@@ -1,0 +1,18 @@
+Erstelle ein fotorealistisches Bild von einem schmalen, 
+rechteckigen, futuristischen Rahmen aus Kohlefaser - 
+in der Auflösung 3840x2160 PIxel. Achte darauf das der Rahmen ganz zu sehen ist, 
+nicht beschnitten wird und kein weiterer Hintergrund vorhanden ist - 
+der Rahmen füllt das gesamte Bild aus. 
+Auf dem linken Teil des Rahmens befinden sich 8, fiktive, 
+außeriridsch anmutende, goldene Schriftzeichen. 
+Im Rahmen ist ein großer, rechteckiger Stein aus Marmor mit gebrochenen Kanten. 
+Der Stein hat im linken Bereich eine quadratische, vertikal zentrierte, 
+deutlich sichtbare Vertiefung von 2000x2000 Pixel. 
+Diese Vertiefung hat einen Abstand von 140 Pixel vom linken Rahmen. 
+Der ganze Stein ist im Stil von Leonardo Da Vinci bearbeitet. 
+Er hat Unebenheiten, kleinere Risse, Flecken und ist nicht perfekt. 
+Im rechten Bereich des Steines sind 5 rechteckige, 
+aus dem Stein rausragende Schaltflächen aus Glas. 
+Mache die Schaltflächen so breit wie möglich. 
+Vom rechtem Rand jeder Schaltfläche führt eine schmale, 
+futuristische, goldene Pipeline, die im rechten Rand des Rahmens endet.
