@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>CSNova</class>
+ <widget class="QDialog" name="CSNova">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1920</width>
+    <height>1080</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Codizies Scriptoria Nova</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QWidget {
+    border-image: url(/home/frank/Dokumente/CSNova/assets/media/csNova_background_start.png) 0 0 0 0 stretch stretch;
+}
+
+QPushButton {
+    background-color: transparent;
+    color: #1a1a1a;
+    font-family: &quot;Garamond&quot;;
+    font-size: 18px;
+    border: 2px solid #1a1a1a;
+    border-radius: 6px;
+    padding: 6px 12px;
+}
+
+QPushButton:hover {
+    background-color: #e0d8c0;
+    color: #000000;
+    border-color: #000000;
+}
+
+QLabel {
+    color: #1a1a1a;
+    font-family: &quot;Garamond&quot;;
+    font-size: 20px;
+    background-color: transparent;
+}</string>
+  </property>
+  <property name="modal">
+   <bool>false</bool>
+  </property>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
