@@ -34,13 +34,14 @@ class StartWindow(QWidget):
         self.setWindowTitle("Codices Scriptoria Nova (CSNova)")
         self.resize(self.DEFAULT_WIDTH, self.DEFAULT_HEIGHT)
         self.setAutoFillBackground(False)
-        self.bg_pixmap = QPixmap(
-            "/home/frank/Dokumente/CSNova/assets/media/csNova_background_start.png"
-        )
+        base_path = os.path.dirname(__file__)
+        pix_path = os.path.join(base_path, "..", "assets", "media", "csNova_background_start.png")
+        self.bg_pixmap = QPixmap(pix_path)
+    
 
         self.translator = Translator(default=default_language)
         self._create_ui()
-        self._retranslate_and_position()
+        QTimer.singleShot(0, self._retranslate_and_position)
 
     def _create_ui(self):
         self.button_keys = [
