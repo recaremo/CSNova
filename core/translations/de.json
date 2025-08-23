@@ -1,0 +1,22 @@
+{
+  "btn_new_project": "Neues Projekt",
+  "btn_load_project": "Projekt laden …",
+  "btn_settings": "Einstellungen",
+  "btn_help": "Hilfe/Tutorial",
+  "btn_exit": "Beenden",
+  "menu_file": "Datei",
+  "menu_edit": "Bearbeiten",
+  "menu_help": "Hilfe",
+  "menu_settings": "Einstellungen",
+  "menu_language": "Sprache",
+  "action_new": "Neu",
+  "action_open": "Öffnen",
+  "action_save": "Speichern",
+  "action_exit": "Beenden",
+  "tab_project": "Projekt",
+  "tab_character": "Charaktere",
+  "tab_scene": "Szenen",
+  "btn_save": "Speichern",
+  "tooltip_exit": "Programm beenden",
+  "action_cancel": "Abbrechen"
+}

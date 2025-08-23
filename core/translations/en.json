@@ -1,0 +1,22 @@
+{
+        "btn_new_project":   "New Project",
+        "btn_load_project":  "Open Project …",
+        "btn_settings":      "Settings",
+        "btn_help":          "Help/Tutorial",
+        "btn_exit":          "Exit",
+        "menu_file":         "File",
+        "menu_edit":         "Edit",
+        "menu_help":         "Help",
+        "menu_settings":     "Settings",
+        "menu_language":     "Language",
+        "action_new":        "New",
+        "action_open":       "Open",
+        "action_save":       "Save",
+        "action_exit":       "Exit",
+        "tab_project":       "Project",
+        "tab_character":     "Characters",
+        "tab_scene":         "Scenes",
+        "btn_save":          "Save",
+        "tooltip_exit":      "Exit application",
+        "action_cancel": "Cancel"
+    }

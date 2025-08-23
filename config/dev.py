@@ -1,14 +1,14 @@
 # config/dev.py
 
-import os
+from pathlib import Path
 import sys
 
 if getattr(sys, 'frozen', False):
-    BASE_DIR = os.path.dirname(sys.executable)
+    BASE_DIR = Path(sys.executable).parent
 else:
-    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+    BASE_DIR = Path(__file__).resolve().parent
 
-DATA_DIR = os.path.join(BASE_DIR, "..", "data")
-os.makedirs(DATA_DIR, exist_ok=True)
+DATA_DIR = BASE_DIR.parent / "data"
+DATA_DIR.mkdir(exist_ok=True)
 
-DB_PATH = os.path.join(DATA_DIR, "csnova.db")
+DB_PATH = DATA_DIR / "csnova.db"

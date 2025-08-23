@@ -1,5 +1,18 @@
 # Codices Scriptoria Nova (CSNova)
 
+## CSNova - Projektbeschreibung
+Diese Projektbeschreibung dient als zentrale Übersicht und Referenz für das Projekt Codex Scriptoria Nova. Sie enthält globale Definitionen, Kriterien und Querverweise zu den einzelnen Kapiteln.
+
+### Projektstruktur
+
+* CSNova_01 – Ziele
+* CDNova_02 – Funktionsumfang
+* CSNova_03 – Code-Basis
+* CSNova_04 – Projektfahrplan
+* CSNova_05 – Tabellen
+* CSNova_06 – Programmcode
+* CSNova 07 – Quellen
+
 ## 1. Ziel
 
 Entwicklung einer plattformübergreifenden Desktop‑Anwendung (Linux, Windows, macOS) für Autor:innen zur Planung, Organisation und kreativen Unterstützung von Buchprojekten. Die Software kombiniert datenbankgestützte Projektverwaltung, moderne GUI, integrierte KI‑Features und einen individuellen Reader, der multimediale Inhalte, Animationen und 3D-Modelle darstellen kann.
@@ -168,13 +181,88 @@ Entwicklung einer plattformübergreifenden Desktop‑Anwendung (Linux, Windows, 
 * Layout: responsiv, plattformabhängig
 * Ziel: intuitive Bedienung, modulare Erweiterbarkeit
 
-#### 4.2.1 Hauptprogramm
+## 5. Tabellen
+
+Auflistungen der erstellten Tabellen in Python:
+
+### 5.1 Haupttabelle: character_main
+
+```python
+# Haupttabelle: character_main
+cursor.execute("""
+CREATE TABLE IF NOT EXISTS character_main (
+    character_ID INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT,
+    first_name TEXT,
+    nick_name TEXT,
+    born DATE,
+    age INTEGER,
+    role TEXT,
+    status TEXT,
+    gender_ID INTEGER,
+    sex_orientation_ID INTEGER,
+    notes TEXT
+);
+""")
+
+#### 5.1.1 Referenztabelle: gender
+
+```python
+# Referenztabelle: gender
+cursor.execute("""
+CREATE TABLE IF NOT EXISTS gender (
+    gender_ID INTEGER PRIMARY KEY AUTOINCREMENT,
+    gender TEXT,
+    short_description TEXT
+);
+""")
+
+#### 5.1.2 Referenztabelle: sex_orientation
+
+```python
+# Referenztabelle: sex_orientation
+cursor.execute("""
+CREATE TABLE IF NOT EXISTS sex_orientation (
+    sex_orientation_ID INTEGER PRIMARY KEY AUTOINCREMENT,
+    sex_orientation TEXT,
+    short_description TEXT
+);
+""")
+
+#### 5.1.3 Untertabelle: psychological_profile
+
+```python
+# Untertabellen (Beispiel: psychological_profile)
+cursor.execute("""
+CREATE TABLE IF NOT EXISTS psychological_profile (
+    profile_ID INTEGER PRIMARY KEY AUTOINCREMENT,
+    character_ID INTEGER,
+    diagnosis TEXT,
+    symptoms TEXT,
+    therapy TEXT,
+    medication TEXT,
+    temperament TEXT,
+    values_set TEXT,
+    moral_concepts TEXT,
+    character_strength TEXT,
+    character_weakness TEXT,
+    self_image TEXT,
+    fears TEXT,
+    notes TEXT,
+    FOREIGN KEY(character_ID) REFERENCES character_main(character_ID)
+);
+""")
+
+## 6. - Programmecode
+
+### 6.1 Hauptprogramm (main.py)
 
 ```python
 import sys
 from PySide6.QtWidgets import QApplication
 from core.database import init_schema
-from config.settings import load_settings
+from config.settings import load_settings, save_settings
+
 from gui.start_window import StartWindow
 
 def main():
@@ -186,16 +274,54 @@ def main():
     # Übergebe Default-Sprache an das Startfenster
     window = StartWindow(default_language=language)
     window.show()
-    sys.exit(app.exec())
+    app.exec()
+
+    # Sprache speichern, falls geändert
+    settings["language"] = window.translator.lang
+    save_settings(settings)
 
 if __name__ == "__main__":
     main()
 
+#### 6.1.1 Settings (setting.py)
 
-#### 4.2.1 Startfenster (start_window.py)
+```python
+# config/settings.py
 
-In diesem Abschnitt wird das Startfenster so konfiguriert, dass das gesamte Fenster-Background das Bild  
-`/home/frank/Dokumente/CSNova/assets/media/csNova_background_start.png` verwendet.
+import json
+import os
+
+SETTINGS_FILE = "config/user_settings.json"
+
+def load_settings():
+    if os.path.exists(SETTINGS_FILE):
+        with open(SETTINGS_FILE, "r", encoding="utf-8") as f:
+            return json.load(f)
+    return {"language": "de"}  # Fallback
+
+def save_settings(settings):
+    with open(SETTINGS_FILE, "w", encoding="utf-8") as f:
+        json.dump(settings, f, indent=2)
+
+####6.1.2 Verzeichnisse (dev.py)
+
+```python
+# config/dev.py
+
+from pathlib import Path
+import sys
+
+if getattr(sys, 'frozen', False):
+    BASE_DIR = Path(sys.executable).parent
+else:
+    BASE_DIR = Path(__file__).resolve().parent
+
+DATA_DIR = BASE_DIR.parent / "data"
+DATA_DIR.mkdir(exist_ok=True)
+
+DB_PATH = DATA_DIR / "csnova.db"
+
+### 6.2 Startfenster (start_window.py)
 
 ```python
 from PySide6.QtWidgets import (
@@ -338,8 +464,27 @@ if __name__ == "__main__":
     window.show()
     sys.exit(app.exec())
 
+#### 6.2.1 Translator (translator.py)
 
-#### 4.2.2 Preferenzen (preferences.py)
+```python
+# core/translator.py
+
+from core.translations import TRANSLATIONS, LANGUAGES
+
+class Translator:
+    def __init__(self, default="de"):
+        self.lang = default if default in LANGUAGES else LANGUAGES[0]
+
+    def set_language(self, lang_code):
+        if lang_code in TRANSLATIONS:
+            self.lang = lang_code
+
+    def tr(self, key):
+        return TRANSLATIONS[self.lang].get(
+            key, TRANSLATIONS["en"].get(key, key)
+        )
+
+### 6.3 Preferenzen (preferences.py)
 
 ```python
 from PySide6.QtWidgets import (
@@ -350,165 +495,222 @@ from core.translations import LANGUAGES, TRANSLATIONS
 from config.settings import load_settings, save_settings
 
 class PreferencesWindow(QDialog):
-    # Größe des Dialogs
     DEFAULT_WIDTH  = 400
     DEFAULT_HEIGHT = 200
 
-    # Anzeige-Namen in der ComboBox (Deutsch-Namen)
     LANGUAGE_NAMES = {
         "de": "Deutsch",
-        "en": "Englisch",
-        "fr": "Französisch",
-        "es": "Spanisch"
+        "en": "English",
+        "fr": "Français",
+        "es": "Español"
     }
 
     def __init__(self, parent=None):
         super().__init__(parent)
         self.translator = parent.translator
         self.settings   = load_settings()
+        self.original_language = self.translator.lang
 
-        # Dialog einstellen
         self.setWindowTitle(self.translator.tr("menu_settings"))
         self.resize(self.DEFAULT_WIDTH, self.DEFAULT_HEIGHT)
 
-        # UI aufbauen
         self._init_ui()
         self._load_values()
 
     def _init_ui(self):
-        # Label „Sprache“
         self.lang_label = QLabel(self.translator.tr("menu_language"), self)
 
-        # ComboBox mit German-Namen, userData = Sprachcode
         self.lang_combo = QComboBox(self)
         for code in LANGUAGES:
             name = self.LANGUAGE_NAMES.get(code, code)
             self.lang_combo.addItem(name, userData=code)
 
-        # Bei Änderung sofort umschalten
         self.lang_combo.currentIndexChanged.connect(self._on_language_changed)
 
-        # OK und Abbrechen
-        self.ok_button     = QPushButton(
-            self.translator.tr("action_save"), self
-        )
-        self.cancel_button = QPushButton(
-            self.translator.tr("action_cancel"), self
-        )
+        self.ok_button     = QPushButton(self)
+        self.cancel_button = QPushButton(self)
 
         self.ok_button.clicked.connect(self._on_ok)
-        self.cancel_button.clicked.connect(self.reject)
+        self.cancel_button.clicked.connect(self._on_cancel)
 
-#### 4.2.3 Translation (translation.py)
+        btn_layout = QHBoxLayout()
+        btn_layout.addStretch()
+        btn_layout.addWidget(self.ok_button)
+        btn_layout.addWidget(self.cancel_button)
 
+        main_layout = QVBoxLayout(self)
+        main_layout.addWidget(self.lang_label)
+        main_layout.addWidget(self.lang_combo)
+        main_layout.addLayout(btn_layout)
 
-### 4.3 Tabellen
+    def _load_values(self):
+        lang = self.settings.get("language", LANGUAGES[0])
+        idx  = LANGUAGES.index(lang) if lang in LANGUAGES else 0
+        self.lang_combo.setCurrentIndex(idx)
+        self._update_ui_texts()
 
-Auflistungen der erstellten Tabellen in Python:
+    def _on_language_changed(self):
+        index = self.lang_combo.currentIndex()
+        code = self.lang_combo.itemData(index)
+        self.translator.set_language(code)
+        self._update_ui_texts()
 
-#### 4.3.1 Haupttabelle: character_main
+    def _update_ui_texts(self):
+        self.setWindowTitle(self.translator.tr("menu_settings"))
+        self.lang_label.setText(self.translator.tr("menu_language"))
+        self.ok_button.setText(self.translator.tr("action_save"))
+        self.cancel_button.setText(self.translator.tr("action_cancel"))
 
-```python
-# Haupttabelle: character_main
-cursor.execute("""
-CREATE TABLE IF NOT EXISTS character_main (
-    character_ID INTEGER PRIMARY KEY AUTOINCREMENT,
-    name TEXT,
-    first_name TEXT,
-    nick_name TEXT,
-    born DATE,
-    age INTEGER,
-    role TEXT,
-    status TEXT,
-    gender_ID INTEGER,
-    sex_orientation_ID INTEGER,
-    notes TEXT
-);
-""")
+    def _on_ok(self):
+        index = self.lang_combo.currentIndex()
+        code = self.lang_combo.itemData(index)
+        self.settings["language"] = code
+        save_settings(self.settings)
+        if self.parent() and hasattr(self.parent(), "_on_language_changed"):
+            self.parent()._on_language_changed(code)
+        self.accept()
 
-##### 4.3.1.1 Referenztabelle: gender
+    def _on_cancel(self):
+        self.translator.set_language(self.original_language)
+        if self.parent() and hasattr(self.parent(), "_on_language_changed"):
+            self.parent()._on_language_changed(self.original_language)
+        self.reject()
 
-```python
-# Referenztabelle: gender
-cursor.execute("""
-CREATE TABLE IF NOT EXISTS gender (
-    gender_ID INTEGER PRIMARY KEY AUTOINCREMENT,
-    gender TEXT,
-    short_description TEXT
-);
-""")
-
-##### 4.3.1.2 Referenztabelle: sex_orientation
-
-```python
-# Referenztabelle: sex_orientation
-cursor.execute("""
-CREATE TABLE IF NOT EXISTS sex_orientation (
-    sex_orientation_ID INTEGER PRIMARY KEY AUTOINCREMENT,
-    sex_orientation TEXT,
-    short_description TEXT
-);
-""")
-
-##### 4.3.1.3 Untertabelle: psychological_profile
+### 6.4 Translation (translation.py)
 
 ```python
-# Untertabellen (Beispiel: psychological_profile)
-cursor.execute("""
-CREATE TABLE IF NOT EXISTS psychological_profile (
-    profile_ID INTEGER PRIMARY KEY AUTOINCREMENT,
-    character_ID INTEGER,
-    diagnosis TEXT,
-    symptoms TEXT,
-    therapy TEXT,
-    medication TEXT,
-    temperament TEXT,
-    values_set TEXT,
-    moral_concepts TEXT,
-    character_strength TEXT,
-    character_weakness TEXT,
-    self_image TEXT,
-    fears TEXT,
-    notes TEXT,
-    FOREIGN KEY(character_ID) REFERENCES character_main(character_ID)
-);
-""")
+from pathlib import Path
+import json
 
-## 5. Programm-Logo
+LANGUAGES = ["de", "en", "fr", "es"]
+TRANSLATIONS = {}
 
-### 5.1 Großes Logo
- 
-* Motiv: Geöffnetes Buch darüber eine schwebende Hand und Schreibfeder, die in das Buch schreiben. Das Buch ist 45° gegen den Uhrzeigersinn gedreht. Setzt das Buch im Verhältnis 2:1 zur Hand mit der Feder. Das gesamte Motiv ist von einem schlichten, einfachen Rahmen umgeben.  
-- Schriftzug: „Codices Scriptoria Nova“ in drei Zeilen  
-- „Codices Scriptoria“ in mittelalterlicher Schrift, „C“ und „S“ in Lapislazuli-Blau  
-- „Nova“ in moderner Schrift  
-- Das Motiv ist auf der linken Seite – der Text befindet sich rechts davon und liegt außerhalb des Rahmens der das Motiv umgibt.  
-- Hintergrund: Pergamenttextur mit Gebrauchsspuren  
-- Stil: Albrecht Dürer, mittelalterlicher Holzdruck  
-- Komposition: Drittelregel oder Goldener Schnitt  
-- Besonderheiten: Kleine Unregelmäßigkeiten im Druckbild  
+for lang in LANGUAGES:
+    path = Path(__file__).parent / "translations" / f"{lang}.json"
+    with open(path, "r", encoding="utf-8") as f:
+        TRANSLATIONS[lang] = json.load(f)
 
-### 5.2 Kleines Logo
+#### 6.4.1 de.json
 
-- Motiv: Geöffnetes Buch darüber eine schwebende Hand und Schreibfeder, die in das Buch schreiben. Das Buch ist 45° gegen den Uhrzeigersinn gedreht. Setzt das Buch im Verhältnis 2:1 zur Hand mit der Feder. Das gesamte Motiv ist von einem schlichten, einfachen Rahmen umgeben.  
-- Schriftzug: „CS” und “Nova“ in zwei Zeilen  
-- „CS“ in mittelalterlicher Schrift, „Nova“ in moderner Schrift  
-- Das Motiv ist auf der linken Seite – der Text befindet sich rechts davon und liegt außerhalb des Rahmens der das Motiv umgibt.  
-- Hintergrund: Pergamenttextur mit Gebrauchsspuren  
-- Stil: Albrecht Dürer, mittelalterlicher Holzdruck  
-- Komposition: Drittelregel oder Goldener Schnitt  
-- Besonderheiten: Kleine Unregelmäßigkeiten im Druckbild  
+```json
+{
+  "btn_new_project": "Neues Projekt",
+  "btn_load_project": "Projekt laden …",
+  "btn_settings": "Einstellungen",
+  "btn_help": "Hilfe/Tutorial",
+  "btn_exit": "Beenden",
+  "menu_file": "Datei",
+  "menu_edit": "Bearbeiten",
+  "menu_help": "Hilfe",
+  "menu_settings": "Einstellungen",
+  "menu_language": "Sprache",
+  "action_new": "Neu",
+  "action_open": "Öffnen",
+  "action_save": "Speichern",
+  "action_exit": "Beenden",
+  "tab_project": "Projekt",
+  "tab_character": "Charaktere",
+  "tab_scene": "Szenen",
+  "btn_save": "Speichern",
+  "tooltip_exit": "Programm beenden",
+  "action_cancel": "Abbrechen"
+}
 
-## 6. Tutorials & Literatur, Quellen
+#### 6.4.2 en.json
 
-### 6.1 PySide6 & GUI-Entwicklung
+```json
+{
+        "btn_new_project":   "New Project",
+        "btn_load_project":  "Open Project …",
+        "btn_settings":      "Settings",
+        "btn_help":          "Help/Tutorial",
+        "btn_exit":          "Exit",
+        "menu_file":         "File",
+        "menu_edit":         "Edit",
+        "menu_help":         "Help",
+        "menu_settings":     "Settings",
+        "menu_language":     "Language",
+        "action_new":        "New",
+        "action_open":       "Open",
+        "action_save":       "Save",
+        "action_exit":       "Exit",
+        "tab_project":       "Project",
+        "tab_character":     "Characters",
+        "tab_scene":         "Scenes",
+        "btn_save":          "Save",
+        "tooltip_exit":      "Exit application",
+        "action_cancel": "Cancel"
+    }
+
+#### 6.4.3 fr.json
+
+```json
+{
+        "btn_new_project":   "Nouveau projet", 
+        "btn_load_project":  "Ouvrir projet …",
+        "btn_settings":      "Paramètres",
+        "btn_help":          "Aide/Tutoriel",
+        "btn_exit":          "Quitter",
+        "menu_file":         "Fichier",
+        "menu_edit":         "Éditer",
+        "menu_help":         "Aide",
+        "menu_settings":     "Paramètres",
+        "menu_language":     "Langue",
+        "action_new":        "Nouveau",
+        "action_open":       "Ouvrir",
+        "action_save":       "Enregistrer",
+        "action_exit":       "Quitter",
+        "tab_project":       "Projet",
+        "tab_character":     "Personnages",
+        "tab_scene":         "Scènes",
+        "btn_save":          "Enregistrer",
+        "tooltip_exit":      "Quitter l'application",
+        "action_cancel":     "Annuler"
+    }
+
+#### 6.4.4 es.json
+
+```json
+{
+        "btn_new_project":   "Nuevo proyecto",
+        "btn_load_project":  "Abrir proyecto …",
+        "btn_settings":      "Configuración",
+        "btn_help":          "Ayuda/Tutorial",
+        "btn_exit":          "Salir",
+        "menu_file":         "Archivo",
+        "menu_edit":         "Editar",
+        "menu_help":         "Ayuda",
+        "menu_settings":     "Configuración",
+        "menu_language":     "Idioma",
+        "action_new":        "Nuevo",
+        "action_open":       "Abrir",
+        "action_save":       "Guardar",
+        "action_exit":       "Salir",
+        "tab_project":       "Proyecto",
+        "tab_character":     "Personajes",
+        "tab_scene":         "Escenas",
+        "btn_save":          "Guardar",
+        "tooltip_exit":      "Salir de la aplicación",
+        "action_cancel": "Cancelar"
+    }
+
+#### 6.4.5 Spracheinstellung (user_settings.json)
+
+```json
+{
+  "language": "en"
+}
+
+## 7. Tutorials & Literatur, Quellen
+
+### 7.1 PySide6 & GUI-Entwicklung
 
 - Create GUI Applications with Python & Qt6 – Martin Fitzpatrick  
 - Modern UI mit PySide6 – komplette App  
 - Install & Setup PySide6 and Qt Designer  
 - PySide6 + SQLite integration – Qt‑Dokumentation  
 
-### 6.2 Datenbank & Migration
+### 7.2 Datenbank & Migration
 
 - SQL für Einsteiger – Michael Kofler  
 - SQLite Tutorial – Jacek Artymiak  
@@ -516,7 +718,7 @@ CREATE TABLE IF NOT EXISTS psychological_profile (
 - Datenbankmigration mit Alembic – Heise Developer  
 - SQLAlchemy Getting Started  
 
-### 6.3 Multimedia & Animation
+### 7.3 Multimedia & Animation
 
 - Multimedia Programming with Qt – Marco Piccolino  
 - QtMultimedia Tutorial – Audio & Video  
@@ -525,7 +727,7 @@ CREATE TABLE IF NOT EXISTS psychological_profile (
 - PySide6 Animation Tutorial  
 - QtMultimedia Docs  
 
-### 6.4 Exportformate & Reader
+### 7.4 Exportformate & Reader
 
 - Creating EPUBs with ebooklib – Python Publishing Guide  
 - PDF-Export mit ReportLab – Python Tutorials  
@@ -535,7 +737,7 @@ CREATE TABLE IF NOT EXISTS psychological_profile (
 - ReportLab User Guide  
 - WeasyPrint Docs  
 
-### 6.5 KI-Integration
+### 7.5 KI-Integration
 
 - Hands-On AI with Python – Packt Publishing  
 - OpenAI API Integration – Python Tutorial  

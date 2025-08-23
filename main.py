@@ -1,7 +1,8 @@
 import sys
 from PySide6.QtWidgets import QApplication
 from core.database import init_schema
-from config.settings import load_settings
+from config.settings import load_settings, save_settings
+
 from gui.start_window import StartWindow
 
 def main():
@@ -13,7 +14,11 @@ def main():
     # Übergebe Default-Sprache an das Startfenster
     window = StartWindow(default_language=language)
     window.show()
-    sys.exit(app.exec())
+    app.exec()
+
+    # Sprache speichern, falls geändert
+    settings["language"] = window.translator.lang
+    save_settings(settings)
 
 if __name__ == "__main__":
     main()
