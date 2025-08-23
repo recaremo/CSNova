@@ -1,17 +1,81 @@
 # Codices Scriptoria Nova (CSNova)
 
-## CSNova - Projektbeschreibung
-Diese Projektbeschreibung dient als zentrale Übersicht und Referenz für das Projekt Codex Scriptoria Nova. Sie enthält globale Definitionen, Kriterien und Querverweise zu den einzelnen Kapiteln.
+## Projektbeschreibung
 
-### Projektstruktur
+CSNova ist eine umfassende Softwarelösung für Romanautor:innen, Drehbuchautor:innen, Game Writer:innen und alle, die komplexe narrative Projekte planen, entwickeln und veröffentlichen möchten.
 
-* CSNova_01 – Ziele
-* CDNova_02 – Funktionsumfang
-* CSNova_03 – Code-Basis
-* CSNova_04 – Projektfahrplan
-* CSNova_05 – Tabellen
-* CSNova_06 – Programmcode
-* CSNova 07 – Quellen
+## Funktionen im Überblick
+
+### Projektverwaltung
+- Beliebig viele Bücher und Serien verwalten
+- Inhalte zwischen Projekten flexibel übertragen
+
+### Charakterentwicklung
+- Grundlagen, Morphologie, Psychologie
+- Bilder und 3D-Charaktere
+- Beziehungen und soziale Dynamiken
+- Biografien, Hintergrundgeschichten, Motivationen
+- Entwicklung über Zeit und Ereignisse
+- Konflikte, Stärken, Schwächen
+- KI-gestützte Vorschläge für realistische Verhaltensweisen und Dialoge
+
+### Kapitel- und Szenenmanagement
+- Strukturieren, erfassen und organisieren
+
+### Weltenbau
+- Handlungsorte, Gegenstände, Gruppen
+- Timeline, Mindmaps und Schreibziele
+
+### Recherche und Quellenverwaltung
+- Integrierte Datenbank für Recherchen
+- KI-gestützte Quellenanalyse und Generierung:
+  - *„Erzeuge eine Tabelle mit wichtigen Theorien zur Quantenphysik von 1900–2025; Name der Entdecker:innen; Veröffentlichungsjahr; Zusammenfassung.“*
+  - *„Beschreibung des Ortes XYZ um 1300; Persönlichkeiten; historische Ereignisse; Gebäude.“*
+
+### Storyboard und Drehbucherstellung
+- Automatische Generierung aus Kapiteln und Szenen
+
+### Statistische Analyse
+- Schreibverhalten, Textumfang, Fortschritt
+
+### Stilistische Unterstützung
+- Ich-Perspektive
+- Personale und auktoriale Erzählweise
+- Neutrale Erzähler:innen
+
+### Interview-Modus
+- Geführte Dateneingabe mit Erinnerungsfunktion
+- KI-Unterstützung:
+  - *„Erstelle ein Bild basierend auf der Charakterbeschreibung.“*
+  - *„Was wäre ein realistischer chinesischer Name für diesen Charakter?“*
+
+### Exportformate
+- PDF
+- EPUB
+- CSNova-Readerformat:
+  - Unterstützung für multimediale Inhalte, Animationen, Videos und interaktive Elemente
+  - Der CSNova-Reader ist Open Source und wird lizenzfrei weitergegeben
+
+### Videotutorials
+- Verfügbar in Deutsch, Englisch, Französisch und Spanisch
+
+### Integrierte Textverarbeitung
+- Alle Daten direkt anzeigen und bearbeiten
+- Copy/Paste ohne Programmwechsel
+
+## Optional: Erweiterungen
+
+### Kollaboration
+- Gemeinsames Schreiben, Freigabe für Lektor:innen oder Co-Autor:innen
+
+### Datensicherheit
+- Lokale Speicherung, Backup-Funktion, Cloud-Optionen
+
+### Systemvoraussetzungen
+- Verfügbar für Windows, macOS und Linux
+- Mobile Version in Entwicklung
+- Mehrsprachige Benutzeroberfläche: Deutsch, Englisch, Französisch und Spanisch
+
 
 ## 1. Ziel
 
@@ -167,6 +231,7 @@ Entwicklung einer plattformübergreifenden Desktop‑Anwendung (Linux, Windows, 
 ├── ./setup.py
 └── ./tests
 └── ./tests/conftest.py
+```
 
 ### 4.2 GUI
 
@@ -183,75 +248,258 @@ Entwicklung einer plattformübergreifenden Desktop‑Anwendung (Linux, Windows, 
 
 ## 5. Tabellen
 
-Auflistungen der erstellten Tabellen in Python:
+```python
+# database.py
+import sqlite3
+from config.dev import DB_PATH  # falls du den Pfad dort definiert hast
 
-### 5.1 Haupttabelle: character_main
+# Importiere die Tabellenmodule
+from tables.character_main import create_character_main_table
+from tables.gender import create_gender_table
+from tables.sex_orientation import create_sex_orientation_table
+from tables.psychological_profile import create_psychological_profile_table
+from tables.origin import create_origin_table
+from tables.education import create_education_table
+from tables.personality import create_personality_table
+from tables.appearance_main import create_appearance_main_table
+from tables.appearance_detail import create_appearance_detail_table
+
+def init_schema():
+    conn = sqlite3.connect(DB_PATH)
+    cursor = conn.cursor()
+
+    # Fremdschlüssel aktivieren
+    cursor.execute("PRAGMA foreign_keys = ON")
+
+    # Tabellen initialisieren
+    create_character_main_table(cursor)
+    create_gender_table(cursor)
+    create_sex_orientation_table(cursor)
+    create_psychological_profile_table(cursor)
+    create_origin_table(cursor)
+    create_education_table(cursor)
+    create_personality_table(cursor)
+    create_appearance_main_table(cursor)
+    create_appearance_detail_table(cursor)
+
+    conn.commit()
+    conn.close()
+```
+
+### 5.1 character_main.py
 
 ```python
-# Haupttabelle: character_main
-cursor.execute("""
-CREATE TABLE IF NOT EXISTS character_main (
-    character_ID INTEGER PRIMARY KEY AUTOINCREMENT,
-    name TEXT,
-    first_name TEXT,
-    nick_name TEXT,
-    born DATE,
-    age INTEGER,
-    role TEXT,
-    status TEXT,
-    gender_ID INTEGER,
-    sex_orientation_ID INTEGER,
-    notes TEXT
-);
-""")
+def create_character_main_table(cursor):
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS character_main (
+        character_ID INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT,
+        first_name TEXT,
+        nick_name TEXT,
+        born DATE,
+        age INTEGER,
+        role TEXT,
+        status TEXT,
+        gender_ID INTEGER,
+        sex_orientation_ID INTEGER,
+        notes TEXT
+    );
+    """)
+```
 
-#### 5.1.1 Referenztabelle: gender
-
-```python
-# Referenztabelle: gender
-cursor.execute("""
-CREATE TABLE IF NOT EXISTS gender (
-    gender_ID INTEGER PRIMARY KEY AUTOINCREMENT,
-    gender TEXT,
-    short_description TEXT
-);
-""")
-
-#### 5.1.2 Referenztabelle: sex_orientation
+#### 5.1.1 gender.py
 
 ```python
-# Referenztabelle: sex_orientation
-cursor.execute("""
-CREATE TABLE IF NOT EXISTS sex_orientation (
-    sex_orientation_ID INTEGER PRIMARY KEY AUTOINCREMENT,
-    sex_orientation TEXT,
-    short_description TEXT
-);
-""")
+def create_gender_table(cursor):
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS gender (
+        gender_ID INTEGER PRIMARY KEY AUTOINCREMENT,
+        gender TEXT,
+        short_description TEXT
+    );
+    """)
+```
 
-#### 5.1.3 Untertabelle: psychological_profile
+#### 5.1.2 sex_orientation.py
 
 ```python
-# Untertabellen (Beispiel: psychological_profile)
-cursor.execute("""
-CREATE TABLE IF NOT EXISTS psychological_profile (
-    profile_ID INTEGER PRIMARY KEY AUTOINCREMENT,
-    character_ID INTEGER,
-    diagnosis TEXT,
-    symptoms TEXT,
-    therapy TEXT,
-    medication TEXT,
-    temperament TEXT,
-    values_set TEXT,
-    moral_concepts TEXT,
-    character_strength TEXT,
-    character_weakness TEXT,
-    self_image TEXT,
-    fears TEXT,
-    notes TEXT,
-    FOREIGN KEY(character_ID) REFERENCES character_main(character_ID)
-);
-""")
+def create_sex_orientation_table(cursor):
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS sex_orientation (
+        sex_orientation_ID INTEGER PRIMARY KEY AUTOINCREMENT,
+        sex_orientation TEXT,
+        short_description TEXT
+    );
+    """)
+```
+
+#### 5.1.3 character_origin.py
+
+```python
+def create_character_origin_table(cursor):
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS character_origin (
+        origin_ID INTEGER PRIMARY KEY AUTOINCREMENT,
+        character_ID INTEGER NOT NULL,
+        father TEXT,
+        mother TEXT,
+        reference_person TEXT,
+        siblings TEXT,
+        birthplace TEXT,
+        notes TEXT,
+        FOREIGN KEY(character_ID) REFERENCES character_main(character_ID)
+    );
+    """)
+```
+
+#### 5.1.4 character_education.py
+
+```python
+def create_character_education_table(cursor):
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS character_education (
+        education_ID INTEGER PRIMARY KEY AUTOINCREMENT,
+        character_ID INTEGER NOT NULL,
+        school TEXT,
+        university TEXT,
+        job_education TEXT,
+        autodidactic TEXT,
+        job TEXT,
+        art_music TEXT,
+        sport TEXT,
+        technology TEXT,
+        notes TEXT,
+        FOREIGN KEY(character_ID) REFERENCES character_main(character_ID)
+    );
+    """)
+```
+
+#### 5.1.5 character_personality.py
+
+```python
+def create_character_personality_table(cursor):
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS character_personality (
+        personality_ID INTEGER PRIMARY KEY AUTOINCREMENT,
+        character_ID INTEGER NOT NULL,
+        pos_characteristic TEXT,
+        neg_characteristic TEXT,
+        fears TEXT,
+        weaknesses TEXT,
+        strengths TEXT,
+        talents TEXT,
+        char_values TEXT,
+        beliefs TEXT,
+        life_goals TEXT,
+        motivation TEXT,
+        behavior TEXT,
+        notes TEXT,
+        FOREIGN KEY(character_ID) REFERENCES character_main(character_ID)
+    );
+    """)
+```
+
+#### 5.1.6 character_psychological_profile.py
+
+```python
+def create_character_psychological_profile_table(cursor):
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS character_psychological_profile (
+        psychological_profile_ID INTEGER PRIMARY KEY AUTOINCREMENT,
+        character_ID INTEGER NOT NULL,
+        diagnosis TEXT,
+        symptoms TEXT,
+        therapy TEXT,
+        medication TEXT,
+        temperament TEXT,
+        values_set TEXT,
+        moral_concepts TEXT,
+        character_strength TEXT,
+        character_weakness TEXT,
+        self_image TEXT,
+        fears TEXT,
+        longing TEXT,
+        anger TEXT,
+        joy TEXT,
+        stress_situation TEXT,
+        motives_fears TEXT,
+        duty_desire TEXT,
+        ideal_reality TEXT,
+        security TEXT,
+        belonging TEXT,
+        recognition TEXT,
+        self_realization TEXT,
+        psychological_control TEXT,
+        freedom TEXT,
+        love TEXT,
+        power TEXT,
+        knowledge TEXT,
+        revenge TEXT,
+        withdrawal TEXT,
+        humor TEXT,
+        aggression TEXT,
+        security TEXT,
+        trauma TEXT,
+        formative_personality TEXT,
+        socialization TEXT,
+        norms TEXT,
+        taboos TEXT,
+        notes TEXT,
+        FOREIGN KEY(character_ID) REFERENCES character_main(character_ID)
+    );
+    """)
+```
+
+#### 5.1.7 character_appearance_main.py
+
+```python
+def create_character_appearance_main_table(cursor):
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS character_appearance_main (
+        appearance_main_ID INTEGER PRIMARY KEY AUTOINCREMENT,
+        character_ID INTEGER NOT NULL,
+        height TEXT,
+        body_type TEXT,
+        posture TEXT,
+        face_shape TEXT,
+        eye_shape TEXT,
+        eye_color TEXT,
+        hair TEXT,
+        hair_color TEXT,
+        skin TEXT,
+        charisma TEXT,
+        special_features TEXT,
+        notes TEXT,
+        FOREIGN KEY(character_ID) REFERENCES character_main(character_ID)
+    );
+    """)
+```
+
+#### 5.1.8 character_appearance_detail.py
+
+```python
+def create_character_appearance_detail_table(cursor):
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS character_appearance_detail (
+        appearance_detail_ID INTEGER PRIMARY KEY AUTOINCREMENT,
+        character_ID INTEGER NOT NULL,
+        head TEXT,
+        neck TEXT,
+        shoulder TEXT,
+        arms TEXT,
+        hands TEXT,
+        finger TEXT,
+        chest TEXT,
+        hips_waist TEXT,
+        buttocks TEXT,
+        legs TEXT,
+        feet TEXT,
+        toes TEXT,
+        notes TEXT,
+        FOREIGN KEY(character_ID) REFERENCES character_main(character_ID)
+    );
+    """)
+```
 
 ## 6. - Programmecode
 
