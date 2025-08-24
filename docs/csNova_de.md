@@ -155,82 +155,106 @@ Entwicklung einer plattformübergreifenden Desktop‑Anwendung (Linux, Windows, 
   - libxcb-cursor0  
 
 ```text
-├── ./ai
-│   ├── ./ai/analysis.py
-│   ├── ./ai/brainstorming.py
-│   ├── ./ai/interview.py
-│   ├── ./ai/modelle
-│   └── ./ai/prompts
-├── ./assets
-│   ├── ./assets/icons
-│   └── ./assets/media
-│       ├── ./assets/media/csNova_background_middle.png
-│       ├── ./assets/media/csNova_background_start.png
-│       └── ./assets/media/csNova_logo_main.png
-├── ./cli.py
-├── ./config
-│   ├── ./config/dev.py
-│   ├── ./config/prod.py
-│   ├── ./config/__pycache__
-│   │   ├── ./config/__pycache__/dev.cpython-312.pyc
-│   │   └── ./config/__pycache__/settings.cpython-312.pyc
-│   ├── ./config/settings.py
-│   └── ./config/user_settings.json
-├── ./core
-│   ├── ./core/database.py
-│   ├── ./core/logic
-│   │   └── ./core/logic/crud.py
-│   ├── ./core/models
-│   │   ├── ./core/models/character.py
-│   │   ├── ./core/models/project.py
-│   │   └── ./core/models/scene.py
-│   ├── ./core/__pycache__
-│   │   ├── ./core/__pycache__/database.cpython-312.pyc
-│   │   └── ./core/__pycache__/translations.cpython-312.pyc
-│   ├── ./core/services
-│   └── ./core/translations.py
-├── ./data
-│   └── ./data/csnova.db
-├── ./docs
-│   ├── ./docs/ai_prompt_background_l.txt
-│   ├── ./docs/ai_prompt_background_s.txt
-│   ├── ./docs/ai_prompt_background_xl.txt
-│   ├── ./docs/ai_prompt_logo_big.txt
-│   ├── ./docs/ai_prompt_logo_small.txt
-│   ├── ./docs/csNova_de.rst
-│   ├── ./docs/csNova_en.rst
-│   ├── ./docs/csNova_es.rst
-│   └── ./docs/csNova_fr.rst
-├── ./export
-│   ├── ./export/csnova_export.py
-│   ├── ./export/epub_export.py
-│   ├── ./export/html_export.py
-│   └── ./export/pdf_export.py
-├── ./gui
-│   ├── ./gui/main_window.py
-│   ├── ./gui/__pycache__
-│   │   ├── ./gui/__pycache__/main_window.cpython-312.pyc
-│   │   └── ./gui/__pycache__/start_window.cpython-312.pyc
-│   ├── ./gui/start_window.py
-│   ├── ./gui/styles
-│   │   └── ./gui/styles/buttons.qss
-│   ├── ./gui/tabs
-│   │   ├── ./gui/tabs/character_tab.py
-│   │   ├── ./gui/tabs/project_tab.py
-│   │   ├── ./gui/tabs/__pycache__
-│   │   │   └── ./gui/tabs/__pycache__/project_tab.cpython-312.pyc
-│   │   └── ./gui/tabs/scene_tab.py
-│   ├── ./gui/ui
-│   │   └── ./gui/ui/start_window.ui
-│   └── ./gui/widgets
-│       ├── ./gui/widgets/dialog.py
-│       └── ./gui/widgets/listview.py
-├── ./license.md
-├── ./main.py
-├── ./readme.md
-├── ./setup.py
-└── ./tests
-└── ./tests/conftest.py
+├── ai/
+│   ├── analysis.py
+│   ├── brainstorming.py
+│   ├── interview.py
+│   ├── modelle/
+│   └── prompts/
+├── assets/
+│   ├── icons/
+│   └── media/
+│       ├── csNova_background_start.png
+│       └── csNova_logo_main.png
+├── cli.py
+├── config/
+│   ├── dev.py
+│   ├── prod.py
+│   ├── __pycache__/
+│   │   ├── dev.cpython-312.pyc
+│   │   └── settings.cpython-312.pyc
+│   ├── settings.py
+│   └── user_settings.json
+├── core/
+│   ├── database.py
+│   ├── logic/
+│   │   └── crud.py
+│   ├── models/
+│   │   ├── character.py
+│   │   ├── project.py
+│   │   └── scene.py
+│   ├── __pycache__/
+│   │   ├── database.cpython-312.pyc
+│   │   ├── translations.cpython-312.pyc
+│   │   └── translator.cpython-312.pyc
+│   ├── services/
+│   ├── tables/
+│   │   ├── character_appearance_detail.py
+│   │   ├── character_appearance_main.py
+│   │   ├── character_education.py
+│   │   ├── character_main.py
+│   │   ├── character_origin.py
+│   │   ├── character_personality.py
+│   │   ├── character_psychological_profile.py
+│   │   ├── gender_data.py
+│   │   ├── gender.py
+│   │   ├── __init__.py
+│   │   ├── __pycache__/
+│   │   │   ├── character_appearance_detail.cpython-312.pyc
+│   │   │   ├── character_appearance_main.cpython-312.pyc
+│   │   │   ├── character_education.cpython-312.pyc
+│   │   │   ├── character_main.cpython-312.pyc
+│   │   │   ├── character_origin.cpython-312.pyc
+│   │   │   ├── character_personality.cpython-312.pyc
+│   │   │   ├── character_psychological_profile.cpython-312.pyc
+│   │   │   ├── gender.cpython-312.pyc
+│   │   │   ├── gender_data.cpython-312.pyc
+│   │   │   ├── __init__.cpython-312.pyc
+│   │   │   ├── sex_orientation.cpython-312.pyc
+│   │   │   └── sex_orientation_data.cpython-312.pyc
+│   │   ├── sex_orientation_data.py
+│   │   └── sex_orientation.py
+│   ├── translations/
+│   │   ├── de.json
+│   │   ├── en.json
+│   │   ├── es.json
+│   │   └── fr.json
+│   ├── translations.py
+│   └── translator.py
+├── data/
+│   └── csnova.db
+├── docs/
+│   └── csNova_de.md
+├── export/
+│   ├── csnova_export.py
+│   ├── epub_export.py
+│   ├── html_export.py
+│   └── pdf_export.py
+├── gui/
+│   ├── preferences.py
+│   ├── __pycache__/
+│   │   ├── main_window.cpython-312.pyc
+│   │   ├── preferences.cpython-312.pyc
+│   │   └── start_window.cpython-312.pyc
+│   ├── start_window_old.py
+│   ├── start_window.py
+│   ├── styles/
+│   │   └── buttons.qss
+│   ├── tabs/
+│   │   ├── character_tab.py
+│   │   ├── project_tab.py
+│   │   ├── __pycache__/
+│   │   │   └── project_tab.cpython-312.pyc
+│   │   └── scene_tab.py
+│   └── widgets/
+│       ├── dialog.py
+│       └── listview.py
+├── license.md
+├── main.py
+├── readme.md
+├── setup.py
+└── tests/
+    └── conftest.py
 ```
 
 ### 4.2 GUI
@@ -251,18 +275,22 @@ Entwicklung einer plattformübergreifenden Desktop‑Anwendung (Linux, Windows, 
 ```python
 # database.py
 import sqlite3
-from config.dev import DB_PATH  # falls du den Pfad dort definiert hast
+from config.dev import DB_PATH  
+from core.tables.gender_data import data_gender
+from core.tables.sex_orientation_data import sex_orientation_data
 
 # Importiere die Tabellenmodule
-from tables.character_main import create_character_main_table
-from tables.gender import create_gender_table
-from tables.sex_orientation import create_sex_orientation_table
-from tables.psychological_profile import create_psychological_profile_table
-from tables.origin import create_origin_table
-from tables.education import create_education_table
-from tables.personality import create_personality_table
-from tables.appearance_main import create_appearance_main_table
-from tables.appearance_detail import create_appearance_detail_table
+from core.tables import (
+    character_main,
+    gender,
+    sex_orientation,
+    character_psychological_profile,
+    character_origin,
+    character_education,
+    character_personality,
+    character_appearance_main,
+    character_appearance_detail
+)
 
 def init_schema():
     conn = sqlite3.connect(DB_PATH)
@@ -272,15 +300,22 @@ def init_schema():
     cursor.execute("PRAGMA foreign_keys = ON")
 
     # Tabellen initialisieren
-    create_character_main_table(cursor)
-    create_gender_table(cursor)
-    create_sex_orientation_table(cursor)
-    create_psychological_profile_table(cursor)
-    create_origin_table(cursor)
-    create_education_table(cursor)
-    create_personality_table(cursor)
-    create_appearance_main_table(cursor)
-    create_appearance_detail_table(cursor)
+    for module in [
+        character_main,
+        gender,
+        sex_orientation,
+        character_psychological_profile,
+        character_origin,
+        character_education,
+        character_personality,
+        character_appearance_main,
+        character_appearance_detail
+    ]:
+        module.create_table(cursor)
+    
+    # Seed-Daten einfügen
+    data_gender(cursor)
+    data_sex_orientation(cursor)
 
     conn.commit()
     conn.close()
@@ -289,7 +324,11 @@ def init_schema():
 ### 5.1 character_main.py
 
 ```python
-def create_character_main_table(cursor):
+# character_main.py
+# table: character_main
+# description: base stats for a character
+# access to the tables: gender.py, sex_orientation.py
+def create_table(cursor):
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS character_main (
         character_ID INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -310,7 +349,11 @@ def create_character_main_table(cursor):
 #### 5.1.1 gender.py
 
 ```python
-def create_gender_table(cursor):
+# gender.py
+# table: gender_data.py
+# description: the different types of gender that can be assigned to a character
+# access from the tables: character_main
+def create_table(cursor):
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS gender (
         gender_ID INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -319,11 +362,29 @@ def create_gender_table(cursor):
     );
     """)
 ```
+#### gender_data.py
+
+```python
+# gender_data.py
+# description: data for gender.py
+
+def data_gender(cursor):
+    cursor.executemany("""
+        INSERT INTO gender (gender, short_description)
+        VALUES (?, ?)
+    """, [
+        #Data
+    ])
+```
 
 #### 5.1.2 sex_orientation.py
 
 ```python
-def create_sex_orientation_table(cursor):
+# sex_orientation.py
+# table: sex_orientation_data.py
+# description: the different types of sexual orientation that can be assigned to a character
+# access from the tables: character_main
+def create_table(cursor):
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS sex_orientation (
         sex_orientation_ID INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -332,11 +393,35 @@ def create_sex_orientation_table(cursor):
     );
     """)
 ```
+#### sex_orientation_data.py
+
+```python
+# sex_orientation_data.py
+# description: data for sex_orientation.py
+
+def sex_orientation_data(cursor):
+    cursor.executemany("""
+        INSERT INTO sex_orientation (sex_orientation, short_description)
+        VALUES (?, ?)
+    """, [
+        ('Heterosexual', 'Attracted to the opposite gender'),
+        ('Homosexual', 'Attracted to the same gender'),
+        ('Bisexual', 'Attracted to both genders'),
+        ('Asexual', 'Experiences little or no sexual attraction'),
+        ('Pansexual', 'Attracted to people regardless of gender'),
+        ('Queer', 'Non-normative sexual orientation'),
+        ('Questioning', 'Exploring or unsure about sexual orientation')
+    ])
+```
 
 #### 5.1.3 character_origin.py
 
 ```python
-def create_character_origin_table(cursor):
+# character_origin.py
+# table: subtable for character_main
+# description: family and origin of a character
+# connected with: character_main
+def create_table(cursor):
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS character_origin (
         origin_ID INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -355,7 +440,11 @@ def create_character_origin_table(cursor):
 #### 5.1.4 character_education.py
 
 ```python
-def create_character_education_table(cursor):
+# character_education.py
+# table: subtable for character_main
+# description: educations of a character
+# connected with: character_main
+def create_table(cursor):
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS character_education (
         education_ID INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -377,7 +466,11 @@ def create_character_education_table(cursor):
 #### 5.1.5 character_personality.py
 
 ```python
-def create_character_personality_table(cursor):
+# character_personality.py
+# table: subtable for character_main
+# description: personality of a character
+# connected with: character_main
+def create_table(cursor):
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS character_personality (
         personality_ID INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -402,7 +495,11 @@ def create_character_personality_table(cursor):
 #### 5.1.6 character_psychological_profile.py
 
 ```python
-def create_character_psychological_profile_table(cursor):
+# character_psychological_profile.py
+# table: subtable for character_main
+# description: psychological profil of a character
+# connected with: character_main
+def create_table(cursor):
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS character_psychological_profile (
         psychological_profile_ID INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -425,7 +522,6 @@ def create_character_psychological_profile_table(cursor):
         motives_fears TEXT,
         duty_desire TEXT,
         ideal_reality TEXT,
-        security TEXT,
         belonging TEXT,
         recognition TEXT,
         self_realization TEXT,
@@ -453,7 +549,11 @@ def create_character_psychological_profile_table(cursor):
 #### 5.1.7 character_appearance_main.py
 
 ```python
-def create_character_appearance_main_table(cursor):
+# character_appearance_main.py
+# table: subtable for character_main
+# description: main appearance of a character
+# connected with: character_main
+def create_table(cursor):
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS character_appearance_main (
         appearance_main_ID INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -478,7 +578,11 @@ def create_character_appearance_main_table(cursor):
 #### 5.1.8 character_appearance_detail.py
 
 ```python
-def create_character_appearance_detail_table(cursor):
+# character_appearance_detail.py
+# table: subtable for character_main
+# description: more appearance details of a character
+# connected with: character_main
+def create_table(cursor):
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS character_appearance_detail (
         appearance_detail_ID INTEGER PRIMARY KEY AUTOINCREMENT,

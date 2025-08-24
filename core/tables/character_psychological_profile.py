@@ -1,4 +1,8 @@
-def create_character_psychological_profile_table(cursor):
+# character_psychological_profile.py
+# table: subtable for character_main
+# description: psychological profil of a character
+# connected with: character_main
+def create_table(cursor):
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS character_psychological_profile (
         psychological_profile_ID INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -21,7 +25,6 @@ def create_character_psychological_profile_table(cursor):
         motives_fears TEXT,
         duty_desire TEXT,
         ideal_reality TEXT,
-        security TEXT,
         belonging TEXT,
         recognition TEXT,
         self_realization TEXT,

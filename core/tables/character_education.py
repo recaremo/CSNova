@@ -1,4 +1,8 @@
-def create_character_education_table(cursor):
+# character_education.py
+# table: subtable for character_main
+# description: educations of a character
+# connected with: character_main
+def create_table(cursor):
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS character_education (
         education_ID INTEGER PRIMARY KEY AUTOINCREMENT,

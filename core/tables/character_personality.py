@@ -1,4 +1,8 @@
-def create_character_personality_table(cursor):
+# character_personality.py
+# table: subtable for character_main
+# description: personality of a character
+# connected with: character_main
+def create_table(cursor):
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS character_personality (
         personality_ID INTEGER PRIMARY KEY AUTOINCREMENT,

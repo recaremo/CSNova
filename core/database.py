@@ -1,17 +1,21 @@
 # database.py
 import sqlite3
-from config.dev import DB_PATH  # falls du den Pfad dort definiert hast
+from config.dev import DB_PATH  
+from core.tables.gender_data import data_gender
+from core.tables.sex_orientation_data import sex_orientation_data
 
 # Importiere die Tabellenmodule
-from tables.character_main import create_character_main_table
-from tables.gender import create_gender_table
-from tables.sex_orientation import create_sex_orientation_table
-from tables.character_psychological_profile import create_character_psychological_profile_table
-from tables.character_origin import create_character_origin_table  
-from tables.character_personality import create_character_personality_table  
-from tables.character_appearance_detail import create_character_appearance_detail_table  
-from tables.character_education import create_character_education_table
-from tables.character_appearance_main import create_character_appearance_main_table
+from core.tables import (
+    character_main,
+    gender,
+    sex_orientation,
+    character_psychological_profile,
+    character_origin,
+    character_education,
+    character_personality,
+    character_appearance_main,
+    character_appearance_detail
+)
 
 def init_schema():
     conn = sqlite3.connect(DB_PATH)
@@ -21,15 +25,22 @@ def init_schema():
     cursor.execute("PRAGMA foreign_keys = ON")
 
     # Tabellen initialisieren
-    create_character_main_table(cursor)
-    create_gender_table(cursor)
-    create_sex_orientation_table(cursor)
-    create_character_psychological_profile_table(cursor)
-    create_character_origin_table(cursor)
-    create_character_education_table(cursor)
-    create_character_personality_table(cursor)
-    create_character_appearance_main_table(cursor)
-    create_character_appearance_detail_table(cursor)
+    for module in [
+        character_main,
+        gender,
+        sex_orientation,
+        character_psychological_profile,
+        character_origin,
+        character_education,
+        character_personality,
+        character_appearance_main,
+        character_appearance_detail
+    ]:
+        module.create_table(cursor)
+    
+    # Seed-Daten einfügen
+    data_gender(cursor)
+    sex_orientation_data(cursor)
 
     conn.commit()
     conn.close()

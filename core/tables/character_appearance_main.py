@@ -1,4 +1,8 @@
-def create_character_appearance_main_table(cursor):
+# character_appearance_main.py
+# table: subtable for character_main
+# description: main appearance of a character
+# connected with: character_main
+def create_table(cursor):
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS character_appearance_main (
         appearance_main_ID INTEGER PRIMARY KEY AUTOINCREMENT,
