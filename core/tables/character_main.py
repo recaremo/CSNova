@@ -6,6 +6,8 @@ def create_table(cursor):
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS character_main (
         character_ID INTEGER PRIMARY KEY AUTOINCREMENT,
+        main_character BOOL,
+        group_member TEXT,
         name TEXT,
         first_name TEXT,
         nick_name TEXT,

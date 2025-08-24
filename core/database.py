@@ -14,7 +14,13 @@ from core.tables import (
     character_education,
     character_personality,
     character_appearance_main,
-    character_appearance_detail
+    character_appearance_detail,
+    project,
+    project_storylines,
+    project_chapters,
+    project_chapters_scenes,
+    project_scenes_objects,
+    project_scenes_places
 )
 
 def init_schema():
@@ -34,13 +40,19 @@ def init_schema():
         character_education,
         character_personality,
         character_appearance_main,
-        character_appearance_detail
+        character_appearance_detail,
+        project,
+        project_storylines,
+        project_chapters,
+        project_chapters_scenes,
+        project_scenes_objects,
+        project_scenes_places
     ]:
         module.create_table(cursor)
     
     # Seed-Daten einfügen
     data_gender(cursor)
-    sex_orientation_data(cursor)
+    data_sex_orientation(cursor)
 
     conn.commit()
     conn.close()

@@ -332,6 +332,8 @@ def create_table(cursor):
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS character_main (
         character_ID INTEGER PRIMARY KEY AUTOINCREMENT,
+        main_character BOOL,
+        group_member TEXT,
         name TEXT,
         first_name TEXT,
         nick_name TEXT,
@@ -601,6 +603,154 @@ def create_table(cursor):
         toes TEXT,
         notes TEXT,
         FOREIGN KEY(character_ID) REFERENCES character_main(character_ID)
+    );
+    """)
+```
+
+#### 5.1.9 character_groups.py
+
+```python
+# character_groups.py
+# table: subtable for character_main
+# description: character memberchip in a group
+# connected with: character_main
+def create_table(cursor):
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS character_groups (
+        character_groups_ID INTEGER PRIMARY KEY AUTOINCREMENT,
+        character_groups_title TEXT,
+        character_groups_description TEXT
+    );
+    """)
+```
+
+### 5.2 Projektdatenbank
+
+#### 5.2.1 project.py
+
+```python
+# project.py
+# table: project
+# description: central project database, main statistic of work done
+# 
+def create_table(cursor):
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS project (
+        project_ID INTEGER PRIMARY KEY AUTOINCREMENT,
+        project_premise TEXT,
+        project_words_count_goal INTEGER,
+        project_words_count_days INTEGER,  
+        project_deadlines DATE,
+        project_chapters INTEGER,
+        project_scenes INTEGER,
+        project_story_lines INTEGER,
+        project_main_characters INTEGER,
+        project_supporting_characters INTEGER,
+        project_groups_characters INTEGER,
+        project_story_places INTEGER,
+        project_story_opjects INTEGER,
+        project_timeline TEXT,
+        project_notes TEXT
+
+    );
+    """)
+```
+
+#### 5.2.2 project_storylines.py
+
+```python
+# project_storylines.py
+# table: project_storylines
+# description: storylines in project
+# 
+def create_table(cursor):
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS project_storylines (
+        project_storylines_ID INTEGER PRIMARY KEY AUTOINCREMENT,
+        project_storylines_premise TEXT,
+        porject_storylines_title TEXT,
+        project_storylines_description TEXT,
+        project_storylines_notes TEXT,
+    );
+    """)
+```
+
+#### 5.2.3 project_chapters.py
+
+```python
+# project_chapters.py
+# # table: project_chapters
+# description: chapters inside a project
+# 
+def create_table(cursor):
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS project_chapters (
+        project_chapter_ID INTEGER PRIMARY KEY AUTOINCREMENT,
+        project_ID INTEGER NOT NULL,
+        project_chapters_premise TEXT,
+        project_chapters_titel TEXT,
+        FOREIGN KEY(project_ID) REFERENCES project(project_ID)
+    );
+    """)
+```
+
+#### 5.2.4 project_chapter_scenes.py
+
+```python
+# project_chapter_scenes.py
+# # table: project_chapter_scenes
+# description: scenes inside a chapter
+# 
+def create_table(cursor):
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS project_chapters_scenes (
+        project_chapters_scenes_ID INTEGER PRIMARY KEY AUTOINCREMENT,
+        project_chapters_ID INTEGER NOT NULL,
+        project_chapters_scenes_premise TEXT,
+        project_chapters_scenes_titel TEXT,
+        project_chapters_scenes_main_characters TEXT,
+        project_chapters_scenes_supporting_character TEXT,
+        project_chapters_scenes_places TEXT,
+        project_chapters_scenes_text TEXT,
+        FOREIGN KEY(project_chapters_ID) REFERENCES project_chapters(project_chapters_ID)
+    );
+    """)
+```
+
+##### 5.2.4.1 project_scenes_objects.py
+
+```python
+# project_scenes_objects.py
+# table: project_scenes_sobjects
+# description: objects can be used in different scenes
+# 
+def create_table(cursor):
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS project_scenes_objects (
+        project_scenes_object_ID INTEGER PRIMARY KEY AUTOINCREMENT,
+        project_chapters_scenes_ID INTEGER,
+        project_scenes_objects_titel TEXT,
+        project_scenes_objects_description TEXT,
+        FOREIGN KEY(project_chapters_scenes_ID ) REFERENCES  project_chapters_scenes (project_chapters_scenes_ID)
+    );
+    """)
+```
+
+##### 5.2.4.2 project_scenes_places.py
+
+```python
+# project_scenes_places.py
+# table: project_scenes_places
+# description: places can be used in different scenes
+# 
+def create_table(cursor):
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS project_scenes_places (
+        scenes_places_ID INTEGER PRIMARY KEY AUTOINCREMENT,
+        project_chapters_scenes_ID INTEGER,
+        scenes_places_titel TEXT,
+        scenes_places_description TEXT,
+        FOREIGN KEY(project_chapters_scenes_ID ) REFERENCES  project_chapters_scenes (project_chapters_scenes_ID)
     );
     """)
 ```
