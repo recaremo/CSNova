@@ -152,7 +152,8 @@ Entwicklung einer plattformübergreifenden Desktop‑Anwendung (Linux, Windows, 
   - reportlab  
   - requests  
   - asyncio  
-  - libxcb-cursor0  
+  - libxcb-cursor0
+  - pyinstaller  
 
 #### 4.1.1 Projektbaum
 
@@ -272,6 +273,7 @@ Entwicklung einer plattformübergreifenden Desktop‑Anwendung (Linux, Windows, 
 │   └── widgets/
 │       ├── dialog.py
 │       └── listview.py
+├── .gitignore
 ├── license.md
 ├── main.py
 ├── readme.md
@@ -1391,6 +1393,78 @@ def init_schema():
             conn.commit()
     except Exception as e:
         print(f"An error occurred during database initialization: {e}")
+```
+
+### 6.6 .gitignore
+
+```text
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*.so
+*.pyd
+
+# Virtual environments
+.venv/
+env/
+venv/
+
+# Editor/IDE files
+.vscode/
+.idea/
+*.swp
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# Database files
+data/*.db
+
+# User settings and logs
+config/user_settings.json
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Exported files
+export/*.pdf
+export/*.epub
+export/*.html
+
+# Python test cache
+.pytest_cache/
+```
+
+### 6.7 Abhängigkeiten (requirements.txt)
+
+```text
+pyside6
+ebooklib
+weasyprint
+reportlab
+requests
+asyncio
+pyinstaller
+```
+
+### 6.8 Pyinstaller
+
+```text
+pyinstaller --onefile --windowed main.py \
+  --add-data "core/translations:core/translations" \
+  --add-data "core/tables:core/tables" \
+  --add-data "data:data" \
+  --add-data "assets:assets" \
+  --add-data "config:config" \
+  --add-data "gui/styles:gui/styles" \
+  --add-data "docs:docs" \
+  --add-data "ai:ai" \
+  --add-data "export:export"
 ```
 
 ## 7. Tutorials & Literatur, Quellen

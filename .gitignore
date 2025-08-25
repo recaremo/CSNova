@@ -1,0 +1,40 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*.so
+*.pyd
+
+# Virtual environments
+.venv/
+env/
+venv/
+
+# Editor/IDE files
+.vscode/
+.idea/
+*.swp
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# Database files
+data/*.db
+
+# User settings and logs
+config/user_settings.json
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Exported files
+export/*.pdf
+export/*.epub
+export/*.html
+
+# Python test cache
+.pytest_cache/

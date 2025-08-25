@@ -1,0 +1,7 @@
+pyside6
+ebooklib
+weasyprint
+reportlab
+requests
+asyncio
+pyinstaller
