@@ -1,40 +1,16 @@
-/* Allgemeines Button-Styling */
 QPushButton {
+    background-color: #d4c29c;
+    color: #1a1a1a;
     font-size: 18px;
-    padding: 12px 24px;
+    border: 2px solid #8b7d5c;
     border-radius: 10px;
-    background-color: #2E3440;
-    color: white;
-    border: 2px solid #4C566A;
-    font-weight: bold;
+    border-style: outset;
 }
-
-/* Hover- und Klickeffekte */
 QPushButton:hover {
-    background-color: #3B4252;
+    background-color: #e8d9b5;
+    border-color: #5c5138;
 }
-
 QPushButton:pressed {
-    background-color: #434C5E;
-}
-
-/* Individuelle Farben pro Button */
-QPushButton#newProject {
-    background-color: #5E81AC;
-}
-
-QPushButton#openProject {
-    background-color: #A3BE8C;
-}
-
-QPushButton#settings {
-    background-color: #EBCB8B;
-}
-
-QPushButton#tutorials {
-    background-color: #B48EAD;
-}
-
-QPushButton#exit {
-    background-color: #BF616A;
+    background-color: #c0aa7a;
+    border-style: inset;
 }

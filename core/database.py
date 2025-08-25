@@ -24,35 +24,35 @@ from core.tables import (
 )
 
 def init_schema():
-    conn = sqlite3.connect(DB_PATH)
-    cursor = conn.cursor()
+    try:
+        with sqlite3.connect(DB_PATH) as conn:
+            cursor = conn.cursor()
+            # Enable foreign key support
+            cursor.execute("PRAGMA foreign_keys = ON")
 
-    # Fremdschlüssel aktivieren
-    cursor.execute("PRAGMA foreign_keys = ON")
-
-    # Tabellen initialisieren
-    for module in [
-        character_main,
-        gender,
-        sex_orientation,
-        character_psychological_profile,
-        character_origin,
-        character_education,
-        character_personality,
-        character_appearance_main,
-        character_appearance_detail,
-        project,
-        project_storylines,
-        project_chapters,
-        project_chapters_scenes,
-        project_scenes_objects,
-        project_scenes_places
-    ]:
-        module.create_table(cursor)
-    
-    # Seed-Daten einfügen
-    data_gender(cursor)
-    data_sex_orientation(cursor)
-
-    conn.commit()
-    conn.close()
+            # Initialize tables
+            for module in [
+                character_main,
+                gender,
+                sex_orientation,
+                character_psychological_profile,
+                character_origin,
+                character_education,
+                character_personality,
+                character_appearance_main,
+                character_appearance_detail,
+                project,
+                project_storylines,
+                project_chapters,
+                project_chapters_scenes,
+                project_scenes_objects,
+                project_scenes_places
+            ]:
+                module.create_table(cursor)
+            
+            # Insert seed data
+            data_gender(cursor)
+            sex_orientation_data(cursor)
+            conn.commit()
+    except Exception as e:
+        print(f"An error occurred during database initialization: {e}")

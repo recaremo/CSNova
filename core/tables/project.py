@@ -17,7 +17,7 @@ def create_table(cursor):
         supporting_characters INTEGER,
         groups_characters INTEGER,
         story_places INTEGER,
-        story_opjects INTEGER,
+        story_objects INTEGER,
         timeline TEXT
     );
     """)

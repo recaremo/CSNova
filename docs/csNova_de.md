@@ -289,7 +289,13 @@ from core.tables import (
     character_education,
     character_personality,
     character_appearance_main,
-    character_appearance_detail
+    character_appearance_detail,
+    project,
+    project_storylines,
+    project_chapters,
+    project_chapters_scenes,
+    project_scenes_objects,
+    project_scenes_places
 )
 
 def init_schema():
@@ -309,13 +315,19 @@ def init_schema():
         character_education,
         character_personality,
         character_appearance_main,
-        character_appearance_detail
+        character_appearance_detail,
+        project,
+        project_storylines,
+        project_chapters,
+        project_chapters_scenes,
+        project_scenes_objects,
+        project_scenes_places
     ]:
         module.create_table(cursor)
     
     # Seed-Daten einfügen
     data_gender(cursor)
-    data_sex_orientation(cursor)
+    sex_orientation_data(cursor)
 
     conn.commit()
     conn.close()
@@ -375,7 +387,15 @@ def data_gender(cursor):
         INSERT INTO gender (gender, short_description)
         VALUES (?, ?)
     """, [
-        #Data
+        ('Male', 'Identifies as male'),
+        ('Female', 'Identifies as female'),
+        ('Non-binary', 'Does not identify exclusively as male or female'),
+        ('Transgender', 'Gender identity differs from assigned sex at birth'),
+        ('Intersex', 'Born with physical sex characteristics that don’t fit typical definitions'),
+        ('Agender', 'Does not identify with any gender'),
+        ('Genderfluid', 'Gender identity varies over time'),
+        ('Bigender', 'Identifies as two genders'),
+        ('Other', 'Gender identity not listed above')
     ])
 ```
 
@@ -648,7 +668,7 @@ def create_table(cursor):
         project_supporting_characters INTEGER,
         project_groups_characters INTEGER,
         project_story_places INTEGER,
-        project_story_opjects INTEGER,
+        project_story_objects INTEGER,
         project_timeline TEXT,
         project_notes TEXT
 
@@ -668,9 +688,9 @@ def create_table(cursor):
     CREATE TABLE IF NOT EXISTS project_storylines (
         project_storylines_ID INTEGER PRIMARY KEY AUTOINCREMENT,
         project_storylines_premise TEXT,
-        porject_storylines_title TEXT,
+        project_storylines_title TEXT,
         project_storylines_description TEXT,
-        project_storylines_notes TEXT,
+        project_storylines_notes TEXT
     );
     """)
 ```
@@ -721,7 +741,7 @@ def create_table(cursor):
 
 ```python
 # project_scenes_objects.py
-# table: project_scenes_sobjects
+# table: project_scenes_objects
 # description: objects can be used in different scenes
 # 
 def create_table(cursor):
