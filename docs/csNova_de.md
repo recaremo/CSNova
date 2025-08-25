@@ -154,6 +154,8 @@ Entwicklung einer plattformübergreifenden Desktop‑Anwendung (Linux, Windows, 
   - asyncio  
   - libxcb-cursor0  
 
+#### 4.1.1 Projektbaum
+
 ```text
 ├── ai/
 │   ├── analysis.py
@@ -192,6 +194,8 @@ Entwicklung einer plattformübergreifenden Desktop‑Anwendung (Linux, Windows, 
 │   │   ├── character_appearance_detail.py
 │   │   ├── character_appearance_main.py
 │   │   ├── character_education.py
+│   │   ├── character_groups
+│   │   ├── character_groups.py
 │   │   ├── character_main.py
 │   │   ├── character_origin.py
 │   │   ├── character_personality.py
@@ -199,6 +203,12 @@ Entwicklung einer plattformübergreifenden Desktop‑Anwendung (Linux, Windows, 
 │   │   ├── gender_data.py
 │   │   ├── gender.py
 │   │   ├── __init__.py
+│   │   ├── project_chapters.py
+│   │   ├── project_chapters_scenes.py
+│   │   ├── project.py
+│   │   ├── project_scenes_objects.py
+│   │   ├── project_scenes_places.py
+│   │   ├── project_storylines.py
 │   │   ├── __pycache__/
 │   │   │   ├── character_appearance_detail.cpython-312.pyc
 │   │   │   ├── character_appearance_main.cpython-312.pyc
@@ -210,6 +220,12 @@ Entwicklung einer plattformübergreifenden Desktop‑Anwendung (Linux, Windows, 
 │   │   │   ├── gender.cpython-312.pyc
 │   │   │   ├── gender_data.cpython-312.pyc
 │   │   │   ├── __init__.cpython-312.pyc
+│   │   │   ├── project_chapters.cpython-312.pyc
+│   │   │   ├── project_chapters_scenes.cpython-312.pyc
+│   │   │   ├── project.cpython-312.pyc
+│   │   │   ├── project_scenes_objects.cpython-312.pyc
+│   │   │   ├── project_scenes_places.cpython-312.pyc
+│   │   │   ├── project_storylines.cpython-312.pyc
 │   │   │   ├── sex_orientation.cpython-312.pyc
 │   │   │   └── sex_orientation_data.cpython-312.pyc
 │   │   ├── sex_orientation_data.py
@@ -224,6 +240,11 @@ Entwicklung einer plattformübergreifenden Desktop‑Anwendung (Linux, Windows, 
 ├── data/
 │   └── csnova.db
 ├── docs/
+│   ├── csNova_00_de.md
+│   ├── csNova_01-04_de.md
+│   ├── csNova_05_de.md
+│   ├── csNova_06_de.md
+│   ├── csNova_07_de.md
 │   └── csNova_de.md
 ├── export/
 │   ├── csnova_export.py
@@ -236,10 +257,12 @@ Entwicklung einer plattformübergreifenden Desktop‑Anwendung (Linux, Windows, 
 │   │   ├── main_window.cpython-312.pyc
 │   │   ├── preferences.cpython-312.pyc
 │   │   └── start_window.cpython-312.pyc
-│   ├── start_window_old.py
 │   ├── start_window.py
 │   ├── styles/
-│   │   └── buttons.qss
+│   │   ├── buttons.qss
+│   │   ├── __pycache__/
+│   │   │   └── style_utils.cpython-312.pyc
+│   │   └── style_utils.py
 │   ├── tabs/
 │   │   ├── character_tab.py
 │   │   ├── project_tab.py
@@ -788,22 +811,30 @@ from config.settings import load_settings, save_settings
 from gui.start_window import StartWindow
 
 def main():
-    init_schema()
-    settings = load_settings()
-    language = settings.get("language", "de")
+    try:
+        # --- Original code start ---
+        init_schema()
+        settings = load_settings()
+        language = settings.get("language", "de")
 
-    app = QApplication(sys.argv)
-    # Übergebe Default-Sprache an das Startfenster
-    window = StartWindow(default_language=language)
-    window.show()
-    app.exec()
+        app = QApplication(sys.argv)
+        # Pass default language to the start window
+        window = StartWindow(default_language=language)
+        window.show()
+        app.exec()
 
-    # Sprache speichern, falls geändert
-    settings["language"] = window.translator.lang
-    save_settings(settings)
+        # Save language if it was changed
+        if hasattr(window, "translator") and hasattr(window.translator, "lang"):
+            settings["language"] = window.translator.lang
+            save_settings(settings)
+        # --- Original code end ---
+    except Exception as e:
+        # Catch and print any error that occurs
+        print(f"An error occurred: {e}")
 
 if __name__ == "__main__":
     main()
+```
 
 #### 6.1.1 Settings (setting.py)
 
@@ -824,6 +855,7 @@ def load_settings():
 def save_settings(settings):
     with open(SETTINGS_FILE, "w", encoding="utf-8") as f:
         json.dump(settings, f, indent=2)
+```
 
 ####6.1.2 Verzeichnisse (dev.py)
 
@@ -842,6 +874,7 @@ DATA_DIR = BASE_DIR.parent / "data"
 DATA_DIR.mkdir(exist_ok=True)
 
 DB_PATH = DATA_DIR / "csnova.db"
+```
 
 ### 6.2 Startfenster (start_window.py)
 
@@ -849,24 +882,14 @@ DB_PATH = DATA_DIR / "csnova.db"
 from PySide6.QtWidgets import (
     QApplication, QWidget, QPushButton, QGraphicsDropShadowEffect
 )
-from PySide6.QtGui import QColor, QPalette, QBrush, QPixmap, QPainter
-from PySide6.QtCore import Qt, QTimer
+from PySide6.QtGui import QColor, QPixmap, QPainter
+from PySide6.QtCore import QTimer
 from core.translations import LANGUAGES, TRANSLATIONS
 from gui.preferences import PreferencesWindow
+from core.translator import Translator
+from gui.styles.style_utils import load_button_style  # Import the style loader
+
 import sys
-
-class Translator:
-    def __init__(self, default="de"):
-        self.lang = default if default in LANGUAGES else LANGUAGES[0]
-
-    def set_language(self, lang_code):
-        if lang_code in TRANSLATIONS:
-            self.lang = lang_code
-
-    def tr(self, key):
-        return TRANSLATIONS[self.lang].get(
-            key, TRANSLATIONS["en"].get(key, key)
-        )
 
 class StartWindow(QWidget):
     DEFAULT_WIDTH        = 1920
@@ -879,18 +902,21 @@ class StartWindow(QWidget):
 
     def __init__(self, default_language="de"):
         super().__init__()
-        self.setWindowTitle("Codices Scriptoria Nova (CSNova)")
+        # Set window title using translator
+        self.translator = Translator(default=default_language)
+        self.setWindowTitle(self.translator.tr("window_title"))
         self.resize(self.DEFAULT_WIDTH, self.DEFAULT_HEIGHT)
         self.setAutoFillBackground(False)
         self.bg_pixmap = QPixmap(
             "/home/frank/Dokumente/CSNova/assets/media/csNova_background_start.png"
         )
 
-        self.translator = Translator(default=default_language)
+        self.pref_window = None  # Track preferences window
         self._create_ui()
-        QTimer.singleShot(0, self._retranslate_and_position)
+        self._retranslate_and_position()
 
     def _create_ui(self):
+        # Button keys for translation
         self.button_keys = [
             "btn_new_project",
             "btn_load_project",
@@ -909,23 +935,51 @@ class StartWindow(QWidget):
             btn.setGraphicsEffect(shadow)
             self.buttons.append(btn)
 
-        # Einstellungen-Button verbinden
+        # Connect settings button
         self.buttons[2].clicked.connect(self._open_preferences)
 
+        # Connect placeholder buttons
+        self.buttons[0].clicked.connect(self._new_project_placeholder)
+        self.buttons[1].clicked.connect(self._load_project_placeholder)
+        self.buttons[3].clicked.connect(self._help_placeholder)
+
+        # Connect exit button
+        self.buttons[4].clicked.connect(self._exit_application)
+
     def _open_preferences(self):
-        self.pref_window = PreferencesWindow(self)
-        self.pref_window.show()
+        # Open preferences window only if not already open
+        if self.pref_window is None or not self.pref_window.isVisible():
+            self.pref_window = PreferencesWindow(self)
+            self.pref_window.show()
+        else:
+            self.pref_window.raise_()
+            self.pref_window.activateWindow()
+
+    def _new_project_placeholder(self):
+        print("Preparing new project...")
+
+    def _load_project_placeholder(self):
+        print("Preparing to load project...")
+
+    def _help_placeholder(self):
+        print("Preparing help function...")
+
+    def _exit_application(self):
+        QApplication.instance().quit()
 
     def _on_language_changed(self, code):
         self.translator.set_language(code)
         self._retranslate_and_position()
 
     def _retranslate_and_position(self):
+        # Update button texts and window title
         for key, btn in zip(self.button_keys, self.buttons):
             btn.setText(self.translator.tr(key))
+        self.setWindowTitle(self.translator.tr("window_title"))
         self.update_button_positions()
 
     def paintEvent(self, event):
+        # Draw background image scaled and centered
         painter = QPainter(self)
         rect = self.contentsRect()
         w, h = rect.width(), rect.height()
@@ -942,10 +996,12 @@ class StartWindow(QWidget):
         super().paintEvent(event)
 
     def resizeEvent(self, event):
+        # Update button positions on resize
         self.update_button_positions()
         super().resizeEvent(event)
 
     def update_button_positions(self):
+        # Dynamically position and style buttons
         rect = self.contentsRect()
         w, h = rect.width(), rect.height()
         pw, ph = self.bg_pixmap.width(), self.bg_pixmap.height()
@@ -957,34 +1013,19 @@ class StartWindow(QWidget):
         bh      = int(self.BUTTON_HEIGHT  * scale)
         spacing = int(self.BUTTON_SPACING * scale)
         font_px = max(10, int(bh * 0.4))
+        style = load_button_style(font_px)  # Use the imported style loader
         for i, btn in enumerate(self.buttons):
             x = int(x_off)
             y = int(y_off + i * (bh + spacing))
             btn.setGeometry(x, y, bw, bh)
-            btn.setStyleSheet(f"""
-                QPushButton {{
-                    background-color: #d4c29c;
-                    color: #1a1a1a;
-                    font-size: {font_px}px;
-                    border: 2px solid #8b7d5c;
-                    border-radius: 10px;
-                    border-style: outset;
-                }}
-                QPushButton:hover {{
-                    background-color: #e8d9b5;
-                    border-color: #5c5138;
-                }}
-                QPushButton:pressed {{
-                    background-color: #c0aa7a;
-                    border-style: inset;
-                }}
-            """)
+            btn.setStyleSheet(style)
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     window = StartWindow(default_language="de")
     window.show()
     sys.exit(app.exec())
+```
 
 #### 6.2.1 Translator (translator.py)
 
@@ -1005,6 +1046,64 @@ class Translator:
         return TRANSLATIONS[self.lang].get(
             key, TRANSLATIONS["en"].get(key, key)
         )
+```
+
+#### 6.2.2 Styles (style_utils.py)
+
+```python
+import os
+
+def load_button_style(font_size):
+    """
+    Load button style from external QSS file and inject dynamic font size.
+    """
+    style_path = "/home/frank/Dokumente/CSNova/styles/button_style.qss"
+    if not os.path.exists(style_path):
+        # Fallback style if file is missing
+        return f"""
+            QPushButton {{
+                background-color: #d4c29c;
+                color: #1a1a1a;
+                font-size: {font_size}px;
+                border: 2px solid #8b7d5c;
+                border-radius: 10px;
+                border-style: outset;
+            }}
+            QPushButton:hover {{
+                background-color: #e8d9b5;
+                border-color: #5c5138;
+            }}
+            QPushButton:pressed {{
+                background-color: #c0aa7a;
+                border-style: inset;
+            }}
+        """
+    with open(style_path, "r") as f:
+        style = f.read()
+    # Replace placeholder for font size if present
+    return style.replace("{font_size}", str(font_size))
+```
+
+#### 6.2.3 Buttons (buttons.qss)
+
+```text
+QPushButton {
+    background-color: #d4c29c;
+    color: #1a1a1a;
+    font-size: 18px;
+    border: 2px solid #8b7d5c;
+    border-radius: 10px;
+    border-style: outset;
+}
+QPushButton:hover {
+    background-color: #e8d9b5;
+    border-color: #5c5138;
+}
+QPushButton:pressed {
+    background-color: #c0aa7a;
+    border-style: inset;
+}
+```
 
 ### 6.3 Preferenzen (preferences.py)
 
@@ -1096,7 +1195,9 @@ class PreferencesWindow(QDialog):
         self.translator.set_language(self.original_language)
         if self.parent() and hasattr(self.parent(), "_on_language_changed"):
             self.parent()._on_language_changed(self.original_language)
+        self.reject()age_changed(self.original_language)
         self.reject()
+```
 
 ### 6.4 Translation (translation.py)
 
@@ -1111,32 +1212,34 @@ for lang in LANGUAGES:
     path = Path(__file__).parent / "translations" / f"{lang}.json"
     with open(path, "r", encoding="utf-8") as f:
         TRANSLATIONS[lang] = json.load(f)
+```
 
 #### 6.4.1 de.json
 
 ```json
 {
-  "btn_new_project": "Neues Projekt",
-  "btn_load_project": "Projekt laden …",
-  "btn_settings": "Einstellungen",
-  "btn_help": "Hilfe/Tutorial",
-  "btn_exit": "Beenden",
-  "menu_file": "Datei",
-  "menu_edit": "Bearbeiten",
-  "menu_help": "Hilfe",
-  "menu_settings": "Einstellungen",
-  "menu_language": "Sprache",
-  "action_new": "Neu",
-  "action_open": "Öffnen",
-  "action_save": "Speichern",
-  "action_exit": "Beenden",
-  "tab_project": "Projekt",
-  "tab_character": "Charaktere",
-  "tab_scene": "Szenen",
-  "btn_save": "Speichern",
-  "tooltip_exit": "Programm beenden",
-  "action_cancel": "Abbrechen"
+  "btn_new_project":   "Neues Projekt",
+  "btn_load_project":  "Projekt laden …",
+  "btn_settings":      "Einstellungen",
+  "btn_help":          "Hilfe/Tutorial",
+  "btn_exit":          "Beenden",
+  "menu_file":         "Datei",
+  "menu_edit":         "Bearbeiten",
+  "menu_help":         "Hilfe",
+  "menu_settings":     "Einstellungen",
+  "menu_language":     "Sprache",
+  "action_new":        "Neu",
+  "action_open":       "Öffnen",
+  "action_save":       "Speichern",
+  "action_exit":       "Beenden",
+  "tab_project":       "Projekt",
+  "tab_character":     "Charaktere",
+  "tab_scene":         "Szenen",
+  "btn_save":          "Speichern",
+  "tooltip_exit":      "Programm beenden",
+  "action_cancel":     "Abbrechen"
 }
+```
 
 #### 6.4.2 en.json
 
@@ -1161,8 +1264,9 @@ for lang in LANGUAGES:
         "tab_scene":         "Scenes",
         "btn_save":          "Save",
         "tooltip_exit":      "Exit application",
-        "action_cancel": "Cancel"
+        "action_cancel":     "Cancel"
     }
+```
 
 #### 6.4.3 fr.json
 
@@ -1189,6 +1293,7 @@ for lang in LANGUAGES:
         "tooltip_exit":      "Quitter l'application",
         "action_cancel":     "Annuler"
     }
+```
 
 #### 6.4.4 es.json
 
@@ -1213,8 +1318,9 @@ for lang in LANGUAGES:
         "tab_scene":         "Escenas",
         "btn_save":          "Guardar",
         "tooltip_exit":      "Salir de la aplicación",
-        "action_cancel": "Cancelar"
+        "action_cancel":     "Cancelar"
     }
+```
 
 #### 6.4.5 Spracheinstellung (user_settings.json)
 
@@ -1222,6 +1328,70 @@ for lang in LANGUAGES:
 {
   "language": "en"
 }
+```
+
+### 6.5 Datenbank (database.py)
+
+```python
+# database.py
+import sqlite3
+from config.dev import DB_PATH  
+from core.tables.gender_data import data_gender
+from core.tables.sex_orientation_data import sex_orientation_data
+
+# Importiere die Tabellenmodule
+from core.tables import (
+    character_main,
+    gender,
+    sex_orientation,
+    character_psychological_profile,
+    character_origin,
+    character_education,
+    character_personality,
+    character_appearance_main,
+    character_appearance_detail,
+    project,
+    project_storylines,
+    project_chapters,
+    project_chapters_scenes,
+    project_scenes_objects,
+    project_scenes_places
+)
+
+def init_schema():
+    try:
+        with sqlite3.connect(DB_PATH) as conn:
+            cursor = conn.cursor()
+            # Enable foreign key support
+            cursor.execute("PRAGMA foreign_keys = ON")
+
+            # Initialize tables
+            for module in [
+                character_main,
+                gender,
+                sex_orientation,
+                character_psychological_profile,
+                character_origin,
+                character_education,
+                character_personality,
+                character_appearance_main,
+                character_appearance_detail,
+                project,
+                project_storylines,
+                project_chapters,
+                project_chapters_scenes,
+                project_scenes_objects,
+                project_scenes_places
+            ]:
+                module.create_table(cursor)
+            
+            # Insert seed data
+            data_gender(cursor)
+            sex_orientation_data(cursor)
+            conn.commit()
+    except Exception as e:
+        print(f"An error occurred during database initialization: {e}")
+```
 
 ## 7. Tutorials & Literatur, Quellen
 
@@ -1263,3 +1433,71 @@ for lang in LANGUAGES:
 
 - Hands-On AI with Python – Packt Publishing  
 - OpenAI API Integration – Python Tutorial  
+
+## 8. Lizenz
+# Lizenzbedingungen für Codices Scriptoria Nova (CSNova)
+
+## Einleitung
+
+Die Lizenzstruktur von *Codices Scriptoria Nova* orientiert sich an der Welt mittelalterlicher Schreibstuben und spiegelt die Vielfalt moderner Autor:innen wider. Drei klar definierte Versionen – **Novitia**, **Magister** und **Collegium** – ermöglichen eine faire und transparente Nutzung der Software, abgestimmt auf individuelle und gemeinschaftliche Bedürfnisse.
+
+## CSNova – Hauptanwendung
+
+CSNova ist Open Source Software. Sie darf unter den Bedingungen der jeweiligen Version genutzt und weitergegeben werden.
+
+### Lizenzübersicht
+
+Es existieren drei Versionen:
+
+- **CSNova Novitia** – eine **kostenlose Version** für die **nicht kommerzielle Nutzung**, z. B. durch angehende Autor:innen, zu Testzwecken oder in Bildungseinrichtungen (Schulen, Universitäten, Volkshochschulen und sonstige Bildungseinrichtungen).  
+  *Die Nutzung setzt eine Registrierung voraus.*
+
+- **CSNova Magister** – eine **kostenpflichtige Version** für einzelne Autor:innen, die das Programm professionell nutzen und ein Jahreseinkommen von über 50.000 € erzielen.  
+  *Die Nutzung setzt eine Registrierung sowie den Erwerb einer gültigen Lizenz voraus.*  
+  Das Jahreseinkommen bezieht sich auf Einnahmen aus schriftstellerischer Tätigkeit, die mit Hilfe der Software erzielt werden. Professionelle Nutzung bezeichnet den regelmäßigen Einsatz der Software zur Erstellung, Veröffentlichung oder Vermarktung literarischer Werke mit kommerziellem Zweck.
+
+- **CSNova Collegium** – eine Version für Autor:innen, die im Team das Programm professionell nutzen.  
+  *Die Nutzung setzt eine Registrierung sowie den Erwerb einer gültigen Lizenz voraus.*  
+  Professionelle Nutzung bezeichnet den regelmäßigen Einsatz der Software zur Erstellung, Veröffentlichung oder Vermarktung literarischer Werke mit kommerziellem Zweck.
+
+#### Zusammenfassung der Lizenzversionen
+
+| Version              | Zielgruppe                         | Nutzungstyp                   | Lizenzstatus                         |
+|----------------------|------------------------------------|--------------------------------|--------------------------------------|
+| **CSNova Novitia**   | Lernende, Bildungseinrichtungen    | Nicht-kommerziell              | Kostenlos (mit Registrierung)        |
+| **CSNova Magister**  | Einzelautor:innen mit Einkommen >50.000 € | Professionell (Einzelnutzung) | Kostenpflichtig (mit Registrierung) |
+| **CSNova Collegium** | Autor:innen-Teams                  | Professionell (Teamnutzung)    | Kostenpflichtig (mit Registrierung) |
+
+### Änderungen und Weitergabe
+
+Änderungen am Quellcode dürfen **nur mit schriftlicher Zustimmung des Autors** vorgenommen werden. Alle modifizierten Versionen müssen ebenfalls unter einer **Open Source Lizenz** veröffentlicht werden.
+
+Die Nutzung des Namens „CSNova“, „Codices Scriptoria Nova“, „CSNova Novitia“, „CSNova Magister“ oder „CSNova Collegium“ für modifizierte Versionen ist **nur mit schriftlicher Genehmigung des Autors** gestattet. Der Autor übernimmt **keine Haftung** für Schäden, die durch veränderte Versionen oder deren Inhalte entstehen – insbesondere nicht für Inhalte, die ohne seine Zustimmung verändert oder unter einem der genannten Namen veröffentlicht wurden.
+
+## CSNova-Reader
+
+Der CSNova-Reader ist **Open Source** und steht **ohne Lizenzgebühren** zur Verfügung. Die Nutzung unterliegt den unten genannten Einschränkungen.  
+*Die Nutzung setzt eine Registrierung voraus.*
+
+Er darf kostenfrei genutzt, kopiert und weitergegeben werden – sowohl privat als auch kommerziell.
+
+### Einschränkungen der kommerziellen Nutzung
+
+Der CSNova-Reader darf kommerziell genutzt werden, z. B. zur Erstellung und Veröffentlichung von Büchern, Editionen oder anderen Produkten.
+
+Ein Verkauf oder Vertrieb des CSNova-Readers als eigenständiges Produkt ist **nicht gestattet**.
+
+### Änderungen und Weitergabe
+
+Änderungen am CSNova-Reader dürfen **nur mit schriftlicher Zustimmung des Autors** vorgenommen werden. Alle abgeleiteten Versionen müssen ebenfalls **dauerhaft kostenfrei nutzbar** bleiben.
+
+Die Nutzung des Namens „CSNova“, „Codices Scriptoria Nova“, „CSNova-Reader“, „CSNova Novitia“, „CSNova Magister“ oder „CSNova Collegium“ für modifizierte Versionen des CSNova-Readers ist **nur mit schriftlicher Genehmigung des Autors** gestattet. Der Autor übernimmt **keine Haftung** für Schäden, die durch veränderte Versionen oder deren Inhalte entstehen – insbesondere nicht für Inhalte, die ohne seine Zustimmung verändert oder unter einem der genannten Namen veröffentlicht wurden.
+
+## Allgemeine Hinweise
+
+* Die Software wird ohne Gewähr bereitgestellt. Es besteht kein Anspruch auf Support oder Updates.
+* Die Namensrechte an „CSNova“, „Codices Scriptoria Nova“, „CSNova-Reader“, „CSNova Novitia“, „CSNova Magister“ und „CSNova Collegium“ verbleiben beim Autor.
+* Die Nutzung der Software setzt die Anerkennung dieser Lizenzbedingungen voraus.
+
+© 2025 Frank Reiser  
+Kontakt: reiserfrank@t-online.de
