@@ -9,7 +9,7 @@ def load_settings():
     if os.path.exists(SETTINGS_FILE):
         with open(SETTINGS_FILE, "r", encoding="utf-8") as f:
             return json.load(f)
-    return {"language": "de"}  # Fallback
+    return {"language": "en"}  # Fallback
 
 def save_settings(settings):
     with open(SETTINGS_FILE, "w", encoding="utf-8") as f:

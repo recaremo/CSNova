@@ -304,7 +304,7 @@ from config.dev import DB_PATH
 from core.tables.gender_data import data_gender
 from core.tables.sex_orientation_data import sex_orientation_data
 
-# Importiere die Tabellenmodule
+# Import the table modules
 from core.tables import (
     character_main,
     gender,
@@ -327,10 +327,10 @@ def init_schema():
     conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
 
-    # Fremdschlüssel aktivieren
+    # Enable foreign key support
     cursor.execute("PRAGMA foreign_keys = ON")
 
-    # Tabellen initialisieren
+    # Initialize tables
     for module in [
         character_main,
         gender,
@@ -350,7 +350,7 @@ def init_schema():
     ]:
         module.create_table(cursor)
     
-    # Seed-Daten einfügen
+    # Insert seed data
     data_gender(cursor)
     sex_orientation_data(cursor)
 
@@ -1024,7 +1024,7 @@ class StartWindow(QWidget):
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    window = StartWindow(default_language="de")
+    window = StartWindow(default_language="en")
     window.show()
     sys.exit(app.exec())
 ```
@@ -1341,7 +1341,7 @@ from config.dev import DB_PATH
 from core.tables.gender_data import data_gender
 from core.tables.sex_orientation_data import sex_orientation_data
 
-# Importiere die Tabellenmodule
+# import tables
 from core.tables import (
     character_main,
     gender,
@@ -1455,7 +1455,7 @@ pyinstaller
 ### 6.8 Pyinstaller
 
 ```text
-pyinstaller --onefile --windowed main.py \
+pyinstaller --onefile --windowed csnova.py \
   --add-data "core/translations:core/translations" \
   --add-data "core/tables:core/tables" \
   --add-data "data:data" \
@@ -1465,6 +1465,40 @@ pyinstaller --onefile --windowed main.py \
   --add-data "docs:docs" \
   --add-data "ai:ai" \
   --add-data "export:export"
+```
+
+### 6.8 Setup (install_csnova.sh)
+
+```sh
+#!/bin/bash
+
+echo "Installing CSNova..."
+
+# 1. Check and install system dependencies
+echo "Checking system dependencies..."
+sudo apt update
+sudo apt install -y libxcb-cursor0
+
+# 2. Create installation directory
+INSTALL_DIR="$HOME/CSNova 1.0"
+mkdir -p "$INSTALL_DIR"
+
+# 3. Copy csnova in executable
+cp ./dist/csnova "$INSTALL_DIR/"
+
+# 4. Copy all necessary folders and files
+for folder in assets config core data docs gui ai export; do
+    if [ -d "$folder" ]; then
+        cp -r "$folder" "$INSTALL_DIR/"
+    fi
+done
+
+# 5. Set executable permissions
+chmod +x "$INSTALL_DIR/csnova"
+
+echo "Installation complete!"
+echo "You can start CSNova with:"
+echo "$INSTALL_DIR/csnova"
 ```
 
 ## 7. Tutorials & Literatur, Quellen

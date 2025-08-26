@@ -2,7 +2,7 @@
 
 
 a = Analysis(
-    ['main.py'],
+    ['csnova.py'],
     pathex=[],
     binaries=[],
     datas=[('core/translations', 'core/translations'), ('core/tables', 'core/tables'), ('data', 'data'), ('assets', 'assets'), ('config', 'config'), ('gui/styles', 'gui/styles'), ('docs', 'docs'), ('ai', 'ai'), ('export', 'export')],
@@ -22,7 +22,7 @@ exe = EXE(
     a.binaries,
     a.datas,
     [],
-    name='main',
+    name='csnova',
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,
