@@ -3,7 +3,7 @@ from PySide6.QtWidgets import (
 )
 from PySide6.QtGui import QColor, QPixmap, QPainter
 from PySide6.QtCore import QTimer
-from core.translations import LANGUAGES, TRANSLATIONS
+from core.translations.translations import LANGUAGES, TRANSLATIONS
 from gui.preferences import PreferencesWindow
 from core.translator import Translator
 from gui.project_window import ProjectWindow

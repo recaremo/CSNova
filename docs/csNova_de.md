@@ -807,25 +807,22 @@ def create_table(cursor):
 ```python
 import sys
 from PySide6.QtWidgets import QApplication
+
 from core.database import init_schema
 from config.settings import load_settings, save_settings
-
 from gui.start_window import StartWindow
 
 def main():
     try:
-        # Initialisiere Datenbank und lade Einstellungen
         init_schema()
         settings = load_settings()
         language = settings.get("language", "en")
 
-        # Starte Anwendung und öffne Startfenster
         app = QApplication(sys.argv)
         window = StartWindow(default_language=language)
         window.show()
         app.exec()
 
-        # Sprache speichern, ohne andere Einstellungen zu überschreiben
         if hasattr(window, "translator") and hasattr(window.translator, "lang"):
             updated_settings = load_settings()
             updated_settings["language"] = window.translator.lang
@@ -894,7 +891,7 @@ from PySide6.QtWidgets import (
 )
 from PySide6.QtGui import QColor, QPixmap, QPainter
 from PySide6.QtCore import QTimer
-from core.translations import LANGUAGES, TRANSLATIONS
+from core.translations.translations import LANGUAGES, TRANSLATIONS
 from gui.preferences import PreferencesWindow
 from core.translator import Translator
 from gui.project_window import ProjectWindow
@@ -1346,11 +1343,68 @@ for lang in LANGUAGES:
     }
 ```
 
-#### 6.4.5 Spracheinstellung (user_settings.json)
+#### 6.4.5 Programmeinstellungen (user_settings.json)
 
 ```json
 {
-  "language": "en"
+  "language": "en",
+  "splitter_sizes": [
+    297,
+    1089,
+    184
+  ]
+}
+```
+
+#### 6.4.6 help_de.json
+```json
+{
+    "help_project": "Geben Sie allgemeine Informationen zu Ihrem Schreibprojekt an, wie Titel, Genre und Ziele.",
+    "help_characters": "Definieren Sie Ihre Charaktere: Namen, Rollen, Eigenschaften und Beziehungen.",
+    "help_storylines": "Skizzieren Sie die Haupt-Handlungsstränge und deren Entwicklung im Laufe der Zeit.",
+    "help_chapters": "Organisieren Sie Ihre Geschichte in Kapitel und beschreiben Sie deren Inhalt.",
+    "help_scenes": "Beschreiben Sie einzelne Szenen, deren Zweck und Umgebung.",
+    "help_objects": "Listen Sie wichtige Objekte und deren Bedeutung in der Geschichte auf.",
+    "help_locations": "Beschreiben Sie die in Ihrer Geschichte verwendeten Orte, einschließlich Atmosphäre und Relevanz."
+}
+```
+
+#### 6.4.6 help_en.json
+```json
+{
+  "help_project": "Provide general information about your writing project, such as title, genre, and goals.",
+  "help_characters": "Define your characters: names, roles, traits, and relationships.",
+  "help_storylines": "Outline the main story arcs and how they develop over time.",
+  "help_chapters": "Organize your story into chapters and describe their content.",
+  "help_scenes": "Detail individual scenes, their purpose, and setting.",
+  "help_objects": "List important objects and their significance in the story.",
+  "help_locations": "Describe the locations used in your story, including atmosphere and relevance."
+}
+```
+
+#### 6.4.7 help_es.json
+```json
+{
+  "help_project": "Proporcione información general sobre su proyecto de escritura, como el título, el género y los objetivos.",
+  "help_characters": "Defina sus personajes: nombres, roles, características y relaciones.",
+  "help_storylines": "Esboce las tramas principales y cómo se desarrollan a lo largo del tiempo.",
+  "help_chapters": "Organice su historia en capítulos y describa su contenido.",
+  "help_scenes": "Describa las escenas individuales, su propósito y entorno.",
+  "help_objects": "Enumere los objetos importantes y su significado dentro de la historia.",
+  "help_locations": "Describa los lugares utilizados en su historia, incluyendo la atmósfera y su relevancia."
+}
+```
+
+#### 6.4.8 help_fr.json
+```json
+{
+  "help_project": "Fournissez des informations générales sur votre projet d’écriture, telles que le titre, le genre et les objectifs.",
+  "help_characters": "Définissez vos personnages : noms, rôles, traits de caractère et relations.",
+  "help_storylines": "Esquissez les intrigues principales et leur évolution au fil du temps.",
+  "help_chapters": "Organisez votre histoire en chapitres et décrivez leur contenu.",
+  "help_scenes": "Décrivez les scènes individuelles, leur objectif et leur environnement.",
+  "help_objects": "Listez les objets importants et leur signification dans l’histoire.",
+  "help_locations": "Décrivez les lieux utilisés dans votre histoire, y compris leur atmosphère et leur pertinence."
 }
 ```
 
@@ -1527,69 +1581,57 @@ echo "$INSTALL_DIR/csnova"
 
 ```python
 from PySide6.QtWidgets import (
-    QApplication, QWidget, QPushButton, QVBoxLayout, QHBoxLayout, QTextEdit, QLabel, QSizePolicy, QSplitter
+    QWidget, QPushButton, QVBoxLayout, QHBoxLayout, QTextEdit, QLabel, QSizePolicy, QSplitter
 )
 from PySide6.QtGui import QPalette, QColor
 from PySide6.QtCore import Qt
+
 from gui.styles.style_utils import load_button_style
 from core.translator import Translator
 from config.settings import load_settings, save_settings
+from core.translations.help_loader import load_help_texts
 
 class ProjectWindow(QWidget):
-    BUTTON_WIDTH   = 240
-    BUTTON_HEIGHT  = 70
+    BUTTON_WIDTH = 240
+    BUTTON_HEIGHT = 70
 
     def __init__(self, translator=None, parent=None):
         self.translator = translator or Translator(default="en")
         super().__init__(parent)
-        if parent is not None:
-            self.resize(1600, 900)
-        else:
-            self.resize(1600, 900)
+        self.resize(1600, 900)
         self.setWindowTitle(self.translator.tr("project_window_title"))
         self.settings = load_settings()
+        self.help_texts = load_help_texts(self.translator.lang)
         self._set_background()
         self._init_ui()
 
     def _set_background(self):
-        # Set a neutral background color
         palette = self.palette()
         palette.setColor(QPalette.Window, QColor("#f0f0f0"))
         self.setPalette(palette)
         self.setAutoFillBackground(True)
 
     def _init_ui(self):
-        # Left column: navigation buttons
         self.nav_layout = QVBoxLayout()
         self.nav_buttons = {}
-        labels = [
-            "Project", "Characters", "Storylines",
-            "Chapters", "Scenes", "Objects", "Places", "Exit"
+        keys = [
+            "btn_project", "btn_characters", "btn_storylines",
+            "btn_chapters", "btn_scenes", "btn_objects", "btn_locations", "btn_exit"
         ]
-        font_px = 18  # Match default font size from start_window.py
-        style = load_button_style(font_px)
-        for label in labels:
-            btn = QPushButton(label)
+        style = load_button_style(18)
+        for key in keys:
+            btn = QPushButton(self.translator.tr(key))
             btn.setFixedSize(self.BUTTON_WIDTH, self.BUTTON_HEIGHT)
-            btn.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
             btn.setStyleSheet(style)
             self.nav_layout.addWidget(btn)
-            self.nav_buttons[label] = btn
+            self.nav_buttons[key] = btn
 
-        # Connect exit button
-        self.nav_buttons["Exit"].setText(self.translator.tr("btn_exit"))
-        self.nav_buttons["Exit"].clicked.connect(self._exit_application)
+        self.nav_buttons["btn_exit"].clicked.connect(self._exit_application)
 
-        # Middle column: input area
         self.input_area = QTextEdit()
-        self.input_area.setPlaceholderText("Enter project data here …")
-
-        # Right column: help and info area
-        self.help_area = QLabel("Help and information will be displayed here.")
+        self.help_area = QLabel()
         self.help_area.setWordWrap(True)
-        self.help_area.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
 
-        # Create single splitter for three columns
         left_widget = QWidget()
         left_widget.setLayout(self.nav_layout)
 
@@ -1597,26 +1639,32 @@ class ProjectWindow(QWidget):
         self.splitter.addWidget(left_widget)
         self.splitter.addWidget(self.input_area)
         self.splitter.addWidget(self.help_area)
+        self.splitter.setSizes(self.settings.get("splitter_sizes", [300, 900, 300]))
 
-        saved_sizes = self.settings.get("splitter_sizes", [300, 900, 300])
-        self.settings["splitter_sizes"] = saved_sizes
-        self.splitter.setSizes(saved_sizes)
-        self._last_sizes = saved_sizes.copy()
+        layout = QHBoxLayout(self)
+        layout.addWidget(self.splitter)
 
-        main_layout = QHBoxLayout(self)
-        main_layout.addWidget(self.splitter)
+        # Button-Verbindungen
+        self.nav_buttons["btn_project"].clicked.connect(lambda: self._update_content("Project"))
+        self.nav_buttons["btn_characters"].clicked.connect(lambda: self._update_content("Characters"))
+        self.nav_buttons["btn_storylines"].clicked.connect(lambda: self._update_content("Storylines"))
+        self.nav_buttons["btn_chapters"].clicked.connect(lambda: self._update_content("Chapters"))
+        self.nav_buttons["btn_scenes"].clicked.connect(lambda: self._update_content("Scenes"))
+        self.nav_buttons["btn_objects"].clicked.connect(lambda: self._update_content("Objects"))
+        self.nav_buttons["btn_locations"].clicked.connect(lambda: self._update_content("Places"))
+
+    def _update_content(self, section):
+        self.input_area.setPlainText(f"[{section}]\n\nEnter {section.lower()} data here …")
+        self.help_area.setText(self.help_texts.get(section, "Help and information will be displayed here."))
 
     def _exit_application(self):
         self.close()
 
     def closeEvent(self, event):
-        print("closeEvent triggered")  # ← Testausgabe
-        current_sizes = self.splitter.sizes()
-        print("Splitter sizes:", current_sizes)  # ← weitere Kontrolle
-        self.settings["splitter_sizes"] = current_sizes
+        self.settings["splitter_sizes"] = self.splitter.sizes()
         save_settings(self.settings)
         event.accept()
-        super().closeEvent(event)
+
 ```
 
 ## 7. Tutorials & Literatur, Quellen
