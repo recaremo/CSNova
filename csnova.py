@@ -7,24 +7,24 @@ from gui.start_window import StartWindow
 
 def main():
     try:
-        # --- Original code start ---
+        # Initialisiere Datenbank und lade Einstellungen
         init_schema()
         settings = load_settings()
-        language = settings.get("language", "de")
+        language = settings.get("language", "en")
 
+        # Starte Anwendung und öffne Startfenster
         app = QApplication(sys.argv)
-        # Pass default language to the start window
         window = StartWindow(default_language=language)
         window.show()
         app.exec()
 
-        # Save language if it was changed
+        # Sprache speichern, ohne andere Einstellungen zu überschreiben
         if hasattr(window, "translator") and hasattr(window.translator, "lang"):
-            settings["language"] = window.translator.lang
-            save_settings(settings)
-        # --- Original code end ---
+            updated_settings = load_settings()
+            updated_settings["language"] = window.translator.lang
+            save_settings(updated_settings)
+
     except Exception as e:
-        # Catch and print any error that occurs
         print(f"An error occurred: {e}")
 
 if __name__ == "__main__":

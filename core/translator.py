@@ -3,7 +3,7 @@
 from core.translations import TRANSLATIONS, LANGUAGES
 
 class Translator:
-    def __init__(self, default="de"):
+    def __init__(self, default="en"):
         self.lang = default if default in LANGUAGES else LANGUAGES[0]
 
     def set_language(self, lang_code):

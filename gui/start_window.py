@@ -20,7 +20,7 @@ class StartWindow(QWidget):
     BUTTON_LEFT_OFFSET   = 1380
     BUTTON_SPACING       = 44
 
-    def __init__(self, default_language="de"):
+    def __init__(self, default_language="en"):
         super().__init__()
         # Set window title using translator
         self.translator = Translator(default=default_language)
@@ -44,6 +44,7 @@ class StartWindow(QWidget):
             "btn_help",
             "btn_exit"
         ]
+
         self.buttons = []
         for key in self.button_keys:
             btn = QPushButton(parent=self)
@@ -77,8 +78,9 @@ class StartWindow(QWidget):
 
     def _new_project_placeholder(self):
         print("Preparing new project...")
-        self.project_window = ProjectWindow(parent=self, translator=self.translator)
+        self.project_window = ProjectWindow(translator=self.translator)
         self.project_window.show()
+        QTimer.singleShot(100, lambda: self.hide())  # Nur verstecken, nicht schließen
 
 
     def _load_project_placeholder(self):
@@ -98,7 +100,7 @@ class StartWindow(QWidget):
         # Update button texts and window title
         for key, btn in zip(self.button_keys, self.buttons):
             btn.setText(self.translator.tr(key))
-        self.setWindowTitle(self.translator.tr("window_title"))
+        self.setWindowTitle(self.translator.tr("start_window_title"))
         self.update_button_positions()
 
     def paintEvent(self, event):
@@ -145,6 +147,6 @@ class StartWindow(QWidget):
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    window = StartWindow(default_language="de")
+    window = StartWindow(default_language="en")
     window.show()
     sys.exit(app.exec())

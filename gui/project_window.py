@@ -1,19 +1,25 @@
 from PySide6.QtWidgets import (
-    QApplication, QWidget, QPushButton, QVBoxLayout, QHBoxLayout, QTextEdit, QLabel, QSizePolicy
+    QApplication, QWidget, QPushButton, QVBoxLayout, QHBoxLayout, QTextEdit, QLabel, QSizePolicy, QSplitter
 )
 from PySide6.QtGui import QPalette, QColor
+from PySide6.QtCore import Qt
 from gui.styles.style_utils import load_button_style
 from core.translator import Translator
+from config.settings import load_settings, save_settings
 
 class ProjectWindow(QWidget):
     BUTTON_WIDTH   = 240
     BUTTON_HEIGHT  = 70
 
-    def __init__(self, parent=None, translator=None):
+    def __init__(self, translator=None, parent=None):
         self.translator = translator or Translator(default="en")
         super().__init__(parent)
+        if parent is not None:
+            self.resize(1600, 900)
+        else:
+            self.resize(1600, 900)
         self.setWindowTitle(self.translator.tr("project_window_title"))
-        self.resize(parent.width(), parent.height())
+        self.settings = load_settings()
         self._set_background()
         self._init_ui()
 
@@ -30,7 +36,7 @@ class ProjectWindow(QWidget):
         self.nav_buttons = {}
         labels = [
             "Project", "Characters", "Storylines",
-            "Chapters", "Scenes", "Objects", "Places", "Exit"
+            "Chapters", "Scenes", "Objects", "Locations", "Exit"
         ]
         font_px = 18  # Match default font size from start_window.py
         style = load_button_style(font_px)
@@ -55,11 +61,31 @@ class ProjectWindow(QWidget):
         self.help_area.setWordWrap(True)
         self.help_area.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
 
-        # Main layout: horizontal split
+        # Create single splitter for three columns
+        left_widget = QWidget()
+        left_widget.setLayout(self.nav_layout)
+
+        self.splitter = QSplitter(Qt.Horizontal)
+        self.splitter.addWidget(left_widget)
+        self.splitter.addWidget(self.input_area)
+        self.splitter.addWidget(self.help_area)
+
+        saved_sizes = self.settings.get("splitter_sizes", [300, 900, 300])
+        self.settings["splitter_sizes"] = saved_sizes
+        self.splitter.setSizes(saved_sizes)
+        self._last_sizes = saved_sizes.copy()
+
         main_layout = QHBoxLayout(self)
-        main_layout.addLayout(self.nav_layout, 1)
-        main_layout.addWidget(self.input_area, 2)
-        main_layout.addWidget(self.help_area, 1)
+        main_layout.addWidget(self.splitter)
 
     def _exit_application(self):
-        QApplication.instance().quit()
+        self.close()
+
+    def closeEvent(self, event):
+        print("closeEvent triggered")  # ← Testausgabe
+        current_sizes = self.splitter.sizes()
+        print("Splitter sizes:", current_sizes)  # ← weitere Kontrolle
+        self.settings["splitter_sizes"] = current_sizes
+        save_settings(self.settings)
+        event.accept()
+        super().closeEvent(event)

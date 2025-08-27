@@ -1,3 +1,8 @@
 {
-  "language": "en"
+  "language": "de",
+  "splitter_sizes": [
+    571,
+    844,
+    155
+  ]
 }
