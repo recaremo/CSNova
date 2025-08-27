@@ -859,7 +859,7 @@ def save_settings(settings):
         json.dump(settings, f, indent=2)
 ```
 
-####6.1.2 Verzeichnisse (dev.py)
+#### 6.1.2 Verzeichnisse (dev.py)
 
 ```python
 # config/dev.py
@@ -889,6 +889,7 @@ from PySide6.QtCore import QTimer
 from core.translations import LANGUAGES, TRANSLATIONS
 from gui.preferences import PreferencesWindow
 from core.translator import Translator
+from gui.project_window import ProjectWindow
 from gui.styles.style_utils import load_button_style  # Import the style loader
 
 import sys
@@ -906,7 +907,7 @@ class StartWindow(QWidget):
         super().__init__()
         # Set window title using translator
         self.translator = Translator(default=default_language)
-        self.setWindowTitle(self.translator.tr("window_title"))
+        self.setWindowTitle(self.translator.tr("start_window_title"))
         self.resize(self.DEFAULT_WIDTH, self.DEFAULT_HEIGHT)
         self.setAutoFillBackground(False)
         self.bg_pixmap = QPixmap(
@@ -959,6 +960,9 @@ class StartWindow(QWidget):
 
     def _new_project_placeholder(self):
         print("Preparing new project...")
+        self.project_window = ProjectWindow(parent=self, translator=self.translator)
+        self.project_window.show()
+
 
     def _load_project_placeholder(self):
         print("Preparing to load project...")
@@ -1024,7 +1028,7 @@ class StartWindow(QWidget):
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    window = StartWindow(default_language="en")
+    window = StartWindow(default_language="de")
     window.show()
     sys.exit(app.exec())
 ```
@@ -1054,12 +1058,13 @@ class Translator:
 
 ```python
 import os
+from pathlib import Path
 
 def load_button_style(font_size):
     """
     Load button style from external QSS file and inject dynamic font size.
     """
-    style_path = "/home/frank/Dokumente/CSNova/styles/button_style.qss"
+    style_path = Path(__file__).parent / "button_style.qss"
     if not os.path.exists(style_path):
         # Fallback style if file is missing
         return f"""
@@ -1197,7 +1202,6 @@ class PreferencesWindow(QDialog):
         self.translator.set_language(self.original_language)
         if self.parent() and hasattr(self.parent(), "_on_language_changed"):
             self.parent()._on_language_changed(self.original_language)
-        self.reject()age_changed(self.original_language)
         self.reject()
 ```
 
@@ -1220,26 +1224,28 @@ for lang in LANGUAGES:
 
 ```json
 {
-  "btn_new_project":   "Neues Projekt",
-  "btn_load_project":  "Projekt laden …",
-  "btn_settings":      "Einstellungen",
-  "btn_help":          "Hilfe/Tutorial",
-  "btn_exit":          "Beenden",
-  "menu_file":         "Datei",
-  "menu_edit":         "Bearbeiten",
-  "menu_help":         "Hilfe",
-  "menu_settings":     "Einstellungen",
-  "menu_language":     "Sprache",
-  "action_new":        "Neu",
-  "action_open":       "Öffnen",
-  "action_save":       "Speichern",
-  "action_exit":       "Beenden",
-  "tab_project":       "Projekt",
-  "tab_character":     "Charaktere",
-  "tab_scene":         "Szenen",
-  "btn_save":          "Speichern",
-  "tooltip_exit":      "Programm beenden",
-  "action_cancel":     "Abbrechen"
+  "btn_new_project": "Neues Projekt",
+  "btn_load_project": "Projekt laden …",
+  "btn_settings": "Einstellungen",
+  "btn_help": "Hilfe/Tutorial",
+  "btn_exit": "Beenden",
+  "menu_file": "Datei",
+  "menu_edit": "Bearbeiten",
+  "menu_help": "Hilfe",
+  "menu_settings": "Einstellungen",
+  "menu_language": "Sprache",
+  "action_new": "Neu",
+  "action_open": "Öffnen",
+  "action_save": "Speichern",
+  "action_exit": "Beenden",
+  "tab_project": "Projekt",
+  "tab_character": "Charaktere",
+  "tab_scene": "Szenen",
+  "btn_save": "Speichern",
+  "tooltip_exit": "Programm beenden",
+  "action_cancel": "Abbrechen",
+  "project_window_title": "Projekt Manager",
+  "start_window_title": "Startseite"
 }
 ```
 
@@ -1247,26 +1253,28 @@ for lang in LANGUAGES:
 
 ```json
 {
-        "btn_new_project":   "New Project",
-        "btn_load_project":  "Open Project …",
-        "btn_settings":      "Settings",
-        "btn_help":          "Help/Tutorial",
-        "btn_exit":          "Exit",
-        "menu_file":         "File",
-        "menu_edit":         "Edit",
-        "menu_help":         "Help",
-        "menu_settings":     "Settings",
-        "menu_language":     "Language",
-        "action_new":        "New",
-        "action_open":       "Open",
-        "action_save":       "Save",
-        "action_exit":       "Exit",
-        "tab_project":       "Project",
-        "tab_character":     "Characters",
-        "tab_scene":         "Scenes",
-        "btn_save":          "Save",
-        "tooltip_exit":      "Exit application",
-        "action_cancel":     "Cancel"
+        "btn_new_project": "New Project",
+        "btn_load_project": "Open Project …",
+        "btn_settings": "Settings",
+        "btn_help": "Help/Tutorial",
+        "btn_exit": "Exit",
+        "menu_file": "File",
+        "menu_edit": "Edit",
+        "menu_help": "Help",
+        "menu_settings": "Settings",
+        "menu_language": "Language",
+        "action_new": "New",
+        "action_open": "Open",
+        "action_save": "Save",
+        "action_exit": "Exit",
+        "tab_project": "Project",
+        "tab_character": "Characters",
+        "tab_scene": "Scenes",
+        "btn_save": "Save",
+        "tooltip_exit": "Exit application",
+        "action_cancel": "Cancel",
+        "project_window_title": "Project Manager",
+        "start_window_title": "Start"
     }
 ```
 
@@ -1274,26 +1282,28 @@ for lang in LANGUAGES:
 
 ```json
 {
-        "btn_new_project":   "Nouveau projet", 
-        "btn_load_project":  "Ouvrir projet …",
-        "btn_settings":      "Paramètres",
-        "btn_help":          "Aide/Tutoriel",
-        "btn_exit":          "Quitter",
-        "menu_file":         "Fichier",
-        "menu_edit":         "Éditer",
-        "menu_help":         "Aide",
-        "menu_settings":     "Paramètres",
-        "menu_language":     "Langue",
-        "action_new":        "Nouveau",
-        "action_open":       "Ouvrir",
-        "action_save":       "Enregistrer",
-        "action_exit":       "Quitter",
-        "tab_project":       "Projet",
-        "tab_character":     "Personnages",
-        "tab_scene":         "Scènes",
-        "btn_save":          "Enregistrer",
-        "tooltip_exit":      "Quitter l'application",
-        "action_cancel":     "Annuler"
+        "btn_new_project": "Nouveau projet", 
+        "btn_load_project": "Ouvrir projet …",
+        "btn_settings": "Paramètres",
+        "btn_help": "Aide/Tutoriel",
+        "btn_exit": "Quitter",
+        "menu_file": "Fichier",
+        "menu_edit": "Éditer",
+        "menu_help": "Aide",
+        "menu_settings": "Paramètres",
+        "menu_language": "Langue",
+        "action_new": "Nouveau",
+        "action_open": "Ouvrir",
+        "action_save": "Enregistrer",
+        "action_exit": "Quitter",
+        "tab_project": "Projet",
+        "tab_character": "Personnages",
+        "tab_scene": "Scènes",
+        "btn_save": "Enregistrer",
+        "tooltip_exit": "Quitter l'application",
+        "action_cancel": "Annuler",
+        "project_window_title": "Gestion de projet",
+        "start_window_title": "Accueil"
     }
 ```
 
@@ -1301,26 +1311,28 @@ for lang in LANGUAGES:
 
 ```json
 {
-        "btn_new_project":   "Nuevo proyecto",
-        "btn_load_project":  "Abrir proyecto …",
-        "btn_settings":      "Configuración",
-        "btn_help":          "Ayuda/Tutorial",
-        "btn_exit":          "Salir",
-        "menu_file":         "Archivo",
-        "menu_edit":         "Editar",
-        "menu_help":         "Ayuda",
-        "menu_settings":     "Configuración",
-        "menu_language":     "Idioma",
-        "action_new":        "Nuevo",
-        "action_open":       "Abrir",
-        "action_save":       "Guardar",
-        "action_exit":       "Salir",
-        "tab_project":       "Proyecto",
-        "tab_character":     "Personajes",
-        "tab_scene":         "Escenas",
-        "btn_save":          "Guardar",
-        "tooltip_exit":      "Salir de la aplicación",
-        "action_cancel":     "Cancelar"
+        "btn_new_project": "Nuevo proyecto",
+        "btn_load_project": "Abrir proyecto …",
+        "btn_settings": "Configuración",
+        "btn_help": "Ayuda/Tutorial",
+        "btn_exit": "Salir",
+        "menu_file": "Archivo",
+        "menu_edit": "Editar",
+        "menu_help": "Ayuda",
+        "menu_settings": "Configuración",
+        "menu_language": "Idioma",
+        "action_new": "Nuevo",
+        "action_open": "Abrir",
+        "action_save": "Guardar",
+        "action_exit": "Salir",
+        "tab_project": "Proyecto",
+        "tab_character": "Personajes",
+        "tab_scene": "Escenas",
+        "btn_save": "Guardar",
+        "tooltip_exit": "Salir de la aplicación",
+        "action_cancel": "Cancelar",
+        "project_window_title": "Gestor de proyectos",
+        "start_window_title": "Inicio"
     }
 ```
 
@@ -1467,7 +1479,7 @@ pyinstaller --onefile --windowed csnova.py \
   --add-data "export:export"
 ```
 
-### 6.8 Setup (install_csnova.sh)
+### 6.9 Setup (install_csnova.sh)
 
 ```sh
 #!/bin/bash
@@ -1499,6 +1511,76 @@ chmod +x "$INSTALL_DIR/csnova"
 echo "Installation complete!"
 echo "You can start CSNova with:"
 echo "$INSTALL_DIR/csnova"
+```
+
+### 6.10 Projektfenster (project_window.py)
+
+```python
+from PySide6.QtWidgets import (
+    QApplication, QWidget, QPushButton, QVBoxLayout, QHBoxLayout, QTextEdit, QLabel, QSizePolicy
+)
+from PySide6.QtGui import QPalette, QColor
+from gui.styles.style_utils import load_button_style
+from core.translator import Translator
+
+class ProjectWindow(QWidget):
+    BUTTON_WIDTH   = 240
+    BUTTON_HEIGHT  = 70
+
+    def __init__(self, parent=None, translator=None):
+        self.translator = translator or Translator(default="en")
+        super().__init__(parent)
+        self.setWindowTitle(self.translator.tr("project_window_title"))
+        self.resize(parent.width(), parent.height())
+        self._set_background()
+        self._init_ui()
+
+    def _set_background(self):
+        # Set a neutral background color
+        palette = self.palette()
+        palette.setColor(QPalette.Window, QColor("#f0f0f0"))
+        self.setPalette(palette)
+        self.setAutoFillBackground(True)
+
+    def _init_ui(self):
+        # Left column: navigation buttons
+        self.nav_layout = QVBoxLayout()
+        self.nav_buttons = {}
+        labels = [
+            "Project", "Characters", "Storylines",
+            "Chapters", "Scenes", "Objects", "Places", "Exit"
+        ]
+        font_px = 18  # Match default font size from start_window.py
+        style = load_button_style(font_px)
+        for label in labels:
+            btn = QPushButton(label)
+            btn.setFixedSize(self.BUTTON_WIDTH, self.BUTTON_HEIGHT)
+            btn.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+            btn.setStyleSheet(style)
+            self.nav_layout.addWidget(btn)
+            self.nav_buttons[label] = btn
+
+        # Connect exit button
+        self.nav_buttons["Exit"].setText(self.translator.tr("btn_exit"))
+        self.nav_buttons["Exit"].clicked.connect(self._exit_application)
+
+        # Middle column: input area
+        self.input_area = QTextEdit()
+        self.input_area.setPlaceholderText("Enter project data here …")
+
+        # Right column: help and info area
+        self.help_area = QLabel("Help and information will be displayed here.")
+        self.help_area.setWordWrap(True)
+        self.help_area.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+
+        # Main layout: horizontal split
+        main_layout = QHBoxLayout(self)
+        main_layout.addLayout(self.nav_layout, 1)
+        main_layout.addWidget(self.input_area, 2)
+        main_layout.addWidget(self.help_area, 1)
+
+    def _exit_application(self):
+        QApplication.instance().quit()
 ```
 
 ## 7. Tutorials & Literatur, Quellen

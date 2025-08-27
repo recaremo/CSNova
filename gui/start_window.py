@@ -6,6 +6,7 @@ from PySide6.QtCore import QTimer
 from core.translations import LANGUAGES, TRANSLATIONS
 from gui.preferences import PreferencesWindow
 from core.translator import Translator
+from gui.project_window import ProjectWindow
 from gui.styles.style_utils import load_button_style  # Import the style loader
 
 import sys
@@ -23,7 +24,7 @@ class StartWindow(QWidget):
         super().__init__()
         # Set window title using translator
         self.translator = Translator(default=default_language)
-        self.setWindowTitle(self.translator.tr("window_title"))
+        self.setWindowTitle(self.translator.tr("start_window_title"))
         self.resize(self.DEFAULT_WIDTH, self.DEFAULT_HEIGHT)
         self.setAutoFillBackground(False)
         self.bg_pixmap = QPixmap(
@@ -76,6 +77,9 @@ class StartWindow(QWidget):
 
     def _new_project_placeholder(self):
         print("Preparing new project...")
+        self.project_window = ProjectWindow(parent=self, translator=self.translator)
+        self.project_window.show()
+
 
     def _load_project_placeholder(self):
         print("Preparing to load project...")

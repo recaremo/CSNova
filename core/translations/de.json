@@ -18,5 +18,7 @@
   "tab_scene": "Szenen",
   "btn_save": "Speichern",
   "tooltip_exit": "Programm beenden",
-  "action_cancel": "Abbrechen"
+  "action_cancel": "Abbrechen",
+  "project_window_title": "Projekt Manager",
+  "start_window_title": "Startseite"
 }

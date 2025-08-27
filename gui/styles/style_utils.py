@@ -1,10 +1,11 @@
 import os
+from pathlib import Path
 
 def load_button_style(font_size):
     """
     Load button style from external QSS file and inject dynamic font size.
     """
-    style_path = "/home/frank/Dokumente/CSNova/styles/button_style.qss"
+    style_path = Path(__file__).parent / "button_style.qss"
     if not os.path.exists(style_path):
         # Fallback style if file is missing
         return f"""
