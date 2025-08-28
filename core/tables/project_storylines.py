@@ -9,6 +9,8 @@ def create_table(cursor):
         project_storylines_premise TEXT,
         project_storylines_title TEXT,
         project_storylines_description TEXT,
+        project_storylines_transformation TEXT,
+        project_storylines_timeline TEXT,
         project_storylines_notes TEXT
     );
     """)

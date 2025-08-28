@@ -8,7 +8,7 @@ def create_table(cursor):
         project_chapter_ID INTEGER PRIMARY KEY AUTOINCREMENT,
         project_ID INTEGER NOT NULL,
         project_chapters_premise TEXT,
-        project_chapters_titel TEXT,
+        project_chapters_title TEXT,
         FOREIGN KEY(project_ID) REFERENCES project(project_ID)
     );
     """)

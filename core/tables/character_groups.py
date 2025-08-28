@@ -5,8 +5,10 @@
 def create_table(cursor):
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS character_groups (
-        character_groups_ID INTEGER PRIMARY KEY AUTOINCREMENT,
-        character_groups_title TEXT,
-        character_groups_description TEXT
+        groups_ID INTEGER PRIMARY KEY AUTOINCREMENT,
+        character_ID INTEGER NOT NULL,
+        FOREIGN KEY(character_ID) REFERENCES character_main(character_ID),
+        groups_title TEXT,
+        groups_description TEXT
     );
     """)

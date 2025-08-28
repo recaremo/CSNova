@@ -19,8 +19,14 @@ from core.tables import (
     project_storylines,
     project_chapters,
     project_chapters_scenes,
-    project_scenes_objects,
-    project_scenes_places
+    project_objects,
+    project_locations,
+    project_scene_object_map,
+    project_scene_location_map,
+    project_scene_storyline_map,
+    project_scene_character_map,
+    project_character_storyline_map,
+    project_character_group_map
 )
 
 def init_schema():
@@ -45,8 +51,14 @@ def init_schema():
                 project_storylines,
                 project_chapters,
                 project_chapters_scenes,
-                project_scenes_objects,
-                project_scenes_places
+                project_objects,
+                project_locations,
+                project_scene_object_map,
+                project_scene_location_map,
+                project_scene_storyline_map,
+                project_scene_character_map,
+                project_character_storyline_map,
+                project_character_group_map
             ]:
                 module.create_table(cursor)
             

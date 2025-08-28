@@ -120,40 +120,42 @@ Entwicklung einer plattformübergreifenden Desktop‑Anwendung (Linux, Windows, 
 
 ### Übersicht
 
-- Installation  
-- GUI‑Grundstruktur aufsetzen  
-- Datentabellen anlegen  
-- Datenbankverbindung testen  
-- Beispielprojekt einrichten  
-- Exportfunktion vorbereiten  
-- KI‑Modul initialisieren  
-- Sprachmodul vorbereiten  
+* Installation  
+* GUI‑Grundstruktur aufsetzen  
+* Datentabellen anlegen  
+* Datenbankverbindung testen  
+* Beispielprojekt einrichten  
+* Exportfunktion vorbereiten  
+* KI‑Modul initialisieren  
+* Sprachmodul vorbereiten  
+
+---
 
 ### 4.1 Installation
 
-- Projektname „Codices Scriptoria Nova“ urheberrechtlich geprüft  
-- PNG-Logo erstellt  
-- Entwicklungsumgebung: Linux Mint, Visual Studio Code (englisch), QT Designer, QT Design Studio, GIMP  
-- Sprache: Python  
-- VSC installiert, Python-AddOn eingebunden  
-- AddOns:  
-  - Black Formatter  
-  - Github Pull Requests  
-  - isort  
-  - Jupyter  
-  - Pylance  
-  - Python Debugger  
-  - Python Environments  
-- GitHub-Verbindung aktiv  
-- venv eingerichtet, Tools installiert:  
-  - pyside6  
-  - ebooklib  
-  - weasyprint  
-  - reportlab  
-  - requests  
-  - asyncio  
-  - libxcb-cursor0
-  - pyinstaller  
+* Projektname „Codices Scriptoria Nova“ urheberrechtlich geprüft  
+* PNG-Logo erstellt  
+* Entwicklungsumgebung: Linux Mint, Visual Studio Code (Englisch), QT Designer, QT Design Studio, GIMP  
+* Sprache: Python  
+* VSC installiert, Python-Add-on eingebunden  
+* Add-ons:  
+  * Black Formatter  
+  * GitHub Pull Requests  
+  * isort  
+  * Jupyter  
+  * Pylance  
+  * Python Debugger  
+  * Python Environments  
+* GitHub-Verbindung aktiv  
+* venv eingerichtet, Tools installiert:  
+  * PySide6  
+  * EbookLib  
+  * WeasyPrint  
+  * ReportLab  
+  * Requests  
+  * asyncio  
+  * libxcb-cursor0  
+  * PyInstaller  
 
 #### 4.1.1 Projektbaum
 
@@ -195,7 +197,7 @@ Entwicklung einer plattformübergreifenden Desktop‑Anwendung (Linux, Windows, 
 │   │   ├── character_appearance_detail.py
 │   │   ├── character_appearance_main.py
 │   │   ├── character_education.py
-│   │   ├── character_groups
+│   │   ├── character_groups/
 │   │   ├── character_groups.py
 │   │   ├── character_main.py
 │   │   ├── character_origin.py
@@ -290,10 +292,79 @@ Entwicklung einer plattformübergreifenden Desktop‑Anwendung (Linux, Windows, 
 * Referenzen: preferences.py
 * Übersetzungen: translation.py
 * Tabs: character_tab.py, project_tab.py, scene_tab.py
-* Widgets: [dialog.py](https://dialog.py), [listview.py](https://listview.py)
+* Widgets: dialog.py, listview.py
 * Stylesheets: styles/
 * Layout: responsiv, plattformabhängig
 * Ziel: intuitive Bedienung, modulare Erweiterbarkeit
+
+### 4.3 Definitionen
+
+#### Projekt
+
+Ein Projekt beschreibt eine in sich geschlossene Geschichte mit einem definierten Anfang und Ende. Im Rahmen einer Serie kann ein Projekt einen Cliffhanger enthalten, der in einem Folgeprojekt weitergeführt wird.
+
+- Enthält einen oder mehrere Charaktere, die auch in anderen Projekten auftreten können.
+- Umfasst eine oder mehrere Storylines, die projektübergreifend fortgesetzt werden können.
+- Beinhaltet Orte und Objekte, die auch in anderen Projekten relevant sein können.
+- Besteht aus mehreren Kapiteln, die eindeutig diesem Projekt zugeordnet sind.
+- Enthält Szenen, die jeweils einem Kapitel und damit eindeutig dem Projekt zugeordnet sind.
+- Grundlegende Projektdaten sind in der Tabelle [5.4.1 project.py](#541-projectpy) erfasst.
+
+#### Storyline
+
+Eine Storyline beschreibt einen Handlungsstrang, der:
+
+- sich über mehrere Projekte erstrecken kann,
+- sich über Kapitel und Szenen hinweg entfaltet – linear oder nichtlinear, z. B.:
+  - Storyline A: Kapitel 3, 9, 12
+  - Storyline B: Kapitel 2, 4, 5
+- mit Charakteren, Objekten und Orten verknüpft ist.
+
+#### Kapitel
+
+Kapitel strukturieren den Handlungsablauf eines Projekts und sind ausschließlich diesem Projekt zugeordnet.
+
+- Kapitel verlaufen immer linear: 1, 2, 3, 4 …
+- Sie enthalten eine oder mehrere Szenen, die diesem Kapitel eindeutig zugeordnet sind.
+- Sie enthalten einen oder mehrere Charaktere, Objekte und Orte.
+
+#### Szene
+
+Szenen strukturieren den Handlungsablauf innerhalb eines Kapitels und sind diesem eindeutig zugeordnet.
+
+- Sie enthalten einen oder mehrere Charaktere, Objekte und Orte.
+- Sie können Teil einer oder mehrerer Storylines sein.
+
+#### Charakter
+
+Charaktere können innerhalb eines oder mehrerer Projekte eine Rolle spielen.
+
+- Sie treten in einem oder mehreren Kapiteln und Szenen auf.
+- Ihnen lassen sich beliebig viele Orte und Objekte zuordnen.
+- Sie können Mitglied in einer oder mehreren Gruppen sein.
+- Es gibt Haupt- und Nebencharaktere. Hauptcharaktere sind immer umfassend definiert und haben einen inneren Konflikt.
+
+#### Gruppe
+
+Gruppen bestehen aus zwei oder mehreren Charakteren.
+
+- Sie können projektübergreifend bestehen.
+- Sie haben eine definierte Struktur oder Dynamik (z. B. Familie, Team, Gegenspieler).
+
+#### Objekt
+
+Objekte sind Gegenstände, die für die Handlung eines oder mehrerer Projekte von Bedeutung sind.
+
+- Sie können Charakteren, Szenen oder Storylines zugeordnet sein.
+- Sie können symbolische, funktionale oder narrative Bedeutung haben.
+
+#### Ort
+
+Orte sind Schauplätze, an denen die Handlung eines Projekts stattfindet.
+
+- Sie können mehrfach verwendet werden.
+- Sie sind mit Szenen, Charakteren und Objekten verknüpft.
+
 
 ## 5. Tabellen
 
@@ -489,7 +560,6 @@ def create_table(cursor):
     CREATE TABLE IF NOT EXISTS character_main (
         character_ID INTEGER PRIMARY KEY AUTOINCREMENT,
         main_character BOOL,
-        group_member TEXT,
         name TEXT,
         first_name TEXT,
         nick_name TEXT,
@@ -781,16 +851,18 @@ def create_table(cursor):
 def create_table(cursor):
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS character_groups (
-        character_groups_ID INTEGER PRIMARY KEY AUTOINCREMENT,
-        character_groups_title TEXT,
-        character_groups_description TEXT
+        groups_ID INTEGER PRIMARY KEY AUTOINCREMENT,
+        character_ID INTEGER NOT NULL,
+        FOREIGN KEY(character_ID) REFERENCES character_main(character_ID),
+        groups_title TEXT,
+        groups_description TEXT
     );
     """)
 ```
 
 ### 5.4 Projektdatenbank
 
-In diesem Abschnitt sind die Tabellen zu Erstellung von Projekten zusammengefasst.
+In diesem Abschnitt sind die Tabellen zur Erstellung von Projekten zusammengefasst.
 
 #### 5.4.1 project.py
 
@@ -804,9 +876,16 @@ def create_table(cursor):
     CREATE TABLE IF NOT EXISTS project (
         project_ID INTEGER PRIMARY KEY AUTOINCREMENT,
         project_premise TEXT,
+        project_title TEXT,
+        project_subtitle TEXT,
+        project_genre TEXT,
+        project_target_group TEXT,
+        project_narrative_perspective TEXT,
+        project_deadline DATE,
+        project_start_date DATE,     
         project_words_count_goal INTEGER,
-        project_words_count_days INTEGER,  
-        project_deadlines DATE,
+        project_words_count_days INTEGER,
+        project_days_count INTEGER,  
         project_chapters INTEGER,
         project_scenes INTEGER,
         project_story_lines INTEGER,
@@ -815,9 +894,7 @@ def create_table(cursor):
         project_groups_characters INTEGER,
         project_story_places INTEGER,
         project_story_objects INTEGER,
-        project_timeline TEXT,
-        project_notes TEXT
-
+        project_timeline TEXT
     );
     """)
 ```
@@ -836,6 +913,8 @@ def create_table(cursor):
         project_storylines_premise TEXT,
         project_storylines_title TEXT,
         project_storylines_description TEXT,
+        project_storylines_transformation TEXT,
+        project_storylines_timeline TEXT,
         project_storylines_notes TEXT
     );
     """)
@@ -854,7 +933,7 @@ def create_table(cursor):
         project_chapter_ID INTEGER PRIMARY KEY AUTOINCREMENT,
         project_ID INTEGER NOT NULL,
         project_chapters_premise TEXT,
-        project_chapters_titel TEXT,
+        project_chapters_title TEXT,
         FOREIGN KEY(project_ID) REFERENCES project(project_ID)
     );
     """)
@@ -873,9 +952,15 @@ def create_table(cursor):
         project_chapters_scenes_ID INTEGER PRIMARY KEY AUTOINCREMENT,
         project_chapters_ID INTEGER NOT NULL,
         project_chapters_scenes_premise TEXT,
-        project_chapters_scenes_titel TEXT,
+        project_chapters_scenes_title TEXT,
+        project_chapters_scenes_goal TEXT,
+        project_chapters_scenes_conflict TEXT,
+        project_chapters_scenes_outcome TEXT,
+        project_chapters_scenes_type TEXT,
+        project_chapters_scenes_mood TEXT,
+        project_chapters_scenes_duration TEXT,
         project_chapters_scenes_main_characters TEXT,
-        project_chapters_scenes_supporting_character TEXT,
+        project_chapters_scenes_supporting_characters TEXT,
         project_chapters_scenes_places TEXT,
         project_chapters_scenes_text TEXT,
         FOREIGN KEY(project_chapters_ID) REFERENCES project_chapters(project_chapters_ID)
@@ -883,40 +968,151 @@ def create_table(cursor):
     """)
 ```
 
-##### 5.4.4.1 project_scenes_objects.py
+#### 5.4.5 project_objects.py
 
 ```python
-# project_scenes_objects.py
-# table: project_scenes_objects
+# project_objects.py
+# table: project_objects
 # description: objects can be used in different scenes
 # 
 def create_table(cursor):
     cursor.execute("""
-    CREATE TABLE IF NOT EXISTS project_scenes_objects (
-        project_scenes_object_ID INTEGER PRIMARY KEY AUTOINCREMENT,
-        project_chapters_scenes_ID INTEGER,
-        project_scenes_objects_titel TEXT,
-        project_scenes_objects_description TEXT,
-        FOREIGN KEY(project_chapters_scenes_ID ) REFERENCES  project_chapters_scenes (project_chapters_scenes_ID)
+    CREATE TABLE IF NOT EXISTS project_objects (
+        project_objects_ID INTEGER PRIMARY KEY AUTOINCREMENT,
+        project_objects_titel TEXT,
+        project_objects_description TEXT
     );
     """)
 ```
 
-##### 5.4.4.2 project_scenes_places.py
+#### 5.4.6 project_locations.py
 
 ```python
-# project_scenes_places.py
+# project_places.py
 # table: project_scenes_places
 # description: places can be used in different scenes
 # 
 def create_table(cursor):
     cursor.execute("""
-    CREATE TABLE IF NOT EXISTS project_scenes_places (
-        scenes_places_ID INTEGER PRIMARY KEY AUTOINCREMENT,
-        project_chapters_scenes_ID INTEGER,
-        scenes_places_titel TEXT,
-        scenes_places_description TEXT,
-        FOREIGN KEY(project_chapters_scenes_ID ) REFERENCES  project_chapters_scenes (project_chapters_scenes_ID)
+    CREATE TABLE IF NOT EXISTS project_locations (
+        project_locations_ID INTEGER PRIMARY KEY AUTOINCREMENT,
+        project_locations_titel TEXT,
+        project_locations_description TEXT
+    );
+    """)
+```
+
+### 5.5 Mapping
+
+In diesem Abschnitt werden die gemappten Tabellen sowie deren Verbindungen übersichtlich dargestellt.
+
+#### 5.5.1 project_scene_character_map.py
+```python
+# project_scene_character_map.py
+# table: scene_character_map
+# description: links characters to scenes
+
+def create_table(cursor):
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS scene_character_map (
+        scene_character_map_ID INTEGER PRIMARY KEY AUTOINCREMENT,
+        scene_ID INTEGER NOT NULL,
+        character_ID INTEGER NOT NULL,
+        role_in_scene TEXT,
+        FOREIGN KEY(scene_ID) REFERENCES project_chapters_scenes(project_chapters_scenes_ID),
+        FOREIGN KEY(character_ID) REFERENCES character_main(character_ID)
+    );
+    """)
+```
+
+#### 5.5.2 project_scene_location_map.py
+```python
+# project_scene_location_map.py
+# table: scene_location_map
+# description: links locations to scenes
+
+def create_table(cursor):
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS scene_location_map (
+        scene_location_map_ID INTEGER PRIMARY KEY AUTOINCREMENT,
+        scene_ID INTEGER NOT NULL,
+        location_ID INTEGER NOT NULL,
+        FOREIGN KEY(scene_ID) REFERENCES project_chapters_scenes(project_chapters_scenes_ID),
+        FOREIGN KEY(location_ID) REFERENCES locations(locations_ID)
+    );
+    """)
+```
+
+#### 5.5.3 project_scene_object_map.py
+```python
+# project_scene_object_map.py
+# table: scene_object_map
+# description: links objects to scenes
+
+def create_table(cursor):
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS scene_object_map (
+        scene_object_map_ID INTEGER PRIMARY KEY AUTOINCREMENT,
+        scene_ID INTEGER NOT NULL,
+        object_ID INTEGER NOT NULL,
+        FOREIGN KEY(scene_ID) REFERENCES project_chapters_scenes(project_chapters_scenes_ID),
+        FOREIGN KEY(object_ID) REFERENCES objects(object_ID)
+    );
+    """)
+```
+
+#### 5.5.4 project_scene_storyline_map.py
+```python
+# project_scene_storyline_map.py
+# table: scene_storyline_map
+# description: links scenes to storylines
+
+def create_table(cursor):
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS scene_storyline_map (
+        scene_storyline_map_ID INTEGER PRIMARY KEY AUTOINCREMENT,
+        scene_ID INTEGER NOT NULL,
+        storyline_ID INTEGER NOT NULL,
+        FOREIGN KEY(scene_ID) REFERENCES project_chapters_scenes(project_chapters_scenes_ID),
+        FOREIGN KEY(storyline_ID) REFERENCES project_storylines(project_storylines_ID)
+    );
+    """)
+```
+
+#### 5.5.5 project_charcter_group_map.py
+```python
+# project_character_group_map.py
+# table: character_group_map
+# description: links characters to groups
+
+def create_table(cursor):
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS character_group_map (
+        character_group_map_ID INTEGER PRIMARY KEY AUTOINCREMENT,
+        character_ID INTEGER NOT NULL,
+        group_ID INTEGER NOT NULL,
+        role_in_group TEXT,
+        FOREIGN KEY(character_ID) REFERENCES character_main(character_ID),
+        FOREIGN KEY(group_ID) REFERENCES character_groups(character_groups_ID)
+    );
+    """)
+```
+
+#### 5.5.6 project_charcter_storyline_map.py
+```python
+# project_character_storyline_map.py
+# table: character_storyline_map
+# description: links characters to storylines
+
+def create_table(cursor):
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS character_storyline_map (
+        character_storyline_map_ID INTEGER PRIMARY KEY AUTOINCREMENT,
+        character_ID INTEGER NOT NULL,
+        storyline_ID INTEGER NOT NULL,
+        role_in_storyline TEXT,
+        FOREIGN KEY(character_ID) REFERENCES character_main(character_ID),
+        FOREIGN KEY(storyline_ID) REFERENCES project_storylines(project_storylines_ID)
     );
     """)
 ```
@@ -963,7 +1159,7 @@ if __name__ == "__main__":
 
 ```python
 # config/settings.py
-# load and save settings: wich language was selected, settings for project_window
+# load and save settings: which language was selected, settings for project_window
 import json
 import os
 
@@ -1394,8 +1590,8 @@ from core.tables import (
     project_storylines,
     project_chapters,
     project_chapters_scenes,
-    project_scenes_objects,
-    project_scenes_places
+    project_objects,
+    project_locations
 )
 
 def init_schema():
@@ -1420,8 +1616,8 @@ def init_schema():
                 project_storylines,
                 project_chapters,
                 project_chapters_scenes,
-                project_scenes_objects,
-                project_scenes_places
+                project_objects,
+                project_locations
             ]:
                 module.create_table(cursor)
             
@@ -1438,7 +1634,10 @@ def init_schema():
 ```python
 from PySide6.QtGui import QPalette, QColor
 from PySide6.QtCore import Qt
-from PySide6.QtWidgets import QWidget, QVBoxLayout, QPushButton, QTextEdit, QLabel, QSplitter, QHBoxLayout
+from PySide6.QtWidgets import (
+    QWidget, QVBoxLayout, QPushButton, QTextEdit, QLabel, QSplitter, QHBoxLayout,
+    QFormLayout, QLineEdit, QDateEdit, QSpinBox
+)
 from gui.styles.style_utils import load_button_style
 from core.translator import Translator
 from config.settings import load_settings, save_settings
@@ -1479,6 +1678,14 @@ class ProjectWindow(QWidget):
             self.nav_layout.addWidget(btn)
             self.nav_buttons[key] = btn
 
+        # Button connections
+        self.nav_buttons["btn_project"].clicked.connect(self._show_project_text)
+        self.nav_buttons["btn_characters"].clicked.connect(self._show_characters_text)
+        self.nav_buttons["btn_storylines"].clicked.connect(self._show_storylines_text)
+        self.nav_buttons["btn_chapters"].clicked.connect(self._show_chapters_text)
+        self.nav_buttons["btn_scenes"].clicked.connect(self._show_scenes_text)
+        self.nav_buttons["btn_objects"].clicked.connect(self._show_objects_text)
+        self.nav_buttons["btn_locations"].clicked.connect(self._show_locations_text)
         self.nav_buttons["btn_exit"].clicked.connect(self._exit_application)
 
         self.input_area = QTextEdit()
@@ -1497,27 +1704,74 @@ class ProjectWindow(QWidget):
         layout = QHBoxLayout(self)
         layout.addWidget(self.splitter)
 
-        # Button-Connections
-        self.nav_buttons["btn_project"].clicked.connect(lambda: self._update_content("Project"))
-        self.nav_buttons["btn_characters"].clicked.connect(lambda: self._update_content("Characters"))
-        self.nav_buttons["btn_storylines"].clicked.connect(lambda: self._update_content("Storylines"))
-        self.nav_buttons["btn_chapters"].clicked.connect(lambda: self._update_content("Chapters"))
-        self.nav_buttons["btn_scenes"].clicked.connect(lambda: self._update_content("Scenes"))
-        self.nav_buttons["btn_objects"].clicked.connect(lambda: self._update_content("Objects"))
-        self.nav_buttons["btn_locations"].clicked.connect(lambda: self._update_content("Locations"))
-
     def _update_content(self, section):
-        # Set placeholder text in the input area
         self.input_area.setPlainText(f"[{section}]\n\nEnter {section.lower()} data here …")
-
-        # Generate the key for the help text, e.g., "help_project"
         key = f"help_{section.lower()}"
-
-        # Load the corresponding help text from the loaded language file
         help_text = self.help_texts.get(key, "Help and information will be displayed here.")
-
-        # Display the help text in the right-hand area
         self.help_area.setText(help_text)
+
+    # Shows project content area — now with a basic input form
+    def _show_project_text(self):
+        form_layout = QFormLayout()
+        self.fields = {}
+
+        # Text fields
+        for field in [
+            "project_title", "project_subtitle", "project_premise",
+            "project_genre", "project_narrative_perspective", "timeline"
+        ]:
+            line = QLineEdit()
+            form_layout.addRow(field.replace("_", " ").title(), line)
+            self.fields[field] = line
+
+        # Date fields
+        for field in ["project_start_date", "project_deadline"]:
+            date_edit = QDateEdit()
+            date_edit.setCalendarPopup(True)
+            form_layout.addRow(field.replace("_", " ").title(), date_edit)
+            self.fields[field] = date_edit
+
+        # Numeric field
+        goal_spin = QSpinBox()
+        goal_spin.setMaximum(100000)
+        form_layout.addRow("Words Count Goal", goal_spin)
+        self.fields["project_words_count_goal"] = goal_spin
+
+        form_widget = QWidget()
+        form_widget.setLayout(form_layout)
+
+        # Replace middle widget safely
+        self.input_area.deleteLater()
+        self.splitter.replaceWidget(1, form_widget)
+        self.input_area = form_widget  # Update reference
+        self.splitter.setSizes([300, 900, 300])
+        key = "help_project"
+        help_text = self.help_texts.get(key, "Help and information will be displayed here.")
+        self.help_area.setText(help_text)
+
+    # Shows character content area — ready for future form integration
+    def _show_characters_text(self):
+        self._update_content("Characters")
+
+    # Shows storyline content area — ready for future form integration
+    def _show_storylines_text(self):
+        self._update_content("Storylines")
+
+    # Shows chapter content area — ready for future form integration
+    def _show_chapters_text(self):
+        self._update_content("Chapters")
+
+    # Shows scene content area — ready for future form integration
+    def _show_scenes_text(self):
+        self._update_content("Scenes")
+
+    # Shows object content area — ready for future form integration
+    def _show_objects_text(self):
+        self._update_content("Objects")
+
+    # Shows location content area — ready for future form integration
+    def _show_locations_text(self):
+        self._update_content("Locations")
 
     def _exit_application(self):
         self.close()

@@ -12,7 +12,7 @@ def load_button_style(font_size):
             QPushButton {{
                 background-color: #d4c29c;
                 color: #1a1a1a;
-                font-size: {font_size}px;
+                font-size: 18px;
                 border: 2px solid #8b7d5c;
                 border-radius: 10px;
                 border-style: outset;
