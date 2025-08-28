@@ -1,9 +1,6 @@
-from PySide6.QtWidgets import (
-    QWidget, QPushButton, QVBoxLayout, QHBoxLayout, QTextEdit, QLabel, QSizePolicy, QSplitter
-)
 from PySide6.QtGui import QPalette, QColor
 from PySide6.QtCore import Qt
-
+from PySide6.QtWidgets import QWidget, QVBoxLayout, QPushButton, QTextEdit, QLabel, QSplitter, QHBoxLayout
 from gui.styles.style_utils import load_button_style
 from core.translator import Translator
 from config.settings import load_settings, save_settings
@@ -62,18 +59,27 @@ class ProjectWindow(QWidget):
         layout = QHBoxLayout(self)
         layout.addWidget(self.splitter)
 
-        # Button-Verbindungen
+        # Button-Connections
         self.nav_buttons["btn_project"].clicked.connect(lambda: self._update_content("Project"))
         self.nav_buttons["btn_characters"].clicked.connect(lambda: self._update_content("Characters"))
         self.nav_buttons["btn_storylines"].clicked.connect(lambda: self._update_content("Storylines"))
         self.nav_buttons["btn_chapters"].clicked.connect(lambda: self._update_content("Chapters"))
         self.nav_buttons["btn_scenes"].clicked.connect(lambda: self._update_content("Scenes"))
         self.nav_buttons["btn_objects"].clicked.connect(lambda: self._update_content("Objects"))
-        self.nav_buttons["btn_locations"].clicked.connect(lambda: self._update_content("Places"))
+        self.nav_buttons["btn_locations"].clicked.connect(lambda: self._update_content("Locations"))
 
     def _update_content(self, section):
+        # Set placeholder text in the input area
         self.input_area.setPlainText(f"[{section}]\n\nEnter {section.lower()} data here …")
-        self.help_area.setText(self.help_texts.get(section, "Help and information will be displayed here."))
+
+        # Generate the key for the help text, e.g., "help_project"
+        key = f"help_{section.lower()}"
+
+        # Load the corresponding help text from the loaded language file
+        help_text = self.help_texts.get(key, "Help and information will be displayed here.")
+
+        # Display the help text in the right-hand area
+        self.help_area.setText(help_text)
 
     def _exit_application(self):
         self.close()

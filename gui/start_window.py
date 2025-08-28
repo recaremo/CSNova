@@ -1,3 +1,5 @@
+# main window with buttons for create a new project, load an existing project
+# main settings for GUI positions and changing after resizing the window
 from PySide6.QtWidgets import (
     QApplication, QWidget, QPushButton, QGraphicsDropShadowEffect
 )
@@ -11,6 +13,7 @@ from gui.styles.style_utils import load_button_style  # Import the style loader
 
 import sys
 
+#basic position of buttons
 class StartWindow(QWidget):
     DEFAULT_WIDTH        = 1920
     DEFAULT_HEIGHT       = 1080
@@ -56,13 +59,17 @@ class StartWindow(QWidget):
             btn.setGraphicsEffect(shadow)
             self.buttons.append(btn)
 
+        # Connect new_project button
+        self.buttons[0].clicked.connect(self._new_project)
+
+        # Connect load_project button
+        self.buttons[1].clicked.connect(self._load_project)
+
         # Connect settings button
         self.buttons[2].clicked.connect(self._open_preferences)
 
-        # Connect placeholder buttons
-        self.buttons[0].clicked.connect(self._new_project_placeholder)
-        self.buttons[1].clicked.connect(self._load_project_placeholder)
-        self.buttons[3].clicked.connect(self._help_placeholder)
+        # Connect help button
+        self.buttons[3].clicked.connect(self._help)
 
         # Connect exit button
         self.buttons[4].clicked.connect(self._exit_application)
@@ -76,17 +83,16 @@ class StartWindow(QWidget):
             self.pref_window.raise_()
             self.pref_window.activateWindow()
 
-    def _new_project_placeholder(self):
+    def _new_project(self):
         print("Preparing new project...")
         self.project_window = ProjectWindow(translator=self.translator)
         self.project_window.show()
-        QTimer.singleShot(100, lambda: self.hide())  # Nur verstecken, nicht schließen
+        QTimer.singleShot(100, lambda: self.hide())
 
-
-    def _load_project_placeholder(self):
+    def _load_project(self):
         print("Preparing to load project...")
 
-    def _help_placeholder(self):
+    def _help(self):
         print("Preparing help function...")
 
     def _exit_application(self):

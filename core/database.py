@@ -4,7 +4,7 @@ from config.dev import DB_PATH
 from core.tables.gender_data import data_gender
 from core.tables.sex_orientation_data import sex_orientation_data
 
-# Importiere die Tabellenmodule
+# import tables
 from core.tables import (
     character_main,
     gender,

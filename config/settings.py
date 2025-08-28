@@ -1,5 +1,5 @@
 # config/settings.py
-
+# load and save settings: wich language was selected, settings for project_window
 import json
 import os
 

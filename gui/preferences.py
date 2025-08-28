@@ -2,7 +2,7 @@ from PySide6.QtWidgets import (
     QDialog, QLabel, QComboBox, QPushButton,
     QHBoxLayout, QVBoxLayout
 )
-from core.translations import LANGUAGES, TRANSLATIONS
+from core.translations.translations import LANGUAGES, TRANSLATIONS
 from config.settings import load_settings, save_settings
 
 class PreferencesWindow(QDialog):

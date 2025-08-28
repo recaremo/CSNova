@@ -1,5 +1,5 @@
 # config/dev.py
-
+#folder structure of csnova
 from pathlib import Path
 import sys
 

@@ -1,9 +1,11 @@
+# Mainprogram csnova.py
 import sys
 from PySide6.QtWidgets import QApplication
 from core.database import init_schema
 from config.settings import load_settings, save_settings
 from gui.start_window import StartWindow
 
+# Check for language an needed translations
 def main():
     try:
         init_schema()

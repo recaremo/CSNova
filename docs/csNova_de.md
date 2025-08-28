@@ -297,68 +297,187 @@ Entwicklung einer plattformübergreifenden Desktop‑Anwendung (Linux, Windows, 
 
 ## 5. Tabellen
 
-```python
-# database.py
-import sqlite3
-from config.dev import DB_PATH  
-from core.tables.gender_data import data_gender
-from core.tables.sex_orientation_data import sex_orientation_data
+### 5.1 Hilfedateien
 
-# Import the table modules
-from core.tables import (
-    character_main,
-    gender,
-    sex_orientation,
-    character_psychological_profile,
-    character_origin,
-    character_education,
-    character_personality,
-    character_appearance_main,
-    character_appearance_detail,
-    project,
-    project_storylines,
-    project_chapters,
-    project_chapters_scenes,
-    project_scenes_objects,
-    project_scenes_places
-)
+In diesem Kapitel sind die Translationstabellen für die Hilfedateien zusammengefasst
 
-def init_schema():
-    conn = sqlite3.connect(DB_PATH)
-    cursor = conn.cursor()
-
-    # Enable foreign key support
-    cursor.execute("PRAGMA foreign_keys = ON")
-
-    # Initialize tables
-    for module in [
-        character_main,
-        gender,
-        sex_orientation,
-        character_psychological_profile,
-        character_origin,
-        character_education,
-        character_personality,
-        character_appearance_main,
-        character_appearance_detail,
-        project,
-        project_storylines,
-        project_chapters,
-        project_chapters_scenes,
-        project_scenes_objects,
-        project_scenes_places
-    ]:
-        module.create_table(cursor)
-    
-    # Insert seed data
-    data_gender(cursor)
-    sex_orientation_data(cursor)
-
-    conn.commit()
-    conn.close()
+#### 5.1.1 help_de.json
+```json
+{
+    "help_project": "Geben Sie allgemeine Informationen zu Ihrem Schreibprojekt an, wie Titel, Genre und Ziele.",
+    "help_characters": "Definieren Sie Ihre Charaktere: Namen, Rollen, Eigenschaften und Beziehungen.",
+    "help_storylines": "Skizzieren Sie die Haupt-Handlungsstränge und deren Entwicklung im Laufe der Zeit.",
+    "help_chapters": "Organisieren Sie Ihre Geschichte in Kapitel und beschreiben Sie deren Inhalt.",
+    "help_scenes": "Beschreiben Sie einzelne Szenen, deren Zweck und Umgebung.",
+    "help_objects": "Listen Sie wichtige Objekte und deren Bedeutung in der Geschichte auf.",
+    "help_locations": "Beschreiben Sie die in Ihrer Geschichte verwendeten Orte, einschließlich Atmosphäre und Relevanz."
+}
 ```
 
-### 5.1 character_main.py
+#### 5.1.2 help_en.json
+```json
+{
+  "help_project": "Provide general information about your writing project, such as title, genre, and goals.",
+  "help_characters": "Define your characters: names, roles, traits, and relationships.",
+  "help_storylines": "Outline the main story arcs and how they develop over time.",
+  "help_chapters": "Organize your story into chapters and describe their content.",
+  "help_scenes": "Detail individual scenes, their purpose, and setting.",
+  "help_objects": "List important objects and their significance in the story.",
+  "help_locations": "Describe the locations used in your story, including atmosphere and relevance."
+}
+```
+
+#### 5.1.3 help_es.json
+```json
+{
+  "help_project": "Proporcione información general sobre su proyecto de escritura, como el título, el género y los objetivos.",
+  "help_characters": "Defina sus personajes: nombres, roles, características y relaciones.",
+  "help_storylines": "Esboce las tramas principales y cómo se desarrollan a lo largo del tiempo.",
+  "help_chapters": "Organice su historia en capítulos y describa su contenido.",
+  "help_scenes": "Describa las escenas individuales, su propósito y entorno.",
+  "help_objects": "Enumere los objetos importantes y su significado dentro de la historia.",
+  "help_locations": "Describa los lugares utilizados en su historia, incluyendo la atmósfera y su relevancia."
+}
+```
+
+#### 5.1.4 help_fr.json
+```json
+{
+  "help_project": "Fournissez des informations générales sur votre projet d’écriture, telles que le titre, le genre et les objectifs.",
+  "help_characters": "Définissez vos personnages : noms, rôles, traits de caractère et relations.",
+  "help_storylines": "Esquissez les intrigues principales et leur évolution au fil du temps.",
+  "help_chapters": "Organisez votre histoire en chapitres et décrivez leur contenu.",
+  "help_scenes": "Décrivez les scènes individuelles, leur objectif et leur environnement.",
+  "help_objects": "Listez les objets importants et leur signification dans l’histoire.",
+  "help_locations": "Décrivez les lieux utilisés dans votre histoire, y compris leur atmosphère et leur pertinence."
+}
+```
+
+### 5.2 GUI
+
+In diesem Abschnitt sind die Translationstabellen für die GUI zusammengefasst.
+
+#### 5.2.1 de.json
+
+```json
+{
+  "btn_new_project": "Neues Projekt",
+  "btn_load_project": "Projekt laden …",
+  "btn_settings": "Einstellungen",
+  "btn_help": "Hilfe/Tutorial",
+  "btn_exit": "Beenden",
+  "menu_file": "Datei",
+  "menu_edit": "Bearbeiten",
+  "menu_help": "Hilfe",
+  "menu_settings": "Einstellungen",
+  "menu_language": "Sprache",
+  "action_new": "Neu",
+  "action_open": "Öffnen",
+  "action_save": "Speichern",
+  "action_exit": "Beenden",
+  "tab_project": "Projekt",
+  "tab_character": "Charaktere",
+  "tab_scene": "Szenen",
+  "btn_save": "Speichern",
+  "tooltip_exit": "Programm beenden",
+  "action_cancel": "Abbrechen",
+  "project_window_title": "Projekt Manager",
+  "start_window_title": "Startseite"
+}
+```
+
+#### 5.2.2 en.json
+
+```json
+{
+        "btn_new_project": "New Project",
+        "btn_load_project": "Open Project …",
+        "btn_settings": "Settings",
+        "btn_help": "Help/Tutorial",
+        "btn_exit": "Exit",
+        "menu_file": "File",
+        "menu_edit": "Edit",
+        "menu_help": "Help",
+        "menu_settings": "Settings",
+        "menu_language": "Language",
+        "action_new": "New",
+        "action_open": "Open",
+        "action_save": "Save",
+        "action_exit": "Exit",
+        "tab_project": "Project",
+        "tab_character": "Characters",
+        "tab_scene": "Scenes",
+        "btn_save": "Save",
+        "tooltip_exit": "Exit application",
+        "action_cancel": "Cancel",
+        "project_window_title": "Project Manager",
+        "start_window_title": "Start"
+    }
+```
+
+#### 5.2.3 fr.json
+
+```json
+{
+        "btn_new_project": "Nouveau projet", 
+        "btn_load_project": "Ouvrir projet …",
+        "btn_settings": "Paramètres",
+        "btn_help": "Aide/Tutoriel",
+        "btn_exit": "Quitter",
+        "menu_file": "Fichier",
+        "menu_edit": "Éditer",
+        "menu_help": "Aide",
+        "menu_settings": "Paramètres",
+        "menu_language": "Langue",
+        "action_new": "Nouveau",
+        "action_open": "Ouvrir",
+        "action_save": "Enregistrer",
+        "action_exit": "Quitter",
+        "tab_project": "Projet",
+        "tab_character": "Personnages",
+        "tab_scene": "Scènes",
+        "btn_save": "Enregistrer",
+        "tooltip_exit": "Quitter l'application",
+        "action_cancel": "Annuler",
+        "project_window_title": "Gestion de projet",
+        "start_window_title": "Accueil"
+    }
+```
+
+#### 5.2.4 es.json
+
+```json
+{
+        "btn_new_project": "Nuevo proyecto",
+        "btn_load_project": "Abrir proyecto …",
+        "btn_settings": "Configuración",
+        "btn_help": "Ayuda/Tutorial",
+        "btn_exit": "Salir",
+        "menu_file": "Archivo",
+        "menu_edit": "Editar",
+        "menu_help": "Ayuda",
+        "menu_settings": "Configuración",
+        "menu_language": "Idioma",
+        "action_new": "Nuevo",
+        "action_open": "Abrir",
+        "action_save": "Guardar",
+        "action_exit": "Salir",
+        "tab_project": "Proyecto",
+        "tab_character": "Personajes",
+        "tab_scene": "Escenas",
+        "btn_save": "Guardar",
+        "tooltip_exit": "Salir de la aplicación",
+        "action_cancel": "Cancelar",
+        "project_window_title": "Gestor de proyectos",
+        "start_window_title": "Inicio"
+    }
+```
+
+### 5.3 Character Tabellen
+
+In diesem Abschnitt sind die Tabellen zur Erstellung von Charakteren zusammengefasst.
+
+#### 5.3.1 character_main.py
 
 ```python
 # character_main.py
@@ -385,7 +504,7 @@ def create_table(cursor):
     """)
 ```
 
-#### 5.1.1 gender.py
+##### 5.3.1.1 gender.py
 
 ```python
 # gender.py
@@ -401,7 +520,7 @@ def create_table(cursor):
     );
     """)
 ```
-#### gender_data.py
+##### gender_data.py
 
 ```python
 # gender_data.py
@@ -424,7 +543,7 @@ def data_gender(cursor):
     ])
 ```
 
-#### 5.1.2 sex_orientation.py
+##### 5.3.1.2 sex_orientation.py
 
 ```python
 # sex_orientation.py
@@ -440,7 +559,7 @@ def create_table(cursor):
     );
     """)
 ```
-#### sex_orientation_data.py
+##### sex_orientation_data.py
 
 ```python
 # sex_orientation_data.py
@@ -461,7 +580,7 @@ def sex_orientation_data(cursor):
     ])
 ```
 
-#### 5.1.3 character_origin.py
+#### 5.3.2 character_origin.py
 
 ```python
 # character_origin.py
@@ -484,7 +603,7 @@ def create_table(cursor):
     """)
 ```
 
-#### 5.1.4 character_education.py
+#### 5.3.3 character_education.py
 
 ```python
 # character_education.py
@@ -510,7 +629,7 @@ def create_table(cursor):
     """)
 ```
 
-#### 5.1.5 character_personality.py
+#### 5.3.4 character_personality.py
 
 ```python
 # character_personality.py
@@ -539,7 +658,7 @@ def create_table(cursor):
     """)
 ```
 
-#### 5.1.6 character_psychological_profile.py
+#### 5.3.5 character_psychological_profile.py
 
 ```python
 # character_psychological_profile.py
@@ -593,7 +712,7 @@ def create_table(cursor):
     """)
 ```
 
-#### 5.1.7 character_appearance_main.py
+#### 5.3.6 character_appearance_main.py
 
 ```python
 # character_appearance_main.py
@@ -622,7 +741,7 @@ def create_table(cursor):
     """)
 ```
 
-#### 5.1.8 character_appearance_detail.py
+#### 5.3.7 character_appearance_detail.py
 
 ```python
 # character_appearance_detail.py
@@ -652,7 +771,7 @@ def create_table(cursor):
     """)
 ```
 
-#### 5.1.9 character_groups.py
+#### 5.3.8 character_groups.py
 
 ```python
 # character_groups.py
@@ -669,9 +788,11 @@ def create_table(cursor):
     """)
 ```
 
-### 5.2 Projektdatenbank
+### 5.4 Projektdatenbank
 
-#### 5.2.1 project.py
+In diesem Abschnitt sind die Tabellen zu Erstellung von Projekten zusammengefasst.
+
+#### 5.4.1 project.py
 
 ```python
 # project.py
@@ -701,7 +822,7 @@ def create_table(cursor):
     """)
 ```
 
-#### 5.2.2 project_storylines.py
+#### 5.4.2 project_storylines.py
 
 ```python
 # project_storylines.py
@@ -720,7 +841,7 @@ def create_table(cursor):
     """)
 ```
 
-#### 5.2.3 project_chapters.py
+#### 5.4.3 project_chapters.py
 
 ```python
 # project_chapters.py
@@ -739,7 +860,7 @@ def create_table(cursor):
     """)
 ```
 
-#### 5.2.4 project_chapter_scenes.py
+#### 5.4.4 project_chapter_scenes.py
 
 ```python
 # project_chapter_scenes.py
@@ -762,7 +883,7 @@ def create_table(cursor):
     """)
 ```
 
-##### 5.2.4.1 project_scenes_objects.py
+##### 5.4.4.1 project_scenes_objects.py
 
 ```python
 # project_scenes_objects.py
@@ -781,7 +902,7 @@ def create_table(cursor):
     """)
 ```
 
-##### 5.2.4.2 project_scenes_places.py
+##### 5.4.4.2 project_scenes_places.py
 
 ```python
 # project_scenes_places.py
@@ -802,16 +923,19 @@ def create_table(cursor):
 
 ## 6. - Programmecode
 
+In diesem Abschnitt sind alle Programmcodes zusammengefasst.
+
 ### 6.1 Hauptprogramm (csnova.py)
 
 ```python
+# Mainprogram csnova.py
 import sys
 from PySide6.QtWidgets import QApplication
-
 from core.database import init_schema
 from config.settings import load_settings, save_settings
 from gui.start_window import StartWindow
 
+# Check for language an needed translations
 def main():
     try:
         init_schema()
@@ -839,7 +963,7 @@ if __name__ == "__main__":
 
 ```python
 # config/settings.py
-
+# load and save settings: wich language was selected, settings for project_window
 import json
 import os
 
@@ -868,7 +992,7 @@ def save_settings(settings):
 
 ```python
 # config/dev.py
-
+#folder structure of csnova
 from pathlib import Path
 import sys
 
@@ -886,6 +1010,8 @@ DB_PATH = DATA_DIR / "csnova.db"
 ### 6.2 Startfenster (start_window.py)
 
 ```python
+# main window with buttons for create a new project, load an existing project
+# main settings for GUI positions and changing after resizing the window
 from PySide6.QtWidgets import (
     QApplication, QWidget, QPushButton, QGraphicsDropShadowEffect
 )
@@ -899,6 +1025,7 @@ from gui.styles.style_utils import load_button_style  # Import the style loader
 
 import sys
 
+#basic position of buttons
 class StartWindow(QWidget):
     DEFAULT_WIDTH        = 1920
     DEFAULT_HEIGHT       = 1080
@@ -944,13 +1071,17 @@ class StartWindow(QWidget):
             btn.setGraphicsEffect(shadow)
             self.buttons.append(btn)
 
+        # Connect new_project button
+        self.buttons[0].clicked.connect(self._new_project)
+
+        # Connect load_project button
+        self.buttons[1].clicked.connect(self._load_project)
+
         # Connect settings button
         self.buttons[2].clicked.connect(self._open_preferences)
 
-        # Connect placeholder buttons
-        self.buttons[0].clicked.connect(self._new_project_placeholder)
-        self.buttons[1].clicked.connect(self._load_project_placeholder)
-        self.buttons[3].clicked.connect(self._help_placeholder)
+        # Connect help button
+        self.buttons[3].clicked.connect(self._help)
 
         # Connect exit button
         self.buttons[4].clicked.connect(self._exit_application)
@@ -964,17 +1095,16 @@ class StartWindow(QWidget):
             self.pref_window.raise_()
             self.pref_window.activateWindow()
 
-    def _new_project_placeholder(self):
+    def _new_project(self):
         print("Preparing new project...")
         self.project_window = ProjectWindow(translator=self.translator)
         self.project_window.show()
-        QTimer.singleShot(100, lambda: self.hide())  # Nur verstecken, nicht schließen
+        QTimer.singleShot(100, lambda: self.hide())
 
-
-    def _load_project_placeholder(self):
+    def _load_project(self):
         print("Preparing to load project...")
 
-    def _help_placeholder(self):
+    def _help(self):
         print("Preparing help function...")
 
     def _exit_application(self):
@@ -1045,7 +1175,7 @@ if __name__ == "__main__":
 ```python
 # core/translator.py
 
-from core.translations import TRANSLATIONS, LANGUAGES
+from core.translations.translations import TRANSLATIONS, LANGUAGES
 
 class Translator:
     def __init__(self, default=""):
@@ -1098,7 +1228,7 @@ def load_button_style(font_size):
     return style.replace("{font_size}", str(font_size))
 ```
 
-#### 6.2.3 Buttons (buttons.qss)
+#### 6.2.3 Buttons (button_style.qss)
 
 ```text
 QPushButton {
@@ -1126,7 +1256,7 @@ from PySide6.QtWidgets import (
     QDialog, QLabel, QComboBox, QPushButton,
     QHBoxLayout, QVBoxLayout
 )
-from core.translations import LANGUAGES, TRANSLATIONS
+from core.translations.translations import LANGUAGES, TRANSLATIONS
 from config.settings import load_settings, save_settings
 
 class PreferencesWindow(QDialog):
@@ -1222,125 +1352,9 @@ LANGUAGES = ["de", "en", "fr", "es"]
 TRANSLATIONS = {}
 
 for lang in LANGUAGES:
-    path = Path(__file__).parent / "translations" / f"{lang}.json"
+    path = Path(__file__).parent / f"{lang}.json"
     with open(path, "r", encoding="utf-8") as f:
         TRANSLATIONS[lang] = json.load(f)
-```
-
-#### 6.4.1 de.json
-
-```json
-{
-  "btn_new_project": "Neues Projekt",
-  "btn_load_project": "Projekt laden …",
-  "btn_settings": "Einstellungen",
-  "btn_help": "Hilfe/Tutorial",
-  "btn_exit": "Beenden",
-  "menu_file": "Datei",
-  "menu_edit": "Bearbeiten",
-  "menu_help": "Hilfe",
-  "menu_settings": "Einstellungen",
-  "menu_language": "Sprache",
-  "action_new": "Neu",
-  "action_open": "Öffnen",
-  "action_save": "Speichern",
-  "action_exit": "Beenden",
-  "tab_project": "Projekt",
-  "tab_character": "Charaktere",
-  "tab_scene": "Szenen",
-  "btn_save": "Speichern",
-  "tooltip_exit": "Programm beenden",
-  "action_cancel": "Abbrechen",
-  "project_window_title": "Projekt Manager",
-  "start_window_title": "Startseite"
-}
-```
-
-#### 6.4.2 en.json
-
-```json
-{
-        "btn_new_project": "New Project",
-        "btn_load_project": "Open Project …",
-        "btn_settings": "Settings",
-        "btn_help": "Help/Tutorial",
-        "btn_exit": "Exit",
-        "menu_file": "File",
-        "menu_edit": "Edit",
-        "menu_help": "Help",
-        "menu_settings": "Settings",
-        "menu_language": "Language",
-        "action_new": "New",
-        "action_open": "Open",
-        "action_save": "Save",
-        "action_exit": "Exit",
-        "tab_project": "Project",
-        "tab_character": "Characters",
-        "tab_scene": "Scenes",
-        "btn_save": "Save",
-        "tooltip_exit": "Exit application",
-        "action_cancel": "Cancel",
-        "project_window_title": "Project Manager",
-        "start_window_title": "Start"
-    }
-```
-
-#### 6.4.3 fr.json
-
-```json
-{
-        "btn_new_project": "Nouveau projet", 
-        "btn_load_project": "Ouvrir projet …",
-        "btn_settings": "Paramètres",
-        "btn_help": "Aide/Tutoriel",
-        "btn_exit": "Quitter",
-        "menu_file": "Fichier",
-        "menu_edit": "Éditer",
-        "menu_help": "Aide",
-        "menu_settings": "Paramètres",
-        "menu_language": "Langue",
-        "action_new": "Nouveau",
-        "action_open": "Ouvrir",
-        "action_save": "Enregistrer",
-        "action_exit": "Quitter",
-        "tab_project": "Projet",
-        "tab_character": "Personnages",
-        "tab_scene": "Scènes",
-        "btn_save": "Enregistrer",
-        "tooltip_exit": "Quitter l'application",
-        "action_cancel": "Annuler",
-        "project_window_title": "Gestion de projet",
-        "start_window_title": "Accueil"
-    }
-```
-
-#### 6.4.4 es.json
-
-```json
-{
-        "btn_new_project": "Nuevo proyecto",
-        "btn_load_project": "Abrir proyecto …",
-        "btn_settings": "Configuración",
-        "btn_help": "Ayuda/Tutorial",
-        "btn_exit": "Salir",
-        "menu_file": "Archivo",
-        "menu_edit": "Editar",
-        "menu_help": "Ayuda",
-        "menu_settings": "Configuración",
-        "menu_language": "Idioma",
-        "action_new": "Nuevo",
-        "action_open": "Abrir",
-        "action_save": "Guardar",
-        "action_exit": "Salir",
-        "tab_project": "Proyecto",
-        "tab_character": "Personajes",
-        "tab_scene": "Escenas",
-        "btn_save": "Guardar",
-        "tooltip_exit": "Salir de la aplicación",
-        "action_cancel": "Cancelar",
-        "project_window_title": "Gestor de proyectos",
-        "start_window_title": "Inicio"
-    }
 ```
 
 #### 6.4.5 Programmeinstellungen (user_settings.json)
@@ -1353,58 +1367,6 @@ for lang in LANGUAGES:
     1089,
     184
   ]
-}
-```
-
-#### 6.4.6 help_de.json
-```json
-{
-    "help_project": "Geben Sie allgemeine Informationen zu Ihrem Schreibprojekt an, wie Titel, Genre und Ziele.",
-    "help_characters": "Definieren Sie Ihre Charaktere: Namen, Rollen, Eigenschaften und Beziehungen.",
-    "help_storylines": "Skizzieren Sie die Haupt-Handlungsstränge und deren Entwicklung im Laufe der Zeit.",
-    "help_chapters": "Organisieren Sie Ihre Geschichte in Kapitel und beschreiben Sie deren Inhalt.",
-    "help_scenes": "Beschreiben Sie einzelne Szenen, deren Zweck und Umgebung.",
-    "help_objects": "Listen Sie wichtige Objekte und deren Bedeutung in der Geschichte auf.",
-    "help_locations": "Beschreiben Sie die in Ihrer Geschichte verwendeten Orte, einschließlich Atmosphäre und Relevanz."
-}
-```
-
-#### 6.4.6 help_en.json
-```json
-{
-  "help_project": "Provide general information about your writing project, such as title, genre, and goals.",
-  "help_characters": "Define your characters: names, roles, traits, and relationships.",
-  "help_storylines": "Outline the main story arcs and how they develop over time.",
-  "help_chapters": "Organize your story into chapters and describe their content.",
-  "help_scenes": "Detail individual scenes, their purpose, and setting.",
-  "help_objects": "List important objects and their significance in the story.",
-  "help_locations": "Describe the locations used in your story, including atmosphere and relevance."
-}
-```
-
-#### 6.4.7 help_es.json
-```json
-{
-  "help_project": "Proporcione información general sobre su proyecto de escritura, como el título, el género y los objetivos.",
-  "help_characters": "Defina sus personajes: nombres, roles, características y relaciones.",
-  "help_storylines": "Esboce las tramas principales y cómo se desarrollan a lo largo del tiempo.",
-  "help_chapters": "Organice su historia en capítulos y describa su contenido.",
-  "help_scenes": "Describa las escenas individuales, su propósito y entorno.",
-  "help_objects": "Enumere los objetos importantes y su significado dentro de la historia.",
-  "help_locations": "Describa los lugares utilizados en su historia, incluyendo la atmósfera y su relevancia."
-}
-```
-
-#### 6.4.8 help_fr.json
-```json
-{
-  "help_project": "Fournissez des informations générales sur votre projet d’écriture, telles que le titre, le genre et les objectifs.",
-  "help_characters": "Définissez vos personnages : noms, rôles, traits de caractère et relations.",
-  "help_storylines": "Esquissez les intrigues principales et leur évolution au fil du temps.",
-  "help_chapters": "Organisez votre histoire en chapitres et décrivez leur contenu.",
-  "help_scenes": "Décrivez les scènes individuelles, leur objectif et leur environnement.",
-  "help_objects": "Listez les objets importants et leur signification dans l’histoire.",
-  "help_locations": "Décrivez les lieux utilisés dans votre histoire, y compris leur atmosphère et leur pertinence."
 }
 ```
 
@@ -1471,121 +1433,12 @@ def init_schema():
         print(f"An error occurred during database initialization: {e}")
 ```
 
-### 6.6 .gitignore
-
-```text
-# Byte-compiled / optimized / DLL files
-__pycache__/
-*.py[cod]
-*.so
-*.pyd
-
-# Virtual environments
-.venv/
-env/
-venv/
-
-# Editor/IDE files
-.vscode/
-.idea/
-*.swp
-
-# Distribution / packaging
-build/
-dist/
-*.egg-info/
-.eggs/
-
-# Database files
-data/*.db
-
-# User settings and logs
-config/user_settings.json
-*.log
-
-# OS files
-.DS_Store
-Thumbs.db
-
-# Exported files
-export/*.pdf
-export/*.epub
-export/*.html
-
-# Python test cache
-.pytest_cache/
-```
-
-### 6.7 Abhängigkeiten (requirements.txt)
-
-```text
-pyside6
-ebooklib
-weasyprint
-reportlab
-requests
-asyncio
-pyinstaller
-```
-
-### 6.8 Pyinstaller
-
-```text
-pyinstaller --onefile --windowed csnova.py \
-  --add-data "core/translations:core/translations" \
-  --add-data "core/tables:core/tables" \
-  --add-data "data:data" \
-  --add-data "assets:assets" \
-  --add-data "config:config" \
-  --add-data "gui/styles:gui/styles" \
-  --add-data "docs:docs" \
-  --add-data "ai:ai" \
-  --add-data "export:export"
-```
-
-### 6.9 Setup (install_csnova.sh)
-
-```sh
-#!/bin/bash
-
-echo "Installing CSNova..."
-
-# 1. Check and install system dependencies
-echo "Checking system dependencies..."
-sudo apt update
-sudo apt install -y libxcb-cursor0
-
-# 2. Create installation directory
-INSTALL_DIR="$HOME/CSNova 1.0"
-mkdir -p "$INSTALL_DIR"
-
-# 3. Copy csnova in executable
-cp ./dist/csnova "$INSTALL_DIR/"
-
-# 4. Copy all necessary folders and files
-for folder in assets config core data docs gui ai export; do
-    if [ -d "$folder" ]; then
-        cp -r "$folder" "$INSTALL_DIR/"
-    fi
-done
-
-# 5. Set executable permissions
-chmod +x "$INSTALL_DIR/csnova"
-
-echo "Installation complete!"
-echo "You can start CSNova with:"
-echo "$INSTALL_DIR/csnova"
-```
-
-### 6.10 Projektfenster (project_window.py)
+### 6.6 Projektfenster (project_window.py)
 
 ```python
-from PySide6.QtWidgets import (
-    QWidget, QPushButton, QVBoxLayout, QHBoxLayout, QTextEdit, QLabel, QSizePolicy, QSplitter
-)
 from PySide6.QtGui import QPalette, QColor
 from PySide6.QtCore import Qt
-
+from PySide6.QtWidgets import QWidget, QVBoxLayout, QPushButton, QTextEdit, QLabel, QSplitter, QHBoxLayout
 from gui.styles.style_utils import load_button_style
 from core.translator import Translator
 from config.settings import load_settings, save_settings
@@ -1644,18 +1497,27 @@ class ProjectWindow(QWidget):
         layout = QHBoxLayout(self)
         layout.addWidget(self.splitter)
 
-        # Button-Verbindungen
+        # Button-Connections
         self.nav_buttons["btn_project"].clicked.connect(lambda: self._update_content("Project"))
         self.nav_buttons["btn_characters"].clicked.connect(lambda: self._update_content("Characters"))
         self.nav_buttons["btn_storylines"].clicked.connect(lambda: self._update_content("Storylines"))
         self.nav_buttons["btn_chapters"].clicked.connect(lambda: self._update_content("Chapters"))
         self.nav_buttons["btn_scenes"].clicked.connect(lambda: self._update_content("Scenes"))
         self.nav_buttons["btn_objects"].clicked.connect(lambda: self._update_content("Objects"))
-        self.nav_buttons["btn_locations"].clicked.connect(lambda: self._update_content("Places"))
+        self.nav_buttons["btn_locations"].clicked.connect(lambda: self._update_content("Locations"))
 
     def _update_content(self, section):
+        # Set placeholder text in the input area
         self.input_area.setPlainText(f"[{section}]\n\nEnter {section.lower()} data here …")
-        self.help_area.setText(self.help_texts.get(section, "Help and information will be displayed here."))
+
+        # Generate the key for the help text, e.g., "help_project"
+        key = f"help_{section.lower()}"
+
+        # Load the corresponding help text from the loaded language file
+        help_text = self.help_texts.get(key, "Help and information will be displayed here.")
+
+        # Display the help text in the right-hand area
+        self.help_area.setText(help_text)
 
     def _exit_application(self):
         self.close()
@@ -1664,7 +1526,134 @@ class ProjectWindow(QWidget):
         self.settings["splitter_sizes"] = self.splitter.sizes()
         save_settings(self.settings)
         event.accept()
+```
 
+#### 6.6.1 help_loader.py
+
+```python
+import json
+import os
+
+def load_help_texts(lang="en"):
+    filename = f"help_{lang}.json"
+    base_path = os.path.join(os.path.dirname(__file__), "help")
+    file_path = os.path.join(base_path, filename)
+
+    try:
+        with open(file_path, "r", encoding="utf-8") as f:
+            return json.load(f)
+    except Exception as e:
+        print(f"Could not load help texts for language '{lang}': {e}")
+        return {}
+
+```
+
+### 6.7 Vorbereitungen für die Installation unter Linux-Mint
+
+#### 6.7 1 .gitignore
+
+```text
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*.so
+*.pyd
+
+# Virtual environments
+.venv/
+env/
+venv/
+
+# Editor/IDE files
+.vscode/
+.idea/
+*.swp
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# Database files
+data/*.db
+
+# User settings and logs
+config/user_settings.json
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Exported files
+export/*.pdf
+export/*.epub
+export/*.html
+
+# Python test cache
+.pytest_cache/
+```
+
+#### 6.7.2 Abhängigkeiten (requirements.txt)
+
+```text
+pyside6
+ebooklib
+weasyprint
+reportlab
+requests
+asyncio
+pyinstaller
+```
+
+#### 6.7.3 Pyinstaller
+
+```text
+pyinstaller --onefile --windowed csnova.py \
+  --add-data "core/translations:core/translations" \
+  --add-data "core/tables:core/tables" \
+  --add-data "data:data" \
+  --add-data "assets:assets" \
+  --add-data "config:config" \
+  --add-data "gui/styles:gui/styles" \
+  --add-data "docs:docs" \
+  --add-data "ai:ai" \
+  --add-data "export:export"
+```
+
+#### 6.7.4 Setup (install_csnova.sh)
+
+```sh
+#!/bin/bash
+
+echo "Installing CSNova..."
+
+# 1. Check and install system dependencies
+echo "Checking system dependencies..."
+sudo apt update
+sudo apt install -y libxcb-cursor0
+
+# 2. Create installation directory
+INSTALL_DIR="$HOME/CSNova 1.0"
+mkdir -p "$INSTALL_DIR"
+
+# 3. Copy csnova in executable
+cp ./dist/csnova "$INSTALL_DIR/"
+
+# 4. Copy all necessary folders and files
+for folder in assets config core data docs gui ai export; do
+    if [ -d "$folder" ]; then
+        cp -r "$folder" "$INSTALL_DIR/"
+    fi
+done
+
+# 5. Set executable permissions
+chmod +x "$INSTALL_DIR/csnova"
+
+echo "Installation complete!"
+echo "You can start CSNova with:"
+echo "$INSTALL_DIR/csnova"
 ```
 
 ## 7. Tutorials & Literatur, Quellen
