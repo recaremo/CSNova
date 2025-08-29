@@ -1,5 +1,8 @@
 # Codices Scriptoria Nova (CSNova)
 
+[Deutsch](#projektbeschreibung) [English](#project-description) [Español](#descripci%C3%B3n-del-proyecto) [Français](#description-du-projet)
+
+
 ## Projektbeschreibung
 
 CSNova ist eine umfassende Softwarelösung für Romanautor:innen, Drehbuchautor:innen, Game Writer:innen und alle, die komplexe narrative Projekte planen, entwickeln und veröffentlichen möchten.
@@ -79,3 +82,200 @@ CSNova ist eine umfassende Softwarelösung für Romanautor:innen, Drehbuchautor:
 ## Lizenzvereinbarung
 
 Für die Nutzung der Software CSNova und ihrer Anwendungen ist die Zustimmung zur Lizenzvereinbarung ([license.md](https://license.md)) Voraussetzung.
+
+-----------------------------------------------------------------------------
+
+## Project Description
+
+CSNova is a comprehensive software solution for novelists, screenwriters, game writers, and anyone planning, developing, and publishing complex narrative projects.
+
+## Features Overview
+
+### Project Management
+* Manage unlimited books and series
+* Flexibly transfer content between projects
+
+### Character Development
+* Basics, morphology, psychology
+* Images and 3D characters
+* Relationships and social dynamics
+* Biographies, backstories, motivations
+* Development across time and events
+* Conflicts, strengths, weaknesses
+* AI-powered suggestions for realistic behaviors and dialogue
+
+### Chapter and Scene Management
+* Structure, capture, and organize chapters and scenes
+
+### Worldbuilding
+* Locations, key items, and groups
+* Timeline, mind maps, and writing goals
+
+### Research and Source Management
+* Integrated database for research and references
+* AI-assisted source generation and analysis:
+  * *“Generate a table of key theories in quantum physics from 1900–2025; discoverer’s name; publication year; summary.”*
+  * *“Give me a description of location XYZ around the year 1300; notable figures; historical events; prominent buildings.”*
+
+### Storyboard and Screenplay Creation
+* Automatically generate storyboards or full screenplays from chapters and scenes
+
+### Statistical Analysis
+* Analyze writing behavior, text volume, and progress
+
+### Stylistic Support
+* First-person perspective
+* Limited and omniscient narration
+* Neutral narrators
+
+### Interview Mode
+* Guided data entry with memory support
+* AI assistance:
+  * *“Generate an image based on the character description.”*
+  * *“Suggest a realistic Chinese name for this character.”*
+
+### Export Formats
+* PDF
+* EPUB
+* CSNova Reader Format:
+  * Supports multimedia content, animations, videos, and interactive elements
+  * The CSNova Reader is open source and distributed license-free
+
+### Video Tutorials
+* Available in German, English, French, and Spanish
+
+### Integrated Word Processing
+* View and edit all data directly
+* Copy/paste without switching between programs
+
+## Optional: Extensions
+
+### Collaboration
+* Collaborative writing and sharing with editors or co-authors
+
+### Data Security
+* Local storage, backup functionality, and cloud options
+
+### System Requirements
+* Available for Windows, macOS, and Linux
+* Mobile version in development
+* Multilingual user interface: German, English, French, and Spanish
+
+## License Agreement
+
+To use the CSNova software and its applications, acceptance of the license agreement ([license.md](https://license.md)) is required.
+
+-----------------------------------------------------------------------------
+
+## Descripción del proyecto
+
+CSNova es una solución de software integral para novelistas, guionistas, escritores de videojuegos y cualquier persona que planifique, desarrolle y publique proyectos narrativos complejos.
+
+## Resumen de funciones
+
+### Gestión de proyectos
+* Gestiona libros y series ilimitados
+* Transfiere contenido entre proyectos de forma flexible
+
+### Desarrollo de personajes
+* Aspectos básicos, morfología, psicología
+* Imágenes y personajes en 3D
+* Relaciones y dinámicas sociales
+* Biografías, historias de fondo, motivaciones
+* Evolución a lo largo del tiempo y los eventos
+* Conflictos, fortalezas, debilidades
+* Sugerencias impulsadas por IA para comportamientos y diálogos realistas
+
+### Gestión de capítulos y escenas
+* Estructura, captura y organización
+
+### Creación de mundos
+* Ubicaciones, objetos, grupos
+* Línea de tiempo, mapas mentales y objetivos de escritura
+
+### Investigación y gestión de fuentes
+* Base de datos integrada para investigaciones
+* Generación y análisis de fuentes con IA:
+  * *«Genera una tabla con teorías clave de la física cuántica entre 1900 y 2025; nombre de los descubridores; año de publicación; resumen.»*
+  * *«Descripción del lugar XYZ alrededor del año 1300; personalidades; eventos históricos; edificios destacados.»*
+
+### Creación de storyboard y guiones
+* Generación automática a partir de capítulos y escenas
+
+### Análisis estadístico
+* Comportamiento de escritura, volumen de texto, progreso
+
+### Soporte estilístico
+* Narración en primera persona
+* Narración limitada y omnisciente
+* Narradores neutrales
+
+### Modo entrevista
+* Entrada guiada de datos con función de recordatorio
+* Asistencia por IA:
+  * *«Crea una imagen basada en la descripción del personaje.»*
+  * *«¿Cuál sería un nombre chino realista para este personaje?»*
+
+### Formatos de exportación
+* PDF
+* EPUB
+* Formato CSNova Reader:
+  * Soporte para contenido multimedia, animaciones, vídeos y elementos interactivos
+  * El lector CSNova es de código abierto y se distribuye sin licencia
+
+### Tutoriales en vídeo
+* Disponibles en alemán, inglés, francés y español
+
+### Procesador de texto integrado
+* Visualiza y edita todos los datos directamente
+* Copiar/pegar sin cambiar de programa
+
+## Opcional: Extensiones
+
+### Colaboración
+* Escritura colaborativa, compartir con editores o coautores
+
+### Seguridad de datos
+* Almacenamiento local, función de copia de seguridad, opciones en la nube
+
+### Requisitos del sistema
+* Disponible para Windows, macOS y Linux
+* Versión móvil en desarrollo
+* Interfaz de usuario multilingüe: alemán, inglés, francés y español
+
+## Acuerdo de licencia
+
+Para utilizar el software CSNova y sus aplicaciones, se requiere la aceptación del acuerdo de licencia ([license.md](https://license.md)).
+
+-----------------------------------------------------------------------------
+
+## Description du projet
+
+CSNova est une solution logicielle complète destinée aux romancier·ère·s, scénaristes, auteur·e·s de jeux vidéo et à toute personne souhaitant planifier, développer et publier des projets narratifs complexes.
+
+## Aperçu des fonctionnalités
+
+### Gestion de projet
+* Gérer un nombre illimité de livres et de séries
+* Transférer du contenu entre projets de manière flexible
+
+### Développement des personnages
+* Bases, morphologie, psychologie
+* Images et personnages en 3D
+* Relations et dynamiques sociales
+* Biographies, histoires personnelles, motivations
+* Évolution dans le temps et selon les événements
+* Conflits, forces, faiblesses
+* Suggestions basées sur l’IA pour des comportements et dialogues réalistes
+
+### Gestion des chapitres et des scènes
+* Structurer, enregistrer et organiser
+
+### Création d’univers
+* Lieux, objets, groupes
+* Chronologie, cartes mentales et objectifs d’écriture
+
+### Recherche et gestion des sources
+* Base de données intégrée pour la recherche
+* Analyse et génération de sources par IA :
+  * *« Génère un tableau des principales
