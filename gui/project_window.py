@@ -5,9 +5,11 @@ from PySide6.QtWidgets import (
     QFormLayout, QLineEdit, QDateEdit, QSpinBox
 )
 from gui.styles.style_utils import load_button_style
+from gui.styles.form_styles import load_form_style  # Style for form fields
 from core.translator import Translator
 from config.settings import load_settings, save_settings
 from core.translations.help_loader import load_help_texts
+from core.translations.form_labels import load_form_labels  # Load translated form labels
 
 class ProjectWindow(QWidget):
     BUTTON_WIDTH = 240
@@ -20,16 +22,19 @@ class ProjectWindow(QWidget):
         self.setWindowTitle(self.translator.tr("project_window_title"))
         self.settings = load_settings()
         self.help_texts = load_help_texts(self.translator.lang)
+        self.form_labels = load_form_labels(self.translator.lang)
         self._set_background()
         self._init_ui()
 
     def _set_background(self):
+        # Set the background color of the window
         palette = self.palette()
         palette.setColor(QPalette.Window, QColor("#f0f0f0"))
         self.setPalette(palette)
         self.setAutoFillBackground(True)
 
     def _init_ui(self):
+        # Create navigation buttons
         self.nav_layout = QVBoxLayout()
         self.nav_buttons = {}
         keys = [
@@ -44,6 +49,7 @@ class ProjectWindow(QWidget):
             self.nav_layout.addWidget(btn)
             self.nav_buttons[key] = btn
 
+        # Create main content and help areas
         self.input_area = QTextEdit()
         self.help_area = QLabel()
         self.help_area.setWordWrap(True)
@@ -51,6 +57,7 @@ class ProjectWindow(QWidget):
         left_widget = QWidget()
         left_widget.setLayout(self.nav_layout)
 
+        # Create horizontal splitter layout: navigation | content | help
         self.splitter = QSplitter(Qt.Horizontal)
         self.splitter.addWidget(left_widget)
         self.splitter.addWidget(self.input_area)
@@ -60,7 +67,7 @@ class ProjectWindow(QWidget):
         layout = QHBoxLayout(self)
         layout.addWidget(self.splitter)
 
-        # Button connections
+        # Connect navigation buttons to their respective handlers
         self.nav_buttons["btn_project"].clicked.connect(self._show_project_text)
         self.nav_buttons["btn_characters"].clicked.connect(self._show_characters_text)
         self.nav_buttons["btn_storylines"].clicked.connect(self._show_storylines_text)
@@ -71,15 +78,18 @@ class ProjectWindow(QWidget):
         self.nav_buttons["btn_exit"].clicked.connect(self._exit_application)
 
     def _update_content(self, section):
+        # Replace current content widget with QTextEdit if needed
         if not isinstance(self.splitter.widget(1), QTextEdit):
             old_widget = self.splitter.widget(1)
             if old_widget:
                 old_widget.setParent(None)
             self.splitter.insertWidget(1, self.input_area)
 
+        # Ensure help area is present
         if self.splitter.count() < 3:
             self.splitter.addWidget(self.help_area)
 
+        # Update content and help text
         self.input_area.setPlainText(f"[{section}]\n\nEnter {section.lower()} data here …")
         key = f"help_{section.lower()}"
         help_text = self.help_texts.get(key, "Help and information will be displayed here.")
@@ -90,34 +100,66 @@ class ProjectWindow(QWidget):
         print("✅ Project form triggered")
         form_layout = QFormLayout()
         self.fields = {}
+        style = load_form_style(16)
 
+        # Load translated form title
+        form_title = self.form_labels.get("project_form_label", "Project")
+        title_label = QLabel(form_title)
+        title_label.setStyleSheet("font-size: 20px; font-weight: bold; margin-bottom: 12px;")
+
+        # Create text fields with translated labels
         for field in [
-            "project_title", "project_subtitle", "project_premise",
-            "project_genre", "project_narrative_perspective", "timeline"
+            "title", "subtitle", "author", "premise",
+            "genre", "narrative_perspective", "timeline", "target_group", "cover_image"
         ]:
             line = QLineEdit()
-            form_layout.addRow(field.replace("_", " ").title(), line)
+            line.setStyleSheet(style)
+            label_key = f"project_{field}"
+            label_text = self.form_labels.get(label_key, field.replace("_", " ").title())
+            form_layout.addRow(label_text, line)
             self.fields[field] = line
 
-        for field in ["project_start_date", "project_deadline"]:
+        # Create date fields with translated labels
+        for field in ["start_date", "deadline"]:
+            label_key = f"project_{field}"
+            label_text = self.form_labels.get(label_key, field.replace("_", " ").title())
             date_edit = QDateEdit()
             date_edit.setCalendarPopup(True)
-            form_layout.addRow(field.replace("_", " ").title(), date_edit)
+            date_edit.setStyleSheet(style)
+            form_layout.addRow(label_text, date_edit)
             self.fields[field] = date_edit
 
+        # Create spinbox for word count goal
+        label_key = "project_word_count_goal"
+        label_text = self.form_labels.get(label_key, "Word Count Goal")
         goal_spin = QSpinBox()
         goal_spin.setMaximum(100000)
-        form_layout.addRow("Words Count Goal", goal_spin)
-        self.fields["project_words_count_goal"] = goal_spin
+        goal_spin.setStyleSheet(style)
+        form_layout.addRow(label_text, goal_spin)
+        self.fields["word_count_goal"] = goal_spin
 
+        # Create save button with translated label
+        save_label = self.form_labels.get("project_btn_save", "Save")
+        save_button = QPushButton(save_label)
+        save_button.setFixedSize(120, 40)
+        save_button.setStyleSheet("font-size: 14px; padding: 6px;")
+        save_button.clicked.connect(self._save_project_form)
+
+        # Assemble layout with title, form, and save button
         form_widget = QWidget()
-        form_widget.setLayout(form_layout)
+        form_container = QVBoxLayout()
+        form_container.addWidget(title_label)
+        form_container.addLayout(form_layout)
+        form_container.addWidget(save_button, alignment=Qt.AlignRight)
+        form_widget.setLayout(form_container)
 
+        # Replace current content widget with the form
         old_widget = self.splitter.widget(1)
         if old_widget:
             old_widget.setParent(None)
         self.splitter.insertWidget(1, form_widget)
 
+        # Ensure help area is present
         if self.splitter.count() < 3:
             self.splitter.addWidget(self.help_area)
 
@@ -126,6 +168,10 @@ class ProjectWindow(QWidget):
         key = "help_project"
         help_text = self.help_texts.get(key, "Help and information will be displayed here.")
         self.help_area.setText(help_text)
+
+    def _save_project_form(self):
+        print("💾 Save button clicked")
+        # Placeholder for future save logic
 
     def _show_characters_text(self):
         print("🧪 Characters button clicked")
@@ -152,9 +198,11 @@ class ProjectWindow(QWidget):
         self._update_content("Locations")
 
     def _exit_application(self):
+        # Close the application
         self.close()
 
     def closeEvent(self, event):
+        # Save splitter sizes before closing
         self.settings["splitter_sizes"] = self.splitter.sizes()
         save_settings(self.settings)
         event.accept()

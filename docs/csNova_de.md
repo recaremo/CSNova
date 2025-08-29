@@ -1678,16 +1678,6 @@ class ProjectWindow(QWidget):
             self.nav_layout.addWidget(btn)
             self.nav_buttons[key] = btn
 
-        # Button connections
-        self.nav_buttons["btn_project"].clicked.connect(self._show_project_text)
-        self.nav_buttons["btn_characters"].clicked.connect(self._show_characters_text)
-        self.nav_buttons["btn_storylines"].clicked.connect(self._show_storylines_text)
-        self.nav_buttons["btn_chapters"].clicked.connect(self._show_chapters_text)
-        self.nav_buttons["btn_scenes"].clicked.connect(self._show_scenes_text)
-        self.nav_buttons["btn_objects"].clicked.connect(self._show_objects_text)
-        self.nav_buttons["btn_locations"].clicked.connect(self._show_locations_text)
-        self.nav_buttons["btn_exit"].clicked.connect(self._exit_application)
-
         self.input_area = QTextEdit()
         self.help_area = QLabel()
         self.help_area.setWordWrap(True)
@@ -1704,18 +1694,37 @@ class ProjectWindow(QWidget):
         layout = QHBoxLayout(self)
         layout.addWidget(self.splitter)
 
+        # Button connections
+        self.nav_buttons["btn_project"].clicked.connect(self._show_project_text)
+        self.nav_buttons["btn_characters"].clicked.connect(self._show_characters_text)
+        self.nav_buttons["btn_storylines"].clicked.connect(self._show_storylines_text)
+        self.nav_buttons["btn_chapters"].clicked.connect(self._show_chapters_text)
+        self.nav_buttons["btn_scenes"].clicked.connect(self._show_scenes_text)
+        self.nav_buttons["btn_objects"].clicked.connect(self._show_objects_text)
+        self.nav_buttons["btn_locations"].clicked.connect(self._show_locations_text)
+        self.nav_buttons["btn_exit"].clicked.connect(self._exit_application)
+
     def _update_content(self, section):
+        if not isinstance(self.splitter.widget(1), QTextEdit):
+            old_widget = self.splitter.widget(1)
+            if old_widget:
+                old_widget.setParent(None)
+            self.splitter.insertWidget(1, self.input_area)
+
+        if self.splitter.count() < 3:
+            self.splitter.addWidget(self.help_area)
+
         self.input_area.setPlainText(f"[{section}]\n\nEnter {section.lower()} data here …")
         key = f"help_{section.lower()}"
         help_text = self.help_texts.get(key, "Help and information will be displayed here.")
         self.help_area.setText(help_text)
+        self.splitter.setSizes([300, 900, 300])
 
-    # Shows project content area — now with a basic input form
     def _show_project_text(self):
+        print("✅ Project form triggered")
         form_layout = QFormLayout()
         self.fields = {}
 
-        # Text fields
         for field in [
             "project_title", "project_subtitle", "project_premise",
             "project_genre", "project_narrative_perspective", "timeline"
@@ -1724,14 +1733,12 @@ class ProjectWindow(QWidget):
             form_layout.addRow(field.replace("_", " ").title(), line)
             self.fields[field] = line
 
-        # Date fields
         for field in ["project_start_date", "project_deadline"]:
             date_edit = QDateEdit()
             date_edit.setCalendarPopup(True)
             form_layout.addRow(field.replace("_", " ").title(), date_edit)
             self.fields[field] = date_edit
 
-        # Numeric field
         goal_spin = QSpinBox()
         goal_spin.setMaximum(100000)
         form_layout.addRow("Words Count Goal", goal_spin)
@@ -1740,37 +1747,42 @@ class ProjectWindow(QWidget):
         form_widget = QWidget()
         form_widget.setLayout(form_layout)
 
-        # Replace middle widget safely
-        self.input_area.deleteLater()
-        self.splitter.replaceWidget(1, form_widget)
-        self.input_area = form_widget  # Update reference
+        old_widget = self.splitter.widget(1)
+        if old_widget:
+            old_widget.setParent(None)
+        self.splitter.insertWidget(1, form_widget)
+
+        if self.splitter.count() < 3:
+            self.splitter.addWidget(self.help_area)
+
         self.splitter.setSizes([300, 900, 300])
+
         key = "help_project"
         help_text = self.help_texts.get(key, "Help and information will be displayed here.")
         self.help_area.setText(help_text)
 
-    # Shows character content area — ready for future form integration
     def _show_characters_text(self):
+        print("🧪 Characters button clicked")
         self._update_content("Characters")
 
-    # Shows storyline content area — ready for future form integration
     def _show_storylines_text(self):
+        print("🧪 Storylines button clicked")
         self._update_content("Storylines")
 
-    # Shows chapter content area — ready for future form integration
     def _show_chapters_text(self):
+        print("🧪 Chapters button clicked")
         self._update_content("Chapters")
 
-    # Shows scene content area — ready for future form integration
     def _show_scenes_text(self):
+        print("🧪 Scenes button clicked")
         self._update_content("Scenes")
 
-    # Shows object content area — ready for future form integration
     def _show_objects_text(self):
+        print("🧪 Objects button clicked")
         self._update_content("Objects")
 
-    # Shows location content area — ready for future form integration
     def _show_locations_text(self):
+        print("🧪 Locations button clicked")
         self._update_content("Locations")
 
     def _exit_application(self):

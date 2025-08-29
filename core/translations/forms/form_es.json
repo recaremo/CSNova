@@ -1,0 +1,16 @@
+{
+    "project_form_label": "Proyecto",
+    "project_btn_save": "Guardar",
+    "project_title": "Título",
+    "project_subtitle": "Subtítulo",
+    "project_author": "Autor",
+    "project_premise": "Premisa",
+    "project_genre": "Género",
+    "project_narrative_perspective": "Perspectiva Narrativa",
+    "project_timeline": "Cronología",
+    "project_target_group": "Grupo Objetivo",
+    "project_start_date": "Fecha de Inicio",
+    "project_deadline": "Fecha Límite",
+    "project_word_count_goal": "Objetivo de Recuento de Palabras",
+    "project_cover_image": "Imagen de Portada"
+}

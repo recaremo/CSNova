@@ -6,11 +6,20 @@ QPushButton {
     border-radius: 10px;
     border-style: outset;
 }
+
 QPushButton:hover {
     background-color: #e8d9b5;
     border-color: #5c5138;
 }
+
 QPushButton:pressed {
     background-color: #c0aa7a;
     border-style: inset;
+}
+
+/* Highlighted style for active button */
+QPushButton.active {
+    background-color: #bfa76f;
+    border: 2px solid #5c5138;
+    font-weight: bold;
 }
