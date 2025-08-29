@@ -1,5 +1,5 @@
 
-[English](##english) [Español](##espa%C3%B1ol) [Français](##fran%C3%A7ais)
+[English](##English) [Español](##Espa%C3%B1ol) [Français](##Fran%C3%A7ais)
 
 ## Deutsch
 # Codices Scriptoria Nova (CSNova)
