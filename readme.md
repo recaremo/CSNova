@@ -1,6 +1,6 @@
 [English](#project-description) [Español](#descripci%C3%B3n-del-proyecto) [Français](#description-du-projet)
 
-# Deutsch
+## Deutsch
 # Codices Scriptoria Nova (CSNova)
 
 ## Projektbeschreibung
@@ -84,9 +84,9 @@ CSNova ist eine umfassende Softwarelösung für Romanautor:innen, Drehbuchautor:
 Für die Nutzung der Software CSNova und ihrer Anwendungen ist die Zustimmung zur Lizenzvereinbarung ([license.md](https://license.md)) Voraussetzung.
 
 -----------------------------------------------------------------------------
-[Deutsch](#Deutsch) [English](#English) [Español](#Español) [Français] (#Français)
+[Deutsch](##Deutsch) [Español](##Español) [Français](##Français)
 
-# English
+## English
 # Codices Scriptoria Nova (CSNova)
 
 ## Project Description
@@ -170,9 +170,9 @@ CSNova is a comprehensive software solution for novelists, screenwriters, game w
 To use the CSNova software and its applications, acceptance of the license agreement ([license.md](https://license.md)) is required.
 
 -----------------------------------------------------------------------------
-[Deutsch](#Deutsch) [English](#English) [Español](#Español) [Français] (#Français)
+[Deutsch](##Deutsch) [English](##English) [Français)](##Français)
 
-# Español
+## Español
 # Codices Scriptoria Nova (CSNova)
 
 ## Descripción del proyecto
@@ -256,9 +256,9 @@ CSNova es una solución de software integral para novelistas, guionistas, escrit
 Para utilizar el software CSNova y sus aplicaciones, se requiere la aceptación del acuerdo de licencia ([license.md](https://license.md)).
 
 -----------------------------------------------------------------------------
-[Deutsch](#Deutsch) [English](#English) [Español](#Español) [Français] (#Français)
+[Deutsch](##Deutsch) [English](##English) [Español](##Español) 
 
-# Français
+## Français
 # Codices Scriptoria Nova (CSNova)
 
 ## Description du projet
