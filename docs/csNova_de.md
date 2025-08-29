@@ -179,10 +179,6 @@ Entwicklung einer plattformübergreifenden Desktop‑Anwendung (Linux, Windows, 
 │       ├── csnova.pkg
 │       ├── EXE-00.toc
 │       ├── localpycs/
-│       │   ├── pyimod01_archive.pyc
-│       │   ├── pyimod02_importers.pyc
-│       │   ├── pyimod03_ctypes.pyc
-│       │   └── struct.pyc
 │       ├── PKG-00.toc
 │       ├── PYZ-00.pyz
 │       ├── PYZ-00.toc
@@ -193,8 +189,6 @@ Entwicklung einer plattformübergreifenden Desktop‑Anwendung (Linux, Windows, 
 │   ├── dev.py
 │   ├── prod.py
 │   ├── __pycache__/
-│   │   ├── dev.cpython-312.pyc
-│   │   └── settings.cpython-312.pyc
 │   ├── settings.py
 │   └── user_settings.json
 ├── core/
@@ -206,10 +200,6 @@ Entwicklung einer plattformübergreifenden Desktop‑Anwendung (Linux, Windows, 
 │   │   ├── project.py
 │   │   └── scene.py
 │   ├── __pycache__/
-│   │   ├── database.cpython-312.pyc
-│   │   ├── __init__.cpython-312.pyc
-│   │   ├── translations.cpython-312.pyc
-│   │   └── translator.cpython-312.pyc
 │   ├── services/
 │   ├── tables/
 │   │   ├── character_appearance_detail.py
@@ -236,32 +226,6 @@ Entwicklung einer plattformübergreifenden Desktop‑Anwendung (Linux, Windows, 
 │   │   ├── project_scene_storyline_map.py
 │   │   ├── project_storylines.py
 │   │   ├── __pycache__/
-│   │   │   ├── character_appearance_detail.cpython-312.pyc
-│   │   │   ├── character_appearance_main.cpython-312.pyc
-│   │   │   ├── character_education.cpython-312.pyc
-│   │   │   ├── character_main.cpython-312.pyc
-│   │   │   ├── character_origin.cpython-312.pyc
-│   │   │   ├── character_personality.cpython-312.pyc
-│   │   │   ├── character_psychological_profile.cpython-312.pyc
-│   │   │   ├── gender.cpython-312.pyc
-│   │   │   ├── gender_data.cpython-312.pyc
-│   │   │   ├── __init__.cpython-312.pyc
-│   │   │   ├── project_chapters.cpython-312.pyc
-│   │   │   ├── project_chapters_scenes.cpython-312.pyc
-│   │   │   ├── project_character_group_map.cpython-312.pyc
-│   │   │   ├── project_character_storyline_map.cpython-312.pyc
-│   │   │   ├── project.cpython-312.pyc
-│   │   │   ├── project_locations.cpython-312.pyc
-│   │   │   ├── project_objects.cpython-312.pyc
-│   │   │   ├── project_scene_character_map.cpython-312.pyc
-│   │   │   ├── project_scene_location_map.cpython-312.pyc
-│   │   │   ├── project_scene_object_map.cpython-312.pyc
-│   │   │   ├── project_scenes_objects.cpython-312.pyc
-│   │   │   ├── project_scenes_places.cpython-312.pyc
-│   │   │   ├── project_scene_storyline_map.cpython-312.pyc
-│   │   │   ├── project_storylines.cpython-312.pyc
-│   │   │   ├── sex_orientation.cpython-312.pyc
-│   │   │   └── sex_orientation_data.cpython-312.pyc
 │   │   ├── sex_orientation_data.py
 │   │   └── sex_orientation.py
 │   ├── translations/
@@ -282,10 +246,6 @@ Entwicklung einer plattformübergreifenden Desktop‑Anwendung (Linux, Windows, 
 │   │   │   └── help_fr.json
 │   │   ├── help_loader.py
 │   │   ├── __pycache__/
-│   │   │   ├── form_labels.cpython-312.pyc
-│   │   │   ├── help_loader.cpython-312.pyc
-│   │   │   ├── __init__.cpython-312.pyc
-│   │   │   └── translations.cpython-312.pyc
 │   │   └── translations.py
 │   └── translator.py
 ├── csnova.py
@@ -304,27 +264,21 @@ Entwicklung einer plattformübergreifenden Desktop‑Anwendung (Linux, Windows, 
 │   ├── preferences.py
 │   ├── project_window.py
 │   ├── __pycache__/
-│   │   ├── preferences.cpython-312.pyc
-│   │   ├── project_window.cpython-312.pyc
-│   │   ├── project_window_old.cpython-312.pyc
-│   │   └── start_window.cpython-312.pyc
 │   ├── start_window.py
 │   ├── styles/
 │   │   ├── button_style.qss
 │   │   ├── form_styles.py
 │   │   ├── __pycache__/
-│   │   │   ├── form_styles.cpython-312.pyc
-│   │   │   └── style_utils.cpython-312.pyc
 │   │   └── style_utils.py
 │   ├── tabs/
 │   │   ├── character_tab.py
 │   │   ├── project_tab.py
 │   │   ├── __pycache__/
-│   │   │   └── project_tab.cpython-312.pyc
 │   │   └── scene_tab.py
 │   └── widgets/
 │       ├── dialog.py
 │       └── listview.py
+├── index.md
 ├── install_csnova.sh*
 ├── license.md
 ├── readme.md
@@ -979,7 +933,7 @@ def create_table(cursor):
 ```python
 # character_groups.py
 # table: subtable for character_main
-# description: character memberchip in a group
+# description: character membership in a group
 # connected with: character_main
 def create_table(cursor):
     cursor.execute("""
@@ -1074,11 +1028,11 @@ def create_table(cursor):
     """)
 ```
 
-#### 5.4.4 project_chapter_scenes.py
+#### 5.4.4 project_chapters_scenes.py
 
 ```python
-# project_chapter_scenes.py
-# # table: project_chapter_scenes
+# project_chapters_scenes.py
+# # table: project_chapters_scenes
 # description: scenes inside a chapter
 # 
 def create_table(cursor):
@@ -1114,7 +1068,7 @@ def create_table(cursor):
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS project_objects (
         project_objects_ID INTEGER PRIMARY KEY AUTOINCREMENT,
-        project_objects_titel TEXT,
+        project_objects_title TEXT,
         project_objects_description TEXT
     );
     """)
@@ -1123,15 +1077,15 @@ def create_table(cursor):
 #### 5.4.6 project_locations.py
 
 ```python
-# project_places.py
-# table: project_scenes_places
-# description: places can be used in different scenes
+# project_locations.py
+# table: project_locations
+# description: locations can be used in different scenes
 # 
 def create_table(cursor):
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS project_locations (
         project_locations_ID INTEGER PRIMARY KEY AUTOINCREMENT,
-        project_locations_titel TEXT,
+        project_locations_title TEXT,
         project_locations_description TEXT
     );
     """)
@@ -1173,25 +1127,25 @@ def create_table(cursor):
         scene_ID INTEGER NOT NULL,
         location_ID INTEGER NOT NULL,
         FOREIGN KEY(scene_ID) REFERENCES project_chapters_scenes(project_chapters_scenes_ID),
-        FOREIGN KEY(location_ID) REFERENCES locations(locations_ID)
+        FOREIGN KEY(location_ID) REFERENCES project_locations(project_locations_ID)
     );
     """)
 ```
 
-#### 5.5.3 project_scene_object_map.py
+#### 5.5.3 scene_objects_map.py
 ```python
-# project_scene_object_map.py
-# table: scene_object_map
+# scene_objects_map.py
+# table: scene_objects_map
 # description: links objects to scenes
 
 def create_table(cursor):
     cursor.execute("""
-    CREATE TABLE IF NOT EXISTS scene_object_map (
+    CREATE TABLE IF NOT EXISTS scene_objects_map (
         scene_object_map_ID INTEGER PRIMARY KEY AUTOINCREMENT,
         scene_ID INTEGER NOT NULL,
         object_ID INTEGER NOT NULL,
         FOREIGN KEY(scene_ID) REFERENCES project_chapters_scenes(project_chapters_scenes_ID),
-        FOREIGN KEY(object_ID) REFERENCES objects(object_ID)
+        FOREIGN KEY(object_ID) REFERENCES project_objects(project_objects_ID)
     );
     """)
 ```
@@ -1228,7 +1182,7 @@ def create_table(cursor):
         group_ID INTEGER NOT NULL,
         role_in_group TEXT,
         FOREIGN KEY(character_ID) REFERENCES character_main(character_ID),
-        FOREIGN KEY(group_ID) REFERENCES character_groups(character_groups_ID)
+        FOREIGN KEY(group_ID) REFERENCES character_groups(groups_ID)
     );
     """)
 ```
@@ -2222,11 +2176,11 @@ Es existieren drei Versionen:
 | **CSNova Magister**  | Einzelautor:innen mit Einkommen >50.000 € | Professionell (Einzelnutzung) | Kostenpflichtig (mit Registrierung) |
 | **CSNova Collegium** | Autor:innen-Teams                  | Professionell (Teamnutzung)    | Kostenpflichtig (mit Registrierung) |
 
-### Änderungen und Weitergabe
+### Änderungen und Weitergabe 
 
-Änderungen am Quellcode dürfen **nur mit schriftlicher Zustimmung des Autors** vorgenommen werden. Alle modifizierten Versionen müssen ebenfalls unter einer **Open Source Lizenz** veröffentlicht werden.
+Änderungen am Quellcode und die Weitergabe modifizierter Versionen sind gestattet, sofern die modifizierten Versionen ebenfalls unter einer Open Source Lizenz veröffentlicht werden. 
 
-Die Nutzung des Namens „CSNova“, „Codices Scriptoria Nova“, „CSNova Novitia“, „CSNova Magister“ oder „CSNova Collegium“ für modifizierte Versionen ist **nur mit schriftlicher Genehmigung des Autors** gestattet. Der Autor übernimmt **keine Haftung** für Schäden, die durch veränderte Versionen oder deren Inhalte entstehen – insbesondere nicht für Inhalte, die ohne seine Zustimmung verändert oder unter einem der genannten Namen veröffentlicht wurden.
+Die Nutzung des Namens „CSNova“, „Codices Scriptoria Nova“, „CSNova Novitia“, „CSNova Magister“ oder „CSNova Collegium“ für modifizierte Versionen ist nur mit schriftlicher Genehmigung des Autors gestattet. Der Autor übernimmt **keine Haftung** für Schäden, die durch veränderte Versionen oder deren Inhalte entstehen – insbesondere nicht für Inhalte, die ohne seine Zustimmung verändert oder unter einem der genannten Namen veröffentlicht wurden.
 
 ## CSNova-Reader
 

@@ -1,5 +1,5 @@
-# project_chapter_scenes.py
-# # table: project_chapter_scenes
+# project_chapters_scenes.py
+# # table: project_chapters_scenes
 # description: scenes inside a chapter
 # 
 def create_table(cursor):

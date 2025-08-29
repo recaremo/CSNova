@@ -1,6 +1,6 @@
 # character_groups.py
 # table: subtable for character_main
-# description: character memberchip in a group
+# description: character membership in a group
 # connected with: character_main
 def create_table(cursor):
     cursor.execute("""
