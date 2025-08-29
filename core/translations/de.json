@@ -1,5 +1,5 @@
 {
-  "btn_new_project": "Neues Projekt",
+  "btn_new_project": "Datenbanken",
   "btn_load_project": "Projekt laden …",
   "btn_settings": "Einstellungen",
   "btn_help": "Hilfe/Tutorial",
@@ -26,6 +26,6 @@
   "btn_save": "Speichern",
   "tooltip_exit": "Programm beenden",
   "action_cancel": "Abbrechen",
-  "project_window_title": "Projekt Manager",
+  "project_window_title": "Datenbanken",
   "start_window_title": "Startseite"
 }

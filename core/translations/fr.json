@@ -1,5 +1,5 @@
 {
-        "btn_new_project": "Nouveau projet", 
+        "btn_new_project": "Bases de données", 
         "btn_load_project": "Ouvrir projet …",
         "btn_settings": "Paramètres",
         "btn_help": "Aide/Tutoriel",
@@ -26,6 +26,6 @@
         "btn_save": "Enregistrer",
         "tooltip_exit": "Quitter l'application",
         "action_cancel": "Annuler",
-        "project_window_title": "Gestion de projet",
+        "project_window_title": "Bases de données",
         "start_window_title": "Accueil"
     }

@@ -1,5 +1,5 @@
-import os
 from pathlib import Path
+import os
 
 def load_button_style(font_size):
     """
@@ -12,7 +12,7 @@ def load_button_style(font_size):
             QPushButton {{
                 background-color: #d4c29c;
                 color: #1a1a1a;
-                font-size: 18px;
+                font-size: {font_size}px;
                 border: 2px solid #8b7d5c;
                 border-radius: 10px;
                 border-style: outset;
@@ -28,5 +28,20 @@ def load_button_style(font_size):
         """
     with open(style_path, "r") as f:
         style = f.read()
-    # Replace placeholder for font size if present
     return style.replace("{font_size}", str(font_size))
+
+def load_active_button_style(font_size):
+    """
+    Return style for the active navigation button.
+    """
+    return f"""
+        QPushButton {{
+            background-color: #6E8B3D;
+            color: #1a1a1a;
+            font-size: {font_size}px;
+            border: 2px solid #5c5138;
+            border-radius: 10px;
+            border-style: outset;
+            font-weight: bold;
+        }}
+    """
