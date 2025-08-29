@@ -160,6 +160,7 @@ Entwicklung einer plattformübergreifenden Desktop‑Anwendung (Linux, Windows, 
 #### 4.1.1 Projektbaum
 
 ```text
+./
 ├── ai/
 │   ├── analysis.py
 │   ├── brainstorming.py
@@ -171,6 +172,22 @@ Entwicklung einer plattformübergreifenden Desktop‑Anwendung (Linux, Windows, 
 │   └── media/
 │       ├── csNova_background_start.png
 │       └── csNova_logo_main.png
+├── build/
+│   └── csnova/
+│       ├── Analysis-00.toc
+│       ├── base_library.zip
+│       ├── csnova.pkg
+│       ├── EXE-00.toc
+│       ├── localpycs/
+│       │   ├── pyimod01_archive.pyc
+│       │   ├── pyimod02_importers.pyc
+│       │   ├── pyimod03_ctypes.pyc
+│       │   └── struct.pyc
+│       ├── PKG-00.toc
+│       ├── PYZ-00.pyz
+│       ├── PYZ-00.toc
+│       ├── warn-csnova.txt
+│       └── xref-csnova.html
 ├── cli.py
 ├── config/
 │   ├── dev.py
@@ -190,6 +207,7 @@ Entwicklung einer plattformübergreifenden Desktop‑Anwendung (Linux, Windows, 
 │   │   └── scene.py
 │   ├── __pycache__/
 │   │   ├── database.cpython-312.pyc
+│   │   ├── __init__.cpython-312.pyc
 │   │   ├── translations.cpython-312.pyc
 │   │   └── translator.cpython-312.pyc
 │   ├── services/
@@ -197,7 +215,6 @@ Entwicklung einer plattformübergreifenden Desktop‑Anwendung (Linux, Windows, 
 │   │   ├── character_appearance_detail.py
 │   │   ├── character_appearance_main.py
 │   │   ├── character_education.py
-│   │   ├── character_groups/
 │   │   ├── character_groups.py
 │   │   ├── character_main.py
 │   │   ├── character_origin.py
@@ -208,9 +225,15 @@ Entwicklung einer plattformübergreifenden Desktop‑Anwendung (Linux, Windows, 
 │   │   ├── __init__.py
 │   │   ├── project_chapters.py
 │   │   ├── project_chapters_scenes.py
+│   │   ├── project_character_group_map.py
+│   │   ├── project_character_storyline_map.py
+│   │   ├── project_locations.py
+│   │   ├── project_objects.py
 │   │   ├── project.py
-│   │   ├── project_scenes_objects.py
-│   │   ├── project_scenes_places.py
+│   │   ├── project_scene_character_map.py
+│   │   ├── project_scene_location_map.py
+│   │   ├── project_scene_object_map.py
+│   │   ├── project_scene_storyline_map.py
 │   │   ├── project_storylines.py
 │   │   ├── __pycache__/
 │   │   │   ├── character_appearance_detail.cpython-312.pyc
@@ -225,9 +248,17 @@ Entwicklung einer plattformübergreifenden Desktop‑Anwendung (Linux, Windows, 
 │   │   │   ├── __init__.cpython-312.pyc
 │   │   │   ├── project_chapters.cpython-312.pyc
 │   │   │   ├── project_chapters_scenes.cpython-312.pyc
+│   │   │   ├── project_character_group_map.cpython-312.pyc
+│   │   │   ├── project_character_storyline_map.cpython-312.pyc
 │   │   │   ├── project.cpython-312.pyc
+│   │   │   ├── project_locations.cpython-312.pyc
+│   │   │   ├── project_objects.cpython-312.pyc
+│   │   │   ├── project_scene_character_map.cpython-312.pyc
+│   │   │   ├── project_scene_location_map.cpython-312.pyc
+│   │   │   ├── project_scene_object_map.cpython-312.pyc
 │   │   │   ├── project_scenes_objects.cpython-312.pyc
 │   │   │   ├── project_scenes_places.cpython-312.pyc
+│   │   │   ├── project_scene_storyline_map.cpython-312.pyc
 │   │   │   ├── project_storylines.cpython-312.pyc
 │   │   │   ├── sex_orientation.cpython-312.pyc
 │   │   │   └── sex_orientation_data.cpython-312.pyc
@@ -237,17 +268,32 @@ Entwicklung einer plattformübergreifenden Desktop‑Anwendung (Linux, Windows, 
 │   │   ├── de.json
 │   │   ├── en.json
 │   │   ├── es.json
-│   │   └── fr.json
-│   ├── translations.py
+│   │   ├── form_labels.py
+│   │   ├── forms/
+│   │   │   ├── form_de.json
+│   │   │   ├── form_en.json
+│   │   │   ├── form_es.json
+│   │   │   └── form_fr.json
+│   │   ├── fr.json
+│   │   ├── help/
+│   │   │   ├── help_de.json
+│   │   │   ├── help_en.json
+│   │   │   ├── help_es.json
+│   │   │   └── help_fr.json
+│   │   ├── help_loader.py
+│   │   ├── __pycache__/
+│   │   │   ├── form_labels.cpython-312.pyc
+│   │   │   ├── help_loader.cpython-312.pyc
+│   │   │   ├── __init__.cpython-312.pyc
+│   │   │   └── translations.cpython-312.pyc
+│   │   └── translations.py
 │   └── translator.py
+├── csnova.py
 ├── data/
 │   └── csnova.db
+├── dist/
+│   └── csnova*
 ├── docs/
-│   ├── csNova_00_de.md
-│   ├── csNova_01-04_de.md
-│   ├── csNova_05_de.md
-│   ├── csNova_06_de.md
-│   ├── csNova_07_de.md
 │   └── csNova_de.md
 ├── export/
 │   ├── csnova_export.py
@@ -256,14 +302,18 @@ Entwicklung einer plattformübergreifenden Desktop‑Anwendung (Linux, Windows, 
 │   └── pdf_export.py
 ├── gui/
 │   ├── preferences.py
+│   ├── project_window.py
 │   ├── __pycache__/
-│   │   ├── main_window.cpython-312.pyc
 │   │   ├── preferences.cpython-312.pyc
+│   │   ├── project_window.cpython-312.pyc
+│   │   ├── project_window_old.cpython-312.pyc
 │   │   └── start_window.cpython-312.pyc
 │   ├── start_window.py
 │   ├── styles/
-│   │   ├── buttons.qss
+│   │   ├── button_style.qss
+│   │   ├── form_styles.py
 │   │   ├── __pycache__/
+│   │   │   ├── form_styles.cpython-312.pyc
 │   │   │   └── style_utils.cpython-312.pyc
 │   │   └── style_utils.py
 │   ├── tabs/
@@ -275,10 +325,10 @@ Entwicklung einer plattformübergreifenden Desktop‑Anwendung (Linux, Windows, 
 │   └── widgets/
 │       ├── dialog.py
 │       └── listview.py
-├── .gitignore
+├── install_csnova.sh*
 ├── license.md
-├── main.py
 ├── readme.md
+├── requirements.txt
 ├── setup.py
 └── tests/
     └── conftest.py
@@ -544,6 +594,89 @@ In diesem Abschnitt sind die Translationstabellen für die GUI zusammengefasst.
     }
 ```
 
+#### 5.2.5 form_de.json
+
+```json
+{
+    "project_form_label": "Projekt", 
+    "project_btn_save": "Speichern", 
+    "project_title": "Titel",
+    "project_subtitle": "Untertitel",
+    "project_author": "Autor",
+    "project_premise": "Prämisse",
+    "project_genre": "Genre",
+    "project_narrative_perspective": "Erzählperspektive",
+    "project_timeline": "Zeitlinie",
+    "project_target_group": "Zielgruppe",
+    "project_start_date": "Startdatum",
+    "project_deadline": "Abgabedatum",
+    "project_word_count_goal": "Ziel Wortanzahl",
+    "project_cover_image": "Titelbild"
+}
+```
+
+#### 5.2.6 form_en.json
+
+```json
+{
+    "project_form_label": "Project",
+    "project_btn_save": "Save",
+    "project_title": "Title",
+    "project_subtitle": "Subtitle",
+    "project_author": "Author",
+    "project_premise": "Premise",
+    "project_genre": "Genre",
+    "project_narrative_perspective": "Narrative Perspective",
+    "project_timeline": "Timeline",
+    "project_target_group": "Target Group",
+    "project_start_date": "Start Date",
+    "project_deadline": "Deadline",
+    "project_word_count_goal": "Word Count Goal",
+    "project_cover_image": "Cover Image"
+}
+```
+
+#### 5.2.6 form_es.json
+
+```json
+{
+    "project_form_label": "Proyecto",
+    "project_btn_save": "Guardar",
+    "project_title": "Título",
+    "project_subtitle": "Subtítulo",
+    "project_author": "Autor",
+    "project_premise": "Premisa",
+    "project_genre": "Género",
+    "project_narrative_perspective": "Perspectiva Narrativa",
+    "project_timeline": "Cronología",
+    "project_target_group": "Grupo Objetivo",
+    "project_start_date": "Fecha de Inicio",
+    "project_deadline": "Fecha Límite",
+    "project_word_count_goal": "Objetivo de Recuento de Palabras",
+    "project_cover_image": "Imagen de Portada"
+}
+```
+
+#### 5.2.5 form_fr.json
+
+```json
+{
+    "project_form_label": "projet",
+    "project_btn_save": "sauvegarder",
+    "project_title": "titre",
+    "project_subtitle": "sous-titre",
+    "project_author": "auteur",
+    "project_premise": "prémisse",
+    "project_genre": "genre",
+    "project_narrative_perspective": "perspective narrative",
+    "project_timeline": "chronologie",
+    "project_target_group": "groupe cible",
+    "project_start_date": "date de début",
+    "project_deadline": "date limite",
+    "project_word_count_goal": "objectif de nombre de mots",
+    "project_cover_image": "image de couverture"
+}
+```
 ### 5.3 Character Tabellen
 
 In diesem Abschnitt sind die Tabellen zur Erstellung von Charakteren zusammengefasst.
@@ -878,7 +1011,9 @@ def create_table(cursor):
         project_premise TEXT,
         project_title TEXT,
         project_subtitle TEXT,
+        project_author TEXT,
         project_genre TEXT,
+        project_cover_image TEXT,
         project_target_group TEXT,
         project_narrative_perspective TEXT,
         project_deadline DATE,
@@ -1445,6 +1580,32 @@ QPushButton:pressed {
 }
 ```
 
+#### 6.2.4 Formulare (form_styles.py)
+```python
+def load_form_style(input_font_size=14, label_font_size=14, input_width=400):
+    return f"""
+        QLineEdit, QDateEdit, QSpinBox {{
+            padding: 6px;
+            border: 1px solid #aaa;
+            border-radius: 4px;
+            background-color: #ffffff;
+            font-size: {input_font_size}px;
+            font-family: 'Segoe UI', sans-serif;
+            min-width: {input_width}px;
+            max-width: {input_width}px;
+        }}
+
+        QLabel {{
+            font-size: {label_font_size}px;
+            color: #333;
+        }}
+
+        QFormLayout {{
+            margin: 12px;
+        }}
+    """
+```
+
 ### 6.3 Preferenzen (preferences.py)
 
 ```python
@@ -1553,7 +1714,7 @@ for lang in LANGUAGES:
         TRANSLATIONS[lang] = json.load(f)
 ```
 
-#### 6.4.5 Programmeinstellungen (user_settings.json)
+#### 6.4.1 Programmeinstellungen (user_settings.json)
 
 ```json
 {
@@ -1639,9 +1800,11 @@ from PySide6.QtWidgets import (
     QFormLayout, QLineEdit, QDateEdit, QSpinBox
 )
 from gui.styles.style_utils import load_button_style
+from gui.styles.form_styles import load_form_style  # Style for form fields
 from core.translator import Translator
 from config.settings import load_settings, save_settings
 from core.translations.help_loader import load_help_texts
+from core.translations.form_labels import load_form_labels  # Load translated form labels
 
 class ProjectWindow(QWidget):
     BUTTON_WIDTH = 240
@@ -1654,16 +1817,19 @@ class ProjectWindow(QWidget):
         self.setWindowTitle(self.translator.tr("project_window_title"))
         self.settings = load_settings()
         self.help_texts = load_help_texts(self.translator.lang)
+        self.form_labels = load_form_labels(self.translator.lang)
         self._set_background()
         self._init_ui()
 
     def _set_background(self):
+        # Set the background color of the window
         palette = self.palette()
         palette.setColor(QPalette.Window, QColor("#f0f0f0"))
         self.setPalette(palette)
         self.setAutoFillBackground(True)
 
     def _init_ui(self):
+        # Create navigation buttons
         self.nav_layout = QVBoxLayout()
         self.nav_buttons = {}
         keys = [
@@ -1678,6 +1844,7 @@ class ProjectWindow(QWidget):
             self.nav_layout.addWidget(btn)
             self.nav_buttons[key] = btn
 
+        # Create main content and help areas
         self.input_area = QTextEdit()
         self.help_area = QLabel()
         self.help_area.setWordWrap(True)
@@ -1685,6 +1852,7 @@ class ProjectWindow(QWidget):
         left_widget = QWidget()
         left_widget.setLayout(self.nav_layout)
 
+        # Create horizontal splitter layout: navigation | content | help
         self.splitter = QSplitter(Qt.Horizontal)
         self.splitter.addWidget(left_widget)
         self.splitter.addWidget(self.input_area)
@@ -1694,7 +1862,7 @@ class ProjectWindow(QWidget):
         layout = QHBoxLayout(self)
         layout.addWidget(self.splitter)
 
-        # Button connections
+        # Connect navigation buttons to their respective handlers
         self.nav_buttons["btn_project"].clicked.connect(self._show_project_text)
         self.nav_buttons["btn_characters"].clicked.connect(self._show_characters_text)
         self.nav_buttons["btn_storylines"].clicked.connect(self._show_storylines_text)
@@ -1705,15 +1873,18 @@ class ProjectWindow(QWidget):
         self.nav_buttons["btn_exit"].clicked.connect(self._exit_application)
 
     def _update_content(self, section):
+        # Replace current content widget with QTextEdit if needed
         if not isinstance(self.splitter.widget(1), QTextEdit):
             old_widget = self.splitter.widget(1)
             if old_widget:
                 old_widget.setParent(None)
             self.splitter.insertWidget(1, self.input_area)
 
+        # Ensure help area is present
         if self.splitter.count() < 3:
             self.splitter.addWidget(self.help_area)
 
+        # Update content and help text
         self.input_area.setPlainText(f"[{section}]\n\nEnter {section.lower()} data here …")
         key = f"help_{section.lower()}"
         help_text = self.help_texts.get(key, "Help and information will be displayed here.")
@@ -1724,34 +1895,66 @@ class ProjectWindow(QWidget):
         print("✅ Project form triggered")
         form_layout = QFormLayout()
         self.fields = {}
+        style = load_form_style(16)
 
+        # Load translated form title
+        form_title = self.form_labels.get("project_form_label", "Project")
+        title_label = QLabel(form_title)
+        title_label.setStyleSheet("font-size: 20px; font-weight: bold; margin-bottom: 12px;")
+
+        # Create text fields with translated labels
         for field in [
-            "project_title", "project_subtitle", "project_premise",
-            "project_genre", "project_narrative_perspective", "timeline"
+            "title", "subtitle", "author", "premise",
+            "genre", "narrative_perspective", "timeline", "target_group", "cover_image"
         ]:
             line = QLineEdit()
-            form_layout.addRow(field.replace("_", " ").title(), line)
+            line.setStyleSheet(style)
+            label_key = f"project_{field}"
+            label_text = self.form_labels.get(label_key, field.replace("_", " ").title())
+            form_layout.addRow(label_text, line)
             self.fields[field] = line
 
-        for field in ["project_start_date", "project_deadline"]:
+        # Create date fields with translated labels
+        for field in ["start_date", "deadline"]:
+            label_key = f"project_{field}"
+            label_text = self.form_labels.get(label_key, field.replace("_", " ").title())
             date_edit = QDateEdit()
             date_edit.setCalendarPopup(True)
-            form_layout.addRow(field.replace("_", " ").title(), date_edit)
+            date_edit.setStyleSheet(style)
+            form_layout.addRow(label_text, date_edit)
             self.fields[field] = date_edit
 
+        # Create spinbox for word count goal
+        label_key = "project_word_count_goal"
+        label_text = self.form_labels.get(label_key, "Word Count Goal")
         goal_spin = QSpinBox()
         goal_spin.setMaximum(100000)
-        form_layout.addRow("Words Count Goal", goal_spin)
-        self.fields["project_words_count_goal"] = goal_spin
+        goal_spin.setStyleSheet(style)
+        form_layout.addRow(label_text, goal_spin)
+        self.fields["word_count_goal"] = goal_spin
 
+        # Create save button with translated label
+        save_label = self.form_labels.get("project_btn_save", "Save")
+        save_button = QPushButton(save_label)
+        save_button.setFixedSize(120, 40)
+        save_button.setStyleSheet("font-size: 14px; padding: 6px;")
+        save_button.clicked.connect(self._save_project_form)
+
+        # Assemble layout with title, form, and save button
         form_widget = QWidget()
-        form_widget.setLayout(form_layout)
+        form_container = QVBoxLayout()
+        form_container.addWidget(title_label)
+        form_container.addLayout(form_layout)
+        form_container.addWidget(save_button, alignment=Qt.AlignRight)
+        form_widget.setLayout(form_container)
 
+        # Replace current content widget with the form
         old_widget = self.splitter.widget(1)
         if old_widget:
             old_widget.setParent(None)
         self.splitter.insertWidget(1, form_widget)
 
+        # Ensure help area is present
         if self.splitter.count() < 3:
             self.splitter.addWidget(self.help_area)
 
@@ -1760,6 +1963,10 @@ class ProjectWindow(QWidget):
         key = "help_project"
         help_text = self.help_texts.get(key, "Help and information will be displayed here.")
         self.help_area.setText(help_text)
+
+    def _save_project_form(self):
+        print("💾 Save button clicked")
+        # Placeholder for future save logic
 
     def _show_characters_text(self):
         print("🧪 Characters button clicked")
@@ -1786,9 +1993,11 @@ class ProjectWindow(QWidget):
         self._update_content("Locations")
 
     def _exit_application(self):
+        # Close the application
         self.close()
 
     def closeEvent(self, event):
+        # Save splitter sizes before closing
         self.settings["splitter_sizes"] = self.splitter.sizes()
         save_settings(self.settings)
         event.accept()
@@ -1965,6 +2174,22 @@ echo "$INSTALL_DIR/csnova"
 
 ## 8. Lizenz
 # Lizenzbedingungen für Codices Scriptoria Nova (CSNova)
+
+## Verwendete Drittanbieter-Bibliotheken
+
+Dieses Projekt verwendet folgende externe Bibliotheken:
+
+- **PySide6** (LGPL)
+- **ebooklib** (Apache License 2.0)
+- **WeasyPrint** (BSD)
+- **ReportLab** (BSD)
+- **Requests** (Apache License 2.0)
+- **asyncio** (Python Standard Library, PSF License)
+- **PyInstaller** (GPL)
+
+Die jeweiligen Lizenztexte finden Sie in den offiziellen Repositories der Bibliotheken.  
+Es wurden keine Änderungen an den Originalquellen vorgenommen.
+
 
 ## Einleitung
 

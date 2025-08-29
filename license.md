@@ -2,6 +2,21 @@
 
 # Lizenzbedingungen für Codices Scriptoria Nova (CSNova)
 
+## Verwendete Drittanbieter-Bibliotheken
+
+Dieses Projekt verwendet folgende externe Bibliotheken:
+
+- **PySide6** (LGPL)
+- **ebooklib** (Apache License 2.0)
+- **WeasyPrint** (BSD)
+- **ReportLab** (BSD)
+- **Requests** (Apache License 2.0)
+- **asyncio** (Python Standard Library, PSF License)
+- **PyInstaller** (GPL)
+
+Die jeweiligen Lizenztexte finden Sie in den offiziellen Repositories der Bibliotheken.  
+Es wurden keine Änderungen an den Originalquellen vorgenommen.
+
 ## Einleitung
 
 Die Lizenzstruktur von *Codices Scriptoria Nova* orientiert sich an der Welt mittelalterlicher Schreibstuben und spiegelt die Vielfalt moderner Autor:innen wider. Drei klar definierte Versionen – **Novitia**, **Magister** und **Collegium** – ermöglichen eine faire und transparente Nutzung der Software, abgestimmt auf individuelle und gemeinschaftliche Bedürfnisse.
@@ -33,11 +48,11 @@ Es existieren drei Versionen:
 | **CSNova Magister**  | Einzelautor:innen mit Einkommen >50.000 € | Professionell (Einzelnutzung) | Kostenpflichtig (mit Registrierung) |
 | **CSNova Collegium** | Autor:innen-Teams                  | Professionell (Teamnutzung)    | Kostenpflichtig (mit Registrierung) |
 
-### Änderungen und Weitergabe
+### Änderungen und Weitergabe 
 
-Änderungen am Quellcode dürfen **nur mit schriftlicher Zustimmung des Autors** vorgenommen werden. Alle modifizierten Versionen müssen ebenfalls unter einer **Open Source Lizenz** veröffentlicht werden.
+Änderungen am Quellcode und die Weitergabe modifizierter Versionen sind gestattet, sofern die modifizierten Versionen ebenfalls unter einer Open Source Lizenz veröffentlicht werden. 
 
-Die Nutzung des Namens „CSNova“, „Codices Scriptoria Nova“, „CSNova Novitia“, „CSNova Magister“ oder „CSNova Collegium“ für modifizierte Versionen ist **nur mit schriftlicher Genehmigung des Autors** gestattet. Der Autor übernimmt **keine Haftung** für Schäden, die durch veränderte Versionen oder deren Inhalte entstehen – insbesondere nicht für Inhalte, die ohne seine Zustimmung verändert oder unter einem der genannten Namen veröffentlicht wurden.
+Die Nutzung des Namens „CSNova“, „Codices Scriptoria Nova“, „CSNova Novitia“, „CSNova Magister“ oder „CSNova Collegium“ für modifizierte Versionen ist nur mit schriftlicher Genehmigung des Autors gestattet. Der Autor übernimmt **keine Haftung** für Schäden, die durch veränderte Versionen oder deren Inhalte entstehen – insbesondere nicht für Inhalte, die ohne seine Zustimmung verändert oder unter einem der genannten Namen veröffentlicht wurden.
 
 ## CSNova-Reader
 
@@ -106,9 +121,11 @@ There are three versions:
 
 ### Modifications and Redistribution
 
-Modifications to the source code may be made **only with written permission from the author**. All modified versions must also be published under an **open source license**.
+Modifications to the source code and redistribution of modified versions are permitted, provided that the modified versions are also released under an open source license.
 
-Use of the names “CSNova,” “Codices Scriptoria Nova,” “CSNova Novitia,” “CSNova Magister,” or “CSNova Collegium” for modified versions is **only permitted with written authorization from the author**. The author assumes **no liability** for damages caused by altered versions or their content—especially for content that has been changed or published under one of the listed names without the author's consent.
+The use of the names “CSNova,” “Codices Scriptoria Nova,” “CSNova Novitia,” “CSNova Magister,” or “CSNova Collegium” for modified versions is only allowed with written permission from the author.
+
+The author assumes **no liability** for damages resulting from modified versions or their contents — especially for content that has been altered without the author's consent or published under any of the aforementioned names.
 
 ## CSNova Reader
 
@@ -177,9 +194,11 @@ Existen tres versiones:
 
 ### Modificaciones y Redistribución
 
-Las modificaciones al código fuente solo pueden realizarse **con el permiso escrito del autor**. Todas las versiones modificadas también deben publicarse bajo una **licencia de código abierto**.
+Se permiten modificaciones al código fuente y la redistribución de versiones modificadas, siempre que dichas versiones también se publiquen bajo una licencia de código abierto.
 
-El uso de los nombres “CSNova”, “Codices Scriptoria Nova”, “CSNova Novitia”, “CSNova Magister” o “CSNova Collegium” para versiones modificadas está **permitido solo con autorización escrita del autor**. El autor no asume **ninguna responsabilidad** por daños causados por versiones modificadas o su contenido—especialmente por contenido que haya sido cambiado o publicado bajo uno de los nombres mencionados sin el consentimiento del autor.
+El uso de los nombres “CSNova”, “Codices Scriptoria Nova”, “CSNova Novitia”, “CSNova Magister” o “CSNova Collegium” para versiones modificadas solo está permitido con autorización escrita del autor.
+
+El autor no asume **ninguna responsabilidad** por los daños derivados de versiones modificadas o de sus contenidos — especialmente por contenidos que hayan sido alterados sin su consentimiento o publicados bajo alguno de los nombres mencionados.
 
 ## CSNova Reader
 
@@ -248,9 +267,11 @@ Il existe trois versions :
 
 ### Modifications et Redistribution
 
-Les modifications du code source ne peuvent être effectuées **qu'avec l'autorisation écrite de l'auteur**. Toutes les versions modifiées doivent également être publiées sous une **licence open source**.
+Les modifications du code source et la redistribution de versions modifiées sont autorisées, à condition que les versions modifiées soient également publiées sous une licence open source.
 
-L'utilisation des noms “CSNova”, “Codices Scriptoria Nova”, “CSNova Novitia”, “CSNova Magister” ou “CSNova Collegium” pour des versions modifiées est **seulement autorisée avec l'accord écrit de l'auteur**. L'auteur n'assume **aucune responsabilité** pour les dommages causés par des versions modifiées ou leur contenu—en particulier pour le contenu modifié ou publié sous l'un des noms mentionnés sans le consentement de l'auteur.
+L'utilisation des noms « CSNova », « Codices Scriptoria Nova », « CSNova Novitia », « CSNova Magister » ou « CSNova Collegium » pour des versions modifiées n'est autorisée qu'avec l'accord écrit de l'auteur.
+
+L'auteur décline **toute responsabilité** pour les dommages causés par des versions modifiées ou leur contenu — en particulier pour tout contenu modifié sans son consentement ou publié sous l’un des noms mentionnés.
 
 ## CSNova Reader
 
