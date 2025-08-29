@@ -1,5 +1,5 @@
 
-[English](##English) [Español](##Espa%C3%B1ol) [Français](##Fran%C3%A7ais)
+[English](#english) [Español](#espa%C3%B1ol) [Français](#fran%C3%A7ais)
 
 ## Deutsch
 # Codices Scriptoria Nova (CSNova)
@@ -85,7 +85,7 @@ CSNova ist eine umfassende Softwarelösung für Romanautor:innen, Drehbuchautor:
 Für die Nutzung der Software CSNova und ihrer Anwendungen ist die Zustimmung zur Lizenzvereinbarung ([license.md](https://license.md)) Voraussetzung.
 
 -----------------------------------------------------------------------------
-[Deutsch](##deutsch) [Español](##espa%C3%B1ol) [Français](##fran%C3%A7ais)
+[Deutsch](#deutsch) [Español](#espa%C3%B1ol) [Français](#fran%C3%A7ais)
 
 ## English
 # Codices Scriptoria Nova (CSNova)
@@ -171,7 +171,7 @@ CSNova is a comprehensive software solution for novelists, screenwriters, game w
 To use the CSNova software and its applications, acceptance of the license agreement ([license.md](https://license.md)) is required.
 
 -----------------------------------------------------------------------------
-[Deutsch](##deutsch) [English](##english) [Français](##fran%C3%A7ais)
+[Deutsch](#deutsch) [English](#english) [Français](#fran%C3%A7ais)
 
 ## Español
 # Codices Scriptoria Nova (CSNova)
@@ -257,7 +257,7 @@ CSNova es una solución de software integral para novelistas, guionistas, escrit
 Para utilizar el software CSNova y sus aplicaciones, se requiere la aceptación del acuerdo de licencia ([license.md](https://license.md)).
 
 -----------------------------------------------------------------------------
-[Deutsch](##deutsch) [English](##english) [Español](##espa%C3%B1ol)
+[Deutsch](#deutsch) [English](#english) [Español](#espa%C3%B1ol)
 
 ## Français
 # Codices Scriptoria Nova (CSNova)
