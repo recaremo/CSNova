@@ -1,7 +1,7 @@
-# Codices Scriptoria Nova (CSNova)
-
 [English](#project-description) [Español](#descripci%C3%B3n-del-proyecto) [Français](#description-du-projet)
 
+# Deutsch
+# Codices Scriptoria Nova (CSNova)
 
 ## Projektbeschreibung
 
@@ -84,7 +84,10 @@ CSNova ist eine umfassende Softwarelösung für Romanautor:innen, Drehbuchautor:
 Für die Nutzung der Software CSNova und ihrer Anwendungen ist die Zustimmung zur Lizenzvereinbarung ([license.md](https://license.md)) Voraussetzung.
 
 -----------------------------------------------------------------------------
-[Deutsch](#projektbeschreibung) [Español](#descripci%C3%B3n-del-proyecto) [Français](#description-du-projet)
+[Deutsch](#Deutsch) [English](#English) [Español](#Español) [Français] (#Français)
+
+# English
+# Codices Scriptoria Nova (CSNova)
 
 ## Project Description
 
@@ -167,7 +170,10 @@ CSNova is a comprehensive software solution for novelists, screenwriters, game w
 To use the CSNova software and its applications, acceptance of the license agreement ([license.md](https://license.md)) is required.
 
 -----------------------------------------------------------------------------
-[Deutsch](#projektbeschreibung) [English](#project-description) [Français](#description-du-projet)
+[Deutsch](#Deutsch) [English](#English) [Español](#Español) [Français] (#Français)
+
+# Español
+# Codices Scriptoria Nova (CSNova)
 
 ## Descripción del proyecto
 
@@ -250,7 +256,10 @@ CSNova es una solución de software integral para novelistas, guionistas, escrit
 Para utilizar el software CSNova y sus aplicaciones, se requiere la aceptación del acuerdo de licencia ([license.md](https://license.md)).
 
 -----------------------------------------------------------------------------
-[Deutsch](#projektbeschreibung) [English](#project-description) [Español](#descripci%C3%B3n-del-proyecto)
+[Deutsch](#Deutsch) [English](#English) [Español](#Español) [Français] (#Français)
+
+# Français
+# Codices Scriptoria Nova (CSNova)
 
 ## Description du projet
 
@@ -281,4 +290,53 @@ CSNova est une solution logicielle complète destinée aux romancier·ère·s, s
 ### Recherche et gestion des sources
 * Base de données intégrée pour la recherche
 * Analyse et génération de sources par IA :
-  * *« Génère un tableau des principales
+  * *« Génère un tableau des principales théories de la physique quantique de 1900 à 2025 ; nom des découvreurs ; année de publication ; résumé. »*
+  * *« Donne une description du lieu XYZ vers l’an 1300 ; personnalités connues ; événements historiques ; bâtiments remarquables. »*
+
+### Création de storyboard et de scénario
+* Génération automatique à partir des chapitres et des scènes
+
+### Analyse statistique
+* Comportement d’écriture, volume de texte, progression
+
+### Aide au style narratif
+* Narration à la première personne
+* Narration limitée et omnisciente
+* Narration neutre
+
+### Mode interview
+* Saisie guidée avec fonction de rappel
+* Assistance par IA :
+  * *« Crée une image à partir de la description du personnage. »*
+  * *« Quel serait un nom chinois réaliste pour ce personnage ? »*
+
+### Formats d’exportation
+* PDF
+* EPUB
+* Format CSNova Reader :
+  * Prise en charge de contenus multimédias, animations, vidéos et éléments interactifs
+  * Le lecteur CSNova est open source et distribué sans licence
+
+### Tutoriels vidéo
+* Disponibles en allemand, anglais, français et espagnol
+
+### Traitement de texte intégré
+* Affichage et édition directe de toutes les données
+* Copier/coller sans changer d’application
+
+## Extensions optionnelles
+
+### Collaboration
+* Écriture collaborative, partage avec des éditeur·rice·s ou co-auteur·rice·s
+
+### Sécurité des données
+* Stockage local, sauvegarde, options cloud
+
+### Configuration requise
+* Disponible pour Windows, macOS et Linux
+* Version mobile en cours de développement
+* Interface utilisateur multilingue : allemand, anglais, français et espagnol
+
+## Accord de licence
+
+L’utilisation du logiciel CSNova et de ses applications nécessite l’acceptation de l’accord de licence ([license.md](https://license.md)).
