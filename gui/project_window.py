@@ -1,15 +1,22 @@
 from PySide6.QtGui import QPalette, QColor
 from PySide6.QtCore import Qt
-from PySide6.QtWidgets import (
-    QWidget, QVBoxLayout, QTextEdit, QSplitter, QHBoxLayout
-)
+from PySide6.QtWidgets import QWidget, QVBoxLayout, QSplitter, QHBoxLayout
+
 from gui.styles.style_utils import load_button_style, load_active_button_style
 from core.translator import Translator
 from config.settings import load_settings, save_settings
-from gui.widgets.form_toolbar import FormToolbar
-from gui.widgets.base_form_widget import BaseFormWidget
 from gui.widgets.navigation_panel import NavigationPanel
 from gui.widgets.help_panel import HelpPanel
+
+# Import modular forms
+from gui.widgets.form_projects import ProjectForm
+from gui.widgets.form_characters import CharactersForm
+from gui.widgets.form_storylines import StorylinesForm
+from gui.widgets.form_chapters import ChaptersForm
+from gui.widgets.form_scenes import ScenesForm
+from gui.widgets.form_objects import ObjectsForm
+from gui.widgets.form_locations import LocationsForm
+from gui.widgets.form_start import StartForm
 
 # Import central logging functions
 from core.logger import log_section, log_subsection, log_info, log_error
@@ -22,7 +29,7 @@ class ProjectWindow(QWidget):
         log_section("project_window.py")
         log_subsection("__init__")
         try:
-            self.translator = translator or Translator(default="en")
+            self.translator = translator or Translator(lang="en")
             super().__init__(parent)
             self.resize(1600, 900)
             self.setWindowTitle(self.translator.tr("project_window_title"))
@@ -55,13 +62,13 @@ class ProjectWindow(QWidget):
                 "btn_chapters", "btn_scenes", "btn_objects", "btn_locations", "btn_exit"
             ]
             callbacks = {
-                "btn_project": lambda: self._on_nav_clicked("btn_project", self._show_project_text),
-                "btn_characters": lambda: self._on_nav_clicked("btn_characters", self._show_characters_text),
-                "btn_storylines": lambda: self._on_nav_clicked("btn_storylines", self._show_storylines_text),
-                "btn_chapters": lambda: self._on_nav_clicked("btn_chapters", self._show_chapters_text),
-                "btn_scenes": lambda: self._on_nav_clicked("btn_scenes", self._show_scenes_text),
-                "btn_objects": lambda: self._on_nav_clicked("btn_objects", self._show_objects_text),
-                "btn_locations": lambda: self._on_nav_clicked("btn_locations", self._show_locations_text),
+                "btn_project": lambda: self._on_nav_clicked("btn_project", self._show_project_form),
+                "btn_characters": lambda: self._on_nav_clicked("btn_characters", self._show_characters_form),
+                "btn_storylines": lambda: self._on_nav_clicked("btn_storylines", self._show_storylines_form),
+                "btn_chapters": lambda: self._on_nav_clicked("btn_chapters", self._show_chapters_form),
+                "btn_scenes": lambda: self._on_nav_clicked("btn_scenes", self._show_scenes_form),
+                "btn_objects": lambda: self._on_nav_clicked("btn_objects", self._show_objects_form),
+                "btn_locations": lambda: self._on_nav_clicked("btn_locations", self._show_locations_form),
                 "btn_exit": self._exit_application
             }
             self.navigation_panel = NavigationPanel(
@@ -69,11 +76,12 @@ class ProjectWindow(QWidget):
             )
 
             self.help_panel = HelpPanel(self)
-            self.input_area = QTextEdit()
+            # Start with project form
+            self.form_widget = StartForm(self.translator, self)
 
             self.splitter = QSplitter(Qt.Horizontal)
             self.splitter.addWidget(self.navigation_panel)
-            self.splitter.addWidget(self.input_area)
+            self.splitter.addWidget(self.form_widget)
             self.splitter.addWidget(self.help_panel)
             self.splitter.setSizes(self.settings.get("splitter_sizes", [300, 900, 300]))
 
@@ -92,45 +100,11 @@ class ProjectWindow(QWidget):
         except Exception as e:
             log_error(f"Error in navigation click handler for '{key}': {str(e)}")
 
-    def _show_project_text(self):
-        log_subsection("_show_project_text")
+    def _show_project_form(self):
+        log_subsection("_show_project_form")
         try:
-            fields = [
-                {"name": "title", "label_key": "project_title", "default_label": "Title", "type": "text"},
-                {"name": "subtitle", "label_key": "project_subtitle", "default_label": "Subtitle", "type": "text"},
-                {"name": "author", "label_key": "project_author", "default_label": "Author", "type": "text"},
-                {"name": "premise", "label_key": "project_premise", "default_label": "Premise", "type": "text"},
-                {"name": "genre", "label_key": "project_genre", "default_label": "Genre", "type": "text"},
-                {"name": "narrative_perspective", "label_key": "project_narrative_perspective", "default_label": "Narrative Perspective", "type": "text"},
-                {"name": "timeline", "label_key": "project_timeline", "default_label": "Timeline", "type": "text"},
-                {"name": "target_group", "label_key": "project_target_group", "default_label": "Target Group", "type": "text"},
-                {"name": "cover_image", "label_key": "project_cover_image", "default_label": "Cover Image", "type": "text"},
-                {"name": "start_date", "label_key": "project_start_date", "default_label": "Start Date", "type": "date"},
-                {"name": "deadline", "label_key": "project_deadline", "default_label": "Deadline", "type": "date"},
-                {"name": "word_count_goal", "label_key": "project_word_count_goal", "default_label": "Word Count Goal", "type": "spin", "max": 100000},
-            ]
-
-            def toolbar_actions(toolbar):
-                log_subsection("toolbar_actions: project")
-                toolbar.new_action.triggered.connect(lambda: log_info("New project record triggered."))
-                toolbar.delete_action.triggered.connect(lambda: log_info("Delete project record triggered."))
-                toolbar.prev_action.triggered.connect(lambda: log_info("Previous project record triggered."))
-                toolbar.next_action.triggered.connect(lambda: log_info("Next project record triggered."))
-                toolbar.save_action.triggered.connect(self._save_project_form)
-
-            form_widget = BaseFormWidget(
-                title=self.translator.form_label("project_form_label"),
-                fields=fields,
-                form_labels=self.translator.form_labels,
-                toolbar_actions=toolbar_actions,
-                parent=self
-            )
-
-            old_widget = self.splitter.widget(1)
-            if old_widget:
-                old_widget.setParent(None)
-            self.splitter.insertWidget(1, form_widget)
-
+            form_widget = ProjectForm(self.translator, self)
+            self._replace_form_widget(form_widget)
             help_text = self.translator.help_text("help_project")
             self.help_panel.set_help_text(help_text)
             self.splitter.setSizes([300, 900, 300])
@@ -138,286 +112,86 @@ class ProjectWindow(QWidget):
         except Exception as e:
             log_error(f"Error displaying project form: {str(e)}")
 
-    def _save_project_form(self):
-        log_subsection("_save_project_form")
+    def _show_characters_form(self):
+        log_subsection("_show_characters_form")
         try:
-            log_info("Save project button clicked.")
-            # Add logic to save project data here
-        except Exception as e:
-            log_error(f"Error saving project data: {str(e)}")
-
-    def _show_characters_text(self):
-        log_subsection("_show_characters_text")
-        try:
-            fields = [
-                {"name": "character_name", "label_key": "character_name", "default_label": "Name", "type": "text"},
-                {"name": "character_nickname", "label_key": "character_nickname", "default_label": "Nickname", "type": "text"},
-                {"name": "character_gender", "label_key": "character_gender", "default_label": "Gender", "type": "text"},
-                {"name": "character_age", "label_key": "character_age", "default_label": "Age", "type": "spin", "max": 120},
-                {"name": "character_role", "label_key": "character_role", "default_label": "Role", "type": "text"},
-                {"name": "character_description", "label_key": "character_description", "default_label": "Description", "type": "text"},
-            ]
-
-            def toolbar_actions(toolbar):
-                log_subsection("toolbar_actions: character")
-                toolbar.new_action.triggered.connect(lambda: log_info("New character triggered."))
-                toolbar.delete_action.triggered.connect(lambda: log_info("Delete character triggered."))
-                toolbar.prev_action.triggered.connect(lambda: log_info("Previous character triggered."))
-                toolbar.next_action.triggered.connect(lambda: log_info("Next character triggered."))
-                toolbar.save_action.triggered.connect(self._save_character_form)
-
-            form_widget = BaseFormWidget(
-                title=self.translator.form_label("character_form_label"),
-                fields=fields,
-                form_labels=self.translator.form_labels,
-                toolbar_actions=toolbar_actions,
-                parent=self
-            )
-
-            old_widget = self.splitter.widget(1)
-            if old_widget:
-                old_widget.setParent(None)
-            self.splitter.insertWidget(1, form_widget)
-
+            form_widget = CharactersForm(self.translator, self)
+            self._replace_form_widget(form_widget)
             help_text = self.translator.help_text("help_characters")
             self.help_panel.set_help_text(help_text)
             self.splitter.setSizes([300, 900, 300])
-            log_info("Character form displayed successfully.")
+            log_info("Characters form displayed successfully.")
         except Exception as e:
-            log_error(f"Error displaying character form: {str(e)}")
+            log_error(f"Error displaying characters form: {str(e)}")
 
-    def _save_character_form(self):
-        log_subsection("_save_character_form")
+    def _show_storylines_form(self):
+        log_subsection("_show_storylines_form")
         try:
-            log_info("Save character button clicked.")
-            # Add logic to save character data here
-        except Exception as e:
-            log_error(f"Error saving character data: {str(e)}")
-
-    def _show_storylines_text(self):
-        log_subsection("_show_storylines_text")
-        try:
-            fields = [
-                {"name": "storyline_title", "label_key": "storyline_title", "default_label": "Title", "type": "text"},
-                {"name": "storyline_summary", "label_key": "storyline_summary", "default_label": "Summary", "type": "text"},
-                {"name": "storyline_notes", "label_key": "storyline_notes", "default_label": "Notes", "type": "text"},
-            ]
-
-            def toolbar_actions(toolbar):
-                log_subsection("toolbar_actions: storyline")
-                toolbar.new_action.triggered.connect(lambda: log_info("New storyline triggered."))
-                toolbar.delete_action.triggered.connect(lambda: log_info("Delete storyline triggered."))
-                toolbar.prev_action.triggered.connect(lambda: log_info("Previous storyline triggered."))
-                toolbar.next_action.triggered.connect(lambda: log_info("Next storyline triggered."))
-                toolbar.save_action.triggered.connect(self._save_storyline_form)
-
-            form_widget = BaseFormWidget(
-                title=self.translator.form_label("storyline_form_label"),
-                fields=fields,
-                form_labels=self.translator.form_labels,
-                toolbar_actions=toolbar_actions,
-                parent=self
-            )
-
-            old_widget = self.splitter.widget(1)
-            if old_widget:
-                old_widget.setParent(None)
-            self.splitter.insertWidget(1, form_widget)
-
+            form_widget = StorylinesForm(self.translator, self)
+            self._replace_form_widget(form_widget)
             help_text = self.translator.help_text("help_storylines")
             self.help_panel.set_help_text(help_text)
             self.splitter.setSizes([300, 900, 300])
-            log_info("Storyline form displayed successfully.")
+            log_info("Storylines form displayed successfully.")
         except Exception as e:
-            log_error(f"Error displaying storyline form: {str(e)}")
+            log_error(f"Error displaying storylines form: {str(e)}")
 
-    def _save_storyline_form(self):
-        log_subsection("_save_storyline_form")
+    def _show_chapters_form(self):
+        log_subsection("_show_chapters_form")
         try:
-            log_info("Save storyline button clicked.")
-            # Add logic to save storyline data here
-        except Exception as e:
-            log_error(f"Error saving storyline data: {str(e)}")
-
-    def _show_chapters_text(self):
-        log_subsection("_show_chapters_text")
-        try:
-            fields = [
-                {"name": "chapter_title", "label_key": "chapter_title", "default_label": "Title", "type": "text"},
-                {"name": "chapter_number", "label_key": "chapter_number", "default_label": "Number", "type": "spin", "max": 999},
-                {"name": "chapter_summary", "label_key": "chapter_summary", "default_label": "Summary", "type": "text"},
-            ]
-
-            def toolbar_actions(toolbar):
-                log_subsection("toolbar_actions: chapter")
-                toolbar.new_action.triggered.connect(lambda: log_info("New chapter triggered."))
-                toolbar.delete_action.triggered.connect(lambda: log_info("Delete chapter triggered."))
-                toolbar.prev_action.triggered.connect(lambda: log_info("Previous chapter triggered."))
-                toolbar.next_action.triggered.connect(lambda: log_info("Next chapter triggered."))
-                toolbar.save_action.triggered.connect(self._save_chapter_form)
-
-            form_widget = BaseFormWidget(
-                title=self.translator.form_label("chapter_form_label"),
-                fields=fields,
-                form_labels=self.translator.form_labels,
-                toolbar_actions=toolbar_actions,
-                parent=self
-            )
-
-            old_widget = self.splitter.widget(1)
-            if old_widget:
-                old_widget.setParent(None)
-            self.splitter.insertWidget(1, form_widget)
-
+            form_widget = ChaptersForm(self.translator, self)
+            self._replace_form_widget(form_widget)
             help_text = self.translator.help_text("help_chapters")
             self.help_panel.set_help_text(help_text)
             self.splitter.setSizes([300, 900, 300])
-            log_info("Chapter form displayed successfully.")
+            log_info("Chapters form displayed successfully.")
         except Exception as e:
-            log_error(f"Error displaying chapter form: {str(e)}")
+            log_error(f"Error displaying chapters form: {str(e)}")
 
-    def _save_chapter_form(self):
-        log_subsection("_save_chapter_form")
+    def _show_scenes_form(self):
+        log_subsection("_show_scenes_form")
         try:
-            log_info("Save chapter button clicked.")
-            # Add logic to save chapter data here
-        except Exception as e:
-            log_error(f"Error saving chapter data: {str(e)}")
-
-    def _show_scenes_text(self):
-        log_subsection("_show_scenes_text")
-        try:
-            fields = [
-                {"name": "scene_title", "label_key": "scene_title", "default_label": "Title", "type": "text"},
-                {"name": "scene_number", "label_key": "scene_number", "default_label": "Number", "type": "spin", "max": 9999},
-                {"name": "scene_summary", "label_key": "scene_summary", "default_label": "Summary", "type": "text"},
-            ]
-
-            def toolbar_actions(toolbar):
-                log_subsection("toolbar_actions: scene")
-                toolbar.new_action.triggered.connect(lambda: log_info("New scene triggered."))
-                toolbar.delete_action.triggered.connect(lambda: log_info("Delete scene triggered."))
-                toolbar.prev_action.triggered.connect(lambda: log_info("Previous scene triggered."))
-                toolbar.next_action.triggered.connect(lambda: log_info("Next scene triggered."))
-                toolbar.save_action.triggered.connect(self._save_scene_form)
-
-            form_widget = BaseFormWidget(
-                title=self.translator.form_label("scene_form_label"),
-                fields=fields,
-                form_labels=self.translator.form_labels,
-                toolbar_actions=toolbar_actions,
-                parent=self
-            )
-
-            old_widget = self.splitter.widget(1)
-            if old_widget:
-                old_widget.setParent(None)
-            self.splitter.insertWidget(1, form_widget)
-
+            form_widget = ScenesForm(self.translator, self)
+            self._replace_form_widget(form_widget)
             help_text = self.translator.help_text("help_scenes")
             self.help_panel.set_help_text(help_text)
             self.splitter.setSizes([300, 900, 300])
-            log_info("Scene form displayed successfully.")
+            log_info("Scenes form displayed successfully.")
         except Exception as e:
-            log_error(f"Error displaying scene form: {str(e)}")
+            log_error(f"Error displaying scenes form: {str(e)}")
 
-    def _save_scene_form(self):
-        log_subsection("_save_scene_form")
+    def _show_objects_form(self):
+        log_subsection("_show_objects_form")
         try:
-            log_info("Save scene button clicked.")
-            # Add logic to save scene data here
-        except Exception as e:
-            log_error(f"Error saving scene data: {str(e)}")
-
-    def _show_objects_text(self):
-        log_subsection("_show_objects_text")
-        try:
-            fields = [
-                {"name": "object_name", "label_key": "object_name", "default_label": "Name", "type": "text"},
-                {"name": "object_type", "label_key": "object_type", "default_label": "Type", "type": "text"},
-                {"name": "object_description", "label_key": "object_description", "default_label": "Description", "type": "text"},
-            ]
-
-            def toolbar_actions(toolbar):
-                log_subsection("toolbar_actions: object")
-                toolbar.new_action.triggered.connect(lambda: log_info("New object triggered."))
-                toolbar.delete_action.triggered.connect(lambda: log_info("Delete object triggered."))
-                toolbar.prev_action.triggered.connect(lambda: log_info("Previous object triggered."))
-                toolbar.next_action.triggered.connect(lambda: log_info("Next object triggered."))
-                toolbar.save_action.triggered.connect(self._save_object_form)
-
-            form_widget = BaseFormWidget(
-                title=self.translator.form_label("object_form_label"),
-                fields=fields,
-                form_labels=self.translator.form_labels,
-                toolbar_actions=toolbar_actions,
-                parent=self
-            )
-
-            old_widget = self.splitter.widget(1)
-            if old_widget:
-                old_widget.setParent(None)
-            self.splitter.insertWidget(1, form_widget)
-
+            form_widget = ObjectsForm(self.translator, self)
+            self._replace_form_widget(form_widget)
             help_text = self.translator.help_text("help_objects")
             self.help_panel.set_help_text(help_text)
             self.splitter.setSizes([300, 900, 300])
-            log_info("Object form displayed successfully.")
+            log_info("Objects form displayed successfully.")
         except Exception as e:
-            log_error(f"Error displaying object form: {str(e)}")
+            log_error(f"Error displaying objects form: {str(e)}")
 
-    def _save_object_form(self):
-        log_subsection("_save_object_form")
+    def _show_locations_form(self):
+        log_subsection("_show_locations_form")
         try:
-            log_info("Save object button clicked.")
-            # Add logic to save object data here
-        except Exception as e:
-            log_error(f"Error saving object data: {str(e)}")
-
-    def _show_locations_text(self):
-        log_subsection("_show_locations_text")
-        try:
-            fields = [
-                {"name": "location_name", "label_key": "location_name", "default_label": "Name", "type": "text"},
-                {"name": "location_type", "label_key": "location_type", "default_label": "Type", "type": "text"},
-                {"name": "location_description", "label_key": "location_description", "default_label": "Description", "type": "text"},
-            ]
-
-            def toolbar_actions(toolbar):
-                log_subsection("toolbar_actions: location")
-                toolbar.new_action.triggered.connect(lambda: log_info("New location triggered."))
-                toolbar.delete_action.triggered.connect(lambda: log_info("Delete location triggered."))
-                toolbar.prev_action.triggered.connect(lambda: log_info("Previous location triggered."))
-                toolbar.next_action.triggered.connect(lambda: log_info("Next location triggered."))
-                toolbar.save_action.triggered.connect(self._save_location_form)
-
-            form_widget = BaseFormWidget(
-                title=self.translator.form_label("location_form_label"),
-                fields=fields,
-                form_labels=self.translator.form_labels,
-                toolbar_actions=toolbar_actions,
-                parent=self
-            )
-
-            old_widget = self.splitter.widget(1)
-            if old_widget:
-                old_widget.setParent(None)
-            self.splitter.insertWidget(1, form_widget)
-
+            form_widget = LocationsForm(self.translator, self)
+            self._replace_form_widget(form_widget)
             help_text = self.translator.help_text("help_locations")
             self.help_panel.set_help_text(help_text)
             self.splitter.setSizes([300, 900, 300])
-            log_info("Location form displayed successfully.")
+            log_info("Locations form displayed successfully.")
         except Exception as e:
-            log_error(f"Error displaying location form: {str(e)}")
+            log_error(f"Error displaying locations form: {str(e)}")
 
-    def _save_location_form(self):
-        log_subsection("_save_location_form")
-        try:
-            log_info("Save location button clicked.")
-            # Add logic to save location data here
-        except Exception as e:
-            log_error(f"Error saving location data: {str(e)}")
+    def _replace_form_widget(self, new_widget):
+        """
+        Replace the current form widget in the splitter.
+        """
+        old_widget = self.splitter.widget(1)
+        if old_widget:
+            old_widget.setParent(None)
+        self.splitter.insertWidget(1, new_widget)
 
     def _exit_application(self):
         log_subsection("_exit_application")

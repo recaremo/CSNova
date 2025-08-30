@@ -3,11 +3,12 @@ from gui.widgets.form_toolbar import FormToolbar
 from core.logger import log_section, log_subsection, log_info, log_error
 
 class BaseFormWidget(QWidget):
-    def __init__(self, title, fields, form_labels, toolbar_actions, parent=None):
+    def __init__(self, title, fields, form_labels, toolbar_actions, form_prefix, translator, parent=None):
         log_section("base_form_widget.py")
         log_subsection("__init__")
         try:
             super().__init__(parent)
+            self.translator = translator  # Korrektur: Translator setzen!
             self.layout = QVBoxLayout()
             self.title_label = QLabel(title, self)
             self.layout.addWidget(self.title_label)
@@ -32,7 +33,7 @@ class BaseFormWidget(QWidget):
 
             self.layout.addLayout(self.form_layout)
 
-            self.toolbar = FormToolbar(self)
+            self.toolbar = FormToolbar(self.translator, form_prefix, self)
             if toolbar_actions:
                 toolbar_actions(self.toolbar)
             self.layout.addWidget(self.toolbar)

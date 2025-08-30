@@ -205,6 +205,7 @@ Entwicklung einer plattformübergreifenden Desktop‑Anwendung (Linux, Windows, 
 │   ├── __pycache__/
 │   │   ├── database.cpython-312.pyc
 │   │   ├── lloger.cpython-312.pyc
+│   │   ├── logger.cpython-312.pyc
 │   │   └── translator.cpython-312.pyc
 │   ├── services/
 │   ├── tables/
@@ -262,7 +263,6 @@ Entwicklung einer plattformübergreifenden Desktop‑Anwendung (Linux, Windows, 
 │   │   ├── de.json
 │   │   ├── en.json
 │   │   ├── es.json
-│   │   ├── form_labels.py
 │   │   ├── forms/
 │   │   │   ├── form_de.json
 │   │   │   ├── form_en.json
@@ -315,12 +315,26 @@ Entwicklung einer plattformübergreifenden Desktop‑Anwendung (Linux, Windows, 
 │   └── widgets/
 │       ├── base_form_widget.py
 │       ├── dialog.py
+│       ├── form_chapters.py
+│       ├── form_characters.py
+│       ├── form_locations.py
+│       ├── form_objects.py
+│       ├── form_projects.py
+│       ├── form_scenes.py
+│       ├── form_storylines.py
 │       ├── form_toolbar.py
 │       ├── help_panel.py
 │       ├── listview.py
 │       ├── navigation_panel.py
 │       └── __pycache__/
 │           ├── base_form_widget.cpython-312.pyc
+│           ├── form_chapters.cpython-312.pyc
+│           ├── form_characters.cpython-312.pyc
+│           ├── form_locations.cpython-312.pyc
+│           ├── form_objects.cpython-312.pyc
+│           ├── form_projects.cpython-312.pyc
+│           ├── form_scenes.cpython-312.pyc
+│           ├── form_storylines.cpython-312.pyc
 │           ├── form_toolbar.cpython-312.pyc
 │           ├── help_panel.cpython-312.pyc
 │           └── navigation_panel.cpython-312.pyc
@@ -599,6 +613,10 @@ In diesem Abschnitt sind die Translationstabellen für die GUI zusammengefasst.
 {
     "project_form_label": "Projekt", 
     "project_btn_save": "Speichern", 
+    "project_btn_delete": "Löschen",
+    "project_btn_next": "Vor",
+    "project_btn_preview": "Zurück",
+    "project_btn_new": "Neu",
     "project_title": "Titel",
     "project_subtitle": "Untertitel",
     "project_author": "Autor",
@@ -610,7 +628,64 @@ In diesem Abschnitt sind die Translationstabellen für die GUI zusammengefasst.
     "project_start_date": "Startdatum",
     "project_deadline": "Abgabedatum",
     "project_word_count_goal": "Ziel Wortanzahl",
-    "project_cover_image": "Titelbild"
+    "project_cover_image": "Titelbild",
+    "character_form_label": "Charakter",
+    "character_btn_save": "Speichern",
+    "character_btn_delete": "Löschen",
+    "character_btn_next": "Vor",
+    "character_btn_preview": "Zurück",
+    "character_btn_new": "Neu",
+    "character_name": "Name",
+    "character_nickname": "Spitzname",
+    "character_gender": "Geschlecht",
+    "character_age": "Alter",
+    "character_role": "Rolle",
+    "character_description": "Beschreibung",
+    "storyline_form_label": "Handlungsstrang",
+    "storyline_btn_save": "Speichern",
+    "storyline_btn_delete": "Löschen",
+    "storyline_btn_next": "Vor",
+    "storyline_btn_preview": "Zurück",
+    "storyline_btn_new": "Neu",
+    "storyline_title": "Titel",
+    "storyline_summary": "Zusammenfassung",
+    "storyline_notes": "Notizen",
+    "chapter_form_label": "Kapitel",
+    "chapter_btn_save": "Speichern",
+    "chapter_btn_delete": "Löschen",
+    "chapter_btn_next": "Vor",
+    "chapter_btn_preview": "Zurück",
+    "chapter_btn_new": "Neu",
+    "chapter_title": "Titel",
+    "chapter_number": "Nummer",
+    "chapter_summary": "Zusammenfassung",
+    "scene_form_label": "Szene",
+    "scene_btn_save": "Speichern",
+    "scene_btn_delete": "Löschen",
+    "scene_btn_next": "Vor",
+    "scene_btn_preview": "Zurück",
+    "scene_btn_new": "Neu",
+    "scene_title": "Titel",
+    "scene_number": "Nummer",
+    "scene_summary": "Zusammenfassung",
+    "object_form_label": "Gegenstand",
+    "object_btn_save": "Speichern",
+    "object_btn_delete": "Löschen",
+    "object_btn_next": "Vor",
+    "object_btn_preview": "Zurück",
+    "object_btn_new": "Neu",
+    "object_name": "Name",
+    "object_type": "Typ",
+    "object_description": "Beschreibung",
+    "location_form_label": "Ort",
+    "location_btn_save": "Speichern",
+    "location_btn_delete": "Löschen",
+    "location_btn_next": "Vor",
+    "location_btn_preview": "Zurück",
+    "location_btn_new": "Neu",
+    "location_name": "Name",
+    "location_type": "Typ",
+    "location_description": "Beschreibung"
 }
 ```
 
@@ -620,6 +695,10 @@ In diesem Abschnitt sind die Translationstabellen für die GUI zusammengefasst.
 {
     "project_form_label": "Project",
     "project_btn_save": "Save",
+    "project_btn_delete": "Delete",
+    "project_btn_next": "Next",
+    "project_btn_preview": "Previous",
+    "project_btn_new": "New",
     "project_title": "Title",
     "project_subtitle": "Subtitle",
     "project_author": "Author",
@@ -631,7 +710,64 @@ In diesem Abschnitt sind die Translationstabellen für die GUI zusammengefasst.
     "project_start_date": "Start Date",
     "project_deadline": "Deadline",
     "project_word_count_goal": "Word Count Goal",
-    "project_cover_image": "Cover Image"
+    "project_cover_image": "Cover Image",
+    "character_form_label": "Character",
+    "character_btn_save": "Save",
+    "character_btn_delete": "Delete",
+    "character_btn_next": "Next",
+    "character_btn_preview": "Previous",
+    "character_btn_new": "New",
+    "character_name": "Name",
+    "character_nickname": "Nickname",
+    "character_gender": "Gender",
+    "character_age": "Age",
+    "character_role": "Role",
+    "character_description": "Description",
+    "storyline_form_label": "Storyline",
+    "storyline_btn_save": "Save",
+    "storyline_btn_delete": "Delete",
+    "storyline_btn_next": "Next",
+    "storyline_btn_preview": "Previous",
+    "storyline_btn_new": "New",
+    "storyline_title": "Title",
+    "storyline_summary": "Summary",
+    "storyline_notes": "Notes",
+    "chapter_form_label": "Chapter",
+    "chapter_btn_save": "Save",
+    "chapter_btn_delete": "Delete",
+    "chapter_btn_next": "Next",
+    "chapter_btn_preview": "Previous",
+    "chapter_btn_new": "New",
+    "chapter_title": "Title",
+    "chapter_number": "Number",
+    "chapter_summary": "Summary",
+    "scene_form_label": "Scene",
+    "scene_btn_save": "Save",
+    "scene_btn_delete": "Delete",
+    "scene_btn_next": "Next",
+    "scene_btn_preview": "Previous",
+    "scene_btn_new": "New",
+    "scene_title": "Title",
+    "scene_number": "Number",
+    "scene_summary": "Summary",
+    "object_form_label": "Object",
+    "object_btn_save": "Save",
+    "object_btn_delete": "Delete",
+    "object_btn_next": "Next",
+    "object_btn_preview": "Previous",
+    "object_btn_new": "New",
+    "object_name": "Name",
+    "object_type": "Type",
+    "object_description": "Description",
+    "location_form_label": "Location",
+    "location_btn_save": "Save",
+    "location_btn_delete": "Delete",
+    "location_btn_next": "Next",
+    "location_btn_preview": "Previous",
+    "location_btn_new": "New",
+    "location_name": "Name",
+    "location_type": "Type",
+    "location_description": "Description"
 }
 ```
 
@@ -641,18 +777,79 @@ In diesem Abschnitt sind die Translationstabellen für die GUI zusammengefasst.
 {
     "project_form_label": "Proyecto",
     "project_btn_save": "Guardar",
+    "project_btn_delete": "Eliminar",
+    "project_btn_next": "Siguiente",
+    "project_btn_preview": "Anterior",
+    "project_btn_new": "Nuevo",
     "project_title": "Título",
     "project_subtitle": "Subtítulo",
     "project_author": "Autor",
     "project_premise": "Premisa",
     "project_genre": "Género",
-    "project_narrative_perspective": "Perspectiva Narrativa",
+    "project_narrative_perspective": "Perspectiva narrativa",
     "project_timeline": "Cronología",
-    "project_target_group": "Grupo Objetivo",
-    "project_start_date": "Fecha de Inicio",
-    "project_deadline": "Fecha Límite",
-    "project_word_count_goal": "Objetivo de Recuento de Palabras",
-    "project_cover_image": "Imagen de Portada"
+    "project_target_group": "Grupo objetivo",
+    "project_start_date": "Fecha de inicio",
+    "project_deadline": "Fecha límite",
+    "project_word_count_goal": "Meta de palabras",
+    "project_cover_image": "Imagen de portada",
+    "character_form_label": "Personaje",
+    "character_btn_save": "Guardar",
+    "character_btn_delete": "Eliminar",
+    "character_btn_next": "Siguiente",
+    "character_btn_preview": "Anterior",
+    "character_btn_new": "Nuevo",
+    "character_name": "Nombre",
+    "character_nickname": "Apodo",
+    "character_gender": "Género",
+    "character_age": "Edad",
+    "character_role": "Rol",
+    "character_description": "Descripción",
+    "storyline_form_label": "Trama",
+    "storyline_btn_save": "Guardar",
+    "storyline_btn_delete": "Eliminar",
+    "storyline_btn_next": "Siguiente",
+    "storyline_btn_preview": "Anterior",
+    "storyline_btn_new": "Nuevo",
+    "storyline_title": "Título",
+    "storyline_summary": "Resumen",
+    "storyline_notes": "Notas",
+    "chapter_form_label": "Capítulo",
+    "chapter_btn_save": "Guardar",
+    "chapter_btn_delete": "Eliminar",
+    "chapter_btn_next": "Siguiente",
+    "chapter_btn_preview": "Anterior",
+    "chapter_btn_new": "Nuevo",
+    "chapter_title": "Título",
+    "chapter_number": "Número",
+    "chapter_summary": "Resumen",
+    "scene_form_label": "Escena",
+    "scene_btn_save": "Guardar",
+    "scene_btn_delete": "Eliminar",
+    "scene_btn_next": "Siguiente",
+    "scene_btn_preview": "Anterior",
+    "scene_btn_new": "Nuevo",
+    "scene_title": "Título",
+    "scene_number": "Número",
+    "scene_summary": "Resumen",
+    "object_form_label": "Objeto",
+    "object_btn_save": "Guardar",
+    "object_btn_delete": "Eliminar",
+    "object_btn_next": "Siguiente",
+    "object_btn_preview": "Anterior",
+    "object_btn_new": "Nuevo",
+    "object_name": "Nombre",
+    "object_type": "Tipo",
+    "object_description": "Descripción",
+    "location_form_label": "Lugar",
+    "location_btn_save": "Guardar",
+    "location_btn_delete": "Eliminar",
+    "location_btn_next": "Siguiente",
+    "location_btn_preview": "Anterior",
+    "location_btn_new": "Nuevo",
+    "location_name": "Nombre",
+    "location_type": "Tipo",
+    "location_description": "Descripción"
 }
 ```
 
@@ -661,19 +858,80 @@ In diesem Abschnitt sind die Translationstabellen für die GUI zusammengefasst.
 ```json
 {
     "project_form_label": "Projet",
-    "project_btn_save": "sauvegarder",
-    "project_title": "titre",
-    "project_subtitle": "sous-titre",
-    "project_author": "auteur",
-    "project_premise": "prémisse",
-    "project_genre": "genre",
-    "project_narrative_perspective": "perspective narrative",
-    "project_timeline": "chronologie",
-    "project_target_group": "groupe cible",
-    "project_start_date": "date de début",
-    "project_deadline": "date limite",
-    "project_word_count_goal": "objectif de nombre de mots",
-    "project_cover_image": "image de couverture"
+    "project_btn_save": "Enregistrer",
+    "project_btn_delete": "Supprimer",
+    "project_btn_next": "Suivant",
+    "project_btn_preview": "Précédent",
+    "project_btn_new": "Nouveau",
+    "project_title": "Titre",
+    "project_subtitle": "Sous-titre",
+    "project_author": "Auteur",
+    "project_premise": "Prémisse",
+    "project_genre": "Genre",
+    "project_narrative_perspective": "Perspective narrative",
+    "project_timeline": "Chronologie",
+    "project_target_group": "Groupe cible",
+    "project_start_date": "Date de début",
+    "project_deadline": "Date limite",
+    "project_word_count_goal": "Objectif de mots",
+    "project_cover_image": "Image de couverture",
+    "character_form_label": "Personnage",
+    "character_btn_save": "Enregistrer",
+    "character_btn_delete": "Supprimer",
+    "character_btn_next": "Suivant",
+    "character_btn_preview": "Précédent",
+    "character_btn_new": "Nouveau",
+    "character_name": "Nom",
+    "character_nickname": "Surnom",
+    "character_gender": "Genre",
+    "character_age": "Âge",
+    "character_role": "Rôle",
+    "character_description": "Description",
+    "storyline_form_label": "Intrigue",
+    "storyline_btn_save": "Enregistrer",
+    "storyline_btn_delete": "Supprimer",
+    "storyline_btn_next": "Suivant",
+    "storyline_btn_preview": "Précédent",
+    "storyline_btn_new": "Nouveau",
+    "storyline_title": "Titre",
+    "storyline_summary": "Résumé",
+    "storyline_notes": "Notes",
+    "chapter_form_label": "Chapitre",
+    "chapter_btn_save": "Enregistrer",
+    "chapter_btn_delete": "Supprimer",
+    "chapter_btn_next": "Suivant",
+    "chapter_btn_preview": "Précédent",
+    "chapter_btn_new": "Nouveau",
+    "chapter_title": "Titre",
+    "chapter_number": "Numéro",
+    "chapter_summary": "Résumé",
+    "scene_form_label": "Scène",
+    "scene_btn_save": "Enregistrer",
+    "scene_btn_delete": "Supprimer",
+    "scene_btn_next": "Suivant",
+    "scene_btn_preview": "Précédent",
+    "scene_btn_new": "Nouveau",
+    "scene_title": "Titre",
+    "scene_number": "Numéro",
+    "scene_summary": "Résumé",
+    "object_form_label": "Objet",
+    "object_btn_save": "Enregistrer",
+    "object_btn_delete": "Supprimer",
+    "object_btn_next": "Suivant",
+    "object_btn_preview": "Précédent",
+    "object_btn_new": "Nouveau",
+    "object_name": "Nom",
+    "object_type": "Type",
+    "object_description": "Description",
+    "location_form_label": "Lieu",
+    "location_btn_save": "Enregistrer",
+    "location_btn_delete": "Supprimer",
+    "location_btn_next": "Suivant",
+    "location_btn_preview": "Précédent",
+    "location_btn_new": "Nouveau",
+    "location_name": "Nom",
+    "location_type": "Type",
+    "location_description": "Description"
 }
 ```
 ### 5.3 Character Tabellen
@@ -1838,17 +2096,19 @@ from PySide6.QtGui import QAction
 from core.logger import log_section, log_subsection, log_info, log_error
 
 class FormToolbar(QWidget):
-    def __init__(self, parent=None):
+    def __init__(self, translator, form_prefix, parent=None):
         log_section("form_toolbar.py")
         log_subsection("__init__")
         try:
             super().__init__(parent)
             self.toolbar = QToolBar(self)
-            self.new_action = QAction("New", self)
-            self.delete_action = QAction("Delete", self)
-            self.prev_action = QAction("Previous", self)
-            self.next_action = QAction("Next", self)
-            self.save_action = QAction("Save", self)
+            self.translator = translator
+            # Use form_prefix like "project", "character", etc.
+            self.new_action = QAction(self.translator.form_label(f"{form_prefix}_btn_new"), self)
+            self.delete_action = QAction(self.translator.form_label(f"{form_prefix}_btn_delete"), self)
+            self.prev_action = QAction(self.translator.form_label(f"{form_prefix}_btn_preview"), self)
+            self.next_action = QAction(self.translator.form_label(f"{form_prefix}_btn_next"), self)
+            self.save_action = QAction(self.translator.form_label(f"{form_prefix}_btn_save"), self)
 
             self.toolbar.addAction(self.new_action)
             self.toolbar.addAction(self.delete_action)
@@ -1872,7 +2132,7 @@ from gui.widgets.form_toolbar import FormToolbar
 from core.logger import log_section, log_subsection, log_info, log_error
 
 class BaseFormWidget(QWidget):
-    def __init__(self, title, fields, form_labels, toolbar_actions, parent=None):
+    def __init__(self, title, fields, form_labels, toolbar_actions, form_prefix, parent=None):
         log_section("base_form_widget.py")
         log_subsection("__init__")
         try:
@@ -1901,7 +2161,7 @@ class BaseFormWidget(QWidget):
 
             self.layout.addLayout(self.form_layout)
 
-            self.toolbar = FormToolbar(self)
+            self.toolbar = FormToolbar(self.translator, form_prefix, self)
             if toolbar_actions:
                 toolbar_actions(self.toolbar)
             self.layout.addWidget(self.toolbar)
@@ -1912,34 +2172,376 @@ class BaseFormWidget(QWidget):
             log_error(f"Error initializing BaseFormWidget: {str(e)}")
 ```
 
-##### 6.5.3.3 form_labels.py
+##### 6.5.3.3 form_chapters.py
 
 ```python
-import json
-import os
-
-# Import central logging functions
+from PySide6.QtWidgets import QWidget, QVBoxLayout
+from gui.widgets.base_form_widget import BaseFormWidget
+from core.translator import Translator
 from core.logger import log_section, log_subsection, log_info, log_error
 
-# Import the central forms directory
-from config.dev import FORMS_DIR
+class ChaptersForm(QWidget):
+    """
+    Form widget for chapter data entry.
+    """
+    def __init__(self, translator: Translator, parent=None):
+        log_section("form_chapters.py")
+        log_subsection("__init__")
+        try:
+            super().__init__(parent)
+            self.translator = translator
+            fields = [
+                {"name": "chapter_title", "label_key": "chapter_title", "default_label": "Title", "type": "text"},
+                {"name": "chapter_number", "label_key": "chapter_number", "default_label": "Number", "type": "spin", "max": 999},
+                {"name": "chapter_summary", "label_key": "chapter_summary", "default_label": "Summary", "type": "text"},
+                # ... add more fields as needed ...
+            ]
+            def toolbar_actions(toolbar):
+                toolbar.save_action.triggered.connect(self._on_save)
+            self.form = BaseFormWidget(
+                title=self.translator.form_label("chapter_form_label"),
+                fields=fields,
+                form_labels=self.translator.form_labels,
+                toolbar_actions=toolbar_actions,
+                form_prefix="chapter",
+                parent=self
+            )
+            layout = QVBoxLayout(self)
+            layout.addWidget(self.form)
+            self.setLayout(layout)
+            log_info("ChaptersForm initialized successfully.")
+        except Exception as e:
+            log_error(f"Error initializing ChaptersForm: {str(e)}")
 
-def load_form_labels(language="en"):
-    log_section("form_labels.py")
-    log_subsection("load_form_labels")
-    path = FORMS_DIR / f"form_{language}.json"
-    try:
-        if os.path.exists(path):
-            with open(path, "r", encoding="utf-8") as f:
-                labels = json.load(f)
-                log_info(f"Form labels loaded for language '{language}' from {path}.")
-                return labels
-        else:
-            log_error(f"Form labels file not found: {path}")
-            return {}
-    except Exception as e:
-        log_error(f"Error loading form labels for language '{language}': {e}")
-        return {}
+    def _on_save(self):
+        """
+        Handle save action for chapter form.
+        """
+        log_subsection("_on_save")
+        log_info("ChaptersForm save triggered.")
+```
+
+##### 6.5.3.4 form_characters.py
+
+```python
+from PySide6.QtWidgets import QWidget, QVBoxLayout
+from gui.widgets.base_form_widget import BaseFormWidget
+from core.translator import Translator
+from core.logger import log_section, log_subsection, log_info, log_error
+
+class CharactersForm(QWidget):
+    """
+    Form widget for character data entry.
+    """
+    def __init__(self, translator: Translator, parent=None):
+        log_section("form_characters.py")
+        log_subsection("__init__")
+        try:
+            super().__init__(parent)
+            self.translator = translator
+            fields = [
+                {"name": "character_name", "label_key": "character_name", "default_label": "Name", "type": "text"},
+                {"name": "character_nickname", "label_key": "character_nickname", "default_label": "Nickname", "type": "text"},
+                {"name": "character_gender", "label_key": "character_gender", "default_label": "Gender", "type": "text"},
+                {"name": "character_age", "label_key": "character_age", "default_label": "Age", "type": "spin", "max": 120},
+                {"name": "character_role", "label_key": "character_role", "default_label": "Role", "type": "text"},
+                {"name": "character_description", "label_key": "character_description", "default_label": "Description", "type": "text"},
+                # ... add more fields as needed ...
+            ]
+            def toolbar_actions(toolbar):
+                toolbar.save_action.triggered.connect(self._on_save)
+            self.form = BaseFormWidget(
+                title=self.translator.form_label("character_form_label"),
+                fields=fields,
+                form_labels=self.translator.form_labels,
+                toolbar_actions=toolbar_actions,
+                form_prefix="character",
+                parent=self
+            )
+            layout = QVBoxLayout(self)
+            layout.addWidget(self.form)
+            self.setLayout(layout)
+            log_info("CharactersForm initialized successfully.")
+        except Exception as e:
+            log_error(f"Error initializing CharactersForm: {str(e)}")
+
+    def _on_save(self):
+        """
+        Handle save action for character form.
+        """
+        log_subsection("_on_save")
+        log_info("CharactersForm save triggered.")
+```
+
+##### 6.5.3.5 form_locations.py
+
+```python
+from PySide6.QtWidgets import QWidget, QVBoxLayout
+from gui.widgets.base_form_widget import BaseFormWidget
+from core.translator import Translator
+from core.logger import log_section, log_subsection, log_info, log_error
+
+class LocationsForm(QWidget):
+    """
+    Form widget for location data entry.
+    """
+    def __init__(self, translator: Translator, parent=None):
+        log_section("form_locations.py")
+        log_subsection("__init__")
+        try:
+            super().__init__(parent)
+            self.translator = translator
+            fields = [
+                {"name": "location_name", "label_key": "location_name", "default_label": "Name", "type": "text"},
+                {"name": "location_type", "label_key": "location_type", "default_label": "Type", "type": "text"},
+                {"name": "location_description", "label_key": "location_description", "default_label": "Description", "type": "text"},
+                # ... add more fields as needed ...
+            ]
+            def toolbar_actions(toolbar):
+                toolbar.save_action.triggered.connect(self._on_save)
+            self.form = BaseFormWidget(
+                title=self.translator.form_label("location_form_label"),
+                fields=fields,
+                form_labels=self.translator.form_labels,
+                toolbar_actions=toolbar_actions,
+                form_prefix="location",
+                parent=self
+            )
+            layout = QVBoxLayout(self)
+            layout.addWidget(self.form)
+            self.setLayout(layout)
+            log_info("LocationsForm initialized successfully.")
+        except Exception as e:
+            log_error(f"Error initializing LocationsForm: {str(e)}")
+
+    def _on_save(self):
+        """
+        Handle save action for location form.
+        """
+        log_subsection("_on_save")
+        log_info("LocationsForm save triggered.")
+```
+
+##### 6.5.3.6 form_objects.py
+
+```python
+from PySide6.QtWidgets import QWidget, QVBoxLayout
+from gui.widgets.base_form_widget import BaseFormWidget
+from core.translator import Translator
+from core.logger import log_section, log_subsection, log_info, log_error
+
+class ObjectsForm(QWidget):
+    """
+    Form widget for object data entry.
+    """
+    def __init__(self, translator: Translator, parent=None):
+        log_section("form_objects.py")
+        log_subsection("__init__")
+        try:
+            super().__init__(parent)
+            self.translator = translator
+            fields = [
+                {"name": "object_name", "label_key": "object_name", "default_label": "Name", "type": "text"},
+                {"name": "object_type", "label_key": "object_type", "default_label": "Type", "type": "text"},
+                {"name": "object_description", "label_key": "object_description", "default_label": "Description", "type": "text"},
+                # ... add more fields as needed ...
+            ]
+            def toolbar_actions(toolbar):
+                toolbar.save_action.triggered.connect(self._on_save)
+            self.form = BaseFormWidget(
+                title=self.translator.form_label("object_form_label"),
+                fields=fields,
+                form_labels=self.translator.form_labels,
+                toolbar_actions=toolbar_actions,
+                form_prefix="object",
+                parent=self
+            )
+            layout = QVBoxLayout(self)
+            layout.addWidget(self.form)
+            self.setLayout(layout)
+            log_info("ObjectsForm initialized successfully.")
+        except Exception as e:
+            log_error(f"Error initializing ObjectsForm: {str(e)}")
+
+    def _on_save(self):
+        """
+        Handle save action for object form.
+        """
+        log_subsection("_on_save")
+        log_info("ObjectsForm save triggered.")
+```
+
+##### 6.5.3.7 form_projects.py
+
+```python
+from PySide6.QtWidgets import QWidget, QVBoxLayout
+from gui.widgets.base_form_widget import BaseFormWidget
+from core.translator import Translator
+from core.logger import log_section, log_subsection, log_info, log_error
+
+class ProjectForm(QWidget):
+    """
+    Form widget for project data entry.
+    """
+    def __init__(self, translator: Translator, parent=None):
+        log_section("form_projects.py")
+        log_subsection("__init__")
+        try:
+            super().__init__(parent)
+            self.translator = translator
+            fields = [
+                {"name": "title", "label_key": "project_title", "default_label": "Title", "type": "text"},
+                {"name": "subtitle", "label_key": "project_subtitle", "default_label": "Subtitle", "type": "text"},
+                {"name": "author", "label_key": "project_author", "default_label": "Author", "type": "text"},
+                # ... add more fields as needed ...
+            ]
+            def toolbar_actions(toolbar):
+                toolbar.save_action.triggered.connect(self._on_save)
+            self.form = BaseFormWidget(
+                title=self.translator.form_label("project_form_label"),
+                fields=fields,
+                form_labels=self.translator.form_labels,
+                toolbar_actions=toolbar_actions,
+                form_prefix="project",
+                parent=self
+            )
+            layout = QVBoxLayout(self)
+            layout.addWidget(self.form)
+            self.setLayout(layout)
+            log_info("ProjectForm initialized successfully.")
+        except Exception as e:
+            log_error(f"Error initializing ProjectForm: {str(e)}")
+
+    def _on_save(self):
+        """
+        Handle save action for project form.
+        """
+        log_subsection("_on_save")
+        log_info("ProjectForm save triggered.")
+```
+
+##### 6.5.3.8 form_scenes.py
+
+```python
+from PySide6.QtWidgets import QWidget, QVBoxLayout
+from gui.widgets.base_form_widget import BaseFormWidget
+from core.translator import Translator
+from core.logger import log_section, log_subsection, log_info, log_error
+
+class ScenesForm(QWidget):
+    """
+    Form widget for scene data entry.
+    """
+    def __init__(self, translator: Translator, parent=None):
+        log_section("form_scenes.py")
+        log_subsection("__init__")
+        try:
+            super().__init__(parent)
+            self.translator = translator
+            fields = [
+                {"name": "scene_title", "label_key": "scene_title", "default_label": "Title", "type": "text"},
+                {"name": "scene_number", "label_key": "scene_number", "default_label": "Number", "type": "spin", "max": 9999},
+                {"name": "scene_summary", "label_key": "scene_summary", "default_label": "Summary", "type": "text"},
+                # ... add more fields as needed ...
+            ]
+            def toolbar_actions(toolbar):
+                toolbar.save_action.triggered.connect(self._on_save)
+            self.form = BaseFormWidget(
+                title=self.translator.form_label("scene_form_label"),
+                fields=fields,
+                form_labels=self.translator.form_labels,
+                toolbar_actions=toolbar_actions,
+                form_prefix="scene",
+                parent=self
+            )
+            layout = QVBoxLayout(self)
+            layout.addWidget(self.form)
+            self.setLayout(layout)
+            log_info("ScenesForm initialized successfully.")
+        except Exception as e:
+            log_error(f"Error initializing ScenesForm: {str(e)}")
+
+    def _on_save(self):
+        """
+        Handle save action for scene form.
+        """
+        log_subsection("_on_save")
+        log_info("ScenesForm save triggered.")
+```
+
+##### 6.5.3.9 form_storylines.py
+
+```python
+from PySide6.QtWidgets import QWidget, QVBoxLayout
+from gui.widgets.base_form_widget import BaseFormWidget
+from core.translator import Translator
+from core.logger import log_section, log_subsection, log_info, log_error
+
+class StorylinesForm(QWidget):
+    """
+    Form widget for storyline data entry.
+    """
+    def __init__(self, translator: Translator, parent=None):
+        log_section("form_storylines.py")
+        log_subsection("__init__")
+        try:
+            super().__init__(parent)
+            self.translator = translator
+            fields = [
+                {"name": "storyline_title", "label_key": "storyline_title", "default_label": "Title", "type": "text"},
+                {"name": "storyline_summary", "label_key": "storyline_summary", "default_label": "Summary", "type": "text"},
+                {"name": "storyline_notes", "label_key": "storyline_notes", "default_label": "Notes", "type": "text"},
+                # ... add more fields as needed ...
+            ]
+            def toolbar_actions(toolbar):
+                toolbar.save_action.triggered.connect(self._on_save)
+            self.form = BaseFormWidget(
+                title=self.translator.form_label("storyline_form_label"),
+                fields=fields,
+                form_labels=self.translator.form_labels,
+                toolbar_actions=toolbar_actions,
+                form_prefix="storyline",
+                parent=self
+            )
+            layout = QVBoxLayout(self)
+            layout.addWidget(self.form)
+            self.setLayout(layout)
+            log_info("StorylinesForm initialized successfully.")
+        except Exception as e:
+            log_error(f"Error initializing StorylinesForm: {str(e)}")
+
+    def _on_save(self):
+        """
+        Handle save action for storyline form.
+        """
+        log_subsection("_on_save")
+        log_info("StorylinesForm save triggered.")
+```
+
+##### 6.5.3.10 form_start.py
+```python
+from PySide6.QtWidgets import QWidget, QVBoxLayout
+from core.translator import Translator
+from core.logger import log_section, log_subsection, log_info, log_error
+
+class StartForm(QWidget):
+    """
+    Completely empty form widget for the start window.
+    """
+    def __init__(self, translator: Translator, parent=None):
+        log_section("form_start.py")
+        log_subsection("__init__")
+        try:
+            super().__init__(parent)
+            self.translator = translator
+
+            # Empty layout
+            layout = QVBoxLayout()
+            self.setLayout(layout)
+
+            log_info("StartForm initialized successfully.")
+        except Exception as e:
+            log_error(f"Error initializing StartForm: {str(e)}")
 ```
 
 #### 6.5.4 Fenster
@@ -2302,16 +2904,23 @@ class PreferencesWindow(QDialog):
 ```python
 from PySide6.QtGui import QPalette, QColor
 from PySide6.QtCore import Qt
-from PySide6.QtWidgets import (
-    QWidget, QVBoxLayout, QTextEdit, QSplitter, QHBoxLayout
-)
+from PySide6.QtWidgets import QWidget, QVBoxLayout, QSplitter, QHBoxLayout
+
 from gui.styles.style_utils import load_button_style, load_active_button_style
 from core.translator import Translator
 from config.settings import load_settings, save_settings
-from gui.widgets.form_toolbar import FormToolbar
-from gui.widgets.base_form_widget import BaseFormWidget
 from gui.widgets.navigation_panel import NavigationPanel
 from gui.widgets.help_panel import HelpPanel
+
+# Import modular forms
+from gui.widgets.form_projects import ProjectForm
+from gui.widgets.form_characters import CharactersForm
+from gui.widgets.form_storylines import StorylinesForm
+from gui.widgets.form_chapters import ChaptersForm
+from gui.widgets.form_scenes import ScenesForm
+from gui.widgets.form_objects import ObjectsForm
+from gui.widgets.form_locations import LocationsForm
+from gui.widgets.form_start import StartForm
 
 # Import central logging functions
 from core.logger import log_section, log_subsection, log_info, log_error
@@ -2324,7 +2933,7 @@ class ProjectWindow(QWidget):
         log_section("project_window.py")
         log_subsection("__init__")
         try:
-            self.translator = translator or Translator(default="en")
+            self.translator = translator or Translator(lang="en")
             super().__init__(parent)
             self.resize(1600, 900)
             self.setWindowTitle(self.translator.tr("project_window_title"))
@@ -2357,13 +2966,13 @@ class ProjectWindow(QWidget):
                 "btn_chapters", "btn_scenes", "btn_objects", "btn_locations", "btn_exit"
             ]
             callbacks = {
-                "btn_project": lambda: self._on_nav_clicked("btn_project", self._show_project_text),
-                "btn_characters": lambda: self._on_nav_clicked("btn_characters", self._show_characters_text),
-                "btn_storylines": lambda: self._on_nav_clicked("btn_storylines", self._show_storylines_text),
-                "btn_chapters": lambda: self._on_nav_clicked("btn_chapters", self._show_chapters_text),
-                "btn_scenes": lambda: self._on_nav_clicked("btn_scenes", self._show_scenes_text),
-                "btn_objects": lambda: self._on_nav_clicked("btn_objects", self._show_objects_text),
-                "btn_locations": lambda: self._on_nav_clicked("btn_locations", self._show_locations_text),
+                "btn_project": lambda: self._on_nav_clicked("btn_project", self._show_project_form),
+                "btn_characters": lambda: self._on_nav_clicked("btn_characters", self._show_characters_form),
+                "btn_storylines": lambda: self._on_nav_clicked("btn_storylines", self._show_storylines_form),
+                "btn_chapters": lambda: self._on_nav_clicked("btn_chapters", self._show_chapters_form),
+                "btn_scenes": lambda: self._on_nav_clicked("btn_scenes", self._show_scenes_form),
+                "btn_objects": lambda: self._on_nav_clicked("btn_objects", self._show_objects_form),
+                "btn_locations": lambda: self._on_nav_clicked("btn_locations", self._show_locations_form),
                 "btn_exit": self._exit_application
             }
             self.navigation_panel = NavigationPanel(
@@ -2371,11 +2980,12 @@ class ProjectWindow(QWidget):
             )
 
             self.help_panel = HelpPanel(self)
-            self.input_area = QTextEdit()
+            # Start with project form
+            self.form_widget = StartForm(self.translator, self)
 
             self.splitter = QSplitter(Qt.Horizontal)
             self.splitter.addWidget(self.navigation_panel)
-            self.splitter.addWidget(self.input_area)
+            self.splitter.addWidget(self.form_widget)
             self.splitter.addWidget(self.help_panel)
             self.splitter.setSizes(self.settings.get("splitter_sizes", [300, 900, 300]))
 
@@ -2394,45 +3004,11 @@ class ProjectWindow(QWidget):
         except Exception as e:
             log_error(f"Error in navigation click handler for '{key}': {str(e)}")
 
-    def _show_project_text(self):
-        log_subsection("_show_project_text")
+    def _show_project_form(self):
+        log_subsection("_show_project_form")
         try:
-            fields = [
-                {"name": "title", "label_key": "project_title", "default_label": "Title", "type": "text"},
-                {"name": "subtitle", "label_key": "project_subtitle", "default_label": "Subtitle", "type": "text"},
-                {"name": "author", "label_key": "project_author", "default_label": "Author", "type": "text"},
-                {"name": "premise", "label_key": "project_premise", "default_label": "Premise", "type": "text"},
-                {"name": "genre", "label_key": "project_genre", "default_label": "Genre", "type": "text"},
-                {"name": "narrative_perspective", "label_key": "project_narrative_perspective", "default_label": "Narrative Perspective", "type": "text"},
-                {"name": "timeline", "label_key": "project_timeline", "default_label": "Timeline", "type": "text"},
-                {"name": "target_group", "label_key": "project_target_group", "default_label": "Target Group", "type": "text"},
-                {"name": "cover_image", "label_key": "project_cover_image", "default_label": "Cover Image", "type": "text"},
-                {"name": "start_date", "label_key": "project_start_date", "default_label": "Start Date", "type": "date"},
-                {"name": "deadline", "label_key": "project_deadline", "default_label": "Deadline", "type": "date"},
-                {"name": "word_count_goal", "label_key": "project_word_count_goal", "default_label": "Word Count Goal", "type": "spin", "max": 100000},
-            ]
-
-            def toolbar_actions(toolbar):
-                log_subsection("toolbar_actions: project")
-                toolbar.new_action.triggered.connect(lambda: log_info("New project record triggered."))
-                toolbar.delete_action.triggered.connect(lambda: log_info("Delete project record triggered."))
-                toolbar.prev_action.triggered.connect(lambda: log_info("Previous project record triggered."))
-                toolbar.next_action.triggered.connect(lambda: log_info("Next project record triggered."))
-                toolbar.save_action.triggered.connect(self._save_project_form)
-
-            form_widget = BaseFormWidget(
-                title=self.translator.form_label("project_form_label"),
-                fields=fields,
-                form_labels=self.translator.form_labels,
-                toolbar_actions=toolbar_actions,
-                parent=self
-            )
-
-            old_widget = self.splitter.widget(1)
-            if old_widget:
-                old_widget.setParent(None)
-            self.splitter.insertWidget(1, form_widget)
-
+            form_widget = ProjectForm(self.translator, self)
+            self._replace_form_widget(form_widget)
             help_text = self.translator.help_text("help_project")
             self.help_panel.set_help_text(help_text)
             self.splitter.setSizes([300, 900, 300])
@@ -2440,286 +3016,86 @@ class ProjectWindow(QWidget):
         except Exception as e:
             log_error(f"Error displaying project form: {str(e)}")
 
-    def _save_project_form(self):
-        log_subsection("_save_project_form")
+    def _show_characters_form(self):
+        log_subsection("_show_characters_form")
         try:
-            log_info("Save project button clicked.")
-            # Add logic to save project data here
-        except Exception as e:
-            log_error(f"Error saving project data: {str(e)}")
-
-    def _show_characters_text(self):
-        log_subsection("_show_characters_text")
-        try:
-            fields = [
-                {"name": "character_name", "label_key": "character_name", "default_label": "Name", "type": "text"},
-                {"name": "character_nickname", "label_key": "character_nickname", "default_label": "Nickname", "type": "text"},
-                {"name": "character_gender", "label_key": "character_gender", "default_label": "Gender", "type": "text"},
-                {"name": "character_age", "label_key": "character_age", "default_label": "Age", "type": "spin", "max": 120},
-                {"name": "character_role", "label_key": "character_role", "default_label": "Role", "type": "text"},
-                {"name": "character_description", "label_key": "character_description", "default_label": "Description", "type": "text"},
-            ]
-
-            def toolbar_actions(toolbar):
-                log_subsection("toolbar_actions: character")
-                toolbar.new_action.triggered.connect(lambda: log_info("New character triggered."))
-                toolbar.delete_action.triggered.connect(lambda: log_info("Delete character triggered."))
-                toolbar.prev_action.triggered.connect(lambda: log_info("Previous character triggered."))
-                toolbar.next_action.triggered.connect(lambda: log_info("Next character triggered."))
-                toolbar.save_action.triggered.connect(self._save_character_form)
-
-            form_widget = BaseFormWidget(
-                title=self.translator.form_label("character_form_label"),
-                fields=fields,
-                form_labels=self.translator.form_labels,
-                toolbar_actions=toolbar_actions,
-                parent=self
-            )
-
-            old_widget = self.splitter.widget(1)
-            if old_widget:
-                old_widget.setParent(None)
-            self.splitter.insertWidget(1, form_widget)
-
+            form_widget = CharactersForm(self.translator, self)
+            self._replace_form_widget(form_widget)
             help_text = self.translator.help_text("help_characters")
             self.help_panel.set_help_text(help_text)
             self.splitter.setSizes([300, 900, 300])
-            log_info("Character form displayed successfully.")
+            log_info("Characters form displayed successfully.")
         except Exception as e:
-            log_error(f"Error displaying character form: {str(e)}")
+            log_error(f"Error displaying characters form: {str(e)}")
 
-    def _save_character_form(self):
-        log_subsection("_save_character_form")
+    def _show_storylines_form(self):
+        log_subsection("_show_storylines_form")
         try:
-            log_info("Save character button clicked.")
-            # Add logic to save character data here
-        except Exception as e:
-            log_error(f"Error saving character data: {str(e)}")
-
-    def _show_storylines_text(self):
-        log_subsection("_show_storylines_text")
-        try:
-            fields = [
-                {"name": "storyline_title", "label_key": "storyline_title", "default_label": "Title", "type": "text"},
-                {"name": "storyline_summary", "label_key": "storyline_summary", "default_label": "Summary", "type": "text"},
-                {"name": "storyline_notes", "label_key": "storyline_notes", "default_label": "Notes", "type": "text"},
-            ]
-
-            def toolbar_actions(toolbar):
-                log_subsection("toolbar_actions: storyline")
-                toolbar.new_action.triggered.connect(lambda: log_info("New storyline triggered."))
-                toolbar.delete_action.triggered.connect(lambda: log_info("Delete storyline triggered."))
-                toolbar.prev_action.triggered.connect(lambda: log_info("Previous storyline triggered."))
-                toolbar.next_action.triggered.connect(lambda: log_info("Next storyline triggered."))
-                toolbar.save_action.triggered.connect(self._save_storyline_form)
-
-            form_widget = BaseFormWidget(
-                title=self.translator.form_label("storyline_form_label"),
-                fields=fields,
-                form_labels=self.translator.form_labels,
-                toolbar_actions=toolbar_actions,
-                parent=self
-            )
-
-            old_widget = self.splitter.widget(1)
-            if old_widget:
-                old_widget.setParent(None)
-            self.splitter.insertWidget(1, form_widget)
-
+            form_widget = StorylinesForm(self.translator, self)
+            self._replace_form_widget(form_widget)
             help_text = self.translator.help_text("help_storylines")
             self.help_panel.set_help_text(help_text)
             self.splitter.setSizes([300, 900, 300])
-            log_info("Storyline form displayed successfully.")
+            log_info("Storylines form displayed successfully.")
         except Exception as e:
-            log_error(f"Error displaying storyline form: {str(e)}")
+            log_error(f"Error displaying storylines form: {str(e)}")
 
-    def _save_storyline_form(self):
-        log_subsection("_save_storyline_form")
+    def _show_chapters_form(self):
+        log_subsection("_show_chapters_form")
         try:
-            log_info("Save storyline button clicked.")
-            # Add logic to save storyline data here
-        except Exception as e:
-            log_error(f"Error saving storyline data: {str(e)}")
-
-    def _show_chapters_text(self):
-        log_subsection("_show_chapters_text")
-        try:
-            fields = [
-                {"name": "chapter_title", "label_key": "chapter_title", "default_label": "Title", "type": "text"},
-                {"name": "chapter_number", "label_key": "chapter_number", "default_label": "Number", "type": "spin", "max": 999},
-                {"name": "chapter_summary", "label_key": "chapter_summary", "default_label": "Summary", "type": "text"},
-            ]
-
-            def toolbar_actions(toolbar):
-                log_subsection("toolbar_actions: chapter")
-                toolbar.new_action.triggered.connect(lambda: log_info("New chapter triggered."))
-                toolbar.delete_action.triggered.connect(lambda: log_info("Delete chapter triggered."))
-                toolbar.prev_action.triggered.connect(lambda: log_info("Previous chapter triggered."))
-                toolbar.next_action.triggered.connect(lambda: log_info("Next chapter triggered."))
-                toolbar.save_action.triggered.connect(self._save_chapter_form)
-
-            form_widget = BaseFormWidget(
-                title=self.translator.form_label("chapter_form_label"),
-                fields=fields,
-                form_labels=self.translator.form_labels,
-                toolbar_actions=toolbar_actions,
-                parent=self
-            )
-
-            old_widget = self.splitter.widget(1)
-            if old_widget:
-                old_widget.setParent(None)
-            self.splitter.insertWidget(1, form_widget)
-
+            form_widget = ChaptersForm(self.translator, self)
+            self._replace_form_widget(form_widget)
             help_text = self.translator.help_text("help_chapters")
             self.help_panel.set_help_text(help_text)
             self.splitter.setSizes([300, 900, 300])
-            log_info("Chapter form displayed successfully.")
+            log_info("Chapters form displayed successfully.")
         except Exception as e:
-            log_error(f"Error displaying chapter form: {str(e)}")
+            log_error(f"Error displaying chapters form: {str(e)}")
 
-    def _save_chapter_form(self):
-        log_subsection("_save_chapter_form")
+    def _show_scenes_form(self):
+        log_subsection("_show_scenes_form")
         try:
-            log_info("Save chapter button clicked.")
-            # Add logic to save chapter data here
-        except Exception as e:
-            log_error(f"Error saving chapter data: {str(e)}")
-
-    def _show_scenes_text(self):
-        log_subsection("_show_scenes_text")
-        try:
-            fields = [
-                {"name": "scene_title", "label_key": "scene_title", "default_label": "Title", "type": "text"},
-                {"name": "scene_number", "label_key": "scene_number", "default_label": "Number", "type": "spin", "max": 9999},
-                {"name": "scene_summary", "label_key": "scene_summary", "default_label": "Summary", "type": "text"},
-            ]
-
-            def toolbar_actions(toolbar):
-                log_subsection("toolbar_actions: scene")
-                toolbar.new_action.triggered.connect(lambda: log_info("New scene triggered."))
-                toolbar.delete_action.triggered.connect(lambda: log_info("Delete scene triggered."))
-                toolbar.prev_action.triggered.connect(lambda: log_info("Previous scene triggered."))
-                toolbar.next_action.triggered.connect(lambda: log_info("Next scene triggered."))
-                toolbar.save_action.triggered.connect(self._save_scene_form)
-
-            form_widget = BaseFormWidget(
-                title=self.translator.form_label("scene_form_label"),
-                fields=fields,
-                form_labels=self.translator.form_labels,
-                toolbar_actions=toolbar_actions,
-                parent=self
-            )
-
-            old_widget = self.splitter.widget(1)
-            if old_widget:
-                old_widget.setParent(None)
-            self.splitter.insertWidget(1, form_widget)
-
+            form_widget = ScenesForm(self.translator, self)
+            self._replace_form_widget(form_widget)
             help_text = self.translator.help_text("help_scenes")
             self.help_panel.set_help_text(help_text)
             self.splitter.setSizes([300, 900, 300])
-            log_info("Scene form displayed successfully.")
+            log_info("Scenes form displayed successfully.")
         except Exception as e:
-            log_error(f"Error displaying scene form: {str(e)}")
+            log_error(f"Error displaying scenes form: {str(e)}")
 
-    def _save_scene_form(self):
-        log_subsection("_save_scene_form")
+    def _show_objects_form(self):
+        log_subsection("_show_objects_form")
         try:
-            log_info("Save scene button clicked.")
-            # Add logic to save scene data here
-        except Exception as e:
-            log_error(f"Error saving scene data: {str(e)}")
-
-    def _show_objects_text(self):
-        log_subsection("_show_objects_text")
-        try:
-            fields = [
-                {"name": "object_name", "label_key": "object_name", "default_label": "Name", "type": "text"},
-                {"name": "object_type", "label_key": "object_type", "default_label": "Type", "type": "text"},
-                {"name": "object_description", "label_key": "object_description", "default_label": "Description", "type": "text"},
-            ]
-
-            def toolbar_actions(toolbar):
-                log_subsection("toolbar_actions: object")
-                toolbar.new_action.triggered.connect(lambda: log_info("New object triggered."))
-                toolbar.delete_action.triggered.connect(lambda: log_info("Delete object triggered."))
-                toolbar.prev_action.triggered.connect(lambda: log_info("Previous object triggered."))
-                toolbar.next_action.triggered.connect(lambda: log_info("Next object triggered."))
-                toolbar.save_action.triggered.connect(self._save_object_form)
-
-            form_widget = BaseFormWidget(
-                title=self.translator.form_label("object_form_label"),
-                fields=fields,
-                form_labels=self.translator.form_labels,
-                toolbar_actions=toolbar_actions,
-                parent=self
-            )
-
-            old_widget = self.splitter.widget(1)
-            if old_widget:
-                old_widget.setParent(None)
-            self.splitter.insertWidget(1, form_widget)
-
+            form_widget = ObjectsForm(self.translator, self)
+            self._replace_form_widget(form_widget)
             help_text = self.translator.help_text("help_objects")
             self.help_panel.set_help_text(help_text)
             self.splitter.setSizes([300, 900, 300])
-            log_info("Object form displayed successfully.")
+            log_info("Objects form displayed successfully.")
         except Exception as e:
-            log_error(f"Error displaying object form: {str(e)}")
+            log_error(f"Error displaying objects form: {str(e)}")
 
-    def _save_object_form(self):
-        log_subsection("_save_object_form")
+    def _show_locations_form(self):
+        log_subsection("_show_locations_form")
         try:
-            log_info("Save object button clicked.")
-            # Add logic to save object data here
-        except Exception as e:
-            log_error(f"Error saving object data: {str(e)}")
-
-    def _show_locations_text(self):
-        log_subsection("_show_locations_text")
-        try:
-            fields = [
-                {"name": "location_name", "label_key": "location_name", "default_label": "Name", "type": "text"},
-                {"name": "location_type", "label_key": "location_type", "default_label": "Type", "type": "text"},
-                {"name": "location_description", "label_key": "location_description", "default_label": "Description", "type": "text"},
-            ]
-
-            def toolbar_actions(toolbar):
-                log_subsection("toolbar_actions: location")
-                toolbar.new_action.triggered.connect(lambda: log_info("New location triggered."))
-                toolbar.delete_action.triggered.connect(lambda: log_info("Delete location triggered."))
-                toolbar.prev_action.triggered.connect(lambda: log_info("Previous location triggered."))
-                toolbar.next_action.triggered.connect(lambda: log_info("Next location triggered."))
-                toolbar.save_action.triggered.connect(self._save_location_form)
-
-            form_widget = BaseFormWidget(
-                title=self.translator.form_label("location_form_label"),
-                fields=fields,
-                form_labels=self.translator.form_labels,
-                toolbar_actions=toolbar_actions,
-                parent=self
-            )
-
-            old_widget = self.splitter.widget(1)
-            if old_widget:
-                old_widget.setParent(None)
-            self.splitter.insertWidget(1, form_widget)
-
+            form_widget = LocationsForm(self.translator, self)
+            self._replace_form_widget(form_widget)
             help_text = self.translator.help_text("help_locations")
             self.help_panel.set_help_text(help_text)
             self.splitter.setSizes([300, 900, 300])
-            log_info("Location form displayed successfully.")
+            log_info("Locations form displayed successfully.")
         except Exception as e:
-            log_error(f"Error displaying location form: {str(e)}")
+            log_error(f"Error displaying locations form: {str(e)}")
 
-    def _save_location_form(self):
-        log_subsection("_save_location_form")
-        try:
-            log_info("Save location button clicked.")
-            # Add logic to save location data here
-        except Exception as e:
-            log_error(f"Error saving location data: {str(e)}")
+    def _replace_form_widget(self, new_widget):
+        """
+        Replace the current form widget in the splitter.
+        """
+        old_widget = self.splitter.widget(1)
+        if old_widget:
+            old_widget.setParent(None)
+        self.splitter.insertWidget(1, new_widget)
 
     def _exit_application(self):
         log_subsection("_exit_application")
