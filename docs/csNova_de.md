@@ -2,7 +2,7 @@
 
 ## Projektbeschreibung
 
-CSNova ist eine umfassende Softwarelösung für Romanautor:innen, Drehbuchautor:innen, Game Writer:innen und alle, die komplexe narrative Projekte planen, entwickeln und veröffentlichen möchten.
+CSNova ist eine umfassende Software für alle, die komplexe narrative Projekte planen, entwickeln und veröffentlichen möchten – von Romanautor:innen über Drehbuchautor:innen bis zu Game Writer:innen.
 
 ## Funktionen im Überblick
 
@@ -85,8 +85,7 @@ Entwicklung einer plattformübergreifenden Desktop‑Anwendung (Linux, Windows, 
 
 1. Verzichte auf die Simulation von Gefühlen, Empathie und Humor.  
 2. Antworten sind rational, sachlich und ausschließlich auf die Frage bezogen.  
-3. Füge keine Inhalte hinzu und verzichte auf Vorschläge, wenn nicht explizit dazu aufgefordert: "Mache mir alternative Vorschläge"  
-4. Füge der Seite keine Inhalte hinzu. Alle Antworten, Korrekturen und Veränderungsvorschläge erfolgen ausschließlich hier im Chat.  
+3. Füge keine Inhalte hinzu und verzichte auf Vorschläge, wenn nicht explizit dazu aufgefordert: "Mache mir alternative Vorschläge". Alle Antworten, Korrekturen und Veränderungsvorschläge erfolgen ausschließlich hier im Chat.  
 5. Die im Punkt 4 vorgeschlagenen Änderungen werden der Seite nur hinzugefügt, wenn eine explizite Aufforderung erfolgt: "Füge die Änderungen der Seite hinzu"
 
 ## 2. Hauptfunktionen
@@ -189,6 +188,8 @@ Entwicklung einer plattformübergreifenden Desktop‑Anwendung (Linux, Windows, 
 │   ├── dev.py
 │   ├── prod.py
 │   ├── __pycache__/
+│   │   ├── dev.cpython-312.pyc
+│   │   └── settings.cpython-312.pyc
 │   ├── settings.py
 │   └── user_settings.json
 ├── core/
@@ -200,6 +201,8 @@ Entwicklung einer plattformübergreifenden Desktop‑Anwendung (Linux, Windows, 
 │   │   ├── project.py
 │   │   └── scene.py
 │   ├── __pycache__/
+│   │   ├── database.cpython-312.pyc
+│   │   └── translator.cpython-312.pyc
 │   ├── services/
 │   ├── tables/
 │   │   ├── character_appearance_detail.py
@@ -226,6 +229,30 @@ Entwicklung einer plattformübergreifenden Desktop‑Anwendung (Linux, Windows, 
 │   │   ├── project_scene_storyline_map.py
 │   │   ├── project_storylines.py
 │   │   ├── __pycache__/
+│   │   │   ├── character_appearance_detail.cpython-312.pyc
+│   │   │   ├── character_appearance_main.cpython-312.pyc
+│   │   │   ├── character_education.cpython-312.pyc
+│   │   │   ├── character_main.cpython-312.pyc
+│   │   │   ├── character_origin.cpython-312.pyc
+│   │   │   ├── character_personality.cpython-312.pyc
+│   │   │   ├── character_psychological_profile.cpython-312.pyc
+│   │   │   ├── gender.cpython-312.pyc
+│   │   │   ├── gender_data.cpython-312.pyc
+│   │   │   ├── __init__.cpython-312.pyc
+│   │   │   ├── project_chapters.cpython-312.pyc
+│   │   │   ├── project_chapters_scenes.cpython-312.pyc
+│   │   │   ├── project_character_group_map.cpython-312.pyc
+│   │   │   ├── project_character_storyline_map.cpython-312.pyc
+│   │   │   ├── project.cpython-312.pyc
+│   │   │   ├── project_locations.cpython-312.pyc
+│   │   │   ├── project_objects.cpython-312.pyc
+│   │   │   ├── project_scene_character_map.cpython-312.pyc
+│   │   │   ├── project_scene_location_map.cpython-312.pyc
+│   │   │   ├── project_scene_object_map.cpython-312.pyc
+│   │   │   ├── project_scene_storyline_map.cpython-312.pyc
+│   │   │   ├── project_storylines.cpython-312.pyc
+│   │   │   ├── sex_orientation.cpython-312.pyc
+│   │   │   └── sex_orientation_data.cpython-312.pyc
 │   │   ├── sex_orientation_data.py
 │   │   └── sex_orientation.py
 │   ├── translations/
@@ -246,6 +273,9 @@ Entwicklung einer plattformübergreifenden Desktop‑Anwendung (Linux, Windows, 
 │   │   │   └── help_fr.json
 │   │   ├── help_loader.py
 │   │   ├── __pycache__/
+│   │   │   ├── form_labels.cpython-312.pyc
+│   │   │   ├── help_loader.cpython-312.pyc
+│   │   │   └── translations.cpython-312.pyc
 │   │   └── translations.py
 │   └── translator.py
 ├── csnova.py
@@ -254,7 +284,8 @@ Entwicklung einer plattformübergreifenden Desktop‑Anwendung (Linux, Windows, 
 ├── dist/
 │   └── csnova*
 ├── docs/
-│   └── csNova_de.md
+│   ├── csNova_de.md
+│   └── index.md
 ├── export/
 │   ├── csnova_export.py
 │   ├── epub_export.py
@@ -264,11 +295,15 @@ Entwicklung einer plattformübergreifenden Desktop‑Anwendung (Linux, Windows, 
 │   ├── preferences.py
 │   ├── project_window.py
 │   ├── __pycache__/
+│   │   ├── preferences.cpython-312.pyc
+│   │   ├── project_window.cpython-312.pyc
+│   │   └── start_window.cpython-312.pyc
 │   ├── start_window.py
 │   ├── styles/
-│   │   ├── button_style.qss
 │   │   ├── form_styles.py
 │   │   ├── __pycache__/
+│   │   │   ├── form_styles.cpython-312.pyc
+│   │   │   └── style_utils.cpython-312.pyc
 │   │   └── style_utils.py
 │   ├── tabs/
 │   │   ├── character_tab.py
@@ -276,9 +311,13 @@ Entwicklung einer plattformübergreifenden Desktop‑Anwendung (Linux, Windows, 
 │   │   ├── __pycache__/
 │   │   └── scene_tab.py
 │   └── widgets/
+│       ├── base_form_widget.py
 │       ├── dialog.py
-│       └── listview.py
-├── index.md
+│       ├── form_toolbar.py
+│       ├── listview.py
+│       └── __pycache__/
+│           ├── base_form_widget.cpython-312.pyc
+│           └── form_toolbar.cpython-312.pyc
 ├── install_csnova.sh*
 ├── license.md
 ├── readme.md
@@ -392,39 +431,39 @@ In diesem Kapitel sind die Translationstabellen für die Hilfedateien zusammenge
 #### 5.1.2 help_en.json
 ```json
 {
-  "help_project": "Provide general information about your writing project, such as title, genre, and goals.",
-  "help_characters": "Define your characters: names, roles, traits, and relationships.",
-  "help_storylines": "Outline the main story arcs and how they develop over time.",
-  "help_chapters": "Organize your story into chapters and describe their content.",
-  "help_scenes": "Detail individual scenes, their purpose, and setting.",
-  "help_objects": "List important objects and their significance in the story.",
-  "help_locations": "Describe the locations used in your story, including atmosphere and relevance."
+    "help_project": "Provide general information about your writing project, such as title, genre, and goals.",
+    "help_characters": "Define your characters: names, roles, traits, and relationships.",
+    "help_storylines": "Outline the main story arcs and how they develop over time.",
+    "help_chapters": "Organize your story into chapters and describe their content.",
+    "help_scenes": "Detail individual scenes, their purpose, and setting.",
+    "help_objects": "List important objects and their significance in the story.",
+    "help_locations": "Describe the locations used in your story, including atmosphere and relevance."
 }
 ```
 
 #### 5.1.3 help_es.json
 ```json
 {
-  "help_project": "Proporcione información general sobre su proyecto de escritura, como el título, el género y los objetivos.",
-  "help_characters": "Defina sus personajes: nombres, roles, características y relaciones.",
-  "help_storylines": "Esboce las tramas principales y cómo se desarrollan a lo largo del tiempo.",
-  "help_chapters": "Organice su historia en capítulos y describa su contenido.",
-  "help_scenes": "Describa las escenas individuales, su propósito y entorno.",
-  "help_objects": "Enumere los objetos importantes y su significado dentro de la historia.",
-  "help_locations": "Describa los lugares utilizados en su historia, incluyendo la atmósfera y su relevancia."
+    "help_project": "Proporcione información general sobre su proyecto de escritura, como el título, el género y los objetivos.",
+    "help_characters": "Defina sus personajes: nombres, roles, características y relaciones.",
+    "help_storylines": "Esboce las tramas principales y cómo se desarrollan a lo largo del tiempo.",
+    "help_chapters": "Organice su historia en capítulos y describa su contenido.",
+    "help_scenes": "Describa las escenas individuales, su propósito y entorno.",
+    "help_objects": "Enumere los objetos importantes y su significado dentro de la historia.",
+    "help_locations": "Describa los lugares utilizados en su historia, incluyendo la atmósfera y su relevancia."
 }
 ```
 
 #### 5.1.4 help_fr.json
 ```json
 {
-  "help_project": "Fournissez des informations générales sur votre projet d’écriture, telles que le titre, le genre et les objectifs.",
-  "help_characters": "Définissez vos personnages : noms, rôles, traits de caractère et relations.",
-  "help_storylines": "Esquissez les intrigues principales et leur évolution au fil du temps.",
-  "help_chapters": "Organisez votre histoire en chapitres et décrivez leur contenu.",
-  "help_scenes": "Décrivez les scènes individuelles, leur objectif et leur environnement.",
-  "help_objects": "Listez les objets importants et leur signification dans l’histoire.",
-  "help_locations": "Décrivez les lieux utilisés dans votre histoire, y compris leur atmosphère et leur pertinence."
+    "help_project": "Fournissez des informations générales sur votre projet d’écriture, telles que le titre, le genre et les objectifs.",
+    "help_characters": "Définissez vos personnages : noms, rôles, traits de caractère et relations.",
+    "help_storylines": "Esquissez les intrigues principales et leur évolution au fil du temps.",
+    "help_chapters": "Organisez votre histoire en chapitres et décrivez leur contenu.",
+    "help_scenes": "Décrivez les scènes individuelles, leur objectif et leur environnement.",
+    "help_objects": "Listez les objets importants et leur signification dans l’histoire.",
+    "help_locations": "Décrivez les lieux utilisés dans votre histoire, y compris leur atmosphère et leur pertinence."
 }
 ```
 
@@ -436,28 +475,28 @@ In diesem Abschnitt sind die Translationstabellen für die GUI zusammengefasst.
 
 ```json
 {
-  "btn_new_project": "Datenbanken",
-  "btn_load_project": "Projekt laden …",
-  "btn_settings": "Einstellungen",
-  "btn_help": "Hilfe/Tutorial",
-  "btn_exit": "Beenden",
-  "menu_file": "Datei",
-  "menu_edit": "Bearbeiten",
-  "menu_help": "Hilfe",
-  "menu_settings": "Einstellungen",
-  "menu_language": "Sprache",
-  "action_new": "Neu",
-  "action_open": "Öffnen",
-  "action_save": "Speichern",
-  "action_exit": "Beenden",
-  "tab_project": "Projekt",
-  "tab_character": "Charaktere",
-  "tab_scene": "Szenen",
-  "btn_save": "Speichern",
-  "tooltip_exit": "Programm beenden",
-  "action_cancel": "Abbrechen",
-  "project_window_title": "Datenbanken",
-  "start_window_title": "Startseite"
+    "btn_new_project": "Datenbanken",
+    "btn_load_project": "Projekt laden …",
+    "btn_settings": "Einstellungen",
+    "btn_help": "Hilfe/Tutorial",
+    "btn_exit": "Beenden",
+    "menu_file": "Datei",
+    "menu_edit": "Bearbeiten",
+    "menu_help": "Hilfe",
+    "menu_settings": "Einstellungen",
+    "menu_language": "Sprache",
+    "action_new": "Neu",
+    "action_open": "Öffnen",
+    "action_save": "Speichern",
+    "action_exit": "Beenden",
+    "tab_project": "Projekt",
+    "tab_character": "Charaktere",
+    "tab_scene": "Szenen",
+    "btn_save": "Speichern",
+    "tooltip_exit": "Programm beenden",
+    "action_cancel": "Abbrechen",
+    "project_window_title": "Datenbanken",
+    "start_window_title": "Startseite"
 }
 ```
 
@@ -465,94 +504,94 @@ In diesem Abschnitt sind die Translationstabellen für die GUI zusammengefasst.
 
 ```json
 {
-        "btn_new_project": "Databases",
-        "btn_load_project": "Open Project …",
-        "btn_settings": "Settings",
-        "btn_help": "Help/Tutorial",
-        "btn_exit": "Exit",
-        "menu_file": "File",
-        "menu_edit": "Edit",
-        "menu_help": "Help",
-        "menu_settings": "Settings",
-        "menu_language": "Language",
-        "action_new": "New",
-        "action_open": "Open",
-        "action_save": "Save",
-        "action_exit": "Exit",
-        "tab_project": "Project",
-        "tab_character": "Characters",
-        "tab_scene": "Scenes",
-        "btn_save": "Save",
-        "tooltip_exit": "Exit application",
-        "action_cancel": "Cancel",
-        "project_window_title": "Databases",
-        "start_window_title": "Start"
-    }
+    "btn_new_project": "Databases",
+    "btn_load_project": "Open Project …",
+    "btn_settings": "Settings",
+    "btn_help": "Help/Tutorial",
+    "btn_exit": "Exit",
+    "menu_file": "File",
+    "menu_edit": "Edit",
+    "menu_help": "Help",
+    "menu_settings": "Settings",
+    "menu_language": "Language",
+    "action_new": "New",
+    "action_open": "Open",
+    "action_save": "Save",
+    "action_exit": "Exit",
+    "tab_project": "Project",
+    "tab_character": "Characters",
+    "tab_scene": "Scenes",
+    "btn_save": "Save",
+    "tooltip_exit": "Exit application",
+    "action_cancel": "Cancel",
+    "project_window_title": "Databases",
+    "start_window_title": "Start"
+}
 ```
 
 #### 5.2.3 fr.json
 
 ```json
 {
-        "btn_new_project": "Bases de données", 
-        "btn_load_project": "Ouvrir projet …",
-        "btn_settings": "Paramètres",
-        "btn_help": "Aide/Tutoriel",
-        "btn_exit": "Quitter",
-        "menu_file": "Fichier",
-        "menu_edit": "Éditer",
-        "menu_help": "Aide",
-        "menu_settings": "Paramètres",
-        "menu_language": "Langue",
-        "action_new": "Nouveau",
-        "action_open": "Ouvrir",
-        "action_save": "Enregistrer",
-        "action_exit": "Quitter",
-        "tab_project": "Projet",
-        "tab_character": "Personnages",
-        "tab_scene": "Scènes",
-        "btn_save": "Enregistrer",
-        "tooltip_exit": "Quitter l'application",
-        "action_cancel": "Annuler",
-        "project_window_title": "Bases de données",
-        "start_window_title": "Accueil"
-    }
+    "btn_new_project": "Bases de données", 
+    "btn_load_project": "Ouvrir projet …",
+    "btn_settings": "Paramètres",
+    "btn_help": "Aide/Tutoriel",
+    "btn_exit": "Quitter",
+    "menu_file": "Fichier",
+    "menu_edit": "Éditer",
+    "menu_help": "Aide",
+    "menu_settings": "Paramètres",
+    "menu_language": "Langue",
+    "action_new": "Nouveau",
+    "action_open": "Ouvrir",
+    "action_save": "Enregistrer",
+    "action_exit": "Quitter",
+    "tab_project": "Projet",
+    "tab_character": "Personnages",
+    "tab_scene": "Scènes",
+    "btn_save": "Enregistrer",
+    "tooltip_exit": "Quitter l'application",
+    "action_cancel": "Annuler",
+    "project_window_title": "Bases de données",
+    "start_window_title": "Accueil"
+}
 ```
 
 #### 5.2.4 es.json
 
 ```json
 {
-        "btn_new_project": "Bases de datos",
-        "btn_load_project": "Abrir proyecto …",
-        "btn_settings": "Configuración",
-        "btn_help": "Ayuda/Tutorial",
-        "btn_exit": "Salir",
-        "menu_file": "Archivo",
-        "menu_edit": "Editar",
-        "menu_help": "Ayuda",
-        "menu_settings": "Configuración",
-        "menu_language": "Idioma",
-        "action_new": "Nuevo",
-        "action_open": "Abrir",
-        "action_save": "Guardar",
-        "action_exit": "Salir",
-        "tab_project": "Proyecto",
-        "tab_character": "Personajes",
-        "tab_scene": "Escenas",
-        "btn_save": "Guardar",
-        "tooltip_exit": "Salir de la aplicación",
-        "action_cancel": "Cancelar",
-        "project_window_title": "Bases de datos",
-        "start_window_title": "Inicio"
-    }
+    "btn_new_project": "Bases de datos",
+    "btn_load_project": "Abrir proyecto …",
+    "btn_settings": "Configuración",
+    "btn_help": "Ayuda/Tutorial",
+    "btn_exit": "Salir",
+    "menu_file": "Archivo",
+    "menu_edit": "Editar",
+    "menu_help": "Ayuda",
+    "menu_settings": "Configuración",
+    "menu_language": "Idioma",
+    "action_new": "Nuevo",
+    "action_open": "Abrir",
+    "action_save": "Guardar",
+    "action_exit": "Salir",
+    "tab_project": "Proyecto",
+    "tab_character": "Personajes",
+    "tab_scene": "Escenas",
+    "btn_save": "Guardar",
+    "tooltip_exit": "Salir de la aplicación",
+    "action_cancel": "Cancelar",
+    "project_window_title": "Bases de datos",
+    "start_window_title": "Inicio"
+}
 ```
 
 #### 5.2.5 form_de.json
 
 ```json
 {
-    "project_form_label": "ases de données", 
+    "project_form_label": "Projekt", 
     "project_btn_save": "Speichern", 
     "project_title": "Titel",
     "project_subtitle": "Untertitel",
@@ -590,7 +629,7 @@ In diesem Abschnitt sind die Translationstabellen für die GUI zusammengefasst.
 }
 ```
 
-#### 5.2.6 form_es.json
+#### 5.2.7 form_es.json
 
 ```json
 {
@@ -611,11 +650,11 @@ In diesem Abschnitt sind die Translationstabellen für die GUI zusammengefasst.
 }
 ```
 
-#### 5.2.5 form_fr.json
+#### 5.2.8 form_fr.json
 
 ```json
 {
-    "project_form_label": "projet",
+    "project_form_label": "Projet",
     "project_btn_save": "sauvegarder",
     "project_title": "titre",
     "project_subtitle": "sous-titre",
@@ -820,7 +859,7 @@ def create_table(cursor):
 ```python
 # character_psychological_profile.py
 # table: subtable for character_main
-# description: psychological profil of a character
+# description: psychological profile of a character
 # connected with: character_main
 def create_table(cursor):
     cursor.execute("""
@@ -957,7 +996,8 @@ In diesem Abschnitt sind die Tabellen zur Erstellung von Projekten zusammengefas
 # project.py
 # table: project
 # description: central project database, main statistic of work done
-# 
+# project_words_count_days = How many words a day do I "have to" write
+# project_days_count = How many days are left until the deadline
 def create_table(cursor):
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS project (
@@ -2195,15 +2235,16 @@ CSNova ist Open Source Software. Sie darf unter den Bedingungen der jeweiligen V
 
 Es existieren drei Versionen:
 
+Die Nutzung aller drei Versionen setzt eine Registrierung voraus.
+
 - **CSNova Novitia** – eine **kostenlose Version** für die **nicht kommerzielle Nutzung**, z. B. durch angehende Autor:innen, zu Testzwecken oder in Bildungseinrichtungen (Schulen, Universitäten, Volkshochschulen und sonstige Bildungseinrichtungen).  
-  *Die Nutzung setzt eine Registrierung voraus.*
 
 - **CSNova Magister** – eine **kostenpflichtige Version** für einzelne Autor:innen, die das Programm professionell nutzen und ein Jahreseinkommen von über 50.000 € erzielen.  
-  *Die Nutzung setzt eine Registrierung sowie den Erwerb einer gültigen Lizenz voraus.*  
+ 
   Das Jahreseinkommen bezieht sich auf Einnahmen aus schriftstellerischer Tätigkeit, die mit Hilfe der Software erzielt werden. Professionelle Nutzung bezeichnet den regelmäßigen Einsatz der Software zur Erstellung, Veröffentlichung oder Vermarktung literarischer Werke mit kommerziellem Zweck.
 
 - **CSNova Collegium** – eine Version für Autor:innen, die im Team das Programm professionell nutzen.  
-  *Die Nutzung setzt eine Registrierung sowie den Erwerb einer gültigen Lizenz voraus.*  
+
   Professionelle Nutzung bezeichnet den regelmäßigen Einsatz der Software zur Erstellung, Veröffentlichung oder Vermarktung literarischer Werke mit kommerziellem Zweck.
 
 #### Zusammenfassung der Lizenzversionen
@@ -2218,7 +2259,7 @@ Es existieren drei Versionen:
 
 Änderungen am Quellcode und die Weitergabe modifizierter Versionen sind gestattet, sofern die modifizierten Versionen ebenfalls unter einer Open Source Lizenz veröffentlicht werden. 
 
-Die Nutzung des Namens „CSNova“, „Codices Scriptoria Nova“, „CSNova Novitia“, „CSNova Magister“ oder „CSNova Collegium“ für modifizierte Versionen ist nur mit schriftlicher Genehmigung des Autors gestattet. Der Autor übernimmt **keine Haftung** für Schäden, die durch veränderte Versionen oder deren Inhalte entstehen – insbesondere nicht für Inhalte, die ohne seine Zustimmung verändert oder unter einem der genannten Namen veröffentlicht wurden.
+Die Nutzung des Namens „CSNova“, „Codices Scriptoria Nova“, „CSNova Novitia“, „CSNova Magister“ oder „CSNova Collegium“ für modifizierte Versionen ist nur mit schriftlicher Genehmigung des Autors gestattet. Der Autor übernimmt **keine Haftung** für Schäden, die durch veränderte Versionen oder deren Inhalte entstehen – insbesondere nicht für Inhalte, die ohne seine Zustimmung verändert worden sind oder unter einem der genannten Namen veröffentlicht wurden.
 
 ## CSNova-Reader
 
@@ -2246,4 +2287,4 @@ Die Nutzung des Namens „CSNova“, „Codices Scriptoria Nova“, „CSNova-Re
 * Die Nutzung der Software setzt die Anerkennung dieser Lizenzbedingungen voraus.
 
 © 2025 Frank Reiser  
-Kontakt: reiserfrank@t-online.de
+Kontakt: [reiserfrank@t-online.de](mailto:reiserfrank@t-online.de)

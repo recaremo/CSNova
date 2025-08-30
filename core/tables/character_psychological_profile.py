@@ -1,6 +1,6 @@
 # character_psychological_profile.py
 # table: subtable for character_main
-# description: psychological profil of a character
+# description: psychological profile of a character
 # connected with: character_main
 def create_table(cursor):
     cursor.execute("""
