@@ -1,9 +1,22 @@
 import json
 import os
 
+# Import zentrale Logging-Funktionen
+from core.lloger import log_section, log_subsection, log_info, log_error
+
 def load_form_labels(language="en"):
+    log_section("form_labels.py")
+    log_subsection("load_form_labels")
     path = f"core/translations/forms/form_{language}.json"
-    if os.path.exists(path):
-        with open(path, "r", encoding="utf-8") as f:
-            return json.load(f)
-    return {}
+    try:
+        if os.path.exists(path):
+            with open(path, "r", encoding="utf-8") as f:
+                labels = json.load(f)
+                log_info(f"Form labels loaded for language '{language}' from {path}.")
+                return labels
+        else:
+            log_error(f"Form labels file not found: {path}")
+            return {}
+    except Exception as e:
+        log_error(f"Error loading form labels for language '{language}': {e}")
+        return {}

@@ -3,21 +3,35 @@
 import json
 import os
 
+# Import zentrale Logging-Funktionen
+from core.lloger import log_section, log_subsection, log_info, log_error
+
 SETTINGS_FILE = "config/user_settings.json"
 
 def load_settings():
-    if os.path.exists(SETTINGS_FILE):
-        with open(SETTINGS_FILE, "r", encoding="utf-8") as f:
-            return json.load(f)
-    return {"language": "en"}  # Fallback
+    log_section("settings.py")
+    log_subsection("load_settings")
+    try:
+        if os.path.exists(SETTINGS_FILE):
+            with open(SETTINGS_FILE, "r", encoding="utf-8") as f:
+                settings = json.load(f)
+                log_info(f"Settings loaded from {SETTINGS_FILE}.")
+                return settings
+        log_info("Settings file not found, using fallback settings.")
+        return {"language": "en"}  # Fallback
+    except Exception as e:
+        log_error(f"Error loading settings: {e}")
+        return {"language": "en"}
 
 def save_settings(settings):
-    print("Saving to:", SETTINGS_FILE)
+    log_section("settings.py")
+    log_subsection("save_settings")
     try:
         json_str = json.dumps(settings, indent=2)
-        print("JSON preview:\n", json_str)
+        log_info(f"Saving settings to {SETTINGS_FILE}.")
+        log_info(f"JSON preview:\n{json_str}")
         with open(SETTINGS_FILE, "w", encoding="utf-8") as f:
             f.write(json_str)
-        print("Settings saved.")
+        log_info("Settings saved successfully.")
     except Exception as e:
-        print("❌ Error while saving settings:", e)
+        log_error(f"Error while saving settings: {e}")

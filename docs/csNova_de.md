@@ -2,7 +2,7 @@
 
 ## Projektbeschreibung
 
-CSNova ist eine umfassende Software für alle, die komplexe narrative Projekte planen, entwickeln und veröffentlichen möchten – von Romanautor:innen über Drehbuchautor:innen bis zu Game Writer:innen.
+CSNova ist eine umfassende Software für alle, die komplexe narrative Projekte planen, entwickeln und veröffentlichen möchten – von Romanautor:innen über Drehbuchautor:innen bis hin zu Game Writer:innen.
 
 ## Funktionen im Überblick
 
@@ -75,6 +75,7 @@ CSNova ist eine umfassende Software für alle, die komplexe narrative Projekte p
 - Verfügbar für Windows, macOS und Linux
 - Mobile Version in Entwicklung
 - Mehrsprachige Benutzeroberfläche: Deutsch, Englisch, Französisch und Spanisch
+- Python 3.12+ empfohlen
 
 
 ## 1. Ziel
@@ -86,7 +87,7 @@ Entwicklung einer plattformübergreifenden Desktop‑Anwendung (Linux, Windows, 
 1. Verzichte auf die Simulation von Gefühlen, Empathie und Humor.  
 2. Antworten sind rational, sachlich und ausschließlich auf die Frage bezogen.  
 3. Füge keine Inhalte hinzu und verzichte auf Vorschläge, wenn nicht explizit dazu aufgefordert: "Mache mir alternative Vorschläge". Alle Antworten, Korrekturen und Veränderungsvorschläge erfolgen ausschließlich hier im Chat.  
-5. Die im Punkt 4 vorgeschlagenen Änderungen werden der Seite nur hinzugefügt, wenn eine explizite Aufforderung erfolgt: "Füge die Änderungen der Seite hinzu"
+4. Die im Punkt 4 vorgeschlagenen Änderungen werden der Seite nur hinzugefügt, wenn eine explizite Aufforderung erfolgt: "Füge die Änderungen der Seite hinzu"
 
 ## 2. Hauptfunktionen
 
@@ -1208,7 +1209,7 @@ def create_table(cursor):
     """)
 ```
 
-#### 5.5.5 project_charcter_group_map.py
+#### 5.5.5 project_character_group_map.py
 ```python
 # project_character_group_map.py
 # table: character_group_map
@@ -1254,31 +1255,44 @@ In diesem Abschnitt sind alle Programmcodes zusammengefasst.
 
 ```python
 # Mainprogram csnova.py
+# Mainprogram csnova.py
 import sys
+from datetime import datetime
 from PySide6.QtWidgets import QApplication
 from core.database import init_schema
 from config.settings import load_settings, save_settings
 from gui.start_window import StartWindow
 
-# Check for language an needed translations
+# Import zentrale Logging-Funktionen
+from core.lloger import setup_logging, log_header, log_section, log_subsection, log_info, log_error
+
 def main():
+    setup_logging()  # Nur einmal beim Programmstart!
+    log_header()
+    log_section("csnova.py")
+    log_subsection("main")
     try:
+        log_info("Initializing database schema.")
         init_schema()
+        log_info("Loading settings.")
         settings = load_settings()
         language = settings.get("language", "en")
+        log_info(f"Language set to '{language}'.")
 
         app = QApplication(sys.argv)
         window = StartWindow(default_language=language)
         window.show()
+        log_info("StartWindow shown.")
         app.exec()
 
         if hasattr(window, "translator") and hasattr(window.translator, "lang"):
             updated_settings = load_settings()
             updated_settings["language"] = window.translator.lang
             save_settings(updated_settings)
+            log_info(f"Language updated to '{window.translator.lang}' in settings.")
 
     except Exception as e:
-        print(f"An error occurred: {e}")
+        log_error(f"An error occurred: {e}")
 
 if __name__ == "__main__":
     main()
@@ -1288,29 +1302,42 @@ if __name__ == "__main__":
 
 ```python
 # config/settings.py
-# load and save settings: which language was selected, settings for project_window
+# load and save settings: wich language was selected, settings for project_window
 import json
 import os
+
+# Import zentrale Logging-Funktionen
+from core.lloger import log_section, log_subsection, log_info, log_error
 
 SETTINGS_FILE = "config/user_settings.json"
 
 def load_settings():
-    if os.path.exists(SETTINGS_FILE):
-        with open(SETTINGS_FILE, "r", encoding="utf-8") as f:
-            return json.load(f)
-    return {"language": "en"}  # Fallback
+    log_section("settings.py")
+    log_subsection("load_settings")
+    try:
+        if os.path.exists(SETTINGS_FILE):
+            with open(SETTINGS_FILE, "r", encoding="utf-8") as f:
+                settings = json.load(f)
+                log_info(f"Settings loaded from {SETTINGS_FILE}.")
+                return settings
+        log_info("Settings file not found, using fallback settings.")
+        return {"language": "en"}  # Fallback
+    except Exception as e:
+        log_error(f"Error loading settings: {e}")
+        return {"language": "en"}
 
 def save_settings(settings):
-    print("Saving to:", SETTINGS_FILE)
+    log_section("settings.py")
+    log_subsection("save_settings")
     try:
         json_str = json.dumps(settings, indent=2)
-        print("JSON preview:\n", json_str)
+        log_info(f"Saving settings to {SETTINGS_FILE}.")
+        log_info(f"JSON preview:\n{json_str}")
         with open(SETTINGS_FILE, "w", encoding="utf-8") as f:
             f.write(json_str)
-        print("Settings saved.")
+        log_info("Settings saved successfully.")
     except Exception as e:
-        print("❌ Error while saving settings:", e)
-
+        log_error(f"Error while saving settings: {e}")
 ```
 
 #### 6.1.2 Verzeichnisse (dev.py)
@@ -1321,15 +1348,28 @@ def save_settings(settings):
 from pathlib import Path
 import sys
 
-if getattr(sys, 'frozen', False):
-    BASE_DIR = Path(sys.executable).parent
-else:
-    BASE_DIR = Path(__file__).resolve().parent
+# Import zentrale Logging-Funktionen (optional)
+from core.lloger import log_section, log_subsection, log_info, log_error
 
-DATA_DIR = BASE_DIR.parent / "data"
-DATA_DIR.mkdir(exist_ok=True)
+log_section("dev.py")
+log_subsection("path_setup")
 
-DB_PATH = DATA_DIR / "csnova.db"
+try:
+    if getattr(sys, 'frozen', False):
+        BASE_DIR = Path(sys.executable).parent
+        log_info(f"Running frozen, BASE_DIR set to {BASE_DIR}")
+    else:
+        BASE_DIR = Path(__file__).resolve().parent
+        log_info(f"Running script, BASE_DIR set to {BASE_DIR}")
+
+    DATA_DIR = BASE_DIR.parent / "data"
+    DATA_DIR.mkdir(exist_ok=True)
+    log_info(f"DATA_DIR ensured at {DATA_DIR}")
+
+    DB_PATH = DATA_DIR / "csnova.db"
+    log_info(f"DB_PATH set to {DB_PATH}")
+except Exception as e:
+    log_error(f"Error setting up paths in dev.py: {e}")
 ```
 
 ### 6.2 Startfenster (start_window.py)
@@ -1337,6 +1377,7 @@ DB_PATH = DATA_DIR / "csnova.db"
 ```python
 # main window with buttons for create a new project, load an existing project
 # main settings for GUI positions and changing after resizing the window
+from datetime import datetime
 from PySide6.QtWidgets import (
     QApplication, QWidget, QPushButton, QGraphicsDropShadowEffect
 )
@@ -1350,7 +1391,9 @@ from gui.styles.style_utils import load_button_style  # Import the style loader
 
 import sys
 
-#basic position of buttons
+# Import zentrale Logging-Funktionen
+from core.lloger import log_section, log_subsection, log_info, log_error
+
 class StartWindow(QWidget):
     DEFAULT_WIDTH        = 1920
     DEFAULT_HEIGHT       = 1080
@@ -1361,90 +1404,136 @@ class StartWindow(QWidget):
     BUTTON_SPACING       = 44
 
     def __init__(self, default_language="en"):
-        super().__init__()
-        # Set window title using translator
-        self.translator = Translator(default=default_language)
-        self.setWindowTitle(self.translator.tr("start_window_title"))
-        self.resize(self.DEFAULT_WIDTH, self.DEFAULT_HEIGHT)
-        self.setAutoFillBackground(False)
-        self.bg_pixmap = QPixmap(
-            "/home/frank/Dokumente/CSNova/assets/media/csNova_background_start.png"
-        )
+        log_section("start_window.py")
+        log_subsection("__init__")
+        try:
+            super().__init__()
+            self.translator = Translator(default=default_language)
+            self.setWindowTitle(self.translator.tr("start_window_title"))
+            self.resize(self.DEFAULT_WIDTH, self.DEFAULT_HEIGHT)
+            self.setAutoFillBackground(False)
+            self.bg_pixmap = QPixmap(
+                "/home/frank/Dokumente/CSNova/assets/media/csNova_background_start.png"
+            )
 
-        self.pref_window = None  # Track preferences window
-        self._create_ui()
-        self._retranslate_and_position()
+            self.pref_window = None  # Track preferences window
+            self._create_ui()
+            self._retranslate_and_position()
+            log_info("StartWindow initialized successfully.")
+        except Exception as e:
+            log_error(f"Error initializing StartWindow: {str(e)}")
 
     def _create_ui(self):
-        # Button keys for translation
-        self.button_keys = [
-            "btn_new_project",
-            "btn_load_project",
-            "btn_settings",
-            "btn_help",
-            "btn_exit"
-        ]
+        log_subsection("_create_ui")
+        try:
+            # Button keys for translation
+            self.button_keys = [
+                "btn_new_project",
+                "btn_load_project",
+                "btn_settings",
+                "btn_help",
+                "btn_exit"
+            ]
 
-        self.buttons = []
-        for key in self.button_keys:
-            btn = QPushButton(parent=self)
-            shadow = QGraphicsDropShadowEffect(btn)
-            shadow.setBlurRadius(10)
-            shadow.setXOffset(4)
-            shadow.setYOffset(4)
-            shadow.setColor(QColor(0, 0, 0, 80))
-            btn.setGraphicsEffect(shadow)
-            self.buttons.append(btn)
+            self.buttons = []
+            for key in self.button_keys:
+                btn = QPushButton(parent=self)
+                shadow = QGraphicsDropShadowEffect(btn)
+                shadow.setBlurRadius(10)
+                shadow.setXOffset(4)
+                shadow.setYOffset(4)
+                shadow.setColor(QColor(0, 0, 0, 80))
+                btn.setGraphicsEffect(shadow)
+                self.buttons.append(btn)
 
-        # Connect new_project button
-        self.buttons[0].clicked.connect(self._new_project)
+            # Connect new_project button
+            self.buttons[0].clicked.connect(self._new_project)
 
-        # Connect load_project button
-        self.buttons[1].clicked.connect(self._load_project)
+            # Connect load_project button
+            self.buttons[1].clicked.connect(self._load_project)
 
-        # Connect settings button
-        self.buttons[2].clicked.connect(self._open_preferences)
+            # Connect settings button
+            self.buttons[2].clicked.connect(self._open_preferences)
 
-        # Connect help button
-        self.buttons[3].clicked.connect(self._help)
+            # Connect help button
+            self.buttons[3].clicked.connect(self._help)
 
-        # Connect exit button
-        self.buttons[4].clicked.connect(self._exit_application)
+            # Connect exit button
+            self.buttons[4].clicked.connect(self._exit_application)
+            log_info("UI created and buttons connected.")
+        except Exception as e:
+            log_error(f"Error creating UI: {str(e)}")
 
     def _open_preferences(self):
-        # Open preferences window only if not already open
-        if self.pref_window is None or not self.pref_window.isVisible():
-            self.pref_window = PreferencesWindow(self)
-            self.pref_window.show()
-        else:
-            self.pref_window.raise_()
-            self.pref_window.activateWindow()
+        log_subsection("_open_preferences")
+        try:
+            # Open preferences window only if not already open
+            if self.pref_window is None or not self.pref_window.isVisible():
+                self.pref_window = PreferencesWindow(self)
+                self.pref_window.show()
+                log_info("Preferences window opened.")
+            else:
+                self.pref_window.raise_()
+                self.pref_window.activateWindow()
+                log_info("Preferences window focused.")
+        except Exception as e:
+            log_error(f"Error opening preferences window: {str(e)}")
 
     def _new_project(self):
-        print("Preparing new project...")
-        self.project_window = ProjectWindow(translator=self.translator)
-        self.project_window.show()
-        QTimer.singleShot(100, lambda: self.hide())
+        log_subsection("_new_project")
+        try:
+            log_info("Preparing new project...")
+            self.project_window = ProjectWindow(translator=self.translator)
+            self.project_window.show()
+            QTimer.singleShot(100, lambda: self.hide())
+            log_info("ProjectWindow shown and StartWindow hidden.")
+        except Exception as e:
+            log_error(f"Error preparing new project: {str(e)}")
 
     def _load_project(self):
-        print("Preparing to load project...")
+        log_subsection("_load_project")
+        try:
+            log_info("Preparing to load project...")
+            # Implement loading logic here
+        except Exception as e:
+            log_error(f"Error preparing to load project: {str(e)}")
 
     def _help(self):
-        print("Preparing help function...")
+        log_subsection("_help")
+        try:
+            log_info("Preparing help function...")
+            # Implement help logic here
+        except Exception as e:
+            log_error(f"Error preparing help function: {str(e)}")
 
     def _exit_application(self):
-        QApplication.instance().quit()
+        log_subsection("_exit_application")
+        try:
+            log_info("Exiting application...")
+            QApplication.instance().quit()
+        except Exception as e:
+            log_error(f"Error during application exit: {str(e)}")
 
     def _on_language_changed(self, code):
-        self.translator.set_language(code)
-        self._retranslate_and_position()
+        log_subsection("_on_language_changed")
+        try:
+            self.translator.set_language(code)
+            self._retranslate_and_position()
+            log_info(f"Language changed to {code}.")
+        except Exception as e:
+            log_error(f"Error changing language: {str(e)}")
 
     def _retranslate_and_position(self):
-        # Update button texts and window title
-        for key, btn in zip(self.button_keys, self.buttons):
-            btn.setText(self.translator.tr(key))
-        self.setWindowTitle(self.translator.tr("start_window_title"))
-        self.update_button_positions()
+        log_subsection("_retranslate_and_position")
+        try:
+            # Update button texts and window title
+            for key, btn in zip(self.button_keys, self.buttons):
+                btn.setText(self.translator.tr(key))
+            self.setWindowTitle(self.translator.tr("start_window_title"))
+            self.update_button_positions()
+            log_info("Button texts and window title updated.")
+        except Exception as e:
+            log_error(f"Error updating translations and positions: {str(e)}")
 
     def paintEvent(self, event):
         # Draw background image scaled and centered
@@ -1469,51 +1558,83 @@ class StartWindow(QWidget):
         super().resizeEvent(event)
 
     def update_button_positions(self):
-        # Dynamically position and style buttons
-        rect = self.contentsRect()
-        w, h = rect.width(), rect.height()
-        pw, ph = self.bg_pixmap.width(), self.bg_pixmap.height()
-        scale = max(w / pw, h / ph)
-        sw, sh = pw * scale, ph * scale
-        x_off = rect.x() + (w - sw) / 2 + self.BUTTON_LEFT_OFFSET * scale
-        y_off = rect.y() + (h - sh) / 2 + self.BUTTON_TOP_OFFSET  * scale
-        bw      = int(self.BUTTON_WIDTH   * scale)
-        bh      = int(self.BUTTON_HEIGHT  * scale)
-        spacing = int(self.BUTTON_SPACING * scale)
-        font_px = max(10, int(bh * 0.4))
-        style = load_button_style(font_px)  # Use the imported style loader
-        for i, btn in enumerate(self.buttons):
-            x = int(x_off)
-            y = int(y_off + i * (bh + spacing))
-            btn.setGeometry(x, y, bw, bh)
-            btn.setStyleSheet(style)
+        log_subsection("update_button_positions")
+        try:
+            # Dynamically position and style buttons
+            rect = self.contentsRect()
+            w, h = rect.width(), rect.height()
+            pw, ph = self.bg_pixmap.width(), self.bg_pixmap.height()
+            scale = max(w / pw, h / ph)
+            sw, sh = pw * scale, ph * scale
+            x_off = rect.x() + (w - sw) / 2 + self.BUTTON_LEFT_OFFSET * scale
+            y_off = rect.y() + (h - sh) / 2 + self.BUTTON_TOP_OFFSET  * scale
+            bw      = int(self.BUTTON_WIDTH   * scale)
+            bh      = int(self.BUTTON_HEIGHT  * scale)
+            spacing = int(self.BUTTON_SPACING * scale)
+            font_px = max(10, int(bh * 0.4))
+            style = load_button_style(font_px)  # Use the imported style loader
+            for i, btn in enumerate(self.buttons):
+                x = int(x_off)
+                y = int(y_off + i * (bh + spacing))
+                btn.setGeometry(x, y, bw, bh)
+                btn.setStyleSheet(style)
+            log_info("Button positions updated.")
+        except Exception as e:
+            log_error(f"Error updating button positions: {str(e)}")
 
 if __name__ == "__main__":
-    app = QApplication(sys.argv)
-    window = StartWindow(default_language="en")
-    window.show()
-    sys.exit(app.exec())
+    log_section("start_window.py")
+    log_subsection("__main__")
+    try:
+        app = QApplication(sys.argv)
+        window = StartWindow(default_language="en")
+        window.show()
+        log_info("StartWindow shown.")
+        sys.exit(app.exec())
+    except Exception as e:
+        log_error(f"Error in main: {str(e)}")
 ```
 
 #### 6.2.1 Translator (translator.py)
 
 ```python
 # core/translator.py
-
 from core.translations.translations import TRANSLATIONS, LANGUAGES
+# Import zentrale Logging-Funktionen
+from core.lloger import log_section, log_subsection, log_info, log_error
 
 class Translator:
     def __init__(self, default=""):
-        self.lang = default if default in LANGUAGES else LANGUAGES[0]
+        log_section("translator.py")
+        log_subsection("__init__")
+        try:
+            self.lang = default if default in LANGUAGES else LANGUAGES[0]
+            log_info(f"Translator initialized with language '{self.lang}'.")
+        except Exception as e:
+            log_error(f"Error initializing Translator: {str(e)}")
 
     def set_language(self, lang_code):
-        if lang_code in TRANSLATIONS:
-            self.lang = lang_code
+        log_subsection("set_language")
+        try:
+            if lang_code in TRANSLATIONS:
+                self.lang = lang_code
+                log_info(f"Language set to '{lang_code}'.")
+            else:
+                log_error(f"Language code '{lang_code}' not found in TRANSLATIONS.")
+        except Exception as e:
+            log_error(f"Error setting language: {str(e)}")
 
     def tr(self, key):
-        return TRANSLATIONS[self.lang].get(
-            key, TRANSLATIONS["en"].get(key, key)
-        )
+        log_subsection("tr")
+        try:
+            value = TRANSLATIONS[self.lang].get(
+                key, TRANSLATIONS["en"].get(key, key)
+            )
+            log_info(f"Translation for key '{key}': '{value}'")
+            return value
+        except Exception as e:
+            log_error(f"Error translating key '{key}': {str(e)}")
+            return key
 ```
 
 #### 6.2.2 Styles (style_utils.py)
@@ -1522,13 +1643,45 @@ class Translator:
 from pathlib import Path
 import os
 
+# Import zentrale Logging-Funktionen
+from core.lloger import log_section, log_subsection, log_info, log_error
+
 def load_button_style(font_size):
     """
     Load button style from external QSS file and inject dynamic font size.
     """
-    style_path = Path(__file__).parent / "button_style.qss"
-    if not os.path.exists(style_path):
-        # Fallback style if file is missing
+    log_section("style_utils.py")
+    log_subsection("load_button_style")
+    try:
+        style_path = Path(__file__).parent / "button_style.qss"
+        if not os.path.exists(style_path):
+            log_error(f"button_style.qss not found at {style_path}, using fallback style.")
+            # Fallback style if file is missing
+            return f"""
+                QPushButton {{
+                    background-color: #d4c29c;
+                    color: #1a1a1a;
+                    font-size: {font_size}px;
+                    border: 2px solid #8b7d5c;
+                    border-radius: 10px;
+                    border-style: outset;
+                }}
+                QPushButton:hover {{
+                    background-color: #e8d9b5;
+                    border-color: #5c5138;
+                }}
+                QPushButton:pressed {{
+                    background-color: #c0aa7a;
+                    border-style: inset;
+                }}
+            """
+        with open(style_path, "r") as f:
+            style = f.read()
+        log_info("button_style.qss loaded successfully.")
+        return style.replace("{font_size}", str(font_size))
+    except Exception as e:
+        log_error(f"Error loading button style: {str(e)}")
+        # Fallback style in case of error
         return f"""
             QPushButton {{
                 background-color: #d4c29c;
@@ -1547,52 +1700,97 @@ def load_button_style(font_size):
                 border-style: inset;
             }}
         """
-    with open(style_path, "r") as f:
-        style = f.read()
-    return style.replace("{font_size}", str(font_size))
 
 def load_active_button_style(font_size):
     """
     Return style for the active navigation button.
     """
-    # 6E8B3D = DarkOliveGreen4
-    return f"""
-         QPushButton {{
-            background-color: #6E8B3D;
-            color: #1a1a1a;
-            font-size: {font_size}px;
-            border: 2px solid #5c5138;
-            border-radius: 10px;
-            border-style: outset;
-            font-weight: bold;
-        }}
-    """
+    log_subsection("load_active_button_style")
+    try:
+        style = f"""
+            QPushButton {{
+                background-color: #6E8B3D;
+                color: #1a1a1a;
+                font-size: {font_size}px;
+                border: 2px solid #5c5138;
+                border-radius: 10px;
+                border-style: outset;
+                font-weight: bold;
+            }}
+        """
+        log_info("Active button style generated.")
+        return style
+    except Exception as e:
+        log_error(f"Error generating active button style: {str(e)}")
+        # Fallback style
+        return f"""
+            QPushButton {{
+                background-color: #6E8B3D;
+                color: #1a1a1a;
+                font-size: {font_size}px;
+                border: 2px solid #5c5138;
+                border-radius: 10px;
+                border-style: outset;
+                font-weight: bold;
+            }}
+        """
 ```
 
 #### 6.2.4 Formulare (form_styles.py)
 ```python
+from core.lloger import log_section, log_subsection, log_info, log_error
+
 def load_form_style(input_font_size=14, label_font_size=14, input_width=400):
-    return f"""
-        QLineEdit, QDateEdit, QSpinBox {{
-            padding: 6px;
-            border: 1px solid #aaa;
-            border-radius: 4px;
-            background-color: #ffffff;
-            font-size: {input_font_size}px;
-            font-family: 'Segoe UI', sans-serif;
-            min-width: {input_width}px;
-            max-width: {input_width}px;
-        }}
+    log_section("form_styles.py")
+    log_subsection("load_form_style")
+    try:
+        style = f"""
+            QLineEdit, QDateEdit, QSpinBox {{
+                padding: 6px;
+                border: 1px solid #aaa;
+                border-radius: 4px;
+                background-color: #ffffff;
+                font-size: {input_font_size}px;
+                font-family: 'Segoe UI', sans-serif;
+                min-width: {input_width}px;
+                max-width: {input_width}px;
+            }}
 
-        QLabel {{
-            font-size: {label_font_size}px;
-            color: #333;
-        }}
+            QLabel {{
+                font-size: {label_font_size}px;
+                color: #333;
+            }}
 
-        QFormLayout {{
-            margin: 12px;
-        }}
-    """
+            QFormLayout {{
+                margin: 12px;
+            }}
+        """
+        log_info("Form style generated successfully.")
+        return style
+    except Exception as e:
+        log_error(f"Error generating form style: {str(e)}")
+        # Fallback style
+        return f"""
+            QLineEdit, QDateEdit, QSpinBox {{
+                padding: 6px;
+                border: 1px solid #aaa;
+                border-radius: 4px;
+                background-color: #ffffff;
+                font-size: 14px;
+                font-family: 'Segoe UI', sans-serif;
+                min-width: 400px;
+                max-width: 400px;
+            }}
+
+            QLabel {{
+                font-size: 14px;
+                color: #333;
+            }}
+
+            QFormLayout {{
+                margin: 12px;
+            }}
+        """
 ```
 
 ### 6.3 Preferenzen (preferences.py)
@@ -1604,6 +1802,9 @@ from PySide6.QtWidgets import (
 )
 from core.translations.translations import LANGUAGES, TRANSLATIONS
 from config.settings import load_settings, save_settings
+
+# Import zentrale Logging-Funktionen
+from core.lloger import log_section, log_subsection, log_info, log_error
 
 class PreferencesWindow(QDialog):
     DEFAULT_WIDTH  = 400
@@ -1617,75 +1818,111 @@ class PreferencesWindow(QDialog):
     }
 
     def __init__(self, parent=None):
-        super().__init__(parent)
-        self.translator = parent.translator
-        self.settings   = load_settings()
-        self.original_language = self.translator.lang
+        log_section("preferences.py")
+        log_subsection("__init__")
+        try:
+            super().__init__(parent)
+            self.translator = parent.translator
+            self.settings   = load_settings()
+            self.original_language = self.translator.lang
 
-        self.setWindowTitle(self.translator.tr("menu_settings"))
-        self.resize(self.DEFAULT_WIDTH, self.DEFAULT_HEIGHT)
+            self.setWindowTitle(self.translator.tr("menu_settings"))
+            self.resize(self.DEFAULT_WIDTH, self.DEFAULT_HEIGHT)
 
-        self._init_ui()
-        self._load_values()
+            self._init_ui()
+            self._load_values()
+            log_info("PreferencesWindow initialized successfully.")
+        except Exception as e:
+            log_error(f"Error initializing PreferencesWindow: {str(e)}")
 
     def _init_ui(self):
-        self.lang_label = QLabel(self.translator.tr("menu_language"), self)
+        log_subsection("_init_ui")
+        try:
+            self.lang_label = QLabel(self.translator.tr("menu_language"), self)
 
-        self.lang_combo = QComboBox(self)
-        for code in LANGUAGES:
-            name = self.LANGUAGE_NAMES.get(code, code)
-            self.lang_combo.addItem(name, userData=code)
+            self.lang_combo = QComboBox(self)
+            for code in LANGUAGES:
+                name = self.LANGUAGE_NAMES.get(code, code)
+                self.lang_combo.addItem(name, userData=code)
 
-        self.lang_combo.currentIndexChanged.connect(self._on_language_changed)
+            self.lang_combo.currentIndexChanged.connect(self._on_language_changed)
 
-        self.ok_button     = QPushButton(self)
-        self.cancel_button = QPushButton(self)
+            self.ok_button     = QPushButton(self)
+            self.cancel_button = QPushButton(self)
 
-        self.ok_button.clicked.connect(self._on_ok)
-        self.cancel_button.clicked.connect(self._on_cancel)
+            self.ok_button.clicked.connect(self._on_ok)
+            self.cancel_button.clicked.connect(self._on_cancel)
 
-        btn_layout = QHBoxLayout()
-        btn_layout.addStretch()
-        btn_layout.addWidget(self.ok_button)
-        btn_layout.addWidget(self.cancel_button)
+            btn_layout = QHBoxLayout()
+            btn_layout.addStretch()
+            btn_layout.addWidget(self.ok_button)
+            btn_layout.addWidget(self.cancel_button)
 
-        main_layout = QVBoxLayout(self)
-        main_layout.addWidget(self.lang_label)
-        main_layout.addWidget(self.lang_combo)
-        main_layout.addLayout(btn_layout)
+            main_layout = QVBoxLayout(self)
+            main_layout.addWidget(self.lang_label)
+            main_layout.addWidget(self.lang_combo)
+            main_layout.addLayout(btn_layout)
+            log_info("UI initialized successfully.")
+        except Exception as e:
+            log_error(f"Error initializing UI: {str(e)}")
 
     def _load_values(self):
-        lang = self.settings.get("language", LANGUAGES[0])
-        idx  = LANGUAGES.index(lang) if lang in LANGUAGES else 0
-        self.lang_combo.setCurrentIndex(idx)
-        self._update_ui_texts()
+        log_subsection("_load_values")
+        try:
+            lang = self.settings.get("language", LANGUAGES[0])
+            idx  = LANGUAGES.index(lang) if lang in LANGUAGES else 0
+            self.lang_combo.setCurrentIndex(idx)
+            self._update_ui_texts()
+            log_info("Values loaded and UI texts updated.")
+        except Exception as e:
+            log_error(f"Error loading values: {str(e)}")
 
     def _on_language_changed(self):
-        index = self.lang_combo.currentIndex()
-        code = self.lang_combo.itemData(index)
-        self.translator.set_language(code)
-        self._update_ui_texts()
+        log_subsection("_on_language_changed")
+        try:
+            index = self.lang_combo.currentIndex()
+            code = self.lang_combo.itemData(index)
+            self.translator.set_language(code)
+            self._update_ui_texts()
+            log_info(f"Language changed to {code}.")
+        except Exception as e:
+            log_error(f"Error changing language: {str(e)}")
 
     def _update_ui_texts(self):
-        self.setWindowTitle(self.translator.tr("menu_settings"))
-        self.lang_label.setText(self.translator.tr("menu_language"))
-        self.ok_button.setText(self.translator.tr("action_save"))
-        self.cancel_button.setText(self.translator.tr("action_cancel"))
+        log_subsection("_update_ui_texts")
+        try:
+            self.setWindowTitle(self.translator.tr("menu_settings"))
+            self.lang_label.setText(self.translator.tr("menu_language"))
+            self.ok_button.setText(self.translator.tr("action_save"))
+            self.cancel_button.setText(self.translator.tr("action_cancel"))
+            log_info("UI texts updated.")
+        except Exception as e:
+            log_error(f"Error updating UI texts: {str(e)}")
 
     def _on_ok(self):
-        index = self.lang_combo.currentIndex()
-        code = self.lang_combo.itemData(index)
-        self.settings["language"] = code
-        save_settings(self.settings)
-        if self.parent() and hasattr(self.parent(), "_on_language_changed"):
-            self.parent()._on_language_changed(code)
-        self.accept()
+        log_subsection("_on_ok")
+        try:
+            index = self.lang_combo.currentIndex()
+            code = self.lang_combo.itemData(index)
+            self.settings["language"] = code
+            save_settings(self.settings)
+            if self.parent() and hasattr(self.parent(), "_on_language_changed"):
+                self.parent()._on_language_changed(code)
+            self.accept()
+            log_info("Settings saved and dialog accepted.")
+        except Exception as e:
+            log_error(f"Error saving settings: {str(e)}")
 
     def _on_cancel(self):
-        self.translator.set_language(self.original_language)
-        if self.parent() and hasattr(self.parent(), "_on_language_changed"):
-            self.parent()._on_language_changed(self.original_language)
-        self.reject()
+        log_subsection("_on_cancel")
+        try:
+            self.translator.set_language(self.original_language)
+            if self.parent() and hasattr(self.parent(), "_on_language_changed"):
+                self.parent()._on_language_changed(self.original_language)
+            self.reject()
+            log_info("Dialog canceled and language reverted.")
+        except Exception as e:
+            log_error(f"Error canceling dialog: {str(e)}")
 ```
 
 ### 6.4 Translation (translation.py)
@@ -1694,13 +1931,24 @@ class PreferencesWindow(QDialog):
 from pathlib import Path
 import json
 
+# Import zentrale Logging-Funktionen
+from core.lloger import log_section, log_subsection, log_info, log_error
+
 LANGUAGES = ["de", "en", "fr", "es"]
 TRANSLATIONS = {}
 
+log_section("translations.py")
+log_subsection("load_translations")
+
 for lang in LANGUAGES:
     path = Path(__file__).parent / f"{lang}.json"
-    with open(path, "r", encoding="utf-8") as f:
-        TRANSLATIONS[lang] = json.load(f)
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            TRANSLATIONS[lang] = json.load(f)
+        log_info(f"Loaded translations for '{lang}' from {path}.")
+    except Exception as e:
+        log_error(f"Error loading translations for '{lang}' from {path}: {str(e)}")
+        TRANSLATIONS[lang] = {}
 ```
 
 #### 6.4.1 Programmeinstellungen (user_settings.json)
@@ -1741,15 +1989,28 @@ from core.tables import (
     project_chapters,
     project_chapters_scenes,
     project_objects,
-    project_locations
+    project_locations,
+    project_scene_object_map,
+    project_scene_location_map,
+    project_scene_storyline_map,
+    project_scene_character_map,
+    project_character_storyline_map,
+    project_character_group_map
 )
 
+# Import zentrale Logging-Funktionen
+from core.lloger import log_section, log_subsection, log_info, log_error
+
 def init_schema():
+    log_section("database.py")
+    log_subsection("init_schema")
     try:
         with sqlite3.connect(DB_PATH) as conn:
             cursor = conn.cursor()
+            log_info("Database connection established.")
             # Enable foreign key support
             cursor.execute("PRAGMA foreign_keys = ON")
+            log_info("Foreign key support enabled.")
 
             # Initialize tables
             for module in [
@@ -1767,16 +2028,26 @@ def init_schema():
                 project_chapters,
                 project_chapters_scenes,
                 project_objects,
-                project_locations
+                project_locations,
+                project_scene_object_map,
+                project_scene_location_map,
+                project_scene_storyline_map,
+                project_scene_character_map,
+                project_character_storyline_map,
+                project_character_group_map
             ]:
                 module.create_table(cursor)
-            
+                log_info(f"Table created: {module.__name__}")
+
             # Insert seed data
             data_gender(cursor)
+            log_info("Seed data for gender inserted.")
             sex_orientation_data(cursor)
+            log_info("Seed data for sex orientation inserted.")
             conn.commit()
+            log_info("Database schema initialized and committed successfully.")
     except Exception as e:
-        print(f"An error occurred during database initialization: {e}")
+        log_error(f"An error occurred during database initialization: {e}")
 ```
 
 ### 6.6 Projektfenster (project_window.py)
@@ -1795,153 +2066,475 @@ from core.translations.form_labels import load_form_labels
 from gui.widgets.form_toolbar import FormToolbar
 from gui.widgets.base_form_widget import BaseFormWidget
 
+# Import zentrale Logging-Funktionen
+from core.lloger import log_section, log_subsection, log_info, log_error
+
 class ProjectWindow(QWidget):
     BUTTON_WIDTH = 240
     BUTTON_HEIGHT = 70
 
     def __init__(self, translator=None, parent=None):
-        self.translator = translator or Translator(default="en")
-        super().__init__(parent)
-        self.resize(1600, 900)
-        self.setWindowTitle(self.translator.tr("project_window_title"))
-        self.settings = load_settings()
-        self.help_texts = load_help_texts(self.translator.lang)
-        self.form_labels = load_form_labels(self.translator.lang)
-        self.button_style = load_button_style(18)
-        self.button_style_active = load_active_button_style(18)
-        self.active_nav_key = None
-        self._set_background()
-        self._init_ui()
+        log_section("project_window.py")
+        log_subsection("__init__")
+        try:
+            self.translator = translator or Translator(default="en")
+            super().__init__(parent)
+            self.resize(1600, 900)
+            self.setWindowTitle(self.translator.tr("project_window_title"))
+            self.settings = load_settings()
+            self.help_texts = load_help_texts(self.translator.lang)
+            self.form_labels = load_form_labels(self.translator.lang)
+            self.button_style = load_button_style(18)
+            self.button_style_active = load_active_button_style(18)
+            self.active_nav_key = None
+            self._set_background()
+            self._init_ui()
+            log_info("ProjectWindow initialized successfully.")
+        except Exception as e:
+            log_error(f"Error initializing ProjectWindow: {str(e)}")
 
     def _set_background(self):
-        palette = self.palette()
-        palette.setColor(QPalette.Window, QColor("#f0f0f0"))
-        self.setPalette(palette)
-        self.setAutoFillBackground(True)
+        log_subsection("_set_background")
+        try:
+            palette = self.palette()
+            palette.setColor(QPalette.Window, QColor("#f0f0f0"))
+            self.setPalette(palette)
+            self.setAutoFillBackground(True)
+            log_info("Background set successfully.")
+        except Exception as e:
+            log_error(f"Error setting background: {str(e)}")
 
     def _init_ui(self):
-        self.nav_layout = QVBoxLayout()
-        self.nav_buttons = {}
-        keys = [
-            "btn_project", "btn_characters", "btn_storylines",
-            "btn_chapters", "btn_scenes", "btn_objects", "btn_locations", "btn_exit"
-        ]
-        self.button_style = load_button_style(18)
-        self.button_style_active = load_active_button_style(18)
+        log_subsection("_init_ui")
+        try:
+            self.nav_layout = QVBoxLayout()
+            self.nav_buttons = {}
+            keys = [
+                "btn_project", "btn_characters", "btn_storylines",
+                "btn_chapters", "btn_scenes", "btn_objects", "btn_locations", "btn_exit"
+            ]
+            self.button_style = load_button_style(18)
+            self.button_style_active = load_active_button_style(18)
 
-        for key in keys:
-            btn = QPushButton(self.translator.tr(key))
-            btn.setFixedSize(self.BUTTON_WIDTH, self.BUTTON_HEIGHT)
-            btn.setStyleSheet(self.button_style)
-            self.nav_layout.addWidget(btn)
-            self.nav_buttons[key] = btn
+            for key in keys:
+                btn = QPushButton(self.translator.tr(key))
+                btn.setFixedSize(self.BUTTON_WIDTH, self.BUTTON_HEIGHT)
+                btn.setStyleSheet(self.button_style)
+                self.nav_layout.addWidget(btn)
+                self.nav_buttons[key] = btn
 
-        self.input_area = QTextEdit()
-        self.help_area = QLabel()
-        self.help_area.setWordWrap(True)
+            self.input_area = QTextEdit()
+            self.help_area = QLabel()
+            self.help_area.setWordWrap(True)
 
-        left_widget = QWidget()
-        left_widget.setLayout(self.nav_layout)
+            left_widget = QWidget()
+            left_widget.setLayout(self.nav_layout)
 
-        self.splitter = QSplitter(Qt.Horizontal)
-        self.splitter.addWidget(left_widget)
-        self.splitter.addWidget(self.input_area)
-        self.splitter.addWidget(self.help_area)
-        self.splitter.setSizes(self.settings.get("splitter_sizes", [300, 900, 300]))
+            self.splitter = QSplitter(Qt.Horizontal)
+            self.splitter.addWidget(left_widget)
+            self.splitter.addWidget(self.input_area)
+            self.splitter.addWidget(self.help_area)
+            self.splitter.setSizes(self.settings.get("splitter_sizes", [300, 900, 300]))
 
-        layout = QHBoxLayout(self)
-        layout.addWidget(self.splitter)
+            layout = QHBoxLayout(self)
+            layout.addWidget(self.splitter)
 
-        # Navigation mit Highlight
-        self.nav_buttons["btn_project"].clicked.connect(lambda: self._on_nav_clicked("btn_project", self._show_project_text))
-        self.nav_buttons["btn_characters"].clicked.connect(lambda: self._on_nav_clicked("btn_characters", self._show_characters_text))
-        self.nav_buttons["btn_storylines"].clicked.connect(lambda: self._on_nav_clicked("btn_storylines", self._show_storylines_text))
-        self.nav_buttons["btn_chapters"].clicked.connect(lambda: self._on_nav_clicked("btn_chapters", self._show_chapters_text))
-        self.nav_buttons["btn_scenes"].clicked.connect(lambda: self._on_nav_clicked("btn_scenes", self._show_scenes_text))
-        self.nav_buttons["btn_objects"].clicked.connect(lambda: self._on_nav_clicked("btn_objects", self._show_objects_text))
-        self.nav_buttons["btn_locations"].clicked.connect(lambda: self._on_nav_clicked("btn_locations", self._show_locations_text))
-        self.nav_buttons["btn_exit"].clicked.connect(self._exit_application)
+            self.nav_buttons["btn_project"].clicked.connect(lambda: self._on_nav_clicked("btn_project", self._show_project_text))
+            self.nav_buttons["btn_characters"].clicked.connect(lambda: self._on_nav_clicked("btn_characters", self._show_characters_text))
+            self.nav_buttons["btn_storylines"].clicked.connect(lambda: self._on_nav_clicked("btn_storylines", self._show_storylines_text))
+            self.nav_buttons["btn_chapters"].clicked.connect(lambda: self._on_nav_clicked("btn_chapters", self._show_chapters_text))
+            self.nav_buttons["btn_scenes"].clicked.connect(lambda: self._on_nav_clicked("btn_scenes", self._show_scenes_text))
+            self.nav_buttons["btn_objects"].clicked.connect(lambda: self._on_nav_clicked("btn_objects", self._show_objects_text))
+            self.nav_buttons["btn_locations"].clicked.connect(lambda: self._on_nav_clicked("btn_locations", self._show_locations_text))
+            self.nav_buttons["btn_exit"].clicked.connect(self._exit_application)
+            log_info("UI initialized successfully.")
+        except Exception as e:
+            log_error(f"Error initializing UI: {str(e)}")
 
     def _on_nav_clicked(self, key, handler):
-        for k, btn in self.nav_buttons.items():
-            btn.setStyleSheet(self.button_style)
-        self.nav_buttons[key].setStyleSheet(self.button_style_active)
-        self.active_nav_key = key
-        handler()
+        log_subsection(f"_on_nav_clicked: {key}")
+        try:
+            for k, btn in self.nav_buttons.items():
+                btn.setStyleSheet(self.button_style)
+            self.nav_buttons[key].setStyleSheet(self.button_style_active)
+            self.active_nav_key = key
+            handler()
+            log_info(f"Navigation button '{key}' clicked.")
+        except Exception as e:
+            log_error(f"Error in navigation click handler for '{key}': {str(e)}")
 
     def _show_project_text(self):
-        fields = [
-            {"name": "title", "label_key": "project_title", "default_label": "Title", "type": "text"},
-            {"name": "subtitle", "label_key": "project_subtitle", "default_label": "Subtitle", "type": "text"},
-            {"name": "author", "label_key": "project_author", "default_label": "Author", "type": "text"},
-            {"name": "premise", "label_key": "project_premise", "default_label": "Premise", "type": "text"},
-            {"name": "genre", "label_key": "project_genre", "default_label": "Genre", "type": "text"},
-            {"name": "narrative_perspective", "label_key": "project_narrative_perspective", "default_label": "Narrative Perspective", "type": "text"},
-            {"name": "timeline", "label_key": "project_timeline", "default_label": "Timeline", "type": "text"},
-            {"name": "target_group", "label_key": "project_target_group", "default_label": "Target Group", "type": "text"},
-            {"name": "cover_image", "label_key": "project_cover_image", "default_label": "Cover Image", "type": "text"},
-            {"name": "start_date", "label_key": "project_start_date", "default_label": "Start Date", "type": "date"},
-            {"name": "deadline", "label_key": "project_deadline", "default_label": "Deadline", "type": "date"},
-            {"name": "word_count_goal", "label_key": "project_word_count_goal", "default_label": "Word Count Goal", "type": "spin", "max": 100000},
-        ]
+        log_subsection("_show_project_text")
+        try:
+            fields = [
+                {"name": "title", "label_key": "project_title", "default_label": "Title", "type": "text"},
+                {"name": "subtitle", "label_key": "project_subtitle", "default_label": "Subtitle", "type": "text"},
+                {"name": "author", "label_key": "project_author", "default_label": "Author", "type": "text"},
+                {"name": "premise", "label_key": "project_premise", "default_label": "Premise", "type": "text"},
+                {"name": "genre", "label_key": "project_genre", "default_label": "Genre", "type": "text"},
+                {"name": "narrative_perspective", "label_key": "project_narrative_perspective", "default_label": "Narrative Perspective", "type": "text"},
+                {"name": "timeline", "label_key": "project_timeline", "default_label": "Timeline", "type": "text"},
+                {"name": "target_group", "label_key": "project_target_group", "default_label": "Target Group", "type": "text"},
+                {"name": "cover_image", "label_key": "project_cover_image", "default_label": "Cover Image", "type": "text"},
+                {"name": "start_date", "label_key": "project_start_date", "default_label": "Start Date", "type": "date"},
+                {"name": "deadline", "label_key": "project_deadline", "default_label": "Deadline", "type": "date"},
+                {"name": "word_count_goal", "label_key": "project_word_count_goal", "default_label": "Word Count Goal", "type": "spin", "max": 100000},
+            ]
 
-        def toolbar_actions(toolbar):
-            toolbar.new_action.triggered.connect(lambda: print("Neuer Datensatz"))
-            toolbar.delete_action.triggered.connect(lambda: print("Datensatz löschen"))
-            toolbar.prev_action.triggered.connect(lambda: print("Ein Datensatz zurück"))
-            toolbar.next_action.triggered.connect(lambda: print("Ein Datensatz vor"))
-            toolbar.save_action.triggered.connect(self._save_project_form)
+            def toolbar_actions(toolbar):
+                log_subsection("toolbar_actions: project")
+                toolbar.new_action.triggered.connect(lambda: log_info("New project record triggered."))
+                toolbar.delete_action.triggered.connect(lambda: log_info("Delete project record triggered."))
+                toolbar.prev_action.triggered.connect(lambda: log_info("Previous project record triggered."))
+                toolbar.next_action.triggered.connect(lambda: log_info("Next project record triggered."))
+                toolbar.save_action.triggered.connect(self._save_project_form)
 
-        form_widget = BaseFormWidget(
-            title=self.form_labels.get("project_form_label", "Project"),
-            fields=fields,
-            form_labels=self.form_labels,
-            toolbar_actions=toolbar_actions,
-            parent=self
-        )
+            form_widget = BaseFormWidget(
+                title=self.form_labels.get("project_form_label", "Project"),
+                fields=fields,
+                form_labels=self.form_labels,
+                toolbar_actions=toolbar_actions,
+                parent=self
+            )
 
-        old_widget = self.splitter.widget(1)
-        if old_widget:
-            old_widget.setParent(None)
-        self.splitter.insertWidget(1, form_widget)
+            old_widget = self.splitter.widget(1)
+            if old_widget:
+                old_widget.setParent(None)
+            self.splitter.insertWidget(1, form_widget)
 
-        if self.splitter.count() < 3:
-            self.splitter.addWidget(self.help_area)
-        self.splitter.setSizes([300, 900, 300])
+            if self.splitter.count() < 3:
+                self.splitter.addWidget(self.help_area)
+            self.splitter.setSizes([300, 900, 300])
 
-        key = "help_project"
-        help_text = self.help_texts.get(key, "Help and information will be displayed here.")
-        self.help_area.setText(help_text)
+            key = "help_project"
+            help_text = self.help_texts.get(key, "Help and information will be displayed here.")
+            self.help_area.setText(help_text)
+            log_info("Project form displayed successfully.")
+        except Exception as e:
+            log_error(f"Error displaying project form: {str(e)}")
 
     def _save_project_form(self):
-        print("💾 Save button clicked")
-        # Hier kann die Speicherlogik ergänzt werden
+        log_subsection("_save_project_form")
+        try:
+            log_info("Save project button clicked.")
+            # Add logic to save project data here
+        except Exception as e:
+            log_error(f"Error saving project data: {str(e)}")
 
     def _show_characters_text(self):
-        self._update_content("Characters")
+        log_subsection("_show_characters_text")
+        try:
+            fields = [
+                {"name": "character_name", "label_key": "character_name", "default_label": "Name", "type": "text"},
+                {"name": "character_nickname", "label_key": "character_nickname", "default_label": "Nickname", "type": "text"},
+                {"name": "character_gender", "label_key": "character_gender", "default_label": "Gender", "type": "text"},
+                {"name": "character_age", "label_key": "character_age", "default_label": "Age", "type": "spin", "max": 120},
+                {"name": "character_role", "label_key": "character_role", "default_label": "Role", "type": "text"},
+                {"name": "character_description", "label_key": "character_description", "default_label": "Description", "type": "text"},
+            ]
+
+            def toolbar_actions(toolbar):
+                log_subsection("toolbar_actions: character")
+                toolbar.new_action.triggered.connect(lambda: log_info("New character triggered."))
+                toolbar.delete_action.triggered.connect(lambda: log_info("Delete character triggered."))
+                toolbar.prev_action.triggered.connect(lambda: log_info("Previous character triggered."))
+                toolbar.next_action.triggered.connect(lambda: log_info("Next character triggered."))
+                toolbar.save_action.triggered.connect(self._save_character_form)
+
+            form_widget = BaseFormWidget(
+                title=self.form_labels.get("character_form_label", "Character"),
+                fields=fields,
+                form_labels=self.form_labels,
+                toolbar_actions=toolbar_actions,
+                parent=self
+            )
+
+            old_widget = self.splitter.widget(1)
+            if old_widget:
+                old_widget.setParent(None)
+            self.splitter.insertWidget(1, form_widget)
+
+            if self.splitter.count() < 3:
+                self.splitter.addWidget(self.help_area)
+            self.splitter.setSizes([300, 900, 300])
+
+            key = "help_characters"
+            help_text = self.help_texts.get(key, "Help and information will be displayed here.")
+            self.help_area.setText(help_text)
+            log_info("Character form displayed successfully.")
+        except Exception as e:
+            log_error(f"Error displaying character form: {str(e)}")
+
+    def _save_character_form(self):
+        log_subsection("_save_character_form")
+        try:
+            log_info("Save character button clicked.")
+            # Add logic to save character data here
+        except Exception as e:
+            log_error(f"Error saving character data: {str(e)}")
 
     def _show_storylines_text(self):
-        self._update_content("Storylines")
+        log_subsection("_show_storylines_text")
+        try:
+            fields = [
+                {"name": "storyline_title", "label_key": "storyline_title", "default_label": "Title", "type": "text"},
+                {"name": "storyline_summary", "label_key": "storyline_summary", "default_label": "Summary", "type": "text"},
+                {"name": "storyline_notes", "label_key": "storyline_notes", "default_label": "Notes", "type": "text"},
+            ]
+
+            def toolbar_actions(toolbar):
+                log_subsection("toolbar_actions: storyline")
+                toolbar.new_action.triggered.connect(lambda: log_info("New storyline triggered."))
+                toolbar.delete_action.triggered.connect(lambda: log_info("Delete storyline triggered."))
+                toolbar.prev_action.triggered.connect(lambda: log_info("Previous storyline triggered."))
+                toolbar.next_action.triggered.connect(lambda: log_info("Next storyline triggered."))
+                toolbar.save_action.triggered.connect(self._save_storyline_form)
+
+            form_widget = BaseFormWidget(
+                title=self.form_labels.get("storyline_form_label", "Storyline"),
+                fields=fields,
+                form_labels=self.form_labels,
+                toolbar_actions=toolbar_actions,
+                parent=self
+            )
+
+            old_widget = self.splitter.widget(1)
+            if old_widget:
+                old_widget.setParent(None)
+            self.splitter.insertWidget(1, form_widget)
+
+            if self.splitter.count() < 3:
+                self.splitter.addWidget(self.help_area)
+            self.splitter.setSizes([300, 900, 300])
+
+            key = "help_storylines"
+            help_text = self.help_texts.get(key, "Help and information will be displayed here.")
+            self.help_area.setText(help_text)
+            log_info("Storyline form displayed successfully.")
+        except Exception as e:
+            log_error(f"Error displaying storyline form: {str(e)}")
+
+    def _save_storyline_form(self):
+        log_subsection("_save_storyline_form")
+        try:
+            log_info("Save storyline button clicked.")
+            # Add logic to save storyline data here
+        except Exception as e:
+            log_error(f"Error saving storyline data: {str(e)}")
 
     def _show_chapters_text(self):
-        self._update_content("Chapters")
+        log_subsection("_show_chapters_text")
+        try:
+            fields = [
+                {"name": "chapter_title", "label_key": "chapter_title", "default_label": "Title", "type": "text"},
+                {"name": "chapter_number", "label_key": "chapter_number", "default_label": "Number", "type": "spin", "max": 999},
+                {"name": "chapter_summary", "label_key": "chapter_summary", "default_label": "Summary", "type": "text"},
+            ]
+
+            def toolbar_actions(toolbar):
+                log_subsection("toolbar_actions: chapter")
+                toolbar.new_action.triggered.connect(lambda: log_info("New chapter triggered."))
+                toolbar.delete_action.triggered.connect(lambda: log_info("Delete chapter triggered."))
+                toolbar.prev_action.triggered.connect(lambda: log_info("Previous chapter triggered."))
+                toolbar.next_action.triggered.connect(lambda: log_info("Next chapter triggered."))
+                toolbar.save_action.triggered.connect(self._save_chapter_form)
+
+            form_widget = BaseFormWidget(
+                title=self.form_labels.get("chapter_form_label", "Chapter"),
+                fields=fields,
+                form_labels=self.form_labels,
+                toolbar_actions=toolbar_actions,
+                parent=self
+            )
+
+            old_widget = self.splitter.widget(1)
+            if old_widget:
+                old_widget.setParent(None)
+            self.splitter.insertWidget(1, form_widget)
+
+            if self.splitter.count() < 3:
+                self.splitter.addWidget(self.help_area)
+            self.splitter.setSizes([300, 900, 300])
+
+            key = "help_chapters"
+            help_text = self.help_texts.get(key, "Help and information will be displayed here.")
+            self.help_area.setText(help_text)
+            log_info("Chapter form displayed successfully.")
+        except Exception as e:
+            log_error(f"Error displaying chapter form: {str(e)}")
+
+    def _save_chapter_form(self):
+        log_subsection("_save_chapter_form")
+        try:
+            log_info("Save chapter button clicked.")
+            # Add logic to save chapter data here
+        except Exception as e:
+            log_error(f"Error saving chapter data: {str(e)}")
 
     def _show_scenes_text(self):
-        self._update_content("Scenes")
+        log_subsection("_show_scenes_text")
+        try:
+            fields = [
+                {"name": "scene_title", "label_key": "scene_title", "default_label": "Title", "type": "text"},
+                {"name": "scene_number", "label_key": "scene_number", "default_label": "Number", "type": "spin", "max": 9999},
+                {"name": "scene_summary", "label_key": "scene_summary", "default_label": "Summary", "type": "text"},
+            ]
+
+            def toolbar_actions(toolbar):
+                log_subsection("toolbar_actions: scene")
+                toolbar.new_action.triggered.connect(lambda: log_info("New scene triggered."))
+                toolbar.delete_action.triggered.connect(lambda: log_info("Delete scene triggered."))
+                toolbar.prev_action.triggered.connect(lambda: log_info("Previous scene triggered."))
+                toolbar.next_action.triggered.connect(lambda: log_info("Next scene triggered."))
+                toolbar.save_action.triggered.connect(self._save_scene_form)
+
+            form_widget = BaseFormWidget(
+                title=self.form_labels.get("scene_form_label", "Scene"),
+                fields=fields,
+                form_labels=self.form_labels,
+                toolbar_actions=toolbar_actions,
+                parent=self
+            )
+
+            old_widget = self.splitter.widget(1)
+            if old_widget:
+                old_widget.setParent(None)
+            self.splitter.insertWidget(1, form_widget)
+
+            if self.splitter.count() < 3:
+                self.splitter.addWidget(self.help_area)
+            self.splitter.setSizes([300, 900, 300])
+
+            key = "help_scenes"
+            help_text = self.help_texts.get(key, "Help and information will be displayed here.")
+            self.help_area.setText(help_text)
+            log_info("Scene form displayed successfully.")
+        except Exception as e:
+            log_error(f"Error displaying scene form: {str(e)}")
+
+    def _save_scene_form(self):
+        log_subsection("_save_scene_form")
+        try:
+            log_info("Save scene button clicked.")
+            # Add logic to save scene data here
+        except Exception as e:
+            log_error(f"Error saving scene data: {str(e)}")
 
     def _show_objects_text(self):
-        self._update_content("Objects")
+        log_subsection("_show_objects_text")
+        try:
+            fields = [
+                {"name": "object_name", "label_key": "object_name", "default_label": "Name", "type": "text"},
+                {"name": "object_type", "label_key": "object_type", "default_label": "Type", "type": "text"},
+                {"name": "object_description", "label_key": "object_description", "default_label": "Description", "type": "text"},
+            ]
+
+            def toolbar_actions(toolbar):
+                log_subsection("toolbar_actions: object")
+                toolbar.new_action.triggered.connect(lambda: log_info("New object triggered."))
+                toolbar.delete_action.triggered.connect(lambda: log_info("Delete object triggered."))
+                toolbar.prev_action.triggered.connect(lambda: log_info("Previous object triggered."))
+                toolbar.next_action.triggered.connect(lambda: log_info("Next object triggered."))
+                toolbar.save_action.triggered.connect(self._save_object_form)
+
+            form_widget = BaseFormWidget(
+                title=self.form_labels.get("object_form_label", "Object"),
+                fields=fields,
+                form_labels=self.form_labels,
+                toolbar_actions=toolbar_actions,
+                parent=self
+            )
+
+            old_widget = self.splitter.widget(1)
+            if old_widget:
+                old_widget.setParent(None)
+            self.splitter.insertWidget(1, form_widget)
+
+            if self.splitter.count() < 3:
+                self.splitter.addWidget(self.help_area)
+            self.splitter.setSizes([300, 900, 300])
+
+            key = "help_objects"
+            help_text = self.help_texts.get(key, "Help and information will be displayed here.")
+            self.help_area.setText(help_text)
+            log_info("Object form displayed successfully.")
+        except Exception as e:
+            log_error(f"Error displaying object form: {str(e)}")
+
+    def _save_object_form(self):
+        log_subsection("_save_object_form")
+        try:
+            log_info("Save object button clicked.")
+            # Add logic to save object data here
+        except Exception as e:
+            log_error(f"Error saving object data: {str(e)}")
 
     def _show_locations_text(self):
-        self._update_content("Locations")
+        log_subsection("_show_locations_text")
+        try:
+            fields = [
+                {"name": "location_name", "label_key": "location_name", "default_label": "Name", "type": "text"},
+                {"name": "location_type", "label_key": "location_type", "default_label": "Type", "type": "text"},
+                {"name": "location_description", "label_key": "location_description", "default_label": "Description", "type": "text"},
+            ]
+
+            def toolbar_actions(toolbar):
+                log_subsection("toolbar_actions: location")
+                toolbar.new_action.triggered.connect(lambda: log_info("New location triggered."))
+                toolbar.delete_action.triggered.connect(lambda: log_info("Delete location triggered."))
+                toolbar.prev_action.triggered.connect(lambda: log_info("Previous location triggered."))
+                toolbar.next_action.triggered.connect(lambda: log_info("Next location triggered."))
+                toolbar.save_action.triggered.connect(self._save_location_form)
+
+            form_widget = BaseFormWidget(
+                title=self.form_labels.get("location_form_label", "Location"),
+                fields=fields,
+                form_labels=self.form_labels,
+                toolbar_actions=toolbar_actions,
+                parent=self
+            )
+
+            old_widget = self.splitter.widget(1)
+            if old_widget:
+                old_widget.setParent(None)
+            self.splitter.insertWidget(1, form_widget)
+
+            if self.splitter.count() < 3:
+                self.splitter.addWidget(self.help_area)
+            self.splitter.setSizes([300, 900, 300])
+
+            key = "help_locations"
+            help_text = self.help_texts.get(key, "Help and information will be displayed here.")
+            self.help_area.setText(help_text)
+            log_info("Location form displayed successfully.")
+        except Exception as e:
+            log_error(f"Error displaying location form: {str(e)}")
+
+    def _save_location_form(self):
+        log_subsection("_save_location_form")
+        try:
+            log_info("Save location button clicked.")
+            # Add logic to save location data here
+        except Exception as e:
+            log_error(f"Error saving location data: {str(e)}")
 
     def _exit_application(self):
-        self.close()
+        log_subsection("_exit_application")
+        try:
+            self.close()
+            log_info("Application exit triggered.")
+        except Exception as e:
+            log_error(f"Error during application exit: {str(e)}")
 
     def closeEvent(self, event):
-        self.settings["splitter_sizes"] = self.splitter.sizes()
-        save_settings(self.settings)
-        event.accept()
+        log_subsection("closeEvent")
+        try:
+            self.settings["splitter_sizes"] = self.splitter.sizes()
+            save_settings(self.settings)
+            event.accept()
+            log_info("Splitter sizes saved and application closed.")
+        except Exception as e:
+            log_error(f"Error in closeEvent: {str(e)}")
 ```
 
 #### 6.6.1 help_loader.py
@@ -1950,18 +2543,24 @@ class ProjectWindow(QWidget):
 import json
 import os
 
+# Import zentrale Logging-Funktionen
+from core.lloger import log_section, log_subsection, log_info, log_error
+
 def load_help_texts(lang="en"):
+    log_section("help_loader.py")
+    log_subsection("load_help_texts")
     filename = f"help_{lang}.json"
     base_path = os.path.join(os.path.dirname(__file__), "help")
     file_path = os.path.join(base_path, filename)
 
     try:
         with open(file_path, "r", encoding="utf-8") as f:
-            return json.load(f)
+            help_texts = json.load(f)
+            log_info(f"Help texts loaded for language '{lang}' from {file_path}.")
+            return help_texts
     except Exception as e:
-        print(f"Could not load help texts for language '{lang}': {e}")
+        log_error(f"Could not load help texts for language '{lang}': {e}")
         return {}
-
 ```
 
 #### 6.6.2 form_toolbar.py
@@ -1971,44 +2570,52 @@ from PySide6.QtWidgets import QToolBar, QStyle, QGraphicsDropShadowEffect
 from PySide6.QtGui import QAction, QColor
 from PySide6.QtCore import QSize
 
+# Import zentrale Logging-Funktionen
+from core.lloger import log_section, log_subsection, log_info, log_error
+
 class FormToolbar(QToolBar):
     def __init__(self, parent=None):
-        super().__init__(parent)
-        self.setIconSize(QSize(56, 56))
+        log_section("form_toolbar.py")
+        log_subsection("__init__")
+        try:
+            super().__init__(parent)
+            self.setIconSize(QSize(56, 56))
 
-        self.setStyleSheet("""
-            QToolBar {
-                background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
-                    stop:0 #f4f4f4, stop:1 #666666);
-                border: 2px solid #4F4F4F;
-                border-radius: 8px;
-                padding: 6px;
-                margin-bottom: 6px;
-            }
-        """)
+            self.setStyleSheet("""
+                QToolBar {
+                    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                        stop:0 #f4f4f4, stop:1 #666666);
+                    border: 2px solid #4F4F4F;
+                    border-radius: 8px;
+                    padding: 6px;
+                    margin-bottom: 6px;
+                }
+            """)
 
-        # Schatteneffekt direkt nach dem StyleSheet
-        shadow = QGraphicsDropShadowEffect(self)
-        shadow.setBlurRadius(18)
-        shadow.setOffset(0, 6)
-        shadow.setColor(QColor(80, 60, 30, int(0.3 * 255)))
-        self.setGraphicsEffect(shadow)
+            # Schatteneffekt direkt nach dem StyleSheet
+            shadow = QGraphicsDropShadowEffect(self)
+            shadow.setBlurRadius(18)
+            shadow.setOffset(0, 6)
+            shadow.setColor(QColor(80, 60, 30, int(0.3 * 255)))
+            self.setGraphicsEffect(shadow)
 
-        # ...Rest wie gehabt...
+            self.new_action = QAction(parent.style().standardIcon(QStyle.SP_FileIcon), "Neuer Datensatz", self)
+            self.delete_action = QAction(parent.style().standardIcon(QStyle.SP_TrashIcon), "Datensatz löschen", self)
+            self.prev_action = QAction(parent.style().standardIcon(QStyle.SP_ArrowBack), "Zurück", self)
+            self.next_action = QAction(parent.style().standardIcon(QStyle.SP_ArrowForward), "Vor", self)
+            self.save_action = QAction(parent.style().standardIcon(QStyle.SP_DialogSaveButton), "Datensatz speichern", self)
 
-        self.new_action = QAction(parent.style().standardIcon(QStyle.SP_FileIcon), "Neuer Datensatz", self)
-        self.delete_action = QAction(parent.style().standardIcon(QStyle.SP_TrashIcon), "Datensatz löschen", self)
-        self.prev_action = QAction(parent.style().standardIcon(QStyle.SP_ArrowBack), "Zurück", self)
-        self.next_action = QAction(parent.style().standardIcon(QStyle.SP_ArrowForward), "Vor", self)
-        self.save_action = QAction(parent.style().standardIcon(QStyle.SP_DialogSaveButton), "Datensatz speichern", self)
+            self.addAction(self.new_action)
+            self.addAction(self.delete_action)
+            self.addSeparator()
+            self.addAction(self.prev_action)
+            self.addAction(self.next_action)
+            self.addSeparator()
+            self.addAction(self.save_action)
 
-        self.addAction(self.new_action)
-        self.addAction(self.delete_action)
-        self.addSeparator()
-        self.addAction(self.prev_action)
-        self.addAction(self.next_action)
-        self.addSeparator()
-        self.addAction(self.save_action)
+            log_info("FormToolbar initialized successfully.")
+        except Exception as e:
+            log_error(f"Error initializing FormToolbar: {str(e)}")
 ```
 
 #### 6.6.3 base_form_widget.py
@@ -2017,42 +2624,51 @@ from PySide6.QtWidgets import QWidget, QVBoxLayout, QLabel, QFormLayout, QLineEd
 from gui.widgets.form_toolbar import FormToolbar
 from gui.styles.form_styles import load_form_style
 
+# Import zentrale Logging-Funktionen
+from core.lloger import log_section, log_subsection, log_info, log_error
+
 class BaseFormWidget(QWidget):
     def __init__(self, title, fields, form_labels, toolbar_actions, parent=None):
-        super().__init__(parent)
-        style = load_form_style(16)
-        layout = QVBoxLayout()
-        
-        # Toolbar
-        self.toolbar = FormToolbar(self)
-        toolbar_actions(self.toolbar)
-        layout.addWidget(self.toolbar)
-        
-        # Überschrift
-        title_label = QLabel(title)
-        title_label.setStyleSheet("font-size: 20px; font-weight: bold; margin-bottom: 12px;")
-        layout.addWidget(title_label)
-        
-        # Formlayout
-        form_layout = QFormLayout()
-        self.field_widgets = {}
-        for field in fields:
-            label_text = form_labels.get(field["label_key"], field["default_label"])
-            if field["type"] == "text":
-                widget = QLineEdit()
-            elif field["type"] == "date":
-                widget = QDateEdit()
-                widget.setCalendarPopup(True)
-            elif field["type"] == "spin":
-                widget = QSpinBox()
-                widget.setMaximum(field.get("max", 100000))
-            else:
-                continue
-            widget.setStyleSheet(style)
-            form_layout.addRow(label_text, widget)
-            self.field_widgets[field["name"]] = widget
-        layout.addLayout(form_layout)
-        self.setLayout(layout)
+        log_section("base_form_widget.py")
+        log_subsection("__init__")
+        try:
+            super().__init__(parent)
+            style = load_form_style(16)
+            layout = QVBoxLayout()
+            
+            # Toolbar
+            self.toolbar = FormToolbar(self)
+            toolbar_actions(self.toolbar)
+            layout.addWidget(self.toolbar)
+            
+            # Überschrift
+            title_label = QLabel(title)
+            title_label.setStyleSheet("font-size: 20px; font-weight: bold; margin-bottom: 12px;")
+            layout.addWidget(title_label)
+            
+            # Formlayout
+            form_layout = QFormLayout()
+            self.field_widgets = {}
+            for field in fields:
+                label_text = form_labels.get(field["label_key"], field["default_label"])
+                if field["type"] == "text":
+                    widget = QLineEdit()
+                elif field["type"] == "date":
+                    widget = QDateEdit()
+                    widget.setCalendarPopup(True)
+                elif field["type"] == "spin":
+                    widget = QSpinBox()
+                    widget.setMaximum(field.get("max", 100000))
+                else:
+                    continue
+                widget.setStyleSheet(style)
+                form_layout.addRow(label_text, widget)
+                self.field_widgets[field["name"]] = widget
+            layout.addLayout(form_layout)
+            self.setLayout(layout)
+            log_info("BaseFormWidget initialized successfully.")
+        except Exception as e:
+            log_error(f"Error initializing BaseFormWidget: {str(e)}")
 ```
 
 ### 6.7 Vorbereitungen für die Installation unter Linux-Mint
@@ -2241,7 +2857,7 @@ Die Nutzung aller drei Versionen setzt eine Registrierung voraus.
 
 - **CSNova Magister** – eine **kostenpflichtige Version** für einzelne Autor:innen, die das Programm professionell nutzen und ein Jahreseinkommen von über 50.000 € erzielen.  
  
-  Das Jahreseinkommen bezieht sich auf Einnahmen aus schriftstellerischer Tätigkeit, die mit Hilfe der Software erzielt werden. Professionelle Nutzung bezeichnet den regelmäßigen Einsatz der Software zur Erstellung, Veröffentlichung oder Vermarktung literarischer Werke mit kommerziellem Zweck.
+  Das Jahreseinkommen bezieht sich auf Einnahmen aus schriftstellerischer Tätigkeit, die mithilfe der Software erzielt werden. Professionelle Nutzung bezeichnet den regelmäßigen Einsatz der Software zur Erstellung, Veröffentlichung oder Vermarktung literarischer Werke mit kommerziellem Zweck.
 
 - **CSNova Collegium** – eine Version für Autor:innen, die im Team das Programm professionell nutzen.  
 
@@ -2259,7 +2875,7 @@ Die Nutzung aller drei Versionen setzt eine Registrierung voraus.
 
 Änderungen am Quellcode und die Weitergabe modifizierter Versionen sind gestattet, sofern die modifizierten Versionen ebenfalls unter einer Open Source Lizenz veröffentlicht werden. 
 
-Die Nutzung des Namens „CSNova“, „Codices Scriptoria Nova“, „CSNova Novitia“, „CSNova Magister“ oder „CSNova Collegium“ für modifizierte Versionen ist nur mit schriftlicher Genehmigung des Autors gestattet. Der Autor übernimmt **keine Haftung** für Schäden, die durch veränderte Versionen oder deren Inhalte entstehen – insbesondere nicht für Inhalte, die ohne seine Zustimmung verändert worden sind oder unter einem der genannten Namen veröffentlicht wurden.
+Die Nutzung des Namens „CSNova“, „Codices Scriptoria Nova“, „CSNova Novitia“, „CSNova Magister“ oder „CSNova Collegium“ für modifizierte Versionen ist nur mit schriftlicher Genehmigung des Autors gestattet. Der Autor übernimmt **keine Haftung** für Schäden, die durch veränderte Versionen oder deren Inhalte entstehen – nsbesondere nicht für Inhalte, die ohne seine Zustimmung verändert worden sind oder unter einem der genannten Namen veröffentlicht wurden.
 
 ## CSNova-Reader
 
@@ -2270,13 +2886,13 @@ Er darf kostenfrei genutzt, kopiert und weitergegeben werden – sowohl privat a
 
 ### Einschränkungen der kommerziellen Nutzung
 
-Der CSNova-Reader darf kommerziell genutzt werden, z. B. zur Erstellung und Veröffentlichung von Büchern, Editionen oder anderen Produkten.
+Der CSNova-Reader darf kommerziell genutzt werden, z.B. zur Veröffentlichung von Büchern, Editionen oder anderen Produkten.
 
 Ein Verkauf oder Vertrieb des CSNova-Readers als eigenständiges Produkt ist **nicht gestattet**.
 
 ### Änderungen und Weitergabe
 
-Änderungen am CSNova-Reader dürfen **nur mit schriftlicher Zustimmung des Autors** vorgenommen werden. Alle abgeleiteten Versionen müssen ebenfalls **dauerhaft kostenfrei nutzbar** bleiben.
+Änderungen am CSNova-Reader sind gestattet, sofern die modifizierten Versionen ebenfalls unter einer Open Source Lizenz veröffentlicht werden und dauerhaft kostenfrei nutzbar bleiben.
 
 Die Nutzung des Namens „CSNova“, „Codices Scriptoria Nova“, „CSNova-Reader“, „CSNova Novitia“, „CSNova Magister“ oder „CSNova Collegium“ für modifizierte Versionen des CSNova-Readers ist **nur mit schriftlicher Genehmigung des Autors** gestattet. Der Autor übernimmt **keine Haftung** für Schäden, die durch veränderte Versionen oder deren Inhalte entstehen – insbesondere nicht für Inhalte, die ohne seine Zustimmung verändert oder unter einem der genannten Namen veröffentlicht wurden.
 
@@ -2287,4 +2903,4 @@ Die Nutzung des Namens „CSNova“, „Codices Scriptoria Nova“, „CSNova-Re
 * Die Nutzung der Software setzt die Anerkennung dieser Lizenzbedingungen voraus.
 
 © 2025 Frank Reiser  
-Kontakt: [reiserfrank@t-online.de](mailto:reiserfrank@t-online.de)
+### Kontakt: [reiserfrank@t-online.de](mailto:reiserfrank@t-online.de)

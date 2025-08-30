@@ -29,12 +29,19 @@ from core.tables import (
     project_character_group_map
 )
 
+# Import zentrale Logging-Funktionen
+from core.lloger import log_section, log_subsection, log_info, log_error
+
 def init_schema():
+    log_section("database.py")
+    log_subsection("init_schema")
     try:
         with sqlite3.connect(DB_PATH) as conn:
             cursor = conn.cursor()
+            log_info("Database connection established.")
             # Enable foreign key support
             cursor.execute("PRAGMA foreign_keys = ON")
+            log_info("Foreign key support enabled.")
 
             # Initialize tables
             for module in [
@@ -61,10 +68,14 @@ def init_schema():
                 project_character_group_map
             ]:
                 module.create_table(cursor)
-            
+                log_info(f"Table created: {module.__name__}")
+
             # Insert seed data
             data_gender(cursor)
+            log_info("Seed data for gender inserted.")
             sex_orientation_data(cursor)
+            log_info("Seed data for sex orientation inserted.")
             conn.commit()
+            log_info("Database schema initialized and committed successfully.")
     except Exception as e:
-        print(f"An error occurred during database initialization: {e}")
+        log_error(f"An error occurred during database initialization: {e}")
