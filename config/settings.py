@@ -1,12 +1,12 @@
-# config/settings.py
-# load and save settings: wich language was selected, settings for project_window
+# Load and save settings: which language was selected, settings for project_window
 import json
 import os
 
-# Import zentrale Logging-Funktionen
+# Import central logging functions
 from core.lloger import log_section, log_subsection, log_info, log_error
 
-SETTINGS_FILE = "config/user_settings.json"
+# Import the central settings file path
+from config.dev import SETTINGS_FILE
 
 def load_settings():
     log_section("settings.py")

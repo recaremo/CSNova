@@ -1,7 +1,7 @@
 from PySide6.QtGui import QPalette, QColor
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import (
-    QWidget, QVBoxLayout, QPushButton, QTextEdit, QLabel, QSplitter, QHBoxLayout
+    QWidget, QVBoxLayout, QTextEdit, QSplitter, QHBoxLayout
 )
 from gui.styles.style_utils import load_button_style, load_active_button_style
 from core.translator import Translator
@@ -10,9 +10,14 @@ from core.translations.help_loader import load_help_texts
 from core.translations.form_labels import load_form_labels
 from gui.widgets.form_toolbar import FormToolbar
 from gui.widgets.base_form_widget import BaseFormWidget
+from gui.widgets.navigation_panel import NavigationPanel
+from gui.widgets.help_panel import HelpPanel
 
-# Import zentrale Logging-Funktionen
+# Import central logging functions
 from core.lloger import log_section, log_subsection, log_info, log_error
+
+# Import central directories (for future resource loading if needed)
+from config.dev import HELP_DIR, FORMS_DIR, ASSETS_DIR
 
 class ProjectWindow(QWidget):
     BUTTON_WIDTH = 240
@@ -52,46 +57,37 @@ class ProjectWindow(QWidget):
     def _init_ui(self):
         log_subsection("_init_ui")
         try:
-            self.nav_layout = QVBoxLayout()
-            self.nav_buttons = {}
             keys = [
                 "btn_project", "btn_characters", "btn_storylines",
                 "btn_chapters", "btn_scenes", "btn_objects", "btn_locations", "btn_exit"
             ]
-            self.button_style = load_button_style(18)
-            self.button_style_active = load_active_button_style(18)
+            callbacks = {
+                "btn_project": lambda: self._on_nav_clicked("btn_project", self._show_project_text),
+                "btn_characters": lambda: self._on_nav_clicked("btn_characters", self._show_characters_text),
+                "btn_storylines": lambda: self._on_nav_clicked("btn_storylines", self._show_storylines_text),
+                "btn_chapters": lambda: self._on_nav_clicked("btn_chapters", self._show_chapters_text),
+                "btn_scenes": lambda: self._on_nav_clicked("btn_scenes", self._show_scenes_text),
+                "btn_objects": lambda: self._on_nav_clicked("btn_objects", self._show_objects_text),
+                "btn_locations": lambda: self._on_nav_clicked("btn_locations", self._show_locations_text),
+                "btn_exit": self._exit_application
+            }
+            self.navigation_panel = NavigationPanel(
+                keys, self.translator, self.button_style, self.button_style_active, callbacks, self
+            )
 
-            for key in keys:
-                btn = QPushButton(self.translator.tr(key))
-                btn.setFixedSize(self.BUTTON_WIDTH, self.BUTTON_HEIGHT)
-                btn.setStyleSheet(self.button_style)
-                self.nav_layout.addWidget(btn)
-                self.nav_buttons[key] = btn
+            self.help_panel = HelpPanel(self)
 
+            # Placeholder for main content area
             self.input_area = QTextEdit()
-            self.help_area = QLabel()
-            self.help_area.setWordWrap(True)
-
-            left_widget = QWidget()
-            left_widget.setLayout(self.nav_layout)
 
             self.splitter = QSplitter(Qt.Horizontal)
-            self.splitter.addWidget(left_widget)
+            self.splitter.addWidget(self.navigation_panel)
             self.splitter.addWidget(self.input_area)
-            self.splitter.addWidget(self.help_area)
+            self.splitter.addWidget(self.help_panel)
             self.splitter.setSizes(self.settings.get("splitter_sizes", [300, 900, 300]))
 
             layout = QHBoxLayout(self)
             layout.addWidget(self.splitter)
-
-            self.nav_buttons["btn_project"].clicked.connect(lambda: self._on_nav_clicked("btn_project", self._show_project_text))
-            self.nav_buttons["btn_characters"].clicked.connect(lambda: self._on_nav_clicked("btn_characters", self._show_characters_text))
-            self.nav_buttons["btn_storylines"].clicked.connect(lambda: self._on_nav_clicked("btn_storylines", self._show_storylines_text))
-            self.nav_buttons["btn_chapters"].clicked.connect(lambda: self._on_nav_clicked("btn_chapters", self._show_chapters_text))
-            self.nav_buttons["btn_scenes"].clicked.connect(lambda: self._on_nav_clicked("btn_scenes", self._show_scenes_text))
-            self.nav_buttons["btn_objects"].clicked.connect(lambda: self._on_nav_clicked("btn_objects", self._show_objects_text))
-            self.nav_buttons["btn_locations"].clicked.connect(lambda: self._on_nav_clicked("btn_locations", self._show_locations_text))
-            self.nav_buttons["btn_exit"].clicked.connect(self._exit_application)
             log_info("UI initialized successfully.")
         except Exception as e:
             log_error(f"Error initializing UI: {str(e)}")
@@ -99,9 +95,6 @@ class ProjectWindow(QWidget):
     def _on_nav_clicked(self, key, handler):
         log_subsection(f"_on_nav_clicked: {key}")
         try:
-            for k, btn in self.nav_buttons.items():
-                btn.setStyleSheet(self.button_style)
-            self.nav_buttons[key].setStyleSheet(self.button_style_active)
             self.active_nav_key = key
             handler()
             log_info(f"Navigation button '{key}' clicked.")
@@ -147,13 +140,10 @@ class ProjectWindow(QWidget):
                 old_widget.setParent(None)
             self.splitter.insertWidget(1, form_widget)
 
-            if self.splitter.count() < 3:
-                self.splitter.addWidget(self.help_area)
-            self.splitter.setSizes([300, 900, 300])
-
             key = "help_project"
             help_text = self.help_texts.get(key, "Help and information will be displayed here.")
-            self.help_area.setText(help_text)
+            self.help_panel.set_help_text(help_text)
+            self.splitter.setSizes([300, 900, 300])
             log_info("Project form displayed successfully.")
         except Exception as e:
             log_error(f"Error displaying project form: {str(e)}")
@@ -199,13 +189,10 @@ class ProjectWindow(QWidget):
                 old_widget.setParent(None)
             self.splitter.insertWidget(1, form_widget)
 
-            if self.splitter.count() < 3:
-                self.splitter.addWidget(self.help_area)
-            self.splitter.setSizes([300, 900, 300])
-
             key = "help_characters"
             help_text = self.help_texts.get(key, "Help and information will be displayed here.")
-            self.help_area.setText(help_text)
+            self.help_panel.set_help_text(help_text)
+            self.splitter.setSizes([300, 900, 300])
             log_info("Character form displayed successfully.")
         except Exception as e:
             log_error(f"Error displaying character form: {str(e)}")
@@ -248,13 +235,10 @@ class ProjectWindow(QWidget):
                 old_widget.setParent(None)
             self.splitter.insertWidget(1, form_widget)
 
-            if self.splitter.count() < 3:
-                self.splitter.addWidget(self.help_area)
-            self.splitter.setSizes([300, 900, 300])
-
             key = "help_storylines"
             help_text = self.help_texts.get(key, "Help and information will be displayed here.")
-            self.help_area.setText(help_text)
+            self.help_panel.set_help_text(help_text)
+            self.splitter.setSizes([300, 900, 300])
             log_info("Storyline form displayed successfully.")
         except Exception as e:
             log_error(f"Error displaying storyline form: {str(e)}")
@@ -297,13 +281,10 @@ class ProjectWindow(QWidget):
                 old_widget.setParent(None)
             self.splitter.insertWidget(1, form_widget)
 
-            if self.splitter.count() < 3:
-                self.splitter.addWidget(self.help_area)
-            self.splitter.setSizes([300, 900, 300])
-
             key = "help_chapters"
             help_text = self.help_texts.get(key, "Help and information will be displayed here.")
-            self.help_area.setText(help_text)
+            self.help_panel.set_help_text(help_text)
+            self.splitter.setSizes([300, 900, 300])
             log_info("Chapter form displayed successfully.")
         except Exception as e:
             log_error(f"Error displaying chapter form: {str(e)}")
@@ -346,13 +327,10 @@ class ProjectWindow(QWidget):
                 old_widget.setParent(None)
             self.splitter.insertWidget(1, form_widget)
 
-            if self.splitter.count() < 3:
-                self.splitter.addWidget(self.help_area)
-            self.splitter.setSizes([300, 900, 300])
-
             key = "help_scenes"
             help_text = self.help_texts.get(key, "Help and information will be displayed here.")
-            self.help_area.setText(help_text)
+            self.help_panel.set_help_text(help_text)
+            self.splitter.setSizes([300, 900, 300])
             log_info("Scene form displayed successfully.")
         except Exception as e:
             log_error(f"Error displaying scene form: {str(e)}")
@@ -395,13 +373,10 @@ class ProjectWindow(QWidget):
                 old_widget.setParent(None)
             self.splitter.insertWidget(1, form_widget)
 
-            if self.splitter.count() < 3:
-                self.splitter.addWidget(self.help_area)
-            self.splitter.setSizes([300, 900, 300])
-
             key = "help_objects"
             help_text = self.help_texts.get(key, "Help and information will be displayed here.")
-            self.help_area.setText(help_text)
+            self.help_panel.set_help_text(help_text)
+            self.splitter.setSizes([300, 900, 300])
             log_info("Object form displayed successfully.")
         except Exception as e:
             log_error(f"Error displaying object form: {str(e)}")
@@ -444,13 +419,10 @@ class ProjectWindow(QWidget):
                 old_widget.setParent(None)
             self.splitter.insertWidget(1, form_widget)
 
-            if self.splitter.count() < 3:
-                self.splitter.addWidget(self.help_area)
-            self.splitter.setSizes([300, 900, 300])
-
             key = "help_locations"
             help_text = self.help_texts.get(key, "Help and information will be displayed here.")
-            self.help_area.setText(help_text)
+            self.help_panel.set_help_text(help_text)
+            self.splitter.setSizes([300, 900, 300])
             log_info("Location form displayed successfully.")
         except Exception as e:
             log_error(f"Error displaying location form: {str(e)}")
@@ -479,4 +451,5 @@ class ProjectWindow(QWidget):
             event.accept()
             log_info("Splitter sizes saved and application closed.")
         except Exception as e:
-            log_error(f"Error in closeEvent: {str(e)}")
+            log_error(f"Error saving splitter sizes on close: {str(e)}")
+            event.accept()

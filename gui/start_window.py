@@ -14,8 +14,11 @@ from gui.styles.style_utils import load_button_style  # Import the style loader
 
 import sys
 
-# Import zentrale Logging-Funktionen
+# Import central logging functions
 from core.lloger import log_section, log_subsection, log_info, log_error
+
+# Import the central background image path
+from config.dev import BG_IMAGE_PATH
 
 class StartWindow(QWidget):
     DEFAULT_WIDTH        = 1920
@@ -35,9 +38,7 @@ class StartWindow(QWidget):
             self.setWindowTitle(self.translator.tr("start_window_title"))
             self.resize(self.DEFAULT_WIDTH, self.DEFAULT_HEIGHT)
             self.setAutoFillBackground(False)
-            self.bg_pixmap = QPixmap(
-                "/home/frank/Dokumente/CSNova/assets/media/csNova_background_start.png"
-            )
+            self.bg_pixmap = QPixmap(str(BG_IMAGE_PATH))
 
             self.pref_window = None  # Track preferences window
             self._create_ui()
@@ -45,7 +46,7 @@ class StartWindow(QWidget):
             log_info("StartWindow initialized successfully.")
         except Exception as e:
             log_error(f"Error initializing StartWindow: {str(e)}")
-
+            
     def _create_ui(self):
         log_subsection("_create_ui")
         try:

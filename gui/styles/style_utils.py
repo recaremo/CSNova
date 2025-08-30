@@ -1,45 +1,35 @@
-from pathlib import Path
-import os
-
-# Import zentrale Logging-Funktionen
 from core.lloger import log_section, log_subsection, log_info, log_error
 
 def load_button_style(font_size):
     """
-    Load button style from external QSS file and inject dynamic font size.
+    Return default button style as a string with dynamic font size.
     """
     log_section("style_utils.py")
     log_subsection("load_button_style")
     try:
-        style_path = Path(__file__).parent / "button_style.qss"
-        if not os.path.exists(style_path):
-            log_error(f"button_style.qss not found at {style_path}, using fallback style.")
-            # Fallback style if file is missing
-            return f"""
-                QPushButton {{
-                    background-color: #d4c29c;
-                    color: #1a1a1a;
-                    font-size: {font_size}px;
-                    border: 2px solid #8b7d5c;
-                    border-radius: 10px;
-                    border-style: outset;
-                }}
-                QPushButton:hover {{
-                    background-color: #e8d9b5;
-                    border-color: #5c5138;
-                }}
-                QPushButton:pressed {{
-                    background-color: #c0aa7a;
-                    border-style: inset;
-                }}
-            """
-        with open(style_path, "r") as f:
-            style = f.read()
-        log_info("button_style.qss loaded successfully.")
-        return style.replace("{font_size}", str(font_size))
+        style = f"""
+            QPushButton {{
+                background-color: #d4c29c;
+                color: #1a1a1a;
+                font-size: {font_size}px;
+                border: 2px solid #8b7d5c;
+                border-radius: 10px;
+                border-style: outset;
+            }}
+            QPushButton:hover {{
+                background-color: #e8d9b5;
+                border-color: #5c5138;
+            }}
+            QPushButton:pressed {{
+                background-color: #c0aa7a;
+                border-style: inset;
+            }}
+        """
+        log_info("Default button style generated.")
+        return style
     except Exception as e:
-        log_error(f"Error loading button style: {str(e)}")
-        # Fallback style in case of error
+        log_error(f"Error generating button style: {str(e)}")
+        # Fallback style
         return f"""
             QPushButton {{
                 background-color: #d4c29c;
@@ -91,4 +81,4 @@ def load_active_button_style(font_size):
                 border-style: outset;
                 font-weight: bold;
             }}
-        """
+        """          

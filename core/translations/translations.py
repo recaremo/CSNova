@@ -1,8 +1,11 @@
 from pathlib import Path
 import json
 
-# Import zentrale Logging-Funktionen
+# Import central logging functions
 from core.lloger import log_section, log_subsection, log_info, log_error
+
+# Import the central translations directory
+from config.dev import TRANSLATIONS_DIR
 
 LANGUAGES = ["de", "en", "fr", "es"]
 TRANSLATIONS = {}
@@ -11,7 +14,7 @@ log_section("translations.py")
 log_subsection("load_translations")
 
 for lang in LANGUAGES:
-    path = Path(__file__).parent / f"{lang}.json"
+    path = TRANSLATIONS_DIR / f"{lang}.json"
     try:
         with open(path, "r", encoding="utf-8") as f:
             TRANSLATIONS[lang] = json.load(f)

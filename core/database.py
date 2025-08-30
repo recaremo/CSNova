@@ -1,10 +1,15 @@
-# database.py
 import sqlite3
-from config.dev import DB_PATH  
+
+# Import central logging functions
+from core.lloger import log_section, log_subsection, log_info, log_error
+
+# Import the central database path
+from config.dev import DB_PATH
+
 from core.tables.gender_data import data_gender
 from core.tables.sex_orientation_data import sex_orientation_data
 
-# import tables
+# Import tables (these should use central paths if needed)
 from core.tables import (
     character_main,
     gender,
@@ -28,9 +33,6 @@ from core.tables import (
     project_character_storyline_map,
     project_character_group_map
 )
-
-# Import zentrale Logging-Funktionen
-from core.lloger import log_section, log_subsection, log_info, log_error
 
 def init_schema():
     log_section("database.py")
