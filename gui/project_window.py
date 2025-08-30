@@ -6,18 +6,13 @@ from PySide6.QtWidgets import (
 from gui.styles.style_utils import load_button_style, load_active_button_style
 from core.translator import Translator
 from config.settings import load_settings, save_settings
-from core.translations.help_loader import load_help_texts
-from core.translations.form_labels import load_form_labels
 from gui.widgets.form_toolbar import FormToolbar
 from gui.widgets.base_form_widget import BaseFormWidget
 from gui.widgets.navigation_panel import NavigationPanel
 from gui.widgets.help_panel import HelpPanel
 
 # Import central logging functions
-from core.lloger import log_section, log_subsection, log_info, log_error
-
-# Import central directories (for future resource loading if needed)
-from config.dev import HELP_DIR, FORMS_DIR, ASSETS_DIR
+from core.logger import log_section, log_subsection, log_info, log_error
 
 class ProjectWindow(QWidget):
     BUTTON_WIDTH = 240
@@ -32,8 +27,6 @@ class ProjectWindow(QWidget):
             self.resize(1600, 900)
             self.setWindowTitle(self.translator.tr("project_window_title"))
             self.settings = load_settings()
-            self.help_texts = load_help_texts(self.translator.lang)
-            self.form_labels = load_form_labels(self.translator.lang)
             self.button_style = load_button_style(18)
             self.button_style_active = load_active_button_style(18)
             self.active_nav_key = None
@@ -76,8 +69,6 @@ class ProjectWindow(QWidget):
             )
 
             self.help_panel = HelpPanel(self)
-
-            # Placeholder for main content area
             self.input_area = QTextEdit()
 
             self.splitter = QSplitter(Qt.Horizontal)
@@ -128,9 +119,9 @@ class ProjectWindow(QWidget):
                 toolbar.save_action.triggered.connect(self._save_project_form)
 
             form_widget = BaseFormWidget(
-                title=self.form_labels.get("project_form_label", "Project"),
+                title=self.translator.form_label("project_form_label"),
                 fields=fields,
-                form_labels=self.form_labels,
+                form_labels=self.translator.form_labels,
                 toolbar_actions=toolbar_actions,
                 parent=self
             )
@@ -140,8 +131,7 @@ class ProjectWindow(QWidget):
                 old_widget.setParent(None)
             self.splitter.insertWidget(1, form_widget)
 
-            key = "help_project"
-            help_text = self.help_texts.get(key, "Help and information will be displayed here.")
+            help_text = self.translator.help_text("help_project")
             self.help_panel.set_help_text(help_text)
             self.splitter.setSizes([300, 900, 300])
             log_info("Project form displayed successfully.")
@@ -177,9 +167,9 @@ class ProjectWindow(QWidget):
                 toolbar.save_action.triggered.connect(self._save_character_form)
 
             form_widget = BaseFormWidget(
-                title=self.form_labels.get("character_form_label", "Character"),
+                title=self.translator.form_label("character_form_label"),
                 fields=fields,
-                form_labels=self.form_labels,
+                form_labels=self.translator.form_labels,
                 toolbar_actions=toolbar_actions,
                 parent=self
             )
@@ -189,8 +179,7 @@ class ProjectWindow(QWidget):
                 old_widget.setParent(None)
             self.splitter.insertWidget(1, form_widget)
 
-            key = "help_characters"
-            help_text = self.help_texts.get(key, "Help and information will be displayed here.")
+            help_text = self.translator.help_text("help_characters")
             self.help_panel.set_help_text(help_text)
             self.splitter.setSizes([300, 900, 300])
             log_info("Character form displayed successfully.")
@@ -223,9 +212,9 @@ class ProjectWindow(QWidget):
                 toolbar.save_action.triggered.connect(self._save_storyline_form)
 
             form_widget = BaseFormWidget(
-                title=self.form_labels.get("storyline_form_label", "Storyline"),
+                title=self.translator.form_label("storyline_form_label"),
                 fields=fields,
-                form_labels=self.form_labels,
+                form_labels=self.translator.form_labels,
                 toolbar_actions=toolbar_actions,
                 parent=self
             )
@@ -235,8 +224,7 @@ class ProjectWindow(QWidget):
                 old_widget.setParent(None)
             self.splitter.insertWidget(1, form_widget)
 
-            key = "help_storylines"
-            help_text = self.help_texts.get(key, "Help and information will be displayed here.")
+            help_text = self.translator.help_text("help_storylines")
             self.help_panel.set_help_text(help_text)
             self.splitter.setSizes([300, 900, 300])
             log_info("Storyline form displayed successfully.")
@@ -269,9 +257,9 @@ class ProjectWindow(QWidget):
                 toolbar.save_action.triggered.connect(self._save_chapter_form)
 
             form_widget = BaseFormWidget(
-                title=self.form_labels.get("chapter_form_label", "Chapter"),
+                title=self.translator.form_label("chapter_form_label"),
                 fields=fields,
-                form_labels=self.form_labels,
+                form_labels=self.translator.form_labels,
                 toolbar_actions=toolbar_actions,
                 parent=self
             )
@@ -281,8 +269,7 @@ class ProjectWindow(QWidget):
                 old_widget.setParent(None)
             self.splitter.insertWidget(1, form_widget)
 
-            key = "help_chapters"
-            help_text = self.help_texts.get(key, "Help and information will be displayed here.")
+            help_text = self.translator.help_text("help_chapters")
             self.help_panel.set_help_text(help_text)
             self.splitter.setSizes([300, 900, 300])
             log_info("Chapter form displayed successfully.")
@@ -315,9 +302,9 @@ class ProjectWindow(QWidget):
                 toolbar.save_action.triggered.connect(self._save_scene_form)
 
             form_widget = BaseFormWidget(
-                title=self.form_labels.get("scene_form_label", "Scene"),
+                title=self.translator.form_label("scene_form_label"),
                 fields=fields,
-                form_labels=self.form_labels,
+                form_labels=self.translator.form_labels,
                 toolbar_actions=toolbar_actions,
                 parent=self
             )
@@ -327,8 +314,7 @@ class ProjectWindow(QWidget):
                 old_widget.setParent(None)
             self.splitter.insertWidget(1, form_widget)
 
-            key = "help_scenes"
-            help_text = self.help_texts.get(key, "Help and information will be displayed here.")
+            help_text = self.translator.help_text("help_scenes")
             self.help_panel.set_help_text(help_text)
             self.splitter.setSizes([300, 900, 300])
             log_info("Scene form displayed successfully.")
@@ -361,9 +347,9 @@ class ProjectWindow(QWidget):
                 toolbar.save_action.triggered.connect(self._save_object_form)
 
             form_widget = BaseFormWidget(
-                title=self.form_labels.get("object_form_label", "Object"),
+                title=self.translator.form_label("object_form_label"),
                 fields=fields,
-                form_labels=self.form_labels,
+                form_labels=self.translator.form_labels,
                 toolbar_actions=toolbar_actions,
                 parent=self
             )
@@ -373,8 +359,7 @@ class ProjectWindow(QWidget):
                 old_widget.setParent(None)
             self.splitter.insertWidget(1, form_widget)
 
-            key = "help_objects"
-            help_text = self.help_texts.get(key, "Help and information will be displayed here.")
+            help_text = self.translator.help_text("help_objects")
             self.help_panel.set_help_text(help_text)
             self.splitter.setSizes([300, 900, 300])
             log_info("Object form displayed successfully.")
@@ -407,9 +392,9 @@ class ProjectWindow(QWidget):
                 toolbar.save_action.triggered.connect(self._save_location_form)
 
             form_widget = BaseFormWidget(
-                title=self.form_labels.get("location_form_label", "Location"),
+                title=self.translator.form_label("location_form_label"),
                 fields=fields,
-                form_labels=self.form_labels,
+                form_labels=self.translator.form_labels,
                 toolbar_actions=toolbar_actions,
                 parent=self
             )
@@ -419,8 +404,7 @@ class ProjectWindow(QWidget):
                 old_widget.setParent(None)
             self.splitter.insertWidget(1, form_widget)
 
-            key = "help_locations"
-            help_text = self.help_texts.get(key, "Help and information will be displayed here.")
+            help_text = self.translator.help_text("help_locations")
             self.help_panel.set_help_text(help_text)
             self.splitter.setSizes([300, 900, 300])
             log_info("Location form displayed successfully.")

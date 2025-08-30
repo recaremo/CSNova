@@ -1,5 +1,5 @@
 from PySide6.QtWidgets import QWidget, QVBoxLayout, QLabel
-from core.lloger import log_section, log_subsection, log_info, log_error
+from core.logger import log_section, log_subsection, log_info, log_error
 
 class HelpPanel(QWidget):
     def __init__(self, parent=None):

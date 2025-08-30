@@ -1,9 +1,8 @@
-# Load and save settings: which language was selected, settings for project_window
 import json
 import os
 
 # Import central logging functions
-from core.lloger import log_section, log_subsection, log_info, log_error
+from core.logger import log_section, log_subsection, log_info, log_error
 
 # Import the central settings file path
 from config.dev import SETTINGS_FILE

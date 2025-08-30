@@ -1,9 +1,6 @@
-from PySide6.QtWidgets import QWidget, QVBoxLayout, QLabel, QFormLayout, QLineEdit, QDateEdit, QSpinBox
+from PySide6.QtWidgets import QWidget, QVBoxLayout, QLabel, QFormLayout, QLineEdit, QSpinBox, QDateEdit
 from gui.widgets.form_toolbar import FormToolbar
-from gui.styles.form_styles import load_form_style
-
-# Import zentrale Logging-Funktionen
-from core.lloger import log_section, log_subsection, log_info, log_error
+from core.logger import log_section, log_subsection, log_info, log_error
 
 class BaseFormWidget(QWidget):
     def __init__(self, title, fields, form_labels, toolbar_actions, parent=None):
@@ -11,39 +8,36 @@ class BaseFormWidget(QWidget):
         log_subsection("__init__")
         try:
             super().__init__(parent)
-            style = load_form_style(16)
-            layout = QVBoxLayout()
-            
-            # Toolbar
-            self.toolbar = FormToolbar(self)
-            toolbar_actions(self.toolbar)
-            layout.addWidget(self.toolbar)
-            
-            # Überschrift
-            title_label = QLabel(title)
-            title_label.setStyleSheet("font-size: 20px; font-weight: bold; margin-bottom: 12px;")
-            layout.addWidget(title_label)
-            
-            # Formlayout
-            form_layout = QFormLayout()
-            self.field_widgets = {}
+            self.layout = QVBoxLayout()
+            self.title_label = QLabel(title, self)
+            self.layout.addWidget(self.title_label)
+
+            self.form_layout = QFormLayout()
+            self.inputs = {}
+
             for field in fields:
-                label_text = form_labels.get(field["label_key"], field["default_label"])
+                label = form_labels.get(field["label_key"], field["default_label"])
                 if field["type"] == "text":
-                    widget = QLineEdit()
-                elif field["type"] == "date":
-                    widget = QDateEdit()
-                    widget.setCalendarPopup(True)
+                    input_widget = QLineEdit(self)
                 elif field["type"] == "spin":
-                    widget = QSpinBox()
-                    widget.setMaximum(field.get("max", 100000))
+                    input_widget = QSpinBox(self)
+                    if "max" in field:
+                        input_widget.setMaximum(field["max"])
+                elif field["type"] == "date":
+                    input_widget = QDateEdit(self)
                 else:
-                    continue
-                widget.setStyleSheet(style)
-                form_layout.addRow(label_text, widget)
-                self.field_widgets[field["name"]] = widget
-            layout.addLayout(form_layout)
-            self.setLayout(layout)
+                    input_widget = QLineEdit(self)
+                self.inputs[field["name"]] = input_widget
+                self.form_layout.addRow(label, input_widget)
+
+            self.layout.addLayout(self.form_layout)
+
+            self.toolbar = FormToolbar(self)
+            if toolbar_actions:
+                toolbar_actions(self.toolbar)
+            self.layout.addWidget(self.toolbar)
+
+            self.setLayout(self.layout)
             log_info("BaseFormWidget initialized successfully.")
         except Exception as e:
             log_error(f"Error initializing BaseFormWidget: {str(e)}")

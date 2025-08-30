@@ -1,8 +1,8 @@
-from core.lloger import log_section, log_subsection, log_info, log_error
+from core.logger import log_section, log_subsection, log_info, log_error
 
 def load_button_style(font_size):
     """
-    Return default button style as a string with dynamic font size.
+    Returns the style string for default buttons with dynamic font size.
     """
     log_section("style_utils.py")
     log_subsection("load_button_style")
@@ -51,7 +51,7 @@ def load_button_style(font_size):
 
 def load_active_button_style(font_size):
     """
-    Return style for the active navigation button.
+    Returns the style string for active navigation buttons.
     """
     log_subsection("load_active_button_style")
     try:
@@ -81,4 +81,4 @@ def load_active_button_style(font_size):
                 border-style: outset;
                 font-weight: bold;
             }}
-        """          
+        """

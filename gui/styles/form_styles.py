@@ -1,6 +1,9 @@
-from core.lloger import log_section, log_subsection, log_info, log_error
+from core.logger import log_section, log_subsection, log_info, log_error
 
 def load_form_style(input_font_size=14, label_font_size=14, input_width=400):
+    """
+    Returns the style string for form widgets with dynamic font size and width.
+    """
     log_section("form_styles.py")
     log_subsection("load_form_style")
     try:

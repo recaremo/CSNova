@@ -195,7 +195,7 @@ Entwicklung einer plattformübergreifenden Desktop‑Anwendung (Linux, Windows, 
 │   └── user_settings.json
 ├── core/
 │   ├── database.py
-│   ├── lloger.py
+│   ├── logger.py
 │   ├── logic/
 │   │   └── crud.py
 │   ├── models/
@@ -274,12 +274,10 @@ Entwicklung einer plattformübergreifenden Desktop‑Anwendung (Linux, Windows, 
 │   │   │   ├── help_en.json
 │   │   │   ├── help_es.json
 │   │   │   └── help_fr.json
-│   │   ├── help_loader.py
-│   │   ├── __pycache__/
-│   │   │   ├── form_labels.cpython-312.pyc
-│   │   │   ├── help_loader.cpython-312.pyc
-│   │   │   └── translations.cpython-312.pyc
-│   │   └── translations.py
+│   │   └── __pycache__/
+│   │       ├── form_labels.cpython-312.pyc
+│   │       ├── help_loader.cpython-312.pyc
+│   │       └── translations.cpython-312.pyc
 │   └── translator.py
 ├── csnova.log
 ├── csnova.py
@@ -323,7 +321,9 @@ Entwicklung einer plattformübergreifenden Desktop‑Anwendung (Linux, Windows, 
 │       ├── navigation_panel.py
 │       └── __pycache__/
 │           ├── base_form_widget.cpython-312.pyc
-│           └── form_toolbar.cpython-312.pyc
+│           ├── form_toolbar.cpython-312.pyc
+│           ├── help_panel.cpython-312.pyc
+│           └── navigation_panel.cpython-312.pyc
 ├── install_csnova.sh*
 ├── license.md
 ├── readme.md
@@ -1259,8 +1259,7 @@ In diesem Abschnitt sind alle Programmcodes zusammengefasst.
 ### 6.1 Hauptprogramm (csnova.py)
 
 ```python
-# Mainprogram csnova.py
-# Mainprogram csnova.py
+# Main program csnova.py
 import sys
 from datetime import datetime
 from PySide6.QtWidgets import QApplication
@@ -1268,11 +1267,11 @@ from core.database import init_schema
 from config.settings import load_settings, save_settings
 from gui.start_window import StartWindow
 
-# Import zentrale Logging-Funktionen
-from core.lloger import setup_logging, log_header, log_section, log_subsection, log_info, log_error
+# Import central logging functions
+from core.logger import setup_logging, log_header, log_section, log_subsection, log_info, log_error
 
 def main():
-    setup_logging()  # Nur einmal beim Programmstart!
+    setup_logging()  # Only once at program start
     log_header()
     log_section("csnova.py")
     log_subsection("main")
@@ -1290,6 +1289,7 @@ def main():
         log_info("StartWindow shown.")
         app.exec()
 
+        # Save updated language setting if changed
         if hasattr(window, "translator") and hasattr(window.translator, "lang"):
             updated_settings = load_settings()
             updated_settings["language"] = window.translator.lang
@@ -1312,7 +1312,7 @@ import json
 import os
 
 # Import central logging functions
-from core.lloger import log_section, log_subsection, log_info, log_error
+from core.logger import log_section, log_subsection, log_info, log_error
 
 # Import the central settings file path
 from config.dev import SETTINGS_FILE
@@ -1352,56 +1352,65 @@ def save_settings(settings):
 from pathlib import Path
 import sys
 
-# Import central logging functions (optional)
-from core.lloger import log_section, log_subsection, log_info, log_error
+# Determine base directory (supports both frozen and script mode)
+if getattr(sys, 'frozen', False):
+    BASE_DIR = Path(sys.executable).parent
+else:
+    BASE_DIR = Path(__file__).resolve().parent.parent
 
-log_section("dev.py")
-log_subsection("path_setup")
+# Main directories
+DATA_DIR         = BASE_DIR / "data"
+CONFIG_DIR       = BASE_DIR / "config"
+ASSETS_DIR       = BASE_DIR / "assets"
+DOCS_DIR         = BASE_DIR / "docs"
+GUI_DIR          = BASE_DIR / "gui"
+CORE_DIR         = BASE_DIR / "core"
+TRANSLATIONS_DIR = CORE_DIR / "translations"
+TABLES_DIR       = CORE_DIR / "tables"
 
-try:
-    # Determine base directory (supports both frozen and script mode)
-    if getattr(sys, 'frozen', False):
-        BASE_DIR = Path(sys.executable).parent
-        log_info(f"Running frozen, BASE_DIR set to {BASE_DIR}")
-    else:
-        BASE_DIR = Path(__file__).resolve().parent.parent
-        log_info(f"Running script, BASE_DIR set to {BASE_DIR}")
+# Important files
+DB_PATH          = DATA_DIR / "csnova.db"
+SETTINGS_FILE    = CONFIG_DIR / "user_settings.json"
+BG_IMAGE_PATH    = ASSETS_DIR / "media" / "csNova_background_start.png"
 
-    # Main directories
-    DATA_DIR         = BASE_DIR / "data"
-    CONFIG_DIR       = BASE_DIR / "config"
-    ASSETS_DIR       = BASE_DIR / "assets"
-    DOCS_DIR         = BASE_DIR / "docs"
-    GUI_DIR          = BASE_DIR / "gui"
-    CORE_DIR         = BASE_DIR / "core"
-    TRANSLATIONS_DIR = CORE_DIR / "translations"
-    TABLES_DIR       = CORE_DIR / "tables"
+# Translation and help files
+HELP_DIR         = TRANSLATIONS_DIR / "help"
+FORMS_DIR        = TRANSLATIONS_DIR / "forms"
 
-    # Important files
-    DB_PATH          = DATA_DIR / "csnova.db"
-    SETTINGS_FILE    = CONFIG_DIR / "user_settings.json"
-    BG_IMAGE_PATH    = ASSETS_DIR / "media" / "csNova_background_start.png"
+# Ensure directories exist
+DATA_DIR.mkdir(exist_ok=True)
+CONFIG_DIR.mkdir(exist_ok=True)
+ASSETS_DIR.mkdir(exist_ok=True)
+DOCS_DIR.mkdir(exist_ok=True)
+LOG_FILE = BASE_DIR / "csnova.log"
+```
 
-    # Translation and help files
-    HELP_DIR         = TRANSLATIONS_DIR / "help"
-    FORMS_DIR        = TRANSLATIONS_DIR / "forms"
+#### 6.2.3 logger.py
+```python
+import datetime
+from config.dev import LOG_FILE
 
-    # Ensure directories exist
-    DATA_DIR.mkdir(exist_ok=True)
-    CONFIG_DIR.mkdir(exist_ok=True)
-    ASSETS_DIR.mkdir(exist_ok=True)
-    DOCS_DIR.mkdir(exist_ok=True)
+def _write_log(message):
+    with open(LOG_FILE, "a", encoding="utf-8") as f:
+        f.write(message + "\n")
 
-    log_info(f"DATA_DIR ensured at {DATA_DIR}")
-    log_info(f"DB_PATH set to {DB_PATH}")
-    log_info(f"SETTINGS_FILE set to {SETTINGS_FILE}")
-    log_info(f"BG_IMAGE_PATH set to {BG_IMAGE_PATH}")
-    log_info(f"TRANSLATIONS_DIR set to {TRANSLATIONS_DIR}")
-    log_info(f"HELP_DIR set to {HELP_DIR}")
-    log_info(f"FORMS_DIR set to {FORMS_DIR}")
+def log_section(section):
+    _write_log(f"\n=== [{datetime.datetime.now().isoformat(sep=' ', timespec='seconds')}] SECTION: {section} ===")
 
-except Exception as e:
-    log_error(f"Error setting up paths in dev.py: {e}")
+def log_subsection(subsection):
+    _write_log(f"-- [{datetime.datetime.now().isoformat(sep=' ', timespec='seconds')}] SUBSECTION: {subsection}")
+
+def log_info(message):
+    _write_log(f"[INFO {datetime.datetime.now().isoformat(sep=' ', timespec='seconds')}] {message}")
+
+def log_error(message):
+    _write_log(f"[ERROR {datetime.datetime.now().isoformat(sep=' ', timespec='seconds')}] {message}")
+
+def setup_logging():
+    log_section("Logging started")
+
+def log_header():
+    _write_log("\n==================== CSNova Application Start ====================\n")
 ```
 
 ### 6.3 Datenbank
@@ -1411,7 +1420,7 @@ except Exception as e:
 import sqlite3
 
 # Import central logging functions
-from core.lloger import log_section, log_subsection, log_info, log_error
+from core.logger import log_section, log_subsection, log_info, log_error
 
 # Import the central database path
 from config.dev import DB_PATH
@@ -1494,36 +1503,8 @@ def init_schema():
 ```
 
 ### 6.4 Translation 
-#### 6.4.1 translation.py
 
-```python
-from pathlib import Path
-import json
-
-# Import central logging functions
-from core.lloger import log_section, log_subsection, log_info, log_error
-
-# Import the central translations directory
-from config.dev import TRANSLATIONS_DIR
-
-LANGUAGES = ["de", "en", "fr", "es"]
-TRANSLATIONS = {}
-
-log_section("translations.py")
-log_subsection("load_translations")
-
-for lang in LANGUAGES:
-    path = TRANSLATIONS_DIR / f"{lang}.json"
-    try:
-        with open(path, "r", encoding="utf-8") as f:
-            TRANSLATIONS[lang] = json.load(f)
-        log_info(f"Loaded translations for '{lang}' from {path}.")
-    except Exception as e:
-        log_error(f"Error loading translations for '{lang}' from {path}: {str(e)}")
-        TRANSLATIONS[lang] = {}
-```
-
-#### 6.4.2 user_settings.json
+#### 6.4.1 user_settings.json
 
 ```json
 {
@@ -1536,74 +1517,77 @@ for lang in LANGUAGES:
 }
 ```
 
-#### 6.4.3 help_loader.py
+#### 6.4.2 Translator (translator.py)
 
 ```python
 import json
-import os
-
-# Import central logging functions
-from core.lloger import log_section, log_subsection, log_info, log_error
-
-# Import the central help directory
-from config.dev import HELP_DIR
-
-def load_help_texts(lang="en"):
-    log_section("help_loader.py")
-    log_subsection("load_help_texts")
-    filename = f"help_{lang}.json"
-    file_path = HELP_DIR / filename
-
-    try:
-        with open(file_path, "r", encoding="utf-8") as f:
-            help_texts = json.load(f)
-            log_info(f"Help texts loaded for language '{lang}' from {file_path}.")
-            return help_texts
-    except Exception as e:
-        log_error(f"Could not load help texts for language '{lang}': {e}")
-        return {}
-```
-
-#### 6.4.4 Translator (translator.py)
-
-```python
-# core/translator.py
-from core.translations.translations import TRANSLATIONS, LANGUAGES
-# Import zentrale Logging-Funktionen
-from core.lloger import log_section, log_subsection, log_info, log_error
+from config.dev import TRANSLATIONS_DIR, FORMS_DIR, HELP_DIR
+from core.logger import log_section, log_subsection, log_info, log_error
 
 class Translator:
-    def __init__(self, default=""):
+    def __init__(self, lang="en"):
         log_section("translator.py")
         log_subsection("__init__")
         try:
-            self.lang = default if default in LANGUAGES else LANGUAGES[0]
+            self.lang = lang
+            self.translations = self._load_json(TRANSLATIONS_DIR / f"{lang}.json")
+            self.form_labels = self._load_json(FORMS_DIR / f"form_{lang}.json")
+            self.help_texts = self._load_json(HELP_DIR / f"help_{lang}.json")
             log_info(f"Translator initialized with language '{self.lang}'.")
         except Exception as e:
             log_error(f"Error initializing Translator: {str(e)}")
 
+    def _load_json(self, path):
+        log_subsection(f"_load_json: {path}")
+        try:
+            with open(path, "r", encoding="utf-8") as f:
+                data = json.load(f)
+                log_info(f"Loaded translations from {path}")
+                return data
+        except Exception as e:
+            log_error(f"Error loading {path}: {e}")
+            return {}
+
     def set_language(self, lang_code):
         log_subsection("set_language")
         try:
-            if lang_code in TRANSLATIONS:
-                self.lang = lang_code
-                log_info(f"Language set to '{lang_code}'.")
-            else:
-                log_error(f"Language code '{lang_code}' not found in TRANSLATIONS.")
+            self.lang = lang_code
+            self.translations = self._load_json(TRANSLATIONS_DIR / f"{lang_code}.json")
+            self.form_labels = self._load_json(FORMS_DIR / f"form_{lang_code}.json")
+            self.help_texts = self._load_json(HELP_DIR / f"help_{lang_code}.json")
+            log_info(f"Language set to '{lang_code}'.")
         except Exception as e:
             log_error(f"Error setting language: {str(e)}")
 
     def tr(self, key):
         log_subsection("tr")
         try:
-            value = TRANSLATIONS[self.lang].get(
-                key, TRANSLATIONS["en"].get(key, key)
-            )
+            value = self.translations.get(key, key)
             log_info(f"Translation for key '{key}': '{value}'")
             return value
         except Exception as e:
             log_error(f"Error translating key '{key}': {str(e)}")
             return key
+
+    def form_label(self, key):
+        log_subsection("form_label")
+        try:
+            value = self.form_labels.get(key, key)
+            log_info(f"Form label for key '{key}': '{value}'")
+            return value
+        except Exception as e:
+            log_error(f"Error getting form label for key '{key}': {str(e)}")
+            return key
+
+    def help_text(self, key):
+        log_subsection("help_text")
+        try:
+            value = self.help_texts.get(key, "Help and information will be displayed here.")
+            log_info(f"Help text for key '{key}': '{value}'")
+            return value
+        except Exception as e:
+            log_error(f"Error getting help text for key '{key}': {str(e)}")
+            return "Help and information will be displayed here."
 ```
 ### 6.5 GUI
 Module für das GUI.
@@ -1612,11 +1596,11 @@ Module für das GUI.
 ##### 6.5.1.1 style_utils.py
 
 ```python
-from core.lloger import log_section, log_subsection, log_info, log_error
+from core.logger import log_section, log_subsection, log_info, log_error
 
 def load_button_style(font_size):
     """
-    Return default button style as a string with dynamic font size.
+    Returns the style string for default buttons with dynamic font size.
     """
     log_section("style_utils.py")
     log_subsection("load_button_style")
@@ -1665,7 +1649,7 @@ def load_button_style(font_size):
 
 def load_active_button_style(font_size):
     """
-    Return style for the active navigation button.
+    Returns the style string for active navigation buttons.
     """
     log_subsection("load_active_button_style")
     try:
@@ -1695,15 +1679,18 @@ def load_active_button_style(font_size):
                 border-style: outset;
                 font-weight: bold;
             }}
-        """          
+        """
 ```
 
 #### 6.5.1.2 form_styles.py
 
 ```python
-from core.lloger import log_section, log_subsection, log_info, log_error
+from core.logger import log_section, log_subsection, log_info, log_error
 
 def load_form_style(input_font_size=14, label_font_size=14, input_width=400):
+    """
+    Returns the style string for form widgets with dynamic font size and width.
+    """
     log_section("form_styles.py")
     log_subsection("load_form_style")
     try:
@@ -1761,17 +1748,10 @@ def load_form_style(input_font_size=14, label_font_size=14, input_width=400):
 
 ```python
 from PySide6.QtWidgets import QWidget, QVBoxLayout, QPushButton
-from core.lloger import log_section, log_subsection, log_info, log_error
+from core.logger import log_section, log_subsection, log_info, log_error
 
 class NavigationPanel(QWidget):
     def __init__(self, keys, translator, button_style, button_style_active, callbacks, parent=None):
-        """
-        keys: list of navigation keys (e.g. ["btn_project", "btn_characters", ...])
-        translator: Translator instance for button texts
-        button_style: style string for inactive buttons
-        button_style_active: style string for active button
-        callbacks: dict mapping keys to functions
-        """
         log_section("navigation_panel.py")
         log_subsection("__init__")
         try:
@@ -1818,7 +1798,7 @@ class NavigationPanel(QWidget):
 
 ```python
 from PySide6.QtWidgets import QWidget, QVBoxLayout, QLabel
-from core.lloger import log_section, log_subsection, log_info, log_error
+from core.logger import log_section, log_subsection, log_info, log_error
 
 class HelpPanel(QWidget):
     def __init__(self, parent=None):
@@ -1853,66 +1833,43 @@ class HelpPanel(QWidget):
 #### 6.5.3.1 form_toolbar.py
 
 ```python
-from PySide6.QtWidgets import QToolBar, QStyle, QGraphicsDropShadowEffect
-from PySide6.QtGui import QAction, QColor
-from PySide6.QtCore import QSize
+from PySide6.QtWidgets import QWidget, QToolBar, QHBoxLayout
+from PySide6.QtGui import QAction
+from core.logger import log_section, log_subsection, log_info, log_error
 
-# Import zentrale Logging-Funktionen
-from core.lloger import log_section, log_subsection, log_info, log_error
-
-class FormToolbar(QToolBar):
+class FormToolbar(QWidget):
     def __init__(self, parent=None):
         log_section("form_toolbar.py")
         log_subsection("__init__")
         try:
             super().__init__(parent)
-            self.setIconSize(QSize(56, 56))
+            self.toolbar = QToolBar(self)
+            self.new_action = QAction("New", self)
+            self.delete_action = QAction("Delete", self)
+            self.prev_action = QAction("Previous", self)
+            self.next_action = QAction("Next", self)
+            self.save_action = QAction("Save", self)
 
-            self.setStyleSheet("""
-                QToolBar {
-                    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
-                        stop:0 #f4f4f4, stop:1 #666666);
-                    border: 2px solid #4F4F4F;
-                    border-radius: 8px;
-                    padding: 6px;
-                    margin-bottom: 6px;
-                }
-            """)
+            self.toolbar.addAction(self.new_action)
+            self.toolbar.addAction(self.delete_action)
+            self.toolbar.addAction(self.prev_action)
+            self.toolbar.addAction(self.next_action)
+            self.toolbar.addAction(self.save_action)
 
-            # Schatteneffekt direkt nach dem StyleSheet
-            shadow = QGraphicsDropShadowEffect(self)
-            shadow.setBlurRadius(18)
-            shadow.setOffset(0, 6)
-            shadow.setColor(QColor(80, 60, 30, int(0.3 * 255)))
-            self.setGraphicsEffect(shadow)
-
-            self.new_action = QAction(parent.style().standardIcon(QStyle.SP_FileIcon), "Neuer Datensatz", self)
-            self.delete_action = QAction(parent.style().standardIcon(QStyle.SP_TrashIcon), "Datensatz löschen", self)
-            self.prev_action = QAction(parent.style().standardIcon(QStyle.SP_ArrowBack), "Zurück", self)
-            self.next_action = QAction(parent.style().standardIcon(QStyle.SP_ArrowForward), "Vor", self)
-            self.save_action = QAction(parent.style().standardIcon(QStyle.SP_DialogSaveButton), "Datensatz speichern", self)
-
-            self.addAction(self.new_action)
-            self.addAction(self.delete_action)
-            self.addSeparator()
-            self.addAction(self.prev_action)
-            self.addAction(self.next_action)
-            self.addSeparator()
-            self.addAction(self.save_action)
-
+            layout = QHBoxLayout(self)
+            layout.addWidget(self.toolbar)
+            self.setLayout(layout)
             log_info("FormToolbar initialized successfully.")
         except Exception as e:
             log_error(f"Error initializing FormToolbar: {str(e)}")
 ```
 
 ##### 6.5.3.2 base_form_widget.py
-```python
-from PySide6.QtWidgets import QWidget, QVBoxLayout, QLabel, QFormLayout, QLineEdit, QDateEdit, QSpinBox
-from gui.widgets.form_toolbar import FormToolbar
-from gui.styles.form_styles import load_form_style
 
-# Import zentrale Logging-Funktionen
-from core.lloger import log_section, log_subsection, log_info, log_error
+```python
+from PySide6.QtWidgets import QWidget, QVBoxLayout, QLabel, QFormLayout, QLineEdit, QSpinBox, QDateEdit
+from gui.widgets.form_toolbar import FormToolbar
+from core.logger import log_section, log_subsection, log_info, log_error
 
 class BaseFormWidget(QWidget):
     def __init__(self, title, fields, form_labels, toolbar_actions, parent=None):
@@ -1920,39 +1877,36 @@ class BaseFormWidget(QWidget):
         log_subsection("__init__")
         try:
             super().__init__(parent)
-            style = load_form_style(16)
-            layout = QVBoxLayout()
-            
-            # Toolbar
-            self.toolbar = FormToolbar(self)
-            toolbar_actions(self.toolbar)
-            layout.addWidget(self.toolbar)
-            
-            # Überschrift
-            title_label = QLabel(title)
-            title_label.setStyleSheet("font-size: 20px; font-weight: bold; margin-bottom: 12px;")
-            layout.addWidget(title_label)
-            
-            # Formlayout
-            form_layout = QFormLayout()
-            self.field_widgets = {}
+            self.layout = QVBoxLayout()
+            self.title_label = QLabel(title, self)
+            self.layout.addWidget(self.title_label)
+
+            self.form_layout = QFormLayout()
+            self.inputs = {}
+
             for field in fields:
-                label_text = form_labels.get(field["label_key"], field["default_label"])
+                label = form_labels.get(field["label_key"], field["default_label"])
                 if field["type"] == "text":
-                    widget = QLineEdit()
-                elif field["type"] == "date":
-                    widget = QDateEdit()
-                    widget.setCalendarPopup(True)
+                    input_widget = QLineEdit(self)
                 elif field["type"] == "spin":
-                    widget = QSpinBox()
-                    widget.setMaximum(field.get("max", 100000))
+                    input_widget = QSpinBox(self)
+                    if "max" in field:
+                        input_widget.setMaximum(field["max"])
+                elif field["type"] == "date":
+                    input_widget = QDateEdit(self)
                 else:
-                    continue
-                widget.setStyleSheet(style)
-                form_layout.addRow(label_text, widget)
-                self.field_widgets[field["name"]] = widget
-            layout.addLayout(form_layout)
-            self.setLayout(layout)
+                    input_widget = QLineEdit(self)
+                self.inputs[field["name"]] = input_widget
+                self.form_layout.addRow(label, input_widget)
+
+            self.layout.addLayout(self.form_layout)
+
+            self.toolbar = FormToolbar(self)
+            if toolbar_actions:
+                toolbar_actions(self.toolbar)
+            self.layout.addWidget(self.toolbar)
+
+            self.setLayout(self.layout)
             log_info("BaseFormWidget initialized successfully.")
         except Exception as e:
             log_error(f"Error initializing BaseFormWidget: {str(e)}")
@@ -1965,7 +1919,7 @@ import json
 import os
 
 # Import central logging functions
-from core.lloger import log_section, log_subsection, log_info, log_error
+from core.logger import log_section, log_subsection, log_info, log_error
 
 # Import the central forms directory
 from config.dev import FORMS_DIR
@@ -1992,24 +1946,24 @@ def load_form_labels(language="en"):
 ##### 6.5.4.1 start_window.py
 
 ```python
-# main window with buttons for create a new project, load an existing project
+# Main window with buttons for creating a new project, loading an existing project,
 # main settings for GUI positions and changing after resizing the window
+
 from datetime import datetime
 from PySide6.QtWidgets import (
     QApplication, QWidget, QPushButton, QGraphicsDropShadowEffect
 )
 from PySide6.QtGui import QColor, QPixmap, QPainter
 from PySide6.QtCore import QTimer
-from core.translations.translations import LANGUAGES, TRANSLATIONS
 from gui.preferences import PreferencesWindow
 from core.translator import Translator
 from gui.project_window import ProjectWindow
-from gui.styles.style_utils import load_button_style  # Import the style loader
+from gui.styles.style_utils import load_button_style
 
 import sys
 
 # Import central logging functions
-from core.lloger import log_section, log_subsection, log_info, log_error
+from core.logger import log_section, log_subsection, log_info, log_error
 
 # Import the central background image path
 from config.dev import BG_IMAGE_PATH
@@ -2028,13 +1982,12 @@ class StartWindow(QWidget):
         log_subsection("__init__")
         try:
             super().__init__()
-            self.translator = Translator(default=default_language)
+            self.translator = Translator(default_language)
             self.setWindowTitle(self.translator.tr("start_window_title"))
             self.resize(self.DEFAULT_WIDTH, self.DEFAULT_HEIGHT)
             self.setAutoFillBackground(False)
             self.bg_pixmap = QPixmap(str(BG_IMAGE_PATH))
-
-            self.pref_window = None  # Track preferences window
+            self.pref_window = None
             self._create_ui()
             self._retranslate_and_position()
             log_info("StartWindow initialized successfully.")
@@ -2190,7 +2143,7 @@ class StartWindow(QWidget):
             bh      = int(self.BUTTON_HEIGHT  * scale)
             spacing = int(self.BUTTON_SPACING * scale)
             font_px = max(10, int(bh * 0.4))
-            style = load_button_style(font_px)  # Use the imported style loader
+            style = load_button_style(font_px)
             for i, btn in enumerate(self.buttons):
                 x = int(x_off)
                 y = int(y_off + i * (bh + spacing))
@@ -2209,7 +2162,7 @@ if __name__ == "__main__":
         window.show()
         log_info("StartWindow shown.")
         sys.exit(app.exec())
-    except Exception as e:
+     except Exception as e:
         log_error(f"Error in main: {str(e)}")
 ```
 ##### 6.5.4.2 preferences.py
@@ -2219,11 +2172,11 @@ from PySide6.QtWidgets import (
     QDialog, QLabel, QComboBox, QPushButton,
     QHBoxLayout, QVBoxLayout
 )
-from core.translations.translations import LANGUAGES, TRANSLATIONS
+from core.translator import Translator
 from config.settings import load_settings, save_settings
 
-# Import zentrale Logging-Funktionen
-from core.lloger import log_section, log_subsection, log_info, log_error
+# Import central logging functions
+from core.logger import log_section, log_subsection, log_info, log_error
 
 class PreferencesWindow(QDialog):
     DEFAULT_WIDTH  = 400
@@ -2260,7 +2213,7 @@ class PreferencesWindow(QDialog):
             self.lang_label = QLabel(self.translator.tr("menu_language"), self)
 
             self.lang_combo = QComboBox(self)
-            for code in LANGUAGES:
+            for code in ["de", "en", "fr", "es"]:
                 name = self.LANGUAGE_NAMES.get(code, code)
                 self.lang_combo.addItem(name, userData=code)
 
@@ -2288,8 +2241,8 @@ class PreferencesWindow(QDialog):
     def _load_values(self):
         log_subsection("_load_values")
         try:
-            lang = self.settings.get("language", LANGUAGES[0])
-            idx  = LANGUAGES.index(lang) if lang in LANGUAGES else 0
+            lang = self.settings.get("language", "en")
+            idx  = ["de", "en", "fr", "es"].index(lang) if lang in ["de", "en", "fr", "es"] else 0
             self.lang_combo.setCurrentIndex(idx)
             self._update_ui_texts()
             log_info("Values loaded and UI texts updated.")
@@ -2340,8 +2293,8 @@ class PreferencesWindow(QDialog):
                 self.parent()._on_language_changed(self.original_language)
             self.reject()
             log_info("Dialog canceled and language reverted.")
-        except Exception as e:
-            log_error(f"Error canceling dialog: {str(e)}")
+       except Exception as e:
+            log_error(f"Error initializing PreferencesWindow: {str(e)}")
 ```
 
 ##### 6.5.4.3 project_window.py
@@ -2355,18 +2308,13 @@ from PySide6.QtWidgets import (
 from gui.styles.style_utils import load_button_style, load_active_button_style
 from core.translator import Translator
 from config.settings import load_settings, save_settings
-from core.translations.help_loader import load_help_texts
-from core.translations.form_labels import load_form_labels
 from gui.widgets.form_toolbar import FormToolbar
 from gui.widgets.base_form_widget import BaseFormWidget
 from gui.widgets.navigation_panel import NavigationPanel
 from gui.widgets.help_panel import HelpPanel
 
 # Import central logging functions
-from core.lloger import log_section, log_subsection, log_info, log_error
-
-# Import central directories (for future resource loading if needed)
-from config.dev import HELP_DIR, FORMS_DIR, ASSETS_DIR
+from core.logger import log_section, log_subsection, log_info, log_error
 
 class ProjectWindow(QWidget):
     BUTTON_WIDTH = 240
@@ -2381,8 +2329,6 @@ class ProjectWindow(QWidget):
             self.resize(1600, 900)
             self.setWindowTitle(self.translator.tr("project_window_title"))
             self.settings = load_settings()
-            self.help_texts = load_help_texts(self.translator.lang)
-            self.form_labels = load_form_labels(self.translator.lang)
             self.button_style = load_button_style(18)
             self.button_style_active = load_active_button_style(18)
             self.active_nav_key = None
@@ -2425,8 +2371,6 @@ class ProjectWindow(QWidget):
             )
 
             self.help_panel = HelpPanel(self)
-
-            # Placeholder for main content area
             self.input_area = QTextEdit()
 
             self.splitter = QSplitter(Qt.Horizontal)
@@ -2477,9 +2421,9 @@ class ProjectWindow(QWidget):
                 toolbar.save_action.triggered.connect(self._save_project_form)
 
             form_widget = BaseFormWidget(
-                title=self.form_labels.get("project_form_label", "Project"),
+                title=self.translator.form_label("project_form_label"),
                 fields=fields,
-                form_labels=self.form_labels,
+                form_labels=self.translator.form_labels,
                 toolbar_actions=toolbar_actions,
                 parent=self
             )
@@ -2489,8 +2433,7 @@ class ProjectWindow(QWidget):
                 old_widget.setParent(None)
             self.splitter.insertWidget(1, form_widget)
 
-            key = "help_project"
-            help_text = self.help_texts.get(key, "Help and information will be displayed here.")
+            help_text = self.translator.help_text("help_project")
             self.help_panel.set_help_text(help_text)
             self.splitter.setSizes([300, 900, 300])
             log_info("Project form displayed successfully.")
@@ -2526,9 +2469,9 @@ class ProjectWindow(QWidget):
                 toolbar.save_action.triggered.connect(self._save_character_form)
 
             form_widget = BaseFormWidget(
-                title=self.form_labels.get("character_form_label", "Character"),
+                title=self.translator.form_label("character_form_label"),
                 fields=fields,
-                form_labels=self.form_labels,
+                form_labels=self.translator.form_labels,
                 toolbar_actions=toolbar_actions,
                 parent=self
             )
@@ -2538,8 +2481,7 @@ class ProjectWindow(QWidget):
                 old_widget.setParent(None)
             self.splitter.insertWidget(1, form_widget)
 
-            key = "help_characters"
-            help_text = self.help_texts.get(key, "Help and information will be displayed here.")
+            help_text = self.translator.help_text("help_characters")
             self.help_panel.set_help_text(help_text)
             self.splitter.setSizes([300, 900, 300])
             log_info("Character form displayed successfully.")
@@ -2572,9 +2514,9 @@ class ProjectWindow(QWidget):
                 toolbar.save_action.triggered.connect(self._save_storyline_form)
 
             form_widget = BaseFormWidget(
-                title=self.form_labels.get("storyline_form_label", "Storyline"),
+                title=self.translator.form_label("storyline_form_label"),
                 fields=fields,
-                form_labels=self.form_labels,
+                form_labels=self.translator.form_labels,
                 toolbar_actions=toolbar_actions,
                 parent=self
             )
@@ -2584,8 +2526,7 @@ class ProjectWindow(QWidget):
                 old_widget.setParent(None)
             self.splitter.insertWidget(1, form_widget)
 
-            key = "help_storylines"
-            help_text = self.help_texts.get(key, "Help and information will be displayed here.")
+            help_text = self.translator.help_text("help_storylines")
             self.help_panel.set_help_text(help_text)
             self.splitter.setSizes([300, 900, 300])
             log_info("Storyline form displayed successfully.")
@@ -2618,9 +2559,9 @@ class ProjectWindow(QWidget):
                 toolbar.save_action.triggered.connect(self._save_chapter_form)
 
             form_widget = BaseFormWidget(
-                title=self.form_labels.get("chapter_form_label", "Chapter"),
+                title=self.translator.form_label("chapter_form_label"),
                 fields=fields,
-                form_labels=self.form_labels,
+                form_labels=self.translator.form_labels,
                 toolbar_actions=toolbar_actions,
                 parent=self
             )
@@ -2630,8 +2571,7 @@ class ProjectWindow(QWidget):
                 old_widget.setParent(None)
             self.splitter.insertWidget(1, form_widget)
 
-            key = "help_chapters"
-            help_text = self.help_texts.get(key, "Help and information will be displayed here.")
+            help_text = self.translator.help_text("help_chapters")
             self.help_panel.set_help_text(help_text)
             self.splitter.setSizes([300, 900, 300])
             log_info("Chapter form displayed successfully.")
@@ -2664,9 +2604,9 @@ class ProjectWindow(QWidget):
                 toolbar.save_action.triggered.connect(self._save_scene_form)
 
             form_widget = BaseFormWidget(
-                title=self.form_labels.get("scene_form_label", "Scene"),
+                title=self.translator.form_label("scene_form_label"),
                 fields=fields,
-                form_labels=self.form_labels,
+                form_labels=self.translator.form_labels,
                 toolbar_actions=toolbar_actions,
                 parent=self
             )
@@ -2676,8 +2616,7 @@ class ProjectWindow(QWidget):
                 old_widget.setParent(None)
             self.splitter.insertWidget(1, form_widget)
 
-            key = "help_scenes"
-            help_text = self.help_texts.get(key, "Help and information will be displayed here.")
+            help_text = self.translator.help_text("help_scenes")
             self.help_panel.set_help_text(help_text)
             self.splitter.setSizes([300, 900, 300])
             log_info("Scene form displayed successfully.")
@@ -2710,9 +2649,9 @@ class ProjectWindow(QWidget):
                 toolbar.save_action.triggered.connect(self._save_object_form)
 
             form_widget = BaseFormWidget(
-                title=self.form_labels.get("object_form_label", "Object"),
+                title=self.translator.form_label("object_form_label"),
                 fields=fields,
-                form_labels=self.form_labels,
+                form_labels=self.translator.form_labels,
                 toolbar_actions=toolbar_actions,
                 parent=self
             )
@@ -2722,8 +2661,7 @@ class ProjectWindow(QWidget):
                 old_widget.setParent(None)
             self.splitter.insertWidget(1, form_widget)
 
-            key = "help_objects"
-            help_text = self.help_texts.get(key, "Help and information will be displayed here.")
+            help_text = self.translator.help_text("help_objects")
             self.help_panel.set_help_text(help_text)
             self.splitter.setSizes([300, 900, 300])
             log_info("Object form displayed successfully.")
@@ -2756,9 +2694,9 @@ class ProjectWindow(QWidget):
                 toolbar.save_action.triggered.connect(self._save_location_form)
 
             form_widget = BaseFormWidget(
-                title=self.form_labels.get("location_form_label", "Location"),
+                title=self.translator.form_label("location_form_label"),
                 fields=fields,
-                form_labels=self.form_labels,
+                form_labels=self.translator.form_labels,
                 toolbar_actions=toolbar_actions,
                 parent=self
             )
@@ -2768,8 +2706,7 @@ class ProjectWindow(QWidget):
                 old_widget.setParent(None)
             self.splitter.insertWidget(1, form_widget)
 
-            key = "help_locations"
-            help_text = self.help_texts.get(key, "Help and information will be displayed here.")
+            help_text = self.translator.help_text("help_locations")
             self.help_panel.set_help_text(help_text)
             self.splitter.setSizes([300, 900, 300])
             log_info("Location form displayed successfully.")

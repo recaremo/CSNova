@@ -2,11 +2,11 @@ from PySide6.QtWidgets import (
     QDialog, QLabel, QComboBox, QPushButton,
     QHBoxLayout, QVBoxLayout
 )
-from core.translations.translations import LANGUAGES, TRANSLATIONS
+from core.translator import Translator
 from config.settings import load_settings, save_settings
 
-# Import zentrale Logging-Funktionen
-from core.lloger import log_section, log_subsection, log_info, log_error
+# Import central logging functions
+from core.logger import log_section, log_subsection, log_info, log_error
 
 class PreferencesWindow(QDialog):
     DEFAULT_WIDTH  = 400
@@ -43,7 +43,7 @@ class PreferencesWindow(QDialog):
             self.lang_label = QLabel(self.translator.tr("menu_language"), self)
 
             self.lang_combo = QComboBox(self)
-            for code in LANGUAGES:
+            for code in ["de", "en", "fr", "es"]:
                 name = self.LANGUAGE_NAMES.get(code, code)
                 self.lang_combo.addItem(name, userData=code)
 
@@ -71,8 +71,8 @@ class PreferencesWindow(QDialog):
     def _load_values(self):
         log_subsection("_load_values")
         try:
-            lang = self.settings.get("language", LANGUAGES[0])
-            idx  = LANGUAGES.index(lang) if lang in LANGUAGES else 0
+            lang = self.settings.get("language", "en")
+            idx  = ["de", "en", "fr", "es"].index(lang) if lang in ["de", "en", "fr", "es"] else 0
             self.lang_combo.setCurrentIndex(idx)
             self._update_ui_texts()
             log_info("Values loaded and UI texts updated.")

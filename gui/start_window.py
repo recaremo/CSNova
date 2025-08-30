@@ -1,21 +1,21 @@
-# main window with buttons for create a new project, load an existing project
+# Main window with buttons for creating a new project, loading an existing project,
 # main settings for GUI positions and changing after resizing the window
+
 from datetime import datetime
 from PySide6.QtWidgets import (
     QApplication, QWidget, QPushButton, QGraphicsDropShadowEffect
 )
 from PySide6.QtGui import QColor, QPixmap, QPainter
 from PySide6.QtCore import QTimer
-from core.translations.translations import LANGUAGES, TRANSLATIONS
 from gui.preferences import PreferencesWindow
 from core.translator import Translator
 from gui.project_window import ProjectWindow
-from gui.styles.style_utils import load_button_style  # Import the style loader
+from gui.styles.style_utils import load_button_style
 
 import sys
 
 # Import central logging functions
-from core.lloger import log_section, log_subsection, log_info, log_error
+from core.logger import log_section, log_subsection, log_info, log_error
 
 # Import the central background image path
 from config.dev import BG_IMAGE_PATH
@@ -34,13 +34,12 @@ class StartWindow(QWidget):
         log_subsection("__init__")
         try:
             super().__init__()
-            self.translator = Translator(default=default_language)
+            self.translator = Translator(default_language)
             self.setWindowTitle(self.translator.tr("start_window_title"))
             self.resize(self.DEFAULT_WIDTH, self.DEFAULT_HEIGHT)
             self.setAutoFillBackground(False)
             self.bg_pixmap = QPixmap(str(BG_IMAGE_PATH))
-
-            self.pref_window = None  # Track preferences window
+            self.pref_window = None
             self._create_ui()
             self._retranslate_and_position()
             log_info("StartWindow initialized successfully.")
@@ -196,7 +195,7 @@ class StartWindow(QWidget):
             bh      = int(self.BUTTON_HEIGHT  * scale)
             spacing = int(self.BUTTON_SPACING * scale)
             font_px = max(10, int(bh * 0.4))
-            style = load_button_style(font_px)  # Use the imported style loader
+            style = load_button_style(font_px)
             for i, btn in enumerate(self.buttons):
                 x = int(x_off)
                 y = int(y_off + i * (bh + spacing))
@@ -216,4 +215,4 @@ if __name__ == "__main__":
         log_info("StartWindow shown.")
         sys.exit(app.exec())
     except Exception as e:
-        log_error(f"Error in main: {str(e)}")
+        log_error(f"Error in main execution: {str(e)}") 

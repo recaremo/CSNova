@@ -2,7 +2,7 @@ import json
 import os
 
 # Import central logging functions
-from core.lloger import log_section, log_subsection, log_info, log_error
+from core.logger import log_section, log_subsection, log_info, log_error
 
 # Import the central forms directory
 from config.dev import FORMS_DIR

@@ -1,7 +1,7 @@
 import sqlite3
 
 # Import central logging functions
-from core.lloger import log_section, log_subsection, log_info, log_error
+from core.logger import log_section, log_subsection, log_info, log_error
 
 # Import the central database path
 from config.dev import DB_PATH

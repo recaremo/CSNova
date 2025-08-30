@@ -1,15 +1,8 @@
 from PySide6.QtWidgets import QWidget, QVBoxLayout, QPushButton
-from core.lloger import log_section, log_subsection, log_info, log_error
+from core.logger import log_section, log_subsection, log_info, log_error
 
 class NavigationPanel(QWidget):
     def __init__(self, keys, translator, button_style, button_style_active, callbacks, parent=None):
-        """
-        keys: list of navigation keys (e.g. ["btn_project", "btn_characters", ...])
-        translator: Translator instance for button texts
-        button_style: style string for inactive buttons
-        button_style_active: style string for active button
-        callbacks: dict mapping keys to functions
-        """
         log_section("navigation_panel.py")
         log_subsection("__init__")
         try:

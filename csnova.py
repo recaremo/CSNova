@@ -1,4 +1,3 @@
-# Mainprogram csnova.py
 import sys
 from datetime import datetime
 from PySide6.QtWidgets import QApplication
@@ -6,11 +5,11 @@ from core.database import init_schema
 from config.settings import load_settings, save_settings
 from gui.start_window import StartWindow
 
-# Import zentrale Logging-Funktionen
-from core.lloger import setup_logging, log_header, log_section, log_subsection, log_info, log_error
+# Import central logging functions
+from core.logger import setup_logging, log_header, log_section, log_subsection, log_info, log_error
 
 def main():
-    setup_logging()  # Nur einmal beim Programmstart!
+    setup_logging()  # Only once at program start
     log_header()
     log_section("csnova.py")
     log_subsection("main")
@@ -28,6 +27,7 @@ def main():
         log_info("StartWindow shown.")
         app.exec()
 
+        # Save updated language setting if changed
         if hasattr(window, "translator") and hasattr(window.translator, "lang"):
             updated_settings = load_settings()
             updated_settings["language"] = window.translator.lang
