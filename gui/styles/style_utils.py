@@ -1,84 +1,64 @@
-from core.logger import log_section, log_subsection, log_info, log_error
+# Utility functions for generating button styles based on the selected style and mode.
 
-def load_button_style(font_size):
-    """
-    Returns the style string for default buttons with dynamic font size.
-    """
-    log_section("style_utils.py")
-    log_subsection("load_button_style")
-    try:
-        style = f"""
-            QPushButton {{
-                background-color: #d4c29c;
-                color: #1a1a1a;
-                font-size: {font_size}px;
-                border: 2px solid #8b7d5c;
-                border-radius: 10px;
-                border-style: outset;
-            }}
-            QPushButton:hover {{
-                background-color: #e8d9b5;
-                border-color: #5c5138;
-            }}
-            QPushButton:pressed {{
-                background-color: #c0aa7a;
-                border-style: inset;
-            }}
-        """
-        log_info("Default button style generated.")
-        return style
-    except Exception as e:
-        log_error(f"Error generating button style: {str(e)}")
-        # Fallback style
-        return f"""
-            QPushButton {{
-                background-color: #d4c29c;
-                color: #1a1a1a;
-                font-size: {font_size}px;
-                border: 2px solid #8b7d5c;
-                border-radius: 10px;
-                border-style: outset;
-            }}
-            QPushButton:hover {{
-                background-color: #e8d9b5;
-                border-color: #5c5138;
-            }}
-            QPushButton:pressed {{
-                background-color: #c0aa7a;
-                border-style: inset;
-            }}
-        """
+from config.settings import load_settings
+from gui.styles.oldschool_style import get_style as get_oldschool_style
+from gui.styles.vintage_style import get_style as get_vintage_style
+from gui.styles.modern_style import get_style as get_modern_style
+from gui.styles.future_style import get_style as get_future_style
 
-def load_active_button_style(font_size):
+STYLE_FUNCTIONS = {
+    "oldschool": get_oldschool_style,
+    "vintage": get_vintage_style,
+    "modern": get_modern_style,
+    "future": get_future_style
+}
+
+def get_current_style():
     """
-    Returns the style string for active navigation buttons.
+    Returns the style dictionary for the currently selected style and mode.
+    Defaults to modern style and light mode if not set.
     """
-    log_subsection("load_active_button_style")
-    try:
-        style = f"""
-            QPushButton {{
-                background-color: #6E8B3D;
-                color: #1a1a1a;
-                font-size: {font_size}px;
-                border: 2px solid #5c5138;
-                border-radius: 10px;
-                border-style: outset;
-                font-weight: bold;
-            }}
-        """
-        log_info("Active button style generated.")
-        return style
-    except Exception as e:
-        log_error(f"Error generating active button style: {str(e)}")
-        # Fallback style
-        return f"""
-            QPushButton {{
-                background-color: #6E8B3D;
-                color: #1a1a1a;
-                font-size: {font_size}px;
-                border: 2px solid #5c5138;
-                border-radius: 10px;
-                border-style: outset;
-                font-weight: bold;
-            }}
-        """
+    settings = load_settings()
+    style_code = settings.get("style", "modern")
+    mode_code = settings.get("mode", "light")
+    style_func = STYLE_FUNCTIONS.get(style_code, get_modern_style)
+    return style_func(mode_code)
+
+def load_button_style(font_size=16):
+    """
+    Returns the style string for default buttons with dynamic font size,
+    using the currently selected style and mode.
+    """
+    style = get_current_style()
+    return f"""
+        QPushButton {{
+            background-color: {style['button']['background']};
+            color: {style['button']['foreground']};
+            font-size: {font_size}px;
+            border: 2px solid {style['border']};
+            border-radius: 8px;
+        }}
+        QPushButton:hover {{
+            background-color: {style['button']['hover']};
+        }}
+        QPushButton:pressed {{
+            background-color: {style['button']['active']};
+        }}
+    """
+
+def load_active_button_style(font_size=16):
+    """
+    Returns the style string for active navigation buttons,
+    using the currently selected style and mode.
+    """
+    style = get_current_style()
+    return f"""
+        QPushButton {{
+            background-color: {style['highlight']};
+            color: {style['button']['foreground']};
+            font-size: {font_size}px;
+            border: 2px solid {style['border']};
+            border-radius: 8px;
+            font-weight: bold;
+        }}
+    """

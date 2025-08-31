@@ -1,8 +1,10 @@
 {
-  "language": "en",
+  "language": "de",
   "splitter_sizes": [
-    439,
-    817,
+    314,
+    942,
     314
-  ]
+  ],
+  "style": "modern",
+  "mode": "middle"
 }

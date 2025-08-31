@@ -1,4 +1,5 @@
 from PySide6.QtWidgets import QWidget, QVBoxLayout, QLabel
+from gui.styles.form_styles import get_current_style
 from core.logger import log_section, log_subsection, log_info, log_error
 
 class HelpPanel(QWidget):
@@ -12,6 +13,7 @@ class HelpPanel(QWidget):
             self.label.setWordWrap(True)
             self.layout.addWidget(self.label)
             self.setLayout(self.layout)
+            self.apply_style()
             log_info("HelpPanel initialized successfully.")
         except Exception as e:
             log_error(f"Error initializing HelpPanel: {str(e)}")
@@ -23,3 +25,19 @@ class HelpPanel(QWidget):
             log_info("Help text updated in HelpPanel.")
         except Exception as e:
             log_error(f"Error updating help text: {str(e)}")
+
+    def apply_style(self):
+        """
+        Applies the current style to the help panel.
+        """
+        style = get_current_style()
+        self.setStyleSheet(f"""
+            QWidget {{
+                background-color: {style['background']};
+            }}
+            QLabel {{
+                color: {style['foreground']};
+                font-size: 15px;
+                padding: 8px;
+            }}
+        """)

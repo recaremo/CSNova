@@ -160,55 +160,47 @@ Entwicklung einer plattformübergreifenden Desktop‑Anwendung (Linux, Windows, 
 #### 4.1.1 Projektbaum
 
 ```text
-./
-├── ai/
+.
+├── ai
 │   ├── analysis.py
 │   ├── brainstorming.py
 │   ├── interview.py
-│   ├── modelle/
-│   └── prompts/
-├── assets/
-│   ├── icons/
-│   └── media/
+│   ├── modelle
+│   └── prompts
+├── assets
+│   ├── icons
+│   └── media
 │       ├── csNova_background_start.png
 │       └── csNova_logo_main.png
-├── build/
-│   └── csnova/
+├── build
+│   └── csnova
 │       ├── Analysis-00.toc
 │       ├── base_library.zip
 │       ├── csnova.pkg
 │       ├── EXE-00.toc
-│       ├── localpycs/
+│       ├── localpycs
 │       ├── PKG-00.toc
 │       ├── PYZ-00.pyz
 │       ├── PYZ-00.toc
 │       ├── warn-csnova.txt
 │       └── xref-csnova.html
 ├── cli.py
-├── config/
+├── config
 │   ├── dev.py
 │   ├── prod.py
-│   ├── __pycache__/
-│   │   ├── dev.cpython-312.pyc
-│   │   └── settings.cpython-312.pyc
 │   ├── settings.py
 │   └── user_settings.json
-├── core/
+├── core
 │   ├── database.py
 │   ├── logger.py
-│   ├── logic/
+│   ├── logic
 │   │   └── crud.py
-│   ├── models/
+│   ├── models
 │   │   ├── character.py
 │   │   ├── project.py
 │   │   └── scene.py
-│   ├── __pycache__/
-│   │   ├── database.cpython-312.pyc
-│   │   ├── lloger.cpython-312.pyc
-│   │   ├── logger.cpython-312.pyc
-│   │   └── translator.cpython-312.pyc
-│   ├── services/
-│   ├── tables/
+│   ├── services
+│   ├── tables
 │   │   ├── character_appearance_detail.py
 │   │   ├── character_appearance_main.py
 │   │   ├── character_education.py
@@ -232,87 +224,54 @@ Entwicklung einer plattformübergreifenden Desktop‑Anwendung (Linux, Windows, 
 │   │   ├── project_scene_object_map.py
 │   │   ├── project_scene_storyline_map.py
 │   │   ├── project_storylines.py
-│   │   ├── __pycache__/
-│   │   │   ├── character_appearance_detail.cpython-312.pyc
-│   │   │   ├── character_appearance_main.cpython-312.pyc
-│   │   │   ├── character_education.cpython-312.pyc
-│   │   │   ├── character_main.cpython-312.pyc
-│   │   │   ├── character_origin.cpython-312.pyc
-│   │   │   ├── character_personality.cpython-312.pyc
-│   │   │   ├── character_psychological_profile.cpython-312.pyc
-│   │   │   ├── gender.cpython-312.pyc
-│   │   │   ├── gender_data.cpython-312.pyc
-│   │   │   ├── __init__.cpython-312.pyc
-│   │   │   ├── project_chapters.cpython-312.pyc
-│   │   │   ├── project_chapters_scenes.cpython-312.pyc
-│   │   │   ├── project_character_group_map.cpython-312.pyc
-│   │   │   ├── project_character_storyline_map.cpython-312.pyc
-│   │   │   ├── project.cpython-312.pyc
-│   │   │   ├── project_locations.cpython-312.pyc
-│   │   │   ├── project_objects.cpython-312.pyc
-│   │   │   ├── project_scene_character_map.cpython-312.pyc
-│   │   │   ├── project_scene_location_map.cpython-312.pyc
-│   │   │   ├── project_scene_object_map.cpython-312.pyc
-│   │   │   ├── project_scene_storyline_map.cpython-312.pyc
-│   │   │   ├── project_storylines.cpython-312.pyc
-│   │   │   ├── sex_orientation.cpython-312.pyc
-│   │   │   └── sex_orientation_data.cpython-312.pyc
 │   │   ├── sex_orientation_data.py
 │   │   └── sex_orientation.py
-│   ├── translations/
+│   ├── translations
 │   │   ├── de.json
 │   │   ├── en.json
 │   │   ├── es.json
-│   │   ├── forms/
+│   │   ├── forms
 │   │   │   ├── form_de.json
 │   │   │   ├── form_en.json
 │   │   │   ├── form_es.json
 │   │   │   └── form_fr.json
 │   │   ├── fr.json
-│   │   ├── help/
-│   │   │   ├── help_de.json
-│   │   │   ├── help_en.json
-│   │   │   ├── help_es.json
-│   │   │   └── help_fr.json
-│   │   └── __pycache__/
-│   │       ├── form_labels.cpython-312.pyc
-│   │       ├── help_loader.cpython-312.pyc
-│   │       └── translations.cpython-312.pyc
+│   │   └── help
+│   │       ├── help_de.json
+│   │       ├── help_en.json
+│   │       ├── help_es.json
+│   │       └── help_fr.json
 │   └── translator.py
 ├── csnova.log
 ├── csnova.py
-├── data/
+├── data
 │   └── csnova.db
-├── dist/
-│   └── csnova*
-├── docs/
+├── dist
+│   └── csnova
+├── docs
 │   ├── csNova_de.md
 │   └── index.md
-├── export/
+├── export
 │   ├── csnova_export.py
 │   ├── epub_export.py
 │   ├── html_export.py
 │   └── pdf_export.py
-├── gui/
+├── gui
 │   ├── preferences.py
 │   ├── project_window.py
-│   ├── __pycache__/
-│   │   ├── preferences.cpython-312.pyc
-│   │   ├── project_window.cpython-312.pyc
-│   │   └── start_window.cpython-312.pyc
 │   ├── start_window.py
-│   ├── styles/
+│   ├── styles
 │   │   ├── form_styles.py
-│   │   ├── __pycache__/
-│   │   │   ├── form_styles.cpython-312.pyc
-│   │   │   └── style_utils.cpython-312.pyc
-│   │   └── style_utils.py
-│   ├── tabs/
+│   │   ├── future_style.py
+│   │   ├── modern_style.py
+│   │   ├── oldschool_style.py
+│   │   ├── style_utils.py
+│   │   └── vintage_style.py
+│   ├── tabs
 │   │   ├── character_tab.py
 │   │   ├── project_tab.py
-│   │   ├── __pycache__/
 │   │   └── scene_tab.py
-│   └── widgets/
+│   └── widgets
 │       ├── base_form_widget.py
 │       ├── dialog.py
 │       ├── form_chapters.py
@@ -321,29 +280,18 @@ Entwicklung einer plattformübergreifenden Desktop‑Anwendung (Linux, Windows, 
 │       ├── form_objects.py
 │       ├── form_projects.py
 │       ├── form_scenes.py
+│       ├── form_start.py
 │       ├── form_storylines.py
 │       ├── form_toolbar.py
 │       ├── help_panel.py
 │       ├── listview.py
-│       ├── navigation_panel.py
-│       └── __pycache__/
-│           ├── base_form_widget.cpython-312.pyc
-│           ├── form_chapters.cpython-312.pyc
-│           ├── form_characters.cpython-312.pyc
-│           ├── form_locations.cpython-312.pyc
-│           ├── form_objects.cpython-312.pyc
-│           ├── form_projects.cpython-312.pyc
-│           ├── form_scenes.cpython-312.pyc
-│           ├── form_storylines.cpython-312.pyc
-│           ├── form_toolbar.cpython-312.pyc
-│           ├── help_panel.cpython-312.pyc
-│           └── navigation_panel.cpython-312.pyc
-├── install_csnova.sh*
+│       └── navigation_panel.py
+├── install_csnova.sh
 ├── license.md
 ├── readme.md
 ├── requirements.txt
 ├── setup.py
-└── tests/
+└── tests
     └── conftest.py
 ```
 
@@ -1851,154 +1799,472 @@ class Translator:
 Module für das GUI.
 
 #### 6.5.1 Styles
-##### 6.5.1.1 style_utils.py
+##### 6.5.1.1 oldschool_style.py
 
 ```python
-from core.logger import log_section, log_subsection, log_info, log_error
+# Old-School style (Windows 10 inspired) with integrated modes
 
-def load_button_style(font_size):
+def get_style(mode):
     """
-    Returns the style string for default buttons with dynamic font size.
+    Returns the style dictionary for the given mode.
+    All parameters are defined directly in this file.
     """
-    log_section("style_utils.py")
-    log_subsection("load_button_style")
-    try:
-        style = f"""
-            QPushButton {{
-                background-color: #d4c29c;
-                color: #1a1a1a;
-                font-size: {font_size}px;
-                border: 2px solid #8b7d5c;
-                border-radius: 10px;
-                border-style: outset;
-            }}
-            QPushButton:hover {{
-                background-color: #e8d9b5;
-                border-color: #5c5138;
-            }}
-            QPushButton:pressed {{
-                background-color: #c0aa7a;
-                border-style: inset;
-            }}
-        """
-        log_info("Default button style generated.")
-        return style
-    except Exception as e:
-        log_error(f"Error generating button style: {str(e)}")
-        # Fallback style
-        return f"""
-            QPushButton {{
-                background-color: #d4c29c;
-                color: #1a1a1a;
-                font-size: {font_size}px;
-                border: 2px solid #8b7d5c;
-                border-radius: 10px;
-                border-style: outset;
-            }}
-            QPushButton:hover {{
-                background-color: #e8d9b5;
-                border-color: #5c5138;
-            }}
-            QPushButton:pressed {{
-                background-color: #c0aa7a;
-                border-style: inset;
-            }}
-        """
-
-def load_active_button_style(font_size):
-    """
-    Returns the style string for active navigation buttons.
-    """
-    log_subsection("load_active_button_style")
-    try:
-        style = f"""
-            QPushButton {{
-                background-color: #6E8B3D;
-                color: #1a1a1a;
-                font-size: {font_size}px;
-                border: 2px solid #5c5138;
-                border-radius: 10px;
-                border-style: outset;
-                font-weight: bold;
-            }}
-        """
-        log_info("Active button style generated.")
-        return style
-    except Exception as e:
-        log_error(f"Error generating active button style: {str(e)}")
-        # Fallback style
-        return f"""
-            QPushButton {{
-                background-color: #6E8B3D;
-                color: #1a1a1a;
-                font-size: {font_size}px;
-                border: 2px solid #5c5138;
-                border-radius: 10px;
-                border-style: outset;
-                font-weight: bold;
-            }}
-        """
+    if mode == "light":
+        return {
+            "background": "#ffffff",
+            "foreground": "#222326",
+            "button": {
+                "background": "#f3f3f3",
+                "foreground": "#222326",
+                "hover": "#e5e5e5",
+                "active": "#d0d0d0"
+            },
+            "input": {
+                "background": "#f9f9f9",
+                "foreground": "#222326"
+            },
+            "border": "#cfcfcf",
+            "highlight": "#0078d7",  # Windows 10 blue
+            "error": "#e81123"       # Windows error red
+        }
+    elif mode == "middle":
+        return {
+            "background": "#f3f3f3",
+            "foreground": "#222326",
+            "button": {
+                "background": "#e5e5e5",
+                "foreground": "#222326",
+                "hover": "#d0d0d0",
+                "active": "#bcbcbc"
+            },
+            "input": {
+                "background": "#ededed",
+                "foreground": "#222326"
+            },
+            "border": "#bcbcbc",
+            "highlight": "#0078d7",
+            "error": "#e81123"
+        }
+    elif mode == "dark":
+        return {
+            "background": "#1e1e1e",
+            "foreground": "#f3f3f3",
+            "button": {
+                "background": "#2d2d2d",
+                "foreground": "#f3f3f3",
+                "hover": "#3c3c3c",
+                "active": "#0078d7"
+            },
+            "input": {
+                "background": "#252526",
+                "foreground": "#f3f3f3"
+            },
+            "border": "#3c3c3c",
+            "highlight": "#0078d7",
+            "error": "#e81123"
+        }
+    else:
+        # fallback: light
+        return {
+            "background": "#ffffff",
+            "foreground": "#222326",
+            "button": {
+                "background": "#f3f3f3",
+                "foreground": "#222326",
+                "hover": "#e5e5e5",
+                "active": "#d0d0d0"
+            },
+            "input": {
+                "background": "#f9f9f9",
+                "foreground": "#222326"
+            },
+            "border": "#cfcfcf",
+            "highlight": "#0078d7",
+            "error": "#e81123"
+        }
 ```
 
-#### 6.5.1.2 form_styles.py
+##### 6.5.1.2 vintage_style.py
 
 ```python
-from core.logger import log_section, log_subsection, log_info, log_error
+# Vintage style (cozy living room inspired) with integrated modes
+
+def get_style(mode):
+    """
+    Returns the style dictionary for the given mode.
+    All parameters are defined directly in this file.
+    """
+    if mode == "light":
+        return {
+            "background": "#f5eee6",      # warm beige
+            "foreground": "#5a4632",      # dark brown
+            "button": {
+                "background": "#e2d3c3",
+                "foreground": "#5a4632",
+                "hover": "#d6c3a3",
+                "active": "#cbb393"
+            },
+            "input": {
+                "background": "#f8f3ed",
+                "foreground": "#5a4632"
+            },
+            "border": "#cbb393",
+            "highlight": "#b48a78",       # warm reddish brown
+            "error": "#a94442"            # muted red
+        }
+    elif mode == "middle":
+        return {
+            "background": "#e9e2d3",
+            "foreground": "#5a4632",
+            "button": {
+                "background": "#d6c3a3",
+                "foreground": "#5a4632",
+                "hover": "#cbb393",
+                "active": "#b48a78"
+            },
+            "input": {
+                "background": "#ede6d6",
+                "foreground": "#5a4632"
+            },
+            "border": "#b48a78",
+            "highlight": "#a67c52",
+            "error": "#a94442"
+        }
+    elif mode == "dark":
+        return {
+            "background": "#3b2c23",
+            "foreground": "#e2d3c3",
+            "button": {
+                "background": "#5a4632",
+                "foreground": "#e2d3c3",
+                "hover": "#7c624a",
+                "active": "#a67c52"
+            },
+            "input": {
+                "background": "#4e3b2a",
+                "foreground": "#e2d3c3"
+            },
+            "border": "#7c624a",
+            "highlight": "#b48a78",
+            "error": "#a94442"
+        }
+    else:
+        # fallback: light
+        return {
+            "background": "#f5eee6",
+            "foreground": "#5a4632",
+            "button": {
+                "background": "#e2d3c3",
+                "foreground": "#5a4632",
+                "hover": "#d6c3a3",
+                "active": "#cbb393"
+            },
+            "input": {
+                "background": "#f8f3ed",
+                "foreground": "#5a4632"
+            },
+            "border": "#cbb393",
+            "highlight": "#b48a78",
+            "error": "#a94442"
+        }
+```
+
+##### 6.5.1.3 modern_style.py
+
+```python
+# Modern style (Windows 11 inspired) with integrated modes
+
+def get_style(mode):
+    """
+    Returns the style dictionary for the given mode.
+    All parameters are defined directly in this file.
+    """
+    if mode == "light":
+        return {
+            "background": "#f3f6fd",      # very light blueish white
+            "foreground": "#1a1a1a",      # almost black, but softer
+            "button": {
+                "background": "#e7eaf3",
+                "foreground": "#1a1a1a",
+                "hover": "#d0d6e6",
+                "active": "#b6c2e1"
+            },
+            "input": {
+                "background": "#ffffff",
+                "foreground": "#1a1a1a"
+            },
+            "border": "#cfd8dc",
+            "highlight": "#2563eb",       # modern blue accent
+            "error": "#ef4444"            # modern error red
+        }
+    elif mode == "middle":
+        return {
+            "background": "#e0e5ef",
+            "foreground": "#23272f",
+            "button": {
+                "background": "#cfd8dc",
+                "foreground": "#23272f",
+                "hover": "#b6c2e1",
+                "active": "#2563eb"
+            },
+            "input": {
+                "background": "#f3f6fd",
+                "foreground": "#23272f"
+            },
+            "border": "#b6c2e1",
+            "highlight": "#2563eb",
+            "error": "#ef4444"
+        }
+    elif mode == "dark":
+        return {
+            "background": "#181a20",
+            "foreground": "#e7eaf3",
+            "button": {
+                "background": "#23272f",
+                "foreground": "#e7eaf3",
+                "hover": "#2563eb",
+                "active": "#1e293b"
+            },
+            "input": {
+                "background": "#23272f",
+                "foreground": "#e7eaf3"
+            },
+            "border": "#2563eb",
+            "highlight": "#60a5fa",
+            "error": "#ef4444"
+        }
+    else:
+        # fallback: light
+        return {
+            "background": "#f3f6fd",
+            "foreground": "#1a1a1a",
+            "button": {
+                "background": "#e7eaf3",
+                "foreground": "#1a1a1a",
+                "hover": "#d0d6e6",
+                "active": "#b6c2e1"
+            },
+            "input": {
+                "background": "#ffffff",
+                "foreground": "#1a1a1a"
+            },
+            "border": "#cfd8dc",
+            "highlight": "#2563eb",
+            "error": "#ef4444"
+        }
+```
+
+##### 6.5.1.4 future_style.py
+
+```python
+# Future style (glassmorphism, adaptive, modern) with integrated modes
+
+def get_style(mode):
+    """
+    Returns the style dictionary for the given mode.
+    All parameters are defined directly in this file.
+    """
+    if mode == "light":
+        return {
+            "background": "rgba(245, 250, 255, 0.85)",   # semi-transparent, glass effect
+            "foreground": "#22223b",                     # deep blue-grey
+            "button": {
+                "background": "rgba(230, 240, 255, 0.95)",
+                "foreground": "#22223b",
+                "hover": "#b8c6db",
+                "active": "#7f9acb"
+            },
+            "input": {
+                "background": "rgba(255,255,255,0.95)",
+                "foreground": "#22223b"
+            },
+            "border": "#a3bffa",
+            "highlight": "#7f9acb",                      # soft futuristic blue
+            "error": "#ff6b6b"                           # neon red
+        }
+    elif mode == "middle":
+        return {
+            "background": "rgba(210, 220, 235, 0.90)",
+            "foreground": "#22223b",
+            "button": {
+                "background": "#b8c6db",
+                "foreground": "#22223b",
+                "hover": "#7f9acb",
+                "active": "#a3bffa"
+            },
+            "input": {
+                "background": "rgba(240,245,250,0.95)",
+                "foreground": "#22223b"
+            },
+            "border": "#7f9acb",
+            "highlight": "#a3bffa",
+            "error": "#ff6b6b"
+        }
+    elif mode == "dark":
+        return {
+            "background": "rgba(30, 34, 45, 0.92)",
+            "foreground": "#e0eaff",
+            "button": {
+                "background": "#22223b",
+                "foreground": "#e0eaff",
+                "hover": "#7f9acb",
+                "active": "#a3bffa"
+            },
+            "input": {
+                "background": "rgba(40,44,54,0.95)",
+                "foreground": "#e0eaff"
+            },
+            "border": "#7f9acb",
+            "highlight": "#a3bffa",
+            "error": "#ff6b6b"
+        }
+    else:
+        # fallback: light
+        return {
+            "background": "rgba(245, 250, 255, 0.85)",
+            "foreground": "#22223b",
+            "button": {
+                "background": "rgba(230, 240, 255, 0.95)",
+                "foreground": "#22223b",
+                "hover": "#b8c6db",
+                "active": "#7f9acb"
+            },
+            "input": {
+                "background": "rgba(255,255,255,0.95)",
+                "foreground": "#22223b"
+            },
+            "border": "#a3bffa",
+            "highlight": "#7f9acb",
+            "error": "#ff6b6b"
+        }
+```
+
+##### 6.5.1.5 style_utils.py
+
+```python
+# Utility functions for generating button styles based on the selected style and mode.
+
+from config.settings import load_settings
+from gui.styles.oldschool_style import get_style as get_oldschool_style
+from gui.styles.vintage_style import get_style as get_vintage_style
+from gui.styles.modern_style import get_style as get_modern_style
+from gui.styles.future_style import get_style as get_future_style
+
+STYLE_FUNCTIONS = {
+    "oldschool": get_oldschool_style,
+    "vintage": get_vintage_style,
+    "modern": get_modern_style,
+    "future": get_future_style
+}
+
+def get_current_style():
+    """
+    Returns the style dictionary for the currently selected style and mode.
+    Defaults to modern style and light mode if not set.
+    """
+    settings = load_settings()
+    style_code = settings.get("style", "modern")
+    mode_code = settings.get("mode", "light")
+    style_func = STYLE_FUNCTIONS.get(style_code, get_modern_style)
+    return style_func(mode_code)
+
+def load_button_style(font_size=16):
+    """
+    Returns the style string for default buttons with dynamic font size,
+    using the currently selected style and mode.
+    """
+    style = get_current_style()
+    return f"""
+        QPushButton {{
+            background-color: {style['button']['background']};
+            color: {style['button']['foreground']};
+            font-size: {font_size}px;
+            border: 2px solid {style['border']};
+            border-radius: 8px;
+        }}
+        QPushButton:hover {{
+            background-color: {style['button']['hover']};
+        }}
+        QPushButton:pressed {{
+            background-color: {style['button']['active']};
+        }}
+    """
+
+def load_active_button_style(font_size=16):
+    """
+    Returns the style string for active navigation buttons,
+    using the currently selected style and mode.
+    """
+    style = get_current_style()
+    return f"""
+        QPushButton {{
+            background-color: {style['highlight']};
+            color: {style['button']['foreground']};
+            font-size: {font_size}px;
+            border: 2px solid {style['border']};
+            border-radius: 8px;
+            font-weight: bold;
+        }}
+    """
+```
+
+#### 6.5.1.6 form_styles.py
+
+```python
+# Generates the style string for form widgets based on the selected style and mode.
+
+from config.settings import load_settings
+from gui.styles.oldschool_style import get_style as get_oldschool_style
+from gui.styles.vintage_style import get_style as get_vintage_style
+from gui.styles.modern_style import get_style as get_modern_style
+from gui.styles.future_style import get_style as get_future_style
+
+STYLE_FUNCTIONS = {
+    "oldschool": get_oldschool_style,
+    "vintage": get_vintage_style,
+    "modern": get_modern_style,
+    "future": get_future_style
+}
+
+def get_current_style():
+    """
+    Returns the style dictionary for the currently selected style and mode.
+    Defaults to modern style and light mode if not set.
+    """
+    settings = load_settings()
+    style_code = settings.get("style", "modern")
+    mode_code = settings.get("mode", "light")
+    style_func = STYLE_FUNCTIONS.get(style_code, get_modern_style)
+    return style_func(mode_code)
 
 def load_form_style(input_font_size=14, label_font_size=14, input_width=400):
     """
-    Returns the style string for form widgets with dynamic font size and width.
+    Returns the style string for form widgets with dynamic font size and width,
+    using the currently selected style and mode.
     """
-    log_section("form_styles.py")
-    log_subsection("load_form_style")
-    try:
-        style = f"""
-            QLineEdit, QDateEdit, QSpinBox {{
-                padding: 6px;
-                border: 1px solid #aaa;
-                border-radius: 4px;
-                background-color: #ffffff;
-                font-size: {input_font_size}px;
-                font-family: 'Segoe UI', sans-serif;
-                min-width: {input_width}px;
-                max-width: {input_width}px;
-            }}
+    style = get_current_style()
+    return f"""
+        QLineEdit, QDateEdit, QSpinBox {{
+            padding: 6px;
+            border: 1px solid {style['border']};
+            border-radius: 4px;
+            background-color: {style['input']['background']};
+            color: {style['input']['foreground']};
+            font-size: {input_font_size}px;
+            font-family: 'Segoe UI', sans-serif;
+            min-width: {input_width}px;
+            max-width: {input_width}px;
+        }}
 
-            QLabel {{
-                font-size: {label_font_size}px;
-                color: #333;
-            }}
+        QLabel {{
+            font-size: {label_font_size}px;
+            color: {style['foreground']};
+        }}
 
-            QFormLayout {{
-                margin: 12px;
-            }}
-        """
-        log_info("Form style generated successfully.")
-        return style
-    except Exception as e:
-        log_error(f"Error generating form style: {str(e)}")
-        # Fallback style
-        return f"""
-            QLineEdit, QDateEdit, QSpinBox {{
-                padding: 6px;
-                border: 1px solid #aaa;
-                border-radius: 4px;
-                background-color: #ffffff;
-                font-size: 14px;
-                font-family: 'Segoe UI', sans-serif;
-                min-width: 400px;
-                max-width: 400px;
-            }}
-
-            QLabel {{
-                font-size: 14px;
-                color: #333;
-            }}
-
-            QFormLayout {{
-                margin: 12px;
-            }}
-        """
+        QFormLayout {{
+            margin: 12px;
+        }}
+    """
 ```
 
 #### 6.5.2 Panels
@@ -2056,6 +2322,7 @@ class NavigationPanel(QWidget):
 
 ```python
 from PySide6.QtWidgets import QWidget, QVBoxLayout, QLabel
+from gui.styles.form_styles import get_current_style
 from core.logger import log_section, log_subsection, log_info, log_error
 
 class HelpPanel(QWidget):
@@ -2069,6 +2336,7 @@ class HelpPanel(QWidget):
             self.label.setWordWrap(True)
             self.layout.addWidget(self.label)
             self.setLayout(self.layout)
+            self.apply_style()
             log_info("HelpPanel initialized successfully.")
         except Exception as e:
             log_error(f"Error initializing HelpPanel: {str(e)}")
@@ -2080,6 +2348,22 @@ class HelpPanel(QWidget):
             log_info("Help text updated in HelpPanel.")
         except Exception as e:
             log_error(f"Error updating help text: {str(e)}")
+
+    def apply_style(self):
+        """
+        Applies the current style to the help panel.
+        """
+        style = get_current_style()
+        self.setStyleSheet(f"""
+            QWidget {{
+                background-color: {style['background']};
+            }}
+            QLabel {{
+                color: {style['foreground']};
+                font-size: 15px;
+                padding: 8px;
+            }}
+        """)
 ```
 
 ##### 6.5.2.3 center_panel.py
@@ -2772,23 +3056,48 @@ if __name__ == "__main__":
 ```python
 from PySide6.QtWidgets import (
     QDialog, QLabel, QComboBox, QPushButton,
-    QHBoxLayout, QVBoxLayout
+    QHBoxLayout, QVBoxLayout, QWidget
 )
 from core.translator import Translator
 from config.settings import load_settings, save_settings
 
-# Import central logging functions
+# Importiere die Style-Module
+from gui.styles.oldschool_style import get_style as get_oldschool_style
+from gui.styles.vintage_style import get_style as get_vintage_style
+from gui.styles.modern_style import get_style as get_modern_style
+from gui.styles.future_style import get_style as get_future_style
+
 from core.logger import log_section, log_subsection, log_info, log_error
 
 class PreferencesWindow(QDialog):
     DEFAULT_WIDTH  = 400
-    DEFAULT_HEIGHT = 200
+    DEFAULT_HEIGHT = 260
 
     LANGUAGE_NAMES = {
         "de": "Deutsch",
         "en": "English",
         "fr": "Français",
         "es": "Español"
+    }
+
+    STYLE_NAMES = {
+        "oldschool": "Old-School",
+        "vintage": "Vintage",
+        "modern": "Modern",
+        "future": "Future"
+    }
+
+    STYLE_FUNCTIONS = {
+        "oldschool": get_oldschool_style,
+        "vintage": get_vintage_style,
+        "modern": get_modern_style,
+        "future": get_future_style
+    }
+
+    MODE_NAMES = {
+        "light": "Light",
+        "middle": "Middle",
+        "dark": "Dark"
     }
 
     def __init__(self, parent=None):
@@ -2812,18 +3121,36 @@ class PreferencesWindow(QDialog):
     def _init_ui(self):
         log_subsection("_init_ui")
         try:
+            # Language selection
             self.lang_label = QLabel(self.translator.tr("menu_language"), self)
-
             self.lang_combo = QComboBox(self)
-            for code in ["de", "en", "fr", "es"]:
-                name = self.LANGUAGE_NAMES.get(code, code)
+            for code in self.LANGUAGE_NAMES:
+                name = self.LANGUAGE_NAMES[code]
                 self.lang_combo.addItem(name, userData=code)
-
             self.lang_combo.currentIndexChanged.connect(self._on_language_changed)
 
+            # Style selection
+            self.style_label = QLabel("Style", self)
+            self.style_combo = QComboBox(self)
+            for code in self.STYLE_NAMES:
+                self.style_combo.addItem(self.STYLE_NAMES[code], userData=code)
+            self.style_combo.currentIndexChanged.connect(self._on_style_or_mode_changed)
+
+            # Mode selection
+            self.mode_label = QLabel("Modus", self)
+            self.mode_combo = QComboBox(self)
+            for code in self.MODE_NAMES:
+                self.mode_combo.addItem(self.MODE_NAMES[code], userData=code)
+            self.mode_combo.currentIndexChanged.connect(self._on_style_or_mode_changed)
+
+            # Style preview (Button)
+            self.preview_label = QLabel("Vorschau:", self)
+            self.preview_button = QPushButton("Beispiel-Button", self)
+            self.preview_button.setFixedSize(180, 40)
+
+            # Buttons
             self.ok_button     = QPushButton(self)
             self.cancel_button = QPushButton(self)
-
             self.ok_button.clicked.connect(self._on_ok)
             self.cancel_button.clicked.connect(self._on_cancel)
 
@@ -2835,7 +3162,14 @@ class PreferencesWindow(QDialog):
             main_layout = QVBoxLayout(self)
             main_layout.addWidget(self.lang_label)
             main_layout.addWidget(self.lang_combo)
+            main_layout.addWidget(self.style_label)
+            main_layout.addWidget(self.style_combo)
+            main_layout.addWidget(self.mode_label)
+            main_layout.addWidget(self.mode_combo)
+            main_layout.addWidget(self.preview_label)
+            main_layout.addWidget(self.preview_button)
             main_layout.addLayout(btn_layout)
+            self.setLayout(main_layout)
             log_info("UI initialized successfully.")
         except Exception as e:
             log_error(f"Error initializing UI: {str(e)}")
@@ -2843,10 +3177,20 @@ class PreferencesWindow(QDialog):
     def _load_values(self):
         log_subsection("_load_values")
         try:
+            # Language
             lang = self.settings.get("language", "en")
-            idx  = ["de", "en", "fr", "es"].index(lang) if lang in ["de", "en", "fr", "es"] else 0
+            idx  = list(self.LANGUAGE_NAMES.keys()).index(lang) if lang in self.LANGUAGE_NAMES else 0
             self.lang_combo.setCurrentIndex(idx)
+            # Style
+            style = self.settings.get("style", "modern")
+            idx = list(self.STYLE_NAMES.keys()).index(style) if style in self.STYLE_NAMES else 2  # modern als Default
+            self.style_combo.setCurrentIndex(idx)
+            # Mode
+            mode = self.settings.get("mode", "light")
+            idx = list(self.MODE_NAMES.keys()).index(mode) if mode in self.MODE_NAMES else 0
+            self.mode_combo.setCurrentIndex(idx)
             self._update_ui_texts()
+            self._update_preview()
             log_info("Values loaded and UI texts updated.")
         except Exception as e:
             log_error(f"Error loading values: {str(e)}")
@@ -2862,26 +3206,56 @@ class PreferencesWindow(QDialog):
         except Exception as e:
             log_error(f"Error changing language: {str(e)}")
 
+    def _on_style_or_mode_changed(self):
+        self._update_preview()
+
     def _update_ui_texts(self):
         log_subsection("_update_ui_texts")
         try:
             self.setWindowTitle(self.translator.tr("menu_settings"))
             self.lang_label.setText(self.translator.tr("menu_language"))
+            self.style_label.setText("Style")
+            self.mode_label.setText("Modus")
+            self.preview_label.setText("Vorschau:")
             self.ok_button.setText(self.translator.tr("action_save"))
             self.cancel_button.setText(self.translator.tr("action_cancel"))
             log_info("UI texts updated.")
         except Exception as e:
             log_error(f"Error updating UI texts: {str(e)}")
 
+    def _update_preview(self):
+        # Zeigt den Style und Modus direkt am Beispiel-Button
+        style_code = self.style_combo.itemData(self.style_combo.currentIndex())
+        mode_code = self.mode_combo.itemData(self.mode_combo.currentIndex())
+        style_func = self.STYLE_FUNCTIONS.get(style_code, get_modern_style)
+        style_dict = style_func(mode_code)
+        # Beispiel: Button-Style als CSS generieren
+        btn_style = f"""
+            QPushButton {{
+                background-color: {style_dict['button']['background']};
+                color: {style_dict['button']['foreground']};
+                border: 2px solid {style_dict['border']};
+                border-radius: 8px;
+                font-size: 16px;
+            }}
+            QPushButton:hover {{
+                background-color: {style_dict['button']['hover']};
+            }}
+            QPushButton:pressed {{
+                background-color: {style_dict['button']['active']};
+            }}
+        """
+        self.preview_button.setStyleSheet(btn_style)
+
     def _on_ok(self):
         log_subsection("_on_ok")
         try:
-            index = self.lang_combo.currentIndex()
-            code = self.lang_combo.itemData(index)
-            self.settings["language"] = code
+            self.settings["language"] = self.lang_combo.itemData(self.lang_combo.currentIndex())
+            self.settings["style"]    = self.style_combo.itemData(self.style_combo.currentIndex())
+            self.settings["mode"]     = self.mode_combo.itemData(self.mode_combo.currentIndex())
             save_settings(self.settings)
             if self.parent() and hasattr(self.parent(), "_on_language_changed"):
-                self.parent()._on_language_changed(code)
+                self.parent()._on_language_changed(self.settings["language"])
             self.accept()
             log_info("Settings saved and dialog accepted.")
         except Exception as e:
@@ -2895,7 +3269,7 @@ class PreferencesWindow(QDialog):
                 self.parent()._on_language_changed(self.original_language)
             self.reject()
             log_info("Dialog canceled and language reverted.")
-       except Exception as e:
+        except Exception as e:
             log_error(f"Error initializing PreferencesWindow: {str(e)}")
 ```
 
