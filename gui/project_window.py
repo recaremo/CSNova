@@ -2,7 +2,7 @@ from PySide6.QtGui import QPalette, QColor
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import QWidget, QVBoxLayout, QSplitter, QHBoxLayout
 
-from gui.styles.style_utils import load_button_style, load_active_button_style
+from gui.styles.form_styles import load_button_style, load_active_button_style, load_global_stylesheet
 from core.translator import Translator
 from config.settings import load_settings, save_settings
 from gui.widgets.navigation_panel import NavigationPanel
@@ -19,13 +19,13 @@ from gui.widgets.form_locations import LocationsForm
 from gui.widgets.form_start import StartForm
 
 # Import central logging functions
-from core.logger import log_section, log_subsection, log_info, log_error
+from core.logger import log_section, log_subsection, log_info, log_error, log_exception
 
 class ProjectWindow(QWidget):
     BUTTON_WIDTH = 240
     BUTTON_HEIGHT = 70
 
-    def __init__(self, translator=None, parent=None):
+    def __init__(self, translator=None, parent=None, start_window=None):
         log_section("project_window.py")
         log_subsection("__init__")
         try:
@@ -37,11 +37,18 @@ class ProjectWindow(QWidget):
             self.button_style = load_button_style(18)
             self.button_style_active = load_active_button_style(18)
             self.active_nav_key = None
+            self.start_window = start_window
+            self.setStyleSheet(load_global_stylesheet())  # Apply global stylesheet
+
+            # Initialisiere splitter direkt am Anfang!
+            self.splitter = QSplitter(Qt.Horizontal)
+            self.splitter.setObjectName("MainSplitter")   # For splitter styling
+
             self._set_background()
             self._init_ui()
             log_info("ProjectWindow initialized successfully.")
         except Exception as e:
-            log_error(f"Error initializing ProjectWindow: {str(e)}")
+            log_exception("Error initializing ProjectWindow", e)
 
     def _set_background(self):
         log_subsection("_set_background")
@@ -52,7 +59,7 @@ class ProjectWindow(QWidget):
             self.setAutoFillBackground(True)
             log_info("Background set successfully.")
         except Exception as e:
-            log_error(f"Error setting background: {str(e)}")
+            log_exception("Error setting background", e)
 
     def _init_ui(self):
         log_subsection("_init_ui")
@@ -79,7 +86,6 @@ class ProjectWindow(QWidget):
             # Start with project form
             self.form_widget = StartForm(self.translator, self)
 
-            self.splitter = QSplitter(Qt.Horizontal)
             self.splitter.addWidget(self.navigation_panel)
             self.splitter.addWidget(self.form_widget)
             self.splitter.addWidget(self.help_panel)
@@ -87,9 +93,10 @@ class ProjectWindow(QWidget):
 
             layout = QHBoxLayout(self)
             layout.addWidget(self.splitter)
+            self.setLayout(layout)
             log_info("UI initialized successfully.")
         except Exception as e:
-            log_error(f"Error initializing UI: {str(e)}")
+            log_exception("Error initializing UI", e)
 
     def _on_nav_clicked(self, key, handler):
         log_subsection(f"_on_nav_clicked: {key}")
@@ -98,7 +105,7 @@ class ProjectWindow(QWidget):
             handler()
             log_info(f"Navigation button '{key}' clicked.")
         except Exception as e:
-            log_error(f"Error in navigation click handler for '{key}': {str(e)}")
+            log_exception(f"Error in navigation click handler for '{key}'", e)
 
     def _show_project_form(self):
         log_subsection("_show_project_form")
@@ -110,7 +117,7 @@ class ProjectWindow(QWidget):
             self.splitter.setSizes([300, 900, 300])
             log_info("Project form displayed successfully.")
         except Exception as e:
-            log_error(f"Error displaying project form: {str(e)}")
+            log_exception("Error displaying project form", e)
 
     def _show_characters_form(self):
         log_subsection("_show_characters_form")
@@ -122,7 +129,7 @@ class ProjectWindow(QWidget):
             self.splitter.setSizes([300, 900, 300])
             log_info("Characters form displayed successfully.")
         except Exception as e:
-            log_error(f"Error displaying characters form: {str(e)}")
+            log_exception("Error displaying characters form", e)
 
     def _show_storylines_form(self):
         log_subsection("_show_storylines_form")
@@ -134,7 +141,7 @@ class ProjectWindow(QWidget):
             self.splitter.setSizes([300, 900, 300])
             log_info("Storylines form displayed successfully.")
         except Exception as e:
-            log_error(f"Error displaying storylines form: {str(e)}")
+            log_exception("Error displaying storylines form", e)
 
     def _show_chapters_form(self):
         log_subsection("_show_chapters_form")
@@ -146,7 +153,7 @@ class ProjectWindow(QWidget):
             self.splitter.setSizes([300, 900, 300])
             log_info("Chapters form displayed successfully.")
         except Exception as e:
-            log_error(f"Error displaying chapters form: {str(e)}")
+            log_exception("Error displaying chapters form", e)
 
     def _show_scenes_form(self):
         log_subsection("_show_scenes_form")
@@ -158,7 +165,7 @@ class ProjectWindow(QWidget):
             self.splitter.setSizes([300, 900, 300])
             log_info("Scenes form displayed successfully.")
         except Exception as e:
-            log_error(f"Error displaying scenes form: {str(e)}")
+            log_exception("Error displaying scenes form", e)
 
     def _show_objects_form(self):
         log_subsection("_show_objects_form")
@@ -170,7 +177,7 @@ class ProjectWindow(QWidget):
             self.splitter.setSizes([300, 900, 300])
             log_info("Objects form displayed successfully.")
         except Exception as e:
-            log_error(f"Error displaying objects form: {str(e)}")
+            log_exception("Error displaying objects form", e)
 
     def _show_locations_form(self):
         log_subsection("_show_locations_form")
@@ -182,7 +189,7 @@ class ProjectWindow(QWidget):
             self.splitter.setSizes([300, 900, 300])
             log_info("Locations form displayed successfully.")
         except Exception as e:
-            log_error(f"Error displaying locations form: {str(e)}")
+            log_exception("Error displaying locations form", e)
 
     def _replace_form_widget(self, new_widget):
         """
@@ -196,10 +203,12 @@ class ProjectWindow(QWidget):
     def _exit_application(self):
         log_subsection("_exit_application")
         try:
+            if self.start_window:
+                self.start_window.show()
             self.close()
-            log_info("Application exit triggered.")
+            log_info("Application exit triggered, StartWindow shown.")
         except Exception as e:
-            log_error(f"Error during application exit: {str(e)}")
+            log_exception("Error during application exit", e)
 
     def closeEvent(self, event):
         log_subsection("closeEvent")
@@ -209,5 +218,5 @@ class ProjectWindow(QWidget):
             event.accept()
             log_info("Splitter sizes saved and application closed.")
         except Exception as e:
-            log_error(f"Error saving splitter sizes on close: {str(e)}")
+            log_exception("Error saving splitter sizes on close", e)
             event.accept()

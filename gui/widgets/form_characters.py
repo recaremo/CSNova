@@ -1,7 +1,7 @@
 from PySide6.QtWidgets import QWidget, QVBoxLayout
 from gui.widgets.base_form_widget import BaseFormWidget
 from core.translator import Translator
-from core.logger import log_section, log_subsection, log_info, log_error
+from core.logger import log_section, log_subsection, log_info, log_exception
 
 class CharactersForm(QWidget):
     """
@@ -38,8 +38,19 @@ class CharactersForm(QWidget):
             self.setLayout(layout)
             log_info("CharactersForm initialized successfully.")
         except Exception as e:
-            log_error(f"Error initializing CharactersForm: {str(e)}")
+            log_exception("Error initializing CharactersForm", e)
 
     def _on_save(self):
+        """
+        Handle save action for character form.
+        """
         log_subsection("_on_save")
-        log_info("CharactersForm save triggered.")
+        try:
+            name = self.form.inputs["character_name"].text()
+            if not name:
+                log_info("Validation failed: character_name is empty.")
+                return
+            # ...save logic...
+            log_info("CharactersForm save triggered.")
+        except Exception as e:
+            log_exception("Error during CharactersForm save", e)

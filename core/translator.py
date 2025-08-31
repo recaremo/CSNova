@@ -1,6 +1,6 @@
 import json
 from config.dev import TRANSLATIONS_DIR, FORMS_DIR, HELP_DIR
-from core.logger import log_section, log_subsection, log_info, log_error
+from core.logger import log_section, log_subsection, log_info, log_exception
 
 class Translator:
     def __init__(self, lang="en"):
@@ -13,7 +13,7 @@ class Translator:
             self.help_texts = self._load_json(HELP_DIR / f"help_{lang}.json")
             log_info(f"Translator initialized with language '{self.lang}'.")
         except Exception as e:
-            log_error(f"Error initializing Translator: {str(e)}")
+            log_exception("Error initializing Translator", e)
 
     def _load_json(self, path):
         log_subsection(f"_load_json: {path}")
@@ -23,7 +23,7 @@ class Translator:
                 log_info(f"Loaded translations from {path}")
                 return data
         except Exception as e:
-            log_error(f"Error loading {path}: {e}")
+            log_exception(f"Error loading {path}", e)
             return {}
 
     def set_language(self, lang_code):
@@ -35,7 +35,7 @@ class Translator:
             self.help_texts = self._load_json(HELP_DIR / f"help_{lang_code}.json")
             log_info(f"Language set to '{lang_code}'.")
         except Exception as e:
-            log_error(f"Error setting language: {str(e)}")
+            log_exception("Error setting language", e)
 
     def tr(self, key):
         log_subsection("tr")
@@ -44,7 +44,7 @@ class Translator:
             log_info(f"Translation for key '{key}': '{value}'")
             return value
         except Exception as e:
-            log_error(f"Error translating key '{key}': {str(e)}")
+            log_exception(f"Error translating key '{key}'", e)
             return key
 
     def form_label(self, key):
@@ -54,7 +54,7 @@ class Translator:
             log_info(f"Form label for key '{key}': '{value}'")
             return value
         except Exception as e:
-            log_error(f"Error getting form label for key '{key}': {str(e)}")
+            log_exception(f"Error getting form label for key '{key}'", e)
             return key
 
     def help_text(self, key):
@@ -64,5 +64,5 @@ class Translator:
             log_info(f"Help text for key '{key}': '{value}'")
             return value
         except Exception as e:
-            log_error(f"Error getting help text for key '{key}': {str(e)}")
+            log_exception(f"Error getting help text for key '{key}'", e)
             return "Help and information will be displayed here."

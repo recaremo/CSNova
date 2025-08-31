@@ -1,0 +1,266 @@
+%% CSNova: Vollständige Datenbankstruktur und Modul-Abhängigkeiten
+
+graph TD
+
+%% Hauptprogramm und Einstieg
+    csnova.py["csnova.py (Hauptprogramm)"]
+    csnova.py --> core
+    csnova.py --> gui
+    csnova.py --> config
+
+%% Konfiguration
+    config["config/"]
+    config --> dev.py
+    config --> prod.py
+    config --> settings.py
+    config --> user_settings.json
+
+%% Kernlogik und Datenbank
+    core["core/"]
+    core --> database.py
+    core --> logger.py
+    core --> logic
+    core --> models
+    core --> services
+    core --> tables
+    core --> translations
+    core --> translator.py
+
+%% Tabellenstruktur (alle Tabellen)
+    tables["core/tables/"]
+    tables --> character_main.py
+    tables --> gender.py
+    tables --> gender_data.py
+    tables --> sex_orientation.py
+    tables --> sex_orientation_data.py
+    tables --> character_psychological_profile.py
+    tables --> character_origin.py
+    tables --> character_education.py
+    tables --> character_personality.py
+    tables --> character_appearance_main.py
+    tables --> character_appearance_detail.py
+    tables --> character_groups.py
+    tables --> project.py
+    tables --> project_storylines.py
+    tables --> project_chapters.py
+    tables --> project_chapters_scenes.py
+    tables --> project_objects.py
+    tables --> project_locations.py
+    tables --> project_scene_object_map.py
+    tables --> project_scene_location_map.py
+    tables --> project_scene_storyline_map.py
+    tables --> project_scene_character_map.py
+    tables --> project_character_storyline_map.py
+    tables --> project_character_group_map.py
+
+%% Foreign-Key-Beziehungen (vollständig)
+    %% Charakter-Tabellen
+    character_main.py --> gender.py
+    character_main.py --> sex_orientation.py
+    character_origin.py --> character_main.py
+    character_education.py --> character_main.py
+    character_personality.py --> character_main.py
+    character_psychological_profile.py --> character_main.py
+    character_appearance_main.py --> character_main.py
+    character_appearance_detail.py --> character_main.py
+    character_groups.py --> character_main.py
+
+    %% Projekt-Tabellen
+    project_chapters.py --> project.py
+    project_chapters_scenes.py --> project_chapters.py
+
+    %% Mapping-Tabellen
+    project_scene_character_map.py --> project_chapters_scenes.py
+    project_scene_character_map.py --> character_main.py
+
+    project_scene_location_map.py --> project_chapters_scenes.py
+    project_scene_location_map.py --> project_locations.py
+
+    project_scene_object_map.py --> project_chapters_scenes.py
+    project_scene_object_map.py --> project_objects.py
+
+    project_scene_storyline_map.py --> project_chapters_scenes.py
+    project_scene_storyline_map.py --> project_storylines.py
+
+    project_character_group_map.py --> character_main.py
+    project_character_group_map.py --> character_groups.py
+
+    project_character_storyline_map.py --> character_main.py
+    project_character_storyline_map.py --> project_storylines.py
+
+%% Übersetzungen und Hilfedateien
+    translations["core/translations/"]
+    translations --> de.json
+    translations --> en.json
+    translations --> es.json
+    translations --> fr.json
+    translations --> forms
+    translations --> help
+
+%% GUI-Struktur
+    gui["gui/"]
+    gui --> start_window.py
+    gui --> project_window.py
+    gui --> preferences.py
+    gui --> styles
+    gui --> tabs
+    gui --> widgets
+
+%% Styles und Themes
+    styles["gui/styles/"]
+    styles --> form_styles.py
+    styles --> oldschool_style.py
+    styles --> vintage_style.py
+    styles --> modern_style.py
+    styles --> future_style.py
+
+%% GUI-Widgets und Panels
+    widgets["gui/widgets/"]
+    widgets --> base_form_widget.py
+    widgets --> form_toolbar.py
+    widgets --> form_projects.py
+    widgets --> form_characters.py
+    widgets --> form_storylines.py
+    widgets --> form_chapters.py
+    widgets --> form_scenes.py
+    widgets --> form_objects.py
+    widgets --> form_locations.py
+    widgets --> form_start.py
+    widgets --> navigation_panel.py
+    widgets --> help_panel.py
+    widgets --> center_panel.py
+    widgets --> dialog.py
+    widgets --> listview.py
+
+%% Datenbank und Assets
+    data["data/"]
+    data --> csnova.db
+
+    assets["assets/"]
+    assets --> icons
+    assets --> media
+
+%% Exportmodule
+    export["export/"]
+    export --> csnova_export.py
+    export --> epub_export.py
+    export --> html_export.py
+    export --> pdf_export.py
+
+%% Sonstige Verzeichnisse
+    ai["ai/"]
+    ai --> analysis.py
+    ai --> brainstorming.py
+    ai --> interview.py
+
+    docs["docs/"]
+    docs --> csNova_de.md
+    docs --> index.md
+
+%% Beziehungen zwischen GUI und Styles
+    gui --> styles
+    gui --> widgets
+    gui --> tabs
+
+%% Beziehungen zwischen GUI und Datenbank
+    gui --> core
+    gui --> data
+
+%% Beziehungen zwischen core und config
+    core --> config
+
+%% Beziehungen zwischen core und translations
+    core --> translations
+
+%% Beziehungen zwischen core und tables
+    core --> tables
+
+%% Beziehungen zwischen core und logger
+    core --> logger.py
+
+%% Beziehungen zwischen core und translator
+    core --> translator.py
+
+%% Beziehungen zwischen widgets und styles
+    widgets --> styles
+
+%% Beziehungen zwischen widgets und core
+    widgets --> core
+
+%% Beziehungen zwischen widgets und gui
+    widgets --> gui
+
+%% Beziehungen zwischen project_window und forms
+    project_window.py --> widgets
+    project_window.py --> styles
+
+%% Beziehungen zwischen start_window und preferences
+    start_window.py --> preferences.py
+
+%% Beziehungen zwischen preferences und styles
+    preferences.py --> styles
+
+%% Beziehungen zwischen preferences und translator
+    preferences.py --> translator.py
+
+%% Beziehungen zwischen database und tables
+    database.py --> tables
+
+%% Beziehungen zwischen database und data
+    database.py --> data
+
+%% Beziehungen zwischen database und logger
+    database.py --> logger.py
+
+%% Beziehungen zwischen translator und translations
+    translator.py --> translations
+
+%% Beziehungen zwischen translator und logger
+    translator.py --> logger.py
+
+%% Beziehungen zwischen logger und config
+    logger.py --> config
+
+%% Beziehungen zwischen logger und settings
+    logger.py --> settings.py
+
+%% Beziehungen zwischen logger und log_file
+    logger.py --> csnova.log
+
+%% Beziehungen zwischen csnova.py und logger
+    csnova.py --> logger.py
+
+%% Beziehungen zwischen csnova.py und start_window
+    csnova.py --> start_window.py
+
+%% Beziehungen zwischen csnova.py und project_window
+    csnova.py --> project_window.py
+
+%% Beziehungen zwischen csnova.py und preferences
+    csnova.py --> preferences.py
+
+%% Beziehungen zwischen csnova.py und database
+    csnova.py --> database.py
+
+%% Beziehungen zwischen csnova.py und settings
+    csnova.py --> settings.py
+
+%% Beziehungen zwischen csnova.py und styles
+    csnova.py --> styles
+
+%% Beziehungen zwischen csnova.py und data
+    csnova.py --> data
+
+%% Beziehungen zwischen csnova.py und assets
+    csnova.py --> assets
+
+%% Beziehungen zwischen csnova.py und docs
+    csnova.py --> docs
+
+%% Beziehungen zwischen csnova.py und ai
+    csnova.py --> ai
+
+%% Beziehungen zwischen csnova.py und export
+    csnova.py --> export
+
+%% Kommentar: Alle Tabellen und Foreign-Key-Beziehungen sind vollständig abgebildet.

@@ -1,7 +1,7 @@
 from PySide6.QtWidgets import QWidget, QVBoxLayout
 from gui.widgets.base_form_widget import BaseFormWidget
 from core.translator import Translator
-from core.logger import log_section, log_subsection, log_info, log_error
+from core.logger import log_section, log_subsection, log_info, log_exception
 
 class ScenesForm(QWidget):
     """
@@ -35,8 +35,19 @@ class ScenesForm(QWidget):
             self.setLayout(layout)
             log_info("ScenesForm initialized successfully.")
         except Exception as e:
-            log_error(f"Error initializing ScenesForm: {str(e)}")
+            log_exception("Error initializing ScenesForm", e)
 
     def _on_save(self):
+        """
+        Handle save action for scene form.
+        """
         log_subsection("_on_save")
-        log_info("ScenesForm save triggered.")
+        try:
+            title = self.form.inputs["scene_title"].text()
+            if not title:
+                log_info("Validation failed: scene_title is empty.")
+                return
+            # ...save logic...
+            log_info("ScenesForm save triggered.")
+        except Exception as e:
+            log_exception("Error during ScenesForm save", e)

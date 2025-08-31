@@ -1,7 +1,7 @@
 from PySide6.QtWidgets import QWidget, QVBoxLayout
 from gui.widgets.base_form_widget import BaseFormWidget
 from core.translator import Translator
-from core.logger import log_section, log_subsection, log_info, log_error
+from core.logger import log_section, log_subsection, log_info, log_exception
 
 class ObjectsForm(QWidget):
     """
@@ -35,8 +35,19 @@ class ObjectsForm(QWidget):
             self.setLayout(layout)
             log_info("ObjectsForm initialized successfully.")
         except Exception as e:
-            log_error(f"Error initializing ObjectsForm: {str(e)}")
+            log_exception("Error initializing ObjectsForm", e)
 
     def _on_save(self):
+        """
+        Handle save action for object form.
+        """
         log_subsection("_on_save")
-        log_info("ObjectsForm save triggered.")
+        try:
+            name = self.form.inputs["object_name"].text()
+            if not name:
+                log_info("Validation failed: object_name is empty.")
+                return
+            # ...save logic...
+            log_info("ObjectsForm save triggered.")
+        except Exception as e:
+            log_exception("Error during ObjectsForm save", e)

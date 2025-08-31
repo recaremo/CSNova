@@ -5,13 +5,12 @@ from PySide6.QtWidgets import (
 from core.translator import Translator
 from config.settings import load_settings, save_settings
 
-# Importiere die Style-Module
 from gui.styles.oldschool_style import get_style as get_oldschool_style
 from gui.styles.vintage_style import get_style as get_vintage_style
 from gui.styles.modern_style import get_style as get_modern_style
 from gui.styles.future_style import get_style as get_future_style
-
-from core.logger import log_section, log_subsection, log_info, log_error
+from gui.styles.form_styles import load_global_stylesheet
+from core.logger import log_section, log_subsection, log_info, log_exception
 
 class PreferencesWindow(QDialog):
     DEFAULT_WIDTH  = 400
@@ -55,12 +54,12 @@ class PreferencesWindow(QDialog):
 
             self.setWindowTitle(self.translator.tr("menu_settings"))
             self.resize(self.DEFAULT_WIDTH, self.DEFAULT_HEIGHT)
-
+            self.setStyleSheet(load_global_stylesheet())  # Apply global stylesheet
             self._init_ui()
             self._load_values()
             log_info("PreferencesWindow initialized successfully.")
         except Exception as e:
-            log_error(f"Error initializing PreferencesWindow: {str(e)}")
+            log_exception("Error initializing PreferencesWindow", e)
 
     def _init_ui(self):
         log_subsection("_init_ui")
@@ -116,7 +115,7 @@ class PreferencesWindow(QDialog):
             self.setLayout(main_layout)
             log_info("UI initialized successfully.")
         except Exception as e:
-            log_error(f"Error initializing UI: {str(e)}")
+            log_exception("Error initializing UI", e)
 
     def _load_values(self):
         log_subsection("_load_values")
@@ -137,7 +136,7 @@ class PreferencesWindow(QDialog):
             self._update_preview()
             log_info("Values loaded and UI texts updated.")
         except Exception as e:
-            log_error(f"Error loading values: {str(e)}")
+            log_exception("Error loading values", e)
 
     def _on_language_changed(self):
         log_subsection("_on_language_changed")
@@ -148,7 +147,7 @@ class PreferencesWindow(QDialog):
             self._update_ui_texts()
             log_info(f"Language changed to {code}.")
         except Exception as e:
-            log_error(f"Error changing language: {str(e)}")
+            log_exception("Error changing language", e)
 
     def _on_style_or_mode_changed(self):
         self._update_preview()
@@ -165,7 +164,7 @@ class PreferencesWindow(QDialog):
             self.cancel_button.setText(self.translator.tr("action_cancel"))
             log_info("UI texts updated.")
         except Exception as e:
-            log_error(f"Error updating UI texts: {str(e)}")
+            log_exception("Error updating UI texts", e)
 
     def _update_preview(self):
         # Zeigt den Style und Modus direkt am Beispiel-Button
@@ -203,7 +202,7 @@ class PreferencesWindow(QDialog):
             self.accept()
             log_info("Settings saved and dialog accepted.")
         except Exception as e:
-            log_error(f"Error saving settings: {str(e)}")
+            log_exception("Error saving settings", e)
 
     def _on_cancel(self):
         log_subsection("_on_cancel")
@@ -214,4 +213,4 @@ class PreferencesWindow(QDialog):
             self.reject()
             log_info("Dialog canceled and language reverted.")
         except Exception as e:
-            log_error(f"Error initializing PreferencesWindow: {str(e)}")
+            log_exception("Error canceling PreferencesWindow", e)

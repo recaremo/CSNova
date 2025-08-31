@@ -1,15 +1,10 @@
 import sqlite3
-
-# Import central logging functions
-from core.logger import log_section, log_subsection, log_info, log_error
-
-# Import the central database path
+from core.logger import log_section, log_subsection, log_info, log_exception
 from config.dev import DB_PATH
 
 from core.tables.gender_data import data_gender
 from core.tables.sex_orientation_data import sex_orientation_data
 
-# Import tables (these should use central paths if needed)
 from core.tables import (
     character_main,
     gender,
@@ -20,6 +15,7 @@ from core.tables import (
     character_personality,
     character_appearance_main,
     character_appearance_detail,
+    character_groups,
     project,
     project_storylines,
     project_chapters,
@@ -56,6 +52,7 @@ def init_schema():
                 character_personality,
                 character_appearance_main,
                 character_appearance_detail,
+                character_groups,
                 project,
                 project_storylines,
                 project_chapters,
@@ -69,15 +66,25 @@ def init_schema():
                 project_character_storyline_map,
                 project_character_group_map
             ]:
-                module.create_table(cursor)
-                log_info(f"Table created: {module.__name__}")
+                try:
+                    module.create_table(cursor)
+                    log_info(f"Table created: {module.__name__}")
+                except Exception as e:
+                    log_exception(f"Error creating table {module.__name__}", e)
 
             # Insert seed data
-            data_gender(cursor)
-            log_info("Seed data for gender inserted.")
-            sex_orientation_data(cursor)
-            log_info("Seed data for sex orientation inserted.")
+            try:
+                data_gender(cursor)
+                log_info("Seed data for gender inserted.")
+            except Exception as e:
+                log_exception("Error inserting gender seed data", e)
+            try:
+                sex_orientation_data(cursor)
+                log_info("Seed data for sex orientation inserted.")
+            except Exception as e:
+                log_exception("Error inserting sex orientation seed data", e)
+
             conn.commit()
             log_info("Database schema initialized and committed successfully.")
     except Exception as e:
-        log_error(f"An error occurred during database initialization: {e}")
+        log_exception("An error occurred during database initialization", e)

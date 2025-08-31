@@ -1,6 +1,6 @@
 from PySide6.QtWidgets import QWidget, QVBoxLayout, QLabel, QFormLayout, QLineEdit, QSpinBox, QDateEdit
 from gui.widgets.form_toolbar import FormToolbar
-from core.logger import log_section, log_subsection, log_info, log_error
+from core.logger import log_section, log_subsection, log_info, log_exception
 
 class BaseFormWidget(QWidget):
     def __init__(self, title, fields, form_labels, toolbar_actions, form_prefix, translator, parent=None):
@@ -8,8 +8,16 @@ class BaseFormWidget(QWidget):
         log_subsection("__init__")
         try:
             super().__init__(parent)
-            self.translator = translator  # Korrektur: Translator setzen!
+            self.translator = translator  # Set translator for toolbar and labels
+
             self.layout = QVBoxLayout()
+
+            # Add toolbar first for consistent UI (always at the top)
+            self.toolbar = FormToolbar(self.translator, form_prefix, self)
+            if toolbar_actions:
+                toolbar_actions(self.toolbar)
+            self.layout.addWidget(self.toolbar)  # Toolbar should be added first!
+
             self.title_label = QLabel(title, self)
             self.layout.addWidget(self.title_label)
 
@@ -33,12 +41,7 @@ class BaseFormWidget(QWidget):
 
             self.layout.addLayout(self.form_layout)
 
-            self.toolbar = FormToolbar(self.translator, form_prefix, self)
-            if toolbar_actions:
-                toolbar_actions(self.toolbar)
-            self.layout.addWidget(self.toolbar)
-
             self.setLayout(self.layout)
             log_info("BaseFormWidget initialized successfully.")
         except Exception as e:
-            log_error(f"Error initializing BaseFormWidget: {str(e)}")
+            log_exception("Error initializing BaseFormWidget", e)

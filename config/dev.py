@@ -26,9 +26,8 @@ BG_IMAGE_PATH    = ASSETS_DIR / "media" / "csNova_background_start.png"
 HELP_DIR         = TRANSLATIONS_DIR / "help"
 FORMS_DIR        = TRANSLATIONS_DIR / "forms"
 
-# Ensure directories exist
-DATA_DIR.mkdir(exist_ok=True)
-CONFIG_DIR.mkdir(exist_ok=True)
-ASSETS_DIR.mkdir(exist_ok=True)
-DOCS_DIR.mkdir(exist_ok=True)
+# Ensure directories exist (no logging here!)
+for dir_path in [DATA_DIR, CONFIG_DIR, ASSETS_DIR, DOCS_DIR]:
+    dir_path.mkdir(exist_ok=True)
+
 LOG_FILE = BASE_DIR / "csnova.log"

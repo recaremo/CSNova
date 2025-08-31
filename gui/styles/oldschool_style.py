@@ -1,12 +1,24 @@
 # Old-School style (Windows 10 inspired) with integrated modes
+from PySide6.QtWidgets import QApplication, QStyle
+from PySide6.QtGui import QIcon
+
+def qt_icon(name):
+    mapping = {
+        "new": QStyle.SP_FileIcon,
+        "delete": QStyle.SP_TrashIcon,
+        "prev": QStyle.SP_ArrowBack,
+        "next": QStyle.SP_ArrowForward,
+        "save": QStyle.SP_DialogSaveButton
+    }
+    app = QApplication.instance()
+    if name in mapping and app:
+        return app.style().standardIcon(mapping[name])
+    return QIcon()  # Immer ein QIcon zurückgeben!
 
 def get_style(mode):
-    """
-    Returns the style dictionary for the given mode.
-    All parameters are defined directly in this file.
-    """
+    # ...existing code...
     if mode == "light":
-        return {
+        style_dict = {
             "background": "#ffffff",
             "foreground": "#222326",
             "button": {
@@ -20,11 +32,13 @@ def get_style(mode):
                 "foreground": "#222326"
             },
             "border": "#cfcfcf",
-            "highlight": "#0078d7",  # Windows 10 blue
-            "error": "#e81123"       # Windows error red
+            "highlight": "#0078d7",
+            "error": "#e81123"
         }
+        style_dict["icon_factory"] = qt_icon
+        return style_dict
     elif mode == "middle":
-        return {
+        style_dict = {
             "background": "#f3f3f3",
             "foreground": "#222326",
             "button": {
@@ -41,8 +55,10 @@ def get_style(mode):
             "highlight": "#0078d7",
             "error": "#e81123"
         }
+        style_dict["icon_factory"] = qt_icon
+        return style_dict
     elif mode == "dark":
-        return {
+        style_dict = {
             "background": "#1e1e1e",
             "foreground": "#f3f3f3",
             "button": {
@@ -59,9 +75,10 @@ def get_style(mode):
             "highlight": "#0078d7",
             "error": "#e81123"
         }
+        style_dict["icon_factory"] = qt_icon
+        return style_dict
     else:
-        # fallback: light
-        return {
+        style_dict = {
             "background": "#ffffff",
             "foreground": "#222326",
             "button": {
@@ -78,3 +95,5 @@ def get_style(mode):
             "highlight": "#0078d7",
             "error": "#e81123"
         }
+        style_dict["icon_factory"] = qt_icon
+        return style_dict

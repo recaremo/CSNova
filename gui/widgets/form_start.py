@@ -1,6 +1,6 @@
 from PySide6.QtWidgets import QWidget, QVBoxLayout
 from core.translator import Translator
-from core.logger import log_section, log_subsection, log_info, log_error
+from core.logger import log_section, log_subsection, log_info, log_exception
 
 class StartForm(QWidget):
     """
@@ -19,4 +19,4 @@ class StartForm(QWidget):
 
             log_info("StartForm initialized successfully.")
         except Exception as e:
-            log_error(f"Error initializing StartForm: {str(e)}")
+            log_exception("Error initializing StartForm", e)
