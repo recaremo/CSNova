@@ -4,11 +4,8 @@ from PySide6.QtWidgets import (
 )
 from core.translator import Translator
 from config.settings import load_settings, save_settings
-
-from gui.styles.oldschool_style import get_style as get_oldschool_style
-from gui.styles.vintage_style import get_style as get_vintage_style
-from gui.styles.modern_style import get_style as get_modern_style
-from gui.styles.future_style import get_style as get_future_style
+from gui.styles.themes_style import THEMES, get_theme
+from gui.styles.form_styles import load_button_style
 from gui.styles.form_styles import load_global_stylesheet
 from core.logger import log_section, log_subsection, log_info, log_exception
 
@@ -27,15 +24,9 @@ class PreferencesWindow(QDialog):
         "oldschool": "Old-School",
         "vintage": "Vintage",
         "modern": "Modern",
-        "future": "Future"
-    }
-
-    STYLE_FUNCTIONS = {
-        "oldschool": get_oldschool_style,
-        "vintage": get_vintage_style,
-        "modern": get_modern_style,
-        "future": get_future_style
-    }
+        "future": "Future",
+        "minimal": "Minimal"
+}
 
     MODE_NAMES = {
         "light": "Light",
@@ -86,11 +77,6 @@ class PreferencesWindow(QDialog):
                 self.mode_combo.addItem(self.MODE_NAMES[code], userData=code)
             self.mode_combo.currentIndexChanged.connect(self._on_style_or_mode_changed)
 
-            # Style preview (Button)
-            self.preview_label = QLabel("Vorschau:", self)
-            self.preview_button = QPushButton("Beispiel-Button", self)
-            self.preview_button.setFixedSize(180, 40)
-
             # Buttons
             self.ok_button     = QPushButton(self)
             self.cancel_button = QPushButton(self)
@@ -109,8 +95,6 @@ class PreferencesWindow(QDialog):
             main_layout.addWidget(self.style_combo)
             main_layout.addWidget(self.mode_label)
             main_layout.addWidget(self.mode_combo)
-            main_layout.addWidget(self.preview_label)
-            main_layout.addWidget(self.preview_button)
             main_layout.addLayout(btn_layout)
             self.setLayout(main_layout)
             log_info("UI initialized successfully.")
@@ -150,6 +134,7 @@ class PreferencesWindow(QDialog):
             log_exception("Error changing language", e)
 
     def _on_style_or_mode_changed(self):
+        self.setStyleSheet(load_global_stylesheet())  # Apply global stylesheet for the whole window
         self._update_preview()
 
     def _update_ui_texts(self):
@@ -167,27 +152,10 @@ class PreferencesWindow(QDialog):
             log_exception("Error updating UI texts", e)
 
     def _update_preview(self):
-        # Zeigt den Style und Modus direkt am Beispiel-Button
         style_code = self.style_combo.itemData(self.style_combo.currentIndex())
         mode_code = self.mode_combo.itemData(self.mode_combo.currentIndex())
-        style_func = self.STYLE_FUNCTIONS.get(style_code, get_modern_style)
-        style_dict = style_func(mode_code)
-        # Beispiel: Button-Style als CSS generieren
-        btn_style = f"""
-            QPushButton {{
-                background-color: {style_dict['button']['background']};
-                color: {style_dict['button']['foreground']};
-                border: 2px solid {style_dict['border']};
-                border-radius: 8px;
-                font-size: 16px;
-            }}
-            QPushButton:hover {{
-                background-color: {style_dict['button']['hover']};
-            }}
-            QPushButton:pressed {{
-                background-color: {style_dict['button']['active']};
-            }}
-        """
+        style_dict = get_theme(style_code, mode_code)
+        btn_style = load_button_style(font_size=16)
         self.preview_button.setStyleSheet(btn_style)
 
     def _on_ok(self):

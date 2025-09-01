@@ -250,7 +250,9 @@ Entwicklung einer plattformübergreifenden Desktop‑Anwendung (Linux, Windows, 
 │   └── csnova
 ├── docs
 │   ├── csNova_de.md
-│   └── index.md
+│   ├── csNova_mermaid.mmd
+│   ├── index.md
+│   └── To-Do.md
 ├── export
 │   ├── csnova_export.py
 │   ├── epub_export.py
@@ -261,11 +263,10 @@ Entwicklung einer plattformübergreifenden Desktop‑Anwendung (Linux, Windows, 
 │   ├── project_window.py
 │   ├── start_window.py
 │   ├── styles
+│   │   ├── base_style.py
 │   │   ├── form_styles.py
-│   │   ├── future_style.py
-│   │   ├── modern_style.py
-│   │   ├── oldschool_style.py
-│   │   └── vintage_style.py
+│   │   ├── registry_style.py
+│   │   └── themes_style.py
 │   ├── tabs
 │   │   ├── character_tab.py
 │   │   ├── project_tab.py
@@ -1869,30 +1870,194 @@ class Translator:
 Module für das GUI.
 
 #### 6.5.1 Styles
-##### 6.5.1.1 oldschool_style.py
+
+##### 6.5.1.1 base_style.py
 
 ```python
-# Old-School style (Windows 10 inspired) with integrated modes
-from PySide6.QtWidgets import QApplication, QStyle
-from PySide6.QtGui import QIcon
+# Central default parameters for stylesheets
+DEFAULTS = {
+    "border_radius": 8,
+    "font_size": 14,
+    "input_width": 400,
+}
 
-def qt_icon(name):
-    mapping = {
-        "new": QStyle.SP_FileIcon,
-        "delete": QStyle.SP_TrashIcon,
-        "prev": QStyle.SP_ArrowBack,
-        "next": QStyle.SP_ArrowForward,
-        "save": QStyle.SP_DialogSaveButton
-    }
-    app = QApplication.instance()
-    if name in mapping and app:
-        return app.style().standardIcon(mapping[name])
-    return QIcon() 
+# Central CSS templates for all GUI components
+CSS_TEMPLATES = {
+    "button": """
+        QPushButton, QToolButton {{
+            background-color: {button_bg};
+            color: {button_fg};
+            font-size: {font_size}px;
+            border: 2px solid {border};
+            border-radius: {border_radius}px;
+        }}
+        QPushButton:hover, QToolButton:hover {{
+            background-color: {button_hover};
+        }}
+        QPushButton:pressed, QToolButton:pressed {{
+            background-color: {button_active};
+        }}
+        QPushButton:disabled, QToolButton:disabled {{
+            background-color: {border};
+            color: {input_fg};
+        }}
+    """,
 
-def get_style(mode):
-    # ...existing code...
-    if mode == "light":
-        style_dict = {
+    "active_button": """
+        QPushButton {{
+            background-color: {highlight};
+            color: {button_fg};
+            font-size: {font_size}px;
+            border: 2px solid {border};
+            border-radius: {border_radius}px;
+            font-weight: bold;
+        }}
+    """,
+
+    "input": """
+        QLineEdit, QTextEdit, QPlainTextEdit, QComboBox, QSpinBox, QDateEdit {{
+            background-color: {input_bg};
+            color: {input_fg};
+            border: 1px solid {border};
+            border-radius: 4px;
+            font-size: {font_size}px;
+            padding: 6px;
+            min-width: {input_width}px;
+            max-width: {input_width}px;
+        }}
+    """,
+
+    "tab": """
+        QTabWidget::pane {{
+            border: 1px solid {border};
+        }}
+        QTabBar::tab {{
+            background: {button_bg};
+            color: {button_fg};
+            border-radius: {border_radius}px;
+            min-width: 120px;
+            padding: 8px;
+        }}
+        QTabBar::tab:selected {{
+            background: {highlight};
+            color: {button_fg};
+        }}
+    """,
+
+    "listview": """
+        QListView, QTreeView {{
+            background-color: {input_bg};
+            color: {input_fg};
+            border: 1px solid {border};
+            selection-background-color: {highlight};
+            selection-color: {button_fg};
+        }}
+    """,
+
+    "label": """
+        QLabel, QGroupBox {{
+            color: {foreground};
+            font-size: {font_size}px;
+        }}
+    """,
+
+    "tooltip": """
+        QToolTip {{
+            background-color: {highlight};
+            color: {background};
+            border: 1px solid {border};
+        }}
+    """,
+
+    "splitter": """
+        QSplitter::handle {{
+            background: {border};
+            border: 1px solid {highlight};
+            width: 8px;
+        }}
+        QSplitter::handle:hover {{
+            background: {highlight};
+        }}
+    """,
+
+    "panel": """
+        QWidget#NavigationPanel, QWidget#HelpPanel, QWidget#CenterPanel {{
+            background-color: {background};
+            border: 1px solid {border};
+            border-radius: {border_radius}px;
+        }}
+    """,
+
+    "toolbar": """
+        QToolBar {{
+            background: {background};
+            border-bottom: 1px solid {border};
+            min-height: 44px;
+            padding-top: 6px;
+            padding-bottom: 6px;
+        }}
+        QToolButton {{
+            min-width: 36px;
+            min-height: 36px;
+            padding: 6px 12px;
+            font-size: {font_size}px;
+            qproperty-toolButtonStyle: ToolButtonTextBesideIcon;
+        }}
+        QToolButton:hover {{
+            background-color: {button_hover};
+        }}
+        QToolButton:pressed {{
+            background-color: {button_active};
+        }}
+    """,
+
+    "form": """
+        QLineEdit, QDateEdit, QSpinBox {{
+            padding: 6px;
+            border: 1px solid {border};
+            border-radius: 4px;
+            background-color: {input_bg};
+            color: {input_fg};
+            font-size: {font_size}px;
+            font-family: 'Segoe UI', sans-serif;
+            min-width: {input_width}px;
+            max-width: {input_width}px;
+        }}
+        QLabel {{
+            font-size: {font_size}px;
+            color: {foreground};
+        }}
+        QFormLayout {{
+            margin: 12px;
+        }}
+    """,
+}
+
+def render_css(template_name, style_dict, defaults=DEFAULTS):
+    """
+    Renders the requested CSS template with style parameters and defaults.
+    """
+    params = {**defaults, **style_dict}
+    # Map template parameters for compatibility with all style dicts
+    params.update({
+        "button_bg": style_dict.get("button", {}).get("background", style_dict.get("button_bg", "#e7eaf3")),
+        "button_fg": style_dict.get("button", {}).get("foreground", style_dict.get("button_fg", "#1a1a1a")),
+        "button_hover": style_dict.get("button", {}).get("hover", style_dict.get("button_hover", "#d0d6e6")),
+        "button_active": style_dict.get("button", {}).get("active", style_dict.get("button_active", "#b6c2e1")),
+        "input_bg": style_dict.get("input", {}).get("background", style_dict.get("input_bg", "#ffffff")),
+        "input_fg": style_dict.get("input", {}).get("foreground", style_dict.get("input_fg", "#1a1a1a")),
+    })
+    return CSS_TEMPLATES[template_name].format(**params)
+```
+
+##### 6.5.1.2 themes_style.py
+
+```python
+# Central theme definitions for all styles and modes
+
+THEMES = {
+    "oldschool": {
+        "light": {
             "background": "#ffffff",
             "foreground": "#222326",
             "button": {
@@ -1908,11 +2073,8 @@ def get_style(mode):
             "border": "#cfcfcf",
             "highlight": "#0078d7",
             "error": "#e81123"
-        }
-        style_dict["icon_factory"] = qt_icon
-        return style_dict
-    elif mode == "middle":
-        style_dict = {
+        },
+        "middle": {
             "background": "#f3f3f3",
             "foreground": "#222326",
             "button": {
@@ -1928,11 +2090,8 @@ def get_style(mode):
             "border": "#bcbcbc",
             "highlight": "#0078d7",
             "error": "#e81123"
-        }
-        style_dict["icon_factory"] = qt_icon
-        return style_dict
-    elif mode == "dark":
-        style_dict = {
+        },
+        "dark": {
             "background": "#1e1e1e",
             "foreground": "#f3f3f3",
             "button": {
@@ -1949,44 +2108,11 @@ def get_style(mode):
             "highlight": "#0078d7",
             "error": "#e81123"
         }
-        style_dict["icon_factory"] = qt_icon
-        return style_dict
-    else:
-        style_dict = {
-            "background": "#ffffff",
-            "foreground": "#222326",
-            "button": {
-                "background": "#f3f3f3",
-                "foreground": "#222326",
-                "hover": "#e5e5e5",
-                "active": "#d0d0d0"
-            },
-            "input": {
-                "background": "#f9f9f9",
-                "foreground": "#222326"
-            },
-            "border": "#cfcfcf",
-            "highlight": "#0078d7",
-            "error": "#e81123"
-        }
-        style_dict["icon_factory"] = qt_icon
-        return style_dict
-```
-
-##### 6.5.1.2 vintage_style.py
-
-```python
-# Vintage style (cozy living room inspired) with integrated modes
-
-def get_style(mode):
-    """
-    Returns the style dictionary for the given mode.
-    All parameters are defined directly in this file.
-    """
-    if mode == "light":
-        return {
-            "background": "#f5eee6",      # warm beige
-            "foreground": "#5a4632",      # dark brown
+    },
+    "vintage": {
+        "light": {
+            "background": "#f5eee6",
+            "foreground": "#5a4632",
             "button": {
                 "background": "#e2d3c3",
                 "foreground": "#5a4632",
@@ -1998,11 +2124,10 @@ def get_style(mode):
                 "foreground": "#5a4632"
             },
             "border": "#cbb393",
-            "highlight": "#b48a78",       # warm reddish brown
-            "error": "#a94442"            # muted red
-        }
-    elif mode == "middle":
-        return {
+            "highlight": "#b48a78",
+            "error": "#a94442"
+        },
+        "middle": {
             "background": "#e9e2d3",
             "foreground": "#5a4632",
             "button": {
@@ -2018,9 +2143,8 @@ def get_style(mode):
             "border": "#b48a78",
             "highlight": "#a67c52",
             "error": "#a94442"
-        }
-    elif mode == "dark":
-        return {
+        },
+        "dark": {
             "background": "#3b2c23",
             "foreground": "#e2d3c3",
             "button": {
@@ -2037,41 +2161,11 @@ def get_style(mode):
             "highlight": "#b48a78",
             "error": "#a94442"
         }
-    else:
-        # fallback: light
-        return {
-            "background": "#f5eee6",
-            "foreground": "#5a4632",
-            "button": {
-                "background": "#e2d3c3",
-                "foreground": "#5a4632",
-                "hover": "#d6c3a3",
-                "active": "#cbb393"
-            },
-            "input": {
-                "background": "#f8f3ed",
-                "foreground": "#5a4632"
-            },
-            "border": "#cbb393",
-            "highlight": "#b48a78",
-            "error": "#a94442"
-        }
-```
-
-##### 6.5.1.3 modern_style.py
-
-```python
-# Modern style (Windows 11 inspired) with integrated modes
-
-def get_style(mode):
-    """
-    Returns the style dictionary for the given mode.
-    All parameters are defined directly in this file.
-    """
-    if mode == "light":
-        return {
-            "background": "#f3f6fd",      # very light blueish white
-            "foreground": "#1a1a1a",      # almost black, but softer
+    },
+    "modern": {
+        "light": {
+            "background": "#f3f6fd",
+            "foreground": "#1a1a1a",
             "button": {
                 "background": "#e7eaf3",
                 "foreground": "#1a1a1a",
@@ -2083,11 +2177,10 @@ def get_style(mode):
                 "foreground": "#1a1a1a"
             },
             "border": "#cfd8dc",
-            "highlight": "#2563eb",       # modern blue accent
-            "error": "#ef4444"            # modern error red
-        }
-    elif mode == "middle":
-        return {
+            "highlight": "#2563eb",
+            "error": "#ef4444"
+        },
+        "middle": {
             "background": "#e0e5ef",
             "foreground": "#23272f",
             "button": {
@@ -2103,9 +2196,8 @@ def get_style(mode):
             "border": "#b6c2e1",
             "highlight": "#2563eb",
             "error": "#ef4444"
-        }
-    elif mode == "dark":
-        return {
+        },
+        "dark": {
             "background": "#181a20",
             "foreground": "#e7eaf3",
             "button": {
@@ -2122,41 +2214,11 @@ def get_style(mode):
             "highlight": "#60a5fa",
             "error": "#ef4444"
         }
-    else:
-        # fallback: light
-        return {
-            "background": "#f3f6fd",
-            "foreground": "#1a1a1a",
-            "button": {
-                "background": "#e7eaf3",
-                "foreground": "#1a1a1a",
-                "hover": "#d0d6e6",
-                "active": "#b6c2e1"
-            },
-            "input": {
-                "background": "#ffffff",
-                "foreground": "#1a1a1a"
-            },
-            "border": "#cfd8dc",
-            "highlight": "#2563eb",
-            "error": "#ef4444"
-        }
-```
-
-##### 6.5.1.4 future_style.py
-
-```python
-# Future style (glassmorphism, adaptive, modern) with integrated modes
-
-def get_style(mode):
-    """
-    Returns the style dictionary for the given mode.
-    All parameters are defined directly in this file.
-    """
-    if mode == "light":
-        return {
-            "background": "rgba(245, 250, 255, 0.85)",   # semi-transparent, glass effect
-            "foreground": "#22223b",                     # deep blue-grey
+    },
+    "future": {
+        "light": {
+            "background": "rgba(245, 250, 255, 0.85)",
+            "foreground": "#22223b",
             "button": {
                 "background": "rgba(230, 240, 255, 0.95)",
                 "foreground": "#22223b",
@@ -2168,11 +2230,10 @@ def get_style(mode):
                 "foreground": "#22223b"
             },
             "border": "#a3bffa",
-            "highlight": "#7f9acb",                      # soft futuristic blue
-            "error": "#ff6b6b"                           # neon red
-        }
-    elif mode == "middle":
-        return {
+            "highlight": "#7f9acb",
+            "error": "#ff6b6b"
+        },
+        "middle": {
             "background": "rgba(210, 220, 235, 0.90)",
             "foreground": "#22223b",
             "button": {
@@ -2188,9 +2249,8 @@ def get_style(mode):
             "border": "#7f9acb",
             "highlight": "#a3bffa",
             "error": "#ff6b6b"
-        }
-    elif mode == "dark":
-        return {
+        },
+        "dark": {
             "background": "rgba(30, 34, 45, 0.92)",
             "foreground": "#e0eaff",
             "button": {
@@ -2207,151 +2267,134 @@ def get_style(mode):
             "highlight": "#a3bffa",
             "error": "#ff6b6b"
         }
-    else:
-        # fallback: light
-        return {
-            "background": "rgba(245, 250, 255, 0.85)",
-            "foreground": "#22223b",
+    },
+
+    "minimal": {
+        "light": {
+            "background": "#ffffff",
+            "foreground": "#222222",
             "button": {
-                "background": "rgba(230, 240, 255, 0.95)",
-                "foreground": "#22223b",
-                "hover": "#b8c6db",
-                "active": "#7f9acb"
+                "background": "#f7f7f7",
+                "foreground": "#222222",
+                "hover": "#e0e0e0",
+                "active": "#bdbdbd"
             },
             "input": {
-                "background": "rgba(255,255,255,0.95)",
-                "foreground": "#22223b"
+                "background": "#fafafa",
+                "foreground": "#222222"
             },
-            "border": "#a3bffa",
-            "highlight": "#7f9acb",
-            "error": "#ff6b6b"
+            "border": "#cccccc",
+            "highlight": "#1976d2",
+            "error": "#d32f2f"
+        },
+        "middle": {
+            "background": "#ededed",
+            "foreground": "#222222",
+            "button": {
+                "background": "#e0e0e0",
+                "foreground": "#222222",
+                "hover": "#bdbdbd",
+                "active": "#1976d2"
+            },
+            "input": {
+                "background": "#f5f5f5",
+                "foreground": "#222222"
+            },
+            "border": "#bdbdbd",
+            "highlight": "#1976d2",
+            "error": "#d32f2f"
+        },
+        "dark": {
+            "background": "#222222",
+            "foreground": "#f7f7f7",
+            "button": {
+                "background": "#333333",
+                "foreground": "#f7f7f7",
+                "hover": "#1976d2",
+                "active": "#424242"
+            },
+            "input": {
+                "background": "#2c2c2c",
+                "foreground": "#f7f7f7"
+            },
+            "border": "#424242",
+            "highlight": "#1976d2",
+            "error": "#d32f2f"
         }
+    }
+}
+
+def get_theme(style, mode):
+    """
+    Returns the theme dictionary for the given style and mode.
+    Falls back to 'modern' and 'light' if not found.
+    """
+    style_dict = THEMES.get(style, THEMES["modern"])
+    return style_dict.get(mode, style_dict.get("light"))
 ```
 
-#### 6.5.1.5 form_styles.py
+##### 6.5.1.3 registry_style.py
 
 ```python
 from config.settings import load_settings
-from gui.styles.oldschool_style import get_style as get_oldschool_style
-from gui.styles.vintage_style import get_style as get_vintage_style
-from gui.styles.modern_style import get_style as get_modern_style
-from gui.styles.future_style import get_style as get_future_style
-from core.logger import log_section, log_subsection, log_info, log_exception
-
-STYLE_FUNCTIONS = {
-    "oldschool": get_oldschool_style,
-    "vintage": get_vintage_style,
-    "modern": get_modern_style,
-    "future": get_future_style
-}
+from gui.styles.themes_style import get_theme
 
 def get_current_style():
-    log_section("form_styles.py")
-    log_subsection("get_current_style")
-    try:
-        settings = load_settings()
-        style_code = settings.get("style", "modern")
-        mode_code = settings.get("mode", "light")
-        style_func = STYLE_FUNCTIONS.get(style_code, get_modern_style)
-        style = style_func(mode_code)
-        log_info(f"Loaded style: {style_code}, mode: {mode_code}")
-        return style
-    except Exception as e:
-        log_exception("Error loading current style", e)
-        # Fallback: modern light
-        return get_modern_style("light")
+    """
+    Loads the current style and mode from settings and returns the theme dictionary.
+    Falls back to 'modern' and 'light' if not found.
+    """
+    settings = load_settings()
+    style_code = settings.get("style", "modern")
+    mode_code = settings.get("mode", "light")
+    return get_theme(style_code, mode_code)
+```
+
+#### 6.5.1.4 form_styles.py
+
+```python
+from config.settings import load_settings
+from gui.styles.base_style import render_css, DEFAULTS
+from gui.styles.registry_style import get_current_style
+from core.logger import log_section, log_subsection, log_info, log_exception
 
 def load_global_stylesheet(font_size=14):
+    """
+    Loads the global stylesheet for the application using the current style and mode.
+    """
     log_section("form_styles.py")
     log_subsection("load_global_stylesheet")
     try:
         style = get_current_style()
-        stylesheet = f"""
-            /* Buttons */
-            QPushButton, QToolButton {{
-                background-color: {style['button']['background']};
-                color: {style['button']['foreground']};
-                font-size: {font_size}px;
-                border: 2px solid {style['border']};
-                border-radius: 8px;
-            }}
+        style["font_size"] = font_size
+        style["border_radius"] = DEFAULTS["border_radius"]
+        style["input_width"] = DEFAULTS["input_width"]
 
-            QPushButton:hover, QToolButton:hover {{
-                background-color: {style['button']['hover']};
-            }}
-            QPushButton:pressed, QToolButton:pressed {{
-                background-color: {style['button']['active']};
-            }}
-            QPushButton:disabled, QToolButton:disabled {{
-                background-color: {style['border']};
-                color: {style['input']['foreground']};
-            }}
-            
-            /* Tabs */
-            QTabWidget::pane {{
-                border: 1px solid {style['border']};
-            }}
-            QTabBar::tab {{
-                background: {style['button']['background']};
-                color: {style['button']['foreground']};
-                border-radius: 8px;
-                min-width: 120px;
-                padding: 8px;
-            }}
-            QTabBar::tab:selected {{
-                background: {style['highlight']};
-                color: {style['button']['foreground']};
-            }}
+        # Combine all relevant templates
+        button_css = render_css("button", style)
+        input_css = render_css("input", style)
+        tab_css = render_css("tab", style)
+        listview_css = render_css("listview", style)
+        label_css = render_css("label", style)
+        tooltip_css = render_css("tooltip", style)
+        splitter_css = render_css("splitter", style)
+        panel_css = render_css("panel", style)
+        toolbar_css = render_css("toolbar", style)
+        form_css = render_css("form", style)
 
-            /* ListViews & TreeViews */
-            QListView, QTreeView {{
-                background-color: {style['input']['background']};
-                color: {style['input']['foreground']};
-                border: 1px solid {style['border']};
-                selection-background-color: {style['highlight']};
-                selection-color: {style['button']['foreground']};
-            }}
-
-            /* Inputfields */
-            QLineEdit, QTextEdit, QPlainTextEdit, QComboBox, QSpinBox, QDateEdit {{
-                background-color: {style['input']['background']};
-                color: {style['input']['foreground']};
-                border: 1px solid {style['border']};
-                border-radius: 4px;
-                font-size: {font_size}px;
-                padding: 6px;
-            }}
-
-            /* Labels & GroupBoxes */
-            QLabel, QGroupBox {{
-                color: {style['foreground']};
-                font-size: {font_size}px;
-            }}
-
-            /* Tooltips */
-            QToolTip {{
-                background-color: {style['highlight']};
-                color: {style['background']};
-                border: 1px solid {style['border']};
-            }}
-
-            /* Splitter handle (for visible side lines) */
-            QSplitter::handle {{
-                background: {style['border']};
-                border: 1px solid {style['highlight']};
-                width: 8px;
-            }}
-            QSplitter::handle:hover {{
-                background: {style['highlight']};
-            }}
-
-            /* Panels */
-            QWidget#NavigationPanel, QWidget#HelpPanel, QWidget#CenterPanel {{
-                background-color: {style['background']};
-                border: 1px solid {style['border']};
-                border-radius: 8px;
-            }}
-        """
+        # Concatenate all CSS parts
+        stylesheet = (
+            button_css +
+            input_css +
+            tab_css +
+            listview_css +
+            label_css +
+            tooltip_css +
+            splitter_css +
+            panel_css +
+            toolbar_css +
+            form_css
+        )
         log_info("Global stylesheet loaded.")
         return stylesheet
     except Exception as e:
@@ -2359,107 +2402,47 @@ def load_global_stylesheet(font_size=14):
         return ""
 
 def load_button_style(font_size=14):
+    """
+    Loads the stylesheet for buttons and toolbars.
+    """
     log_section("form_styles.py")
     log_subsection("load_button_style")
     try:
         style = get_current_style()
-        stylesheet = f"""
-            QToolBar {{
-                background: {style['background']};
-                border-bottom: 1px solid {style['border']};
-                min-height: 44px;
-                padding-top: 6px;
-                padding-bottom: 6px;
-            }}
-
-            QToolButton {{
-                min-width: 36px;
-                min-height: 36px;
-                padding: 6px 12px;
-                font-size: {font_size}px;
-                qproperty-toolButtonStyle: ToolButtonTextBesideIcon;
-            }}
-
-            QToolButton:hover {{
-                background-color: {style['button']['hover']};
-            }}
-            QToolButton:pressed {{
-                background-color: {style['button']['active']};
-            }}
-            QPushButton {{
-                background-color: {style['button']['background']};
-                color: {style['button']['foreground']};
-                font-size: {font_size}px;
-                border: 2px solid {style['border']};
-                border-radius: 8px;
-            }}
-            QPushButton:hover {{
-                background-color: {style['button']['hover']};
-            }}
-            QPushButton:pressed {{
-                background-color: {style['button']['active']};
-            }}
-            QPushButton:disabled {{
-                background-color: {style['border']};
-                color: {style['input']['foreground']};
-            }}
-        """
-        log_info("Button stylesheet loaded.")
-        return stylesheet
+        style["font_size"] = font_size
+        style["border_radius"] = DEFAULTS["border_radius"]
+        return render_css("button", style) + render_css("toolbar", style)
     except Exception as e:
         log_exception("Error loading button stylesheet", e)
         return ""
 
 def load_active_button_style(font_size=16):
+    """
+    Loads the stylesheet for active buttons.
+    """
     log_section("form_styles.py")
     log_subsection("load_active_button_style")
     try:
         style = get_current_style()
-        stylesheet = f"""
-            QPushButton {{
-                background-color: {style['highlight']};
-                color: {style['button']['foreground']};
-                font-size: {font_size}px;
-                border: 2px solid {style['border']};
-                border-radius: 8px;
-                font-weight: bold;
-            }}
-        """
-        log_info("Active button stylesheet loaded.")
-        return stylesheet
+        style["font_size"] = font_size
+        style["border_radius"] = DEFAULTS["border_radius"]
+        return render_css("active_button", style)
     except Exception as e:
         log_exception("Error loading active button stylesheet", e)
         return ""
 
 def load_form_style(input_font_size=14, label_font_size=14, input_width=400):
+    """
+    Loads the stylesheet for forms and input fields.
+    """
     log_section("form_styles.py")
     log_subsection("load_form_style")
     try:
         style = get_current_style()
-        stylesheet = f"""
-            QLineEdit, QDateEdit, QSpinBox {{
-                padding: 6px;
-                border: 1px solid {style['border']};
-                border-radius: 4px;
-                background-color: {style['input']['background']};
-                color: {style['input']['foreground']};
-                font-size: {input_font_size}px;
-                font-family: 'Segoe UI', sans-serif;
-                min-width: {input_width}px;
-                max-width: {input_width}px;
-            }}
-
-            QLabel {{
-                font-size: {label_font_size}px;
-                color: {style['foreground']};
-            }}
-
-            QFormLayout {{
-                margin: 12px;
-            }}
-        """
-        log_info("Form stylesheet loaded.")
-        return stylesheet
+        style["font_size"] = input_font_size
+        style["border_radius"] = DEFAULTS["border_radius"]
+        style["input_width"] = input_width
+        return render_css("form", style)
     except Exception as e:
         log_exception("Error loading form stylesheet", e)
         return ""
@@ -3402,11 +3385,8 @@ from PySide6.QtWidgets import (
 )
 from core.translator import Translator
 from config.settings import load_settings, save_settings
-
-from gui.styles.oldschool_style import get_style as get_oldschool_style
-from gui.styles.vintage_style import get_style as get_vintage_style
-from gui.styles.modern_style import get_style as get_modern_style
-from gui.styles.future_style import get_style as get_future_style
+from gui.styles.themes_style import THEMES, get_theme
+from gui.styles.form_styles import load_button_style
 from gui.styles.form_styles import load_global_stylesheet
 from core.logger import log_section, log_subsection, log_info, log_exception
 
@@ -3425,15 +3405,9 @@ class PreferencesWindow(QDialog):
         "oldschool": "Old-School",
         "vintage": "Vintage",
         "modern": "Modern",
-        "future": "Future"
-    }
-
-    STYLE_FUNCTIONS = {
-        "oldschool": get_oldschool_style,
-        "vintage": get_vintage_style,
-        "modern": get_modern_style,
-        "future": get_future_style
-    }
+        "future": "Future",
+        "minimal": "Minimal"
+}
 
     MODE_NAMES = {
         "light": "Light",
@@ -3484,11 +3458,6 @@ class PreferencesWindow(QDialog):
                 self.mode_combo.addItem(self.MODE_NAMES[code], userData=code)
             self.mode_combo.currentIndexChanged.connect(self._on_style_or_mode_changed)
 
-            # Style preview (Button)
-            self.preview_label = QLabel("Vorschau:", self)
-            self.preview_button = QPushButton("Beispiel-Button", self)
-            self.preview_button.setFixedSize(180, 40)
-
             # Buttons
             self.ok_button     = QPushButton(self)
             self.cancel_button = QPushButton(self)
@@ -3507,8 +3476,6 @@ class PreferencesWindow(QDialog):
             main_layout.addWidget(self.style_combo)
             main_layout.addWidget(self.mode_label)
             main_layout.addWidget(self.mode_combo)
-            main_layout.addWidget(self.preview_label)
-            main_layout.addWidget(self.preview_button)
             main_layout.addLayout(btn_layout)
             self.setLayout(main_layout)
             log_info("UI initialized successfully.")
@@ -3548,6 +3515,7 @@ class PreferencesWindow(QDialog):
             log_exception("Error changing language", e)
 
     def _on_style_or_mode_changed(self):
+        self.setStyleSheet(load_global_stylesheet())  # Apply global stylesheet for the whole window
         self._update_preview()
 
     def _update_ui_texts(self):
@@ -3565,27 +3533,10 @@ class PreferencesWindow(QDialog):
             log_exception("Error updating UI texts", e)
 
     def _update_preview(self):
-        # Zeigt den Style und Modus direkt am Beispiel-Button
         style_code = self.style_combo.itemData(self.style_combo.currentIndex())
         mode_code = self.mode_combo.itemData(self.mode_combo.currentIndex())
-        style_func = self.STYLE_FUNCTIONS.get(style_code, get_modern_style)
-        style_dict = style_func(mode_code)
-        # Beispiel: Button-Style als CSS generieren
-        btn_style = f"""
-            QPushButton {{
-                background-color: {style_dict['button']['background']};
-                color: {style_dict['button']['foreground']};
-                border: 2px solid {style_dict['border']};
-                border-radius: 8px;
-                font-size: 16px;
-            }}
-            QPushButton:hover {{
-                background-color: {style_dict['button']['hover']};
-            }}
-            QPushButton:pressed {{
-                background-color: {style_dict['button']['active']};
-            }}
-        """
+        style_dict = get_theme(style_code, mode_code)
+        btn_style = load_button_style(font_size=16)
         self.preview_button.setStyleSheet(btn_style)
 
     def _on_ok(self):

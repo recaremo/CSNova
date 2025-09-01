@@ -1,124 +1,45 @@
 from config.settings import load_settings
-from gui.styles.oldschool_style import get_style as get_oldschool_style
-from gui.styles.vintage_style import get_style as get_vintage_style
-from gui.styles.modern_style import get_style as get_modern_style
-from gui.styles.future_style import get_style as get_future_style
+from gui.styles.base_style import render_css, DEFAULTS
+from gui.styles.registry_style import get_current_style
 from core.logger import log_section, log_subsection, log_info, log_exception
 
-STYLE_FUNCTIONS = {
-    "oldschool": get_oldschool_style,
-    "vintage": get_vintage_style,
-    "modern": get_modern_style,
-    "future": get_future_style
-}
-
-def get_current_style():
-    log_section("form_styles.py")
-    log_subsection("get_current_style")
-    try:
-        settings = load_settings()
-        style_code = settings.get("style", "modern")
-        mode_code = settings.get("mode", "light")
-        style_func = STYLE_FUNCTIONS.get(style_code, get_modern_style)
-        style = style_func(mode_code)
-        log_info(f"Loaded style: {style_code}, mode: {mode_code}")
-        return style
-    except Exception as e:
-        log_exception("Error loading current style", e)
-        # Fallback: modern light
-        return get_modern_style("light")
-
 def load_global_stylesheet(font_size=14):
+    """
+    Loads the global stylesheet for the application using the current style and mode.
+    """
     log_section("form_styles.py")
     log_subsection("load_global_stylesheet")
     try:
         style = get_current_style()
-        stylesheet = f"""
-            /* Buttons */
-            QPushButton, QToolButton {{
-                background-color: {style['button']['background']};
-                color: {style['button']['foreground']};
-                font-size: {font_size}px;
-                border: 2px solid {style['border']};
-                border-radius: 8px;
-            }}
+        style["font_size"] = font_size
+        style["border_radius"] = DEFAULTS["border_radius"]
+        style["input_width"] = DEFAULTS["input_width"]
 
-            QPushButton:hover, QToolButton:hover {{
-                background-color: {style['button']['hover']};
-            }}
-            QPushButton:pressed, QToolButton:pressed {{
-                background-color: {style['button']['active']};
-            }}
-            QPushButton:disabled, QToolButton:disabled {{
-                background-color: {style['border']};
-                color: {style['input']['foreground']};
-            }}
-            
-            /* Tabs */
-            QTabWidget::pane {{
-                border: 1px solid {style['border']};
-            }}
-            QTabBar::tab {{
-                background: {style['button']['background']};
-                color: {style['button']['foreground']};
-                border-radius: 8px;
-                min-width: 120px;
-                padding: 8px;
-            }}
-            QTabBar::tab:selected {{
-                background: {style['highlight']};
-                color: {style['button']['foreground']};
-            }}
+        # Combine all relevant templates
+        button_css = render_css("button", style)
+        input_css = render_css("input", style)
+        tab_css = render_css("tab", style)
+        listview_css = render_css("listview", style)
+        label_css = render_css("label", style)
+        tooltip_css = render_css("tooltip", style)
+        splitter_css = render_css("splitter", style)
+        panel_css = render_css("panel", style)
+        toolbar_css = render_css("toolbar", style)
+        form_css = render_css("form", style)
 
-            /* ListViews & TreeViews */
-            QListView, QTreeView {{
-                background-color: {style['input']['background']};
-                color: {style['input']['foreground']};
-                border: 1px solid {style['border']};
-                selection-background-color: {style['highlight']};
-                selection-color: {style['button']['foreground']};
-            }}
-
-            /* Inputfields */
-            QLineEdit, QTextEdit, QPlainTextEdit, QComboBox, QSpinBox, QDateEdit {{
-                background-color: {style['input']['background']};
-                color: {style['input']['foreground']};
-                border: 1px solid {style['border']};
-                border-radius: 4px;
-                font-size: {font_size}px;
-                padding: 6px;
-            }}
-
-            /* Labels & GroupBoxes */
-            QLabel, QGroupBox {{
-                color: {style['foreground']};
-                font-size: {font_size}px;
-            }}
-
-            /* Tooltips */
-            QToolTip {{
-                background-color: {style['highlight']};
-                color: {style['background']};
-                border: 1px solid {style['border']};
-            }}
-
-            /* Splitter handle (for visible side lines) */
-            QSplitter::handle {{
-                background: {style['border']};
-                border: 1px solid {style['highlight']};
-                width: 8px;
-            }}
-            QSplitter::handle:hover {{
-                background: {style['highlight']};
-            }}
-
-            /* Panels */
-            QWidget#NavigationPanel, QWidget#HelpPanel, QWidget#CenterPanel {{
-                background-color: {style['background']};
-                border: 1px solid {style['border']};
-                border-radius: 8px;
-            }}
-        """
+        # Concatenate all CSS parts
+        stylesheet = (
+            button_css +
+            input_css +
+            tab_css +
+            listview_css +
+            label_css +
+            tooltip_css +
+            splitter_css +
+            panel_css +
+            toolbar_css +
+            form_css
+        )
         log_info("Global stylesheet loaded.")
         return stylesheet
     except Exception as e:
@@ -126,107 +47,47 @@ def load_global_stylesheet(font_size=14):
         return ""
 
 def load_button_style(font_size=14):
+    """
+    Loads the stylesheet for buttons and toolbars.
+    """
     log_section("form_styles.py")
     log_subsection("load_button_style")
     try:
         style = get_current_style()
-        stylesheet = f"""
-            QToolBar {{
-                background: {style['background']};
-                border-bottom: 1px solid {style['border']};
-                min-height: 44px;
-                padding-top: 6px;
-                padding-bottom: 6px;
-            }}
-
-            QToolButton {{
-                min-width: 36px;
-                min-height: 36px;
-                padding: 6px 12px;
-                font-size: {font_size}px;
-                qproperty-toolButtonStyle: ToolButtonTextBesideIcon;
-            }}
-
-            QToolButton:hover {{
-                background-color: {style['button']['hover']};
-            }}
-            QToolButton:pressed {{
-                background-color: {style['button']['active']};
-            }}
-            QPushButton {{
-                background-color: {style['button']['background']};
-                color: {style['button']['foreground']};
-                font-size: {font_size}px;
-                border: 2px solid {style['border']};
-                border-radius: 8px;
-            }}
-            QPushButton:hover {{
-                background-color: {style['button']['hover']};
-            }}
-            QPushButton:pressed {{
-                background-color: {style['button']['active']};
-            }}
-            QPushButton:disabled {{
-                background-color: {style['border']};
-                color: {style['input']['foreground']};
-            }}
-        """
-        log_info("Button stylesheet loaded.")
-        return stylesheet
+        style["font_size"] = font_size
+        style["border_radius"] = DEFAULTS["border_radius"]
+        return render_css("button", style) + render_css("toolbar", style)
     except Exception as e:
         log_exception("Error loading button stylesheet", e)
         return ""
 
 def load_active_button_style(font_size=16):
+    """
+    Loads the stylesheet for active buttons.
+    """
     log_section("form_styles.py")
     log_subsection("load_active_button_style")
     try:
         style = get_current_style()
-        stylesheet = f"""
-            QPushButton {{
-                background-color: {style['highlight']};
-                color: {style['button']['foreground']};
-                font-size: {font_size}px;
-                border: 2px solid {style['border']};
-                border-radius: 8px;
-                font-weight: bold;
-            }}
-        """
-        log_info("Active button stylesheet loaded.")
-        return stylesheet
+        style["font_size"] = font_size
+        style["border_radius"] = DEFAULTS["border_radius"]
+        return render_css("active_button", style)
     except Exception as e:
         log_exception("Error loading active button stylesheet", e)
         return ""
 
 def load_form_style(input_font_size=14, label_font_size=14, input_width=400):
+    """
+    Loads the stylesheet for forms and input fields.
+    """
     log_section("form_styles.py")
     log_subsection("load_form_style")
     try:
         style = get_current_style()
-        stylesheet = f"""
-            QLineEdit, QDateEdit, QSpinBox {{
-                padding: 6px;
-                border: 1px solid {style['border']};
-                border-radius: 4px;
-                background-color: {style['input']['background']};
-                color: {style['input']['foreground']};
-                font-size: {input_font_size}px;
-                font-family: 'Segoe UI', sans-serif;
-                min-width: {input_width}px;
-                max-width: {input_width}px;
-            }}
-
-            QLabel {{
-                font-size: {label_font_size}px;
-                color: {style['foreground']};
-            }}
-
-            QFormLayout {{
-                margin: 12px;
-            }}
-        """
-        log_info("Form stylesheet loaded.")
-        return stylesheet
+        style["font_size"] = input_font_size
+        style["border_radius"] = DEFAULTS["border_radius"]
+        style["input_width"] = input_width
+        return render_css("form", style)
     except Exception as e:
         log_exception("Error loading form stylesheet", e)
         return ""
