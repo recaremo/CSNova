@@ -1,8 +1,8 @@
 from PySide6.QtWidgets import QWidget, QToolBar, QHBoxLayout, QWidget
 from PySide6.QtGui import QAction, QIcon
-from core.logger import log_section, log_subsection, log_info, log_exception
-from gui.styles.form_styles import get_current_style
 from PySide6.QtCore import QSize
+from core.logger import log_section, log_subsection, log_info, log_exception
+from gui.styles.form_styles import load_button_style
 
 class FormToolbar(QWidget):
     def __init__(self, translator, form_prefix, parent=None):
@@ -10,24 +10,8 @@ class FormToolbar(QWidget):
         log_subsection("__init__")
         try:
             super().__init__(parent)
-            toolbar_style = """
-                QToolBar {
-                    background: #7A8B8B;
-                    border-bottom: 1px solid #cfcfcf;
-                    min-height: 52px;
-                    padding-top: 8px;
-                    padding-bottom: 8px;
-                }
-                QToolButton {
-                    min-width: 32px;
-                    min-height: 32px;
-                    padding: 8px 16px;
-                    font-size: 14px;
-                    qproperty-toolButtonStyle: ToolButtonTextBesideIcon;
-                }
-            """
             self.toolbar = QToolBar(self)
-            self.toolbar.setStyleSheet(toolbar_style)
+            self.toolbar.setStyleSheet(load_button_style())
             self.toolbar.setIconSize(QSize(32, 32))
 
             # Spacer for left margin
@@ -36,25 +20,20 @@ class FormToolbar(QWidget):
             self.toolbar.addWidget(left_spacer)
 
             self.translator = translator
-            style = get_current_style()
-            icon_factory = style.get("icon_factory", lambda name: QIcon())
 
-            def safe_icon(name):
-                icon = icon_factory(name)
-                return icon if isinstance(icon, QIcon) else QIcon()
-
-            # Create actions
+            # Create actions with translated labels
             self.new_action = QAction(self.translator.form_label(f"{form_prefix}_btn_new"), self)
             self.delete_action = QAction(self.translator.form_label(f"{form_prefix}_btn_delete"), self)
             self.prev_action = QAction(self.translator.form_label(f"{form_prefix}_btn_preview"), self)
             self.next_action = QAction(self.translator.form_label(f"{form_prefix}_btn_next"), self)
             self.save_action = QAction(self.translator.form_label(f"{form_prefix}_btn_save"), self)
 
-            self.new_action.setIcon(safe_icon("new"))
-            self.delete_action.setIcon(safe_icon("delete"))
-            self.prev_action.setIcon(safe_icon("prev"))
-            self.next_action.setIcon(safe_icon("next"))
-            self.save_action.setIcon(safe_icon("save"))
+            # Optionally set icons if available
+            # self.new_action.setIcon(QIcon("icons/new.png"))
+            # self.delete_action.setIcon(QIcon("icons/delete.png"))
+            # self.prev_action.setIcon(QIcon("icons/prev.png"))
+            # self.next_action.setIcon(QIcon("icons/next.png"))
+            # self.save_action.setIcon(QIcon("icons/save.png"))
 
             # Add actions and spacing between buttons
             actions = [

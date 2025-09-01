@@ -1,7 +1,9 @@
+import json
 from PySide6.QtWidgets import QWidget, QVBoxLayout
 from gui.widgets.base_form_widget import BaseFormWidget
 from core.translator import Translator
 from core.logger import log_section, log_subsection, log_info, log_exception
+from config.dev import FORM_FIELDS_FILE
 
 class ScenesForm(QWidget):
     """
@@ -13,18 +15,18 @@ class ScenesForm(QWidget):
         try:
             super().__init__(parent)
             self.translator = translator
-            fields = [
-                {"name": "scene_title", "label_key": "scene_title", "default_label": "Title", "type": "text"},
-                {"name": "scene_number", "label_key": "scene_number", "default_label": "Number", "type": "spin", "max": 9999},
-                {"name": "scene_summary", "label_key": "scene_summary", "default_label": "Summary", "type": "text"},
-                # ... add more fields as needed ...
-            ]
+
+            # Felder zentral aus JSON laden
+            with open(FORM_FIELDS_FILE, "r", encoding="utf-8") as f:
+                all_fields = json.load(f)
+            fields = all_fields.get("scenes", [])
+
             def toolbar_actions(toolbar):
                 toolbar.save_action.triggered.connect(self._on_save)
+
             self.form = BaseFormWidget(
-                title=self.translator.form_label("scene_form_label"),
+                title=self.translator.tr("scene"),
                 fields=fields,
-                form_labels=self.translator.form_labels,
                 toolbar_actions=toolbar_actions,
                 form_prefix="scene",
                 translator=self.translator,
@@ -38,16 +40,5 @@ class ScenesForm(QWidget):
             log_exception("Error initializing ScenesForm", e)
 
     def _on_save(self):
-        """
-        Handle save action for scene form.
-        """
         log_subsection("_on_save")
-        try:
-            title = self.form.inputs["scene_title"].text()
-            if not title:
-                log_info("Validation failed: scene_title is empty.")
-                return
-            # ...save logic...
-            log_info("ScenesForm save triggered.")
-        except Exception as e:
-            log_exception("Error during ScenesForm save", e)
+        log_info("ScenesForm save triggered.")

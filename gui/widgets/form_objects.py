@@ -1,7 +1,9 @@
+import json
 from PySide6.QtWidgets import QWidget, QVBoxLayout
 from gui.widgets.base_form_widget import BaseFormWidget
 from core.translator import Translator
-from core.logger import log_section, log_subsection, log_info, log_exception
+from core.logger import log_section, log_subsection, log_info, log_error
+from config.dev import FORM_FIELDS_FILE
 
 class ObjectsForm(QWidget):
     """
@@ -13,18 +15,18 @@ class ObjectsForm(QWidget):
         try:
             super().__init__(parent)
             self.translator = translator
-            fields = [
-                {"name": "object_name", "label_key": "object_name", "default_label": "Name", "type": "text"},
-                {"name": "object_type", "label_key": "object_type", "default_label": "Type", "type": "text"},
-                {"name": "object_description", "label_key": "object_description", "default_label": "Description", "type": "text"},
-                # ... add more fields as needed ...
-            ]
+
+            # Felder zentral aus JSON laden
+            with open(FORM_FIELDS_FILE, "r", encoding="utf-8") as f:
+                all_fields = json.load(f)
+            fields = all_fields.get("objects", [])
+
             def toolbar_actions(toolbar):
                 toolbar.save_action.triggered.connect(self._on_save)
+
             self.form = BaseFormWidget(
-                title=self.translator.form_label("object_form_label"),
+                title=self.translator.tr("object"),
                 fields=fields,
-                form_labels=self.translator.form_labels,
                 toolbar_actions=toolbar_actions,
                 form_prefix="object",
                 translator=self.translator,
@@ -35,19 +37,8 @@ class ObjectsForm(QWidget):
             self.setLayout(layout)
             log_info("ObjectsForm initialized successfully.")
         except Exception as e:
-            log_exception("Error initializing ObjectsForm", e)
+            log_error(f"Error initializing ObjectsForm: {str(e)}")
 
     def _on_save(self):
-        """
-        Handle save action for object form.
-        """
         log_subsection("_on_save")
-        try:
-            name = self.form.inputs["object_name"].text()
-            if not name:
-                log_info("Validation failed: object_name is empty.")
-                return
-            # ...save logic...
-            log_info("ObjectsForm save triggered.")
-        except Exception as e:
-            log_exception("Error during ObjectsForm save", e)
+        log_info("ObjectsForm save triggered.")

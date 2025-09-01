@@ -32,7 +32,7 @@ class ProjectWindow(QWidget):
             self.translator = translator or Translator(lang="en")
             super().__init__(parent)
             self.resize(1600, 900)
-            self.setWindowTitle(self.translator.tr("project_window_title"))
+            self.setWindowTitle(self.translator.tr("pro"))
             self.settings = load_settings()
             self.button_style = load_button_style(18)
             self.button_style_active = load_active_button_style(18)
@@ -65,21 +65,22 @@ class ProjectWindow(QWidget):
         log_subsection("_init_ui")
         try:
             keys = [
-                "btn_project", "btn_characters", "btn_storylines",
-                "btn_chapters", "btn_scenes", "btn_objects", "btn_locations", "btn_exit"
+                "pro_btn_project", "pro_btn_characters", "pro_btn_storylines",
+                "pro_btn_chapters", "pro_btn_scenes", "pro_btn_objects", "pro_btn_locations", "pro_btn_exit"
             ]
             callbacks = {
-                "btn_project": lambda: self._on_nav_clicked("btn_project", self._show_project_form),
-                "btn_characters": lambda: self._on_nav_clicked("btn_characters", self._show_characters_form),
-                "btn_storylines": lambda: self._on_nav_clicked("btn_storylines", self._show_storylines_form),
-                "btn_chapters": lambda: self._on_nav_clicked("btn_chapters", self._show_chapters_form),
-                "btn_scenes": lambda: self._on_nav_clicked("btn_scenes", self._show_scenes_form),
-                "btn_objects": lambda: self._on_nav_clicked("btn_objects", self._show_objects_form),
-                "btn_locations": lambda: self._on_nav_clicked("btn_locations", self._show_locations_form),
-                "btn_exit": self._exit_application
+                "pro_btn_project": lambda: self._on_nav_clicked("pro_btn_project", self._show_project_form),
+                "pro_btn_characters": lambda: self._on_nav_clicked("pro_btn_characters", self._show_characters_form),
+                "pro_btn_storylines": lambda: self._on_nav_clicked("pro_btn_storylines", self._show_storylines_form),
+                "pro_btn_chapters": lambda: self._on_nav_clicked("pro_btn_chapters", self._show_chapters_form),
+                "pro_btn_scenes": lambda: self._on_nav_clicked("pro_btn_scenes", self._show_scenes_form),
+                "pro_btn_objects": lambda: self._on_nav_clicked("pro_btn_objects", self._show_objects_form),
+                "pro_btn_locations": lambda: self._on_nav_clicked("pro_btn_locations", self._show_locations_form),
+                "pro_btn_exit": self._exit_application
             }
+            # Korrigierter Aufruf: Nur die erlaubten Parameter übergeben!
             self.navigation_panel = NavigationPanel(
-                keys, self.translator, self.button_style, self.button_style_active, callbacks, self
+                keys, self.translator, self, callbacks
             )
 
             self.help_panel = HelpPanel(self)
@@ -97,7 +98,6 @@ class ProjectWindow(QWidget):
             log_info("UI initialized successfully.")
         except Exception as e:
             log_exception("Error initializing UI", e)
-
     def _on_nav_clicked(self, key, handler):
         log_subsection(f"_on_nav_clicked: {key}")
         try:

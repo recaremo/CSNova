@@ -28,7 +28,7 @@ class StartWindow(QWidget):
         try:
             super().__init__()
             self.translator = Translator(default_language)
-            self.setWindowTitle(self.translator.tr("start_window_title"))
+            self.setWindowTitle(self.translator.tr("win_start_title"))
             self.resize(self.DEFAULT_WIDTH, self.DEFAULT_HEIGHT)
             self.setAutoFillBackground(False)
             self.bg_pixmap = QPixmap(str(BG_IMAGE_PATH))
@@ -44,11 +44,11 @@ class StartWindow(QWidget):
         log_subsection("_create_ui")
         try:
             self.button_keys = [
-                "btn_new_project",
-                "btn_load_project",
-                "btn_settings",
-                "btn_help",
-                "btn_exit"
+                "start_btn_new_project",
+                "start_btn_load_project",
+                "start_btn_settings",
+                "start_btn_help",
+                "start_btn_exit"
             ]
 
             self.buttons = []
@@ -135,7 +135,7 @@ class StartWindow(QWidget):
         try:
             for key, btn in zip(self.button_keys, self.buttons):
                 btn.setText(self.translator.tr(key))
-            self.setWindowTitle(self.translator.tr("start_window_title"))
+            self.setWindowTitle(self.translator.tr("win_start_title"))
             self.update_button_positions()
             log_info("Button texts and window title updated.")
         except Exception as e:

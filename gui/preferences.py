@@ -1,17 +1,16 @@
 from PySide6.QtWidgets import (
     QDialog, QLabel, QComboBox, QPushButton,
-    QHBoxLayout, QVBoxLayout, QWidget
+    QHBoxLayout, QVBoxLayout
 )
 from core.translator import Translator
 from config.settings import load_settings, save_settings
 from gui.styles.themes_style import THEMES, get_theme
-from gui.styles.form_styles import load_button_style
-from gui.styles.form_styles import load_global_stylesheet
+from gui.styles.form_styles import load_button_style, load_global_stylesheet
 from core.logger import log_section, log_subsection, log_info, log_exception
 
 class PreferencesWindow(QDialog):
-    DEFAULT_WIDTH  = 400
-    DEFAULT_HEIGHT = 260
+    DEFAULT_WIDTH  = 800
+    DEFAULT_HEIGHT = 600
 
     LANGUAGE_NAMES = {
         "de": "Deutsch",
@@ -26,7 +25,7 @@ class PreferencesWindow(QDialog):
         "modern": "Modern",
         "future": "Future",
         "minimal": "Minimal"
-}
+    }
 
     MODE_NAMES = {
         "light": "Light",
@@ -43,9 +42,9 @@ class PreferencesWindow(QDialog):
             self.settings   = load_settings()
             self.original_language = self.translator.lang
 
-            self.setWindowTitle(self.translator.tr("menu_settings"))
+            self.setWindowTitle(self.translator.tr("win_preference_title"))
             self.resize(self.DEFAULT_WIDTH, self.DEFAULT_HEIGHT)
-            self.setStyleSheet(load_global_stylesheet())  # Apply global stylesheet
+            self.setStyleSheet(load_global_stylesheet())
             self._init_ui()
             self._load_values()
             log_info("PreferencesWindow initialized successfully.")
@@ -56,25 +55,24 @@ class PreferencesWindow(QDialog):
         log_subsection("_init_ui")
         try:
             # Language selection
-            self.lang_label = QLabel(self.translator.tr("menu_language"), self)
+            self.lang_label = QLabel(self.translator.tr("win_preference_title"), self)
             self.lang_combo = QComboBox(self)
-            for code in self.LANGUAGE_NAMES:
-                name = self.LANGUAGE_NAMES[code]
+            for code, name in self.LANGUAGE_NAMES.items():
                 self.lang_combo.addItem(name, userData=code)
             self.lang_combo.currentIndexChanged.connect(self._on_language_changed)
 
             # Style selection
             self.style_label = QLabel("Style", self)
             self.style_combo = QComboBox(self)
-            for code in self.STYLE_NAMES:
-                self.style_combo.addItem(self.STYLE_NAMES[code], userData=code)
+            for code, name in self.STYLE_NAMES.items():
+                self.style_combo.addItem(name, userData=code)
             self.style_combo.currentIndexChanged.connect(self._on_style_or_mode_changed)
 
             # Mode selection
             self.mode_label = QLabel("Modus", self)
             self.mode_combo = QComboBox(self)
-            for code in self.MODE_NAMES:
-                self.mode_combo.addItem(self.MODE_NAMES[code], userData=code)
+            for code, name in self.MODE_NAMES.items():
+                self.mode_combo.addItem(name, userData=code)
             self.mode_combo.currentIndexChanged.connect(self._on_style_or_mode_changed)
 
             # Buttons
@@ -110,7 +108,7 @@ class PreferencesWindow(QDialog):
             self.lang_combo.setCurrentIndex(idx)
             # Style
             style = self.settings.get("style", "modern")
-            idx = list(self.STYLE_NAMES.keys()).index(style) if style in self.STYLE_NAMES else 2  # modern als Default
+            idx = list(self.STYLE_NAMES.keys()).index(style) if style in self.STYLE_NAMES else 2
             self.style_combo.setCurrentIndex(idx)
             # Mode
             mode = self.settings.get("mode", "light")
@@ -134,7 +132,7 @@ class PreferencesWindow(QDialog):
             log_exception("Error changing language", e)
 
     def _on_style_or_mode_changed(self):
-        self.setStyleSheet(load_global_stylesheet())  # Apply global stylesheet for the whole window
+        log_subsection("_on_style_or_mode_changed")
         self._update_preview()
 
     def _update_ui_texts(self):
@@ -144,9 +142,8 @@ class PreferencesWindow(QDialog):
             self.lang_label.setText(self.translator.tr("menu_language"))
             self.style_label.setText("Style")
             self.mode_label.setText("Modus")
-            self.preview_label.setText("Vorschau:")
-            self.ok_button.setText(self.translator.tr("action_save"))
-            self.cancel_button.setText(self.translator.tr("action_cancel"))
+            self.ok_button.setText(self.translator.tr("preference_action_save"))
+            self.cancel_button.setText(self.translator.tr("preference_action_cancel"))
             log_info("UI texts updated.")
         except Exception as e:
             log_exception("Error updating UI texts", e)
@@ -155,8 +152,8 @@ class PreferencesWindow(QDialog):
         style_code = self.style_combo.itemData(self.style_combo.currentIndex())
         mode_code = self.mode_combo.itemData(self.mode_combo.currentIndex())
         style_dict = get_theme(style_code, mode_code)
-        btn_style = load_button_style(font_size=16)
-        self.preview_button.setStyleSheet(btn_style)
+        # Wende das Stylesheet auf das gesamte Fenster an
+        self.setStyleSheet(load_global_stylesheet())
 
     def _on_ok(self):
         log_subsection("_on_ok")

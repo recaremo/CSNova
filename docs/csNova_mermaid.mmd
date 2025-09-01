@@ -1,4 +1,4 @@
-%% CSNova: Vollständige Datenbankstruktur und Modul-Abhängigkeiten
+%% CSNova: Vollständige Datenbankstruktur und Modul-Abhängigkeiten (aktualisiert)
 
 graph TD
 
@@ -54,7 +54,6 @@ graph TD
     tables --> project_character_group_map.py
 
 %% Foreign-Key-Beziehungen (vollständig)
-    %% Charakter-Tabellen
     character_main.py --> gender.py
     character_main.py --> sex_orientation.py
     character_origin.py --> character_main.py
@@ -64,38 +63,26 @@ graph TD
     character_appearance_main.py --> character_main.py
     character_appearance_detail.py --> character_main.py
     character_groups.py --> character_main.py
-
-    %% Projekt-Tabellen
     project_chapters.py --> project.py
     project_chapters_scenes.py --> project_chapters.py
-
-    %% Mapping-Tabellen
     project_scene_character_map.py --> project_chapters_scenes.py
     project_scene_character_map.py --> character_main.py
-
     project_scene_location_map.py --> project_chapters_scenes.py
     project_scene_location_map.py --> project_locations.py
-
     project_scene_object_map.py --> project_chapters_scenes.py
     project_scene_object_map.py --> project_objects.py
-
     project_scene_storyline_map.py --> project_chapters_scenes.py
     project_scene_storyline_map.py --> project_storylines.py
-
     project_character_group_map.py --> character_main.py
     project_character_group_map.py --> character_groups.py
-
     project_character_storyline_map.py --> character_main.py
     project_character_storyline_map.py --> project_storylines.py
 
-%% Übersetzungen und Hilfedateien
-    translations["core/translations/"]
-    translations --> de.json
-    translations --> en.json
-    translations --> es.json
-    translations --> fr.json
-    translations --> forms
-    translations --> help
+%% Übersetzungen (aktualisiert)
+    translations["core/translations/translations.json"]
+    core --> translations
+    translator.py --> translations
+    gui --> translations
 
 %% GUI-Struktur
     gui["gui/"]
@@ -263,4 +250,4 @@ graph TD
 %% Beziehungen zwischen csnova.py und export
     csnova.py --> export
 
-%% Kommentar: Alle Tabellen und Foreign-Key-Beziehungen sind vollständig abgebildet.
+%% Kommentar: Die Übersetzungsstruktur ist jetzt zentral und konsistent.

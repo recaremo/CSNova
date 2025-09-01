@@ -7,8 +7,8 @@ def create_table(cursor):
     CREATE TABLE IF NOT EXISTS character_groups (
         groups_ID INTEGER PRIMARY KEY AUTOINCREMENT,
         character_ID INTEGER NOT NULL,
-        FOREIGN KEY(character_ID) REFERENCES character_main(character_ID),
         groups_title TEXT,
-        groups_description TEXT
+        groups_description TEXT,
+        FOREIGN KEY(character_ID) REFERENCES character_main(character_ID)
     );
     """)

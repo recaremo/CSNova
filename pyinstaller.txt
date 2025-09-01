@@ -1,0 +1,10 @@
+pyinstaller --onefile --windowed csnova.py \
+  --add-data "core/translations:core/translations" \
+  --add-data "core/tables:core/tables" \
+  --add-data "data:data" \
+  --add-data "assets:assets" \
+  --add-data "config:config" \
+  --add-data "gui/styles:gui/styles" \
+  --add-data "docs:docs" \
+  --add-data "ai:ai" \
+  --add-data "export:export"

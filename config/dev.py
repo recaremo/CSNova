@@ -20,11 +20,8 @@ TABLES_DIR       = CORE_DIR / "tables"
 # Important files
 DB_PATH          = DATA_DIR / "csnova.db"
 SETTINGS_FILE    = CONFIG_DIR / "user_settings.json"
+FORM_FIELDS_FILE = CORE_DIR / "config" / "form_fields.json"
 BG_IMAGE_PATH    = ASSETS_DIR / "media" / "csNova_background_start.png"
-
-# Translation and help files
-HELP_DIR         = TRANSLATIONS_DIR / "help"
-FORMS_DIR        = TRANSLATIONS_DIR / "forms"
 
 # Ensure directories exist (no logging here!)
 for dir_path in [DATA_DIR, CONFIG_DIR, ASSETS_DIR, DOCS_DIR]:

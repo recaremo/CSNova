@@ -1,7 +1,9 @@
+import json
 from PySide6.QtWidgets import QWidget, QVBoxLayout
 from gui.widgets.base_form_widget import BaseFormWidget
 from core.translator import Translator
-from core.logger import log_section, log_subsection, log_info, log_exception
+from core.logger import log_section, log_subsection, log_info, log_error
+from config.dev import FORM_FIELDS_FILE
 
 class CharactersForm(QWidget):
     """
@@ -13,23 +15,20 @@ class CharactersForm(QWidget):
         try:
             super().__init__(parent)
             self.translator = translator
-            fields = [
-                {"name": "character_name", "label_key": "character_name", "default_label": "Name", "type": "text"},
-                {"name": "character_nickname", "label_key": "character_nickname", "default_label": "Nickname", "type": "text"},
-                {"name": "character_gender", "label_key": "character_gender", "default_label": "Gender", "type": "text"},
-                {"name": "character_age", "label_key": "character_age", "default_label": "Age", "type": "spin", "max": 120},
-                {"name": "character_role", "label_key": "character_role", "default_label": "Role", "type": "text"},
-                {"name": "character_description", "label_key": "character_description", "default_label": "Description", "type": "text"},
-                # ... add more fields as needed ...
-            ]
+
+            # Felder zentral aus JSON laden
+            with open(FORM_FIELDS_FILE, "r", encoding="utf-8") as f:
+                all_fields = json.load(f)
+            fields = all_fields.get("characters", [])
+
             def toolbar_actions(toolbar):
                 toolbar.save_action.triggered.connect(self._on_save)
+
             self.form = BaseFormWidget(
-                title=self.translator.form_label("character_form_label"),
+                title=self.translator.tr("char"),
                 fields=fields,
-                form_labels=self.translator.form_labels,
                 toolbar_actions=toolbar_actions,
-                form_prefix="character",
+                form_prefix="char",
                 translator=self.translator,
                 parent=self
             )
@@ -38,19 +37,8 @@ class CharactersForm(QWidget):
             self.setLayout(layout)
             log_info("CharactersForm initialized successfully.")
         except Exception as e:
-            log_exception("Error initializing CharactersForm", e)
+            log_error(f"Error initializing CharactersForm: {str(e)}")
 
     def _on_save(self):
-        """
-        Handle save action for character form.
-        """
         log_subsection("_on_save")
-        try:
-            name = self.form.inputs["character_name"].text()
-            if not name:
-                log_info("Validation failed: character_name is empty.")
-                return
-            # ...save logic...
-            log_info("CharactersForm save triggered.")
-        except Exception as e:
-            log_exception("Error during CharactersForm save", e)
+        log_info("CharactersForm save triggered.")

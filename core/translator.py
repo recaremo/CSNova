@@ -1,68 +1,67 @@
 import json
-from config.dev import TRANSLATIONS_DIR, FORMS_DIR, HELP_DIR
+from config.dev import TRANSLATIONS_DIR
 from core.logger import log_section, log_subsection, log_info, log_exception
 
 class Translator:
     def __init__(self, lang="en"):
         log_section("translator.py")
         log_subsection("__init__")
-        try:
-            self.lang = lang
-            self.translations = self._load_json(TRANSLATIONS_DIR / f"{lang}.json")
-            self.form_labels = self._load_json(FORMS_DIR / f"form_{lang}.json")
-            self.help_texts = self._load_json(HELP_DIR / f"help_{lang}.json")
-            log_info(f"Translator initialized with language '{self.lang}'.")
-        except Exception as e:
-            log_exception("Error initializing Translator", e)
+        self.lang = lang
+        self.translations = {}
+        self._load_translations()
 
-    def _load_json(self, path):
-        log_subsection(f"_load_json: {path}")
+    def _load_translations(self):
+        log_subsection("_load_translations")
         try:
+            path = TRANSLATIONS_DIR / "translations.json"
             with open(path, "r", encoding="utf-8") as f:
                 data = json.load(f)
-                log_info(f"Loaded translations from {path}")
-                return data
+            for entry in data:
+                if entry.get("ID") == self.lang:
+                    self.translations = entry
+                    break
+            log_info(f"Translations loaded for language '{self.lang}'.")
         except Exception as e:
-            log_exception(f"Error loading {path}", e)
-            return {}
+            log_exception("Error loading translations", e)
+            self.translations = {}
 
     def set_language(self, lang_code):
         log_subsection("set_language")
-        try:
-            self.lang = lang_code
-            self.translations = self._load_json(TRANSLATIONS_DIR / f"{lang_code}.json")
-            self.form_labels = self._load_json(FORMS_DIR / f"form_{lang_code}.json")
-            self.help_texts = self._load_json(HELP_DIR / f"help_{lang_code}.json")
-            log_info(f"Language set to '{lang_code}'.")
-        except Exception as e:
-            log_exception("Error setting language", e)
+        self.lang = lang_code
+        self._load_translations()
 
     def tr(self, key):
         log_subsection("tr")
-        try:
-            value = self.translations.get(key, key)
-            log_info(f"Translation for key '{key}': '{value}'")
-            return value
-        except Exception as e:
-            log_exception(f"Error translating key '{key}'", e)
-            return key
+        # Flache Struktur oder gruppiert
+        return (
+            self.translations.get(key)
+            or self.translations.get("form_labels", {}).get(key)
+            or self.translations.get("help_texts", {}).get(key)
+            or key
+        )
 
     def form_label(self, key):
         log_subsection("form_label")
-        try:
-            value = self.form_labels.get(key, key)
-            log_info(f"Form label for key '{key}': '{value}'")
-            return value
-        except Exception as e:
-            log_exception(f"Error getting form label for key '{key}'", e)
-            return key
+        # Erst gruppiert, dann flach
+        return (
+            self.translations.get("form_labels", {}).get(key)
+            or self.translations.get(key)
+            or key
+        )
 
     def help_text(self, key):
         log_subsection("help_text")
-        try:
-            value = self.help_texts.get(key, "Help and information will be displayed here.")
-            log_info(f"Help text for key '{key}': '{value}'")
-            return value
-        except Exception as e:
-            log_exception(f"Error getting help text for key '{key}'", e)
-            return "Help and information will be displayed here."
+        # Erst gruppiert, dann flach
+        return (
+            self.translations.get("help_texts", {}).get(key)
+            or self.translations.get(key)
+            or key
+        )
+
+    @property
+    def form_labels(self):
+        # Gibt alle Label-Keys als Dictionary zurück (gruppiert oder flach)
+        if "form_labels" in self.translations:
+            return self.translations["form_labels"]
+        # Fallback: alle Keys mit typischen Label-Namen
+        return {k: v for k, v in self.translations.items() if any(x in k for x in ["label", "btn", "title", "name"])}
