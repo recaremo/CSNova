@@ -7,6 +7,7 @@ from PySide6.QtCore import QTimer
 from gui.preferences import PreferencesWindow
 from core.translator import Translator
 from gui.project_window import ProjectWindow
+from gui.widgets.help_panel import HelpPanel
 from gui.styles.form_styles import load_button_style, load_global_stylesheet
 import sys
 
@@ -35,7 +36,9 @@ class StartWindow(QWidget):
             self.pref_window = None
             self._create_ui()
             self._retranslate_and_position()
-            self.setStyleSheet(load_global_stylesheet())
+            # Korrektur: Hilfetext als String holen und an HelpPanel übergeben
+            help_text = self.translator.help_text("help_new_project")
+            self.help_panel = HelpPanel(help_text, self)
             log_info("StartWindow initialized successfully.")
         except Exception as e:
             log_exception("Error initializing StartWindow", e)

@@ -10,8 +10,6 @@ class CenterPanel(QWidget):
         try:
             super().__init__(parent)
             self.setObjectName("CenterPanel")
-            self.setStyleSheet(load_global_stylesheet())
-
             self.splitter = QSplitter(self)
             self.splitter.addWidget(navigation_panel)
             self.splitter.addWidget(content_widget)

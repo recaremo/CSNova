@@ -10,9 +10,9 @@ class HelpPanel(QWidget):
             super().__init__(parent)
             self.setObjectName("HelpPanel")
             self.setStyleSheet(load_global_stylesheet())
-
             self.layout = QVBoxLayout()
-            self.help_label = QLabel(help_text, self)
+            # Sicherstellen, dass help_text ein String ist
+            self.help_label = QLabel(str(help_text), self)
             self.help_label.setWordWrap(True)
             self.layout.addWidget(self.help_label)
             self.setLayout(self.layout)
@@ -23,7 +23,8 @@ class HelpPanel(QWidget):
     def set_help_text(self, text):
         log_subsection("set_help_text")
         try:
-            self.help_label.setText(text)
+            # Sicherstellen, dass text ein String ist
+            self.help_label.setText(str(text))
             log_info("HelpPanel help text updated.")
         except Exception as e:
             log_exception("Error updating help text in HelpPanel", e)

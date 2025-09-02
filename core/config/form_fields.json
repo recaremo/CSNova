@@ -1,19 +1,21 @@
 {
   "projects": [
+    {"name": "pro_header", "label_key": "pro", "type": "header"},
     {"name": "title", "label_key": "pro_detail_title", "type": "text", "required": true, "max_length": 120},
     {"name": "subtitle", "label_key": "pro_detail_subtitle", "type": "text", "required": false, "max_length": 120},
     {"name": "author", "label_key": "pro_detail_author", "type": "text", "required": true, "max_length": 80},
     {"name": "premise", "label_key": "pro_detail_premise", "type": "text", "required": false, "max_length": 200},
     {"name": "genre", "label_key": "pro_detail_genre", "type": "text", "required": false, "max_length": 80},
-    {"name": "narrative_perspective", "label_key": "pro_detail_narrative_perpective", "type": "text", "required": false, "max_length": 80},
-    {"name": "timeline", "label_key": "pro_detail_timline", "type": "text", "required": false, "max_length": 80},
+    {"name": "narrative_perspective", "label_key": "pro_detail_narrative_perspective", "type": "text", "required": false, "max_length": 80},
+    {"name": "timeline", "label_key": "pro_detail_timeline", "type": "text", "required": false, "max_length": 80},
     {"name": "target_group", "label_key": "pro_detail_targetgroup", "type": "text", "required": false, "max_length": 80},
     {"name": "start_date", "label_key": "pro_detail_startdate", "type": "date", "required": false},
     {"name": "deadline", "label_key": "pro_detail_deadline", "type": "date", "required": false},
-    {"name": "word_count_goal", "label_key": "pro_detail_words_count_goal", "type": "spin", "required": false, "max": 1000000},
+    {"name": "words_count_goal", "label_key": "pro_detail_words_count_goal", "type": "spin", "required": false, "max": 1000000},
     {"name": "cover_image", "label_key": "pro_detail_cover_image", "type": "text", "required": false, "max_length": 120}
   ],
   "characters": [
+    {"name": "char_header", "label_key": "char", "type": "header"},
     {"name": "char_bas_name", "label_key": "char_bas_name", "type": "text", "required": true, "max_length": 80},
     {"name": "char_bas_nickname", "label_key": "char_bas_nickname", "type": "text", "required": false, "max_length": 80},
     {"name": "char_bas_gender", "label_key": "char_bas_gender", "type": "text", "required": true},
@@ -22,26 +24,31 @@
     {"name": "char_bas_notes", "label_key": "char_bas_notes", "type": "text", "required": false, "max_length": 200}
   ],
   "chapters": [
-    {"name": "chapter_title", "label_key": "chapter_title", "type": "text", "required": true, "max_length": 120},
+    {"name": "chapters_header", "label_key": "chapters", "type": "header"},
     {"name": "chapter_number", "label_key": "chapter_number", "type": "spin", "required": false, "max": 999},
+    {"name": "chapter_title", "label_key": "chapter_title", "type": "text", "required": true, "max_length": 120},
     {"name": "chapter_summary", "label_key": "chapter_summary", "type": "text", "required": false, "max_length": 500}
   ],
   "locations": [
+    {"name": "location_header", "label_key": "location", "type": "header"},
     {"name": "location_title", "label_key": "location_title", "type": "text", "required": true, "max_length": 120},
     {"name": "location_description", "label_key": "location_description", "type": "text", "required": false, "max_length": 500},
     {"name": "location_notes", "label_key": "location_notes", "type": "text", "required": false, "max_length": 200}
   ],
   "objects": [
+    {"name": "object_header", "label_key": "objects", "type": "header"},
     {"name": "object_title", "label_key": "object_title", "type": "text", "required": true, "max_length": 120},
     {"name": "object_description", "label_key": "object_description", "type": "text", "required": false, "max_length": 500},
     {"name": "object_notes", "label_key": "object_notes", "type": "text", "required": false, "max_length": 200}
   ],
   "scenes": [
-    {"name": "scene_title", "label_key": "scene_title", "type": "text", "required": true, "max_length": 120},
+    {"name": "scene_header", "label_key": "scene", "type": "header"},
     {"name": "scene_number", "label_key": "scene_number", "type": "spin", "required": false, "max": 9999},
+    {"name": "scene_title", "label_key": "scene_title", "type": "text", "required": true, "max_length": 120},
     {"name": "scene_summary", "label_key": "scene_summary", "type": "text", "required": false, "max_length": 500}
   ],
   "storylines": [
+    {"name": "storyline_header", "label_key": "storyline", "type": "header"},
     {"name": "storyline_title", "label_key": "storyline_title", "type": "text", "required": true, "max_length": 120},
     {"name": "storyline_description", "label_key": "storyline_description", "type": "text", "required": false, "max_length": 500},
     {"name": "storyline_notes", "label_key": "storyline_notes", "type": "text", "required": false, "max_length": 200}

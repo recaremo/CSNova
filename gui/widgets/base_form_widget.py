@@ -18,17 +18,11 @@ class BaseFormWidget(QWidget):
             # Hauptlayout
             main_layout = QVBoxLayout()
 
-            # Titel und Toolbar nebeneinander
-            title_toolbar_layout = QHBoxLayout()
-            self.title_label = QLabel(title, self)
-            self.title_label.setObjectName("FormTitleLabel")
+            # Toolbar linksbündig über die gesamte Breite
             self.toolbar = FormToolbar(self.translator, form_prefix, self)
             if toolbar_actions:
                 toolbar_actions(self.toolbar)
-            title_toolbar_layout.addWidget(self.title_label)
-            title_toolbar_layout.addStretch()
-            title_toolbar_layout.addWidget(self.toolbar)
-            main_layout.addLayout(title_toolbar_layout)
+            main_layout.addWidget(self.toolbar)
             main_layout.addSpacing(12)
 
             # Formularfelder
@@ -36,6 +30,14 @@ class BaseFormWidget(QWidget):
             self.inputs = {}
 
             for field in fields:
+                if field.get("type") == "header":
+                    # Überschrift erzeugen (großes, fettes Label)
+                    header_text = self.translator.tr(field["label_key"])
+                    header_label = QLabel(header_text if header_text else field.get("default_label", ""), self)
+                    header_label.setStyleSheet("font-size: 20px; font-weight: bold; margin-bottom: 12px;")
+                    self.form_layout.addRow(header_label)
+                    continue  # Keine Eingabe für Header-Felder
+
                 label_text = self.translator.tr(field["label_key"])
                 label = QLabel(label_text if label_text else field.get("default_label", ""), self)
                 input_widget = None

@@ -1548,20 +1548,22 @@ def create_table(cursor):
 ```json
 {
   "projects": [
+    {"name": "pro_header", "label_key": "pro", "type": "header"},
     {"name": "title", "label_key": "pro_detail_title", "type": "text", "required": true, "max_length": 120},
     {"name": "subtitle", "label_key": "pro_detail_subtitle", "type": "text", "required": false, "max_length": 120},
     {"name": "author", "label_key": "pro_detail_author", "type": "text", "required": true, "max_length": 80},
     {"name": "premise", "label_key": "pro_detail_premise", "type": "text", "required": false, "max_length": 200},
     {"name": "genre", "label_key": "pro_detail_genre", "type": "text", "required": false, "max_length": 80},
-    {"name": "narrative_perspective", "label_key": "pro_detail_narrative_perpective", "type": "text", "required": false, "max_length": 80},
-    {"name": "timeline", "label_key": "pro_detail_timline", "type": "text", "required": false, "max_length": 80},
+    {"name": "narrative_perspective", "label_key": "pro_detail_narrative_perspective", "type": "text", "required": false, "max_length": 80},
+    {"name": "timeline", "label_key": "pro_detail_timeline", "type": "text", "required": false, "max_length": 80},
     {"name": "target_group", "label_key": "pro_detail_targetgroup", "type": "text", "required": false, "max_length": 80},
     {"name": "start_date", "label_key": "pro_detail_startdate", "type": "date", "required": false},
     {"name": "deadline", "label_key": "pro_detail_deadline", "type": "date", "required": false},
-    {"name": "word_count_goal", "label_key": "pro_detail_words_count_goal", "type": "spin", "required": false, "max": 1000000},
+    {"name": "words_count_goal", "label_key": "pro_detail_words_count_goal", "type": "spin", "required": false, "max": 1000000},
     {"name": "cover_image", "label_key": "pro_detail_cover_image", "type": "text", "required": false, "max_length": 120}
   ],
   "characters": [
+    {"name": "char_header", "label_key": "char", "type": "header"},
     {"name": "char_bas_name", "label_key": "char_bas_name", "type": "text", "required": true, "max_length": 80},
     {"name": "char_bas_nickname", "label_key": "char_bas_nickname", "type": "text", "required": false, "max_length": 80},
     {"name": "char_bas_gender", "label_key": "char_bas_gender", "type": "text", "required": true},
@@ -1570,26 +1572,31 @@ def create_table(cursor):
     {"name": "char_bas_notes", "label_key": "char_bas_notes", "type": "text", "required": false, "max_length": 200}
   ],
   "chapters": [
-    {"name": "chapter_title", "label_key": "chapter_title", "type": "text", "required": true, "max_length": 120},
+    {"name": "chapters_header", "label_key": "chapters", "type": "header"},
     {"name": "chapter_number", "label_key": "chapter_number", "type": "spin", "required": false, "max": 999},
+    {"name": "chapter_title", "label_key": "chapter_title", "type": "text", "required": true, "max_length": 120},
     {"name": "chapter_summary", "label_key": "chapter_summary", "type": "text", "required": false, "max_length": 500}
   ],
   "locations": [
+    {"name": "location_header", "label_key": "location", "type": "header"},
     {"name": "location_title", "label_key": "location_title", "type": "text", "required": true, "max_length": 120},
     {"name": "location_description", "label_key": "location_description", "type": "text", "required": false, "max_length": 500},
     {"name": "location_notes", "label_key": "location_notes", "type": "text", "required": false, "max_length": 200}
   ],
   "objects": [
+    {"name": "object_header", "label_key": "objects", "type": "header"},
     {"name": "object_title", "label_key": "object_title", "type": "text", "required": true, "max_length": 120},
     {"name": "object_description", "label_key": "object_description", "type": "text", "required": false, "max_length": 500},
     {"name": "object_notes", "label_key": "object_notes", "type": "text", "required": false, "max_length": 200}
   ],
   "scenes": [
-    {"name": "scene_title", "label_key": "scene_title", "type": "text", "required": true, "max_length": 120},
+    {"name": "scene_header", "label_key": "scene", "type": "header"},
     {"name": "scene_number", "label_key": "scene_number", "type": "spin", "required": false, "max": 9999},
+    {"name": "scene_title", "label_key": "scene_title", "type": "text", "required": true, "max_length": 120},
     {"name": "scene_summary", "label_key": "scene_summary", "type": "text", "required": false, "max_length": 500}
   ],
   "storylines": [
+    {"name": "storyline_header", "label_key": "storyline", "type": "header"},
     {"name": "storyline_title", "label_key": "storyline_title", "type": "text", "required": true, "max_length": 120},
     {"name": "storyline_description", "label_key": "storyline_description", "type": "text", "required": false, "max_length": 500},
     {"name": "storyline_notes", "label_key": "storyline_notes", "type": "text", "required": false, "max_length": 200}
@@ -2635,9 +2642,9 @@ class HelpPanel(QWidget):
             super().__init__(parent)
             self.setObjectName("HelpPanel")
             self.setStyleSheet(load_global_stylesheet())
-
             self.layout = QVBoxLayout()
-            self.help_label = QLabel(help_text, self)
+            # Sicherstellen, dass help_text ein String ist
+            self.help_label = QLabel(str(help_text), self)
             self.help_label.setWordWrap(True)
             self.layout.addWidget(self.help_label)
             self.setLayout(self.layout)
@@ -2648,7 +2655,8 @@ class HelpPanel(QWidget):
     def set_help_text(self, text):
         log_subsection("set_help_text")
         try:
-            self.help_label.setText(text)
+            # Sicherstellen, dass text ein String ist
+            self.help_label.setText(str(text))
             log_info("HelpPanel help text updated.")
         except Exception as e:
             log_exception("Error updating help text in HelpPanel", e)
@@ -2773,17 +2781,11 @@ class BaseFormWidget(QWidget):
             # Hauptlayout
             main_layout = QVBoxLayout()
 
-            # Titel und Toolbar nebeneinander
-            title_toolbar_layout = QHBoxLayout()
-            self.title_label = QLabel(title, self)
-            self.title_label.setObjectName("FormTitleLabel")
+            # Toolbar linksbündig über die gesamte Breite
             self.toolbar = FormToolbar(self.translator, form_prefix, self)
             if toolbar_actions:
                 toolbar_actions(self.toolbar)
-            title_toolbar_layout.addWidget(self.title_label)
-            title_toolbar_layout.addStretch()
-            title_toolbar_layout.addWidget(self.toolbar)
-            main_layout.addLayout(title_toolbar_layout)
+            main_layout.addWidget(self.toolbar)
             main_layout.addSpacing(12)
 
             # Formularfelder
@@ -2791,6 +2793,14 @@ class BaseFormWidget(QWidget):
             self.inputs = {}
 
             for field in fields:
+                if field.get("type") == "header":
+                    # Überschrift erzeugen (großes, fettes Label)
+                    header_text = self.translator.tr(field["label_key"])
+                    header_label = QLabel(header_text if header_text else field.get("default_label", ""), self)
+                    header_label.setStyleSheet("font-size: 20px; font-weight: bold; margin-bottom: 12px;")
+                    self.form_layout.addRow(header_label)
+                    continue  # Keine Eingabe für Header-Felder
+
                 label_text = self.translator.tr(field["label_key"])
                 label = QLabel(label_text if label_text else field.get("default_label", ""), self)
                 input_widget = None
@@ -3216,6 +3226,7 @@ from PySide6.QtCore import QTimer
 from gui.preferences import PreferencesWindow
 from core.translator import Translator
 from gui.project_window import ProjectWindow
+from gui.widgets.help_panel import HelpPanel
 from gui.styles.form_styles import load_button_style, load_global_stylesheet
 import sys
 
@@ -3244,7 +3255,9 @@ class StartWindow(QWidget):
             self.pref_window = None
             self._create_ui()
             self._retranslate_and_position()
-            self.setStyleSheet(load_global_stylesheet())
+            # Korrektur: Hilfetext als String holen und an HelpPanel übergeben
+            help_text = self.translator.help_text("help_new_project")
+            self.help_panel = HelpPanel(help_text, self)
             log_info("StartWindow initialized successfully.")
         except Exception as e:
             log_exception("Error initializing StartWindow", e)
@@ -3407,6 +3420,7 @@ if __name__ == "__main__":
     except Exception as e:
         log_exception("Error in main execution", e)
 ```
+
 ##### 6.5.4.2 preferences.py
 
 ```python
@@ -3636,7 +3650,6 @@ class ProjectWindow(QWidget):
             self.button_style_active = load_active_button_style(18)
             self.active_nav_key = None
             self.start_window = start_window
-            self.setStyleSheet(load_global_stylesheet())  # Apply global stylesheet
 
             # Initialisiere splitter direkt am Anfang!
             self.splitter = QSplitter(Qt.Horizontal)
@@ -3681,7 +3694,8 @@ class ProjectWindow(QWidget):
                 keys, self.translator, self, callbacks
             )
 
-            self.help_panel = HelpPanel(self)
+            help_text = self.translator.help_text("help_new_project")
+            self.help_panel = HelpPanel(help_text, self)
             # Start with project form
             self.form_widget = StartForm(self.translator, self)
 
@@ -3722,7 +3736,7 @@ class ProjectWindow(QWidget):
         try:
             form_widget = CharactersForm(self.translator, self)
             self._replace_form_widget(form_widget)
-            help_text = self.translator.help_text("help_characters")
+            help_text = self.translator.help_text("help_chars")
             self.help_panel.set_help_text(help_text)
             self.splitter.setSizes([300, 900, 300])
             log_info("Characters form displayed successfully.")

@@ -38,7 +38,6 @@ class ProjectWindow(QWidget):
             self.button_style_active = load_active_button_style(18)
             self.active_nav_key = None
             self.start_window = start_window
-            self.setStyleSheet(load_global_stylesheet())  # Apply global stylesheet
 
             # Initialisiere splitter direkt am Anfang!
             self.splitter = QSplitter(Qt.Horizontal)
@@ -83,7 +82,8 @@ class ProjectWindow(QWidget):
                 keys, self.translator, self, callbacks
             )
 
-            self.help_panel = HelpPanel(self)
+            help_text = self.translator.help_text("help_new_project")
+            self.help_panel = HelpPanel(help_text, self)
             # Start with project form
             self.form_widget = StartForm(self.translator, self)
 
@@ -124,7 +124,7 @@ class ProjectWindow(QWidget):
         try:
             form_widget = CharactersForm(self.translator, self)
             self._replace_form_widget(form_widget)
-            help_text = self.translator.help_text("help_characters")
+            help_text = self.translator.help_text("help_chars")
             self.help_panel.set_help_text(help_text)
             self.splitter.setSizes([300, 900, 300])
             log_info("Characters form displayed successfully.")
