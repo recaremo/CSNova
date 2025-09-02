@@ -4,49 +4,18 @@ from PySide6.QtWidgets import (
 )
 from core.translator import Translator
 from config.settings import load_settings, save_settings
-from gui.styles.themes_style import THEMES, get_theme
-from gui.styles.form_styles import load_button_style, load_global_stylesheet
 from core.logger import log_section, log_subsection, log_info, log_exception
 
 class PreferencesWindow(QDialog):
-    DEFAULT_WIDTH  = 800
-    DEFAULT_HEIGHT = 600
-
-    LANGUAGE_NAMES = {
-        "de": "Deutsch",
-        "en": "English",
-        "fr": "Français",
-        "es": "Español"
-    }
-
-    STYLE_NAMES = {
-        "oldschool": "Old-School",
-        "vintage": "Vintage",
-        "modern": "Modern",
-        "future": "Future",
-        "minimal": "Minimal"
-    }
-
-    MODE_NAMES = {
-        "light": "Light",
-        "middle": "Middle",
-        "dark": "Dark"
-    }
-
     def __init__(self, parent=None):
         log_section("preferences.py")
         log_subsection("__init__")
         try:
             super().__init__(parent)
-            self.translator = parent.translator
-            self.settings   = load_settings()
-            self.original_language = self.translator.lang
-
-            self.setWindowTitle(self.translator.tr("win_preference_title"))
-            self.resize(self.DEFAULT_WIDTH, self.DEFAULT_HEIGHT)
-            self.setStyleSheet(load_global_stylesheet())
+            self.translator = parent.translator if parent and hasattr(parent, "translator") else Translator()
+            self.setWindowTitle(self.translator.tr("preference_title"))
+            self.settings = load_settings()
             self._init_ui()
-            self._load_values()
             log_info("PreferencesWindow initialized successfully.")
         except Exception as e:
             log_exception("Error initializing PreferencesWindow", e)
@@ -54,128 +23,74 @@ class PreferencesWindow(QDialog):
     def _init_ui(self):
         log_subsection("_init_ui")
         try:
-            # Language selection
-            self.lang_label = QLabel(self.translator.tr("win_preference_title"), self)
+            layout = QVBoxLayout(self)
+
+            # Sprache
+            lang_label = QLabel(self.translator.tr("preference_language"), self)
             self.lang_combo = QComboBox(self)
-            for code, name in self.LANGUAGE_NAMES.items():
-                self.lang_combo.addItem(name, userData=code)
-            self.lang_combo.currentIndexChanged.connect(self._on_language_changed)
+            self.lang_combo.addItems(["de", "en", "es"])
+            self.lang_combo.setCurrentText(self.settings.get("language", "de"))
+            layout.addWidget(lang_label)
+            layout.addWidget(self.lang_combo)
 
-            # Style selection
-            self.style_label = QLabel("Style", self)
-            self.style_combo = QComboBox(self)
-            for code, name in self.STYLE_NAMES.items():
-                self.style_combo.addItem(name, userData=code)
-            self.style_combo.currentIndexChanged.connect(self._on_style_or_mode_changed)
-
-            # Mode selection
-            self.mode_label = QLabel("Modus", self)
-            self.mode_combo = QComboBox(self)
-            for code, name in self.MODE_NAMES.items():
-                self.mode_combo.addItem(name, userData=code)
-            self.mode_combo.currentIndexChanged.connect(self._on_style_or_mode_changed)
+            # Theme
+            theme_label = QLabel(self.translator.tr("preference_theme"), self)
+            self.theme_combo = QComboBox(self)
+            self.theme_combo.addItems(["modern", "vintage"])
+            self.theme_combo.setCurrentText(self.settings.get("style", "modern"))
+            layout.addWidget(theme_label)
+            layout.addWidget(self.theme_combo)
 
             # Buttons
-            self.ok_button     = QPushButton(self)
-            self.cancel_button = QPushButton(self)
-            self.ok_button.clicked.connect(self._on_ok)
-            self.cancel_button.clicked.connect(self._on_cancel)
-
             btn_layout = QHBoxLayout()
-            btn_layout.addStretch()
-            btn_layout.addWidget(self.ok_button)
-            btn_layout.addWidget(self.cancel_button)
+            self.save_btn = QPushButton(self.translator.tr("preference_save"), self)
+            self.cancel_btn = QPushButton(self.translator.tr("preference_cancel"), self)
+            btn_layout.addWidget(self.save_btn)
+            btn_layout.addWidget(self.cancel_btn)
+            layout.addLayout(btn_layout)
 
-            main_layout = QVBoxLayout(self)
-            main_layout.addWidget(self.lang_label)
-            main_layout.addWidget(self.lang_combo)
-            main_layout.addWidget(self.style_label)
-            main_layout.addWidget(self.style_combo)
-            main_layout.addWidget(self.mode_label)
-            main_layout.addWidget(self.mode_combo)
-            main_layout.addLayout(btn_layout)
-            self.setLayout(main_layout)
+            self.setLayout(layout)
+
+            self.save_btn.clicked.connect(self._on_save)
+            self.cancel_btn.clicked.connect(self._on_cancel)
+            self.lang_combo.currentTextChanged.connect(self._on_language_changed)
+            self.theme_combo.currentTextChanged.connect(self._on_theme_changed)
             log_info("UI initialized successfully.")
         except Exception as e:
-            log_exception("Error initializing UI", e)
+            log_exception("Error initializing UI in PreferencesWindow", e)
 
-    def _load_values(self):
-        log_subsection("_load_values")
+    def _on_save(self):
+        log_subsection("_on_save")
         try:
-            # Language
-            lang = self.settings.get("language", "en")
-            idx  = list(self.LANGUAGE_NAMES.keys()).index(lang) if lang in self.LANGUAGE_NAMES else 0
-            self.lang_combo.setCurrentIndex(idx)
-            # Style
-            style = self.settings.get("style", "modern")
-            idx = list(self.STYLE_NAMES.keys()).index(style) if style in self.STYLE_NAMES else 2
-            self.style_combo.setCurrentIndex(idx)
-            # Mode
-            mode = self.settings.get("mode", "light")
-            idx = list(self.MODE_NAMES.keys()).index(mode) if mode in self.MODE_NAMES else 0
-            self.mode_combo.setCurrentIndex(idx)
-            self._update_ui_texts()
-            self._update_preview()
-            log_info("Values loaded and UI texts updated.")
-        except Exception as e:
-            log_exception("Error loading values", e)
-
-    def _on_language_changed(self):
-        log_subsection("_on_language_changed")
-        try:
-            index = self.lang_combo.currentIndex()
-            code = self.lang_combo.itemData(index)
-            self.translator.set_language(code)
-            self._update_ui_texts()
-            log_info(f"Language changed to {code}.")
-        except Exception as e:
-            log_exception("Error changing language", e)
-
-    def _on_style_or_mode_changed(self):
-        log_subsection("_on_style_or_mode_changed")
-        self._update_preview()
-
-    def _update_ui_texts(self):
-        log_subsection("_update_ui_texts")
-        try:
-            self.setWindowTitle(self.translator.tr("menu_settings"))
-            self.lang_label.setText(self.translator.tr("menu_language"))
-            self.style_label.setText("Style")
-            self.mode_label.setText("Modus")
-            self.ok_button.setText(self.translator.tr("preference_action_save"))
-            self.cancel_button.setText(self.translator.tr("preference_action_cancel"))
-            log_info("UI texts updated.")
-        except Exception as e:
-            log_exception("Error updating UI texts", e)
-
-    def _update_preview(self):
-        style_code = self.style_combo.itemData(self.style_combo.currentIndex())
-        mode_code = self.mode_combo.itemData(self.mode_combo.currentIndex())
-        style_dict = get_theme(style_code, mode_code)
-        # Wende das Stylesheet auf das gesamte Fenster an
-        self.setStyleSheet(load_global_stylesheet())
-
-    def _on_ok(self):
-        log_subsection("_on_ok")
-        try:
-            self.settings["language"] = self.lang_combo.itemData(self.lang_combo.currentIndex())
-            self.settings["style"]    = self.style_combo.itemData(self.style_combo.currentIndex())
-            self.settings["mode"]     = self.mode_combo.itemData(self.mode_combo.currentIndex())
+            self.settings["language"] = self.lang_combo.currentText()
+            self.settings["style"] = self.theme_combo.currentText()
             save_settings(self.settings)
-            if self.parent() and hasattr(self.parent(), "_on_language_changed"):
-                self.parent()._on_language_changed(self.settings["language"])
             self.accept()
             log_info("Settings saved and dialog accepted.")
         except Exception as e:
-            log_exception("Error saving settings", e)
+            log_exception("Error saving settings in PreferencesWindow", e)
 
     def _on_cancel(self):
         log_subsection("_on_cancel")
         try:
-            self.translator.set_language(self.original_language)
-            if self.parent() and hasattr(self.parent(), "_on_language_changed"):
-                self.parent()._on_language_changed(self.original_language)
             self.reject()
             log_info("Dialog canceled and language reverted.")
         except Exception as e:
             log_exception("Error canceling PreferencesWindow", e)
+
+    def _on_language_changed(self, code):
+        log_subsection("_on_language_changed")
+        try:
+            self.translator.set_language(code)
+            self.setWindowTitle(self.translator.tr("preference_title"))
+            log_info(f"Language changed to {code}.")
+        except Exception as e:
+            log_exception("Error changing language in PreferencesWindow", e)
+
+    def _on_theme_changed(self, theme):
+        log_subsection("_on_theme_changed")
+        try:
+            # Theme-Änderung kann hier verarbeitet werden, falls nötig
+            log_info(f"Theme changed to {theme}.")
+        except Exception as e:
+            log_exception("Error changing theme in PreferencesWindow", e)

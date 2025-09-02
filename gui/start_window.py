@@ -29,14 +29,13 @@ class StartWindow(QWidget):
         try:
             super().__init__()
             self.translator = Translator(default_language)
-            self.setWindowTitle(self.translator.tr("win_start_title"))
+            self.setWindowTitle(self.translator.tr("window_start_title"))
             self.resize(self.DEFAULT_WIDTH, self.DEFAULT_HEIGHT)
             self.setAutoFillBackground(False)
             self.bg_pixmap = QPixmap(str(BG_IMAGE_PATH))
             self.pref_window = None
             self._create_ui()
             self._retranslate_and_position()
-            # Korrektur: Hilfetext als String holen und an HelpPanel übergeben
             help_text = self.translator.help_text("help_new_project")
             self.help_panel = HelpPanel(help_text, self)
             log_info("StartWindow initialized successfully.")
@@ -46,6 +45,7 @@ class StartWindow(QWidget):
     def _create_ui(self):
         log_subsection("_create_ui")
         try:
+            # Standard-Keys für die Buttons gemäß translator.py
             self.button_keys = [
                 "start_btn_new_project",
                 "start_btn_load_project",
@@ -138,7 +138,7 @@ class StartWindow(QWidget):
         try:
             for key, btn in zip(self.button_keys, self.buttons):
                 btn.setText(self.translator.tr(key))
-            self.setWindowTitle(self.translator.tr("win_start_title"))
+            self.setWindowTitle(self.translator.tr("window_start_title"))
             self.update_button_positions()
             log_info("Button texts and window title updated.")
         except Exception as e:

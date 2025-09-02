@@ -1,44 +1,30 @@
-import json
-from PySide6.QtWidgets import QWidget, QVBoxLayout
-from gui.widgets.base_form_widget import BaseFormWidget
-from core.translator import Translator
-from core.logger import log_section, log_subsection, log_info, log_error
-from config.dev import FORM_FIELDS_FILE
+from PySide6.QtWidgets import QWidget, QVBoxLayout, QLabel
+from gui.widgets.form_toolbar import FormToolbar
+from core.logger import log_section, log_subsection, log_info, log_exception
 
 class CharactersForm(QWidget):
-    """
-    Form widget for character data entry.
-    """
-    def __init__(self, translator: Translator, parent=None):
+    def __init__(self, translator, parent=None):
         log_section("form_characters.py")
         log_subsection("__init__")
         try:
             super().__init__(parent)
             self.translator = translator
 
-            # Felder zentral aus JSON laden
-            with open(FORM_FIELDS_FILE, "r", encoding="utf-8") as f:
-                all_fields = json.load(f)
-            fields = all_fields.get("characters", [])
-
-            def toolbar_actions(toolbar):
-                toolbar.save_action.triggered.connect(self._on_save)
-
-            self.form = BaseFormWidget(
-                title=self.translator.tr("char"),
-                fields=fields,
-                toolbar_actions=toolbar_actions,
-                form_prefix="char",
-                translator=self.translator,
-                parent=self
-            )
             layout = QVBoxLayout(self)
-            layout.addWidget(self.form)
+
+            # Toolbar mit "character"-Prefix
+            self.toolbar = FormToolbar(self.translator, "character", self)
+            layout.addWidget(self.toolbar)
+
+            # Beispiel für ein Label mit standard_key
+            self.title_label = QLabel(self.translator.tr("character_title"), self)
+            layout.addWidget(self.title_label)
+
+            # Weitere Felder/Labels nach Bedarf, immer mit standard_key
+            self.name_label = QLabel(self.translator.tr("character_name"), self)
+            layout.addWidget(self.name_label)
+
             self.setLayout(layout)
             log_info("CharactersForm initialized successfully.")
         except Exception as e:
-            log_error(f"Error initializing CharactersForm: {str(e)}")
-
-    def _on_save(self):
-        log_subsection("_on_save")
-        log_info("CharactersForm save triggered.")
+            log_exception("Error initializing CharactersForm", e)

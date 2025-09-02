@@ -32,960 +32,989 @@
 [
   {
     "ID": "de",
-    "chapter": "Kapitel",
-    "chapter_btn_delete": "Löschen",
-    "chapter_btn_new": "Neu",
-    "chapter_btn_next": "Vor",
-    "chapter_btn_preview": "Zurück",
-    "chapter_btn_save": "Speichern",
-    "chapter_number": "Nummer",
-    "chapter_summary": "Zusammenfassung",
-    "chapter_characters": "Charaktere",
-    "chapter_locations": "Orte",
-    "chapter_notes": "Notizen",
-    "chapter_opjects": "Objekte",
-    "chapter_premise": "Prämisse",
-    "chapter_scenes": "Szenen",
-    "chapter_title": "Titel",
-    "char": "Charaktere",
-    "char_app": "Aussehen",
-    "char_app_body_type": "Körpertyp",
-    "char_app_charisma": "Ausstrahlung",
-    "char_app_eye_color": "Augenfarbe",
-    "char_app_eye_shape": "Augenform",
-    "char_app_face_shape": "Gesichtsform",
-    "char_app_hair": "Haare",
-    "char_app_hair_color": "Haarfarbe",
-    "char_app_height": "Größe",
-    "char_app_notes": "Notizen",
-    "char_app_posture": "Statur",
-    "char_app_skin": "Haut",
-    "char_app_specials": "Besonderheiten",
-    "char_app2": "Aussehen Details",
-    "char_app2_arms": "Arme",
-    "char_app2_buttocks": "Gesäß",
-    "char_app2_chest": "Brust",
-    "char_app2_feet": "Füße",
-    "char_app2_finger": "Finger",
-    "char_app2_hands": "Hände",
-    "char_app2_head": "Kopf",
-    "char_app2_hip_waist": "Hüfte, Taille",
-    "char_app2_legs": "Beine",
-    "char_app2_notes": "Notizen",
-    "char_app2_shoulder": "Schultern",
-    "char_app2_toes": "Zehen",
-    "char_bas": "Grunddaten",
-    "char_bas_age": "Alter",
-    "char_bas_born": "Geburtsdatum",
-    "char_bas_firstname": "Vorname",
-    "char_bas_gender": "Geschlecht",
-    "char_bas_group": "Gruppe",
-    "char_bas_name": "Name",
-    "char_bas_nickname": "Spitzname",
-    "char_bas_notes": "Notizen",
-    "char_bas_role": "Rolle",
-    "char_bas_sex_orientation": "sexuelle Orientierung",
-    "char_bas_status": "Status",
-    "char_btn": "Schaltflächen",
-    "char_btn_delete": "Löschen",
-    "char_btn_new": "Neu",
-    "char_btn_next": "Vor",
-    "char_btn_preview": "Zurück",
-    "char_btn_save": "Speichern",
-    "char_edu": "Ausbildung",
-    "char_edu_art_music": "Kunst/Musik",
-    "char_edu_autodidactic": "autodidaktisch",
-    "char_edu_job": "Beruf",
-    "char_edu_job_education": "Berufsausbildung",
-    "char_edu_notes": "Notizen",
-    "char_edu_school": "Schule",
-    "char_edu_sport": "Sport",
-    "char_edu_technologie": "Technik",
-    "char_edu_unitversity": "Universität",
-    "char_groups": "Gruppen",
-    "char_groups_des": "Beschreibung",
-    "char_groups_title": "Bezeichnung",
-    "char_origin": "Herkunft",
-    "char_origin_birthplace": "Geburtsort",
-    "char_origin_father": "Vater",
-    "char_origin_mother": "Mutter",
-    "char_origin_notes": "Notizen",
-    "char_origin_reference_person": "Bezugsperson",
-    "char_origin_siblings": "Geschwister",
-    "char_person": "Persönlichkeit",
-    "char_person_behavior": "Verhalten",
-    "char_person_beliefs": "Glaubensgrundsatz",
-    "char_person_fears": "Ängste",
-    "char_person_life_goals": "Lebensziel",
-    "char_person_motivaton": "Motivation",
-    "char_person_neg": "negative Charaktereigenschaft",
-    "char_person_notes": "Notizen",
-    "char_person_pos": "positve Charaktereigenschaft",
-    "char_person_strengths": "Stärken",
-    "char_person_talente": "Talente",
-    "char_person_weakness": "Schwächen",
-    "char_psy": "Psychologie Profil",
-    "char_psy_aggression": "Aggressivität",
-    "char_psy_diagnostics": "Diagnose",
-    "char_psy_formative": "Prägung",
-    "char_psy_humor": "Humor",
-    "char_psy_medication": "Medikamente",
-    "char_psy_moral": "Moral",
-    "char_psy_norms": "Normen",
-    "char_psy_notes": "Notizen",
-    "char_psy_selfimage": "Selbstbild",
-    "char_psy_socialization": "Sozialisation",
-    "char_psy_symptoms": "Symptome",
-    "char_psy_taboos": "Tabus",
-    "char_psy_temperament": "Temperament",
-    "char_psy_therapy": "Therapie",
-    "char_psy_trauma": "Trauma",
-    "char_psy_values": "Werte",
-    "help": "Hilfe",
-    "help_chapters": "Organisieren Sie Ihre Geschichte in Kapitel und beschreiben Sie deren Inhalt.",
-    "help_chars": "Definieren Sie Ihre Charaktere: Namen, Rollen, Eigenschaften und Beziehungen.",
-    "help_editorwindow": "Editor Fenster",
-    "help_helpwindow": "Hilfe Fenster",
-    "help_locations": "Beschreiben Sie die in Ihrer Geschichte verwendeten Orte, einschließlich Atmosphäre und Relevanz.",
-    "help_objects": "isten Sie wichtige Objekte und deren Bedeutung in der Geschichte auf.",
-    "help_preferencewindow": "Nehmen Sie die gewünschten Einstellungen vor",
-    "help_project": "Geben Sie allgemeine Informationen zu Ihrem Schreibprojekt an, wie Titel, Genre und Ziele.",
-    "help_projectwindow": "Wählen die Tabelle, die Sie berarbieten wollen",
-    "help_scenes": "eschreiben Sie einzelne Szenen, deren Zweck und Umgebung.",
-    "help_startwindow": "Wählen Sie die gewünschte Funktion",
-    "help_storylines": "Skizzieren Sie die Haupt-Handlungsstränge und deren Entwicklung im Laufe der Zeit.",
-    "location": "Orte",
-    "location_btn_delete": "Löschen",
-    "location_btn_new": "Neu",
-    "location_btn_next": "Vor",
-    "location_btn_preview": "Zurück",
-    "location_btn_save": "Speichern",
-    "location_title": "Titel",
-    "location_description": "Beschreibung",
-    "location_notes": "Notizen",
-    "menu": "Menü",
-    "menu_edit": "Bearbeiten",
-    "menu_file": "Datei",
-    "menu_help": "Hilfe ",
-    "menu_language": "Sprache",
-    "menu_settings": "Einstellungen",
-    "object_btn_delete": "Löschen",
-    "object_btn_new": "Neu",
-    "object_btn_next": "Vor",
-    "object_btn_preview": "Zurück",
-    "object_btn_save": "Speichern",
-    "object_notes": "Notizen",
-    "object": "Objekte",
-    "object_title": "Titel",
-    "object_description": "Beschreibung",
-    "preference_action_save": "Speichern",
-    "preference_action_cancel": "Abbrechen",
-    "pro": "Projekte",
-    "pro_btn_project": "Projekt",
-    "pro_btn_characters": "Charaktere", 
-    "pro_btn_storylines": "Erzählstränge",
-    "pro_btn_chapters": "Kapitel",
-    "pro_btn_scenes": "Szenen",
-    "pro_btn_objects": "Objekte",
-    "pro_btn_locations": "Orte",
-    "pro_btn_exit": "Beenden",
-    "pro_btn": "Schaltflächen",
-    "pro_btn_delete": "Löschen",
-    "pro_btn_new": "Neu",
-    "pro_btn_next": "Vor",
-    "pro_btn_preview": "Zurück",
-    "pro_btn_save": "Speichern",
-    "pro_detail": "Details",
-    "pro_detail_author": "Autor",
-    "pro_detail_chapters": "Kapitel",
-    "pro_detail_cover_image": "Titelbild",
-    "pro_detail_day": "Tage bis Abgabe",
-    "pro_detail_deadline": "Abgabedatum",
-    "pro_detail_form_label": "Projekt",
-    "pro_detail_genre": "Genre",
-    "pro_detail_groups": "Gruppen",
-    "pro_detail_locations": "Orte",
-    "pro_detail_main_char": "Hauptcharaktere",
-    "pro_detail_narrative_perpective": "Perspektive Erzähler:in",
-    "pro_detail_objects": "Objekte",
-    "pro_detail_premise": "Prämisse",
-    "pro_detail_scenes": "Szenen",
-    "pro_detail_startdate": "Startdatum",
-    "pro_detail_storylines": "Erzählstränge",
-    "pro_detail_subtitle": "Untertitel",
-    "pro_detail_support_char": "Nebencharaktere",
-    "pro_detail_targetgroup": "Zielgruppe",
-    "pro_detail_timeline_": "Zeitlinie",
-    "pro_detail_timline": "Zeitlinie",
-    "pro_detail_title": "Titel",
-    "pro_detail_window_title": "Datenbanken",
-    "pro_detail_words_count_day": "Wörter am Tag",
-    "pro_detail_words_count_goal": "Ziel Wortanzahl",
-    "scene": "Szenen",
-    "scene_btn_delete": "Löschen",
-    "scene_btn_new": "Neu",
-    "scene_btn_next": "Vor",
-    "scene_btn_preview": "Zurück",
-    "scene_btn_save": "Speichern",
-    "scene_title": "Titel",
-    "scene_number": "Nummer",
-    "scene_summary": "Zusammenfassung",
-    "scene_characters": "Charaktere",
-    "scene_conflict": "Konflikt",
-    "scene_duration": "Dauer",
-    "scene_goal": "Ziel",
-    "scene_locations": "Orte",
-    "scene_mood": "Stimmung",
-    "scene_notes": "Notizen",
-    "scene_objects": "Objekte",
-    "scene_outcome": "Ergebnis",
-    "scene_premise": "Prämisse",
-    "scene_type": "Typ",
-    "start": "csNova",
-    "start_btn_exit": "Beenden",
-    "start_btn_help": "Hilfe && Tutorial",
-    "start_btn_settings": "Einstellungen",
-    "start_btn_load_project": "Projekt laden ...",
-    "start_btn_new_project": "Datenbanken",
-    "storyline": "Erzählstränge",
-    "storyline_btn_delete": "Löschen",
-    "storyline_btn_new": "Neu",
-    "storyline_btn_next": "Vor",
-    "storyline_btn_preview": "Zurück",
-    "storyline_btn_save": "Speichern",
-    "storyline_chapters": "Kapitel",
-    "storyline_characters": "Charaktere",
-    "storyline_description": "Beschreibung",
-    "storyline_notes": "Notizen",
-    "storyline_objects": "Objekte",
-    "storyline_premise": "Prämisse",
-    "storyline_scenes": "Scenen",
-    "storyline_timeline": "Zeitlinie",
-    "storyline_title": "Titel",
-    "storyline_transformation": "Transformation",
-    "win": "Fenster",
-    "win_editor_title": "Editor Fenster",
-    "win_help_title": "Hilfe",
-    "win_preference_title": "Einstellungen",
-    "win_start_title": "csNova"
+    "Chapter": "Kapitel",
+    "ChapterBtnDelete": "Löschen",
+    "ChapterBtnNew": "Neu",
+    "ChapterBtnNext": "Weiter",
+    "ChapterBtnPreview": "Zurück",
+    "ChapterBtnSave": "Speichern",
+    "ChapterNumber": "Nummer",
+    "ChapterSummary": "Zusammenfassung",
+    "ChapterCharacters": "Charaktere",
+    "ChapterLocations": "Orte",
+    "ChapterNotes": "Notizen",
+    "ChapterObjects": "Objekte",
+    "ChapterPremise": "Prämisse",
+    "ChapterScenes": "Szenen",
+    "ChapterTitle": "Titel",
+    "Char": "Charaktere",
+    "CharApp": "Aussehen",
+    "CharAppBodyType": "Körpertyp",
+    "CharAppCharisma": "Ausstrahlung",
+    "CharAppEyeColor": "Augenfarbe",
+    "CharAppEyeShape": "Augenform",
+    "CharAppFaceShape": "Gesichtsform",
+    "CharAppHair": "Haare",
+    "CharAppHairColor": "Haarfarbe",
+    "CharAppHeight": "Größe",
+    "CharAppNotes": "Notizen",
+    "CharAppPosture": "Statur",
+    "CharAppSkin": "Haut",
+    "CharAppSpecials": "Besonderheiten",
+    "CharApp2": "Aussehen Details",
+    "CharApp2Arms": "Arme",
+    "CharApp2Buttocks": "Gesäß",
+    "CharApp2Chest": "Brust",
+    "CharApp2Feet": "Füße",
+    "CharApp2Finger": "Finger",
+    "CharApp2Hands": "Hände",
+    "CharApp2Head": "Kopf",
+    "CharApp2HipWaist": "Hüfte, Taille",
+    "CharApp2Legs": "Beine",
+    "CharApp2Notes": "Notizen",
+    "CharApp2Shoulder": "Schultern",
+    "CharApp2Toes": "Zehen",
+    "CharBas": "Grunddaten",
+    "CharBasAge": "Alter",
+    "CharBasBorn": "Geburtsdatum",
+    "CharBasFirstname": "Vorname",
+    "CharBasGender": "Geschlecht",
+    "CharBasGroup": "Gruppe",
+    "CharBasName": "Name",
+    "CharBasNickname": "Spitzname",
+    "CharBasNotes": "Notizen",
+    "CharBasRole": "Rolle",
+    "CharBasSexOrientation": "Sexuelle Orientierung",
+    "CharBasStatus": "Status",
+    "CharBtn": "Schaltflächen",
+    "CharBtnDelete": "Löschen",
+    "CharBtnNew": "Neu",
+    "CharBtnNext": "Weiter",
+    "CharBtnPreview": "Zurück",
+    "CharBtnSave": "Speichern",
+    "CharEdu": "Ausbildung",
+    "CharEduArtMusic": "Kunst/Musik",
+    "CharEduAutodidactic": "Autodidaktisch",
+    "CharEduJob": "Beruf",
+    "CharEduJobEducation": "Berufsausbildung",
+    "CharEduNotes": "Notizen",
+    "CharEduSchool": "Schule",
+    "CharEduSport": "Sport",
+    "CharEduTechnologie": "Technik",
+    "CharEduUniversity": "Universität",
+    "CharGroups": "Gruppen",
+    "CharGroupsDes": "Beschreibung",
+    "CharGroupsTitle": "Bezeichnung",
+    "CharOrigin": "Herkunft",
+    "CharOriginBirthplace": "Geburtsort",
+    "CharOriginFather": "Vater",
+    "CharOriginMother": "Mutter",
+    "CharOriginNotes": "Notizen",
+    "CharOriginReferencePerson": "Bezugsperson",
+    "CharOriginSiblings": "Geschwister",
+    "CharPerson": "Persönlichkeit",
+    "CharPersonBehavior": "Verhalten",
+    "CharPersonBeliefs": "Glaubensgrundsatz",
+    "CharPersonFears": "Ängste",
+    "CharPersonLifeGoals": "Lebensziel",
+    "CharPersonMotivation": "Motivation",
+    "CharPersonNeg": "Negative Charaktereigenschaft",
+    "CharPersonNotes": "Notizen",
+    "CharPersonPos": "Positive Charaktereigenschaft",
+    "CharPersonStrengths": "Stärken",
+    "CharPersonTalente": "Talente",
+    "CharPersonWeakness": "Schwächen",
+    "CharPsy": "Psychologie Profil",
+    "CharPsyAggression": "Aggressivität",
+    "CharPsyDiagnostics": "Diagnose",
+    "CharPsyFormative": "Prägung",
+    "CharPsyHumor": "Humor",
+    "CharPsyMedication": "Medikamente",
+    "CharPsyMoral": "Moral",
+    "CharPsyNorms": "Normen",
+    "CharPsyNotes": "Notizen",
+    "CharPsySelfimage": "Selbstbild",
+    "CharPsySocialization": "Sozialisation",
+    "CharPsySymptoms": "Symptome",
+    "CharPsyTaboos": "Tabus",
+    "CharPsyTemperament": "Temperament",
+    "CharPsyTherapy": "Therapie",
+    "CharPsyTrauma": "Trauma",
+    "CharPsyValues": "Werte",
+    "Help": "Hilfe",
+    "HelpNewProject": "Wählen Sie eine der Datenbanken, die Sie bearbeiten wollen.",
+    "HelpChapters": "Organisieren Sie Ihre Geschichte in Kapitel und beschreiben Sie deren Inhalt.",
+    "HelpChars": "Definieren Sie Ihre Charaktere: Namen, Rollen, Eigenschaften und Beziehungen.",
+    "HelpEditorWindow": "Editor Fenster",
+    "HelpHelpWindow": "Hilfe Fenster",
+    "HelpLocations": "Beschreiben Sie die in Ihrer Geschichte verwendeten Orte, einschließlich Atmosphäre und Relevanz.",
+    "HelpObjects": "Listen Sie wichtige Objekte und deren Bedeutung in der Geschichte auf.",
+    "HelpPreferenceWindow": "Nehmen Sie die gewünschten Einstellungen vor.",
+    "HelpProject": "Geben Sie allgemeine Informationen zu Ihrem Schreibprojekt an, wie Titel, Genre und Ziele.",
+    "HelpProjectWindow": "Wählen Sie die Tabelle, die Sie bearbeiten wollen.",
+    "HelpScenes": "Beschreiben Sie einzelne Szenen, deren Zweck und Umgebung.",
+    "HelpStartWindow": "Wählen Sie die gewünschte Funktion.",
+    "HelpStorylines": "Skizzieren Sie die Haupt-Handlungsstränge und deren Entwicklung im Laufe der Zeit.",
+    "Location": "Orte",
+    "LocationBtnDelete": "Löschen",
+    "LocationBtnNew": "Neu",
+    "LocationBtnNext": "Weiter",
+    "LocationBtnPreview": "Zurück",
+    "LocationBtnSave": "Speichern",
+    "LocationTitle": "Titel",
+    "LocationDescription": "Beschreibung",
+    "LocationNotes": "Notizen",
+    "Menu": "Menü",
+    "MenuEdit": "Bearbeiten",
+    "MenuFile": "Datei",
+    "MenuHelp": "Hilfe",
+    "MenuLanguage": "Sprache",
+    "MenuSettings": "Einstellungen",
+    "ObjectBtnDelete": "Löschen",
+    "ObjectBtnNew": "Neu",
+    "ObjectBtnNext": "Weiter",
+    "ObjectBtnPreview": "Zurück",
+    "ObjectBtnSave": "Speichern",
+    "ObjectNotes": "Notizen",
+    "Object": "Objekte",
+    "ObjectTitle": "Titel",
+    "ObjectDescription": "Beschreibung",
+    "PreferenceActionSave": "Speichern",
+    "PreferenceActionCancel": "Abbrechen",
+    "PreferenceLanguage": "Sprache",
+    "PreferenceStyle": "Stil",
+    "PreferenceTheme": "Thema",
+    "PreferenceThemeDark": "Dunkel",
+    "PreferenceThemeNeutral": "Neutral",
+    "PreferenceThemeLight": "Hell",
+    "Preference": "Einstellungen",
+    "Pro": "Projekte",
+    "ProBtnProject": "Projekt",
+    "ProBtnCharacters": "Charaktere",
+    "ProBtnStorylines": "Erzählstränge",
+    "ProBtnChapters": "Kapitel",
+    "ProBtnScenes": "Szenen",
+    "ProBtnObjects": "Objekte",
+    "ProBtnLocations": "Orte",
+    "ProBtnExit": "Beenden",
+    "ProBtn": "Schaltflächen",
+    "ProBtnDelete": "Löschen",
+    "ProBtnNew": "Neu",
+    "ProBtnNext": "Weiter",
+    "ProBtnPreview": "Zurück",
+    "ProBtnSave": "Speichern",
+    "ProDetail": "Details",
+    "ProDetailAuthor": "Autor",
+    "ProDetailChapters": "Kapitel",
+    "ProDetailCoverImage": "Titelbild",
+    "ProDetailDay": "Tage bis Abgabe",
+    "ProDetailDeadline": "Abgabedatum",
+    "ProDetailFormLabel": "Projekt",
+    "ProDetailGenre": "Genre",
+    "ProDetailGroups": "Gruppen",
+    "ProDetailLocations": "Orte",
+    "ProDetailMainChar": "Hauptcharaktere",
+    "ProDetailNarrativePerspective": "Perspektive Erzähler:in",
+    "ProDetailObjects": "Objekte",
+    "ProDetailPremise": "Prämisse",
+    "ProDetailScenes": "Szenen",
+    "ProDetailStartDate": "Startdatum",
+    "ProDetailStorylines": "Erzählstränge",
+    "ProDetailSubtitle": "Untertitel",
+    "ProDetailSupportChar": "Nebencharaktere",
+    "ProDetailTargetGroup": "Zielgruppe",
+    "ProDetailTimeline": "Zeitlinie",
+    "ProDetailTitle": "Titel",
+    "ProDetailWindowTitle": "Datenbanken",
+    "ProDetailWordsCountDay": "Wörter am Tag",
+    "ProDetailWordsCountGoal": "Ziel Wortanzahl",
+    "Scene": "Szenen",
+    "SceneBtnDelete": "Löschen",
+    "SceneBtnNew": "Neu",
+    "SceneBtnNext": "Weiter",
+    "SceneBtnPreview": "Zurück",
+    "SceneBtnSave": "Speichern",
+    "SceneTitle": "Titel",
+    "SceneNumber": "Nummer",
+    "SceneSummary": "Zusammenfassung",
+    "SceneCharacters": "Charaktere",
+    "SceneConflict": "Konflikt",
+    "SceneDuration": "Dauer",
+    "SceneGoal": "Ziel",
+    "SceneLocations": "Orte",
+    "SceneMood": "Stimmung",
+    "SceneNotes": "Notizen",
+    "SceneObjects": "Objekte",
+    "SceneOutcome": "Ergebnis",
+    "ScenePremise": "Prämisse",
+    "SceneType": "Typ",
+    "Start": "csNova",
+    "StartBtnExit": "Beenden",
+    "StartBtnHelp": "Hilfe && Tutorial",
+    "StartBtnSettings": "Einstellungen",
+    "StartBtnLoadProject": "Projekt laden ...",
+    "StartBtnNewProject": "Neues Projekt",
+    "Storyline": "Erzählstränge",
+    "StorylineBtnDelete": "Löschen",
+    "StorylineBtnNew": "Neu",
+    "StorylineBtnNext": "Weiter",
+    "StorylineBtnPreview": "Zurück",
+    "StorylineBtnSave": "Speichern",
+    "StorylineChapters": "Kapitel",
+    "StorylineCharacters": "Charaktere",
+    "StorylineDescription": "Beschreibung",
+    "StorylineNotes": "Notizen",
+    "StorylineObjects": "Objekte",
+    "StorylinePremise": "Prämisse",
+    "StorylineScenes": "Szenen",
+    "StorylineTimeline": "Zeitlinie",
+    "StorylineTitle": "Titel",
+    "StorylineTransformation": "Transformation",
+    "Win": "Fenster",
+    "WinEditorTitle": "Editor Fenster",
+    "WinHelpTitle": "Hilfe",
+    "WinPreferenceTitle": "Einstellungen",
+    "WinStartTitle": "csNova"
   },
+
   {
     "ID": "en",
-    "chapter": "Chapter",
-    "chapter_btn_delete": "Delete",
-    "chapter_btn_new": "New",
-    "chapter_btn_next": "Before",
-    "chapter_btn_preview": "Back",
-    "chapter_btn_save": "Save",
-    "chapter_number": "Number", 
-    "chapter_summary": "Summary",
-    "chapter_characters": "Characters",
-    "chapter_locations": "Places",
-    "chapter_notes": "Notes",
-    "chapter_opjects": "Objects",
-    "chapter_premise": "premise",
-    "chapter_scenes": "Scenes",
-    "chapter_title": "title",
-    "char": "Characters",
-    "char_app": "Look",
-    "char_app_body_type": "Body type",
-    "char_app_charisma": "Charisma",
-    "char_app_eye_color": "Eye color",
-    "char_app_eye_shape": "Eye shape",
-    "char_app_face_shape": "Face shape",
-    "char_app_hair": "Hair",
-    "char_app_hair_color": "Hair color",
-    "char_app_height": "Size",
-    "char_app_notes": "Notes",
-    "char_app_posture": "stature",
-    "char_app_skin": "skin",
-    "char_app_specials": "Special features",
-    "char_app2": "Appearance Details",
-    "char_app2_arms": "poor",
-    "char_app2_buttocks": "buttocks",
-    "char_app2_chest": "Breast",
-    "char_app2_feet": "Feet",
-    "char_app2_finger": "finger",
-    "char_app2_hands": "hands",
-    "char_app2_head": "Head",
-    "char_app2_hip_waist": "hips, waist",
-    "char_app2_legs": "Legs",
-    "char_app2_notes": "Notes",
-    "char_app2_shoulder": "Shoulder",
-    "char_app2_toes": "toes",
-    "char_bas": "Basic data",
-    "char_bas_age": "Old",
-    "char_bas_born": "birth date",
-    "char_bas_firstname": "First name",
-    "char_bas_gender": "Gender",
-    "char_bas_group": "group",
-    "char_bas_name": "name",
-    "char_bas_nickname": "Nickname",
-    "char_bas_notes": "Notes",
-    "char_bas_role": "role",
-    "char_bas_sex_orientation": "sexual orientation",
-    "char_bas_status": "status",
-    "char_btn": "Buttons",
-    "char_btn_delete": "Delete",
-    "char_btn_new": "New",
-    "char_btn_next": "Before",
-    "char_btn_preview": "Back",
-    "char_btn_save": "Save",
-    "char_edu": "Training",
-    "char_edu_art_music": "Art/Music",
-    "char_edu_autodidactic": "autodidactic",
-    "char_edu_job": "Profession",
-    "char_edu_job_education": "Vocational training",
-    "char_edu_notes": "Notes",
-    "char_edu_school": "School",
-    "char_edu_sport": "sport",
-    "char_edu_technologie": "Technology",
-    "char_edu_unitversity": "university",
-    "char_groups": "Groups",
-    "char_groups_des": "Description",
-    "char_groups_title": "Designation",
-    "char_origin": "Origin",
-    "char_origin_birthplace": "Place of birth",
-    "char_origin_father": "Father",
-    "char_origin_mother": "Mother",
-    "char_origin_notes": "Notes",
-    "char_origin_reference_person": "Reference person",
-    "char_origin_siblings": "Siblings",
-    "char_person": "personality",
-    "char_person_behavior": "Behave",
-    "char_person_beliefs": "Article of faith",
-    "char_person_fears": "Fears",
-    "char_person_life_goals": "Life goal",
-    "char_person_motivaton": "motivation",
-    "char_person_neg": "negative character trait",
-    "char_person_notes": "Notes",
-    "char_person_pos": "positive character trait",
-    "char_person_strengths": "Strengthen",
-    "char_person_talente": "Talents",
-    "char_person_weakness": "Weaken",
-    "char_psy": "Psychology Profile",
-    "char_psy_aggression": "aggressiveness",
-    "char_psy_diagnostics": "diagnosis",
-    "char_psy_formative": "Embossing",
-    "char_psy_humor": "humor",
-    "char_psy_medication": "Medications",
-    "char_psy_moral": "Moral",
-    "char_psy_norms": "Standards",
-    "char_psy_notes": "Notes",
-    "char_psy_selfimage": "Self-image",
-    "char_psy_socialization": "socialization",
-    "char_psy_symptoms": "Symptoms",
-    "char_psy_taboos": "Taboos",
-    "char_psy_temperament": "temperament",
-    "char_psy_therapy": "therapy",
-    "char_psy_trauma": "trauma",
-    "char_psy_values": "Values",
-    "help": "Help",
-    "help_chapters": "Organize your story into chapters and describe their content.",
-    "help_chars": "Define your characters: names, roles, characteristics and relationships.",
-    "help_editorwindow": "Editor window",
-    "help_helpwindow": "Help window",
-    "help_locations": "Describe the locations used in your story, including atmosphere and relevance.",
-    "help_objects": "Identify important objects and their significance in history.",
-    "help_preferencewindow": "Make the desired settings",
-    "help_project": "Provide general information about your writing project, such as title, genre, and goals.",
-    "help_projectwindow": "Select the table you want to edit",
-    "help_scenes": "Describe individual scenes, their purpose and setting.",
-    "help_startwindow": "Select the desired function",
-    "help_storylines": "Outline the main plot lines and their development over time.",
-    "location": "Places",
-    "location_btn_delete": "Delete",
-    "location_btn_new": "New",
-    "location_btn_next": "Before",
-    "location_btn_preview": "Back",
-    "location_btn_save": "Save",
-    "location_title": "title",
-    "location_description": "Description",
-    "location_notes": "Notes",
-    "menu": "menu",
-    "menu_edit": "Edit",
-    "menu_file": "file",
-    "menu_help": "Help ",
-    "menu_language": "Language",
-    "menu_settings": "Settings",
-    "object_btn_delete": "Delete",
-    "object_btn_new": "New",
-    "object_btn_next": "Before",
-    "object_btn_preview": "Back",
-    "object_btn_save": "Save",
-    "object_notes": "Notes",
-    "object": "Objects",
-    "object_title": "title",
-    "object_description": "Description",
-    "preference_action_save": "Save",
-    "preference_action_cancel": "Cancel",
-    "pro": "Projects",
-    "pro_btn_project": "Project",
-    "pro_btn_characters": "Characters",
-    "pro_btn_storylines": "Storylines",
-    "pro_btn_chapters": "Chapters",
-    "pro_btn_scenes": "Scenes",
-    "pro_btn_objects": "Objects",
-    "pro_btn_locations": "Locations",
-    "pro_btn_exit": "Exit",
-    "pro_btn": "Buttons",
-    "pro_btn_delete": "Delete",
-    "pro_btn_new": "New",
-    "pro_btn_next": "Before",
-    "pro_btn_preview": "Back",
-    "pro_btn_save": "Save",
-    "pro_detail": "Details",
-    "pro_detail_author": "author",
-    "pro_detail_chapters": "Chapter",
-    "pro_detail_cover_image": "Cover image",
-    "pro_detail_day": "Days until delivery",
-    "pro_detail_deadline": "Submission date",
-    "pro_detail_form_label": "project",
-    "pro_detail_genre": "genre",
-    "pro_detail_groups": "Groups",
-    "pro_detail_locations": "Places",
-    "pro_detail_main_char": "Main characters",
-    "pro_detail_narrative_perpective": "Perspective narrator",
-    "pro_detail_objects": "Objects",
-    "pro_detail_premise": "premise",
-    "pro_detail_scenes": "Scenes",
-    "pro_detail_startdate": "Start date",
-    "pro_detail_storylines": "narrative threads",
-    "pro_detail_subtitle": "Subtitles",
-    "pro_detail_support_char": "supporting characters",
-    "pro_detail_targetgroup": "Target group",
-    "pro_detail_timeline_": "Timeline",
-    "pro_detail_timline": "Timeline",
-    "pro_detail_title": "title",
-    "pro_detail_window_title": "databases",
-    "pro_detail_words_count_day": "Words a day",
-    "pro_detail_words_count_goal": "Target word count",
-    "scene": "Scenes",
-    "scene_btn_delete": "Delete",
-    "scene_btn_new": "New",
-    "scene_btn_next": "Before",
-    "scene_btn_preview": "Back",
-    "scene_btn_save": "Save",
-    "scene_number": "Number",
-    "scene_summary": "Summary", 
-    "scene_title": "title",
-    "scene_characters": "Characters",
-    "scene_conflict": "conflict",
-    "scene_duration": "Length of time",
-    "scene_goal": "Goal",
-    "scene_locations": "Places",
-    "scene_mood": "Mood",
-    "scene_notes": "Notes",
-    "scene_objects": "Objects",
-    "scene_outcome": "Result",
-    "scene_premise": "premise",
-    "scene_type": "type",
-    "start": "csNova",
-    "start_btn_exit": "Finish",
-    "start_btn_help": "Help && Tutorial",
-    "start_btn_settings": "Settings",
-    "start_btn_load_project": "Load project...",
-    "start_btn_new_project": "databases",
-    "storyline": "narrative threads",
-    "storyline_btn_delete": "Delete",
-    "storyline_btn_new": "New",
-    "storyline_btn_next": "Before",
-    "storyline_btn_preview": "Back",
-    "storyline_btn_save": "Save",
-    "storyline_chapters": "Chapter",
-    "storyline_characters": "Characters",
-    "storyline_description": "Description",
-    "storyline_notes": "Notes",
-    "storyline_objects": "Objects",
-    "storyline_premise": "premise",
-    "storyline_scenes": "Scenes",
-    "storyline_timeline": "Timeline",
-    "storyline_title": "title",
-    "storyline_transformation": "transformation",
-    "win": "Window",
-    "win_editor_title": "Editor window",
-    "win_help_title": "Help",
-    "win_preference_title": "Settings",
-    "win_start_title": "csNova"
+    "Chapter": "Chapter",
+    "ChapterBtnDelete": "Delete",
+    "ChapterBtnNew": "New",
+    "ChapterBtnNext": "Next",
+    "ChapterBtnPreview": "Back",
+    "ChapterBtnSave": "Save",
+    "ChapterNumber": "Number",
+    "ChapterSummary": "Summary",
+    "ChapterCharacters": "Characters",
+    "ChapterLocations": "Locations",
+    "ChapterNotes": "Notes",
+    "ChapterObjects": "Objects",
+    "ChapterPremise": "Premise",
+    "ChapterScenes": "Scenes",
+    "ChapterTitle": "Title",
+    "Char": "Characters",
+    "CharApp": "Appearance",
+    "CharAppBodyType": "Body Type",
+    "CharAppCharisma": "Charisma",
+    "CharAppEyeColor": "Eye Color",
+    "CharAppEyeShape": "Eye Shape",
+    "CharAppFaceShape": "Face Shape",
+    "CharAppHair": "Hair",
+    "CharAppHairColor": "Hair Color",
+    "CharAppHeight": "Height",
+    "CharAppNotes": "Notes",
+    "CharAppPosture": "Posture",
+    "CharAppSkin": "Skin",
+    "CharAppSpecials": "Special Features",
+    "CharApp2": "Appearance Details",
+    "CharApp2Arms": "Arms",
+    "CharApp2Buttocks": "Buttocks",
+    "CharApp2Chest": "Chest",
+    "CharApp2Feet": "Feet",
+    "CharApp2Finger": "Fingers",
+    "CharApp2Hands": "Hands",
+    "CharApp2Head": "Head",
+    "CharApp2HipWaist": "Hip, Waist",
+    "CharApp2Legs": "Legs",
+    "CharApp2Notes": "Notes",
+    "CharApp2Shoulder": "Shoulders",
+    "CharApp2Toes": "Toes",
+    "CharBas": "Basic Data",
+    "CharBasAge": "Age",
+    "CharBasBorn": "Date of Birth",
+    "CharBasFirstname": "First Name",
+    "CharBasGender": "Gender",
+    "CharBasGroup": "Group",
+    "CharBasName": "Name",
+    "CharBasNickname": "Nickname",
+    "CharBasNotes": "Notes",
+    "CharBasRole": "Role",
+    "CharBasSexOrientation": "Sexual Orientation",
+    "CharBasStatus": "Status",
+    "CharBtn": "Buttons",
+    "CharBtnDelete": "Delete",
+    "CharBtnNew": "New",
+    "CharBtnNext": "Next",
+    "CharBtnPreview": "Back",
+    "CharBtnSave": "Save",
+    "CharEdu": "Education",
+    "CharEduArtMusic": "Art/Music",
+    "CharEduAutodidactic": "Autodidactic",
+    "CharEduJob": "Job",
+    "CharEduJobEducation": "Vocational Training",
+    "CharEduNotes": "Notes",
+    "CharEduSchool": "School",
+    "CharEduSport": "Sport",
+    "CharEduTechnologie": "Technology",
+    "CharEduUniversity": "University",
+    "CharGroups": "Groups",
+    "CharGroupsDes": "Description",
+    "CharGroupsTitle": "Designation",
+    "CharOrigin": "Origin",
+    "CharOriginBirthplace": "Place of Birth",
+    "CharOriginFather": "Father",
+    "CharOriginMother": "Mother",
+    "CharOriginNotes": "Notes",
+    "CharOriginReferencePerson": "Reference Person",
+    "CharOriginSiblings": "Siblings",
+    "CharPerson": "Personality",
+    "CharPersonBehavior": "Behavior",
+    "CharPersonBeliefs": "Beliefs",
+    "CharPersonFears": "Fears",
+    "CharPersonLifeGoals": "Life Goals",
+    "CharPersonMotivation": "Motivation",
+    "CharPersonNeg": "Negative Trait",
+    "CharPersonNotes": "Notes",
+    "CharPersonPos": "Positive Trait",
+    "CharPersonStrengths": "Strengths",
+    "CharPersonTalente": "Talents",
+    "CharPersonWeakness": "Weaknesses",
+    "CharPsy": "Psychological Profile",
+    "CharPsyAggression": "Aggressiveness",
+    "CharPsyDiagnostics": "Diagnosis",
+    "CharPsyFormative": "Formative Influences",
+    "CharPsyHumor": "Humor",
+    "CharPsyMedication": "Medication",
+    "CharPsyMoral": "Morals",
+    "CharPsyNorms": "Norms",
+    "CharPsyNotes": "Notes",
+    "CharPsySelfimage": "Self-Image",
+    "CharPsySocialization": "Socialization",
+    "CharPsySymptoms": "Symptoms",
+    "CharPsyTaboos": "Taboos",
+    "CharPsyTemperament": "Temperament",
+    "CharPsyTherapy": "Therapy",
+    "CharPsyTrauma": "Trauma",
+    "CharPsyValues": "Values",
+    "Help": "Help",
+    "HelpNewProject": "Select one of the databases you want to edit.",
+    "HelpChapters": "Organize your story into chapters and describe their content.",
+    "HelpChars": "Define your characters: names, roles, traits, and relationships.",
+    "HelpEditorWindow": "Editor Window",
+    "HelpHelpWindow": "Help Window",
+    "HelpLocations": "Describe the locations used in your story, including atmosphere and relevance.",
+    "HelpObjects": "List important objects and their significance in the story.",
+    "HelpPreferenceWindow": "Make the desired settings.",
+    "HelpProject": "Provide general information about your writing project, such as title, genre, and goals.",
+    "HelpProjectWindow": "Select the table you want to edit.",
+    "HelpScenes": "Describe individual scenes, their purpose and setting.",
+    "HelpStartWindow": "Select the desired function.",
+    "HelpStorylines": "Outline the main storylines and their development over time.",
+    "Location": "Locations",
+    "LocationBtnDelete": "Delete",
+    "LocationBtnNew": "New",
+    "LocationBtnNext": "Next",
+    "LocationBtnPreview": "Back",
+    "LocationBtnSave": "Save",
+    "LocationTitle": "Title",
+    "LocationDescription": "Description",
+    "LocationNotes": "Notes",
+    "Menu": "Menu",
+    "MenuEdit": "Edit",
+    "MenuFile": "File",
+    "MenuHelp": "Help",
+    "MenuLanguage": "Language",
+    "MenuSettings": "Settings",
+    "ObjectBtnDelete": "Delete",
+    "ObjectBtnNew": "New",
+    "ObjectBtnNext": "Next",
+    "ObjectBtnPreview": "Back",
+    "ObjectBtnSave": "Save",
+    "ObjectNotes": "Notes",
+    "Object": "Objects",
+    "ObjectTitle": "Title",
+    "ObjectDescription": "Description",
+    "PreferenceActionSave": "Save",
+    "PreferenceActionCancel": "Cancel",
+    "PreferenceLanguage": "Language",
+    "PreferenceStyle": "Style",
+    "PreferenceTheme": "Theme",
+    "PreferenceThemeDark": "Dark",
+    "PreferenceThemeNeutral": "Neutral",
+    "PreferenceThemeLight": "Light",
+    "Preference": "Settings",
+    "Pro": "Projects",
+    "ProBtnProject": "Project",
+    "ProBtnCharacters": "Characters",
+    "ProBtnStorylines": "Storylines",
+    "ProBtnChapters": "Chapters",
+    "ProBtnScenes": "Scenes",
+    "ProBtnObjects": "Objects",
+    "ProBtnLocations": "Locations",
+    "ProBtnExit": "Exit",
+    "ProBtn": "Buttons",
+    "ProBtnDelete": "Delete",
+    "ProBtnNew": "New",
+    "ProBtnNext": "Next",
+    "ProBtnPreview": "Back",
+    "ProBtnSave": "Save",
+    "ProDetail": "Details",
+    "ProDetailAuthor": "Author",
+    "ProDetailChapters": "Chapters",
+    "ProDetailCoverImage": "Cover Image",
+    "ProDetailDay": "Days until Deadline",
+    "ProDetailDeadline": "Deadline",
+    "ProDetailFormLabel": "Project",
+    "ProDetailGenre": "Genre",
+    "ProDetailGroups": "Groups",
+    "ProDetailLocations": "Locations",
+    "ProDetailMainChar": "Main Characters",
+    "ProDetailNarrativePerspective": "Narrative Perspective",
+    "ProDetailObjects": "Objects",
+    "ProDetailPremise": "Premise",
+    "ProDetailScenes": "Scenes",
+    "ProDetailStartDate": "Start Date",
+    "ProDetailStorylines": "Storylines",
+    "ProDetailSubtitle": "Subtitle",
+    "ProDetailSupportChar": "Supporting Characters",
+    "ProDetailTargetGroup": "Target Group",
+    "ProDetailTimeline": "Timeline",
+    "ProDetailTitle": "Title",
+    "ProDetailWindowTitle": "Databases",
+    "ProDetailWordsCountDay": "Words per Day",
+    "ProDetailWordsCountGoal": "Word Count Goal",
+    "Scene": "Scenes",
+    "SceneBtnDelete": "Delete",
+    "SceneBtnNew": "New",
+    "SceneBtnNext": "Next",
+    "SceneBtnPreview": "Back",
+    "SceneBtnSave": "Save",
+    "SceneTitle": "Title",
+    "SceneNumber": "Number",
+    "SceneSummary": "Summary",
+    "SceneCharacters": "Characters",
+    "SceneConflict": "Conflict",
+    "SceneDuration": "Duration",
+    "SceneGoal": "Goal",
+    "SceneLocations": "Locations",
+    "SceneMood": "Mood",
+    "SceneNotes": "Notes",
+    "SceneObjects": "Objects",
+    "SceneOutcome": "Outcome",
+    "ScenePremise": "Premise",
+    "SceneType": "Type",
+    "Start": "csNova",
+    "StartBtnExit": "Exit",
+    "StartBtnHelp": "Help && Tutorial",
+    "StartBtnSettings": "Settings",
+    "StartBtnLoadProject": "Load Project ...",
+    "StartBtnNewProject": "New Project",
+    "Storyline": "Storylines",
+    "StorylineBtnDelete": "Delete",
+    "StorylineBtnNew": "New",
+    "StorylineBtnNext": "Next",
+    "StorylineBtnPreview": "Back",
+    "StorylineBtnSave": "Save",
+    "StorylineChapters": "Chapters",
+    "StorylineCharacters": "Characters",
+    "StorylineDescription": "Description",
+    "StorylineNotes": "Notes",
+    "StorylineObjects": "Objects",
+    "StorylinePremise": "Premise",
+    "StorylineScenes": "Scenes",
+    "StorylineTimeline": "Timeline",
+    "StorylineTitle": "Title",
+    "StorylineTransformation": "Transformation",
+    "Win": "Window",
+    "WinEditorTitle": "Editor Window",
+    "WinHelpTitle": "Help",
+    "WinPreferenceTitle": "Settings",
+    "WinStartTitle": "csNova"
   },
   {
-    "ID": "es",
-    "chapter": "Capítulo",
-    "chapter_btn_delete": "Borrar",
-    "chapter_btn_new": "Nuevo",
-    "chapter_btn_next": "Antes",
-    "chapter_btn_preview": "Atrás",
-    "chapter_btn_save": "Ahorrar",
-    "chapter_number": "Número",
-    "chapter_summary": "Resumen",
-    "chapter_characters": "Personajes",
-    "chapter_locations": "Lugares",
-    "chapter_notes": "Notas",
-    "chapter_opjects": "Objetos",
-    "chapter_premise": "premisa",
-    "chapter_scenes": "Escenas",
-    "chapter_title": "título",
-    "char": "Personajes",
-    "char_app": "Mirar",
-    "char_app_body_type": "Tipo de cuerpo",
-    "char_app_charisma": "Carisma",
-    "char_app_eye_color": "Color de los ojos",
-    "char_app_eye_shape": "Forma del ojo",
-    "char_app_face_shape": "Forma de la cara",
-    "char_app_hair": "Cabello",
-    "char_app_hair_color": "Color de pelo",
-    "char_app_height": "Tamaño",
-    "char_app_notes": "Notas",
-    "char_app_posture": "estatura",
-    "char_app_skin": "piel",
-    "char_app_specials": "Características especiales",
-    "char_app2": "Detalles de apariencia",
-    "char_app2_arms": "pobre",
-    "char_app2_buttocks": "nalgas",
-    "char_app2_chest": "Mama",
-    "char_app2_feet": "Pies",
-    "char_app2_finger": "dedo",
-    "char_app2_hands": "manos",
-    "char_app2_head": "Cabeza",
-    "char_app2_hip_waist": "caderas, cintura",
-    "char_app2_legs": "Piernas",
-    "char_app2_notes": "Notas",
-    "char_app2_shoulder": "Hombro",
-    "char_app2_toes": "dedos de los pies",
-    "char_bas": "Datos básicos",
-    "char_bas_age": "Viejo",
-    "char_bas_born": "fecha de nacimiento",
-    "char_bas_firstname": "Nombre de pila",
-    "char_bas_gender": "Género",
-    "char_bas_group": "grupo",
-    "char_bas_name": "nombre",
-    "char_bas_nickname": "Apodo",
-    "char_bas_notes": "Notas",
-    "char_bas_role": "role",
-    "char_bas_sex_orientation": "orientación sexual",
-    "char_bas_status": "estado",
-    "char_btn": "Botones",
-    "char_btn_delete": "Borrar",
-    "char_btn_new": "Nuevo",
-    "char_btn_next": "Antes",
-    "char_btn_preview": "Atrás",
-    "char_btn_save": "Ahorrar",
-    "char_edu": "Capacitación",
-    "char_edu_art_music": "Arte/Música",
-    "char_edu_autodidactic": "autodidáctico",
-    "char_edu_job": "Profesión",
-    "char_edu_job_education": "Formación profesional",
-    "char_edu_notes": "Notas",
-    "char_edu_school": "Escuela",
-    "char_edu_sport": "deporte",
-    "char_edu_technologie": "Tecnología",
-    "char_edu_unitversity": "universidad",
-    "char_groups": "Grupos",
-    "char_groups_des": "Descripción",
-    "char_groups_title": "Designación",
-    "char_origin": "Origen",
-    "char_origin_birthplace": "Lugar de nacimiento",
-    "char_origin_father": "Padre",
-    "char_origin_mother": "Madre",
-    "char_origin_notes": "Notas",
-    "char_origin_reference_person": "Persona de referencia",
-    "char_origin_siblings": "Hermanos",
-    "char_person": "personalidad",
-    "char_person_behavior": "Comportarse",
-    "char_person_beliefs": "Artículo de fe",
-    "char_person_fears": "Miedos",
-    "char_person_life_goals": "Objetivo de vida",
-    "char_person_motivaton": "motivación",
-    "char_person_neg": "rasgo de carácter negativo",
-    "char_person_notes": "Notas",
-    "char_person_pos": "rasgo de carácter positivo",
-    "char_person_strengths": "Fortalecer",
-    "char_person_talente": "Prendas",
-    "char_person_weakness": "Debilitar",
-    "char_psy": "Perfil de Psicología",
-    "char_psy_aggression": "agresividad",
-    "char_psy_diagnostics": "diagnóstico",
-    "char_psy_formative": "Realce",
-    "char_psy_humor": "humor",
-    "char_psy_medication": "Medicamentos",
-    "char_psy_moral": "Moral",
-    "char_psy_norms": "Normas",
-    "char_psy_notes": "Notas",
-    "char_psy_selfimage": "Autoimagen",
-    "char_psy_socialization": "socialización",
-    "char_psy_symptoms": "Síntomas",
-    "char_psy_taboos": "Tabúes",
-    "char_psy_temperament": "temperamento",
-    "char_psy_therapy": "terapia",
-    "char_psy_trauma": "trauma",
-    "char_psy_values": "Valores",
-    "help": "Ayuda",
-    "help_chapters": "Organiza tu historia en capítulos y describe su contenido.",
-    "help_chars": "Define tus personajes: nombres, roles, características y relaciones.",
-    "help_editorwindow": "Ventana del editor",
-    "help_helpwindow": "Ventana de ayuda",
-    "help_locations": "Describe los lugares utilizados en tu historia, incluyendo la atmósfera y la relevancia.",
-    "help_objects": "Identificar objetos importantes y su significado en la historia.",
-    "help_preferencewindow": "Realice los ajustes deseados",
-    "help_project": "Proporcione información general sobre su proyecto de escritura, como título, género y objetivos.",
-    "help_projectwindow": "Seleccione la tabla que desea editar",
-    "help_scenes": "Describe escenas individuales, su propósito y entorno.",
-    "help_startwindow": "Seleccione la función deseada",
-    "help_storylines": "Esbozar las principales líneas argumentales y su desarrollo a lo largo del tiempo.",
-    "location": "Lugares",
-    "location_btn_delete": "Borrar",
-    "location_btn_new": "Nuevo",
-    "location_btn_next": "Antes",
-    "location_btn_preview": "Atrás",
-    "location_btn_save": "Ahorrar",
-    "location_title": "título",
-    "location_description": "Descripción",
-    "location_notes": "Notas",
-    "menu": "menú",
-    "menu_edit": "Editar",
-    "menu_file": "archivo",
-    "menu_help": "Ayuda ",
-    "menu_language": "Idioma",
-    "menu_settings": "Ajustes",
-    "object_btn_delete": "Borrar",
-    "object_btn_new": "Nuevo",
-    "object_btn_next": "Antes",
-    "object_btn_preview": "Atrás",
-    "object_btn_save": "Ahorrar",
-    "object_notes": "Notas",
-    "object": "Objetos",
-    "object_title": "título",
-    "object_description": "Descripción",
-    "preference_action_save": "Ahorrar",
-    "preference_action_cancel": "Cancelar",
-    "pro": "Proyectos",
-    "pro_btn_project": "Proyecto",
-    "pro_btn_characters": "Personajes",
-    "pro_btn_storylines": "Líneas argumentales",
-    "pro_btn_chapters": "Capítulos",
-    "pro_btn_scenes": "Escenas",
-    "pro_btn_objects": "Objetos",
-    "pro_btn_locations": "Lugares",
-    "pro_btn_exit": "Salir",
-    "pro_btn": "Botones",
-    "pro_btn_delete": "Borrar",
-    "pro_btn_new": "Nuevo",
-    "pro_btn_next": "Antes",
-    "pro_btn_preview": "Atrás",
-    "pro_btn_save": "Ahorrar",
-    "pro_detail": "Detalles",
-    "pro_detail_author": "autor",
-    "pro_detail_chapters": "Capítulo",
-    "pro_detail_cover_image": "Imagen de portada",
-    "pro_detail_day": "Días hasta la entrega",
-    "pro_detail_deadline": "Fecha de presentación",
-    "pro_detail_form_label": "proyecto",
-    "pro_detail_genre": "género",
-    "pro_detail_groups": "Grupos",
-    "pro_detail_locations": "Lugares",
-    "pro_detail_main_char": "Personajes principales",
-    "pro_detail_narrative_perpective": "Narrador en perspectiva",
-    "pro_detail_objects": "Objetos",
-    "pro_detail_premise": "premisa",
-    "pro_detail_scenes": "Escenas",
-    "pro_detail_startdate": "Fecha de inicio",
-    "pro_detail_storylines": "hilos narrativos",
-    "pro_detail_subtitle": "Subtítulos",
-    "pro_detail_support_char": "personajes secundarios",
-    "pro_detail_targetgroup": "Grupo objetivo",
-    "pro_detail_timeline_": "Cronología",
-    "pro_detail_timline": "Cronología",
-    "pro_detail_title": "título",
-    "pro_detail_window_title": "bases de datos",
-    "pro_detail_words_count_day": "Palabras al día",
-    "pro_detail_words_count_goal": "Recuento de palabras objetivo",
-    "scene": "Escenas",
-    "scene_btn_delete": "Borrar",
-    "scene_btn_new": "Nuevo",
-    "scene_btn_next": "Antes",
-    "scene_btn_preview": "Atrás",
-    "scene_btn_save": "Ahorrar",
-    "scene_number": "Número",
-    "scene_summary": "Resumen",
-    "scene_title": "título",
-    "scene_characters": "Personajes",
-    "scene_conflict": "conflicto",
-    "scene_duration": "Duración del tiempo",
-    "scene_goal": "Meta",
-    "scene_locations": "Lugares",
-    "scene_mood": "Ánimo",
-    "scene_notes": "Notas",
-    "scene_objects": "Objetos",
-    "scene_outcome": "Resultado",
-    "scene_premise": "premisa",
-    "scene_type": "tipo",
-    "start": "csNova",
-    "start_btn_exit": "Finalizar",
-    "start_btn_help": "Ayuda y tutorial",
-    "start_btn_settings": "Ajustes",
-    "start_btn_load_project": "Cargar proyecto...",
-    "start_btn_new_project": "bases de datos",
-    "storyline": "hilos narrativos",
-    "storyline_btn_delete": "Borrar",
-    "storyline_btn_new": "Nuevo",
-    "storyline_btn_next": "Antes",
-    "storyline_btn_preview": "Atrás",
-    "storyline_btn_save": "Ahorrar",
-    "storyline_chapters": "Capítulo",
-    "storyline_characters": "Personajes",
-    "storyline_description": "Descripción",
-    "storyline_notes": "Notas",
-    "storyline_objects": "Objetos",
-    "storyline_premise": "premisa",
-    "storyline_scenes": "Escenas",
-    "storyline_timeline": "Cronología",
-    "storyline_title": "título",
-    "storyline_transformation": "transformación",
-    "win": "Ventana",
-    "win_editor_title": "Ventana del editor",
-    "win_help_title": "Ayuda",
-    "win_preference_title": "Ajustes",
-    "win_start_title": "csNova"
-  },
-  {
-    "ID": "fr",
-    "chapter": "Chapitre",
-    "chapter_btn_delete": "Supprimer",
-    "chapter_btn_new": "Nouveau",
-    "chapter_btn_next": "Avant",
-    "chapter_btn_preview": "Dos",
-    "chapter_btn_save": "Sauvegarder",
-    "chapter_number": "Numéro",
-    "chapter_summary": "Résumé",
-    "chapter_characters": "Personnages",
-    "chapter_locations": "Lieux",
-    "chapter_notes": "Remarques",
-    "chapter_opjects": "Objets",
-    "chapter_premise": "prémisse",
-    "chapter_scenes": "Scènes",
-    "chapter_title": "titre",
-    "char": "Personnages",
-    "char_app": "Regarder",
-    "char_app_body_type": "Type de corps",
-    "char_app_charisma": "Charisme",
-    "char_app_eye_color": "Couleur des yeux",
-    "char_app_eye_shape": "Forme des yeux",
-    "char_app_face_shape": "Forme du visage",
-    "char_app_hair": "Cheveux",
-    "char_app_hair_color": "Couleur des cheveux",
-    "char_app_height": "Taille",
-    "char_app_notes": "Remarques",
-    "char_app_posture": "stature",
-    "char_app_skin": "peau",
-    "char_app_specials": "Caractéristiques spéciales",
-    "char_app2": "Détails d'apparence",
-    "char_app2_arms": "pauvre",
-    "char_app2_buttocks": "fesses",
-    "char_app2_chest": "Sein",
-    "char_app2_feet": "Pieds",
-    "char_app2_finger": "doigt",
-    "char_app2_hands": "mains",
-    "char_app2_head": "Tête",
-    "char_app2_hip_waist": "hanches, taille",
-    "char_app2_legs": "Jambes",
-    "char_app2_notes": "Remarques",
-    "char_app2_shoulder": "Épaule",
-    "char_app2_toes": "orteils",
-    "char_bas": "Données de base",
-    "char_bas_age": "Vieux",
-    "char_bas_born": "date de naissance",
-    "char_bas_firstname": "Prénom",
-    "char_bas_gender": "Genre",
-    "char_bas_group": "groupe",
-    "char_bas_name": "nom",
-    "char_bas_nickname": "Surnom",
-    "char_bas_notes": "Remarques",
-    "char_bas_role": "rôle",
-    "char_bas_sex_orientation": "orientation sexuelle",
-    "char_bas_status": "statut",
-    "char_btn": "Boutons",
-    "char_btn_delete": "Supprimer",
-    "char_btn_new": "Nouveau",
-    "char_btn_next": "Avant",
-    "char_btn_preview": "Dos",
-    "char_btn_save": "Sauvegarder",
-    "char_edu": "Entraînement",
-    "char_edu_art_music": "Art/Musique",
-    "char_edu_autodidactic": "autodidacte",
-    "char_edu_job": "Profession",
-    "char_edu_job_education": "Formation professionnelle",
-    "char_edu_notes": "Remarques",
-    "char_edu_school": "École",
-    "char_edu_sport": "sport",
-    "char_edu_technologie": "Technologie",
-    "char_edu_unitversity": "université",
-    "char_groups": "Groupes",
-    "char_groups_des": "Description",
-    "char_groups_title": "Désignation",
-    "char_origin": "Origine",
-    "char_origin_birthplace": "Lieu de naissance",
-    "char_origin_father": "Père",
-    "char_origin_mother": "Mère",
-    "char_origin_notes": "Remarques",
-    "char_origin_reference_person": "Personne de référence",
-    "char_origin_siblings": "Frères et sœurs",
-    "char_person": "personnalité",
-    "char_person_behavior": "Se comporter",
-    "char_person_beliefs": "Article de foi",
-    "char_person_fears": "Peurs",
-    "char_person_life_goals": "Objectif de vie",
-    "char_person_motivaton": "motivation",
-    "char_person_neg": "trait de caractère négatif",
-    "char_person_notes": "Remarques",
-    "char_person_pos": "trait de caractère positif",
-    "char_person_strengths": "Renforcer",
-    "char_person_talente": "Talents",
-    "char_person_weakness": "Affaiblir",
-    "char_psy": "Profil psychologique",
-    "char_psy_aggression": "agressivité",
-    "char_psy_diagnostics": "diagnostic",
-    "char_psy_formative": "Gaufrage",
-    "char_psy_humor": "humour",
-    "char_psy_medication": "Médicaments",
-    "char_psy_moral": "Morale",
-    "char_psy_norms": "Normes",
-    "char_psy_notes": "Remarques",
-    "char_psy_selfimage": "Image de soi",
-    "char_psy_socialization": "socialisation",
-    "char_psy_symptoms": "Symptômes",
-    "char_psy_taboos": "Tabous",
-    "char_psy_temperament": "tempérament",
-    "char_psy_therapy": "thérapie",
-    "char_psy_trauma": "traumatisme",
-    "char_psy_values": "Valeurs",
-    "help": "Aide",
-    "help_chapters": "Organisez votre histoire en chapitres et décrivez leur contenu.",
-    "help_chars": "Définissez vos personnages : noms, rôles, caractéristiques et relations.",
-    "help_editorwindow": "Fenêtre de l'éditeur",
-    "help_helpwindow": "Fenêtre d'aide",
-    "help_locations": "Décrivez les lieux utilisés dans votre histoire, y compris l’atmosphère et la pertinence.",
-    "help_objects": "Identifier les objets importants et leur signification dans l’histoire.",
-    "help_preferencewindow": "Effectuez les réglages souhaités",
-    "help_project": "Fournissez des informations générales sur votre projet d’écriture, telles que le titre, le genre et les objectifs.",
-    "help_projectwindow": "Sélectionnez le tableau que vous souhaitez modifier",
-    "help_scenes": "Décrivez les scènes individuelles, leur objectif et leur cadre.",
-    "help_startwindow": "Sélectionnez la fonction souhaitée",
-    "help_storylines": "Décrivez les principales intrigues et leur évolution au fil du temps.",
-    "location": "Lieux",
-    "location_btn_delete": "Supprimer",
-    "location_btn_new": "Nouveau",
-    "location_btn_next": "Avant",
-    "location_btn_preview": "Dos",
-    "location_btn_save": "Sauvegarder",
-    "location_title": "titre",
-    "location_description": "Description",
-    "location_notes": "Remarques",
-    "menu": "menu",
-    "menu_edit": "Modifier",
-    "menu_file": "déposer",
-    "menu_help": "Aide ",
-    "menu_language": "Langue",
-    "menu_settings": "Paramètres",
-    "object_btn_delete": "Supprimer",
-    "object_btn_new": "Nouveau",
-    "object_btn_next": "Avant",
-    "object_btn_preview": "Dos",
-    "object_btn_save": "Sauvegarder",
-    "object_notes": "Remarques",
-    "object": "Objets",
-    "object_title": "titre",
-    "object_description": "Description",
-    "preference_action_save": "Sauvegarder",
-    "preference_action_cancel": "Annuler",
-    "pro": "Projets",
-    "pro_btn_project": "Projet",
-    "pro_btn_characters": "Personnages",
-    "pro_btn_storylines": "Lignes narratives",
-    "pro_btn_chapters": "Chapitres",
-    "pro_btn_scenes": "Scènes",
-    "pro_btn_objects": "Objets",
-    "pro_btn_locations": "Lieux",
-    "pro_btn_exit": "Sortie",
-    "pro_btn": "Boutons",
-    "pro_btn_delete": "Supprimer",
-    "pro_btn_new": "Nouveau",
-    "pro_btn_next": "Avant",
-    "pro_btn_preview": "Dos",
-    "pro_btn_save": "Sauvegarder",
-    "pro_detail": "Détails",
-    "pro_detail_author": "auteur",
-    "pro_detail_chapters": "Chapitre",
-    "pro_detail_cover_image": "Image de couverture",
-    "pro_detail_day": "Jours jusqu'à la livraison",
-    "pro_detail_deadline": "Date de soumission",
-    "pro_detail_form_label": "projet",
-    "pro_detail_genre": "genre",
-    "pro_detail_groups": "Groupes",
-    "pro_detail_locations": "Lieux",
-    "pro_detail_main_char": "Personnages principaux",
-    "pro_detail_narrative_perpective": "Narrateur en perspective",
-    "pro_detail_objects": "Objets",
-    "pro_detail_premise": "prémisse",
-    "pro_detail_scenes": "Scènes",
-    "pro_detail_startdate": "Date de début",
-    "pro_detail_storylines": "fils narratifs",
-    "pro_detail_subtitle": "Sous-titres",
-    "pro_detail_support_char": "personnages secondaires",
-    "pro_detail_targetgroup": "Groupe cible",
-    "pro_detail_timeline_": "Chronologie",
-    "pro_detail_timline": "Chronologie",
-    "pro_detail_title": "titre",
-    "pro_detail_window_title": "bases de données",
-    "pro_detail_words_count_day": "Mots par jour",
-    "pro_detail_words_count_goal": "Nombre de mots cible",
-    "scene": "Scènes",
-    "scene_btn_delete": "Supprimer",
-    "scene_btn_new": "Nouveau",
-    "scene_btn_next": "Avant",
-    "scene_btn_preview": "Dos",
-    "scene_btn_save": "Sauvegarder",
-    "scene_number": "Numéro",
-    "scene_summary": "Résumé",
-    "scene_title": "titre",
-    "scene_characters": "Personnages",
-    "scene_conflict": "conflit",
-    "scene_duration": "Durée",
-    "scene_goal": "But",
-    "scene_locations": "Lieux",
-    "scene_mood": "Humeur",
-    "scene_notes": "Remarques",
-    "scene_objects": "Objets",
-    "scene_outcome": "Résultat",
-    "scene_premise": "prémisse",
-    "scene_type": "taper",
-    "start": "csNova",
-    "start_btn_exit": "Finition",
-    "start_btn_help": "Aide et tutoriel",
-    "start_btn_settings": "Paramètres",
-    "start_btn_load_project": "Charger le projet...",
-    "start_btn_new_project": "bases de données",
-    "storyline": "fils narratifs",
-    "storyline_btn_delete": "Supprimer",
-    "storyline_btn_new": "Nouveau",
-    "storyline_btn_next": "Avant",
-    "storyline_btn_preview": "Dos",
-    "storyline_btn_save": "Sauvegarder",
-    "storyline_chapters": "Chapitre",
-    "storyline_characters": "Personnages",
-    "storyline_description": "Description",
-    "storyline_notes": "Remarques",
-    "storyline_objects": "Objets",
-    "storyline_premise": "prémisse",
-    "storyline_scenes": "Scènes",
-    "storyline_timeline": "Chronologie",
-    "storyline_title": "titre",
-    "storyline_transformation": "transformation",
-    "win": "Fenêtre",
-    "win_editor_title": "Fenêtre de l'éditeur",
-    "win_help_title": "Aide",
-    "win_preference_title": "Paramètres",
-    "win_start_title": "csNova"
-  }
+  "ID": "es",
+  "Chapter": "Capítulo",
+  "ChapterBtnDelete": "Eliminar",
+  "ChapterBtnNew": "Nuevo",
+  "ChapterBtnNext": "Siguiente",
+  "ChapterBtnPreview": "Atrás",
+  "ChapterBtnSave": "Guardar",
+  "ChapterNumber": "Número",
+  "ChapterSummary": "Resumen",
+  "ChapterCharacters": "Personajes",
+  "ChapterLocations": "Lugares",
+  "ChapterNotes": "Notas",
+  "ChapterObjects": "Objetos",
+  "ChapterPremise": "Premisa",
+  "ChapterScenes": "Escenas",
+  "ChapterTitle": "Título",
+  "Char": "Personajes",
+  "CharApp": "Apariencia",
+  "CharAppBodyType": "Tipo de cuerpo",
+  "CharAppCharisma": "Carisma",
+  "CharAppEyeColor": "Color de ojos",
+  "CharAppEyeShape": "Forma de ojos",
+  "CharAppFaceShape": "Forma de cara",
+  "CharAppHair": "Cabello",
+  "CharAppHairColor": "Color de cabello",
+  "CharAppHeight": "Altura",
+  "CharAppNotes": "Notas",
+  "CharAppPosture": "Postura",
+  "CharAppSkin": "Piel",
+  "CharAppSpecials": "Características especiales",
+  "CharApp2": "Detalles de apariencia",
+  "CharApp2Arms": "Brazos",
+  "CharApp2Buttocks": "Glúteos",
+  "CharApp2Chest": "Pecho",
+  "CharApp2Feet": "Pies",
+  "CharApp2Finger": "Dedos",
+  "CharApp2Hands": "Manos",
+  "CharApp2Head": "Cabeza",
+  "CharApp2HipWaist": "Cadera, cintura",
+  "CharApp2Legs": "Piernas",
+  "CharApp2Notes": "Notas",
+  "CharApp2Shoulder": "Hombros",
+  "CharApp2Toes": "Dedos de los pies",
+  "CharBas": "Datos básicos",
+  "CharBasAge": "Edad",
+  "CharBasBorn": "Fecha de nacimiento",
+  "CharBasFirstname": "Nombre",
+  "CharBasGender": "Género",
+  "CharBasGroup": "Grupo",
+  "CharBasName": "Apellido",
+  "CharBasNickname": "Apodo",
+  "CharBasNotes": "Notas",
+  "CharBasRole": "Rol",
+  "CharBasSexOrientation": "Orientación sexual",
+  "CharBasStatus": "Estado",
+  "CharBtn": "Botones",
+  "CharBtnDelete": "Eliminar",
+  "CharBtnNew": "Nuevo",
+  "CharBtnNext": "Siguiente",
+  "CharBtnPreview": "Atrás",
+  "CharBtnSave": "Guardar",
+  "CharEdu": "Educación",
+  "CharEduArtMusic": "Arte/Música",
+  "CharEduAutodidactic": "Autodidacta",
+  "CharEduJob": "Profesión",
+  "CharEduJobEducation": "Formación profesional",
+  "CharEduNotes": "Notas",
+  "CharEduSchool": "Escuela",
+  "CharEduSport": "Deporte",
+  "CharEduTechnologie": "Tecnología",
+  "CharEduUniversity": "Universidad",
+  "CharGroups": "Grupos",
+  "CharGroupsDes": "Descripción",
+  "CharGroupsTitle": "Denominación",
+  "CharOrigin": "Origen",
+  "CharOriginBirthplace": "Lugar de nacimiento",
+  "CharOriginFather": "Padre",
+  "CharOriginMother": "Madre",
+  "CharOriginNotes": "Notas",
+  "CharOriginReferencePerson": "Persona de referencia",
+  "CharOriginSiblings": "Hermanos",
+  "CharPerson": "Personalidad",
+  "CharPersonBehavior": "Comportamiento",
+  "CharPersonBeliefs": "Creencias",
+  "CharPersonFears": "Miedos",
+  "CharPersonLifeGoals": "Meta de vida",
+  "CharPersonMotivation": "Motivación",
+  "CharPersonNeg": "Rasgo negativo",
+  "CharPersonNotes": "Notas",
+  "CharPersonPos": "Rasgo positivo",
+  "CharPersonStrengths": "Fortalezas",
+  "CharPersonTalente": "Talentos",
+  "CharPersonWeakness": "Debilidades",
+  "CharPsy": "Perfil psicológico",
+  "CharPsyAggression": "Agresividad",
+  "CharPsyDiagnostics": "Diagnóstico",
+  "CharPsyFormative": "Influencias formativas",
+  "CharPsyHumor": "Humor",
+  "CharPsyMedication": "Medicamentos",
+  "CharPsyMoral": "Moral",
+  "CharPsyNorms": "Normas",
+  "CharPsyNotes": "Notas",
+  "CharPsySelfimage": "Autoimagen",
+  "CharPsySocialization": "Socialización",
+  "CharPsySymptoms": "Síntomas",
+  "CharPsyTaboos": "Tabúes",
+  "CharPsyTemperament": "Temperamento",
+  "CharPsyTherapy": "Terapia",
+  "CharPsyTrauma": "Trauma",
+  "CharPsyValues": "Valores",
+  "Help": "Ayuda",
+  "HelpNewProject": "Seleccione una de las bases de datos que desea editar.",
+  "HelpChapters": "Organice su historia en capítulos y describa su contenido.",
+  "HelpChars": "Defina sus personajes: nombres, roles, características y relaciones.",
+  "HelpEditorWindow": "Ventana del editor",
+  "HelpHelpWindow": "Ventana de ayuda",
+  "HelpLocations": "Describa los lugares utilizados en su historia, incluyendo atmósfera y relevancia.",
+  "HelpObjects": "Enumere los objetos importantes y su significado en la historia.",
+  "HelpPreferenceWindow": "Realice los ajustes deseados.",
+  "HelpProject": "Proporcione información general sobre su proyecto de escritura, como título, género y objetivos.",
+  "HelpProjectWindow": "Seleccione la tabla que desea editar.",
+  "HelpScenes": "Describa escenas individuales, su propósito y entorno.",
+  "HelpStartWindow": "Seleccione la función deseada.",
+  "HelpStorylines": "Resuma las principales tramas y su desarrollo a lo largo del tiempo.",
+  "Location": "Lugares",
+  "LocationBtnDelete": "Eliminar",
+  "LocationBtnNew": "Nuevo",
+  "LocationBtnNext": "Siguiente",
+  "LocationBtnPreview": "Atrás",
+  "LocationBtnSave": "Guardar",
+  "LocationTitle": "Título",
+  "LocationDescription": "Descripción",
+  "LocationNotes": "Notas",
+  "Menu": "Menú",
+  "MenuEdit": "Editar",
+  "MenuFile": "Archivo",
+  "MenuHelp": "Ayuda",
+  "MenuLanguage": "Idioma",
+  "MenuSettings": "Configuración",
+  "ObjectBtnDelete": "Eliminar",
+  "ObjectBtnNew": "Nuevo",
+  "ObjectBtnNext": "Siguiente",
+  "ObjectBtnPreview": "Atrás",
+  "ObjectBtnSave": "Guardar",
+  "ObjectNotes": "Notas",
+  "Object": "Objetos",
+  "ObjectTitle": "Título",
+  "ObjectDescription": "Descripción",
+  "PreferenceActionSave": "Guardar",
+  "PreferenceActionCancel": "Cancelar",
+  "PreferenceLanguage": "Idioma",
+  "PreferenceStyle": "Estilo",
+  "PreferenceTheme": "Tema",
+  "PreferenceThemeDark": "Oscuro",
+  "PreferenceThemeNeutral": "Neutro",
+  "PreferenceThemeLight": "Claro",
+  "Preference": "Configuración",
+  "Pro": "Proyectos",
+  "ProBtnProject": "Proyecto",
+  "ProBtnCharacters": "Personajes",
+  "ProBtnStorylines": "Tramas",
+  "ProBtnChapters": "Capítulos",
+  "ProBtnScenes": "Escenas",
+  "ProBtnObjects": "Objetos",
+  "ProBtnLocations": "Lugares",
+  "ProBtnExit": "Salir",
+  "ProBtn": "Botones",
+  "ProBtnDelete": "Eliminar",
+  "ProBtnNew": "Nuevo",
+  "ProBtnNext": "Siguiente",
+  "ProBtnPreview": "Atrás",
+  "ProBtnSave": "Guardar",
+  "ProDetail": "Detalles",
+  "ProDetailAuthor": "Autor",
+  "ProDetailChapters": "Capítulos",
+  "ProDetailCoverImage": "Imagen de portada",
+  "ProDetailDay": "Días hasta la fecha límite",
+  "ProDetailDeadline": "Fecha límite",
+  "ProDetailFormLabel": "Proyecto",
+  "ProDetailGenre": "Género",
+  "ProDetailGroups": "Grupos",
+  "ProDetailLocations": "Lugares",
+  "ProDetailMainChar": "Personajes principales",
+  "ProDetailNarrativePerspective": "Perspectiva narrativa",
+  "ProDetailObjects": "Objetos",
+  "ProDetailPremise": "Premisa",
+  "ProDetailScenes": "Escenas",
+  "ProDetailStartDate": "Fecha de inicio",
+  "ProDetailStorylines": "Tramas",
+  "ProDetailSubtitle": "Subtítulo",
+  "ProDetailSupportChar": "Personajes secundarios",
+  "ProDetailTargetGroup": "Grupo objetivo",
+  "ProDetailTimeline": "Cronología",
+  "ProDetailTitle": "Título",
+  "ProDetailWindowTitle": "Bases de datos",
+  "ProDetailWordsCountDay": "Palabras por día",
+  "ProDetailWordsCountGoal": "Meta de palabras",
+  "Scene": "Escenas",
+  "SceneBtnDelete": "Eliminar",
+  "SceneBtnNew": "Nuevo",
+  "SceneBtnNext": "Siguiente",
+  "SceneBtnPreview": "Atrás",
+  "SceneBtnSave": "Guardar",
+  "SceneTitle": "Título",
+  "SceneNumber": "Número",
+  "SceneSummary": "Resumen",
+  "SceneCharacters": "Personajes",
+  "SceneConflict": "Conflicto",
+  "SceneDuration": "Duración",
+  "SceneGoal": "Meta",
+  "SceneLocations": "Lugares",
+  "SceneMood": "Ánimo",
+  "SceneNotes": "Notas",
+  "SceneObjects": "Objetos",
+  "SceneOutcome": "Resultado",
+  "ScenePremise": "Premisa",
+  "SceneType": "Tipo",
+  "Start": "csNova",
+  "StartBtnExit": "Salir",
+  "StartBtnHelp": "Ayuda y tutorial",
+  "StartBtnSettings": "Configuración",
+  "StartBtnLoadProject": "Cargar proyecto ...",
+  "StartBtnNewProject": "Nuevo proyecto",
+  "Storyline": "Tramas",
+  "StorylineBtnDelete": "Eliminar",
+  "StorylineBtnNew": "Nuevo",
+  "StorylineBtnNext": "Siguiente",
+  "StorylineBtnPreview": "Atrás",
+  "StorylineBtnSave": "Guardar",
+  "StorylineChapters": "Capítulos",
+  "StorylineCharacters": "Personajes",
+  "StorylineDescription": "Descripción",
+  "StorylineNotes": "Notas",
+  "StorylineObjects": "Objetos",
+  "StorylinePremise": "Premisa",
+  "StorylineScenes": "Escenas",
+  "StorylineTimeline": "Cronología",
+  "StorylineTitle": "Título",
+  "StorylineTransformation": "Transformación",
+  "Win": "Ventana",
+  "WinEditorTitle": "Ventana del editor",
+  "WinHelpTitle": "Ayuda",
+  "WinPreferenceTitle": "Configuración",
+  "WinStartTitle": "csNova"
+},
+{
+  "ID": "fr",
+  "Chapter": "Chapitre",
+  "ChapterBtnDelete": "Supprimer",
+  "ChapterBtnNew": "Nouveau",
+  "ChapterBtnNext": "Suivant",
+  "ChapterBtnPreview": "Retour",
+  "ChapterBtnSave": "Enregistrer",
+  "ChapterNumber": "Numéro",
+  "ChapterSummary": "Résumé",
+  "ChapterCharacters": "Personnages",
+  "ChapterLocations": "Lieux",
+  "ChapterNotes": "Notes",
+  "ChapterObjects": "Objets",
+  "ChapterPremise": "Prémisse",
+  "ChapterScenes": "Scènes",
+  "ChapterTitle": "Titre",
+  "Char": "Personnages",
+  "CharApp": "Apparence",
+  "CharAppBodyType": "Type de corps",
+  "CharAppCharisma": "Charisme",
+  "CharAppEyeColor": "Couleur des yeux",
+  "CharAppEyeShape": "Forme des yeux",
+  "CharAppFaceShape": "Forme du visage",
+  "CharAppHair": "Cheveux",
+  "CharAppHairColor": "Couleur des cheveux",
+  "CharAppHeight": "Taille",
+  "CharAppNotes": "Notes",
+  "CharAppPosture": "Posture",
+  "CharAppSkin": "Peau",
+  "CharAppSpecials": "Caractéristiques spéciales",
+  "CharApp2": "Détails de l'apparence",
+  "CharApp2Arms": "Bras",
+  "CharApp2Buttocks": "Fessier",
+  "CharApp2Chest": "Poitrine",
+  "CharApp2Feet": "Pieds",
+  "CharApp2Finger": "Doigts",
+  "CharApp2Hands": "Mains",
+  "CharApp2Head": "Tête",
+  "CharApp2HipWaist": "Hanches, taille",
+  "CharApp2Legs": "Jambes",
+  "CharApp2Notes": "Notes",
+  "CharApp2Shoulder": "Épaules",
+  "CharApp2Toes": "Orteils",
+  "CharBas": "Données de base",
+  "CharBasAge": "Âge",
+  "CharBasBorn": "Date de naissance",
+  "CharBasFirstname": "Prénom",
+  "CharBasGender": "Genre",
+  "CharBasGroup": "Groupe",
+  "CharBasName": "Nom",
+  "CharBasNickname": "Surnom",
+  "CharBasNotes": "Notes",
+  "CharBasRole": "Rôle",
+  "CharBasSexOrientation": "Orientation sexuelle",
+  "CharBasStatus": "Statut",
+  "CharBtn": "Boutons",
+  "CharBtnDelete": "Supprimer",
+  "CharBtnNew": "Nouveau",
+  "CharBtnNext": "Suivant",
+  "CharBtnPreview": "Retour",
+  "CharBtnSave": "Enregistrer",
+  "CharEdu": "Éducation",
+  "CharEduArtMusic": "Art/Musique",
+  "CharEduAutodidactic": "Autodidacte",
+  "CharEduJob": "Profession",
+  "CharEduJobEducation": "Formation professionnelle",
+  "CharEduNotes": "Notes",
+  "CharEduSchool": "École",
+  "CharEduSport": "Sport",
+  "CharEduTechnologie": "Technologie",
+  "CharEduUniversity": "Université",
+  "CharGroups": "Groupes",
+  "CharGroupsDes": "Description",
+  "CharGroupsTitle": "Désignation",
+  "CharOrigin": "Origine",
+  "CharOriginBirthplace": "Lieu de naissance",
+  "CharOriginFather": "Père",
+  "CharOriginMother": "Mère",
+  "CharOriginNotes": "Notes",
+  "CharOriginReferencePerson": "Personne de référence",
+  "CharOriginSiblings": "Frères et sœurs",
+  "CharPerson": "Personnalité",
+  "CharPersonBehavior": "Comportement",
+  "CharPersonBeliefs": "Croyances",
+  "CharPersonFears": "Peurs",
+  "CharPersonLifeGoals": "Objectif de vie",
+  "CharPersonMotivation": "Motivation",
+  "CharPersonNeg": "Trait négatif",
+  "CharPersonNotes": "Notes",
+  "CharPersonPos": "Trait positif",
+  "CharPersonStrengths": "Forces",
+  "CharPersonTalente": "Talents",
+  "CharPersonWeakness": "Faiblesses",
+  "CharPsy": "Profil psychologique",
+  "CharPsyAggression": "Agressivité",
+  "CharPsyDiagnostics": "Diagnostic",
+  "CharPsyFormative": "Influences formatrices",
+  "CharPsyHumor": "Humour",
+  "CharPsyMedication": "Médicaments",
+  "CharPsyMoral": "Morale",
+  "CharPsyNorms": "Normes",
+  "CharPsyNotes": "Notes",
+  "CharPsySelfimage": "Image de soi",
+  "CharPsySocialization": "Socialisation",
+  "CharPsySymptoms": "Symptômes",
+  "CharPsyTaboos": "Tabous",
+  "CharPsyTemperament": "Tempérament",
+  "CharPsyTherapy": "Thérapie",
+  "CharPsyTrauma": "Traumatisme",
+  "CharPsyValues": "Valeurs",
+  "Help": "Aide",
+  "HelpNewProject": "Sélectionnez l'une des bases de données que vous souhaitez modifier.",
+  "HelpChapters": "Organisez votre histoire en chapitres et décrivez leur contenu.",
+  "HelpChars": "Définissez vos personnages : noms, rôles, traits et relations.",
+  "HelpEditorWindow": "Fenêtre d'édition",
+  "HelpHelpWindow": "Fenêtre d'aide",
+  "HelpLocations": "Décrivez les lieux utilisés dans votre histoire, y compris l'atmosphère et la pertinence.",
+  "HelpObjects": "Listez les objets importants et leur signification dans l'histoire.",
+  "HelpPreferenceWindow": "Effectuez les réglages souhaités.",
+  "HelpProject": "Fournissez des informations générales sur votre projet d'écriture, telles que le titre, le genre et les objectifs.",
+  "HelpProjectWindow": "Sélectionnez le tableau que vous souhaitez modifier.",
+  "HelpScenes": "Décrivez les scènes individuelles, leur but et leur cadre.",
+  "HelpStartWindow": "Sélectionnez la fonction souhaitée.",
+  "HelpStorylines": "Présentez les principales intrigues et leur évolution au fil du temps.",
+  "Location": "Lieux",
+  "LocationBtnDelete": "Supprimer",
+  "LocationBtnNew": "Nouveau",
+  "LocationBtnNext": "Suivant",
+  "LocationBtnPreview": "Retour",
+  "LocationBtnSave": "Enregistrer",
+  "LocationTitle": "Titre",
+  "LocationDescription": "Description",
+  "LocationNotes": "Notes",
+  "Menu": "Menu",
+  "MenuEdit": "Éditer",
+  "MenuFile": "Fichier",
+  "MenuHelp": "Aide",
+  "MenuLanguage": "Langue",
+  "MenuSettings": "Paramètres",
+  "ObjectBtnDelete": "Supprimer",
+  "ObjectBtnNew": "Nouveau",
+  "ObjectBtnNext": "Suivant",
+  "ObjectBtnPreview": "Retour",
+  "ObjectBtnSave": "Enregistrer",
+  "ObjectNotes": "Notes",
+  "Object": "Objets",
+  "ObjectTitle": "Titre",
+  "ObjectDescription": "Description",
+  "PreferenceActionSave": "Enregistrer",
+  "PreferenceActionCancel": "Annuler",
+  "PreferenceLanguage": "Langue",
+  "PreferenceStyle": "Style",
+  "PreferenceTheme": "Thème",
+  "PreferenceThemeDark": "Sombre",
+  "PreferenceThemeNeutral": "Neutre",
+  "PreferenceThemeLight": "Clair",
+  "Preference": "Paramètres",
+  "Pro": "Projets",
+  "ProBtnProject": "Projet",
+  "ProBtnCharacters": "Personnages",
+  "ProBtnStorylines": "Intrigues",
+  "ProBtnChapters": "Chapitres",
+  "ProBtnScenes": "Scènes",
+  "ProBtnObjects": "Objets",
+  "ProBtnLocations": "Lieux",
+  "ProBtnExit": "Quitter",
+  "ProBtn": "Boutons",
+  "ProBtnDelete": "Supprimer",
+  "ProBtnNew": "Nouveau",
+  "ProBtnNext": "Suivant",
+  "ProBtnPreview": "Retour",
+  "ProBtnSave": "Enregistrer",
+  "ProDetail": "Détails",
+  "ProDetailAuthor": "Auteur",
+  "ProDetailChapters": "Chapitres",
+  "ProDetailCoverImage": "Image de couverture",
+  "ProDetailDay": "Jours avant la date limite",
+  "ProDetailDeadline": "Date limite",
+  "ProDetailFormLabel": "Projet",
+  "ProDetailGenre": "Genre",
+  "ProDetailGroups": "Groupes",
+  "ProDetailLocations": "Lieux",
+  "ProDetailMainChar": "Personnages principaux",
+  "ProDetailNarrativePerspective": "Perspective narrative",
+  "ProDetailObjects": "Objets",
+  "ProDetailPremise": "Prémisse",
+  "ProDetailScenes": "Scènes",
+  "ProDetailStartDate": "Date de début",
+  "ProDetailStorylines": "Intrigues",
+  "ProDetailSubtitle": "Sous-titre",
+  "ProDetailSupportChar": "Personnages secondaires",
+  "ProDetailTargetGroup": "Groupe cible",
+  "ProDetailTimeline": "Chronologie",
+  "ProDetailTitle": "Titre",
+  "ProDetailWindowTitle": "Bases de données",
+  "ProDetailWordsCountDay": "Mots par jour",
+  "ProDetailWordsCountGoal": "Objectif de mots",
+  "Scene": "Scènes",
+  "SceneBtnDelete": "Supprimer",
+  "SceneBtnNew": "Nouveau",
+  "SceneBtnNext": "Suivant",
+  "SceneBtnPreview": "Retour",
+  "SceneBtnSave": "Enregistrer",
+  "SceneTitle": "Titre",
+  "SceneNumber": "Numéro",
+  "SceneSummary": "Résumé",
+  "SceneCharacters": "Personnages",
+  "SceneConflict": "Conflit",
+  "SceneDuration": "Durée",
+  "SceneGoal": "Objectif",
+  "SceneLocations": "Lieux",
+  "SceneMood": "Ambiance",
+  "SceneNotes": "Notes",
+  "SceneObjects": "Objets",
+  "SceneOutcome": "Résultat",
+  "ScenePremise": "Prémisse",
+  "SceneType": "Type",
+  "Start": "csNova",
+  "StartBtnExit": "Quitter",
+  "StartBtnHelp": "Aide & Tutoriel",
+  "StartBtnSettings": "Paramètres",
+  "StartBtnLoadProject": "Charger le projet ...",
+  "StartBtnNewProject": "Nouveau projet",
+  "Storyline": "Intrigues",
+  "StorylineBtnDelete": "Supprimer",
+  "StorylineBtnNew": "Nouveau",
+  "StorylineBtnNext": "Suivant",
+  "StorylineBtnPreview": "Retour",
+  "StorylineBtnSave": "Enregistrer",
+  "StorylineChapters": "Chapitres",
+  "StorylineCharacters": "Personnages",
+  "StorylineDescription": "Description",
+  "StorylineNotes": "Notes",
+  "StorylineObjects": "Objets",
+  "StorylinePremise": "Prémisse",
+  "StorylineScenes": "Scènes",
+  "StorylineTimeline": "Chronologie",
+  "StorylineTitle": "Titre",
+  "StorylineTransformation": "Transformation",
+  "Win": "Fenêtre",
+  "WinEditorTitle": "Fenêtre d'édition",
+  "WinHelpTitle": "Aide",
+  "WinPreferenceTitle": "Paramètres",
+  "WinStartTitle": "csNova"
+}
 ]
 ```
 
@@ -1945,7 +1974,9 @@ class Translator:
         log_subsection("__init__")
         self.lang = lang
         self.translations = {}
+        self.key_map = {}
         self._load_translations()
+        self._init_key_map()
 
     def _load_translations(self):
         log_subsection("_load_translations")
@@ -1957,35 +1988,304 @@ class Translator:
                 if entry.get("ID") == self.lang:
                     self.translations = entry
                     break
+            else:
+                self.translations = {}
             log_info(f"Translations loaded for language '{self.lang}'.")
         except Exception as e:
             log_exception("Error loading translations", e)
             self.translations = {}
 
+    def _init_key_map(self):
+        # Explizites Mapping nach UI-Modul/Formular sortiert
+        self.key_map = {
+            # StartWindow
+            "start_btn_new_project": "StartBtnNewProject",
+            "start_btn_load_project": "StartBtnLoadProject",
+            "start_btn_settings": "StartBtnSettings",
+            "start_btn_help": "StartBtnHelp",
+            "start_btn_exit": "StartBtnExit",
+            "window_start_title": "WinStartTitle",
+
+            # ProjectWindow
+            "project": "Pro",
+            "project_btn": "ProBtn",
+            "project_btn_project": "ProBtnProject",
+            "project_btn_characters": "ProBtnCharacters",
+            "project_btn_storylines": "ProBtnStorylines",
+            "project_btn_chapters": "ProBtnChapters",
+            "project_btn_scenes": "ProBtnScenes",
+            "project_btn_objects": "ProBtnObjects",
+            "project_btn_locations": "ProBtnLocations",
+            "project_btn_exit": "ProBtnExit",
+            "project_btn_new": "ProBtnNew",
+            "project_btn_delete": "ProBtnDelete",
+            "project_btn_next": "ProBtnNext",
+            "project_btn_preview": "ProBtnPreview",
+            "project_btn_save": "ProBtnSave",
+            "project_days_until_deadline": "ProDetailDay",
+            "project_deadline": "ProDetailDeadline",
+            "project_start_date": "ProDetailStartDate",
+            "project_word_count": "ProDetailWordCount",
+            "project_target_word_count": "ProDetailTargetWordCount",
+            "project_title": "ProDetailTitle",
+            "project_detail": "ProDetail",
+            "project_detail_author": "ProDetailAuthor",
+            "project_detail_chapters": "ProDetailChapters",
+            "project_detail_cover_image": "ProDetailCoverImage",
+            "project_detail_form_label": "ProDetailFormLabel",
+            "project_detail_genre": "ProDetailGenre",
+            "project_detail_groups": "ProDetailGroups",
+            "project_detail_scenes": "ProDetailScenes",
+            "project_detail_objects": "ProDetailObjects",
+            "project_detail_locations": "ProDetailLocations",
+            "project_detail_storylines": "ProDetailStorylines",
+            "project_detail_main_char": "ProDetailMainChar",
+            "project_detail_support_char": "ProDetailSupportChar",
+            "project_detail_narrative_perspective": "ProDetailNarrativePerspective",
+            "project_detail_premise": "ProDetailPremise",
+            "project_detail_timeline": "ProDetailTimeline",
+            "project_detail_subtitle": "ProDetailSubtitle",
+            "project_detail_target_group": "ProDetailTargetGroup",
+            "project_window_title": "ProDetailWindowTitle",
+            "project_words_count_day": "ProDetailWordsCountDay",
+            "project_words_count_goal": "ProDetailWordsCountGoal",
+
+            # CharacterForm
+            "character": "Char",
+            "character_app": "CharApp",
+            "character_app_body_type": "CharAppBodyType",
+            "character_app_charisma": "CharAppCharisma",
+            "character_app_eye_color": "CharAppEyeColor",
+            "character_app_eye_shape": "CharAppEyeShape",
+            "character_app_face_shape": "CharAppFaceShape",
+            "character_app_hair": "CharAppHair",
+            "character_app_hair_color": "CharAppHairColor",
+            "character_app_height": "CharAppHeight",
+            "character_app_notes": "CharAppNotes",
+            "character_app_posture": "CharAppPosture",
+            "character_app_skin": "CharAppSkin",
+            "character_app_specials": "CharAppSpecials",
+            "character_app2": "CharApp2",
+            "character_app2_arms": "CharApp2Arms",
+            "character_app2_buttocks": "CharApp2Buttocks",
+            "character_app2_chest": "CharApp2Chest",
+            "character_app2_feet": "CharApp2Feet",
+            "character_app2_finger": "CharApp2Finger",
+            "character_app2_hands": "CharApp2Hands",
+            "character_app2_head": "CharApp2Head",
+            "character_app2_hip_waist": "CharApp2HipWaist",
+            "character_app2_legs": "CharApp2Legs",
+            "character_app2_notes": "CharApp2Notes",
+            "character_app2_shoulder": "CharApp2Shoulder",
+            "character_app2_toes": "CharApp2Toes",
+            "character_bas": "CharBas",
+            "character_bas_age": "CharBasAge",
+            "character_bas_born": "CharBasBorn",
+            "character_bas_firstname": "CharBasFirstname",
+            "character_bas_gender": "CharBasGender",
+            "character_bas_group": "CharBasGroup",
+            "character_bas_name": "CharBasName",
+            "character_bas_nickname": "CharBasNickname",
+            "character_bas_notes": "CharBasNotes",
+            "character_bas_role": "CharBasRole",
+            "character_bas_sex_orientation": "CharBasSexOrientation",
+            "character_bas_status": "CharBasStatus",
+            "character_btn": "CharBtn",
+            "character_btn_delete": "CharBtnDelete",
+            "character_btn_new": "CharBtnNew",
+            "character_btn_next": "CharBtnNext",
+            "character_btn_preview": "CharBtnPreview",
+            "character_btn_save": "CharBtnSave",
+            "character_edu": "CharEdu",
+            "character_edu_art_music": "CharEduArtMusic",
+            "character_edu_autodidactic": "CharEduAutodidactic",
+            "character_edu_job": "CharEduJob",
+            "character_edu_job_education": "CharEduJobEducation",
+            "character_edu_notes": "CharEduNotes",
+            "character_edu_school": "CharEduSchool",
+            "character_edu_sport": "CharEduSport",
+            "character_edu_technologie": "CharEduTechnologie",
+            "character_edu_university": "CharEduUniversity",
+            "character_groups": "CharGroups",
+            "character_groups_des": "CharGroupsDes",
+            "character_groups_title": "CharGroupsTitle",
+            "character_origin": "CharOrigin",
+            "character_origin_birthplace": "CharOriginBirthplace",
+            "character_origin_father": "CharOriginFather",
+            "character_origin_mother": "CharOriginMother",
+            "character_origin_notes": "CharOriginNotes",
+            "character_origin_reference_person": "CharOriginReferencePerson",
+            "character_origin_siblings": "CharOriginSiblings",
+            "character_person": "CharPerson",
+            "character_person_behavior": "CharPersonBehavior",
+            "character_person_beliefs": "CharPersonBeliefs",
+            "character_person_fears": "CharPersonFears",
+            "character_person_life_goals": "CharPersonLifeGoals",
+            "character_person_motivation": "CharPersonMotivation",
+            "character_person_neg": "CharPersonNeg",
+            "character_person_notes": "CharPersonNotes",
+            "character_person_pos": "CharPersonPos",
+            "character_person_strengths": "CharPersonStrengths",
+            "character_person_talente": "CharPersonTalente",
+            "character_person_weakness": "CharPersonWeakness",
+            "character_psy": "CharPsy",
+            "character_psy_aggression": "CharPsyAggression",
+            "character_psy_diagnostics": "CharPsyDiagnostics",
+            "character_psy_formative": "CharPsyFormative",
+            "character_psy_humor": "CharPsyHumor",
+            "character_psy_medication": "CharPsyMedication",
+            "character_psy_moral": "CharPsyMoral",
+            "character_psy_norms": "CharPsyNorms",
+            "character_psy_notes": "CharPsyNotes",
+            "character_psy_selfimage": "CharPsySelfimage",
+            "character_psy_socialization": "CharPsySocialization",
+            "character_psy_symptoms": "CharPsySymptoms",
+            "character_psy_taboos": "CharPsyTaboos",
+            "character_psy_temperament": "CharPsyTemperament",
+            "character_psy_therapy": "CharPsyTherapy",
+            "character_psy_trauma": "CharPsyTrauma",
+            "character_psy_values": "CharPsyValues",
+
+            # ChaptersForm
+            "chapter": "Chapter",
+            "chapter_btn_delete": "ChapterBtnDelete",
+            "chapter_btn_new": "ChapterBtnNew",
+            "chapter_btn_next": "ChapterBtnNext",
+            "chapter_btn_preview": "ChapterBtnPreview",
+            "chapter_btn_save": "ChapterBtnSave",
+            "chapter_number": "ChapterNumber",
+            "chapter_summary": "ChapterSummary",
+            "chapter_characters": "ChapterCharacters",
+            "chapter_locations": "ChapterLocations",
+            "chapter_notes": "ChapterNotes",
+            "chapter_objects": "ChapterObjects",
+            "chapter_premise": "ChapterPremise",
+            "chapter_scenes": "ChapterScenes",
+            "chapter_title": "ChapterTitle",
+
+            # ScenesForm
+            "scene": "Scene",
+            "scene_btn_delete": "SceneBtnDelete",
+            "scene_btn_new": "SceneBtnNew",
+            "scene_btn_next": "SceneBtnNext",
+            "scene_btn_preview": "SceneBtnPreview",
+            "scene_btn_save": "SceneBtnSave",
+            "scene_title": "SceneTitle",
+            "scene_number": "SceneNumber",
+            "scene_summary": "SceneSummary",
+            "scene_characters": "SceneCharacters",
+            "scene_conflict": "SceneConflict",
+            "scene_duration": "SceneDuration",
+            "scene_goal": "SceneGoal",
+            "scene_locations": "SceneLocations",
+            "scene_mood": "SceneMood",
+            "scene_notes": "SceneNotes",
+            "scene_objects": "SceneObjects",
+            "scene_outcome": "SceneOutcome",
+            "scene_premise": "ScenePremise",
+            "scene_type": "SceneType",
+
+            # ObjectsForm
+            "object": "Object",
+            "object_btn_delete": "ObjectBtnDelete",
+            "object_btn_new": "ObjectBtnNew",
+            "object_btn_next": "ObjectBtnNext",
+            "object_btn_preview": "ObjectBtnPreview",
+            "object_btn_save": "ObjectBtnSave",
+            "object_title": "ObjectTitle",
+            "object_description": "ObjectDescription",
+            "object_notes": "ObjectNotes",
+
+            # LocationsForm
+            "location": "Location",
+            "location_btn_delete": "LocationBtnDelete",
+            "location_btn_new": "LocationBtnNew",
+            "location_btn_next": "LocationBtnNext",
+            "location_btn_preview": "LocationBtnPreview",
+            "location_btn_save": "LocationBtnSave",
+            "location_title": "LocationTitle",
+            "location_description": "LocationDescription",
+            "location_notes": "LocationNotes",
+
+            # StorylinesForm
+            "storyline": "Storyline",
+            "storyline_btn_delete": "StorylineBtnDelete",
+            "storyline_btn_new": "StorylineBtnNew",
+            "storyline_btn_next": "StorylineBtnNext",
+            "storyline_btn_preview": "StorylineBtnPreview",
+            "storyline_btn_save": "StorylineBtnSave",
+            "storyline_chapters": "StorylineChapters",
+            "storyline_characters": "StorylineCharacters",
+            "storyline_description": "StorylineDescription",
+            "storyline_notes": "StorylineNotes",
+            "storyline_objects": "StorylineObjects",
+            "storyline_premise": "StorylinePremise",
+            "storyline_scenes": "StorylineScenes",
+            "storyline_timeline": "StorylineTimeline",
+            "storyline_title": "StorylineTitle",
+            "storyline_transformation": "StorylineTransformation",
+
+            # Preferences
+            "preference": "Preference",
+            "preference_save": "PreferenceActionSave",
+            "preference_cancel": "PreferenceActionCancel",
+            "preference_language": "PreferenceLanguage",
+            "preference_style": "PreferenceStyle",
+            "preference_theme": "PreferenceTheme",
+            "preference_theme_dark": "PreferenceThemeDark",
+            "preference_theme_neutral": "PreferenceThemeNeutral",
+            "preference_theme_light": "PreferenceThemeLight",
+            "preference_title": "WinPreferenceTitle",
+
+            # HelpPanel
+            "help": "Help",
+            "help_new_project": "HelpNewProject",
+            "help_chapters": "HelpChapters",
+            "help_chars": "HelpChars",
+            "help_editor_window": "HelpEditorWindow",
+            "help_help_window": "HelpHelpWindow",
+            "help_locations": "HelpLocations",
+            "help_objects": "HelpObjects",
+            "help_preference_window": "HelpPreferenceWindow",
+            "help_project": "HelpProject",
+            "help_project_window": "HelpProjectWindow",
+            "help_scenes": "HelpScenes",
+            "help_start_window": "HelpStartWindow",
+            "help_storylines": "HelpStorylines",
+
+            # Menu
+            "menu": "Menu",
+            "menu_file": "MenuFile",
+            "menu_edit": "MenuEdit",
+            "menu_help": "MenuHelp",
+            "menu_language": "MenuLanguage",
+            "menu_settings": "MenuSettings",
+
+            # Fenster-Titel
+            "win": "Win",
+            "win_editor_title": "WinEditorTitle",
+            "win_help_title": "WinHelpTitle",
+
+        }
+
     def set_language(self, lang_code):
         log_subsection("set_language")
         self.lang = lang_code
         self._load_translations()
+        self._init_key_map()
 
-    def tr(self, key):
+    def tr(self, standard_key):
         log_subsection("tr")
-        return self.translations.get(key, key)
+        json_key = self.key_map.get(standard_key, standard_key)
+        return self.translations.get(json_key, standard_key)
 
-    def form_label(self, key):
+    def form_label(self, standard_key):
         log_subsection("form_label")
-        # Falls form_labels-Bereich existiert, sonst fallback auf Hauptbereich
-        labels = self.translations.get("form_labels", {})
-        if labels and key in labels:
-            return labels[key]
-        return self.translations.get(key, key)
+        return self.tr(standard_key)
 
-    def help_text(self, key):
+    def help_text(self, standard_key):
         log_subsection("help_text")
-        # Falls help_texts-Bereich existiert, sonst fallback auf Hauptbereich
-        helps = self.translations.get("help_texts", {})
-        if helps and key in helps:
-            return helps[key]
-        return self.translations.get(key, key)
+        return self.tr(standard_key)
 ```
 
 ### 6.5 GUI
@@ -2001,6 +2301,19 @@ DEFAULTS = {
     "border_radius": 8,
     "font_size": 14,
     "input_width": 400,
+    "border_radius": 8,
+    "font_size": 14,
+    "input_width": 400,
+    "border": "#b6c2e1",
+    "highlight": "#ff0",
+    "background": "#e7eaf3",
+    "foreground": "#1a1a1a",
+    "button_bg": "#e7eaf3",
+    "button_fg": "#1a1a1a",
+    "button_hover": "#d0d6e6",
+    "button_active": "#b6c2e1",
+    "input_bg": "#ffffff",
+    "input_fg": "#1a1a1a",
 }
 
 # Central CSS templates for all GUI components
@@ -2480,14 +2793,15 @@ from gui.styles.base_style import render_css, DEFAULTS
 from gui.styles.registry_style import get_current_style
 from core.logger import log_section, log_subsection, log_info, log_exception
 
-def load_global_stylesheet(font_size=14):
+def load_global_stylesheet(style_code=None, mode_code=None, font_size=14):
     """
-    Loads the global stylesheet for the application using the current style and mode.
+    Loads the global stylesheet for the application using the given style and mode.
+    If style_code or mode_code are not provided, uses current settings.
     """
     log_section("form_styles.py")
     log_subsection("load_global_stylesheet")
     try:
-        style = get_current_style()
+        style = get_current_style(style_code, mode_code)
         style["font_size"] = font_size
         style["border_radius"] = DEFAULTS["border_radius"]
         style["input_width"] = DEFAULTS["input_width"]
@@ -2523,14 +2837,14 @@ def load_global_stylesheet(font_size=14):
         log_exception("Error loading global stylesheet", e)
         return ""
 
-def load_button_style(font_size=14):
+def load_button_style(style_code=None, mode_code=None, font_size=14):
     """
     Loads the stylesheet for buttons and toolbars.
     """
     log_section("form_styles.py")
     log_subsection("load_button_style")
     try:
-        style = get_current_style()
+        style = get_current_style(style_code, mode_code)
         style["font_size"] = font_size
         style["border_radius"] = DEFAULTS["border_radius"]
         return render_css("button", style) + render_css("toolbar", style)
@@ -2538,14 +2852,14 @@ def load_button_style(font_size=14):
         log_exception("Error loading button stylesheet", e)
         return ""
 
-def load_active_button_style(font_size=16):
+def load_active_button_style(style_code=None, mode_code=None, font_size=16):
     """
     Loads the stylesheet for active buttons.
     """
     log_section("form_styles.py")
     log_subsection("load_active_button_style")
     try:
-        style = get_current_style()
+        style = get_current_style(style_code, mode_code)
         style["font_size"] = font_size
         style["border_radius"] = DEFAULTS["border_radius"]
         return render_css("active_button", style)
@@ -2553,14 +2867,14 @@ def load_active_button_style(font_size=16):
         log_exception("Error loading active button stylesheet", e)
         return ""
 
-def load_form_style(input_font_size=14, label_font_size=14, input_width=400):
+def load_form_style(style_code=None, mode_code=None, input_font_size=14, label_font_size=14, input_width=400):
     """
     Loads the stylesheet for forms and input fields.
     """
     log_section("form_styles.py")
     log_subsection("load_form_style")
     try:
-        style = get_current_style()
+        style = get_current_style(style_code, mode_code)
         style["font_size"] = input_font_size
         style["border_radius"] = DEFAULTS["border_radius"]
         style["input_width"] = input_width
@@ -2585,7 +2899,7 @@ class NavigationPanel(QWidget):
         log_subsection("__init__")
         try:
             super().__init__(parent)
-            self.setObjectName("NavigationPanel")  # For stylesheet targeting
+            self.setObjectName("NavigationPanel")
             self.translator = translator
             self.callbacks = callbacks or {}
             self.active_key = None
@@ -2611,15 +2925,12 @@ class NavigationPanel(QWidget):
     def _on_nav_clicked(self, key):
         log_subsection(f"_on_nav_clicked: {key}")
         try:
-            # Reset all buttons to default style
             button_style = load_button_style()
             button_style_active = load_active_button_style()
             for k, btn in self.buttons.items():
                 btn.setStyleSheet(button_style)
-            # Set active button style
             self.buttons[key].setStyleSheet(button_style_active)
             self.active_key = key
-            # Call the assigned callback
             if key in self.callbacks:
                 self.callbacks[key]()
             log_info(f"Navigation button '{key}' clicked.")
@@ -2721,19 +3032,12 @@ class FormToolbar(QWidget):
 
             self.translator = translator
 
-            # Create actions with translated labels
-            self.new_action = QAction(self.translator.form_label(f"{form_prefix}_btn_new"), self)
-            self.delete_action = QAction(self.translator.form_label(f"{form_prefix}_btn_delete"), self)
-            self.prev_action = QAction(self.translator.form_label(f"{form_prefix}_btn_preview"), self)
-            self.next_action = QAction(self.translator.form_label(f"{form_prefix}_btn_next"), self)
-            self.save_action = QAction(self.translator.form_label(f"{form_prefix}_btn_save"), self)
-
-            # Optionally set icons if available
-            # self.new_action.setIcon(QIcon("icons/new.png"))
-            # self.delete_action.setIcon(QIcon("icons/delete.png"))
-            # self.prev_action.setIcon(QIcon("icons/prev.png"))
-            # self.next_action.setIcon(QIcon("icons/next.png"))
-            # self.save_action.setIcon(QIcon("icons/save.png"))
+            # Standard-Keys für die Aktionen gemäß translator.py
+            self.new_action = QAction(self.translator.tr(f"{form_prefix}_btn_new"), self)
+            self.delete_action = QAction(self.translator.tr(f"{form_prefix}_btn_delete"), self)
+            self.prev_action = QAction(self.translator.tr(f"{form_prefix}_btn_preview"), self)
+            self.next_action = QAction(self.translator.tr(f"{form_prefix}_btn_next"), self)
+            self.save_action = QAction(self.translator.tr(f"{form_prefix}_btn_save"), self)
 
             # Add actions and spacing between buttons
             actions = [
@@ -2785,8 +3089,8 @@ class BaseFormWidget(QWidget):
             self.toolbar = FormToolbar(self.translator, form_prefix, self)
             if toolbar_actions:
                 toolbar_actions(self.toolbar)
-            main_layout.addWidget(self.toolbar)
-            main_layout.addSpacing(12)
+                main_layout.addWidget(self.toolbar)
+                main_layout.addSpacing(12)
 
             # Formularfelder
             self.form_layout = QFormLayout()
@@ -2839,99 +3143,74 @@ class BaseFormWidget(QWidget):
 ##### 6.5.3.3 form_chapters.py
 
 ```python
-import json
-from PySide6.QtWidgets import QWidget, QVBoxLayout
-from gui.widgets.base_form_widget import BaseFormWidget
-from core.translator import Translator
-from core.logger import log_section, log_subsection, log_info, log_error
-from config.dev import FORM_FIELDS_FILE
+from PySide6.QtWidgets import QWidget, QVBoxLayout, QLabel
+from gui.widgets.form_toolbar import FormToolbar
+from core.logger import log_section, log_subsection, log_info, log_exception
 
 class ChaptersForm(QWidget):
-    """
-    Form widget for chapter data entry.
-    """
-    def __init__(self, translator: Translator, parent=None):
+    def __init__(self, translator, parent=None):
         log_section("form_chapters.py")
         log_subsection("__init__")
         try:
             super().__init__(parent)
             self.translator = translator
 
-            # Felder zentral aus JSON laden (nur einmal!)
-            with open(FORM_FIELDS_FILE, "r", encoding="utf-8") as f:
-                all_fields = json.load(f)
-            fields = all_fields.get("chapters", [])
-
-            def toolbar_actions(toolbar):
-                toolbar.save_action.triggered.connect(self._on_save)
-
-            self.form = BaseFormWidget(
-                title=self.translator.tr("chapter"),
-                fields=fields,
-                toolbar_actions=toolbar_actions,
-                form_prefix="chapter",
-                translator=self.translator,
-                parent=self
-            )
             layout = QVBoxLayout(self)
-            layout.addWidget(self.form)
+
+            # Toolbar mit "chapter"-Prefix
+            self.toolbar = FormToolbar(self.translator, "chapter", self)
+            layout.addWidget(self.toolbar)
+
+            # Beispiel für ein Label mit standard_key
+            self.title_label = QLabel(self.translator.tr("chapter_title"), self)
+            layout.addWidget(self.title_label)
+
+            # Weitere Felder/Labels nach Bedarf, immer mit standard_key
+            self.number_label = QLabel(self.translator.tr("chapter_number"), self)
+            layout.addWidget(self.number_label)
+
+            self.summary_label = QLabel(self.translator.tr("chapter_summary"), self)
+            layout.addWidget(self.summary_label)
+
             self.setLayout(layout)
             log_info("ChaptersForm initialized successfully.")
         except Exception as e:
-            log_error(f"Error initializing ChaptersForm: {str(e)}")
-
-    def _on_save(self):
-        log_subsection("_on_save")
-        log_info("ChaptersForm save triggered.")
+            log_exception("Error initializing ChaptersForm", e)
 ```
 
 ##### 6.5.3.4 form_characters.py
 
 ```python
-import json
-from PySide6.QtWidgets import QWidget, QVBoxLayout
-from gui.widgets.base_form_widget import BaseFormWidget
-from core.translator import Translator
-from core.logger import log_section, log_subsection, log_info, log_error
-from config.dev import FORM_FIELDS_FILE
+from PySide6.QtWidgets import QWidget, QVBoxLayout, QLabel
+from gui.widgets.form_toolbar import FormToolbar
+from core.logger import log_section, log_subsection, log_info, log_exception
 
 class CharactersForm(QWidget):
-    """
-    Form widget for character data entry.
-    """
-    def __init__(self, translator: Translator, parent=None):
+    def __init__(self, translator, parent=None):
         log_section("form_characters.py")
         log_subsection("__init__")
         try:
             super().__init__(parent)
             self.translator = translator
 
-            # Felder zentral aus JSON laden
-            with open(FORM_FIELDS_FILE, "r", encoding="utf-8") as f:
-                all_fields = json.load(f)
-            fields = all_fields.get("characters", [])
-
-            def toolbar_actions(toolbar):
-                toolbar.save_action.triggered.connect(self._on_save)
-
-            self.form = BaseFormWidget(
-                title=self.translator.tr("char"),
-                fields=fields,
-                toolbar_actions=toolbar_actions,
-                form_prefix="char",
-                translator=self.translator,
-                parent=self
-            )
             layout = QVBoxLayout(self)
-            layout.addWidget(self.form)
+
+            # Toolbar mit "character"-Prefix
+            self.toolbar = FormToolbar(self.translator, "character", self)
+            layout.addWidget(self.toolbar)
+
+            # Beispiel für ein Label mit standard_key
+            self.title_label = QLabel(self.translator.tr("character_title"), self)
+            layout.addWidget(self.title_label)
+
+            # Weitere Felder/Labels nach Bedarf, immer mit standard_key
+            self.name_label = QLabel(self.translator.tr("character_name"), self)
+            layout.addWidget(self.name_label)
+
             self.setLayout(layout)
             log_info("CharactersForm initialized successfully.")
         except Exception as e:
-            log_error(f"Error initializing CharactersForm: {str(e)}")
-
-    def _on_save(self):
-        log_subsection("_on_save")
-        log_info("CharactersForm save triggered.")
+            log_exception("Error initializing CharactersForm", e)
 ```
 
 ##### 6.5.3.5 form_locations.py
@@ -3035,58 +3314,128 @@ class ObjectsForm(QWidget):
 ##### 6.5.3.7 form_projects.py
 
 ```python
-import json
-from PySide6.QtWidgets import QWidget, QVBoxLayout
-from gui.widgets.base_form_widget import BaseFormWidget
-from core.translator import Translator
+from PySide6.QtWidgets import (
+    QWidget, QVBoxLayout, QLabel, QLineEdit, QComboBox, QDateEdit, QSpinBox,
+    QPushButton, QFileDialog, QHBoxLayout
+)
+from PySide6.QtGui import QPixmap
+from PySide6.QtCore import Qt
+from gui.widgets.form_toolbar import FormToolbar
 from core.logger import log_section, log_subsection, log_info, log_exception
-from config.dev import FORM_FIELDS_FILE
 
 class ProjectForm(QWidget):
-    """
-    Form widget for project data entry.
-    """
-    def __init__(self, translator: Translator, parent=None):
+    def __init__(self, translator, parent=None):
         log_section("form_projects.py")
         log_subsection("__init__")
         try:
             super().__init__(parent)
             self.translator = translator
 
-            # Felder zentral aus JSON laden
-            with open(FORM_FIELDS_FILE, "r", encoding="utf-8") as f:
-                all_fields = json.load(f)
-            fields = all_fields.get("projects", [])
+            # Hauptlayout horizontal: links Formular, rechts Bild
+            main_layout = QHBoxLayout(self)
 
-            def toolbar_actions(toolbar):
-                toolbar.save_action.triggered.connect(self._on_save)
+            # Linkes Layout für Formular
+            form_layout = QVBoxLayout()
+            self.toolbar = FormToolbar(self.translator, "project", self)
+            form_layout.addWidget(self.toolbar)
 
-            self.form = BaseFormWidget(
-                title=self.translator.tr("pro"),
-                fields=fields,
-                toolbar_actions=toolbar_actions,
-                form_prefix="pro",
-                translator=self.translator,
-                parent=self
-            )
-            layout = QVBoxLayout(self)
-            layout.addWidget(self.form)
-            self.setLayout(layout)
+            self.heading_label = QLabel(self.translator.tr("project_window_title"), self)
+            form_layout.addWidget(self.heading_label)
+
+            self.title_label = QLabel(self.translator.tr("project_title"), self)
+            form_layout.addWidget(self.title_label)
+            self.title_edit = QLineEdit(self)
+            form_layout.addWidget(self.title_edit)
+
+            self.subtitle_label = QLabel(self.translator.tr("project_detail_subtitle"), self)
+            form_layout.addWidget(self.subtitle_label)
+            self.subtitle_edit = QLineEdit(self)
+            form_layout.addWidget(self.subtitle_edit)
+
+            self.author_label = QLabel(self.translator.tr("project_detail_author"), self)
+            form_layout.addWidget(self.author_label)
+            self.author_edit = QLineEdit(self)
+            form_layout.addWidget(self.author_edit)
+
+            self.genre_label = QLabel(self.translator.tr("project_detail_genre"), self)
+            form_layout.addWidget(self.genre_label)
+            self.genre_edit = QLineEdit(self)
+            form_layout.addWidget(self.genre_edit)
+
+            self.cover_label = QLabel(self.translator.tr("project_detail_cover_image"), self)
+            form_layout.addWidget(self.cover_label)
+            cover_path_layout = QHBoxLayout()
+            self.cover_edit = QLineEdit(self)
+            cover_path_layout.addWidget(self.cover_edit)
+            self.cover_btn = QPushButton(self.translator.tr("project_detail_cover_image") + " ...", self)
+            self.cover_btn.clicked.connect(self._load_cover_image)
+            cover_path_layout.addWidget(self.cover_btn)
+            form_layout.addLayout(cover_path_layout)
+
+            self.start_date_label = QLabel(self.translator.tr("project_start_date"), self)
+            form_layout.addWidget(self.start_date_label)
+            self.start_date_edit = QDateEdit(self)
+            form_layout.addWidget(self.start_date_edit)
+
+            self.deadline_label = QLabel(self.translator.tr("project_deadline"), self)
+            form_layout.addWidget(self.deadline_label)
+            self.deadline_edit = QDateEdit(self)
+            form_layout.addWidget(self.deadline_edit)
+
+            self.words_goal_label = QLabel(self.translator.tr("project_words_count_goal"), self)
+            form_layout.addWidget(self.words_goal_label)
+            self.words_goal_spin = QSpinBox(self)
+            self.words_goal_spin.setMaximum(1000000)
+            form_layout.addWidget(self.words_goal_spin)
+
+            self.narrative_label = QLabel(self.translator.tr("project_detail_narrative_perspective"), self)
+            form_layout.addWidget(self.narrative_label)
+            self.narrative_edit = QLineEdit(self)
+            form_layout.addWidget(self.narrative_edit)
+
+            self.premise_label = QLabel(self.translator.tr("project_detail_premise"), self)
+            form_layout.addWidget(self.premise_label)
+            self.premise_edit = QLineEdit(self)
+            form_layout.addWidget(self.premise_edit)
+
+            self.target_group_label = QLabel(self.translator.tr("project_detail_target_group"), self)
+            form_layout.addWidget(self.target_group_label)
+            self.target_group_edit = QLineEdit(self)
+            form_layout.addWidget(self.target_group_edit)
+
+            # Rechtes Layout für Bild
+            image_layout = QVBoxLayout()
+            image_layout.addStretch()
+            self.cover_pixmap_label = QLabel(self)
+            self.cover_pixmap_label.setFixedSize(300, 300)
+            self.cover_pixmap_label.setScaledContents(True)
+            image_layout.addWidget(self.cover_pixmap_label)
+            image_layout.addStretch()
+
+            # Layouts ins Hauptlayout einfügen
+            main_layout.addLayout(form_layout, stretch=3)
+            main_layout.addLayout(image_layout, stretch=1)
+
+            self.setLayout(main_layout)
             log_info("ProjectForm initialized successfully.")
         except Exception as e:
             log_exception("Error initializing ProjectForm", e)
 
-    def _on_save(self):
-        log_subsection("_on_save")
-        try:
-            title = self.form.inputs.get("title", None)
-            if title and hasattr(title, "text") and not title.text():
-                log_info("Validation failed: title is empty.")
-                return
-            # ...save logic...
-            log_info("ProjectForm save triggered.")
-        except Exception as e:
-            log_exception("Error during ProjectForm save", e)
+    def _load_cover_image(self):
+        file_path, _ = QFileDialog.getOpenFileName(
+            self, self.translator.tr("project_detail_cover_image"),
+            "", "Image Files (*.png *.jpg *.jpeg *.bmp *.gif)"
+        )
+        if file_path:
+            self.cover_edit.setText(file_path)
+            pixmap = QPixmap(file_path)
+            if not pixmap.isNull():
+                self.cover_pixmap_label.setPixmap(pixmap.scaled(
+                    self.cover_pixmap_label.size(),
+                    Qt.KeepAspectRatio
+                ))
+            else:
+                self.cover_pixmap_label.clear()
 ```
 
 ##### 6.5.3.8 form_scenes.py
@@ -3248,14 +3597,13 @@ class StartWindow(QWidget):
         try:
             super().__init__()
             self.translator = Translator(default_language)
-            self.setWindowTitle(self.translator.tr("win_start_title"))
+            self.setWindowTitle(self.translator.tr("window_start_title"))
             self.resize(self.DEFAULT_WIDTH, self.DEFAULT_HEIGHT)
             self.setAutoFillBackground(False)
             self.bg_pixmap = QPixmap(str(BG_IMAGE_PATH))
             self.pref_window = None
             self._create_ui()
             self._retranslate_and_position()
-            # Korrektur: Hilfetext als String holen und an HelpPanel übergeben
             help_text = self.translator.help_text("help_new_project")
             self.help_panel = HelpPanel(help_text, self)
             log_info("StartWindow initialized successfully.")
@@ -3265,6 +3613,7 @@ class StartWindow(QWidget):
     def _create_ui(self):
         log_subsection("_create_ui")
         try:
+            # Standard-Keys für die Buttons gemäß translator.py
             self.button_keys = [
                 "start_btn_new_project",
                 "start_btn_load_project",
@@ -3357,7 +3706,7 @@ class StartWindow(QWidget):
         try:
             for key, btn in zip(self.button_keys, self.buttons):
                 btn.setText(self.translator.tr(key))
-            self.setWindowTitle(self.translator.tr("win_start_title"))
+            self.setWindowTitle(self.translator.tr("window_start_title"))
             self.update_button_positions()
             log_info("Button texts and window title updated.")
         except Exception as e:
@@ -3430,49 +3779,18 @@ from PySide6.QtWidgets import (
 )
 from core.translator import Translator
 from config.settings import load_settings, save_settings
-from gui.styles.themes_style import THEMES, get_theme
-from gui.styles.form_styles import load_button_style, load_global_stylesheet
 from core.logger import log_section, log_subsection, log_info, log_exception
 
 class PreferencesWindow(QDialog):
-    DEFAULT_WIDTH  = 800
-    DEFAULT_HEIGHT = 600
-
-    LANGUAGE_NAMES = {
-        "de": "Deutsch",
-        "en": "English",
-        "fr": "Français",
-        "es": "Español"
-    }
-
-    STYLE_NAMES = {
-        "oldschool": "Old-School",
-        "vintage": "Vintage",
-        "modern": "Modern",
-        "future": "Future",
-        "minimal": "Minimal"
-    }
-
-    MODE_NAMES = {
-        "light": "Light",
-        "middle": "Middle",
-        "dark": "Dark"
-    }
-
     def __init__(self, parent=None):
         log_section("preferences.py")
         log_subsection("__init__")
         try:
             super().__init__(parent)
-            self.translator = parent.translator
-            self.settings   = load_settings()
-            self.original_language = self.translator.lang
-
-            self.setWindowTitle(self.translator.tr("win_preference_title"))
-            self.resize(self.DEFAULT_WIDTH, self.DEFAULT_HEIGHT)
-            self.setStyleSheet(load_global_stylesheet())
+            self.translator = parent.translator if parent and hasattr(parent, "translator") else Translator()
+            self.setWindowTitle(self.translator.tr("preference_title"))
+            self.settings = load_settings()
             self._init_ui()
-            self._load_values()
             log_info("PreferencesWindow initialized successfully.")
         except Exception as e:
             log_exception("Error initializing PreferencesWindow", e)
@@ -3480,131 +3798,77 @@ class PreferencesWindow(QDialog):
     def _init_ui(self):
         log_subsection("_init_ui")
         try:
-            # Language selection
-            self.lang_label = QLabel(self.translator.tr("win_preference_title"), self)
+            layout = QVBoxLayout(self)
+
+            # Sprache
+            lang_label = QLabel(self.translator.tr("preference_language"), self)
             self.lang_combo = QComboBox(self)
-            for code, name in self.LANGUAGE_NAMES.items():
-                self.lang_combo.addItem(name, userData=code)
-            self.lang_combo.currentIndexChanged.connect(self._on_language_changed)
+            self.lang_combo.addItems(["de", "en", "es"])
+            self.lang_combo.setCurrentText(self.settings.get("language", "de"))
+            layout.addWidget(lang_label)
+            layout.addWidget(self.lang_combo)
 
-            # Style selection
-            self.style_label = QLabel("Style", self)
-            self.style_combo = QComboBox(self)
-            for code, name in self.STYLE_NAMES.items():
-                self.style_combo.addItem(name, userData=code)
-            self.style_combo.currentIndexChanged.connect(self._on_style_or_mode_changed)
-
-            # Mode selection
-            self.mode_label = QLabel("Modus", self)
-            self.mode_combo = QComboBox(self)
-            for code, name in self.MODE_NAMES.items():
-                self.mode_combo.addItem(name, userData=code)
-            self.mode_combo.currentIndexChanged.connect(self._on_style_or_mode_changed)
+            # Theme
+            theme_label = QLabel(self.translator.tr("preference_theme"), self)
+            self.theme_combo = QComboBox(self)
+            self.theme_combo.addItems(["modern", "vintage"])
+            self.theme_combo.setCurrentText(self.settings.get("style", "modern"))
+            layout.addWidget(theme_label)
+            layout.addWidget(self.theme_combo)
 
             # Buttons
-            self.ok_button     = QPushButton(self)
-            self.cancel_button = QPushButton(self)
-            self.ok_button.clicked.connect(self._on_ok)
-            self.cancel_button.clicked.connect(self._on_cancel)
-
             btn_layout = QHBoxLayout()
-            btn_layout.addStretch()
-            btn_layout.addWidget(self.ok_button)
-            btn_layout.addWidget(self.cancel_button)
+            self.save_btn = QPushButton(self.translator.tr("preference_save"), self)
+            self.cancel_btn = QPushButton(self.translator.tr("preference_cancel"), self)
+            btn_layout.addWidget(self.save_btn)
+            btn_layout.addWidget(self.cancel_btn)
+            layout.addLayout(btn_layout)
 
-            main_layout = QVBoxLayout(self)
-            main_layout.addWidget(self.lang_label)
-            main_layout.addWidget(self.lang_combo)
-            main_layout.addWidget(self.style_label)
-            main_layout.addWidget(self.style_combo)
-            main_layout.addWidget(self.mode_label)
-            main_layout.addWidget(self.mode_combo)
-            main_layout.addLayout(btn_layout)
-            self.setLayout(main_layout)
+            self.setLayout(layout)
+
+            self.save_btn.clicked.connect(self._on_save)
+            self.cancel_btn.clicked.connect(self._on_cancel)
+            self.lang_combo.currentTextChanged.connect(self._on_language_changed)
+            self.theme_combo.currentTextChanged.connect(self._on_theme_changed)
             log_info("UI initialized successfully.")
         except Exception as e:
-            log_exception("Error initializing UI", e)
+            log_exception("Error initializing UI in PreferencesWindow", e)
 
-    def _load_values(self):
-        log_subsection("_load_values")
+    def _on_save(self):
+        log_subsection("_on_save")
         try:
-            # Language
-            lang = self.settings.get("language", "en")
-            idx  = list(self.LANGUAGE_NAMES.keys()).index(lang) if lang in self.LANGUAGE_NAMES else 0
-            self.lang_combo.setCurrentIndex(idx)
-            # Style
-            style = self.settings.get("style", "modern")
-            idx = list(self.STYLE_NAMES.keys()).index(style) if style in self.STYLE_NAMES else 2
-            self.style_combo.setCurrentIndex(idx)
-            # Mode
-            mode = self.settings.get("mode", "light")
-            idx = list(self.MODE_NAMES.keys()).index(mode) if mode in self.MODE_NAMES else 0
-            self.mode_combo.setCurrentIndex(idx)
-            self._update_ui_texts()
-            self._update_preview()
-            log_info("Values loaded and UI texts updated.")
-        except Exception as e:
-            log_exception("Error loading values", e)
-
-    def _on_language_changed(self):
-        log_subsection("_on_language_changed")
-        try:
-            index = self.lang_combo.currentIndex()
-            code = self.lang_combo.itemData(index)
-            self.translator.set_language(code)
-            self._update_ui_texts()
-            log_info(f"Language changed to {code}.")
-        except Exception as e:
-            log_exception("Error changing language", e)
-
-    def _on_style_or_mode_changed(self):
-        log_subsection("_on_style_or_mode_changed")
-        self._update_preview()
-
-    def _update_ui_texts(self):
-        log_subsection("_update_ui_texts")
-        try:
-            self.setWindowTitle(self.translator.tr("menu_settings"))
-            self.lang_label.setText(self.translator.tr("menu_language"))
-            self.style_label.setText("Style")
-            self.mode_label.setText("Modus")
-            self.ok_button.setText(self.translator.tr("preference_action_save"))
-            self.cancel_button.setText(self.translator.tr("preference_action_cancel"))
-            log_info("UI texts updated.")
-        except Exception as e:
-            log_exception("Error updating UI texts", e)
-
-    def _update_preview(self):
-        style_code = self.style_combo.itemData(self.style_combo.currentIndex())
-        mode_code = self.mode_combo.itemData(self.mode_combo.currentIndex())
-        style_dict = get_theme(style_code, mode_code)
-        # Wende das Stylesheet auf das gesamte Fenster an
-        self.setStyleSheet(load_global_stylesheet())
-
-    def _on_ok(self):
-        log_subsection("_on_ok")
-        try:
-            self.settings["language"] = self.lang_combo.itemData(self.lang_combo.currentIndex())
-            self.settings["style"]    = self.style_combo.itemData(self.style_combo.currentIndex())
-            self.settings["mode"]     = self.mode_combo.itemData(self.mode_combo.currentIndex())
+            self.settings["language"] = self.lang_combo.currentText()
+            self.settings["style"] = self.theme_combo.currentText()
             save_settings(self.settings)
-            if self.parent() and hasattr(self.parent(), "_on_language_changed"):
-                self.parent()._on_language_changed(self.settings["language"])
             self.accept()
             log_info("Settings saved and dialog accepted.")
         except Exception as e:
-            log_exception("Error saving settings", e)
+            log_exception("Error saving settings in PreferencesWindow", e)
 
     def _on_cancel(self):
         log_subsection("_on_cancel")
         try:
-            self.translator.set_language(self.original_language)
-            if self.parent() and hasattr(self.parent(), "_on_language_changed"):
-                self.parent()._on_language_changed(self.original_language)
             self.reject()
             log_info("Dialog canceled and language reverted.")
         except Exception as e:
             log_exception("Error canceling PreferencesWindow", e)
+
+    def _on_language_changed(self, code):
+        log_subsection("_on_language_changed")
+        try:
+            self.translator.set_language(code)
+            self.setWindowTitle(self.translator.tr("preference_title"))
+            log_info(f"Language changed to {code}.")
+        except Exception as e:
+            log_exception("Error changing language in PreferencesWindow", e)
+
+    def _on_theme_changed(self, theme):
+        log_subsection("_on_theme_changed")
+        try:
+            # Theme-Änderung kann hier verarbeitet werden, falls nötig
+            log_info(f"Theme changed to {theme}.")
+        except Exception as e:
+            log_exception("Error changing theme in PreferencesWindow", e)
 ```
 
 ##### 6.5.4.3 project_window.py
@@ -3614,7 +3878,7 @@ from PySide6.QtGui import QPalette, QColor
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import QWidget, QVBoxLayout, QSplitter, QHBoxLayout
 
-from gui.styles.form_styles import load_button_style, load_active_button_style, load_global_stylesheet
+from gui.styles.form_styles import load_button_style, load_active_button_style
 from core.translator import Translator
 from config.settings import load_settings, save_settings
 from gui.widgets.navigation_panel import NavigationPanel
@@ -3630,8 +3894,7 @@ from gui.widgets.form_objects import ObjectsForm
 from gui.widgets.form_locations import LocationsForm
 from gui.widgets.form_start import StartForm
 
-# Import central logging functions
-from core.logger import log_section, log_subsection, log_info, log_error, log_exception
+from core.logger import log_section, log_subsection, log_info, log_exception
 
 class ProjectWindow(QWidget):
     BUTTON_WIDTH = 240
@@ -3644,16 +3907,15 @@ class ProjectWindow(QWidget):
             self.translator = translator or Translator(lang="en")
             super().__init__(parent)
             self.resize(1600, 900)
-            self.setWindowTitle(self.translator.tr("pro"))
+            self.setWindowTitle(self.translator.tr("project_title"))
             self.settings = load_settings()
             self.button_style = load_button_style(18)
             self.button_style_active = load_active_button_style(18)
             self.active_nav_key = None
             self.start_window = start_window
 
-            # Initialisiere splitter direkt am Anfang!
             self.splitter = QSplitter(Qt.Horizontal)
-            self.splitter.setObjectName("MainSplitter")   # For splitter styling
+            self.splitter.setObjectName("MainSplitter")
 
             self._set_background()
             self._init_ui()
@@ -3675,28 +3937,27 @@ class ProjectWindow(QWidget):
     def _init_ui(self):
         log_subsection("_init_ui")
         try:
+            # Standard-Keys für die Navigation gemäß translator.py
             keys = [
-                "pro_btn_project", "pro_btn_characters", "pro_btn_storylines",
-                "pro_btn_chapters", "pro_btn_scenes", "pro_btn_objects", "pro_btn_locations", "pro_btn_exit"
+                "project_btn_project", "project_btn_characters", "project_btn_storylines",
+                "project_btn_chapters", "project_btn_scenes", "project_btn_objects", "project_btn_locations", "project_btn_exit"
             ]
             callbacks = {
-                "pro_btn_project": lambda: self._on_nav_clicked("pro_btn_project", self._show_project_form),
-                "pro_btn_characters": lambda: self._on_nav_clicked("pro_btn_characters", self._show_characters_form),
-                "pro_btn_storylines": lambda: self._on_nav_clicked("pro_btn_storylines", self._show_storylines_form),
-                "pro_btn_chapters": lambda: self._on_nav_clicked("pro_btn_chapters", self._show_chapters_form),
-                "pro_btn_scenes": lambda: self._on_nav_clicked("pro_btn_scenes", self._show_scenes_form),
-                "pro_btn_objects": lambda: self._on_nav_clicked("pro_btn_objects", self._show_objects_form),
-                "pro_btn_locations": lambda: self._on_nav_clicked("pro_btn_locations", self._show_locations_form),
-                "pro_btn_exit": self._exit_application
+                "project_btn_project": lambda: self._on_nav_clicked("project_btn_project", self._show_project_form),
+                "project_btn_characters": lambda: self._on_nav_clicked("project_btn_characters", self._show_characters_form),
+                "project_btn_storylines": lambda: self._on_nav_clicked("project_btn_storylines", self._show_storylines_form),
+                "project_btn_chapters": lambda: self._on_nav_clicked("project_btn_chapters", self._show_chapters_form),
+                "project_btn_scenes": lambda: self._on_nav_clicked("project_btn_scenes", self._show_scenes_form),
+                "project_btn_objects": lambda: self._on_nav_clicked("project_btn_objects", self._show_objects_form),
+                "project_btn_locations": lambda: self._on_nav_clicked("project_btn_locations", self._show_locations_form),
+                "project_btn_exit": self._exit_application
             }
-            # Korrigierter Aufruf: Nur die erlaubten Parameter übergeben!
             self.navigation_panel = NavigationPanel(
                 keys, self.translator, self, callbacks
             )
 
             help_text = self.translator.help_text("help_new_project")
             self.help_panel = HelpPanel(help_text, self)
-            # Start with project form
             self.form_widget = StartForm(self.translator, self)
 
             self.splitter.addWidget(self.navigation_panel)
@@ -3710,6 +3971,7 @@ class ProjectWindow(QWidget):
             log_info("UI initialized successfully.")
         except Exception as e:
             log_exception("Error initializing UI", e)
+
     def _on_nav_clicked(self, key, handler):
         log_subsection(f"_on_nav_clicked: {key}")
         try:
@@ -3804,9 +4066,6 @@ class ProjectWindow(QWidget):
             log_exception("Error displaying locations form", e)
 
     def _replace_form_widget(self, new_widget):
-        """
-        Replace the current form widget in the splitter.
-        """
         old_widget = self.splitter.widget(1)
         if old_widget:
             old_widget.setParent(None)

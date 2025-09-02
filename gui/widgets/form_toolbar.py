@@ -21,19 +21,12 @@ class FormToolbar(QWidget):
 
             self.translator = translator
 
-            # Create actions with translated labels
-            self.new_action = QAction(self.translator.form_label(f"{form_prefix}_btn_new"), self)
-            self.delete_action = QAction(self.translator.form_label(f"{form_prefix}_btn_delete"), self)
-            self.prev_action = QAction(self.translator.form_label(f"{form_prefix}_btn_preview"), self)
-            self.next_action = QAction(self.translator.form_label(f"{form_prefix}_btn_next"), self)
-            self.save_action = QAction(self.translator.form_label(f"{form_prefix}_btn_save"), self)
-
-            # Optionally set icons if available
-            # self.new_action.setIcon(QIcon("icons/new.png"))
-            # self.delete_action.setIcon(QIcon("icons/delete.png"))
-            # self.prev_action.setIcon(QIcon("icons/prev.png"))
-            # self.next_action.setIcon(QIcon("icons/next.png"))
-            # self.save_action.setIcon(QIcon("icons/save.png"))
+            # Standard-Keys für die Aktionen gemäß translator.py
+            self.new_action = QAction(self.translator.tr(f"{form_prefix}_btn_new"), self)
+            self.delete_action = QAction(self.translator.tr(f"{form_prefix}_btn_delete"), self)
+            self.prev_action = QAction(self.translator.tr(f"{form_prefix}_btn_preview"), self)
+            self.next_action = QAction(self.translator.tr(f"{form_prefix}_btn_next"), self)
+            self.save_action = QAction(self.translator.tr(f"{form_prefix}_btn_save"), self)
 
             # Add actions and spacing between buttons
             actions = [

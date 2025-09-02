@@ -8,7 +8,7 @@ class NavigationPanel(QWidget):
         log_subsection("__init__")
         try:
             super().__init__(parent)
-            self.setObjectName("NavigationPanel")  # For stylesheet targeting
+            self.setObjectName("NavigationPanel")
             self.translator = translator
             self.callbacks = callbacks or {}
             self.active_key = None
@@ -34,15 +34,12 @@ class NavigationPanel(QWidget):
     def _on_nav_clicked(self, key):
         log_subsection(f"_on_nav_clicked: {key}")
         try:
-            # Reset all buttons to default style
             button_style = load_button_style()
             button_style_active = load_active_button_style()
             for k, btn in self.buttons.items():
                 btn.setStyleSheet(button_style)
-            # Set active button style
             self.buttons[key].setStyleSheet(button_style_active)
             self.active_key = key
-            # Call the assigned callback
             if key in self.callbacks:
                 self.callbacks[key]()
             log_info(f"Navigation button '{key}' clicked.")

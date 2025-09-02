@@ -3,6 +3,19 @@ DEFAULTS = {
     "border_radius": 8,
     "font_size": 14,
     "input_width": 400,
+    "border_radius": 8,
+    "font_size": 14,
+    "input_width": 400,
+    "border": "#b6c2e1",
+    "highlight": "#ff0",
+    "background": "#e7eaf3",
+    "foreground": "#1a1a1a",
+    "button_bg": "#e7eaf3",
+    "button_fg": "#1a1a1a",
+    "button_hover": "#d0d6e6",
+    "button_active": "#b6c2e1",
+    "input_bg": "#ffffff",
+    "input_fg": "#1a1a1a",
 }
 
 # Central CSS templates for all GUI components

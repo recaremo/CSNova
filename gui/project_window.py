@@ -2,7 +2,7 @@ from PySide6.QtGui import QPalette, QColor
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import QWidget, QVBoxLayout, QSplitter, QHBoxLayout
 
-from gui.styles.form_styles import load_button_style, load_active_button_style, load_global_stylesheet
+from gui.styles.form_styles import load_button_style, load_active_button_style
 from core.translator import Translator
 from config.settings import load_settings, save_settings
 from gui.widgets.navigation_panel import NavigationPanel
@@ -18,8 +18,7 @@ from gui.widgets.form_objects import ObjectsForm
 from gui.widgets.form_locations import LocationsForm
 from gui.widgets.form_start import StartForm
 
-# Import central logging functions
-from core.logger import log_section, log_subsection, log_info, log_error, log_exception
+from core.logger import log_section, log_subsection, log_info, log_exception
 
 class ProjectWindow(QWidget):
     BUTTON_WIDTH = 240
@@ -32,16 +31,15 @@ class ProjectWindow(QWidget):
             self.translator = translator or Translator(lang="en")
             super().__init__(parent)
             self.resize(1600, 900)
-            self.setWindowTitle(self.translator.tr("pro"))
+            self.setWindowTitle(self.translator.tr("project_title"))
             self.settings = load_settings()
             self.button_style = load_button_style(18)
             self.button_style_active = load_active_button_style(18)
             self.active_nav_key = None
             self.start_window = start_window
 
-            # Initialisiere splitter direkt am Anfang!
             self.splitter = QSplitter(Qt.Horizontal)
-            self.splitter.setObjectName("MainSplitter")   # For splitter styling
+            self.splitter.setObjectName("MainSplitter")
 
             self._set_background()
             self._init_ui()
@@ -63,28 +61,27 @@ class ProjectWindow(QWidget):
     def _init_ui(self):
         log_subsection("_init_ui")
         try:
+            # Standard-Keys für die Navigation gemäß translator.py
             keys = [
-                "pro_btn_project", "pro_btn_characters", "pro_btn_storylines",
-                "pro_btn_chapters", "pro_btn_scenes", "pro_btn_objects", "pro_btn_locations", "pro_btn_exit"
+                "project_btn_project", "project_btn_characters", "project_btn_storylines",
+                "project_btn_chapters", "project_btn_scenes", "project_btn_objects", "project_btn_locations", "project_btn_exit"
             ]
             callbacks = {
-                "pro_btn_project": lambda: self._on_nav_clicked("pro_btn_project", self._show_project_form),
-                "pro_btn_characters": lambda: self._on_nav_clicked("pro_btn_characters", self._show_characters_form),
-                "pro_btn_storylines": lambda: self._on_nav_clicked("pro_btn_storylines", self._show_storylines_form),
-                "pro_btn_chapters": lambda: self._on_nav_clicked("pro_btn_chapters", self._show_chapters_form),
-                "pro_btn_scenes": lambda: self._on_nav_clicked("pro_btn_scenes", self._show_scenes_form),
-                "pro_btn_objects": lambda: self._on_nav_clicked("pro_btn_objects", self._show_objects_form),
-                "pro_btn_locations": lambda: self._on_nav_clicked("pro_btn_locations", self._show_locations_form),
-                "pro_btn_exit": self._exit_application
+                "project_btn_project": lambda: self._on_nav_clicked("project_btn_project", self._show_project_form),
+                "project_btn_characters": lambda: self._on_nav_clicked("project_btn_characters", self._show_characters_form),
+                "project_btn_storylines": lambda: self._on_nav_clicked("project_btn_storylines", self._show_storylines_form),
+                "project_btn_chapters": lambda: self._on_nav_clicked("project_btn_chapters", self._show_chapters_form),
+                "project_btn_scenes": lambda: self._on_nav_clicked("project_btn_scenes", self._show_scenes_form),
+                "project_btn_objects": lambda: self._on_nav_clicked("project_btn_objects", self._show_objects_form),
+                "project_btn_locations": lambda: self._on_nav_clicked("project_btn_locations", self._show_locations_form),
+                "project_btn_exit": self._exit_application
             }
-            # Korrigierter Aufruf: Nur die erlaubten Parameter übergeben!
             self.navigation_panel = NavigationPanel(
                 keys, self.translator, self, callbacks
             )
 
             help_text = self.translator.help_text("help_new_project")
             self.help_panel = HelpPanel(help_text, self)
-            # Start with project form
             self.form_widget = StartForm(self.translator, self)
 
             self.splitter.addWidget(self.navigation_panel)
@@ -98,6 +95,7 @@ class ProjectWindow(QWidget):
             log_info("UI initialized successfully.")
         except Exception as e:
             log_exception("Error initializing UI", e)
+
     def _on_nav_clicked(self, key, handler):
         log_subsection(f"_on_nav_clicked: {key}")
         try:
@@ -192,9 +190,6 @@ class ProjectWindow(QWidget):
             log_exception("Error displaying locations form", e)
 
     def _replace_form_widget(self, new_widget):
-        """
-        Replace the current form widget in the splitter.
-        """
         old_widget = self.splitter.widget(1)
         if old_widget:
             old_widget.setParent(None)
