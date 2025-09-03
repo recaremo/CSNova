@@ -1,47 +1,55 @@
 from PySide6.QtWidgets import QWidget, QVBoxLayout, QPushButton
-from gui.styles.form_styles import load_button_style, load_active_button_style
+from gui.styles.form_styles import load_form_style
 from core.logger import log_section, log_subsection, log_info, log_exception
 
 class NavigationPanel(QWidget):
-    def __init__(self, keys, translator, parent=None, callbacks=None):
+    """
+    Centralized navigation panel widget.
+    Applies global style from preferences.
+    All button labels are translated via translator.py.
+    No local styles or translations are used.
+    """
+
+    def __init__(self, translator, nav_keys=None, parent=None):
+        """
+        Initializes the navigation panel with translated buttons.
+        nav_keys: List of label_keys for navigation buttons.
+        """
         log_section("navigation_panel.py")
         log_subsection("__init__")
         try:
             super().__init__(parent)
-            self.setObjectName("NavigationPanel")
             self.translator = translator
-            self.callbacks = callbacks or {}
-            self.active_key = None
-            self.layout = QVBoxLayout()
+            self.setStyleSheet(load_form_style())
+
+            layout = QVBoxLayout(self)
+            layout.setContentsMargins(12, 12, 12, 12)
+            layout.setSpacing(10)
+
             self.buttons = {}
+            if nav_keys is None:
+                # Default navigation keys if not provided
+                nav_keys = [
+                    "ProBtnProject", "ProBtnCharacters", "ProBtnStorylines",
+                    "ProBtnChapters", "ProBtnScenes", "ProBtnObjects",
+                    "ProBtnLocations", "ProBtnExit"
+                ]
 
-            button_style = load_button_style()
-            button_style_active = load_active_button_style()
-
-            for key in keys:
+            for key in nav_keys:
                 btn = QPushButton(self.translator.tr(key), self)
-                btn.setStyleSheet(button_style)
-                btn.setFixedSize(240, 70)
-                btn.clicked.connect(lambda checked, k=key: self._on_nav_clicked(k))
-                self.layout.addWidget(btn)
+                btn.setObjectName(key)
                 self.buttons[key] = btn
+                layout.addWidget(btn)
 
-            self.setLayout(self.layout)
+            layout.addStretch()
+            self.setLayout(layout)
             log_info("NavigationPanel initialized successfully.")
         except Exception as e:
             log_exception("Error initializing NavigationPanel", e)
 
-    def _on_nav_clicked(self, key):
-        log_subsection(f"_on_nav_clicked: {key}")
-        try:
-            button_style = load_button_style()
-            button_style_active = load_active_button_style()
-            for k, btn in self.buttons.items():
-                btn.setStyleSheet(button_style)
-            self.buttons[key].setStyleSheet(button_style_active)
-            self.active_key = key
-            if key in self.callbacks:
-                self.callbacks[key]()
-            log_info(f"Navigation button '{key}' clicked.")
-        except Exception as e:
-            log_exception(f"Error in navigation click handler for '{key}'", e)
+    def update_translations(self):
+        """
+        Updates all button texts after a language change.
+        """
+        for key, btn in self.buttons.items():
+            btn.setText(self.translator.tr(key))

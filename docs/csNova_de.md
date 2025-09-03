@@ -31,991 +31,1113 @@
 ```json
 [
   {
-    "ID": "de",
-    "Chapter": "Kapitel",
-    "ChapterBtnDelete": "Löschen",
-    "ChapterBtnNew": "Neu",
-    "ChapterBtnNext": "Weiter",
-    "ChapterBtnPreview": "Zurück",
-    "ChapterBtnSave": "Speichern",
-    "ChapterNumber": "Nummer",
-    "ChapterSummary": "Zusammenfassung",
-    "ChapterCharacters": "Charaktere",
-    "ChapterLocations": "Orte",
-    "ChapterNotes": "Notizen",
-    "ChapterObjects": "Objekte",
-    "ChapterPremise": "Prämisse",
-    "ChapterScenes": "Szenen",
-    "ChapterTitle": "Titel",
-    "Char": "Charaktere",
-    "CharApp": "Aussehen",
-    "CharAppBodyType": "Körpertyp",
-    "CharAppCharisma": "Ausstrahlung",
-    "CharAppEyeColor": "Augenfarbe",
-    "CharAppEyeShape": "Augenform",
-    "CharAppFaceShape": "Gesichtsform",
-    "CharAppHair": "Haare",
-    "CharAppHairColor": "Haarfarbe",
-    "CharAppHeight": "Größe",
-    "CharAppNotes": "Notizen",
-    "CharAppPosture": "Statur",
-    "CharAppSkin": "Haut",
-    "CharAppSpecials": "Besonderheiten",
-    "CharApp2": "Aussehen Details",
-    "CharApp2Arms": "Arme",
-    "CharApp2Buttocks": "Gesäß",
-    "CharApp2Chest": "Brust",
-    "CharApp2Feet": "Füße",
-    "CharApp2Finger": "Finger",
-    "CharApp2Hands": "Hände",
-    "CharApp2Head": "Kopf",
-    "CharApp2HipWaist": "Hüfte, Taille",
-    "CharApp2Legs": "Beine",
-    "CharApp2Notes": "Notizen",
-    "CharApp2Shoulder": "Schultern",
-    "CharApp2Toes": "Zehen",
-    "CharBas": "Grunddaten",
-    "CharBasAge": "Alter",
-    "CharBasBorn": "Geburtsdatum",
-    "CharBasFirstname": "Vorname",
-    "CharBasGender": "Geschlecht",
-    "CharBasGroup": "Gruppe",
-    "CharBasName": "Name",
-    "CharBasNickname": "Spitzname",
-    "CharBasNotes": "Notizen",
-    "CharBasRole": "Rolle",
-    "CharBasSexOrientation": "Sexuelle Orientierung",
-    "CharBasStatus": "Status",
-    "CharBtn": "Schaltflächen",
-    "CharBtnDelete": "Löschen",
-    "CharBtnNew": "Neu",
-    "CharBtnNext": "Weiter",
-    "CharBtnPreview": "Zurück",
-    "CharBtnSave": "Speichern",
-    "CharEdu": "Ausbildung",
-    "CharEduArtMusic": "Kunst/Musik",
-    "CharEduAutodidactic": "Autodidaktisch",
-    "CharEduJob": "Beruf",
-    "CharEduJobEducation": "Berufsausbildung",
-    "CharEduNotes": "Notizen",
-    "CharEduSchool": "Schule",
-    "CharEduSport": "Sport",
-    "CharEduTechnologie": "Technik",
-    "CharEduUniversity": "Universität",
-    "CharGroups": "Gruppen",
-    "CharGroupsDes": "Beschreibung",
-    "CharGroupsTitle": "Bezeichnung",
-    "CharOrigin": "Herkunft",
-    "CharOriginBirthplace": "Geburtsort",
-    "CharOriginFather": "Vater",
-    "CharOriginMother": "Mutter",
-    "CharOriginNotes": "Notizen",
-    "CharOriginReferencePerson": "Bezugsperson",
-    "CharOriginSiblings": "Geschwister",
-    "CharPerson": "Persönlichkeit",
-    "CharPersonBehavior": "Verhalten",
-    "CharPersonBeliefs": "Glaubensgrundsatz",
-    "CharPersonFears": "Ängste",
-    "CharPersonLifeGoals": "Lebensziel",
-    "CharPersonMotivation": "Motivation",
-    "CharPersonNeg": "Negative Charaktereigenschaft",
-    "CharPersonNotes": "Notizen",
-    "CharPersonPos": "Positive Charaktereigenschaft",
-    "CharPersonStrengths": "Stärken",
-    "CharPersonTalente": "Talente",
-    "CharPersonWeakness": "Schwächen",
-    "CharPsy": "Psychologie Profil",
-    "CharPsyAggression": "Aggressivität",
-    "CharPsyDiagnostics": "Diagnose",
-    "CharPsyFormative": "Prägung",
-    "CharPsyHumor": "Humor",
-    "CharPsyMedication": "Medikamente",
-    "CharPsyMoral": "Moral",
-    "CharPsyNorms": "Normen",
-    "CharPsyNotes": "Notizen",
-    "CharPsySelfimage": "Selbstbild",
-    "CharPsySocialization": "Sozialisation",
-    "CharPsySymptoms": "Symptome",
-    "CharPsyTaboos": "Tabus",
-    "CharPsyTemperament": "Temperament",
-    "CharPsyTherapy": "Therapie",
-    "CharPsyTrauma": "Trauma",
-    "CharPsyValues": "Werte",
-    "Help": "Hilfe",
-    "HelpNewProject": "Wählen Sie eine der Datenbanken, die Sie bearbeiten wollen.",
-    "HelpChapters": "Organisieren Sie Ihre Geschichte in Kapitel und beschreiben Sie deren Inhalt.",
-    "HelpChars": "Definieren Sie Ihre Charaktere: Namen, Rollen, Eigenschaften und Beziehungen.",
-    "HelpEditorWindow": "Editor Fenster",
-    "HelpHelpWindow": "Hilfe Fenster",
-    "HelpLocations": "Beschreiben Sie die in Ihrer Geschichte verwendeten Orte, einschließlich Atmosphäre und Relevanz.",
-    "HelpObjects": "Listen Sie wichtige Objekte und deren Bedeutung in der Geschichte auf.",
-    "HelpPreferenceWindow": "Nehmen Sie die gewünschten Einstellungen vor.",
-    "HelpProject": "Geben Sie allgemeine Informationen zu Ihrem Schreibprojekt an, wie Titel, Genre und Ziele.",
-    "HelpProjectWindow": "Wählen Sie die Tabelle, die Sie bearbeiten wollen.",
-    "HelpScenes": "Beschreiben Sie einzelne Szenen, deren Zweck und Umgebung.",
-    "HelpStartWindow": "Wählen Sie die gewünschte Funktion.",
-    "HelpStorylines": "Skizzieren Sie die Haupt-Handlungsstränge und deren Entwicklung im Laufe der Zeit.",
-    "Location": "Orte",
-    "LocationBtnDelete": "Löschen",
-    "LocationBtnNew": "Neu",
-    "LocationBtnNext": "Weiter",
-    "LocationBtnPreview": "Zurück",
-    "LocationBtnSave": "Speichern",
-    "LocationTitle": "Titel",
-    "LocationDescription": "Beschreibung",
-    "LocationNotes": "Notizen",
-    "Menu": "Menü",
-    "MenuEdit": "Bearbeiten",
-    "MenuFile": "Datei",
-    "MenuHelp": "Hilfe",
-    "MenuLanguage": "Sprache",
-    "MenuSettings": "Einstellungen",
-    "ObjectBtnDelete": "Löschen",
-    "ObjectBtnNew": "Neu",
-    "ObjectBtnNext": "Weiter",
-    "ObjectBtnPreview": "Zurück",
-    "ObjectBtnSave": "Speichern",
-    "ObjectNotes": "Notizen",
-    "Object": "Objekte",
-    "ObjectTitle": "Titel",
-    "ObjectDescription": "Beschreibung",
-    "PreferenceActionSave": "Speichern",
-    "PreferenceActionCancel": "Abbrechen",
-    "PreferenceLanguage": "Sprache",
-    "PreferenceStyle": "Stil",
-    "PreferenceTheme": "Thema",
-    "PreferenceThemeDark": "Dunkel",
-    "PreferenceThemeNeutral": "Neutral",
-    "PreferenceThemeLight": "Hell",
-    "Preference": "Einstellungen",
-    "Pro": "Projekte",
-    "ProBtnProject": "Projekt",
-    "ProBtnCharacters": "Charaktere",
-    "ProBtnStorylines": "Erzählstränge",
-    "ProBtnChapters": "Kapitel",
-    "ProBtnScenes": "Szenen",
-    "ProBtnObjects": "Objekte",
-    "ProBtnLocations": "Orte",
-    "ProBtnExit": "Beenden",
-    "ProBtn": "Schaltflächen",
-    "ProBtnDelete": "Löschen",
-    "ProBtnNew": "Neu",
-    "ProBtnNext": "Weiter",
-    "ProBtnPreview": "Zurück",
-    "ProBtnSave": "Speichern",
-    "ProDetail": "Details",
-    "ProDetailAuthor": "Autor",
-    "ProDetailChapters": "Kapitel",
-    "ProDetailCoverImage": "Titelbild",
-    "ProDetailDay": "Tage bis Abgabe",
-    "ProDetailDeadline": "Abgabedatum",
-    "ProDetailFormLabel": "Projekt",
-    "ProDetailGenre": "Genre",
-    "ProDetailGroups": "Gruppen",
-    "ProDetailLocations": "Orte",
-    "ProDetailMainChar": "Hauptcharaktere",
-    "ProDetailNarrativePerspective": "Perspektive Erzähler:in",
-    "ProDetailObjects": "Objekte",
-    "ProDetailPremise": "Prämisse",
-    "ProDetailScenes": "Szenen",
-    "ProDetailStartDate": "Startdatum",
-    "ProDetailStorylines": "Erzählstränge",
-    "ProDetailSubtitle": "Untertitel",
-    "ProDetailSupportChar": "Nebencharaktere",
-    "ProDetailTargetGroup": "Zielgruppe",
-    "ProDetailTimeline": "Zeitlinie",
-    "ProDetailTitle": "Titel",
-    "ProDetailWindowTitle": "Datenbanken",
-    "ProDetailWordsCountDay": "Wörter am Tag",
-    "ProDetailWordsCountGoal": "Ziel Wortanzahl",
-    "Scene": "Szenen",
-    "SceneBtnDelete": "Löschen",
-    "SceneBtnNew": "Neu",
-    "SceneBtnNext": "Weiter",
-    "SceneBtnPreview": "Zurück",
-    "SceneBtnSave": "Speichern",
-    "SceneTitle": "Titel",
-    "SceneNumber": "Nummer",
-    "SceneSummary": "Zusammenfassung",
-    "SceneCharacters": "Charaktere",
-    "SceneConflict": "Konflikt",
-    "SceneDuration": "Dauer",
-    "SceneGoal": "Ziel",
-    "SceneLocations": "Orte",
-    "SceneMood": "Stimmung",
-    "SceneNotes": "Notizen",
-    "SceneObjects": "Objekte",
-    "SceneOutcome": "Ergebnis",
-    "ScenePremise": "Prämisse",
-    "SceneType": "Typ",
-    "Start": "csNova",
-    "StartBtnExit": "Beenden",
-    "StartBtnHelp": "Hilfe && Tutorial",
-    "StartBtnSettings": "Einstellungen",
-    "StartBtnLoadProject": "Projekt laden ...",
-    "StartBtnNewProject": "Neues Projekt",
-    "Storyline": "Erzählstränge",
-    "StorylineBtnDelete": "Löschen",
-    "StorylineBtnNew": "Neu",
-    "StorylineBtnNext": "Weiter",
-    "StorylineBtnPreview": "Zurück",
-    "StorylineBtnSave": "Speichern",
-    "StorylineChapters": "Kapitel",
-    "StorylineCharacters": "Charaktere",
-    "StorylineDescription": "Beschreibung",
-    "StorylineNotes": "Notizen",
-    "StorylineObjects": "Objekte",
-    "StorylinePremise": "Prämisse",
-    "StorylineScenes": "Szenen",
-    "StorylineTimeline": "Zeitlinie",
-    "StorylineTitle": "Titel",
-    "StorylineTransformation": "Transformation",
-    "Win": "Fenster",
-    "WinEditorTitle": "Editor Fenster",
-    "WinHelpTitle": "Hilfe",
-    "WinPreferenceTitle": "Einstellungen",
-    "WinStartTitle": "csNova"
-  },
+  "proj_ma_01": "Projekt",
+  "proj_ma_02": "Titel",
+  "proj_ma_03": "Untertitel",
+  "proj_ma_04": "Autor",
+  "proj_ma_05": "Prämisse",
+  "proj_ma_06": "Genre",
+  "proj_ma_07": "Titelbild",
+  "proj_ma_08": "Zielgruppe",
+  "proj_ma_09": "Erzählperspektive",
+  "proj_ma_10": "Abgabedatum",
+  "proj_ma_11": "Startdatum",
+  "proj_ma_12": "Ziel Wortanzahl",
+  "proj_ma_13": "Zeitlinie"
+},
+{
+  "proj_ch_01": "Kapitel",
+  "proj_ch_02": "Kapitel-Titel",
+  "proj_ch_03": "Kapitel-Prämisse"
+},
+{
+  "proj_cs_01": "Szene",
+  "proj_cs_02": "Titel",
+  "proj_cs_03": "Prämisse",
+  "proj_cs_04": "Ziel",
+  "proj_cs_05": "Konflikt",
+  "proj_cs_06": "Ergebnis",
+  "proj_cs_07": "Typ",
+  "proj_cs_08": "Stimmung",
+  "proj_cs_09": "Dauer",
+  "proj_cs_10": "Charaktere",
+  "proj_cs_11": "Orte",
+  "proj_cs_12": "Notizen"
+},
+{
+  "proj_lo_01": "Ort",
+  "proj_lo_02": "Titel",
+  "proj_lo_03": "Beschreibung"
+},
+{
+  "proj_st_01": "Erzählstrang",
+  "proj_st_02": "Titel",
+  "proj_st_03": "Prämisse",
+  "proj_st_04": "Beschreibung",
+  "proj_st_05": "Transformation",
+  "proj_st_06": "Zeitlinie",
+  "proj_st_07": "Notizen"
+},
+{
+  "proj_ob_01": "Objekt",
+  "proj_ob_02": "Titel",
+  "proj_ob_03": "Beschreibung"
+},
+{
+  "char_ma_01": "Charakter",
+  "char_ma_02": "Hauptcharakter",
+  "char_ma_03": "Name",
+  "char_ma_04": "Vorname",
+  "char_ma_05": "Spitzname",
+  "char_ma_06": "Geburtsdatum",
+  "char_ma_07": "Alter",
+  "char_ma_08": "Rolle",
+  "char_ma_09": "Status",
+  "char_ma_10": "Geschlecht",
+  "char_ma_11": "Sexuelle Orientierung",
+  "char_ma_12": "Notizen"
+},
+{
+  "char_gr_01": "Gruppe",
+  "char_gr_02": "Gruppen-Titel",
+  "char_gr_03": "Gruppen-Beschreibung"
+},
+{
+  "char_or_01": "Herkunft",
+  "char_or_02": "Vater",
+  "char_or_03": "Mutter",
+  "char_or_04": "Bezugsperson",
+  "char_or_05": "Geschwister",
+  "char_or_06": "Geburtsort",
+  "char_or_07": "Notizen"
+},
+{
+  "char_ed_01": "Ausbildung",
+  "char_ed_02": "Schule",
+  "char_ed_03": "Universität",
+  "char_ed_04": "Berufsausbildung",
+  "char_ed_05": "Autodidaktisch",
+  "char_ed_06": "Beruf",
+  "char_ed_07": "Kunst/Musik",
+  "char_ed_08": "Sport",
+  "char_ed_09": "Technik",
+  "char_ed_10": "Notizen"
+},
+{
+  "char_am_01": "Aussehen",
+  "char_am_02": "Größe",
+  "char_am_03": "Körpertyp",
+  "char_am_04": "Statur",
+  "char_am_05": "Gesichtsform",
+  "char_am_06": "Augenform",
+  "char_am_07": "Augenfarbe",
+  "char_am_08": "Haare",
+  "char_am_09": "Haarfarbe",
+  "char_am_10": "Haut",
+  "char_am_11": "Ausstrahlung",
+  "char_am_12": "Besonderheiten",
+  "char_am_13": "Notizen"
+},
+{
+  "char_ad_01": "Aussehen Details",
+  "char_ad_02": "Kopf",
+  "char_ad_03": "Nacken",
+  "char_ad_04": "Schultern",
+  "char_ad_05": "Arme",
+  "char_ad_06": "Hände",
+  "char_ad_07": "Finger",
+  "char_ad_08": "Brust",
+  "char_ad_09": "Hüfte, Taille",
+  "char_ad_10": "Gesäß",
+  "char_ad_11": "Beine",
+  "char_ad_12": "Füße",
+  "char_ad_13": "Zehen",
+  "char_ad_14": "Notizen"
+},
+{
+  "char_ps_01": "Persönlichkeit",
+  "char_ps_02": "Positive Eigenschaft",
+  "char_ps_03": "Negative Eigenschaft",
+  "char_ps_04": "Ängste",
+  "char_ps_05": "Schwächen",
+  "char_ps_06": "Stärken",
+  "char_ps_07": "Talente",
+  "char_ps_08": "Glaubensgrundsatz",
+  "char_ps_09": "Lebensziel",
+  "char_ps_10": "Motivation",
+  "char_ps_11": "Verhalten",
+  "char_ps_12": "Notizen"
+},
+{
+  "char_pp_01": "Psychologisches Profil",
+  "char_pp_02": "Diagnose",
+  "char_pp_03": "Symptome",
+  "char_pp_04": "Therapie",
+  "char_pp_05": "Medikamente",
+  "char_pp_06": "Temperament",
+  "char_pp_07": "Werte",
+  "char_pp_08": "Moralvorstellungen",
+  "char_pp_09": "Charakterstärke",
+  "char_pp_10": "Charakterschwäche",
+  "char_pp_11": "Selbstbild",
+  "char_pp_12": "Humor",
+  "char_pp_13": "Aggressivität",
+  "char_pp_14": "Trauma",
+  "char_pp_15": "Prägung",
+  "char_pp_16": "Sozialisation",
+  "char_pp_17": "Normen",
+  "char_pp_18": "Tabus",
+  "char_pp_19": "Notizen"
+},
+{
+  "sexo_sx_01": "Sexuelle Orientierung",
+  "sexo_sx_02": "Orientierung",
+  "sexo_sx_03": "Kurzbeschreibung"
+},
+{
+  "gend_ge_01": "Geschlecht",
+  "gend_ge_02": "Geschlecht",
+  "gend_ge_03": "Kurzbeschreibung"
+},
+{
+  "stat_pr_01": "Wörter pro Tag",
+  "stat_pr_02": "Tage gezählt",
+  "stat_pr_03": "Kapitel gezählt",
+  "stat_pr_04": "Szenen gezählt",
+  "stat_pr_05": "Erzählstränge gezählt",
+  "stat_pr_06": "Hauptcharaktere gezählt",
+  "stat_pr_07": "Nebencharaktere gezählt",
+  "stat_pr_08": "Gruppen gezählt",
+  "stat_pr_09": "Orte gezählt",
+  "stat_pr_10": "Objekte gezählt"
+},
+{
+  "stat_pr_01": "Wörter pro Tag",
+  "stat_pr_02": "Tage gezählt",
+  "stat_pr_03": "Kapitel gezählt",
+  "stat_pr_04": "Szenen gezählt",
+  "stat_pr_05": "Erzählstränge gezählt",
+  "stat_pr_06": "Hauptcharaktere gezählt",
+  "stat_pr_07": "Nebencharaktere gezählt",
+  "stat_pr_08": "Gruppen gezählt",
+  "stat_pr_09": "Orte gezählt",
+  "stat_pr_10": "Objekte gezählt"
+},
+{
+  "PrefWinTitle": "Einstellungen",
 
+  "PreferenceLanguage": "Sprache",
+  "PreferenceStyle": "Stil",
+  "PreferenceTheme": "Thema",
+
+  "PreferenceLanguageDe": "Deutsch",
+  "PreferenceLanguageEn": "Englisch",
+  "PreferenceLanguageEs": "Spanisch",
+  "PreferenceLanguageFr": "Französisch",
+
+  "PreferenceStyleOld": "Klassisch",
+  "PreferenceStyleVintage": "Vintage",
+  "PreferenceStyleModern": "Modern",
+  "PreferenceStyleFuture": "Futuristisch",
+  "PreferenceStyleMinimal": "Minimalistisch",
+
+  "PreferenceThemeDark": "Dunkel",
+  "PreferenceThemeNeutral": "Neutral",
+  "PreferenceThemeLight": "Hell"
+},
+{
+  "botn_st_01": "Datenbank",
+  "botn_st_02": "Projekt öffnen...",
+  "botn_st_03": "Einstellungen",
+  "botn_st_04": "Hilfe && Tutorials",
+  "botn_st_05": "Beenden",
+  "WinStartTitle": "Codicies Scriptoria Nova (CSNova)"
+},
+{
+  "botn_fo_01": "Projekt",
+  "botn_fo_02": "Kapitel",
+  "botn_fo_03": "Szenen",
+  "botn_fo_04": "Erzählstränge",
+  "botn_fo_05": "Hauptcharaktere",
+  "botn_fo_06": "Nebencharaktere",
+  "botn_fo_07": "Gruppen",
+  "botn_fo_08": "Orte",
+  "botn_fo_09": "Objekte",
+  "botn_fo_10": "Zurück",
+  "ProWinTitle": "Projektverwaltung"
+},
+{
+  "botn_pr_01": "Neu",
+  "botn_pr_02": "Löschen",
+  "botn_pr_03": "Vor",
+  "botn_pr_04": "Zurück",
+  "botn_pr_05": "Speichern"
+},
+{
+  "botn_ch_01": "Neu",
+  "botn_ch_02": "Löschen",
+  "botn_ch_03": "Vor",
+  "botn_ch_04": "Zurück",
+  "botn_ch_05": "Speichern"
+},
+{  
+  "botn_cp_01": "Neu",
+  "botn_cp_02": "Löschen",
+  "botn_cp_03": "Vor",
+  "botn_cp_04": "Zurück",
+  "botn_cp_05": "Speichern"
+},
+{
+  "botn_lo_01": "Neu",
+  "botn_lo_02": "Löschen",
+  "botn_lo_03": "Vor",
+  "botn_lo_04": "Zurück",
+  "botn_lo_05": "Speichern"
+},
+{
+  "botn_ob_01": "Neu",
+  "botn_ob_02": "Löschen",
+  "botn_ob_03": "Vor",
+  "botn_ob_04": "Zurück",
+  "botn_ob_05": "Speichern"
+},
+{
+  "botn_sc_01": "Neu",
+  "botn_sc_02": "Löschen",
+  "botn_sc_03": "Vor",
+  "botn_sc_04": "Zurück",
+  "botn_sc_05": "Speichern"
+},
+{
+  "botn_sl_01": "Neu", 
+  "botn_sl_02": "Löschen",
+  "botn_sl_03": "Vor",
+  "botn_sl_04": "Zurück",
+  "botn_sl_05": "Speichern"
+},
+  
+{
+    "proj_ma_01": "Project",
+    "proj_ma_02": "Title",
+    "proj_ma_03": "Subtitle",
+    "proj_ma_04": "Author",
+    "proj_ma_05": "Premise",
+    "proj_ma_06": "Genre",
+    "proj_ma_07": "Cover Image",
+    "proj_ma_08": "Target Group",
+    "proj_ma_09": "Narrative Perspective",
+    "proj_ma_10": "Deadline",
+    "proj_ma_11": "Start Date",
+    "proj_ma_12": "Word Count Goal",
+    "proj_ma_13": "Timeline"
+  },
   {
-    "ID": "en",
-    "Chapter": "Chapter",
-    "ChapterBtnDelete": "Delete",
-    "ChapterBtnNew": "New",
-    "ChapterBtnNext": "Next",
-    "ChapterBtnPreview": "Back",
-    "ChapterBtnSave": "Save",
-    "ChapterNumber": "Number",
-    "ChapterSummary": "Summary",
-    "ChapterCharacters": "Characters",
-    "ChapterLocations": "Locations",
-    "ChapterNotes": "Notes",
-    "ChapterObjects": "Objects",
-    "ChapterPremise": "Premise",
-    "ChapterScenes": "Scenes",
-    "ChapterTitle": "Title",
-    "Char": "Characters",
-    "CharApp": "Appearance",
-    "CharAppBodyType": "Body Type",
-    "CharAppCharisma": "Charisma",
-    "CharAppEyeColor": "Eye Color",
-    "CharAppEyeShape": "Eye Shape",
-    "CharAppFaceShape": "Face Shape",
-    "CharAppHair": "Hair",
-    "CharAppHairColor": "Hair Color",
-    "CharAppHeight": "Height",
-    "CharAppNotes": "Notes",
-    "CharAppPosture": "Posture",
-    "CharAppSkin": "Skin",
-    "CharAppSpecials": "Special Features",
-    "CharApp2": "Appearance Details",
-    "CharApp2Arms": "Arms",
-    "CharApp2Buttocks": "Buttocks",
-    "CharApp2Chest": "Chest",
-    "CharApp2Feet": "Feet",
-    "CharApp2Finger": "Fingers",
-    "CharApp2Hands": "Hands",
-    "CharApp2Head": "Head",
-    "CharApp2HipWaist": "Hip, Waist",
-    "CharApp2Legs": "Legs",
-    "CharApp2Notes": "Notes",
-    "CharApp2Shoulder": "Shoulders",
-    "CharApp2Toes": "Toes",
-    "CharBas": "Basic Data",
-    "CharBasAge": "Age",
-    "CharBasBorn": "Date of Birth",
-    "CharBasFirstname": "First Name",
-    "CharBasGender": "Gender",
-    "CharBasGroup": "Group",
-    "CharBasName": "Name",
-    "CharBasNickname": "Nickname",
-    "CharBasNotes": "Notes",
-    "CharBasRole": "Role",
-    "CharBasSexOrientation": "Sexual Orientation",
-    "CharBasStatus": "Status",
-    "CharBtn": "Buttons",
-    "CharBtnDelete": "Delete",
-    "CharBtnNew": "New",
-    "CharBtnNext": "Next",
-    "CharBtnPreview": "Back",
-    "CharBtnSave": "Save",
-    "CharEdu": "Education",
-    "CharEduArtMusic": "Art/Music",
-    "CharEduAutodidactic": "Autodidactic",
-    "CharEduJob": "Job",
-    "CharEduJobEducation": "Vocational Training",
-    "CharEduNotes": "Notes",
-    "CharEduSchool": "School",
-    "CharEduSport": "Sport",
-    "CharEduTechnologie": "Technology",
-    "CharEduUniversity": "University",
-    "CharGroups": "Groups",
-    "CharGroupsDes": "Description",
-    "CharGroupsTitle": "Designation",
-    "CharOrigin": "Origin",
-    "CharOriginBirthplace": "Place of Birth",
-    "CharOriginFather": "Father",
-    "CharOriginMother": "Mother",
-    "CharOriginNotes": "Notes",
-    "CharOriginReferencePerson": "Reference Person",
-    "CharOriginSiblings": "Siblings",
-    "CharPerson": "Personality",
-    "CharPersonBehavior": "Behavior",
-    "CharPersonBeliefs": "Beliefs",
-    "CharPersonFears": "Fears",
-    "CharPersonLifeGoals": "Life Goals",
-    "CharPersonMotivation": "Motivation",
-    "CharPersonNeg": "Negative Trait",
-    "CharPersonNotes": "Notes",
-    "CharPersonPos": "Positive Trait",
-    "CharPersonStrengths": "Strengths",
-    "CharPersonTalente": "Talents",
-    "CharPersonWeakness": "Weaknesses",
-    "CharPsy": "Psychological Profile",
-    "CharPsyAggression": "Aggressiveness",
-    "CharPsyDiagnostics": "Diagnosis",
-    "CharPsyFormative": "Formative Influences",
-    "CharPsyHumor": "Humor",
-    "CharPsyMedication": "Medication",
-    "CharPsyMoral": "Morals",
-    "CharPsyNorms": "Norms",
-    "CharPsyNotes": "Notes",
-    "CharPsySelfimage": "Self-Image",
-    "CharPsySocialization": "Socialization",
-    "CharPsySymptoms": "Symptoms",
-    "CharPsyTaboos": "Taboos",
-    "CharPsyTemperament": "Temperament",
-    "CharPsyTherapy": "Therapy",
-    "CharPsyTrauma": "Trauma",
-    "CharPsyValues": "Values",
-    "Help": "Help",
-    "HelpNewProject": "Select one of the databases you want to edit.",
-    "HelpChapters": "Organize your story into chapters and describe their content.",
-    "HelpChars": "Define your characters: names, roles, traits, and relationships.",
-    "HelpEditorWindow": "Editor Window",
-    "HelpHelpWindow": "Help Window",
-    "HelpLocations": "Describe the locations used in your story, including atmosphere and relevance.",
-    "HelpObjects": "List important objects and their significance in the story.",
-    "HelpPreferenceWindow": "Make the desired settings.",
-    "HelpProject": "Provide general information about your writing project, such as title, genre, and goals.",
-    "HelpProjectWindow": "Select the table you want to edit.",
-    "HelpScenes": "Describe individual scenes, their purpose and setting.",
-    "HelpStartWindow": "Select the desired function.",
-    "HelpStorylines": "Outline the main storylines and their development over time.",
-    "Location": "Locations",
-    "LocationBtnDelete": "Delete",
-    "LocationBtnNew": "New",
-    "LocationBtnNext": "Next",
-    "LocationBtnPreview": "Back",
-    "LocationBtnSave": "Save",
-    "LocationTitle": "Title",
-    "LocationDescription": "Description",
-    "LocationNotes": "Notes",
-    "Menu": "Menu",
-    "MenuEdit": "Edit",
-    "MenuFile": "File",
-    "MenuHelp": "Help",
-    "MenuLanguage": "Language",
-    "MenuSettings": "Settings",
-    "ObjectBtnDelete": "Delete",
-    "ObjectBtnNew": "New",
-    "ObjectBtnNext": "Next",
-    "ObjectBtnPreview": "Back",
-    "ObjectBtnSave": "Save",
-    "ObjectNotes": "Notes",
-    "Object": "Objects",
-    "ObjectTitle": "Title",
-    "ObjectDescription": "Description",
-    "PreferenceActionSave": "Save",
-    "PreferenceActionCancel": "Cancel",
+    "proj_ch_01": "Chapter",
+    "proj_ch_02": "Chapter Title",
+    "proj_ch_03": "Chapter Premise"
+  },
+  {
+    "proj_cs_01": "Scene",
+    "proj_cs_02": "Title",
+    "proj_cs_03": "Premise",
+    "proj_cs_04": "Goal",
+    "proj_cs_05": "Conflict",
+    "proj_cs_06": "Outcome",
+    "proj_cs_07": "Type",
+    "proj_cs_08": "Mood",
+    "proj_cs_09": "Duration",
+    "proj_cs_10": "Characters",
+    "proj_cs_11": "Locations",
+    "proj_cs_12": "Notes"
+  },
+  {
+    "proj_lo_01": "Location",
+    "proj_lo_02": "Title",
+    "proj_lo_03": "Description"
+  },
+  {
+    "proj_st_01": "Storyline",
+    "proj_st_02": "Title",
+    "proj_st_03": "Premise",
+    "proj_st_04": "Description",
+    "proj_st_05": "Transformation",
+    "proj_st_06": "Timeline",
+    "proj_st_07": "Notes"
+  },
+  {
+    "proj_ob_01": "Object",
+    "proj_ob_02": "Title",
+    "proj_ob_03": "Description"
+  },
+  {
+    "char_ma_01": "Character",
+    "char_ma_02": "Main Character",
+    "char_ma_03": "Name",
+    "char_ma_04": "First Name",
+    "char_ma_05": "Nickname",
+    "char_ma_06": "Date of Birth",
+    "char_ma_07": "Age",
+    "char_ma_08": "Role",
+    "char_ma_09": "Status",
+    "char_ma_10": "Gender",
+    "char_ma_11": "Sexual Orientation",
+    "char_ma_12": "Notes"
+  },
+  {
+    "char_gr_01": "Group",
+    "char_gr_02": "Group Title",
+    "char_gr_03": "Group Description"
+  },
+  {
+    "char_or_01": "Origin",
+    "char_or_02": "Father",
+    "char_or_03": "Mother",
+    "char_or_04": "Reference Person",
+    "char_or_05": "Siblings",
+    "char_or_06": "Birthplace",
+    "char_or_07": "Notes"
+  },
+  {
+    "char_ed_01": "Education",
+    "char_ed_02": "School",
+    "char_ed_03": "University",
+    "char_ed_04": "Vocational Training",
+    "char_ed_05": "Autodidactic",
+    "char_ed_06": "Job",
+    "char_ed_07": "Art/Music",
+    "char_ed_08": "Sport",
+    "char_ed_09": "Technology",
+    "char_ed_10": "Notes"
+  },
+  {
+    "char_am_01": "Appearance",
+    "char_am_02": "Height",
+    "char_am_03": "Body Type",
+    "char_am_04": "Build",
+    "char_am_05": "Face Shape",
+    "char_am_06": "Eye Shape",
+    "char_am_07": "Eye Color",
+    "char_am_08": "Hair",
+    "char_am_09": "Hair Color",
+    "char_am_10": "Skin",
+    "char_am_11": "Charisma",
+    "char_am_12": "Special Features",
+    "char_am_13": "Notes"
+  },
+  {
+    "char_ad_01": "Appearance Details",
+    "char_ad_02": "Head",
+    "char_ad_03": "Neck",
+    "char_ad_04": "Shoulders",
+    "char_ad_05": "Arms",
+    "char_ad_06": "Hands",
+    "char_ad_07": "Fingers",
+    "char_ad_08": "Chest",
+    "char_ad_09": "Hip, Waist",
+    "char_ad_10": "Buttocks",
+    "char_ad_11": "Legs",
+    "char_ad_12": "Feet",
+    "char_ad_13": "Toes",
+    "char_ad_14": "Notes"
+  },
+  {
+    "char_ps_01": "Personality",
+    "char_ps_02": "Positive Trait",
+    "char_ps_03": "Negative Trait",
+    "char_ps_04": "Fears",
+    "char_ps_05": "Weaknesses",
+    "char_ps_06": "Strengths",
+    "char_ps_07": "Talents",
+    "char_ps_08": "Belief",
+    "char_ps_09": "Life Goal",
+    "char_ps_10": "Motivation",
+    "char_ps_11": "Behavior",
+    "char_ps_12": "Notes"
+  },
+  {
+    "char_pp_01": "Psychological Profile",
+    "char_pp_02": "Diagnosis",
+    "char_pp_03": "Symptoms",
+    "char_pp_04": "Therapy",
+    "char_pp_05": "Medication",
+    "char_pp_06": "Temperament",
+    "char_pp_07": "Values",
+    "char_pp_08": "Morals",
+    "char_pp_09": "Strength",
+    "char_pp_10": "Weakness",
+    "char_pp_11": "Self-Image",
+    "char_pp_12": "Humor",
+    "char_pp_13": "Aggressiveness",
+    "char_pp_14": "Trauma",
+    "char_pp_15": "Formative Influence",
+    "char_pp_16": "Socialization",
+    "char_pp_17": "Norms",
+    "char_pp_18": "Taboos",
+    "char_pp_19": "Notes"
+  },
+  {
+    "sexo_sx_01": "Sexual Orientation",
+    "sexo_sx_02": "Orientation",
+    "sexo_sx_03": "Short Description"
+  },
+  {
+    "gend_ge_01": "Gender",
+    "gend_ge_02": "Gender",
+    "gend_ge_03": "Short Description"
+  },
+  {
+    "stat_pr_01": "Words per Day",
+    "stat_pr_02": "Days Counted",
+    "stat_pr_03": "Chapters Counted",
+    "stat_pr_04": "Scenes Counted",
+    "stat_pr_05": "Storylines Counted",
+    "stat_pr_06": "Main Characters Counted",
+    "stat_pr_07": "Supporting Characters Counted",
+    "stat_pr_08": "Groups Counted",
+    "stat_pr_09": "Locations Counted",
+    "stat_pr_10": "Objects Counted"
+  },
+  {
+    "PrefWinTitle": "Settings",
+
     "PreferenceLanguage": "Language",
     "PreferenceStyle": "Style",
     "PreferenceTheme": "Theme",
+
+    "PreferenceLanguageDe": "German",
+    "PreferenceLanguageEn": "English",
+    "PreferenceLanguageEs": "Spanish",
+    "PreferenceLanguageFr": "French",
+
+    "PreferenceStyleOld": "Classic",
+    "PreferenceStyleVintage": "Vintage",
+    "PreferenceStyleModern": "Modern",
+    "PreferenceStyleFuture": "Futuristic",
+    "PreferenceStyleMinimal": "Minimalist",
+
     "PreferenceThemeDark": "Dark",
     "PreferenceThemeNeutral": "Neutral",
-    "PreferenceThemeLight": "Light",
-    "Preference": "Settings",
-    "Pro": "Projects",
-    "ProBtnProject": "Project",
-    "ProBtnCharacters": "Characters",
-    "ProBtnStorylines": "Storylines",
-    "ProBtnChapters": "Chapters",
-    "ProBtnScenes": "Scenes",
-    "ProBtnObjects": "Objects",
-    "ProBtnLocations": "Locations",
-    "ProBtnExit": "Exit",
-    "ProBtn": "Buttons",
-    "ProBtnDelete": "Delete",
-    "ProBtnNew": "New",
-    "ProBtnNext": "Next",
-    "ProBtnPreview": "Back",
-    "ProBtnSave": "Save",
-    "ProDetail": "Details",
-    "ProDetailAuthor": "Author",
-    "ProDetailChapters": "Chapters",
-    "ProDetailCoverImage": "Cover Image",
-    "ProDetailDay": "Days until Deadline",
-    "ProDetailDeadline": "Deadline",
-    "ProDetailFormLabel": "Project",
-    "ProDetailGenre": "Genre",
-    "ProDetailGroups": "Groups",
-    "ProDetailLocations": "Locations",
-    "ProDetailMainChar": "Main Characters",
-    "ProDetailNarrativePerspective": "Narrative Perspective",
-    "ProDetailObjects": "Objects",
-    "ProDetailPremise": "Premise",
-    "ProDetailScenes": "Scenes",
-    "ProDetailStartDate": "Start Date",
-    "ProDetailStorylines": "Storylines",
-    "ProDetailSubtitle": "Subtitle",
-    "ProDetailSupportChar": "Supporting Characters",
-    "ProDetailTargetGroup": "Target Group",
-    "ProDetailTimeline": "Timeline",
-    "ProDetailTitle": "Title",
-    "ProDetailWindowTitle": "Databases",
-    "ProDetailWordsCountDay": "Words per Day",
-    "ProDetailWordsCountGoal": "Word Count Goal",
-    "Scene": "Scenes",
-    "SceneBtnDelete": "Delete",
-    "SceneBtnNew": "New",
-    "SceneBtnNext": "Next",
-    "SceneBtnPreview": "Back",
-    "SceneBtnSave": "Save",
-    "SceneTitle": "Title",
-    "SceneNumber": "Number",
-    "SceneSummary": "Summary",
-    "SceneCharacters": "Characters",
-    "SceneConflict": "Conflict",
-    "SceneDuration": "Duration",
-    "SceneGoal": "Goal",
-    "SceneLocations": "Locations",
-    "SceneMood": "Mood",
-    "SceneNotes": "Notes",
-    "SceneObjects": "Objects",
-    "SceneOutcome": "Outcome",
-    "ScenePremise": "Premise",
-    "SceneType": "Type",
-    "Start": "csNova",
-    "StartBtnExit": "Exit",
-    "StartBtnHelp": "Help && Tutorial",
-    "StartBtnSettings": "Settings",
-    "StartBtnLoadProject": "Load Project ...",
-    "StartBtnNewProject": "New Project",
-    "Storyline": "Storylines",
-    "StorylineBtnDelete": "Delete",
-    "StorylineBtnNew": "New",
-    "StorylineBtnNext": "Next",
-    "StorylineBtnPreview": "Back",
-    "StorylineBtnSave": "Save",
-    "StorylineChapters": "Chapters",
-    "StorylineCharacters": "Characters",
-    "StorylineDescription": "Description",
-    "StorylineNotes": "Notes",
-    "StorylineObjects": "Objects",
-    "StorylinePremise": "Premise",
-    "StorylineScenes": "Scenes",
-    "StorylineTimeline": "Timeline",
-    "StorylineTitle": "Title",
-    "StorylineTransformation": "Transformation",
-    "Win": "Window",
-    "WinEditorTitle": "Editor Window",
-    "WinHelpTitle": "Help",
-    "WinPreferenceTitle": "Settings",
-    "WinStartTitle": "csNova"
+    "PreferenceThemeLight": "Light"
   },
   {
-  "ID": "es",
-  "Chapter": "Capítulo",
-  "ChapterBtnDelete": "Eliminar",
-  "ChapterBtnNew": "Nuevo",
-  "ChapterBtnNext": "Siguiente",
-  "ChapterBtnPreview": "Atrás",
-  "ChapterBtnSave": "Guardar",
-  "ChapterNumber": "Número",
-  "ChapterSummary": "Resumen",
-  "ChapterCharacters": "Personajes",
-  "ChapterLocations": "Lugares",
-  "ChapterNotes": "Notas",
-  "ChapterObjects": "Objetos",
-  "ChapterPremise": "Premisa",
-  "ChapterScenes": "Escenas",
-  "ChapterTitle": "Título",
-  "Char": "Personajes",
-  "CharApp": "Apariencia",
-  "CharAppBodyType": "Tipo de cuerpo",
-  "CharAppCharisma": "Carisma",
-  "CharAppEyeColor": "Color de ojos",
-  "CharAppEyeShape": "Forma de ojos",
-  "CharAppFaceShape": "Forma de cara",
-  "CharAppHair": "Cabello",
-  "CharAppHairColor": "Color de cabello",
-  "CharAppHeight": "Altura",
-  "CharAppNotes": "Notas",
-  "CharAppPosture": "Postura",
-  "CharAppSkin": "Piel",
-  "CharAppSpecials": "Características especiales",
-  "CharApp2": "Detalles de apariencia",
-  "CharApp2Arms": "Brazos",
-  "CharApp2Buttocks": "Glúteos",
-  "CharApp2Chest": "Pecho",
-  "CharApp2Feet": "Pies",
-  "CharApp2Finger": "Dedos",
-  "CharApp2Hands": "Manos",
-  "CharApp2Head": "Cabeza",
-  "CharApp2HipWaist": "Cadera, cintura",
-  "CharApp2Legs": "Piernas",
-  "CharApp2Notes": "Notas",
-  "CharApp2Shoulder": "Hombros",
-  "CharApp2Toes": "Dedos de los pies",
-  "CharBas": "Datos básicos",
-  "CharBasAge": "Edad",
-  "CharBasBorn": "Fecha de nacimiento",
-  "CharBasFirstname": "Nombre",
-  "CharBasGender": "Género",
-  "CharBasGroup": "Grupo",
-  "CharBasName": "Apellido",
-  "CharBasNickname": "Apodo",
-  "CharBasNotes": "Notas",
-  "CharBasRole": "Rol",
-  "CharBasSexOrientation": "Orientación sexual",
-  "CharBasStatus": "Estado",
-  "CharBtn": "Botones",
-  "CharBtnDelete": "Eliminar",
-  "CharBtnNew": "Nuevo",
-  "CharBtnNext": "Siguiente",
-  "CharBtnPreview": "Atrás",
-  "CharBtnSave": "Guardar",
-  "CharEdu": "Educación",
-  "CharEduArtMusic": "Arte/Música",
-  "CharEduAutodidactic": "Autodidacta",
-  "CharEduJob": "Profesión",
-  "CharEduJobEducation": "Formación profesional",
-  "CharEduNotes": "Notas",
-  "CharEduSchool": "Escuela",
-  "CharEduSport": "Deporte",
-  "CharEduTechnologie": "Tecnología",
-  "CharEduUniversity": "Universidad",
-  "CharGroups": "Grupos",
-  "CharGroupsDes": "Descripción",
-  "CharGroupsTitle": "Denominación",
-  "CharOrigin": "Origen",
-  "CharOriginBirthplace": "Lugar de nacimiento",
-  "CharOriginFather": "Padre",
-  "CharOriginMother": "Madre",
-  "CharOriginNotes": "Notas",
-  "CharOriginReferencePerson": "Persona de referencia",
-  "CharOriginSiblings": "Hermanos",
-  "CharPerson": "Personalidad",
-  "CharPersonBehavior": "Comportamiento",
-  "CharPersonBeliefs": "Creencias",
-  "CharPersonFears": "Miedos",
-  "CharPersonLifeGoals": "Meta de vida",
-  "CharPersonMotivation": "Motivación",
-  "CharPersonNeg": "Rasgo negativo",
-  "CharPersonNotes": "Notas",
-  "CharPersonPos": "Rasgo positivo",
-  "CharPersonStrengths": "Fortalezas",
-  "CharPersonTalente": "Talentos",
-  "CharPersonWeakness": "Debilidades",
-  "CharPsy": "Perfil psicológico",
-  "CharPsyAggression": "Agresividad",
-  "CharPsyDiagnostics": "Diagnóstico",
-  "CharPsyFormative": "Influencias formativas",
-  "CharPsyHumor": "Humor",
-  "CharPsyMedication": "Medicamentos",
-  "CharPsyMoral": "Moral",
-  "CharPsyNorms": "Normas",
-  "CharPsyNotes": "Notas",
-  "CharPsySelfimage": "Autoimagen",
-  "CharPsySocialization": "Socialización",
-  "CharPsySymptoms": "Síntomas",
-  "CharPsyTaboos": "Tabúes",
-  "CharPsyTemperament": "Temperamento",
-  "CharPsyTherapy": "Terapia",
-  "CharPsyTrauma": "Trauma",
-  "CharPsyValues": "Valores",
-  "Help": "Ayuda",
-  "HelpNewProject": "Seleccione una de las bases de datos que desea editar.",
-  "HelpChapters": "Organice su historia en capítulos y describa su contenido.",
-  "HelpChars": "Defina sus personajes: nombres, roles, características y relaciones.",
-  "HelpEditorWindow": "Ventana del editor",
-  "HelpHelpWindow": "Ventana de ayuda",
-  "HelpLocations": "Describa los lugares utilizados en su historia, incluyendo atmósfera y relevancia.",
-  "HelpObjects": "Enumere los objetos importantes y su significado en la historia.",
-  "HelpPreferenceWindow": "Realice los ajustes deseados.",
-  "HelpProject": "Proporcione información general sobre su proyecto de escritura, como título, género y objetivos.",
-  "HelpProjectWindow": "Seleccione la tabla que desea editar.",
-  "HelpScenes": "Describa escenas individuales, su propósito y entorno.",
-  "HelpStartWindow": "Seleccione la función deseada.",
-  "HelpStorylines": "Resuma las principales tramas y su desarrollo a lo largo del tiempo.",
-  "Location": "Lugares",
-  "LocationBtnDelete": "Eliminar",
-  "LocationBtnNew": "Nuevo",
-  "LocationBtnNext": "Siguiente",
-  "LocationBtnPreview": "Atrás",
-  "LocationBtnSave": "Guardar",
-  "LocationTitle": "Título",
-  "LocationDescription": "Descripción",
-  "LocationNotes": "Notas",
-  "Menu": "Menú",
-  "MenuEdit": "Editar",
-  "MenuFile": "Archivo",
-  "MenuHelp": "Ayuda",
-  "MenuLanguage": "Idioma",
-  "MenuSettings": "Configuración",
-  "ObjectBtnDelete": "Eliminar",
-  "ObjectBtnNew": "Nuevo",
-  "ObjectBtnNext": "Siguiente",
-  "ObjectBtnPreview": "Atrás",
-  "ObjectBtnSave": "Guardar",
-  "ObjectNotes": "Notas",
-  "Object": "Objetos",
-  "ObjectTitle": "Título",
-  "ObjectDescription": "Descripción",
-  "PreferenceActionSave": "Guardar",
-  "PreferenceActionCancel": "Cancelar",
-  "PreferenceLanguage": "Idioma",
-  "PreferenceStyle": "Estilo",
-  "PreferenceTheme": "Tema",
-  "PreferenceThemeDark": "Oscuro",
-  "PreferenceThemeNeutral": "Neutro",
-  "PreferenceThemeLight": "Claro",
-  "Preference": "Configuración",
-  "Pro": "Proyectos",
-  "ProBtnProject": "Proyecto",
-  "ProBtnCharacters": "Personajes",
-  "ProBtnStorylines": "Tramas",
-  "ProBtnChapters": "Capítulos",
-  "ProBtnScenes": "Escenas",
-  "ProBtnObjects": "Objetos",
-  "ProBtnLocations": "Lugares",
-  "ProBtnExit": "Salir",
-  "ProBtn": "Botones",
-  "ProBtnDelete": "Eliminar",
-  "ProBtnNew": "Nuevo",
-  "ProBtnNext": "Siguiente",
-  "ProBtnPreview": "Atrás",
-  "ProBtnSave": "Guardar",
-  "ProDetail": "Detalles",
-  "ProDetailAuthor": "Autor",
-  "ProDetailChapters": "Capítulos",
-  "ProDetailCoverImage": "Imagen de portada",
-  "ProDetailDay": "Días hasta la fecha límite",
-  "ProDetailDeadline": "Fecha límite",
-  "ProDetailFormLabel": "Proyecto",
-  "ProDetailGenre": "Género",
-  "ProDetailGroups": "Grupos",
-  "ProDetailLocations": "Lugares",
-  "ProDetailMainChar": "Personajes principales",
-  "ProDetailNarrativePerspective": "Perspectiva narrativa",
-  "ProDetailObjects": "Objetos",
-  "ProDetailPremise": "Premisa",
-  "ProDetailScenes": "Escenas",
-  "ProDetailStartDate": "Fecha de inicio",
-  "ProDetailStorylines": "Tramas",
-  "ProDetailSubtitle": "Subtítulo",
-  "ProDetailSupportChar": "Personajes secundarios",
-  "ProDetailTargetGroup": "Grupo objetivo",
-  "ProDetailTimeline": "Cronología",
-  "ProDetailTitle": "Título",
-  "ProDetailWindowTitle": "Bases de datos",
-  "ProDetailWordsCountDay": "Palabras por día",
-  "ProDetailWordsCountGoal": "Meta de palabras",
-  "Scene": "Escenas",
-  "SceneBtnDelete": "Eliminar",
-  "SceneBtnNew": "Nuevo",
-  "SceneBtnNext": "Siguiente",
-  "SceneBtnPreview": "Atrás",
-  "SceneBtnSave": "Guardar",
-  "SceneTitle": "Título",
-  "SceneNumber": "Número",
-  "SceneSummary": "Resumen",
-  "SceneCharacters": "Personajes",
-  "SceneConflict": "Conflicto",
-  "SceneDuration": "Duración",
-  "SceneGoal": "Meta",
-  "SceneLocations": "Lugares",
-  "SceneMood": "Ánimo",
-  "SceneNotes": "Notas",
-  "SceneObjects": "Objetos",
-  "SceneOutcome": "Resultado",
-  "ScenePremise": "Premisa",
-  "SceneType": "Tipo",
-  "Start": "csNova",
-  "StartBtnExit": "Salir",
-  "StartBtnHelp": "Ayuda y tutorial",
-  "StartBtnSettings": "Configuración",
-  "StartBtnLoadProject": "Cargar proyecto ...",
-  "StartBtnNewProject": "Nuevo proyecto",
-  "Storyline": "Tramas",
-  "StorylineBtnDelete": "Eliminar",
-  "StorylineBtnNew": "Nuevo",
-  "StorylineBtnNext": "Siguiente",
-  "StorylineBtnPreview": "Atrás",
-  "StorylineBtnSave": "Guardar",
-  "StorylineChapters": "Capítulos",
-  "StorylineCharacters": "Personajes",
-  "StorylineDescription": "Descripción",
-  "StorylineNotes": "Notas",
-  "StorylineObjects": "Objetos",
-  "StorylinePremise": "Premisa",
-  "StorylineScenes": "Escenas",
-  "StorylineTimeline": "Cronología",
-  "StorylineTitle": "Título",
-  "StorylineTransformation": "Transformación",
-  "Win": "Ventana",
-  "WinEditorTitle": "Ventana del editor",
-  "WinHelpTitle": "Ayuda",
-  "WinPreferenceTitle": "Configuración",
-  "WinStartTitle": "csNova"
-},
-{
-  "ID": "fr",
-  "Chapter": "Chapitre",
-  "ChapterBtnDelete": "Supprimer",
-  "ChapterBtnNew": "Nouveau",
-  "ChapterBtnNext": "Suivant",
-  "ChapterBtnPreview": "Retour",
-  "ChapterBtnSave": "Enregistrer",
-  "ChapterNumber": "Numéro",
-  "ChapterSummary": "Résumé",
-  "ChapterCharacters": "Personnages",
-  "ChapterLocations": "Lieux",
-  "ChapterNotes": "Notes",
-  "ChapterObjects": "Objets",
-  "ChapterPremise": "Prémisse",
-  "ChapterScenes": "Scènes",
-  "ChapterTitle": "Titre",
-  "Char": "Personnages",
-  "CharApp": "Apparence",
-  "CharAppBodyType": "Type de corps",
-  "CharAppCharisma": "Charisme",
-  "CharAppEyeColor": "Couleur des yeux",
-  "CharAppEyeShape": "Forme des yeux",
-  "CharAppFaceShape": "Forme du visage",
-  "CharAppHair": "Cheveux",
-  "CharAppHairColor": "Couleur des cheveux",
-  "CharAppHeight": "Taille",
-  "CharAppNotes": "Notes",
-  "CharAppPosture": "Posture",
-  "CharAppSkin": "Peau",
-  "CharAppSpecials": "Caractéristiques spéciales",
-  "CharApp2": "Détails de l'apparence",
-  "CharApp2Arms": "Bras",
-  "CharApp2Buttocks": "Fessier",
-  "CharApp2Chest": "Poitrine",
-  "CharApp2Feet": "Pieds",
-  "CharApp2Finger": "Doigts",
-  "CharApp2Hands": "Mains",
-  "CharApp2Head": "Tête",
-  "CharApp2HipWaist": "Hanches, taille",
-  "CharApp2Legs": "Jambes",
-  "CharApp2Notes": "Notes",
-  "CharApp2Shoulder": "Épaules",
-  "CharApp2Toes": "Orteils",
-  "CharBas": "Données de base",
-  "CharBasAge": "Âge",
-  "CharBasBorn": "Date de naissance",
-  "CharBasFirstname": "Prénom",
-  "CharBasGender": "Genre",
-  "CharBasGroup": "Groupe",
-  "CharBasName": "Nom",
-  "CharBasNickname": "Surnom",
-  "CharBasNotes": "Notes",
-  "CharBasRole": "Rôle",
-  "CharBasSexOrientation": "Orientation sexuelle",
-  "CharBasStatus": "Statut",
-  "CharBtn": "Boutons",
-  "CharBtnDelete": "Supprimer",
-  "CharBtnNew": "Nouveau",
-  "CharBtnNext": "Suivant",
-  "CharBtnPreview": "Retour",
-  "CharBtnSave": "Enregistrer",
-  "CharEdu": "Éducation",
-  "CharEduArtMusic": "Art/Musique",
-  "CharEduAutodidactic": "Autodidacte",
-  "CharEduJob": "Profession",
-  "CharEduJobEducation": "Formation professionnelle",
-  "CharEduNotes": "Notes",
-  "CharEduSchool": "École",
-  "CharEduSport": "Sport",
-  "CharEduTechnologie": "Technologie",
-  "CharEduUniversity": "Université",
-  "CharGroups": "Groupes",
-  "CharGroupsDes": "Description",
-  "CharGroupsTitle": "Désignation",
-  "CharOrigin": "Origine",
-  "CharOriginBirthplace": "Lieu de naissance",
-  "CharOriginFather": "Père",
-  "CharOriginMother": "Mère",
-  "CharOriginNotes": "Notes",
-  "CharOriginReferencePerson": "Personne de référence",
-  "CharOriginSiblings": "Frères et sœurs",
-  "CharPerson": "Personnalité",
-  "CharPersonBehavior": "Comportement",
-  "CharPersonBeliefs": "Croyances",
-  "CharPersonFears": "Peurs",
-  "CharPersonLifeGoals": "Objectif de vie",
-  "CharPersonMotivation": "Motivation",
-  "CharPersonNeg": "Trait négatif",
-  "CharPersonNotes": "Notes",
-  "CharPersonPos": "Trait positif",
-  "CharPersonStrengths": "Forces",
-  "CharPersonTalente": "Talents",
-  "CharPersonWeakness": "Faiblesses",
-  "CharPsy": "Profil psychologique",
-  "CharPsyAggression": "Agressivité",
-  "CharPsyDiagnostics": "Diagnostic",
-  "CharPsyFormative": "Influences formatrices",
-  "CharPsyHumor": "Humour",
-  "CharPsyMedication": "Médicaments",
-  "CharPsyMoral": "Morale",
-  "CharPsyNorms": "Normes",
-  "CharPsyNotes": "Notes",
-  "CharPsySelfimage": "Image de soi",
-  "CharPsySocialization": "Socialisation",
-  "CharPsySymptoms": "Symptômes",
-  "CharPsyTaboos": "Tabous",
-  "CharPsyTemperament": "Tempérament",
-  "CharPsyTherapy": "Thérapie",
-  "CharPsyTrauma": "Traumatisme",
-  "CharPsyValues": "Valeurs",
-  "Help": "Aide",
-  "HelpNewProject": "Sélectionnez l'une des bases de données que vous souhaitez modifier.",
-  "HelpChapters": "Organisez votre histoire en chapitres et décrivez leur contenu.",
-  "HelpChars": "Définissez vos personnages : noms, rôles, traits et relations.",
-  "HelpEditorWindow": "Fenêtre d'édition",
-  "HelpHelpWindow": "Fenêtre d'aide",
-  "HelpLocations": "Décrivez les lieux utilisés dans votre histoire, y compris l'atmosphère et la pertinence.",
-  "HelpObjects": "Listez les objets importants et leur signification dans l'histoire.",
-  "HelpPreferenceWindow": "Effectuez les réglages souhaités.",
-  "HelpProject": "Fournissez des informations générales sur votre projet d'écriture, telles que le titre, le genre et les objectifs.",
-  "HelpProjectWindow": "Sélectionnez le tableau que vous souhaitez modifier.",
-  "HelpScenes": "Décrivez les scènes individuelles, leur but et leur cadre.",
-  "HelpStartWindow": "Sélectionnez la fonction souhaitée.",
-  "HelpStorylines": "Présentez les principales intrigues et leur évolution au fil du temps.",
-  "Location": "Lieux",
-  "LocationBtnDelete": "Supprimer",
-  "LocationBtnNew": "Nouveau",
-  "LocationBtnNext": "Suivant",
-  "LocationBtnPreview": "Retour",
-  "LocationBtnSave": "Enregistrer",
-  "LocationTitle": "Titre",
-  "LocationDescription": "Description",
-  "LocationNotes": "Notes",
-  "Menu": "Menu",
-  "MenuEdit": "Éditer",
-  "MenuFile": "Fichier",
-  "MenuHelp": "Aide",
-  "MenuLanguage": "Langue",
-  "MenuSettings": "Paramètres",
-  "ObjectBtnDelete": "Supprimer",
-  "ObjectBtnNew": "Nouveau",
-  "ObjectBtnNext": "Suivant",
-  "ObjectBtnPreview": "Retour",
-  "ObjectBtnSave": "Enregistrer",
-  "ObjectNotes": "Notes",
-  "Object": "Objets",
-  "ObjectTitle": "Titre",
-  "ObjectDescription": "Description",
-  "PreferenceActionSave": "Enregistrer",
-  "PreferenceActionCancel": "Annuler",
-  "PreferenceLanguage": "Langue",
-  "PreferenceStyle": "Style",
-  "PreferenceTheme": "Thème",
-  "PreferenceThemeDark": "Sombre",
-  "PreferenceThemeNeutral": "Neutre",
-  "PreferenceThemeLight": "Clair",
-  "Preference": "Paramètres",
-  "Pro": "Projets",
-  "ProBtnProject": "Projet",
-  "ProBtnCharacters": "Personnages",
-  "ProBtnStorylines": "Intrigues",
-  "ProBtnChapters": "Chapitres",
-  "ProBtnScenes": "Scènes",
-  "ProBtnObjects": "Objets",
-  "ProBtnLocations": "Lieux",
-  "ProBtnExit": "Quitter",
-  "ProBtn": "Boutons",
-  "ProBtnDelete": "Supprimer",
-  "ProBtnNew": "Nouveau",
-  "ProBtnNext": "Suivant",
-  "ProBtnPreview": "Retour",
-  "ProBtnSave": "Enregistrer",
-  "ProDetail": "Détails",
-  "ProDetailAuthor": "Auteur",
-  "ProDetailChapters": "Chapitres",
-  "ProDetailCoverImage": "Image de couverture",
-  "ProDetailDay": "Jours avant la date limite",
-  "ProDetailDeadline": "Date limite",
-  "ProDetailFormLabel": "Projet",
-  "ProDetailGenre": "Genre",
-  "ProDetailGroups": "Groupes",
-  "ProDetailLocations": "Lieux",
-  "ProDetailMainChar": "Personnages principaux",
-  "ProDetailNarrativePerspective": "Perspective narrative",
-  "ProDetailObjects": "Objets",
-  "ProDetailPremise": "Prémisse",
-  "ProDetailScenes": "Scènes",
-  "ProDetailStartDate": "Date de début",
-  "ProDetailStorylines": "Intrigues",
-  "ProDetailSubtitle": "Sous-titre",
-  "ProDetailSupportChar": "Personnages secondaires",
-  "ProDetailTargetGroup": "Groupe cible",
-  "ProDetailTimeline": "Chronologie",
-  "ProDetailTitle": "Titre",
-  "ProDetailWindowTitle": "Bases de données",
-  "ProDetailWordsCountDay": "Mots par jour",
-  "ProDetailWordsCountGoal": "Objectif de mots",
-  "Scene": "Scènes",
-  "SceneBtnDelete": "Supprimer",
-  "SceneBtnNew": "Nouveau",
-  "SceneBtnNext": "Suivant",
-  "SceneBtnPreview": "Retour",
-  "SceneBtnSave": "Enregistrer",
-  "SceneTitle": "Titre",
-  "SceneNumber": "Numéro",
-  "SceneSummary": "Résumé",
-  "SceneCharacters": "Personnages",
-  "SceneConflict": "Conflit",
-  "SceneDuration": "Durée",
-  "SceneGoal": "Objectif",
-  "SceneLocations": "Lieux",
-  "SceneMood": "Ambiance",
-  "SceneNotes": "Notes",
-  "SceneObjects": "Objets",
-  "SceneOutcome": "Résultat",
-  "ScenePremise": "Prémisse",
-  "SceneType": "Type",
-  "Start": "csNova",
-  "StartBtnExit": "Quitter",
-  "StartBtnHelp": "Aide & Tutoriel",
-  "StartBtnSettings": "Paramètres",
-  "StartBtnLoadProject": "Charger le projet ...",
-  "StartBtnNewProject": "Nouveau projet",
-  "Storyline": "Intrigues",
-  "StorylineBtnDelete": "Supprimer",
-  "StorylineBtnNew": "Nouveau",
-  "StorylineBtnNext": "Suivant",
-  "StorylineBtnPreview": "Retour",
-  "StorylineBtnSave": "Enregistrer",
-  "StorylineChapters": "Chapitres",
-  "StorylineCharacters": "Personnages",
-  "StorylineDescription": "Description",
-  "StorylineNotes": "Notes",
-  "StorylineObjects": "Objets",
-  "StorylinePremise": "Prémisse",
-  "StorylineScenes": "Scènes",
-  "StorylineTimeline": "Chronologie",
-  "StorylineTitle": "Titre",
-  "StorylineTransformation": "Transformation",
-  "Win": "Fenêtre",
-  "WinEditorTitle": "Fenêtre d'édition",
-  "WinHelpTitle": "Aide",
-  "WinPreferenceTitle": "Paramètres",
-  "WinStartTitle": "csNova"
-}
+    "botn_st_01": "Database",
+    "botn_st_02": "Open Project...",
+    "botn_st_03": "Settings",
+    "botn_st_04": "Help && Tutorials",
+    "botn_st_05": "Exit",
+    "WinStartTitle": "Codicies Scriptoria Nova (CSNova)"
+  },
+  {
+    "botn_fo_01": "Project",
+    "botn_fo_02": "Chapter",
+    "botn_fo_03": "Scenes",
+    "botn_fo_04": "Storylines",
+    "botn_fo_05": "Main Characters",
+    "botn_fo_06": "Supporting Characters",
+    "botn_fo_07": "Groups",
+    "botn_fo_08": "Locations",
+    "botn_fo_09": "Objects",
+    "botn_fo_10": "Back",
+    "ProWinTitle": "Project Management"
+  },
+  {
+    "botn_pr_01": "New",
+    "botn_pr_02": "Delete",
+    "botn_pr_03": "Next",
+    "botn_pr_04": "Back",
+    "botn_pr_05": "Save"
+  },
+  {
+    "botn_ch_01": "New",
+    "botn_ch_02": "Delete",
+    "botn_ch_03": "Next",
+    "botn_ch_04": "Back",
+    "botn_ch_05": "Save"
+  },
+  {
+    "botn_cp_01": "New",
+    "botn_cp_02": "Delete",
+    "botn_cp_03": "Next",
+    "botn_cp_04": "Back",
+    "botn_cp_05": "Save"
+  },
+  {
+    "botn_lo_01": "New",
+    "botn_lo_02": "Delete",
+    "botn_lo_03": "Next",
+    "botn_lo_04": "Back",
+    "botn_lo_05": "Save"
+  },
+  {
+    "botn_ob_01": "New",
+    "botn_ob_02": "Delete",
+    "botn_ob_03": "Next",
+    "botn_ob_04": "Back",
+    "botn_ob_05": "Save"
+  },
+  {
+    "botn_sc_01": "New",
+    "botn_sc_02": "Delete",
+    "botn_sc_03": "Next",
+    "botn_sc_04": "Back",
+    "botn_sc_05": "Save"
+  },
+  {
+    "botn_sl_01": "New",
+    "botn_sl_02": "Delete",
+    "botn_sl_03": "Next",
+    "botn_sl_04": "Back",
+    "botn_sl_05": "Save"
+  },
+    
+  {
+    "proj_ma_01": "Proyecto",
+    "proj_ma_02": "Título",
+    "proj_ma_03": "Subtítulo",
+    "proj_ma_04": "Autor",
+    "proj_ma_05": "Premisa",
+    "proj_ma_06": "Género",
+    "proj_ma_07": "Imagen de portada",
+    "proj_ma_08": "Grupo objetivo",
+    "proj_ma_09": "Perspectiva narrativa",
+    "proj_ma_10": "Fecha de entrega",
+    "proj_ma_11": "Fecha de inicio",
+    "proj_ma_12": "Meta de palabras",
+    "proj_ma_13": "Cronología"
+  },
+  {
+    "proj_ch_01": "Capítulo",
+    "proj_ch_02": "Título del capítulo",
+    "proj_ch_03": "Premisa del capítulo"
+  },
+  {
+    "proj_cs_01": "Escena",
+    "proj_cs_02": "Título",
+    "proj_cs_03": "Premisa",
+    "proj_cs_04": "Objetivo",
+    "proj_cs_05": "Conflicto",
+    "proj_cs_06": "Resultado",
+    "proj_cs_07": "Tipo",
+    "proj_cs_08": "Estado de ánimo",
+    "proj_cs_09": "Duración",
+    "proj_cs_10": "Personajes",
+    "proj_cs_11": "Lugares",
+    "proj_cs_12": "Notas"
+  },
+  {
+    "proj_lo_01": "Lugar",
+    "proj_lo_02": "Título",
+    "proj_lo_03": "Descripción"
+  },
+  {
+    "proj_st_01": "Trama",
+    "proj_st_02": "Título",
+    "proj_st_03": "Premisa",
+    "proj_st_04": "Descripción",
+    "proj_st_05": "Transformación",
+    "proj_st_06": "Cronología",
+    "proj_st_07": "Notas"
+  },
+  {
+    "proj_ob_01": "Objeto",
+    "proj_ob_02": "Título",
+    "proj_ob_03": "Descripción"
+  },
+  {
+    "char_ma_01": "Personaje",
+    "char_ma_02": "Personaje principal",
+    "char_ma_03": "Nombre",
+    "char_ma_04": "Nombre de pila",
+    "char_ma_05": "Apodo",
+    "char_ma_06": "Fecha de nacimiento",
+    "char_ma_07": "Edad",
+    "char_ma_08": "Rol",
+    "char_ma_09": "Estado",
+    "char_ma_10": "Género",
+    "char_ma_11": "Orientación sexual",
+    "char_ma_12": "Notas"
+  },
+  {
+    "char_gr_01": "Grupo",
+    "char_gr_02": "Título del grupo",
+    "char_gr_03": "Descripción del grupo"
+  },
+  {
+    "char_or_01": "Origen",
+    "char_or_02": "Padre",
+    "char_or_03": "Madre",
+    "char_or_04": "Persona de referencia",
+    "char_or_05": "Hermanos",
+    "char_or_06": "Lugar de nacimiento",
+    "char_or_07": "Notas"
+  },
+  {
+    "char_ed_01": "Educación",
+    "char_ed_02": "Escuela",
+    "char_ed_03": "Universidad",
+    "char_ed_04": "Formación profesional",
+    "char_ed_05": "Autodidacta",
+    "char_ed_06": "Trabajo",
+    "char_ed_07": "Arte/Música",
+    "char_ed_08": "Deporte",
+    "char_ed_09": "Tecnología",
+    "char_ed_10": "Notas"
+  },
+  {
+    "char_am_01": "Apariencia",
+    "char_am_02": "Altura",
+    "char_am_03": "Tipo de cuerpo",
+    "char_am_04": "Constitución",
+    "char_am_05": "Forma de la cara",
+    "char_am_06": "Forma de los ojos",
+    "char_am_07": "Color de ojos",
+    "char_am_08": "Cabello",
+    "char_am_09": "Color de cabello",
+    "char_am_10": "Piel",
+    "char_am_11": "Carisma",
+    "char_am_12": "Características especiales",
+    "char_am_13": "Notas"
+  },
+  {
+    "char_ad_01": "Detalles de apariencia",
+    "char_ad_02": "Cabeza",
+    "char_ad_03": "Cuello",
+    "char_ad_04": "Hombros",
+    "char_ad_05": "Brazos",
+    "char_ad_06": "Manos",
+    "char_ad_07": "Dedos",
+    "char_ad_08": "Pecho",
+    "char_ad_09": "Cadera, cintura",
+    "char_ad_10": "Glúteos",
+    "char_ad_11": "Piernas",
+    "char_ad_12": "Pies",
+    "char_ad_13": "Dedos de los pies",
+    "char_ad_14": "Notas"
+  },
+  {
+    "char_ps_01": "Personalidad",
+    "char_ps_02": "Rasgo positivo",
+    "char_ps_03": "Rasgo negativo",
+    "char_ps_04": "Miedos",
+    "char_ps_05": "Debilidades",
+    "char_ps_06": "Fortalezas",
+    "char_ps_07": "Talentos",
+    "char_ps_08": "Creencias",
+    "char_ps_09": "Meta de vida",
+    "char_ps_10": "Motivación",
+    "char_ps_11": "Comportamiento",
+    "char_ps_12": "Notas"
+  },
+  {
+    "char_pp_01": "Perfil psicológico",
+    "char_pp_02": "Diagnóstico",
+    "char_pp_03": "Síntomas",
+    "char_pp_04": "Terapia",
+    "char_pp_05": "Medicamentos",
+    "char_pp_06": "Temperamento",
+    "char_pp_07": "Valores",
+    "char_pp_08": "Moral",
+    "char_pp_09": "Fortaleza",
+    "char_pp_10": "Debilidad",
+    "char_pp_11": "Autoimagen",
+    "char_pp_12": "Humor",
+    "char_pp_13": "Agresividad",
+    "char_pp_14": "Trauma",
+    "char_pp_15": "Influencias formativas",
+    "char_pp_16": "Socialización",
+    "char_pp_17": "Normas",
+    "char_pp_18": "Tabúes",
+    "char_pp_19": "Notas"
+  },
+  {
+    "sexo_sx_01": "Orientación sexual",
+    "sexo_sx_02": "Orientación",
+    "sexo_sx_03": "Descripción corta"
+  },
+  {
+    "gend_ge_01": "Género",
+    "gend_ge_02": "Género",
+    "gend_ge_03": "Descripción corta"
+  },
+  {
+    "stat_pr_01": "Palabras por día",
+    "stat_pr_02": "Días contados",
+    "stat_pr_03": "Capítulos contados",
+    "stat_pr_04": "Escenas contadas",
+    "stat_pr_05": "Tramas contadas",
+    "stat_pr_06": "Personajes principales contados",
+    "stat_pr_07": "Personajes secundarios contados",
+    "stat_pr_08": "Grupos contados",
+    "stat_pr_09": "Lugares contados",
+    "stat_pr_10": "Objetos contados"
+  },
+  {
+    "PrefWinTitle": "Configuración",
+
+    "PreferenceLanguage": "Idioma",
+    "PreferenceStyle": "Estilo",
+    "PreferenceTheme": "Tema",
+
+    "PreferenceLanguageDe": "Alemán",
+    "PreferenceLanguageEn": "Inglés",
+    "PreferenceLanguageEs": "Español",
+    "PreferenceLanguageFr": "Francés",
+
+    "PreferenceStyleOld": "Clásico",
+    "PreferenceStyleVintage": "Vintage",
+    "PreferenceStyleModern": "Moderno",
+    "PreferenceStyleFuture": "Futurista",
+    "PreferenceStyleMinimal": "Minimalista",
+
+    "PreferenceThemeDark": "Oscuro",
+    "PreferenceThemeNeutral": "Neutro",
+    "PreferenceThemeLight": "Claro"
+  },
+  {
+    "botn_st_01": "Base de datos",
+    "botn_st_02": "Abrir proyecto...",
+    "botn_st_03": "Configuración",
+    "botn_st_04": "Ayuda && Tutoriales",
+    "botn_st_05": "Salir",
+    "WinStartTitle": "Codicies Scriptoria Nova (CSNova)"
+  },
+  {
+    "botn_fo_01": "Proyecto",
+    "botn_fo_02": "Capítulo",
+    "botn_fo_03": "Escenas",
+    "botn_fo_04": "Tramas",
+    "botn_fo_05": "Personajes principales",
+    "botn_fo_06": "Personajes secundarios",
+    "botn_fo_07": "Grupos",
+    "botn_fo_08": "Lugares",
+    "botn_fo_09": "Objetos",
+    "botn_fo_10": "Atrás",
+    "ProWinTitle": "Gestión de proyectos"
+  },
+  {
+    "botn_pr_01": "Nuevo",
+    "botn_pr_02": "Eliminar",
+    "botn_pr_03": "Siguiente",
+    "botn_pr_04": "Atrás",
+    "botn_pr_05": "Guardar"
+  },
+  {
+    "botn_ch_01": "Nuevo",
+    "botn_ch_02": "Eliminar",
+    "botn_ch_03": "Siguiente",
+    "botn_ch_04": "Atrás",
+    "botn_ch_05": "Guardar"
+  },
+  {
+    "botn_cp_01": "Nuevo",
+    "botn_cp_02": "Eliminar",
+    "botn_cp_03": "Siguiente",
+    "botn_cp_04": "Atrás",
+    "botn_cp_05": "Guardar"
+  },
+  {
+    "botn_lo_01": "Nuevo",
+    "botn_lo_02": "Eliminar",
+    "botn_lo_03": "Siguiente",
+    "botn_lo_04": "Atrás",
+    "botn_lo_05": "Guardar"
+  },
+  {
+    "botn_ob_01": "Nuevo",
+    "botn_ob_02": "Eliminar",
+    "botn_ob_03": "Siguiente",
+    "botn_ob_04": "Atrás",
+    "botn_ob_05": "Guardar"
+  },
+  {
+    "botn_sc_01": "Nuevo",
+    "botn_sc_02": "Eliminar",
+    "botn_sc_03": "Siguiente",
+    "botn_sc_04": "Atrás",
+    "botn_sc_05": "Guardar"
+  },
+  {
+    "botn_sl_01": "Nuevo",
+    "botn_sl_02": "Eliminar",
+    "botn_sl_03": "Siguiente",
+    "botn_sl_04": "Atrás",
+    "botn_sl_05": "Guardar"
+  },
+  {
+    "proj_ma_01": "Projet",
+    "proj_ma_02": "Titre",
+    "proj_ma_03": "Sous-titre",
+    "proj_ma_04": "Auteur",
+    "proj_ma_05": "Prémisse",
+    "proj_ma_06": "Genre",
+    "proj_ma_07": "Image de couverture",
+    "proj_ma_08": "Groupe cible",
+    "proj_ma_09": "Perspective narrative",
+    "proj_ma_10": "Date limite",
+    "proj_ma_11": "Date de début",
+    "proj_ma_12": "Objectif de mots",
+    "proj_ma_13": "Chronologie"
+  },
+  {
+    "proj_ch_01": "Chapitre",
+    "proj_ch_02": "Titre du chapitre",
+    "proj_ch_03": "Prémisse du chapitre"
+  },
+  {
+    "proj_cs_01": "Scène",
+    "proj_cs_02": "Titre",
+    "proj_cs_03": "Prémisse",
+    "proj_cs_04": "Objectif",
+    "proj_cs_05": "Conflit",
+    "proj_cs_06": "Résultat",
+    "proj_cs_07": "Type",
+    "proj_cs_08": "Ambiance",
+    "proj_cs_09": "Durée",
+    "proj_cs_10": "Personnages",
+    "proj_cs_11": "Lieux",
+    "proj_cs_12": "Notes"
+  },
+  {
+    "proj_lo_01": "Lieu",
+    "proj_lo_02": "Titre",
+    "proj_lo_03": "Description"
+  },
+  {
+    "proj_st_01": "Intrigue",
+    "proj_st_02": "Titre",
+    "proj_st_03": "Prémisse",
+    "proj_st_04": "Description",
+    "proj_st_05": "Transformation",
+    "proj_st_06": "Chronologie",
+    "proj_st_07": "Notes"
+  },
+  {
+    "proj_ob_01": "Objet",
+    "proj_ob_02": "Titre",
+    "proj_ob_03": "Description"
+  },
+  {
+    "char_ma_01": "Personnage",
+    "char_ma_02": "Personnage principal",
+    "char_ma_03": "Nom",
+    "char_ma_04": "Prénom",
+    "char_ma_05": "Surnom",
+    "char_ma_06": "Date de naissance",
+    "char_ma_07": "Âge",
+    "char_ma_08": "Rôle",
+    "char_ma_09": "Statut",
+    "char_ma_10": "Genre",
+    "char_ma_11": "Orientation sexuelle",
+    "char_ma_12": "Notes"
+  },
+  {
+    "char_gr_01": "Groupe",
+    "char_gr_02": "Titre du groupe",
+    "char_gr_03": "Description du groupe"
+  },
+  {
+    "char_or_01": "Origine",
+    "char_or_02": "Père",
+    "char_or_03": "Mère",
+    "char_or_04": "Personne de référence",
+    "char_or_05": "Frères et sœurs",
+    "char_or_06": "Lieu de naissance",
+    "char_or_07": "Notes"
+  },
+  {
+    "char_ed_01": "Éducation",
+    "char_ed_02": "École",
+    "char_ed_03": "Université",
+    "char_ed_04": "Formation professionnelle",
+    "char_ed_05": "Autodidacte",
+    "char_ed_06": "Métier",
+    "char_ed_07": "Art/Musique",
+    "char_ed_08": "Sport",
+    "char_ed_09": "Technologie",
+    "char_ed_10": "Notes"
+  },
+  {
+    "char_am_01": "Apparence",
+    "char_am_02": "Taille",
+    "char_am_03": "Type de corps",
+    "char_am_04": "Constitution",
+    "char_am_05": "Forme du visage",
+    "char_am_06": "Forme des yeux",
+    "char_am_07": "Couleur des yeux",
+    "char_am_08": "Cheveux",
+    "char_am_09": "Couleur des cheveux",
+    "char_am_10": "Peau",
+    "char_am_11": "Charisme",
+    "char_am_12": "Caractéristiques particulières",
+    "char_am_13": "Notes"
+  },
+  {
+    "char_ad_01": "Détails de l'apparence",
+    "char_ad_02": "Tête",
+    "char_ad_03": "Cou",
+    "char_ad_04": "Épaules",
+    "char_ad_05": "Bras",
+    "char_ad_06": "Mains",
+    "char_ad_07": "Doigts",
+    "char_ad_08": "Poitrine",
+    "char_ad_09": "Hanches, taille",
+    "char_ad_10": "Fesses",
+    "char_ad_11": "Jambes",
+    "char_ad_12": "Pieds",
+    "char_ad_13": "Orteils",
+    "char_ad_14": "Notes"
+  },
+  {
+    "char_ps_01": "Personnalité",
+    "char_ps_02": "Trait positif",
+    "char_ps_03": "Trait négatif",
+    "char_ps_04": "Peurs",
+    "char_ps_05": "Faiblesses",
+    "char_ps_06": "Forces",
+    "char_ps_07": "Talents",
+    "char_ps_08": "Croyances",
+    "char_ps_09": "Objectif de vie",
+    "char_ps_10": "Motivation",
+    "char_ps_11": "Comportement",
+    "char_ps_12": "Notes"
+  },
+  {
+    "char_pp_01": "Profil psychologique",
+    "char_pp_02": "Diagnostic",
+    "char_pp_03": "Symptômes",
+    "char_pp_04": "Thérapie",
+    "char_pp_05": "Médicaments",
+    "char_pp_06": "Tempérament",
+    "char_pp_07": "Valeurs",
+    "char_pp_08": "Morale",
+    "char_pp_09": "Force",
+    "char_pp_10": "Faiblesse",
+    "char_pp_11": "Image de soi",
+    "char_pp_12": "Humour",
+    "char_pp_13": "Agressivité",
+    "char_pp_14": "Traumatisme",
+    "char_pp_15": "Influences formatrices",
+    "char_pp_16": "Socialisation",
+    "char_pp_17": "Normes",
+    "char_pp_18": "Tabous",
+    "char_pp_19": "Notes"
+  },
+  {
+    "sexo_sx_01": "Orientation sexuelle",
+    "sexo_sx_02": "Orientation",
+    "sexo_sx_03": "Description courte"
+  },
+  {
+    "gend_ge_01": "Genre",
+    "gend_ge_02": "Genre",
+    "gend_ge_03": "Description courte"
+  },
+  {
+    "stat_pr_01": "Mots par jour",
+    "stat_pr_02": "Jours comptés",
+    "stat_pr_03": "Chapitres comptés",
+    "stat_pr_04": "Scènes comptées",
+    "stat_pr_05": "Intrigues comptées",
+    "stat_pr_06": "Personnages principaux comptés",
+    "stat_pr_07": "Personnages secondaires comptés",
+    "stat_pr_08": "Groupes comptés",
+    "stat_pr_09": "Lieux comptés",
+    "stat_pr_10": "Objets comptés"
+  },
+  {
+    "PrefWinTitle": "Paramètres",
+
+    "PreferenceLanguage": "Langue",
+    "PreferenceStyle": "Style",
+    "PreferenceTheme": "Thème",
+
+    "PreferenceLanguageDe": "Allemand",
+    "PreferenceLanguageEn": "Anglais",
+    "PreferenceLanguageEs": "Espagnol",
+    "PreferenceLanguageFr": "Français",
+
+    "PreferenceStyleOld": "Classique",
+    "PreferenceStyleVintage": "Vintage",
+    "PreferenceStyleModern": "Moderne",
+    "PreferenceStyleFuture": "Futuriste",
+    "PreferenceStyleMinimal": "Minimaliste",
+
+    "PreferenceThemeDark": "Sombre",
+    "PreferenceThemeNeutral": "Neutre",
+    "PreferenceThemeLight": "Clair"
+  },
+  {
+    "botn_st_01": "Base de données",
+    "botn_st_02": "Ouvrir le projet...",
+    "botn_st_03": "Paramètres",
+    "botn_st_04": "Aide && Tutoriels",
+    "botn_st_05": "Quitter",
+    "WinStartTitle": "Codicies Scriptoria Nova (CSNova)"
+  },
+  {
+    "botn_fo_01": "Projet",
+    "botn_fo_02": "Chapitre",
+    "botn_fo_03": "Scènes",
+    "botn_fo_04": "Intrigues",
+    "botn_fo_05": "Personnages principaux",
+    "botn_fo_06": "Personnages secondaires",
+    "botn_fo_07": "Groupes",
+    "botn_fo_08": "Lieux",
+    "botn_fo_09": "Objets",
+    "botn_fo_10": "Retour",
+    "ProWinTitle": "Gestion de projet"
+  },
+  {
+    "botn_pr_01": "Nouveau",
+    "botn_pr_02": "Supprimer",
+    "botn_pr_03": "Suivant",
+    "botn_pr_04": "Retour",
+    "botn_pr_05": "Enregistrer"
+  },
+  {
+    "botn_ch_01": "Nouveau",
+    "botn_ch_02": "Supprimer",
+    "botn_ch_03": "Suivant",
+    "botn_ch_04": "Retour",
+    "botn_ch_05": "Enregistrer"
+  },
+  {
+    "botn_cp_01": "Nouveau",
+    "botn_cp_02": "Supprimer",
+    "botn_cp_03": "Suivant",
+    "botn_cp_04": "Retour",
+    "botn_cp_05": "Enregistrer"
+  },
+  {
+    "botn_lo_01": "Nouveau",
+    "botn_lo_02": "Supprimer",
+    "botn_lo_03": "Suivant",
+    "botn_lo_04": "Retour",
+    "botn_lo_05": "Enregistrer"
+  },
+  {
+    "botn_ob_01": "Nouveau",
+    "botn_ob_02": "Supprimer",
+    "botn_ob_03": "Suivant",
+    "botn_ob_04": "Retour",
+    "botn_ob_05": "Enregistrer"
+  },
+  {
+    "botn_sc_01": "Nouveau",
+    "botn_sc_02": "Supprimer",
+    "botn_sc_03": "Suivant",
+    "botn_sc_04": "Retour",
+    "botn_sc_05": "Enregistrer"
+  },
+  {
+    "botn_sl_01": "Nouveau",
+    "botn_sl_02": "Supprimer",
+    "botn_sl_03": "Suivant",
+    "botn_sl_04": "Retour",
+    "botn_sl_05": "Enregistrer"
+  }
 ]
+
 ```
 
 ## 4. Character Tabellen
@@ -1576,60 +1698,245 @@ def create_table(cursor):
 ### 5.8 form_fields.json
 ```json
 {
-  "projects": [
-    {"name": "pro_header", "label_key": "pro", "type": "header"},
-    {"name": "title", "label_key": "pro_detail_title", "type": "text", "required": true, "max_length": 120},
-    {"name": "subtitle", "label_key": "pro_detail_subtitle", "type": "text", "required": false, "max_length": 120},
-    {"name": "author", "label_key": "pro_detail_author", "type": "text", "required": true, "max_length": 80},
-    {"name": "premise", "label_key": "pro_detail_premise", "type": "text", "required": false, "max_length": 200},
-    {"name": "genre", "label_key": "pro_detail_genre", "type": "text", "required": false, "max_length": 80},
-    {"name": "narrative_perspective", "label_key": "pro_detail_narrative_perspective", "type": "text", "required": false, "max_length": 80},
-    {"name": "timeline", "label_key": "pro_detail_timeline", "type": "text", "required": false, "max_length": 80},
-    {"name": "target_group", "label_key": "pro_detail_targetgroup", "type": "text", "required": false, "max_length": 80},
-    {"name": "start_date", "label_key": "pro_detail_startdate", "type": "date", "required": false},
-    {"name": "deadline", "label_key": "pro_detail_deadline", "type": "date", "required": false},
-    {"name": "words_count_goal", "label_key": "pro_detail_words_count_goal", "type": "spin", "required": false, "max": 1000000},
-    {"name": "cover_image", "label_key": "pro_detail_cover_image", "type": "text", "required": false, "max_length": 120}
-  ],
-  "characters": [
-    {"name": "char_header", "label_key": "char", "type": "header"},
-    {"name": "char_bas_name", "label_key": "char_bas_name", "type": "text", "required": true, "max_length": 80},
-    {"name": "char_bas_nickname", "label_key": "char_bas_nickname", "type": "text", "required": false, "max_length": 80},
-    {"name": "char_bas_gender", "label_key": "char_bas_gender", "type": "text", "required": true},
-    {"name": "char_bas_age", "label_key": "char_bas_age", "type": "spin", "required": false, "max": 120},
-    {"name": "char_bas_role", "label_key": "char_bas_role", "type": "text", "required": false, "max_length": 80},
-    {"name": "char_bas_notes", "label_key": "char_bas_notes", "type": "text", "required": false, "max_length": 200}
-  ],
-  "chapters": [
-    {"name": "chapters_header", "label_key": "chapters", "type": "header"},
-    {"name": "chapter_number", "label_key": "chapter_number", "type": "spin", "required": false, "max": 999},
-    {"name": "chapter_title", "label_key": "chapter_title", "type": "text", "required": true, "max_length": 120},
-    {"name": "chapter_summary", "label_key": "chapter_summary", "type": "text", "required": false, "max_length": 500}
-  ],
-  "locations": [
-    {"name": "location_header", "label_key": "location", "type": "header"},
-    {"name": "location_title", "label_key": "location_title", "type": "text", "required": true, "max_length": 120},
-    {"name": "location_description", "label_key": "location_description", "type": "text", "required": false, "max_length": 500},
-    {"name": "location_notes", "label_key": "location_notes", "type": "text", "required": false, "max_length": 200}
-  ],
-  "objects": [
-    {"name": "object_header", "label_key": "objects", "type": "header"},
-    {"name": "object_title", "label_key": "object_title", "type": "text", "required": true, "max_length": 120},
-    {"name": "object_description", "label_key": "object_description", "type": "text", "required": false, "max_length": 500},
-    {"name": "object_notes", "label_key": "object_notes", "type": "text", "required": false, "max_length": 200}
-  ],
-  "scenes": [
-    {"name": "scene_header", "label_key": "scene", "type": "header"},
-    {"name": "scene_number", "label_key": "scene_number", "type": "spin", "required": false, "max": 9999},
-    {"name": "scene_title", "label_key": "scene_title", "type": "text", "required": true, "max_length": 120},
-    {"name": "scene_summary", "label_key": "scene_summary", "type": "text", "required": false, "max_length": 500}
-  ],
-  "storylines": [
-    {"name": "storyline_header", "label_key": "storyline", "type": "header"},
-    {"name": "storyline_title", "label_key": "storyline_title", "type": "text", "required": true, "max_length": 120},
-    {"name": "storyline_description", "label_key": "storyline_description", "type": "text", "required": false, "max_length": 500},
-    {"name": "storyline_notes", "label_key": "storyline_notes", "type": "text", "required": false, "max_length": 200}
-  ]
+"projects": [
+  {"name": "pro_header", "label_key": "proj_ma_01", "type": "header", "datafield_name": null},
+  {"name": "title", "label_key": "proj_ma_02", "type": "text", "required": true, "max_length": 120, "datafield_name": "project_title"},
+  {"name": "subtitle", "label_key": "proj_ma_03", "type": "text", "required": false, "max_length": 120, "datafield_name": "project_subtitle"},
+  {"name": "author", "label_key": "proj_ma_04", "type": "text", "required": true, "max_length": 80, "datafield_name": "project_author"},
+  {"name": "premise", "label_key": "proj_ma_05", "type": "text", "required": false, "max_length": 200, "datafield_name": "project_premise"},
+  {"name": "genre", "label_key": "proj_ma_06", "type": "text", "required": false, "max_length": 80, "datafield_name": "project_genre"},
+  {"name": "cover_image", "label_key": "proj_ma_07", "type": "text", "required": false, "max_length": 120, "datafield_name": "project_cover_image"},
+  {"name": "target_group", "label_key": "proj_ma_08", "type": "text", "required": false, "max_length": 80, "datafield_name": "project_targetgroup"},
+  {"name": "narrative_perspective", "label_key": "proj_ma_09", "type": "text", "required": false, "max_length": 80, "datafield_name": "project_narrative_perspective"},
+  {"name": "deadline", "label_key": "proj_ma_10", "type": "date", "required": false, "datafield_name": "project_deadline"},
+  {"name": "start_date", "label_key": "proj_ma_11", "type": "date", "required": false, "datafield_name": "project_startdate"},
+  {"name": "words_count_goal", "label_key": "proj_ma_12", "type": "spin", "required": false, "max": 1000000, "datafield_name": "project_words_count_goal"},
+  {"name": "timeline", "label_key": "proj_ma_13", "type": "text", "required": false, "max_length": 80, "datafield_name": "project_timeline"}
+],
+
+"project_chapters": [
+  {"name": "chapters_header", "label_key": "proj_ch_01", "type": "header", "datafield_name": null},
+  {"name": "chapter_title", "label_key": "proj_ch_02", "type": "text", "required": true, "max_length": 120, "datafield_name": "project_chapters_title"},
+  {"name": "chapter_premise", "label_key": "proj_ch_03", "type": "text", "required": false, "max_length": 200, "datafield_name": "project_chapters_premise"}
+],
+
+"project_chapters_scenes": [
+  {"name": "scenes_header", "label_key": "proj_cs_01", "type": "header", "datafield_name": null},
+  {"name": "scene_title", "label_key": "proj_cs_02", "type": "text", "required": true, "max_length": 120, "datafield_name": "project_chapters_scenes_title"},
+  {"name": "scene_premise", "label_key": "proj_cs_03", "type": "text", "required": false, "max_length": 200, "datafield_name": "project_chapters_scenes_premise"},
+  {"name": "scene_goal", "label_key": "proj_cs_04", "type": "text", "required": false, "max_length": 120, "datafield_name": "project_chapters_scenes_goal"},
+  {"name": "scene_conflict", "label_key": "proj_cs_05", "type": "text", "required": false, "max_length": 120, "datafield_name": "project_chapters_scenes_conflict"},
+  {"name": "scene_outcome", "label_key": "proj_cs_06", "type": "text", "required": false, "max_length": 120, "datafield_name": "project_chapters_scenes_outcome"},
+  {"name": "scene_type", "label_key": "proj_cs_07", "type": "text", "required": false, "max_length": 80, "datafield_name": "project_chapters_scenes_type"},
+  {"name": "scene_mood", "label_key": "proj_cs_08", "type": "text", "required": false, "max_length": 80, "datafield_name": "project_chapters_scenes_mood"},
+  {"name": "scene_duration", "label_key": "proj_cs_09", "type": "text", "required": false, "max_length": 80, "datafield_name": "project_chapters_scenes_duration"},
+  {"name": "scene_characters", "label_key": "proj_cs_10", "type": "text", "required": false, "max_length": 200, "datafield_name": "project_chapters_scenes_characters"},
+  {"name": "scene_locations", "label_key": "proj_cs_11", "type": "text", "required": false, "max_length": 200, "datafield_name": "project_chapters_scenes_locations"},
+  {"name": "scene_notes", "label_key": "proj_cs_12", "type": "text", "required": false, "max_length": 500, "datafield_name": "project_chapters_scenes_notes"}
+],
+
+"project_locations": [
+  {"name": "locations_header", "label_key": "proj_lo_01", "type": "header", "datafield_name": null},
+  {"name": "location_title", "label_key": "proj_lo_02", "type": "text", "required": true, "max_length": 120, "datafield_name": "project_locations_title"},
+  {"name": "location_description", "label_key": "proj_lo_03", "type": "text", "required": false, "max_length": 500, "datafield_name": "project_locations_description"}
+],
+
+"project_storylines": [
+  {"name": "storylines_header", "label_key": "proj_st_01", "type": "header", "datafield_name": null},
+  {"name": "storyline_title", "label_key": "proj_st_02", "type": "text", "required": true, "max_length": 120, "datafield_name": "project_storylines_title"},
+  {"name": "storyline_premise", "label_key": "proj_st_03", "type": "text", "required": false, "max_length": 200, "datafield_name": "project_storylines_premise"},
+  {"name": "storyline_description", "label_key": "proj_st_04", "type": "text", "required": false, "max_length": 500, "datafield_name": "project_storylines_description"},
+  {"name": "storyline_transformation", "label_key": "proj_st_05", "type": "text", "required": false, "max_length": 200, "datafield_name": "project_storylines_transformation"},
+  {"name": "storyline_timeline", "label_key": "proj_st_06", "type": "text", "required": false, "max_length": 200, "datafield_name": "project_storylines_timeline"},
+  {"name": "storyline_notes", "label_key": "proj_st_07", "type": "text", "required": false, "max_length": 500, "datafield_name": "project_storylines_notes"}
+],
+
+"project_objects": [
+  {"name": "objects_header", "label_key": "proj_ob_01", "type": "header", "datafield_name": null},
+  {"name": "object_title", "label_key": "proj_ob_02", "type": "text", "required": true, "max_length": 120, "datafield_name": "project_objects_title"},
+  {"name": "object_description", "label_key": "proj_ob_03", "type": "text", "required": false, "max_length": 500, "datafield_name": "project_objects_description"}
+],
+
+"character_main": [
+  {"name": "main_header", "label_key": "char_ma_01", "type": "header", "datafield_name": null},
+  {"name": "main_character", "label_key": "char_ma_02", "type": "checkbox", "required": false, "datafield_name": "main_character"},
+  {"name": "name", "label_key": "char_ma_03", "type": "text", "required": true, "max_length": 80, "datafield_name": "name"},
+  {"name": "first_name", "label_key": "char_ma_04", "type": "text", "required": true, "max_length": 80, "datafield_name": "first_name"},
+  {"name": "nick_name", "label_key": "char_ma_05", "type": "text", "required": false, "max_length": 80, "datafield_name": "nick_name"},
+  {"name": "born", "label_key": "char_ma_06", "type": "date", "required": false, "datafield_name": "born"},
+  {"name": "age", "label_key": "char_ma_07", "type": "spin", "required": false, "max": 150, "datafield_name": "age"},
+  {"name": "role", "label_key": "char_ma_08", "type": "text", "required": false, "max_length": 80, "datafield_name": "role"},
+  {"name": "status", "label_key": "char_ma_09", "type": "text", "required": false, "max_length": 80, "datafield_name": "status"},
+  {"name": "gender_ID", "label_key": "char_ma_10", "type": "select", "required": false, "datafield_name": "gender_ID"},
+  {"name": "sex_orientation_ID", "label_key": "char_ma_11", "type": "select", "required": false, "datafield_name": "sex_orientation_ID"},
+  {"name": "notes", "label_key": "char_ma_12", "type": "text", "required": false, "max_length": 500, "datafield_name": "notes"}
+],
+
+"character_groups": [
+  {"name": "groups_header", "label_key": "char_gr_01", "type": "header", "datafield_name": null},
+  {"name": "groups_title", "label_key": "char_gr_02", "type": "text", "required": true, "max_length": 80, "datafield_name": "groups_title"},
+  {"name": "groups_description", "label_key": "char_gr_03", "type": "text", "required": false, "max_length": 200, "datafield_name": "groups_description"}
+],
+
+"character_origin": [
+  {"name": "origin_header", "label_key": "char_or_01", "type": "header", "datafield_name": null},
+  {"name": "father", "label_key": "char_or_02", "type": "text", "required": false, "max_length": 80, "datafield_name": "father"},
+  {"name": "mother", "label_key": "char_or_03", "type": "text", "required": false, "max_length": 80, "datafield_name": "mother"},
+  {"name": "reference_person", "label_key": "char_or_04", "type": "text", "required": false, "max_length": 80, "datafield_name": "reference_person"},
+  {"name": "siblings", "label_key": "char_or_05", "type": "text", "required": false, "max_length": 120, "datafield_name": "siblings"},
+  {"name": "birthplace", "label_key": "char_or_06", "type": "text", "required": false, "max_length": 120, "datafield_name": "birthplace"},
+  {"name": "notes", "label_key": "char_or_07", "type": "text", "required": false, "max_length": 500, "datafield_name": "notes"}
+],
+
+"character_education": [
+  {"name": "education_header", "label_key": "char_ed_01", "type": "header", "datafield_name": null},
+  {"name": "school", "label_key": "char_ed_02", "type": "text", "required": false, "max_length": 120, "datafield_name": "school"},
+  {"name": "university", "label_key": "char_ed_03", "type": "text", "required": false, "max_length": 120, "datafield_name": "university"},
+  {"name": "job_education", "label_key": "char_ed_04", "type": "text", "required": false, "max_length": 120, "datafield_name": "job_education"},
+  {"name": "autodidactic", "label_key": "char_ed_05", "type": "text", "required": false, "max_length": 120, "datafield_name": "autodidactic"},
+  {"name": "job", "label_key": "char_ed_06", "type": "text", "required": false, "max_length": 120, "datafield_name": "job"},
+  {"name": "art_music", "label_key": "char_ed_07", "type": "text", "required": false, "max_length": 120, "datafield_name": "art_music"},
+  {"name": "sport", "label_key": "char_ed_08", "type": "text", "required": false, "max_length": 120, "datafield_name": "sport"},
+  {"name": "technology", "label_key": "char_ed_09", "type": "text", "required": false, "max_length": 120, "datafield_name": "technology"},
+  {"name": "notes", "label_key": "char_ed_10", "type": "text", "required": false, "max_length": 500, "datafield_name": "notes"}
+],
+
+"character_appearance_main": [
+  {"name": "appearance_main_header", "label_key": "char_am_01", "type": "header", "datafield_name": null},
+  {"name": "height", "label_key": "char_am_02", "type": "text", "required": false, "max_length": 80, "datafield_name": "height"},
+  {"name": "body_type", "label_key": "char_am_03", "type": "text", "required": false, "max_length": 80, "datafield_name": "body_type"},
+  {"name": "posture", "label_key": "char_am_04", "type": "text", "required": false, "max_length": 80, "datafield_name": "posture"},
+  {"name": "face_shape", "label_key": "char_am_05", "type": "text", "required": false, "max_length": 80, "datafield_name": "face_shape"},
+  {"name": "eye_shape", "label_key": "char_am_06", "type": "text", "required": false, "max_length": 80, "datafield_name": "eye_shape"},
+  {"name": "eye_color", "label_key": "char_am_07", "type": "text", "required": false, "max_length": 80, "datafield_name": "eye_color"},
+  {"name": "hair", "label_key": "char_am_08", "type": "text", "required": false, "max_length": 80, "datafield_name": "hair"},
+  {"name": "hair_color", "label_key": "char_am_09", "type": "text", "required": false, "max_length": 80, "datafield_name": "hair_color"},
+  {"name": "skin", "label_key": "char_am_10", "type": "text", "required": false, "max_length": 80, "datafield_name": "skin"},
+  {"name": "charisma", "label_key": "char_am_11", "type": "text", "required": false, "max_length": 80, "datafield_name": "charisma"},
+  {"name": "specials", "label_key": "char_am_12", "type": "text", "required": false, "max_length": 120, "datafield_name": "specials"},
+  {"name": "notes", "label_key": "char_am_13", "type": "text", "required": false, "max_length": 500, "datafield_name": "notes"}
+],
+
+"character_appearance_detail": [
+  {"name": "appearance_detail_header", "label_key": "char_ad_01", "type": "header", "datafield_name": null},
+  {"name": "head", "label_key": "char_ad_02", "type": "text", "required": false, "max_length": 80, "datafield_name": "head"},
+  {"name": "neck", "label_key": "char_ad_03", "type": "text", "required": false, "max_length": 80, "datafield_name": "neck"},
+  {"name": "shoulder", "label_key": "char_ad_04", "type": "text", "required": false, "max_length": 80, "datafield_name": "shoulder"},
+  {"name": "arms", "label_key": "char_ad_05", "type": "text", "required": false, "max_length": 80, "datafield_name": "arms"},
+  {"name": "hands", "label_key": "char_ad_06", "type": "text", "required": false, "max_length": 80, "datafield_name": "hands"},
+  {"name": "finger", "label_key": "char_ad_07", "type": "text", "required": false, "max_length": 80, "datafield_name": "finger"},
+  {"name": "chest", "label_key": "char_ad_08", "type": "text", "required": false, "max_length": 80, "datafield_name": "chest"},
+  {"name": "hips_waist", "label_key": "char_ad_09", "type": "text", "required": false, "max_length": 80, "datafield_name": "hips_waist"},
+  {"name": "buttocks", "label_key": "char_ad_10", "type": "text", "required": false, "max_length": 80, "datafield_name": "buttocks"},
+  {"name": "legs", "label_key": "char_ad_11", "type": "text", "required": false, "max_length": 80, "datafield_name": "legs"},
+  {"name": "feet", "label_key": "char_ad_12", "type": "text", "required": false, "max_length": 80, "datafield_name": "feet"},
+  {"name": "toes", "label_key": "char_ad_13", "type": "text", "required": false, "max_length": 80, "datafield_name": "toes"},
+  {"name": "notes", "label_key": "char_ad_14", "type": "text", "required": false, "max_length": 500, "datafield_name": "notes"}
+],
+
+"character_personality": [
+  {"name": "personality_header", "label_key": "char_ps_01", "type": "header", "datafield_name": null},
+  {"name": "pos_characteristic", "label_key": "char_ps_02", "type": "text", "required": false, "max_length": 120, "datafield_name": "pos_characteristic"},
+  {"name": "neg_characteristic", "label_key": "char_ps_03", "type": "text", "required": false, "max_length": 120, "datafield_name": "neg_characteristic"},
+  {"name": "fears", "label_key": "char_ps_04", "type": "text", "required": false, "max_length": 120, "datafield_name": "fears"},
+  {"name": "weaknesses", "label_key": "char_ps_05", "type": "text", "required": false, "max_length": 120, "datafield_name": "weaknesses"},
+  {"name": "strengths", "label_key": "char_ps_06", "type": "text", "required": false, "max_length": 120, "datafield_name": "strengths"},
+  {"name": "talents", "label_key": "char_ps_07", "type": "text", "required": false, "max_length": 120, "datafield_name": "talents"},
+  {"name": "beliefs", "label_key": "char_ps_08", "type": "text", "required": false, "max_length": 120, "datafield_name": "beliefs"},
+  {"name": "life_goals", "label_key": "char_ps_09", "type": "text", "required": false, "max_length": 120, "datafield_name": "life_goals"},
+  {"name": "motivation", "label_key": "char_ps_10", "type": "text", "required": false, "max_length": 120, "datafield_name": "motivation"},
+  {"name": "behavior", "label_key": "char_ps_11", "type": "text", "required": false, "max_length": 120, "datafield_name": "behavior"},
+  {"name": "notes", "label_key": "char_ps_12", "type": "text", "required": false, "max_length": 500, "datafield_name": "notes"}
+],
+
+"character_psychological_profile": [
+  {"name": "psychological_profile_header", "label_key": "char_pp_01", "type": "header", "datafield_name": null},
+  {"name": "diagnosis", "label_key": "char_pp_02", "type": "text", "required": false, "max_length": 120, "datafield_name": "diagnosis"},
+  {"name": "symptoms", "label_key": "char_pp_03", "type": "text", "required": false, "max_length": 120, "datafield_name": "symptoms"},
+  {"name": "therapy", "label_key": "char_pp_04", "type": "text", "required": false, "max_length": 120, "datafield_name": "therapy"},
+  {"name": "medication", "label_key": "char_pp_05", "type": "text", "required": false, "max_length": 120, "datafield_name": "medication"},
+  {"name": "temperament", "label_key": "char_pp_06", "type": "text", "required": false, "max_length": 120, "datafield_name": "temperament"},
+  {"name": "values_set", "label_key": "char_pp_07", "type": "text", "required": false, "max_length": 120, "datafield_name": "values_set"},
+  {"name": "moral_concepts", "label_key": "char_pp_08", "type": "text", "required": false, "max_length": 120, "datafield_name": "moral_concepts"},
+  {"name": "character_strength", "label_key": "char_pp_09", "type": "text", "required": false, "max_length": 120, "datafield_name": "character_strength"},
+  {"name": "character_weakness", "label_key": "char_pp_10", "type": "text", "required": false, "max_length": 120, "datafield_name": "character_weakness"},
+  {"name": "self_image", "label_key": "char_pp_11", "type": "text", "required": false, "max_length": 120, "datafield_name": "self_image"},
+  {"name": "humor", "label_key": "char_pp_12", "type": "text", "required": false, "max_length": 120, "datafield_name": "humor"},
+  {"name": "aggression", "label_key": "char_pp_13", "type": "text", "required": false, "max_length": 120, "datafield_name": "aggression"},
+  {"name": "trauma", "label_key": "char_pp_14", "type": "text", "required": false, "max_length": 120, "datafield_name": "trauma"},
+  {"name": "formative_personality", "label_key": "char_pp_15", "type": "text", "required": false, "max_length": 120, "datafield_name": "formative_personality"},
+  {"name": "socialization", "label_key": "char_pp_16", "type": "text", "required": false, "max_length": 120, "datafield_name": "socialization"},
+  {"name": "norms", "label_key": "char_pp_17", "type": "text", "required": false, "max_length": 120, "datafield_name": "norms"},
+  {"name": "taboos", "label_key": "char_pp_18", "type": "text", "required": false, "max_length": 120, "datafield_name": "taboos"},
+  {"name": "notes", "label_key": "char_pp_19", "type": "text", "required": false, "max_length": 500, "datafield_name": "notes"}
+],
+
+"sex_orientation": [
+  {"name": "sex_orientation_header", "label_key": "sexo_sx_01", "type": "header", "datafield_name": null},
+  {"name": "sex_orientation", "label_key": "sexo_sx_02", "type": "text", "required": true, "max_length": 80, "datafield_name": "sex_orientation"},
+  {"name": "short_description", "label_key": "sexo_sx_03", "type": "text", "required": false, "max_length": 200, "datafield_name": "short_description"}
+],
+
+"gender": [
+  {"name": "gender_header", "label_key": "gend_ge_01", "type": "header", "datafield_name": null},
+  {"name": "gender", "label_key": "gend_ge_02", "type": "text", "required": true, "max_length": 80, "datafield_name": "gender"},
+  {"name": "short_description", "label_key": "gend_ge_03", "type": "text", "required": false, "max_length": 200, "datafield_name": "short_description"}
+],
+
+"project_statistics": [
+  {"name": "words_count_days", "label_key": "stat_pr_01", "type": "display", "datafield_name": "project_words_count_days"},
+  {"name": "days_count", "label_key": "stat_pr_02", "type": "display", "datafield_name": "project_days_count"},
+  {"name": "chapters_count", "label_key": "stat_pr_03", "type": "display", "datafield_name": "project_chapters"},
+  {"name": "scenes_count", "label_key": "stat_pr_04", "type": "display", "datafield_name": "project_scenes"},
+  {"name": "storylines_count", "label_key": "stat_pr_05", "type": "display", "datafield_name": "project_storylines"},
+  {"name": "main_characters_count", "label_key": "stat_pr_06", "type": "display", "datafield_name": "project_main_characters"},
+  {"name": "supporting_characters_count", "label_key": "stat_pr_07", "type": "display", "datafield_name": "project_supporting_characters"},
+  {"name": "groups_characters_count", "label_key": "stat_pr_08", "type": "display", "datafield_name": "project_groups_characters"},
+  {"name": "locations_count", "label_key": "stat_pr_09", "type": "display", "datafield_name": "project_locatons"},
+  {"name": "objects_count", "label_key": "stat_pr_10", "type": "display", "datafield_name": "project_objects"}
+],
+
+"preferences": [
+  {
+    "name": "language",
+    "label_key": "PreferenceLanguage",
+    "type": "combobox",
+    "required": true,
+    "datafield_name": "preference_language",
+    "options": [
+      {"key": "de", "label_key": "PreferenceLanguageDe"},
+      {"key": "en", "label_key": "PreferenceLanguageEn"},
+      {"key": "es", "label_key": "PreferenceLanguageEs"},
+      {"key": "fr", "label_key": "PreferenceLanguageFr"}
+    ]
+  },
+  {
+    "name": "style",
+    "label_key": "PreferenceStyle",
+    "type": "combobox",
+    "required": true,
+    "datafield_name": "preference_style",
+    "options": [
+      {"key": "style_old", "label_key": "PreferenceStyleOld"},
+      {"key": "style_vintage", "label_key": "PreferenceStyleVintage"},
+      {"key": "style_modern", "label_key": "PreferenceStyleModern"},
+      {"key": "style_future", "label_key": "PreferenceStyleFuture"},
+      {"key": "style_minimal", "label_key": "PreferenceStyleMinimal"}
+    ]
+  },
+  {
+    "name": "theme",
+    "label_key": "PreferenceTheme",
+    "type": "combobox",
+    "required": true,
+    "datafield_name": "preference_theme",
+    "options": [
+      {"key": "theme_dark", "label_key": "PreferenceThemeDark"},
+      {"key": "theme_neutral", "label_key": "PreferenceThemeNeutral"},
+      {"key": "theme_light", "label_key": "PreferenceThemeLight"}
+    ]
+  }
+]
 }
 ```
 
@@ -1637,64 +1944,44 @@ def create_table(cursor):
 
 In diesem Abschnitt sind alle Programmcodes zusammengefasst.
 
-### 6.1 Hauptprogramm (csnova.py)
+### 6.1 Hauptprogramm (csNova.py)
 
 ```python
 import sys
-from datetime import datetime
+import json
 from PySide6.QtWidgets import QApplication
-from core.database import init_schema
-from config.settings import load_settings, save_settings
+from core.translator import Translator
+from config.dev import USER_SETTINGS_FILE
 from gui.start_window import StartWindow
+from core.logger import log_section, log_subsection, log_info, log_exception
 from gui.styles.form_styles import load_global_stylesheet
 
-# Import central logging functions
-from core.logger import setup_logging, log_header, log_section, log_subsection, log_info, log_error, log_exception
+def load_language():
+    """
+    Loads the language from user_settings.json, defaults to 'en' if not set.
+    """
+    try:
+        with open(USER_SETTINGS_FILE, "r", encoding="utf-8") as f:
+            settings = json.load(f)
+        return settings.get("language", "en")
+    except Exception as e:
+        log_exception("Error loading language from user_settings.json", e)
+        return "en"
 
 def main():
-    setup_logging()  # Only once at program start
-    log_header()
-    log_section("csnova.py")
+    log_section("csNova.py")
     log_subsection("main")
     try:
-        log_info("Initializing database schema.")
-        try:
-            init_schema()
-        except Exception as e:
-            log_exception("Error initializing database schema", e)
-
-        log_info("Loading settings.")
-        try:
-            settings = load_settings()
-        except Exception as e:
-            log_exception("Error loading settings", e)
-            settings = {"language": "en"}
-
-        language = settings.get("language", "en")
-        log_info(f"Language set to '{language}'.")
-
-        try:
-            app = QApplication(sys.argv)
-            app.setStyleSheet(load_global_stylesheet())  # Apply global stylesheet
-            window = StartWindow(default_language=language)
-            window.show()
-            log_info("StartWindow shown.")
-            app.exec()
-        except Exception as e:
-            log_exception("Error initializing GUI", e)
-
-        # Save updated language setting if changed
-        try:
-            if hasattr(window, "translator") and hasattr(window.translator, "lang"):
-                updated_settings = load_settings()
-                updated_settings["language"] = window.translator.lang
-                save_settings(updated_settings)
-                log_info(f"Language updated to '{window.translator.lang}' in settings.")
-        except Exception as e:
-            log_exception("Error saving updated language setting", e)
-
+        app = QApplication(sys.argv)
+        app.setStyleSheet(load_global_stylesheet())
+        language = load_language()
+        translator = Translator(language)
+        window = StartWindow(default_language=language)
+        window.show()
+        log_info("csNova main window shown.")
+        sys.exit(app.exec())
     except Exception as e:
-        log_exception("An error occurred in main()", e)
+        log_exception("Error in csNova main execution", e)
 
 if __name__ == "__main__":
     main()
@@ -1706,7 +1993,7 @@ if __name__ == "__main__":
 ```python
 import json
 import os
-from config.dev import SETTINGS_FILE
+from config.dev import USER_SETTINGS_FILE  # Use the unified variable
 
 def load_settings():
     # Import logging only inside the function to avoid circular import
@@ -1715,10 +2002,10 @@ def load_settings():
     except ImportError:
         log_info = lambda msg: None
     try:
-        if os.path.exists(SETTINGS_FILE):
-            with open(SETTINGS_FILE, "r", encoding="utf-8") as f:
+        if os.path.exists(USER_SETTINGS_FILE):
+            with open(USER_SETTINGS_FILE, "r", encoding="utf-8") as f:
                 settings = json.load(f)
-                log_info(f"Settings loaded from {SETTINGS_FILE}.")
+                log_info(f"Settings loaded from {USER_SETTINGS_FILE}.")
                 return settings
         return {"language": "en"}
     except Exception:
@@ -1732,9 +2019,9 @@ def save_settings(settings):
         log_exception = lambda msg, exc=None: None
     try:
         json_str = json.dumps(settings, indent=2)
-        log_info(f"Saving settings to {SETTINGS_FILE}.")
+        log_info(f"Saving settings to {USER_SETTINGS_FILE}.")
         log_info(f"JSON preview:\n{json_str}")
-        with open(SETTINGS_FILE, "w", encoding="utf-8") as f:
+        with open(USER_SETTINGS_FILE, "w", encoding="utf-8") as f:
             f.write(json_str)
         log_info("Settings saved successfully.")
     except Exception as e:
@@ -1765,7 +2052,7 @@ TABLES_DIR       = CORE_DIR / "tables"
 
 # Important files
 DB_PATH          = DATA_DIR / "csnova.db"
-SETTINGS_FILE    = CONFIG_DIR / "user_settings.json"
+USER_SETTINGS_FILE    = CONFIG_DIR / "user_settings.json"
 FORM_FIELDS_FILE = CORE_DIR / "config" / "form_fields.json"
 BG_IMAGE_PATH    = ASSETS_DIR / "media" / "csNova_background_start.png"
 
@@ -1773,6 +2060,7 @@ BG_IMAGE_PATH    = ASSETS_DIR / "media" / "csNova_background_start.png"
 for dir_path in [DATA_DIR, CONFIG_DIR, ASSETS_DIR, DOCS_DIR]:
     dir_path.mkdir(exist_ok=True)
 
+LOG_FILE = BASE_DIR / "csnova.log"
 LOG_FILE = BASE_DIR / "csnova.log"
 ```
 
@@ -1969,323 +2257,71 @@ from config.dev import TRANSLATIONS_DIR
 from core.logger import log_section, log_subsection, log_info, log_exception
 
 class Translator:
+    """
+    Translator class for dynamic UI translation.
+    Loads translations from translations.json and provides translation lookup for label_keys.
+    Dependencies:
+      - config.dev.TRANSLATIONS_DIR: Directory path for translations.json
+      - core.logger: Logging functions for error and info tracking
+    Used by:
+      - All GUI forms and windows to translate labels, buttons, help texts, etc.
+    """
+
     def __init__(self, lang="en"):
+        """
+        Initialize the Translator with a language code.
+        Loads translations for the selected language.
+        """
         log_section("translator.py")
         log_subsection("__init__")
         self.lang = lang
         self.translations = {}
-        self.key_map = {}
         self._load_translations()
-        self._init_key_map()
 
     def _load_translations(self):
+        """
+        Loads translations from translations.json for the current language.
+        The file contains a dict with language codes as keys.
+        Stores the translation dict for the selected language in self.translations.
+        Logs errors if loading fails.
+        """
         log_subsection("_load_translations")
         try:
             path = TRANSLATIONS_DIR / "translations.json"
             with open(path, "r", encoding="utf-8") as f:
                 data = json.load(f)
-            for entry in data:
-                if entry.get("ID") == self.lang:
-                    self.translations = entry
-                    break
-            else:
-                self.translations = {}
+            # Get the translation dict for the current language
+            self.translations = data.get(self.lang, {})
             log_info(f"Translations loaded for language '{self.lang}'.")
         except Exception as e:
             log_exception("Error loading translations", e)
             self.translations = {}
 
-    def _init_key_map(self):
-        # Explizites Mapping nach UI-Modul/Formular sortiert
-        self.key_map = {
-            # StartWindow
-            "start_btn_new_project": "StartBtnNewProject",
-            "start_btn_load_project": "StartBtnLoadProject",
-            "start_btn_settings": "StartBtnSettings",
-            "start_btn_help": "StartBtnHelp",
-            "start_btn_exit": "StartBtnExit",
-            "window_start_title": "WinStartTitle",
-
-            # ProjectWindow
-            "project": "Pro",
-            "project_btn": "ProBtn",
-            "project_btn_project": "ProBtnProject",
-            "project_btn_characters": "ProBtnCharacters",
-            "project_btn_storylines": "ProBtnStorylines",
-            "project_btn_chapters": "ProBtnChapters",
-            "project_btn_scenes": "ProBtnScenes",
-            "project_btn_objects": "ProBtnObjects",
-            "project_btn_locations": "ProBtnLocations",
-            "project_btn_exit": "ProBtnExit",
-            "project_btn_new": "ProBtnNew",
-            "project_btn_delete": "ProBtnDelete",
-            "project_btn_next": "ProBtnNext",
-            "project_btn_preview": "ProBtnPreview",
-            "project_btn_save": "ProBtnSave",
-            "project_days_until_deadline": "ProDetailDay",
-            "project_deadline": "ProDetailDeadline",
-            "project_start_date": "ProDetailStartDate",
-            "project_word_count": "ProDetailWordCount",
-            "project_target_word_count": "ProDetailTargetWordCount",
-            "project_title": "ProDetailTitle",
-            "project_detail": "ProDetail",
-            "project_detail_author": "ProDetailAuthor",
-            "project_detail_chapters": "ProDetailChapters",
-            "project_detail_cover_image": "ProDetailCoverImage",
-            "project_detail_form_label": "ProDetailFormLabel",
-            "project_detail_genre": "ProDetailGenre",
-            "project_detail_groups": "ProDetailGroups",
-            "project_detail_scenes": "ProDetailScenes",
-            "project_detail_objects": "ProDetailObjects",
-            "project_detail_locations": "ProDetailLocations",
-            "project_detail_storylines": "ProDetailStorylines",
-            "project_detail_main_char": "ProDetailMainChar",
-            "project_detail_support_char": "ProDetailSupportChar",
-            "project_detail_narrative_perspective": "ProDetailNarrativePerspective",
-            "project_detail_premise": "ProDetailPremise",
-            "project_detail_timeline": "ProDetailTimeline",
-            "project_detail_subtitle": "ProDetailSubtitle",
-            "project_detail_target_group": "ProDetailTargetGroup",
-            "project_window_title": "ProDetailWindowTitle",
-            "project_words_count_day": "ProDetailWordsCountDay",
-            "project_words_count_goal": "ProDetailWordsCountGoal",
-
-            # CharacterForm
-            "character": "Char",
-            "character_app": "CharApp",
-            "character_app_body_type": "CharAppBodyType",
-            "character_app_charisma": "CharAppCharisma",
-            "character_app_eye_color": "CharAppEyeColor",
-            "character_app_eye_shape": "CharAppEyeShape",
-            "character_app_face_shape": "CharAppFaceShape",
-            "character_app_hair": "CharAppHair",
-            "character_app_hair_color": "CharAppHairColor",
-            "character_app_height": "CharAppHeight",
-            "character_app_notes": "CharAppNotes",
-            "character_app_posture": "CharAppPosture",
-            "character_app_skin": "CharAppSkin",
-            "character_app_specials": "CharAppSpecials",
-            "character_app2": "CharApp2",
-            "character_app2_arms": "CharApp2Arms",
-            "character_app2_buttocks": "CharApp2Buttocks",
-            "character_app2_chest": "CharApp2Chest",
-            "character_app2_feet": "CharApp2Feet",
-            "character_app2_finger": "CharApp2Finger",
-            "character_app2_hands": "CharApp2Hands",
-            "character_app2_head": "CharApp2Head",
-            "character_app2_hip_waist": "CharApp2HipWaist",
-            "character_app2_legs": "CharApp2Legs",
-            "character_app2_notes": "CharApp2Notes",
-            "character_app2_shoulder": "CharApp2Shoulder",
-            "character_app2_toes": "CharApp2Toes",
-            "character_bas": "CharBas",
-            "character_bas_age": "CharBasAge",
-            "character_bas_born": "CharBasBorn",
-            "character_bas_firstname": "CharBasFirstname",
-            "character_bas_gender": "CharBasGender",
-            "character_bas_group": "CharBasGroup",
-            "character_bas_name": "CharBasName",
-            "character_bas_nickname": "CharBasNickname",
-            "character_bas_notes": "CharBasNotes",
-            "character_bas_role": "CharBasRole",
-            "character_bas_sex_orientation": "CharBasSexOrientation",
-            "character_bas_status": "CharBasStatus",
-            "character_btn": "CharBtn",
-            "character_btn_delete": "CharBtnDelete",
-            "character_btn_new": "CharBtnNew",
-            "character_btn_next": "CharBtnNext",
-            "character_btn_preview": "CharBtnPreview",
-            "character_btn_save": "CharBtnSave",
-            "character_edu": "CharEdu",
-            "character_edu_art_music": "CharEduArtMusic",
-            "character_edu_autodidactic": "CharEduAutodidactic",
-            "character_edu_job": "CharEduJob",
-            "character_edu_job_education": "CharEduJobEducation",
-            "character_edu_notes": "CharEduNotes",
-            "character_edu_school": "CharEduSchool",
-            "character_edu_sport": "CharEduSport",
-            "character_edu_technologie": "CharEduTechnologie",
-            "character_edu_university": "CharEduUniversity",
-            "character_groups": "CharGroups",
-            "character_groups_des": "CharGroupsDes",
-            "character_groups_title": "CharGroupsTitle",
-            "character_origin": "CharOrigin",
-            "character_origin_birthplace": "CharOriginBirthplace",
-            "character_origin_father": "CharOriginFather",
-            "character_origin_mother": "CharOriginMother",
-            "character_origin_notes": "CharOriginNotes",
-            "character_origin_reference_person": "CharOriginReferencePerson",
-            "character_origin_siblings": "CharOriginSiblings",
-            "character_person": "CharPerson",
-            "character_person_behavior": "CharPersonBehavior",
-            "character_person_beliefs": "CharPersonBeliefs",
-            "character_person_fears": "CharPersonFears",
-            "character_person_life_goals": "CharPersonLifeGoals",
-            "character_person_motivation": "CharPersonMotivation",
-            "character_person_neg": "CharPersonNeg",
-            "character_person_notes": "CharPersonNotes",
-            "character_person_pos": "CharPersonPos",
-            "character_person_strengths": "CharPersonStrengths",
-            "character_person_talente": "CharPersonTalente",
-            "character_person_weakness": "CharPersonWeakness",
-            "character_psy": "CharPsy",
-            "character_psy_aggression": "CharPsyAggression",
-            "character_psy_diagnostics": "CharPsyDiagnostics",
-            "character_psy_formative": "CharPsyFormative",
-            "character_psy_humor": "CharPsyHumor",
-            "character_psy_medication": "CharPsyMedication",
-            "character_psy_moral": "CharPsyMoral",
-            "character_psy_norms": "CharPsyNorms",
-            "character_psy_notes": "CharPsyNotes",
-            "character_psy_selfimage": "CharPsySelfimage",
-            "character_psy_socialization": "CharPsySocialization",
-            "character_psy_symptoms": "CharPsySymptoms",
-            "character_psy_taboos": "CharPsyTaboos",
-            "character_psy_temperament": "CharPsyTemperament",
-            "character_psy_therapy": "CharPsyTherapy",
-            "character_psy_trauma": "CharPsyTrauma",
-            "character_psy_values": "CharPsyValues",
-
-            # ChaptersForm
-            "chapter": "Chapter",
-            "chapter_btn_delete": "ChapterBtnDelete",
-            "chapter_btn_new": "ChapterBtnNew",
-            "chapter_btn_next": "ChapterBtnNext",
-            "chapter_btn_preview": "ChapterBtnPreview",
-            "chapter_btn_save": "ChapterBtnSave",
-            "chapter_number": "ChapterNumber",
-            "chapter_summary": "ChapterSummary",
-            "chapter_characters": "ChapterCharacters",
-            "chapter_locations": "ChapterLocations",
-            "chapter_notes": "ChapterNotes",
-            "chapter_objects": "ChapterObjects",
-            "chapter_premise": "ChapterPremise",
-            "chapter_scenes": "ChapterScenes",
-            "chapter_title": "ChapterTitle",
-
-            # ScenesForm
-            "scene": "Scene",
-            "scene_btn_delete": "SceneBtnDelete",
-            "scene_btn_new": "SceneBtnNew",
-            "scene_btn_next": "SceneBtnNext",
-            "scene_btn_preview": "SceneBtnPreview",
-            "scene_btn_save": "SceneBtnSave",
-            "scene_title": "SceneTitle",
-            "scene_number": "SceneNumber",
-            "scene_summary": "SceneSummary",
-            "scene_characters": "SceneCharacters",
-            "scene_conflict": "SceneConflict",
-            "scene_duration": "SceneDuration",
-            "scene_goal": "SceneGoal",
-            "scene_locations": "SceneLocations",
-            "scene_mood": "SceneMood",
-            "scene_notes": "SceneNotes",
-            "scene_objects": "SceneObjects",
-            "scene_outcome": "SceneOutcome",
-            "scene_premise": "ScenePremise",
-            "scene_type": "SceneType",
-
-            # ObjectsForm
-            "object": "Object",
-            "object_btn_delete": "ObjectBtnDelete",
-            "object_btn_new": "ObjectBtnNew",
-            "object_btn_next": "ObjectBtnNext",
-            "object_btn_preview": "ObjectBtnPreview",
-            "object_btn_save": "ObjectBtnSave",
-            "object_title": "ObjectTitle",
-            "object_description": "ObjectDescription",
-            "object_notes": "ObjectNotes",
-
-            # LocationsForm
-            "location": "Location",
-            "location_btn_delete": "LocationBtnDelete",
-            "location_btn_new": "LocationBtnNew",
-            "location_btn_next": "LocationBtnNext",
-            "location_btn_preview": "LocationBtnPreview",
-            "location_btn_save": "LocationBtnSave",
-            "location_title": "LocationTitle",
-            "location_description": "LocationDescription",
-            "location_notes": "LocationNotes",
-
-            # StorylinesForm
-            "storyline": "Storyline",
-            "storyline_btn_delete": "StorylineBtnDelete",
-            "storyline_btn_new": "StorylineBtnNew",
-            "storyline_btn_next": "StorylineBtnNext",
-            "storyline_btn_preview": "StorylineBtnPreview",
-            "storyline_btn_save": "StorylineBtnSave",
-            "storyline_chapters": "StorylineChapters",
-            "storyline_characters": "StorylineCharacters",
-            "storyline_description": "StorylineDescription",
-            "storyline_notes": "StorylineNotes",
-            "storyline_objects": "StorylineObjects",
-            "storyline_premise": "StorylinePremise",
-            "storyline_scenes": "StorylineScenes",
-            "storyline_timeline": "StorylineTimeline",
-            "storyline_title": "StorylineTitle",
-            "storyline_transformation": "StorylineTransformation",
-
-            # Preferences
-            "preference": "Preference",
-            "preference_save": "PreferenceActionSave",
-            "preference_cancel": "PreferenceActionCancel",
-            "preference_language": "PreferenceLanguage",
-            "preference_style": "PreferenceStyle",
-            "preference_theme": "PreferenceTheme",
-            "preference_theme_dark": "PreferenceThemeDark",
-            "preference_theme_neutral": "PreferenceThemeNeutral",
-            "preference_theme_light": "PreferenceThemeLight",
-            "preference_title": "WinPreferenceTitle",
-
-            # HelpPanel
-            "help": "Help",
-            "help_new_project": "HelpNewProject",
-            "help_chapters": "HelpChapters",
-            "help_chars": "HelpChars",
-            "help_editor_window": "HelpEditorWindow",
-            "help_help_window": "HelpHelpWindow",
-            "help_locations": "HelpLocations",
-            "help_objects": "HelpObjects",
-            "help_preference_window": "HelpPreferenceWindow",
-            "help_project": "HelpProject",
-            "help_project_window": "HelpProjectWindow",
-            "help_scenes": "HelpScenes",
-            "help_start_window": "HelpStartWindow",
-            "help_storylines": "HelpStorylines",
-
-            # Menu
-            "menu": "Menu",
-            "menu_file": "MenuFile",
-            "menu_edit": "MenuEdit",
-            "menu_help": "MenuHelp",
-            "menu_language": "MenuLanguage",
-            "menu_settings": "MenuSettings",
-
-            # Fenster-Titel
-            "win": "Win",
-            "win_editor_title": "WinEditorTitle",
-            "win_help_title": "WinHelpTitle",
-
-        }
-
     def set_language(self, lang_code):
+        """
+        Change the language and reload translations.
+        Used when the user switches the UI language.
+        """
         log_subsection("set_language")
         self.lang = lang_code
         self._load_translations()
-        self._init_key_map()
 
-    def tr(self, standard_key):
+    def tr(self, label_key):
+        """
+        Translate a label_key using the loaded translations.
+        If the key is not found, returns the key itself as fallback.
+        Used by all forms and windows to get the correct UI label.
+        """
         log_subsection("tr")
-        json_key = self.key_map.get(standard_key, standard_key)
-        return self.translations.get(json_key, standard_key)
+        return self.translations.get(label_key, label_key)
 
-    def form_label(self, standard_key):
-        log_subsection("form_label")
-        return self.tr(standard_key)
-
-    def help_text(self, standard_key):
+    def help_text(self, label_key):
+        """
+        Returns help text for a given label_key.
+        Internally uses tr(), so it works for any key in translations.json.
+        """
         log_subsection("help_text")
-        return self.tr(standard_key)
+        return self.tr(label_key)
 ```
 
 ### 6.5 GUI
@@ -2296,205 +2332,271 @@ Module für das GUI.
 ##### 6.5.1.1 base_style.py
 
 ```python
-# Central default parameters for stylesheets
-DEFAULTS = {
-    "border_radius": 8,
-    "font_size": 14,
-    "input_width": 400,
-    "border_radius": 8,
-    "font_size": 14,
-    "input_width": 400,
-    "border": "#b6c2e1",
-    "highlight": "#ff0",
-    "background": "#e7eaf3",
-    "foreground": "#1a1a1a",
-    "button_bg": "#e7eaf3",
-    "button_fg": "#1a1a1a",
-    "button_hover": "#d0d6e6",
-    "button_active": "#b6c2e1",
-    "input_bg": "#ffffff",
-    "input_fg": "#1a1a1a",
-}
-
 # Central CSS templates for all GUI components
+
 CSS_TEMPLATES = {
+    "window": """
+        QWidget, QDialog {{
+            background-color: {background};
+            color: {foreground};
+            font-family: {font_family};
+            font-size: {font_size}px;
+        }}
+    """,
+    "label": """
+        QLabel {{
+            color: {foreground};
+            font-size: {font_size}px;
+            background: transparent;
+        }}
+    """,
+    "groupbox": """
+        QGroupBox {{
+            border: 1px solid {border};
+            border-radius: {border_radius}px;
+            margin-top: 10px;
+            color: {foreground};
+            font-size: {font_size}px;
+        }}
+        QGroupBox::title {{
+            subcontrol-origin: margin;
+            left: 10px;
+            padding: 0 3px 0 3px;
+        }}
+    """,
     "button": """
-        QPushButton, QToolButton {{
+        QPushButton {{
             background-color: {button_bg};
             color: {button_fg};
-            font-size: {font_size}px;
-            border: 2px solid {border};
             border-radius: {border_radius}px;
+            border: 1px solid {border};
+            font-size: {font_size}px;
+            padding: 6px 18px;
         }}
-        QPushButton:hover, QToolButton:hover {{
+        QPushButton:hover {{
             background-color: {button_hover};
         }}
-        QPushButton:pressed, QToolButton:pressed {{
+        QPushButton:pressed {{
             background-color: {button_active};
         }}
-        QPushButton:disabled, QToolButton:disabled {{
-            background-color: {border};
-            color: {input_fg};
+        QPushButton:disabled {{
+            background-color: #cccccc;
+            color: #888888;
         }}
     """,
-
-    "active_button": """
-        QPushButton {{
-            background-color: {highlight};
-            color: {button_fg};
-            font-size: {font_size}px;
-            border: 2px solid {border};
-            border-radius: {border_radius}px;
-            font-weight: bold;
-        }}
-    """,
-
     "input": """
-        QLineEdit, QTextEdit, QPlainTextEdit, QComboBox, QSpinBox, QDateEdit {{
+        QLineEdit, QTextEdit, QPlainTextEdit, QSpinBox, QDoubleSpinBox, QDateEdit, QTimeEdit, QComboBox {{
             background-color: {input_bg};
             color: {input_fg};
+            border-radius: {border_radius}px;
             border: 1px solid {border};
-            border-radius: 4px;
             font-size: {font_size}px;
-            padding: 6px;
+            padding: 4px 8px;
             min-width: {input_width}px;
-            max-width: {input_width}px;
+        }}
+        QComboBox QAbstractItemView {{
+            background-color: {input_bg};
+            color: {input_fg};
+            selection-background-color: {highlight};
         }}
     """,
-
     "tab": """
         QTabWidget::pane {{
             border: 1px solid {border};
+            border-radius: {border_radius}px;
         }}
         QTabBar::tab {{
             background: {button_bg};
             color: {button_fg};
+            border: 1px solid {border};
             border-radius: {border_radius}px;
-            min-width: 120px;
-            padding: 8px;
+            padding: 6px 18px;
+            font-size: {font_size}px;
         }}
         QTabBar::tab:selected {{
-            background: {highlight};
-            color: {button_fg};
+            background: {button_active};
+            color: {highlight};
+        }}
+        QTabBar::tab:hover {{
+            background: {button_hover};
         }}
     """,
-
-    "listview": """
+    "list": """
         QListView, QTreeView {{
-            background-color: {input_bg};
+            background: {input_bg};
             color: {input_fg};
             border: 1px solid {border};
-            selection-background-color: {highlight};
-            selection-color: {button_fg};
+            border-radius: {border_radius}px;
+            font-size: {font_size}px;
+        }}
+        QListView::item:selected, QTreeView::item:selected {{
+            background: {highlight};
+            color: {foreground};
         }}
     """,
-
-    "label": """
-        QLabel, QGroupBox {{
-            color: {foreground};
+    "table": """
+        QTableView {{
+            background: {input_bg};
+            color: {input_fg};
+            border: 1px solid {border};
+            border-radius: {border_radius}px;
+            font-size: {font_size}px;
+            gridline-color: {border};
+        }}
+        QHeaderView::section {{
+            background: {button_bg};
+            color: {button_fg};
+            border: 1px solid {border};
             font-size: {font_size}px;
         }}
     """,
-
-    "tooltip": """
-        QToolTip {{
-            background-color: {highlight};
-            color: {background};
+    "progress": """
+        QProgressBar {{
             border: 1px solid {border};
+            border-radius: {border_radius}px;
+            text-align: center;
+            background: {input_bg};
+            color: {input_fg};
+            font-size: {font_size}px;
+        }}
+        QProgressBar::chunk {{
+            background-color: {highlight};
+            width: 20px;
         }}
     """,
-
+    "slider": """
+        QSlider::groove:horizontal {{
+            border: 1px solid {border};
+            height: 8px;
+            background: {input_bg};
+            border-radius: 4px;
+        }}
+        QSlider::handle:horizontal {{
+            background: {highlight};
+            border: 1px solid {border};
+            width: 18px;
+            margin: -5px 0;
+            border-radius: 9px;
+        }}
+    """,
     "splitter": """
         QSplitter::handle {{
             background: {border};
-            border: 1px solid {highlight};
-            width: 8px;
-        }}
-        QSplitter::handle:hover {{
-            background: {highlight};
         }}
     """,
-
     "panel": """
         QWidget#NavigationPanel, QWidget#HelpPanel, QWidget#CenterPanel {{
-            background-color: {background};
-            border: 1px solid {border};
+            background: {background};
+            color: {foreground};
             border-radius: {border_radius}px;
         }}
     """,
-
     "toolbar": """
         QToolBar {{
-            background: {background};
+            background: {button_bg};
             border-bottom: 1px solid {border};
-            min-height: 44px;
-            padding-top: 6px;
-            padding-bottom: 6px;
-        }}
-        QToolButton {{
-            min-width: 36px;
-            min-height: 36px;
-            padding: 6px 12px;
-            font-size: {font_size}px;
-            qproperty-toolButtonStyle: ToolButtonTextBesideIcon;
-        }}
-        QToolButton:hover {{
-            background-color: {button_hover};
-        }}
-        QToolButton:pressed {{
-            background-color: {button_active};
+            spacing: 6px;
         }}
     """,
-
     "form": """
-        QLineEdit, QDateEdit, QSpinBox {{
-            padding: 6px;
-            border: 1px solid {border};
-            border-radius: 4px;
-            background-color: {input_bg};
-            color: {input_fg};
+        QFormLayout QLabel {{
+            color: {foreground};
             font-size: {font_size}px;
-            font-family: 'Segoe UI', sans-serif;
-            min-width: {input_width}px;
-            max-width: {input_width}px;
         }}
-        QLabel {{
+        QFormLayout QLineEdit, QFormLayout QDateEdit, QFormLayout QSpinBox {{
+            background: {input_bg};
+            color: {input_fg};
+            border-radius: {border_radius}px;
+            border: 1px solid {border};
             font-size: {font_size}px;
+        }}
+    """,
+    "tooltip": """
+        QToolTip {{
+            background: {button_bg};
+            color: {button_fg};
+            border: 1px solid {border};
+            font-size: {font_size}px;
+        }}
+    """,
+    "menu": """
+        QMenu {{
+            background: {button_bg};
+            color: {button_fg};
+            border: 1px solid {border};
+            font-size: {font_size}px;
+        }}
+        QMenu::item:selected {{
+            background: {highlight};
             color: {foreground};
         }}
-        QFormLayout {{
-            margin: 12px;
+    """,
+    "contextmenu": """
+        QMenu {{
+            background: {button_bg};
+            color: {button_fg};
+            border: 1px solid {border};
+            font-size: {font_size}px;
+        }}
+        QMenu::item:selected {{
+            background: {highlight};
+            color: {foreground};
         }}
     """,
+    "error": """
+        QLabel#error, QLineEdit[error="true"], QTextEdit[error="true"] {{
+            color: {error};
+            border: 1px solid {error};
+            background: #fff0f0;
+        }}
+    """
 }
 
-def render_css(template_name, style_dict, defaults=DEFAULTS):
+def extract_params(theme):
     """
-    Renders the requested CSS template with style parameters and defaults.
+    Converts the nested theme dict from themes_style.py into flat parameters for CSS rendering.
+    Assumes all relevant values are set in the theme.
     """
-    params = {**defaults, **style_dict}
-    # Map template parameters for compatibility with all style dicts
-    params.update({
-        "button_bg": style_dict.get("button", {}).get("background", style_dict.get("button_bg", "#e7eaf3")),
-        "button_fg": style_dict.get("button", {}).get("foreground", style_dict.get("button_fg", "#1a1a1a")),
-        "button_hover": style_dict.get("button", {}).get("hover", style_dict.get("button_hover", "#d0d6e6")),
-        "button_active": style_dict.get("button", {}).get("active", style_dict.get("button_active", "#b6c2e1")),
-        "input_bg": style_dict.get("input", {}).get("background", style_dict.get("input_bg", "#ffffff")),
-        "input_fg": style_dict.get("input", {}).get("foreground", style_dict.get("input_fg", "#1a1a1a")),
-    })
-    return CSS_TEMPLATES[template_name].format(**params)
+    params = {}
+    params.update({k: v for k, v in theme.items() if not isinstance(v, dict)})
+    # Button
+    button = theme.get("button", {})
+    params["button_bg"] = button.get("background")
+    params["button_fg"] = button.get("foreground")
+    params["button_hover"] = button.get("hover")
+    params["button_active"] = button.get("active")
+    # Input
+    input_ = theme.get("input", {})
+    params["input_bg"] = input_.get("background")
+    params["input_fg"] = input_.get("foreground")
+    return params
+
+def render_css(theme):
+    """
+    Renders the full CSS stylesheet for all GUI components using the given theme dict.
+    """
+    params = extract_params(theme)
+    css = ""
+    for key, template in CSS_TEMPLATES.items():
+        css += template.format(**params)
+    return css
 ```
 
 ##### 6.5.1.2 themes_style.py
 
 ```python
-# Central theme definitions for all styles and modes
-
 THEMES = {
     "oldschool": {
         "light": {
             "background": "#ffffff",
             "foreground": "#222326",
+            "border": "#cfcfcf",
+            "highlight": "#0078d7",
+            "error": "#e81123",
+            "font_size": 14,
+            "font_family": "Segoe UI, Arial, sans-serif",
+            "border_radius": 8,
+            "input_width": 400,
             "button": {
                 "background": "#f3f3f3",
                 "foreground": "#222326",
@@ -2504,31 +2606,39 @@ THEMES = {
             "input": {
                 "background": "#f9f9f9",
                 "foreground": "#222326"
-            },
-            "border": "#cfcfcf",
-            "highlight": "#0078d7",
-            "error": "#e81123"
+            }
         },
         "middle": {
-            "background": "#f3f3f3",
+            "background": "#b0b0b0",
             "foreground": "#222326",
+            "border": "#888888",
+            "highlight": "#0078d7",
+            "error": "#e81123",
+            "font_size": 14,
+            "font_family": "Segoe UI, Arial, sans-serif",
+            "border_radius": 8,
+            "input_width": 400,
             "button": {
-                "background": "#e5e5e5",
+                "background": "#a0a0a0",
                 "foreground": "#222326",
-                "hover": "#d0d0d0",
-                "active": "#bcbcbc"
+                "hover": "#888888",
+                "active": "#707070"
             },
             "input": {
-                "background": "#ededed",
+                "background": "#bcbcbc",
                 "foreground": "#222326"
-            },
-            "border": "#bcbcbc",
-            "highlight": "#0078d7",
-            "error": "#e81123"
+            }
         },
         "dark": {
             "background": "#1e1e1e",
             "foreground": "#f3f3f3",
+            "border": "#3c3c3c",
+            "highlight": "#0078d7",
+            "error": "#e81123",
+            "font_size": 14,
+            "font_family": "Segoe UI, Arial, sans-serif",
+            "border_radius": 8,
+            "input_width": 400,
             "button": {
                 "background": "#2d2d2d",
                 "foreground": "#f3f3f3",
@@ -2538,16 +2648,20 @@ THEMES = {
             "input": {
                 "background": "#252526",
                 "foreground": "#f3f3f3"
-            },
-            "border": "#3c3c3c",
-            "highlight": "#0078d7",
-            "error": "#e81123"
+            }
         }
     },
     "vintage": {
         "light": {
             "background": "#f5eee6",
             "foreground": "#5a4632",
+            "border": "#cbb393",
+            "highlight": "#b48a78",
+            "error": "#a94442",
+            "font_size": 15,
+            "font_family": "Georgia, serif",
+            "border_radius": 10,
+            "input_width": 420,
             "button": {
                 "background": "#e2d3c3",
                 "foreground": "#5a4632",
@@ -2557,31 +2671,39 @@ THEMES = {
             "input": {
                 "background": "#f8f3ed",
                 "foreground": "#5a4632"
-            },
-            "border": "#cbb393",
-            "highlight": "#b48a78",
-            "error": "#a94442"
+            }
         },
         "middle": {
-            "background": "#e9e2d3",
+            "background": "#b8ae9c",
             "foreground": "#5a4632",
+            "border": "#8c7c5a",
+            "highlight": "#a67c52",
+            "error": "#a94442",
+            "font_size": 15,
+            "font_family": "Georgia, serif",
+            "border_radius": 10,
+            "input_width": 420,
             "button": {
-                "background": "#d6c3a3",
+                "background": "#a89c7c",
                 "foreground": "#5a4632",
-                "hover": "#cbb393",
-                "active": "#b48a78"
+                "hover": "#8c7c5a",
+                "active": "#6c5a32"
             },
             "input": {
-                "background": "#ede6d6",
+                "background": "#cfc6b3",
                 "foreground": "#5a4632"
-            },
-            "border": "#b48a78",
-            "highlight": "#a67c52",
-            "error": "#a94442"
+            }
         },
         "dark": {
             "background": "#3b2c23",
             "foreground": "#e2d3c3",
+            "border": "#7c624a",
+            "highlight": "#b48a78",
+            "error": "#a94442",
+            "font_size": 15,
+            "font_family": "Georgia, serif",
+            "border_radius": 10,
+            "input_width": 420,
             "button": {
                 "background": "#5a4632",
                 "foreground": "#e2d3c3",
@@ -2591,16 +2713,20 @@ THEMES = {
             "input": {
                 "background": "#4e3b2a",
                 "foreground": "#e2d3c3"
-            },
-            "border": "#7c624a",
-            "highlight": "#b48a78",
-            "error": "#a94442"
+            }
         }
     },
     "modern": {
         "light": {
             "background": "#f3f6fd",
             "foreground": "#1a1a1a",
+            "border": "#cfd8dc",
+            "highlight": "#2563eb",
+            "error": "#ef4444",
+            "font_size": 14,
+            "font_family": "Segoe UI, Arial, sans-serif",
+            "border_radius": 8,
+            "input_width": 400,
             "button": {
                 "background": "#e7eaf3",
                 "foreground": "#1a1a1a",
@@ -2610,31 +2736,39 @@ THEMES = {
             "input": {
                 "background": "#ffffff",
                 "foreground": "#1a1a1a"
-            },
-            "border": "#cfd8dc",
-            "highlight": "#2563eb",
-            "error": "#ef4444"
+            }
         },
         "middle": {
-            "background": "#e0e5ef",
+            "background": "#b0b5bb",
             "foreground": "#23272f",
+            "border": "#888d92",
+            "highlight": "#2563eb",
+            "error": "#ef4444",
+            "font_size": 14,
+            "font_family": "Segoe UI, Arial, sans-serif",
+            "border_radius": 8,
+            "input_width": 400,
             "button": {
-                "background": "#cfd8dc",
+                "background": "#a0a5ab",
                 "foreground": "#23272f",
-                "hover": "#b6c2e1",
-                "active": "#2563eb"
+                "hover": "#888d92",
+                "active": "#70757a"
             },
             "input": {
-                "background": "#f3f6fd",
+                "background": "#bfc4ca",
                 "foreground": "#23272f"
-            },
-            "border": "#b6c2e1",
-            "highlight": "#2563eb",
-            "error": "#ef4444"
+            }
         },
         "dark": {
             "background": "#181a20",
             "foreground": "#e7eaf3",
+            "border": "#2563eb",
+            "highlight": "#60a5fa",
+            "error": "#ef4444",
+            "font_size": 14,
+            "font_family": "Segoe UI, Arial, sans-serif",
+            "border_radius": 8,
+            "input_width": 400,
             "button": {
                 "background": "#23272f",
                 "foreground": "#e7eaf3",
@@ -2644,16 +2778,20 @@ THEMES = {
             "input": {
                 "background": "#23272f",
                 "foreground": "#e7eaf3"
-            },
-            "border": "#2563eb",
-            "highlight": "#60a5fa",
-            "error": "#ef4444"
+            }
         }
     },
     "future": {
         "light": {
             "background": "rgba(245, 250, 255, 0.85)",
             "foreground": "#22223b",
+            "border": "#a3bffa",
+            "highlight": "#7f9acb",
+            "error": "#ff6b6b",
+            "font_size": 15,
+            "font_family": "Montserrat, Arial, sans-serif",
+            "border_radius": 12,
+            "input_width": 420,
             "button": {
                 "background": "rgba(230, 240, 255, 0.95)",
                 "foreground": "#22223b",
@@ -2663,31 +2801,39 @@ THEMES = {
             "input": {
                 "background": "rgba(255,255,255,0.95)",
                 "foreground": "#22223b"
-            },
-            "border": "#a3bffa",
-            "highlight": "#7f9acb",
-            "error": "#ff6b6b"
+            }
         },
         "middle": {
-            "background": "rgba(210, 220, 235, 0.90)",
+            "background": "rgba(160, 170, 190, 0.90)",
             "foreground": "#22223b",
+            "border": "#5a6a8b",
+            "highlight": "#a3bffa",
+            "error": "#ff6b6b",
+            "font_size": 15,
+            "font_family": "Montserrat, Arial, sans-serif",
+            "border_radius": 12,
+            "input_width": 420,
             "button": {
-                "background": "#b8c6db",
+                "background": "#a3bffa",
                 "foreground": "#22223b",
                 "hover": "#7f9acb",
-                "active": "#a3bffa"
+                "active": "#5a6a8b"
             },
             "input": {
-                "background": "rgba(240,245,250,0.95)",
+                "background": "rgba(180,190,210,0.95)",
                 "foreground": "#22223b"
-            },
-            "border": "#7f9acb",
-            "highlight": "#a3bffa",
-            "error": "#ff6b6b"
+            }
         },
         "dark": {
             "background": "rgba(30, 34, 45, 0.92)",
             "foreground": "#e0eaff",
+            "border": "#7f9acb",
+            "highlight": "#a3bffa",
+            "error": "#ff6b6b",
+            "font_size": 15,
+            "font_family": "Montserrat, Arial, sans-serif",
+            "border_radius": 12,
+            "input_width": 420,
             "button": {
                 "background": "#22223b",
                 "foreground": "#e0eaff",
@@ -2697,17 +2843,20 @@ THEMES = {
             "input": {
                 "background": "rgba(40,44,54,0.95)",
                 "foreground": "#e0eaff"
-            },
-            "border": "#7f9acb",
-            "highlight": "#a3bffa",
-            "error": "#ff6b6b"
+            }
         }
     },
-
     "minimal": {
         "light": {
             "background": "#ffffff",
             "foreground": "#222222",
+            "border": "#cccccc",
+            "highlight": "#1976d2",
+            "error": "#d32f2f",
+            "font_size": 13,
+            "font_family": "Arial, sans-serif",
+            "border_radius": 4,
+            "input_width": 380,
             "button": {
                 "background": "#f7f7f7",
                 "foreground": "#222222",
@@ -2717,31 +2866,39 @@ THEMES = {
             "input": {
                 "background": "#fafafa",
                 "foreground": "#222222"
-            },
-            "border": "#cccccc",
-            "highlight": "#1976d2",
-            "error": "#d32f2f"
+            }
         },
         "middle": {
-            "background": "#ededed",
+            "background": "#bdbdbd",
             "foreground": "#222222",
+            "border": "#888888",
+            "highlight": "#1976d2",
+            "error": "#d32f2f",
+            "font_size": 13,
+            "font_family": "Arial, sans-serif",
+            "border_radius": 4,
+            "input_width": 380,
             "button": {
-                "background": "#e0e0e0",
+                "background": "#b0b0b0",
                 "foreground": "#222222",
-                "hover": "#bdbdbd",
+                "hover": "#888888",
                 "active": "#1976d2"
             },
             "input": {
-                "background": "#f5f5f5",
+                "background": "#cfcfcf",
                 "foreground": "#222222"
-            },
-            "border": "#bdbdbd",
-            "highlight": "#1976d2",
-            "error": "#d32f2f"
+            }
         },
         "dark": {
             "background": "#222222",
             "foreground": "#f7f7f7",
+            "border": "#424242",
+            "highlight": "#1976d2",
+            "error": "#d32f2f",
+            "font_size": 13,
+            "font_family": "Arial, sans-serif",
+            "border_radius": 4,
+            "input_width": 380,
             "button": {
                 "background": "#333333",
                 "foreground": "#f7f7f7",
@@ -2751,10 +2908,7 @@ THEMES = {
             "input": {
                 "background": "#2c2c2c",
                 "foreground": "#f7f7f7"
-            },
-            "border": "#424242",
-            "highlight": "#1976d2",
-            "error": "#d32f2f"
+            }
         }
     }
 }
@@ -2773,27 +2927,28 @@ def get_theme(style, mode):
 ```python
 from config.settings import load_settings
 from gui.styles.themes_style import get_theme
+from gui.styles.base_style import extract_params
 
-def get_current_style():
+def get_current_style(style_code=None, mode_code=None):
     """
-    Loads the current style and mode from settings and returns the theme dictionary.
+    Loads the current style and mode from settings and returns a flat theme dictionary for CSS rendering.
     Falls back to 'modern' and 'light' if not found.
     """
     settings = load_settings()
-    style_code = settings.get("style", "modern")
-    mode_code = settings.get("mode", "light")
-    return get_theme(style_code, mode_code)
+    style = style_code if style_code else settings.get("style", "modern")
+    mode = mode_code if mode_code else settings.get("mode", "light")
+    theme = get_theme(style, mode)
+    return extract_params(theme)
 ```
 
 ##### 6.5.1.4 form_styles.py
 
 ```python
-from config.settings import load_settings
-from gui.styles.base_style import render_css, DEFAULTS
+from gui.styles.base_style import render_css, CSS_TEMPLATES
 from gui.styles.registry_style import get_current_style
 from core.logger import log_section, log_subsection, log_info, log_exception
 
-def load_global_stylesheet(style_code=None, mode_code=None, font_size=14):
+def load_global_stylesheet(style_code=None, mode_code=None):
     """
     Loads the global stylesheet for the application using the given style and mode.
     If style_code or mode_code are not provided, uses current settings.
@@ -2802,42 +2957,17 @@ def load_global_stylesheet(style_code=None, mode_code=None, font_size=14):
     log_subsection("load_global_stylesheet")
     try:
         style = get_current_style(style_code, mode_code)
-        style["font_size"] = font_size
-        style["border_radius"] = DEFAULTS["border_radius"]
-        style["input_width"] = DEFAULTS["input_width"]
-
-        # Combine all relevant templates
-        button_css = render_css("button", style)
-        input_css = render_css("input", style)
-        tab_css = render_css("tab", style)
-        listview_css = render_css("listview", style)
-        label_css = render_css("label", style)
-        tooltip_css = render_css("tooltip", style)
-        splitter_css = render_css("splitter", style)
-        panel_css = render_css("panel", style)
-        toolbar_css = render_css("toolbar", style)
-        form_css = render_css("form", style)
-
-        # Concatenate all CSS parts
-        stylesheet = (
-            button_css +
-            input_css +
-            tab_css +
-            listview_css +
-            label_css +
-            tooltip_css +
-            splitter_css +
-            panel_css +
-            toolbar_css +
-            form_css
-        )
+        # Render all CSS templates at once
+        stylesheet = ""
+        for key in CSS_TEMPLATES:
+            stylesheet += CSS_TEMPLATES[key].format(**style)
         log_info("Global stylesheet loaded.")
         return stylesheet
     except Exception as e:
         log_exception("Error loading global stylesheet", e)
         return ""
 
-def load_button_style(style_code=None, mode_code=None, font_size=14):
+def load_button_style(style_code=None, mode_code=None):
     """
     Loads the stylesheet for buttons and toolbars.
     """
@@ -2845,14 +2975,14 @@ def load_button_style(style_code=None, mode_code=None, font_size=14):
     log_subsection("load_button_style")
     try:
         style = get_current_style(style_code, mode_code)
-        style["font_size"] = font_size
-        style["border_radius"] = DEFAULTS["border_radius"]
-        return render_css("button", style) + render_css("toolbar", style)
+        css = CSS_TEMPLATES["button"].format(**style)
+        css += CSS_TEMPLATES["toolbar"].format(**style)
+        return css
     except Exception as e:
         log_exception("Error loading button stylesheet", e)
         return ""
 
-def load_active_button_style(style_code=None, mode_code=None, font_size=16):
+def load_active_button_style(style_code=None, mode_code=None):
     """
     Loads the stylesheet for active buttons.
     """
@@ -2860,14 +2990,15 @@ def load_active_button_style(style_code=None, mode_code=None, font_size=16):
     log_subsection("load_active_button_style")
     try:
         style = get_current_style(style_code, mode_code)
-        style["font_size"] = font_size
-        style["border_radius"] = DEFAULTS["border_radius"]
-        return render_css("active_button", style)
+        if "active_button" in CSS_TEMPLATES:
+            return CSS_TEMPLATES["active_button"].format(**style)
+        else:
+            return CSS_TEMPLATES["button"].format(**style)
     except Exception as e:
         log_exception("Error loading active button stylesheet", e)
         return ""
 
-def load_form_style(style_code=None, mode_code=None, input_font_size=14, label_font_size=14, input_width=400):
+def load_form_style(style_code=None, mode_code=None):
     """
     Loads the stylesheet for forms and input fields.
     """
@@ -2875,10 +3006,7 @@ def load_form_style(style_code=None, mode_code=None, input_font_size=14, label_f
     log_subsection("load_form_style")
     try:
         style = get_current_style(style_code, mode_code)
-        style["font_size"] = input_font_size
-        style["border_radius"] = DEFAULTS["border_radius"]
-        style["input_width"] = input_width
-        return render_css("form", style)
+        return CSS_TEMPLATES["form"].format(**style)
     except Exception as e:
         log_exception("Error loading form stylesheet", e)
         return ""
@@ -2894,6 +3022,11 @@ from gui.styles.form_styles import load_button_style, load_active_button_style
 from core.logger import log_section, log_subsection, log_info, log_exception
 
 class NavigationPanel(QWidget):
+    """
+    NavigationPanel: displays navigation buttons for the main sections.
+    All button labels are set dynamically via translator.py.
+    After language change, call update_translations() to refresh all button texts.
+    """
     def __init__(self, keys, translator, parent=None, callbacks=None):
         log_section("navigation_panel.py")
         log_subsection("__init__")
@@ -2936,41 +3069,58 @@ class NavigationPanel(QWidget):
             log_info(f"Navigation button '{key}' clicked.")
         except Exception as e:
             log_exception(f"Error in navigation click handler for '{key}'", e)
+
+    def update_translations(self):
+        """
+        Update all button labels after language change.
+        """
+        button_style = load_button_style()
+        button_style_active = load_active_button_style()
+        for key, btn in self.buttons.items():
+            btn.setText(self.translator.tr(key))
+            if key == self.active_key:
+                btn.setStyleSheet(button_style_active)
+            else:
+                btn.setStyleSheet(button_style)
 ```
 
 ##### 6.5.2.2 help_panel.py
 
 ```python
 from PySide6.QtWidgets import QWidget, QVBoxLayout, QLabel
-from gui.styles.form_styles import load_global_stylesheet
 from core.logger import log_section, log_subsection, log_info, log_exception
 
 class HelpPanel(QWidget):
-    def __init__(self, help_text="", parent=None):
+    """
+    HelpPanel: displays help texts and tips.
+    All labels and texts are set dynamically via translator.py.
+    After language change, call update_translations() to refresh all texts.
+    """
+    def __init__(self, translator, parent=None):
         log_section("help_panel.py")
         log_subsection("__init__")
         try:
             super().__init__(parent)
-            self.setObjectName("HelpPanel")
-            self.setStyleSheet(load_global_stylesheet())
-            self.layout = QVBoxLayout()
-            # Sicherstellen, dass help_text ein String ist
-            self.help_label = QLabel(str(help_text), self)
-            self.help_label.setWordWrap(True)
+            self.translator = translator
+            self.layout = QVBoxLayout(self)
+            self.help_label = QLabel(self.translator.tr("help_panel_main"), self)
             self.layout.addWidget(self.help_label)
             self.setLayout(self.layout)
             log_info("HelpPanel initialized successfully.")
         except Exception as e:
             log_exception("Error initializing HelpPanel", e)
 
+    def update_translations(self):
+        """
+        Update all help texts after language change.
+        """
+        self.help_label.setText(self.translator.tr("help_panel_main"))
+
     def set_help_text(self, text):
-        log_subsection("set_help_text")
-        try:
-            # Sicherstellen, dass text ein String ist
-            self.help_label.setText(str(text))
-            log_info("HelpPanel help text updated.")
-        except Exception as e:
-            log_exception("Error updating help text in HelpPanel", e)
+        """
+        Set the help text in the label.
+        """
+        self.help_label.setText(text)
 ```
 
 ##### 6.5.2.3 center_panel.py
@@ -2982,6 +3132,11 @@ from gui.styles.form_styles import load_global_stylesheet
 from core.logger import log_section, log_subsection, log_info, log_exception
 
 class CenterPanel(QWidget):
+    """
+    CenterPanel: combines navigation, content, and help panels.
+    All labels and buttons in navigation/help/content are set dynamically via translator.py.
+    After language change, call update_translations() on all child panels.
+    """
     def __init__(self, navigation_panel, content_widget, help_panel, parent=None):
         log_section("center_panel.py")
         log_subsection("__init__")
@@ -2990,10 +3145,14 @@ class CenterPanel(QWidget):
             self.setObjectName("CenterPanel")
             self.setStyleSheet(load_global_stylesheet())
 
+            self.navigation_panel = navigation_panel
+            self.content_widget = content_widget
+            self.help_panel = help_panel
+
             self.splitter = QSplitter(self)
-            self.splitter.addWidget(navigation_panel)
-            self.splitter.addWidget(content_widget)
-            self.splitter.addWidget(help_panel)
+            self.splitter.addWidget(self.navigation_panel)
+            self.splitter.addWidget(self.content_widget)
+            self.splitter.addWidget(self.help_panel)
             self.splitter.setSizes([200, 800, 200])  # Adjust as needed
 
             layout = QHBoxLayout(self)
@@ -3002,6 +3161,17 @@ class CenterPanel(QWidget):
             log_info("CenterPanel initialized successfully.")
         except Exception as e:
             log_exception("Error initializing CenterPanel", e)
+
+    def update_translations(self):
+        """
+        Update all labels after language change.
+        """
+        if hasattr(self.navigation_panel, "update_translations"):
+            self.navigation_panel.update_translations()
+        if hasattr(self.content_widget, "update_translations"):
+            self.content_widget.update_translations()
+        if hasattr(self.help_panel, "update_translations"):
+            self.help_panel.update_translations()
 ```
 
 #### 6.5.3 Widgets
@@ -3009,62 +3179,65 @@ class CenterPanel(QWidget):
 ##### 6.5.3.1 form_toolbar.py
 
 ```python
-from PySide6.QtWidgets import QWidget, QToolBar, QHBoxLayout, QWidget
-from PySide6.QtGui import QAction, QIcon
-from PySide6.QtCore import QSize
-from core.logger import log_section, log_subsection, log_info, log_exception
+from PySide6.QtWidgets import QWidget, QHBoxLayout, QPushButton
 from gui.styles.form_styles import load_button_style
+from core.logger import log_section, log_subsection, log_info, log_exception
 
 class FormToolbar(QWidget):
+    """
+    Centralized toolbar widget for forms.
+    Applies global button styles from preferences.
+    All button labels are translated via translator.py.
+    No local styles or translations are used.
+    """
+
     def __init__(self, translator, form_prefix, parent=None):
+        """
+        Initializes the toolbar with translated buttons for form actions.
+        """
         log_section("form_toolbar.py")
         log_subsection("__init__")
         try:
             super().__init__(parent)
-            self.toolbar = QToolBar(self)
-            self.toolbar.setStyleSheet(load_button_style())
-            self.toolbar.setIconSize(QSize(32, 32))
-
-            # Spacer for left margin
-            left_spacer = QWidget()
-            left_spacer.setFixedWidth(10)
-            self.toolbar.addWidget(left_spacer)
-
             self.translator = translator
-
-            # Standard-Keys für die Aktionen gemäß translator.py
-            self.new_action = QAction(self.translator.tr(f"{form_prefix}_btn_new"), self)
-            self.delete_action = QAction(self.translator.tr(f"{form_prefix}_btn_delete"), self)
-            self.prev_action = QAction(self.translator.tr(f"{form_prefix}_btn_preview"), self)
-            self.next_action = QAction(self.translator.tr(f"{form_prefix}_btn_next"), self)
-            self.save_action = QAction(self.translator.tr(f"{form_prefix}_btn_save"), self)
-
-            # Add actions and spacing between buttons
-            actions = [
-                self.new_action,
-                self.delete_action,
-                self.prev_action,
-                self.next_action,
-                self.save_action
-            ]
-            for i, action in enumerate(actions):
-                self.toolbar.addAction(action)
-                if i < len(actions) - 1:
-                    spacer = QWidget()
-                    spacer.setFixedWidth(8)  # Space between buttons
-                    self.toolbar.addWidget(spacer)
+            self.setStyleSheet(load_button_style())
 
             layout = QHBoxLayout(self)
-            layout.addWidget(self.toolbar)
+            layout.setContentsMargins(0, 0, 0, 0)
+            layout.setSpacing(10)
+
+            # Define button keys for common actions
+            self.button_keys = [
+                "BtnNew", "BtnSave", "BtnDelete", "BtnPreview", "BtnNext"
+            ]
+            self.buttons = {}
+
+            for key in self.button_keys:
+                label_key = f"{form_prefix}{key}"
+                btn = QPushButton(self.translator.tr(label_key), self)
+                btn.setObjectName(label_key)
+                self.buttons[key] = btn
+                layout.addWidget(btn)
+
+            layout.addStretch()
             self.setLayout(layout)
             log_info("FormToolbar initialized successfully.")
         except Exception as e:
             log_exception("Error initializing FormToolbar", e)
+
+    def update_translations(self):
+        """
+        Updates all button texts after a language change.
+        """
+        for key, btn in self.buttons.items():
+            label_key = btn.objectName()
+            btn.setText(self.translator.tr(label_key))
 ```
 
 ##### 6.5.3.2 base_form_widget.py
 
 ```python
+import json
 from PySide6.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QLabel, QFormLayout,
     QLineEdit, QSpinBox, QDateEdit, QComboBox
@@ -3072,9 +3245,20 @@ from PySide6.QtWidgets import (
 from gui.widgets.form_toolbar import FormToolbar
 from gui.styles.form_styles import load_form_style
 from core.logger import log_section, log_subsection, log_info, log_exception
+from config.dev import FORM_FIELDS_FILE
 
 class BaseFormWidget(QWidget):
+    """
+    Generic form widget: loads all fields and labels from form_fields.json,
+    translates all labels and options dynamically via translator.py,
+    updates labels and options after language change.
+    All styles are applied centrally via form_styles.py.
+    """
+
     def __init__(self, title, fields, toolbar_actions, form_prefix, translator, parent=None):
+        """
+        Initializes the form widget with dynamic fields, translations, and toolbar.
+        """
         log_section("base_form_widget.py")
         log_subsection("__init__")
         try:
@@ -3082,31 +3266,33 @@ class BaseFormWidget(QWidget):
             self.translator = translator
             self.setStyleSheet(load_form_style())
 
-            # Hauptlayout
             main_layout = QVBoxLayout()
 
-            # Toolbar linksbündig über die gesamte Breite
+            # Toolbar
             self.toolbar = FormToolbar(self.translator, form_prefix, self)
             if toolbar_actions:
                 toolbar_actions(self.toolbar)
                 main_layout.addWidget(self.toolbar)
                 main_layout.addSpacing(12)
 
-            # Formularfelder
+            # Form fields
             self.form_layout = QFormLayout()
             self.inputs = {}
+            self.labels = {}
+            self.option_keys = {}
 
             for field in fields:
                 if field.get("type") == "header":
-                    # Überschrift erzeugen (großes, fettes Label)
                     header_text = self.translator.tr(field["label_key"])
                     header_label = QLabel(header_text if header_text else field.get("default_label", ""), self)
-                    header_label.setStyleSheet("font-size: 20px; font-weight: bold; margin-bottom: 12px;")
+                    # Use centralized style for header if available, else fallback
+                    header_label.setProperty("header", True)
                     self.form_layout.addRow(header_label)
-                    continue  # Keine Eingabe für Header-Felder
+                    continue
 
                 label_text = self.translator.tr(field["label_key"])
                 label = QLabel(label_text if label_text else field.get("default_label", ""), self)
+                self.labels[field["name"]] = label
                 input_widget = None
 
                 if field["type"] == "text":
@@ -3123,8 +3309,14 @@ class BaseFormWidget(QWidget):
                     input_widget = QDateEdit(self)
                 elif field["type"] == "select":
                     input_widget = QComboBox(self)
+                    self.option_keys[field["name"]] = []
                     for option in field.get("options", []):
-                        input_widget.addItem(str(option))
+                        # Use translated label for each option
+                        option_label = self.translator.tr(option.get("label_key", str(option)))
+                        input_widget.addItem(option_label)
+                        self.option_keys[field["name"]].append(option.get("key", option_label))
+                elif field["type"] == "display":
+                    input_widget = QLabel("", self)
                 else:
                     input_widget = QLineEdit(self)
 
@@ -3138,428 +3330,509 @@ class BaseFormWidget(QWidget):
             log_info("BaseFormWidget initialized successfully.")
         except Exception as e:
             log_exception("Error initializing BaseFormWidget", e)
+
+    def update_translations(self):
+        """
+        Updates all labels and option texts after a language change.
+        """
+        for field_name, label in self.labels.items():
+            # Find the field definition for this label
+            field = next((f for f in self.inputs if f == field_name), None)
+            if field:
+                label_key = None
+                # Try to get label_key from form_fields.json if available
+                # This assumes you pass the fields array to the widget and can access it here
+                # If not, you may need to store label_keys in self.labels
+                label_key = getattr(label, "label_key", None)
+                if not label_key:
+                    # Fallback: try to get from label text
+                    label_key = field_name
+                label.setText(self.translator.tr(label_key))
+
+            # Update options for QComboBox
+            input_widget = self.inputs.get(field_name)
+            if isinstance(input_widget, QComboBox) and field_name in self.option_keys:
+                input_widget.blockSignals(True)
+                input_widget.clear()
+                for idx, option_key in enumerate(self.option_keys[field_name]):
+                    # Try to get the label_key from form_fields.json options
+                    option_label = self.translator.tr(option_key)
+                    input_widget.addItem(option_label)
+                input_widget.blockSignals(False)
 ```
 
 ##### 6.5.3.3 form_chapters.py
 
 ```python
-from PySide6.QtWidgets import QWidget, QVBoxLayout, QLabel
-from gui.widgets.form_toolbar import FormToolbar
+from PySide6.QtWidgets import QWidget, QVBoxLayout
+from gui.widgets.base_form_widget import BaseFormWidget
+from gui.styles.form_styles import load_form_style
 from core.logger import log_section, log_subsection, log_info, log_exception
+from config.dev import FORM_FIELDS_FILE
+import json
 
-class ChaptersForm(QWidget):
-    def __init__(self, translator, parent=None):
+class FormChapters(QWidget):
+    """
+    FormChapters widget for editing project chapters.
+    Loads field definitions from form_fields.json,
+    applies global styles from preferences,
+    translates all labels and options via translator.py,
+    and updates translations after language change.
+    All formatting and styles are centralized.
+    """
+
+    def __init__(self, translator, toolbar_actions=None, parent=None):
+        """
+        Initializes the chapters form with dynamic fields and translations.
+        """
         log_section("form_chapters.py")
         log_subsection("__init__")
         try:
             super().__init__(parent)
             self.translator = translator
+            self.setStyleSheet(load_form_style())
+
+            # Load chapter fields from form_fields.json
+            with open(FORM_FIELDS_FILE, "r", encoding="utf-8") as f:
+                fields_config = json.load(f)
+            chapter_fields = fields_config.get("project_chapters", [])
+
+            # Create the base form widget
+            self.form_widget = BaseFormWidget(
+                title=self.translator.tr("Chapter"),
+                fields=chapter_fields,
+                toolbar_actions=toolbar_actions,
+                form_prefix="chapter",
+                translator=self.translator,
+                parent=self
+            )
 
             layout = QVBoxLayout(self)
-
-            # Toolbar mit "chapter"-Prefix
-            self.toolbar = FormToolbar(self.translator, "chapter", self)
-            layout.addWidget(self.toolbar)
-
-            # Beispiel für ein Label mit standard_key
-            self.title_label = QLabel(self.translator.tr("chapter_title"), self)
-            layout.addWidget(self.title_label)
-
-            # Weitere Felder/Labels nach Bedarf, immer mit standard_key
-            self.number_label = QLabel(self.translator.tr("chapter_number"), self)
-            layout.addWidget(self.number_label)
-
-            self.summary_label = QLabel(self.translator.tr("chapter_summary"), self)
-            layout.addWidget(self.summary_label)
-
+            layout.addWidget(self.form_widget)
+            layout.addStretch()
             self.setLayout(layout)
-            log_info("ChaptersForm initialized successfully.")
+            log_info("FormChapters initialized successfully.")
         except Exception as e:
-            log_exception("Error initializing ChaptersForm", e)
+            log_exception("Error initializing FormChapters", e)
+
+    def update_translations(self):
+        """
+        Updates all labels and option texts after a language change.
+        """
+        self.form_widget.update_translations()
 ```
 
 ##### 6.5.3.4 form_characters.py
 
 ```python
-from PySide6.QtWidgets import QWidget, QVBoxLayout, QLabel
-from gui.widgets.form_toolbar import FormToolbar
+from PySide6.QtWidgets import QWidget, QVBoxLayout
+from gui.widgets.base_form_widget import BaseFormWidget
+from gui.styles.form_styles import load_form_style
 from core.logger import log_section, log_subsection, log_info, log_exception
+from config.dev import FORM_FIELDS_FILE
+import json
 
-class CharactersForm(QWidget):
-    def __init__(self, translator, parent=None):
+class FormCharacters(QWidget):
+    """
+    FormCharacters widget for editing character data.
+    Loads field definitions from form_fields.json,
+    applies global styles from preferences,
+    translates all labels and options via translator.py,
+    and updates translations after language change.
+    All formatting and styles are centralized.
+    """
+
+    def __init__(self, translator, toolbar_actions=None, parent=None):
+        """
+        Initializes the characters form with dynamic fields and translations.
+        """
         log_section("form_characters.py")
         log_subsection("__init__")
         try:
             super().__init__(parent)
             self.translator = translator
+            self.setStyleSheet(load_form_style())
+
+            # Load character fields from form_fields.json
+            with open(FORM_FIELDS_FILE, "r", encoding="utf-8") as f:
+                fields_config = json.load(f)
+            character_fields = fields_config.get("character_main", [])
+
+            # Create the base form widget
+            self.form_widget = BaseFormWidget(
+                title=self.translator.tr("Char"),
+                fields=character_fields,
+                toolbar_actions=toolbar_actions,
+                form_prefix="char",
+                translator=self.translator,
+                parent=self
+            )
 
             layout = QVBoxLayout(self)
-
-            # Toolbar mit "character"-Prefix
-            self.toolbar = FormToolbar(self.translator, "character", self)
-            layout.addWidget(self.toolbar)
-
-            # Beispiel für ein Label mit standard_key
-            self.title_label = QLabel(self.translator.tr("character_title"), self)
-            layout.addWidget(self.title_label)
-
-            # Weitere Felder/Labels nach Bedarf, immer mit standard_key
-            self.name_label = QLabel(self.translator.tr("character_name"), self)
-            layout.addWidget(self.name_label)
-
+            layout.addWidget(self.form_widget)
+            layout.addStretch()
             self.setLayout(layout)
-            log_info("CharactersForm initialized successfully.")
+            log_info("FormCharacters initialized successfully.")
         except Exception as e:
-            log_exception("Error initializing CharactersForm", e)
+            log_exception("Error initializing FormCharacters", e)
+
+    def update_translations(self):
+        """
+        Updates all labels and option texts after a language change.
+        """
+        self.form_widget.update_translations()
 ```
 
 ##### 6.5.3.5 form_locations.py
 
 ```python
-import json
 from PySide6.QtWidgets import QWidget, QVBoxLayout
 from gui.widgets.base_form_widget import BaseFormWidget
-from core.translator import Translator
-from core.logger import log_section, log_subsection, log_info, log_error
+from gui.styles.form_styles import load_form_style
+from core.logger import log_section, log_subsection, log_info, log_exception
 from config.dev import FORM_FIELDS_FILE
+import json
 
-class LocationsForm(QWidget):
+class FormLocations(QWidget):
     """
-    Form widget for location data entry.
+    FormLocations widget for editing location data.
+    Loads field definitions from form_fields.json,
+    applies global styles from preferences,
+    translates all labels and options via translator.py,
+    and updates translations after language change.
+    All formatting and styles are centralized.
     """
-    def __init__(self, translator: Translator, parent=None):
+
+    def __init__(self, translator, toolbar_actions=None, parent=None):
+        """
+        Initializes the locations form with dynamic fields and translations.
+        """
         log_section("form_locations.py")
         log_subsection("__init__")
         try:
             super().__init__(parent)
             self.translator = translator
+            self.setStyleSheet(load_form_style())
 
-            # Felder zentral aus JSON laden
+            # Load location fields from form_fields.json
             with open(FORM_FIELDS_FILE, "r", encoding="utf-8") as f:
-                all_fields = json.load(f)
-            fields = all_fields.get("locations", [])
+                fields_config = json.load(f)
+            location_fields = fields_config.get("project_locations", [])
 
-            def toolbar_actions(toolbar):
-                toolbar.save_action.triggered.connect(self._on_save)
-
-            self.form = BaseFormWidget(
-                title=self.translator.tr("location"),
-                fields=fields,
+            # Create the base form widget
+            self.form_widget = BaseFormWidget(
+                title=self.translator.tr("Location"),
+                fields=location_fields,
                 toolbar_actions=toolbar_actions,
                 form_prefix="location",
                 translator=self.translator,
                 parent=self
             )
-            layout = QVBoxLayout(self)
-            layout.addWidget(self.form)
-            self.setLayout(layout)
-            log_info("LocationsForm initialized successfully.")
-        except Exception as e:
-            log_error(f"Error initializing LocationsForm: {str(e)}")
 
-    def _on_save(self):
-        log_subsection("_on_save")
-        log_info("LocationsForm save triggered.")
+            layout = QVBoxLayout(self)
+            layout.addWidget(self.form_widget)
+            layout.addStretch()
+            self.setLayout(layout)
+            log_info("FormLocations initialized successfully.")
+        except Exception as e:
+            log_exception("Error initializing FormLocations", e)
+
+    def update_translations(self):
+        """
+        Updates all labels and option texts after a language change.
+        """
+        self.form_widget.update_translations()
 ```
 
 ##### 6.5.3.6 form_objects.py
 
 ```python
-import json
 from PySide6.QtWidgets import QWidget, QVBoxLayout
 from gui.widgets.base_form_widget import BaseFormWidget
-from core.translator import Translator
-from core.logger import log_section, log_subsection, log_info, log_error
+from gui.styles.form_styles import load_form_style
+from core.logger import log_section, log_subsection, log_info, log_exception
 from config.dev import FORM_FIELDS_FILE
+import json
 
-class ObjectsForm(QWidget):
+class FormObjects(QWidget):
     """
-    Form widget for object data entry.
+    FormObjects widget for editing object data.
+    Loads field definitions from form_fields.json,
+    applies global styles from preferences,
+    translates all labels and options via translator.py,
+    and updates translations after language change.
+    All formatting and styles are centralized.
     """
-    def __init__(self, translator: Translator, parent=None):
+
+    def __init__(self, translator, toolbar_actions=None, parent=None):
+        """
+        Initializes the objects form with dynamic fields and translations.
+        """
         log_section("form_objects.py")
         log_subsection("__init__")
         try:
             super().__init__(parent)
             self.translator = translator
+            self.setStyleSheet(load_form_style())
 
-            # Felder zentral aus JSON laden
+            # Load object fields from form_fields.json
             with open(FORM_FIELDS_FILE, "r", encoding="utf-8") as f:
-                all_fields = json.load(f)
-            fields = all_fields.get("objects", [])
+                fields_config = json.load(f)
+            object_fields = fields_config.get("project_objects", [])
 
-            def toolbar_actions(toolbar):
-                toolbar.save_action.triggered.connect(self._on_save)
-
-            self.form = BaseFormWidget(
-                title=self.translator.tr("object"),
-                fields=fields,
+            # Create the base form widget
+            self.form_widget = BaseFormWidget(
+                title=self.translator.tr("Object"),
+                fields=object_fields,
                 toolbar_actions=toolbar_actions,
                 form_prefix="object",
                 translator=self.translator,
                 parent=self
             )
-            layout = QVBoxLayout(self)
-            layout.addWidget(self.form)
-            self.setLayout(layout)
-            log_info("ObjectsForm initialized successfully.")
-        except Exception as e:
-            log_error(f"Error initializing ObjectsForm: {str(e)}")
 
-    def _on_save(self):
-        log_subsection("_on_save")
-        log_info("ObjectsForm save triggered.")
+            layout = QVBoxLayout(self)
+            layout.addWidget(self.form_widget)
+            layout.addStretch()
+            self.setLayout(layout)
+            log_info("FormObjects initialized successfully.")
+        except Exception as e:
+            log_exception("Error initializing FormObjects", e)
+
+    def update_translations(self):
+        """
+        Updates all labels and option texts after a language change.
+        """
+        self.form_widget.update_translations()
 ```
 
 ##### 6.5.3.7 form_projects.py
 
 ```python
-from PySide6.QtWidgets import (
-    QWidget, QVBoxLayout, QLabel, QLineEdit, QComboBox, QDateEdit, QSpinBox,
-    QPushButton, QFileDialog, QHBoxLayout
-)
-from PySide6.QtGui import QPixmap
-from PySide6.QtCore import Qt
-from gui.widgets.form_toolbar import FormToolbar
+from PySide6.QtWidgets import QWidget, QVBoxLayout
+from gui.widgets.base_form_widget import BaseFormWidget
+from gui.styles.form_styles import load_form_style
 from core.logger import log_section, log_subsection, log_info, log_exception
+from config.dev import FORM_FIELDS_FILE
+import json
 
-class ProjectForm(QWidget):
-    def __init__(self, translator, parent=None):
+class FormProjects(QWidget):
+    """
+    FormProjects widget for editing project data.
+    Loads field definitions from form_fields.json,
+    applies global styles from preferences,
+    translates all labels and options via translator.py,
+    and updates translations after language change.
+    All formatting and styles are centralized.
+    """
+
+    def __init__(self, translator, toolbar_actions=None, parent=None):
+        """
+        Initializes the projects form with dynamic fields and translations.
+        """
         log_section("form_projects.py")
         log_subsection("__init__")
         try:
             super().__init__(parent)
             self.translator = translator
+            self.setStyleSheet(load_form_style())
 
-            # Hauptlayout horizontal: links Formular, rechts Bild
-            main_layout = QHBoxLayout(self)
+            # Load project fields from form_fields.json
+            with open(FORM_FIELDS_FILE, "r", encoding="utf-8") as f:
+                fields_config = json.load(f)
+            project_fields = fields_config.get("projects", [])
 
-            # Linkes Layout für Formular
-            form_layout = QVBoxLayout()
-            self.toolbar = FormToolbar(self.translator, "project", self)
-            form_layout.addWidget(self.toolbar)
+            # Create the base form widget
+            self.form_widget = BaseFormWidget(
+                title=self.translator.tr("Pro"),
+                fields=project_fields,
+                toolbar_actions=toolbar_actions,
+                form_prefix="project",
+                translator=self.translator,
+                parent=self
+            )
 
-            self.heading_label = QLabel(self.translator.tr("project_window_title"), self)
-            form_layout.addWidget(self.heading_label)
-
-            self.title_label = QLabel(self.translator.tr("project_title"), self)
-            form_layout.addWidget(self.title_label)
-            self.title_edit = QLineEdit(self)
-            form_layout.addWidget(self.title_edit)
-
-            self.subtitle_label = QLabel(self.translator.tr("project_detail_subtitle"), self)
-            form_layout.addWidget(self.subtitle_label)
-            self.subtitle_edit = QLineEdit(self)
-            form_layout.addWidget(self.subtitle_edit)
-
-            self.author_label = QLabel(self.translator.tr("project_detail_author"), self)
-            form_layout.addWidget(self.author_label)
-            self.author_edit = QLineEdit(self)
-            form_layout.addWidget(self.author_edit)
-
-            self.genre_label = QLabel(self.translator.tr("project_detail_genre"), self)
-            form_layout.addWidget(self.genre_label)
-            self.genre_edit = QLineEdit(self)
-            form_layout.addWidget(self.genre_edit)
-
-            self.cover_label = QLabel(self.translator.tr("project_detail_cover_image"), self)
-            form_layout.addWidget(self.cover_label)
-            cover_path_layout = QHBoxLayout()
-            self.cover_edit = QLineEdit(self)
-            cover_path_layout.addWidget(self.cover_edit)
-            self.cover_btn = QPushButton(self.translator.tr("project_detail_cover_image") + " ...", self)
-            self.cover_btn.clicked.connect(self._load_cover_image)
-            cover_path_layout.addWidget(self.cover_btn)
-            form_layout.addLayout(cover_path_layout)
-
-            self.start_date_label = QLabel(self.translator.tr("project_start_date"), self)
-            form_layout.addWidget(self.start_date_label)
-            self.start_date_edit = QDateEdit(self)
-            form_layout.addWidget(self.start_date_edit)
-
-            self.deadline_label = QLabel(self.translator.tr("project_deadline"), self)
-            form_layout.addWidget(self.deadline_label)
-            self.deadline_edit = QDateEdit(self)
-            form_layout.addWidget(self.deadline_edit)
-
-            self.words_goal_label = QLabel(self.translator.tr("project_words_count_goal"), self)
-            form_layout.addWidget(self.words_goal_label)
-            self.words_goal_spin = QSpinBox(self)
-            self.words_goal_spin.setMaximum(1000000)
-            form_layout.addWidget(self.words_goal_spin)
-
-            self.narrative_label = QLabel(self.translator.tr("project_detail_narrative_perspective"), self)
-            form_layout.addWidget(self.narrative_label)
-            self.narrative_edit = QLineEdit(self)
-            form_layout.addWidget(self.narrative_edit)
-
-            self.premise_label = QLabel(self.translator.tr("project_detail_premise"), self)
-            form_layout.addWidget(self.premise_label)
-            self.premise_edit = QLineEdit(self)
-            form_layout.addWidget(self.premise_edit)
-
-            self.target_group_label = QLabel(self.translator.tr("project_detail_target_group"), self)
-            form_layout.addWidget(self.target_group_label)
-            self.target_group_edit = QLineEdit(self)
-            form_layout.addWidget(self.target_group_edit)
-
-            # Rechtes Layout für Bild
-            image_layout = QVBoxLayout()
-            image_layout.addStretch()
-            self.cover_pixmap_label = QLabel(self)
-            self.cover_pixmap_label.setFixedSize(300, 300)
-            self.cover_pixmap_label.setScaledContents(True)
-            image_layout.addWidget(self.cover_pixmap_label)
-            image_layout.addStretch()
-
-            # Layouts ins Hauptlayout einfügen
-            main_layout.addLayout(form_layout, stretch=3)
-            main_layout.addLayout(image_layout, stretch=1)
-
-            self.setLayout(main_layout)
-            log_info("ProjectForm initialized successfully.")
+            layout = QVBoxLayout(self)
+            layout.addWidget(self.form_widget)
+            layout.addStretch()
+            self.setLayout(layout)
+            log_info("FormProjects initialized successfully.")
         except Exception as e:
-            log_exception("Error initializing ProjectForm", e)
+            log_exception("Error initializing FormProjects", e)
 
-    def _load_cover_image(self):
-        file_path, _ = QFileDialog.getOpenFileName(
-            self, self.translator.tr("project_detail_cover_image"),
-            "", "Image Files (*.png *.jpg *.jpeg *.bmp *.gif)"
-        )
-        if file_path:
-            self.cover_edit.setText(file_path)
-            pixmap = QPixmap(file_path)
-            if not pixmap.isNull():
-                self.cover_pixmap_label.setPixmap(pixmap.scaled(
-                    self.cover_pixmap_label.size(),
-                    Qt.KeepAspectRatio
-                ))
-            else:
-                self.cover_pixmap_label.clear()
+    def update_translations(self):
+        """
+        Updates all labels and option texts after a language change.
+        """
+        self.form_widget.update_translations()
 ```
 
 ##### 6.5.3.8 form_scenes.py
 
 ```python
-import json
 from PySide6.QtWidgets import QWidget, QVBoxLayout
 from gui.widgets.base_form_widget import BaseFormWidget
-from core.translator import Translator
+from gui.styles.form_styles import load_form_style
 from core.logger import log_section, log_subsection, log_info, log_exception
 from config.dev import FORM_FIELDS_FILE
+import json
 
-class ScenesForm(QWidget):
+class FormScenes(QWidget):
     """
-    Form widget for scene data entry.
+    FormScenes widget for editing scene data.
+    Loads field definitions from form_fields.json,
+    applies global styles from preferences,
+    translates all labels and options via translator.py,
+    and updates translations after language change.
+    All formatting and styles are centralized.
     """
-    def __init__(self, translator: Translator, parent=None):
+
+    def __init__(self, translator, toolbar_actions=None, parent=None):
+        """
+        Initializes the scenes form with dynamic fields and translations.
+        """
         log_section("form_scenes.py")
         log_subsection("__init__")
         try:
             super().__init__(parent)
             self.translator = translator
+            self.setStyleSheet(load_form_style())
 
-            # Felder zentral aus JSON laden
+            # Load scene fields from form_fields.json
             with open(FORM_FIELDS_FILE, "r", encoding="utf-8") as f:
-                all_fields = json.load(f)
-            fields = all_fields.get("scenes", [])
+                fields_config = json.load(f)
+            scene_fields = fields_config.get("project_chapters_scenes", [])
 
-            def toolbar_actions(toolbar):
-                toolbar.save_action.triggered.connect(self._on_save)
-
-            self.form = BaseFormWidget(
-                title=self.translator.tr("scene"),
-                fields=fields,
+            # Create the base form widget
+            self.form_widget = BaseFormWidget(
+                title=self.translator.tr("Scene"),
+                fields=scene_fields,
                 toolbar_actions=toolbar_actions,
                 form_prefix="scene",
                 translator=self.translator,
                 parent=self
             )
-            layout = QVBoxLayout(self)
-            layout.addWidget(self.form)
-            self.setLayout(layout)
-            log_info("ScenesForm initialized successfully.")
-        except Exception as e:
-            log_exception("Error initializing ScenesForm", e)
 
-    def _on_save(self):
-        log_subsection("_on_save")
-        log_info("ScenesForm save triggered.")
+            layout = QVBoxLayout(self)
+            layout.addWidget(self.form_widget)
+            layout.addStretch()
+            self.setLayout(layout)
+            log_info("FormScenes initialized successfully.")
+        except Exception as e:
+            log_exception("Error initializing FormScenes", e)
+
+    def update_translations(self):
+        """
+        Updates all labels and option texts after a language change.
+        """
+        self.form_widget.update_translations()
 ```
 
 ##### 6.5.3.9 form_storylines.py
 
 ```python
-import json
 from PySide6.QtWidgets import QWidget, QVBoxLayout
 from gui.widgets.base_form_widget import BaseFormWidget
-from core.translator import Translator
+from gui.styles.form_styles import load_form_style
 from core.logger import log_section, log_subsection, log_info, log_exception
 from config.dev import FORM_FIELDS_FILE
+import json
 
-class StorylinesForm(QWidget):
+class FormStorylines(QWidget):
     """
-    Form widget for storyline data entry.
+    FormStorylines widget for editing storylines data.
+    Loads field definitions from form_fields.json,
+    applies global styles from preferences,
+    translates all labels and options via translator.py,
+    and updates translations after language change.
+    All formatting and styles are centralized.
     """
-    def __init__(self, translator: Translator, parent=None):
+
+    def __init__(self, translator, toolbar_actions=None, parent=None):
+        """
+        Initializes the storylines form with dynamic fields and translations.
+        """
         log_section("form_storylines.py")
         log_subsection("__init__")
         try:
             super().__init__(parent)
             self.translator = translator
+            self.setStyleSheet(load_form_style())
 
-            # Felder zentral aus JSON laden
+            # Load storyline fields from form_fields.json
             with open(FORM_FIELDS_FILE, "r", encoding="utf-8") as f:
-                all_fields = json.load(f)
-            fields = all_fields.get("storylines", [])
+                fields_config = json.load(f)
+            storyline_fields = fields_config.get("project_storylines", [])
 
-            def toolbar_actions(toolbar):
-                toolbar.save_action.triggered.connect(self._on_save)
-
-            self.form = BaseFormWidget(
-                title=self.translator.tr("storyline"),
-                fields=fields,
+            # Create the base form widget
+            self.form_widget = BaseFormWidget(
+                title=self.translator.tr("Storyline"),
+                fields=storyline_fields,
                 toolbar_actions=toolbar_actions,
                 form_prefix="storyline",
                 translator=self.translator,
                 parent=self
             )
-            layout = QVBoxLayout(self)
-            layout.addWidget(self.form)
-            self.setLayout(layout)
-            log_info("StorylinesForm initialized successfully.")
-        except Exception as e:
-            log_exception("Error initializing StorylinesForm", e)
 
-    def _on_save(self):
-        log_subsection("_on_save")
-        log_info("StorylinesForm save triggered.")
+            layout = QVBoxLayout(self)
+            layout.addWidget(self.form_widget)
+            layout.addStretch()
+            self.setLayout(layout)
+            log_info("FormStorylines initialized successfully.")
+        except Exception as e:
+            log_exception("Error initializing FormStorylines", e)
+
+    def update_translations(self):
+        """
+        Updates all labels and option texts after a language change.
+        """
+        self.form_widget.update_translations()
 ```
 
 ##### 6.5.3.10 form_start.py
 ```python
-from PySide6.QtWidgets import QWidget, QVBoxLayout
-from core.translator import Translator
+from PySide6.QtWidgets import QWidget, QVBoxLayout, QLabel
+from gui.styles.form_styles import load_form_style
 from core.logger import log_section, log_subsection, log_info, log_exception
 
-class StartForm(QWidget):
+class FormStart(QWidget):
     """
-    Completely empty form widget for the start window.
+    Placeholder widget for the start screen after StartBtnNewProject is pressed.
+    Applies global style from preferences.
+    Displays only a translated label as placeholder.
+    No local styles or translations are used.
     """
-    def __init__(self, translator: Translator, parent=None):
+
+    def __init__(self, translator, parent=None):
+        """
+        Initializes the start form with a translated placeholder label.
+        """
         log_section("form_start.py")
         log_subsection("__init__")
         try:
             super().__init__(parent)
             self.translator = translator
+            self.setStyleSheet(load_form_style())
 
-            # Empty layout
-            layout = QVBoxLayout()
+            layout = QVBoxLayout(self)
+            layout.setContentsMargins(40, 40, 40, 40)
+            layout.setSpacing(20)
+
+            # Placeholder label (translated)
+            self.placeholder_label = QLabel(self.translator.tr("WinStartTitle"), self)
+            self.placeholder_label.setObjectName("startPlaceholderLabel")
+            layout.addWidget(self.placeholder_label)
+            layout.addStretch()
+
             self.setLayout(layout)
-
-            log_info("StartForm initialized successfully.")
+            log_info("FormStart initialized successfully.")
         except Exception as e:
-            log_exception("Error initializing StartForm", e)
+            log_exception("Error initializing FormStart", e)
+
+    def update_translations(self):
+        """
+        Updates the placeholder label after a language change.
+        """
+        self.placeholder_label.setText(self.translator.tr("WinStartTitle"))
 ```
 
 #### 6.5.4 Fenster
@@ -3576,11 +3849,12 @@ from gui.preferences import PreferencesWindow
 from core.translator import Translator
 from gui.project_window import ProjectWindow
 from gui.widgets.help_panel import HelpPanel
-from gui.styles.form_styles import load_button_style, load_global_stylesheet
+from gui.styles.form_styles import load_button_style
 import sys
 
 from core.logger import log_section, log_subsection, log_info, log_exception
 from config.dev import BG_IMAGE_PATH
+from config.settings import load_settings
 
 class StartWindow(QWidget):
     DEFAULT_WIDTH        = 1920
@@ -3596,8 +3870,10 @@ class StartWindow(QWidget):
         log_subsection("__init__")
         try:
             super().__init__()
-            self.translator = Translator(default_language)
-            self.setWindowTitle(self.translator.tr("window_start_title"))
+            self.settings = load_settings()
+            lang = self.settings.get("language", default_language)
+            self.translator = Translator(lang)
+            self.setWindowTitle(self.translator.tr("WinStartTitle"))
             self.resize(self.DEFAULT_WIDTH, self.DEFAULT_HEIGHT)
             self.setAutoFillBackground(False)
             self.bg_pixmap = QPixmap(str(BG_IMAGE_PATH))
@@ -3605,7 +3881,8 @@ class StartWindow(QWidget):
             self._create_ui()
             self._retranslate_and_position()
             help_text = self.translator.help_text("help_new_project")
-            self.help_panel = HelpPanel(help_text, self)
+            self.help_panel = HelpPanel(self.translator, self)
+            self.help_panel.set_help_text(help_text)
             log_info("StartWindow initialized successfully.")
         except Exception as e:
             log_exception("Error initializing StartWindow", e)
@@ -3613,13 +3890,12 @@ class StartWindow(QWidget):
     def _create_ui(self):
         log_subsection("_create_ui")
         try:
-            # Standard-Keys für die Buttons gemäß translator.py
             self.button_keys = [
-                "start_btn_new_project",
-                "start_btn_load_project",
-                "start_btn_settings",
-                "start_btn_help",
-                "start_btn_exit"
+                "StartBtnNewProject",
+                "StartBtnLoadProject",
+                "StartBtnSettings",
+                "StartBtnHelp",
+                "StartBtnExit"
             ]
 
             self.buttons = []
@@ -3696,6 +3972,7 @@ class StartWindow(QWidget):
         log_subsection("_on_language_changed")
         try:
             self.translator.set_language(code)
+            self.settings["language"] = code
             self._retranslate_and_position()
             log_info(f"Language changed to {code}.")
         except Exception as e:
@@ -3706,7 +3983,7 @@ class StartWindow(QWidget):
         try:
             for key, btn in zip(self.button_keys, self.buttons):
                 btn.setText(self.translator.tr(key))
-            self.setWindowTitle(self.translator.tr("window_start_title"))
+            self.setWindowTitle(self.translator.tr("WinStartTitle"))
             self.update_button_positions()
             log_info("Button texts and window title updated.")
         except Exception as e:
@@ -3731,6 +4008,15 @@ class StartWindow(QWidget):
     def resizeEvent(self, event):
         self.update_button_positions()
         super().resizeEvent(event)
+    
+    def update_translations(self):
+        # Called by PreferencesWindow after language change
+        self.settings = load_settings()
+        lang = self.settings.get("language", "en")
+        self.translator.set_language(lang)
+        self._retranslate_and_position()
+        help_text = self.translator.help_text("help_new_project")
+        self.help_panel.set_help_text(help_text)
 
     def update_button_positions(self):
         log_subsection("update_button_positions")
@@ -3761,8 +4047,7 @@ if __name__ == "__main__":
     log_subsection("__main__")
     try:
         app = QApplication(sys.argv)
-        app.setStyleSheet(load_global_stylesheet())
-        window = StartWindow(default_language="en")
+        window = StartWindow()
         window.show()
         log_info("StartWindow shown.")
         sys.exit(app.exec())
@@ -3775,98 +4060,236 @@ if __name__ == "__main__":
 ```python
 from PySide6.QtWidgets import (
     QDialog, QLabel, QComboBox, QPushButton,
-    QHBoxLayout, QVBoxLayout
+    QHBoxLayout, QVBoxLayout, QSpacerItem, QSizePolicy, QApplication
 )
 from core.translator import Translator
 from config.settings import load_settings, save_settings
 from core.logger import log_section, log_subsection, log_info, log_exception
+import json
+
+from gui.styles.form_styles import load_global_stylesheet
 
 class PreferencesWindow(QDialog):
+    """
+    PreferencesWindow: Dialog for user settings such as language, style and theme.
+    All options and translations are loaded centrally from form_fields.json and translations.json.
+    Styles and themes are applied immediately in the preferences window and globally.
+    """
+
     def __init__(self, parent=None):
         log_section("preferences.py")
         log_subsection("__init__")
         try:
             super().__init__(parent)
             self.translator = parent.translator if parent and hasattr(parent, "translator") else Translator()
-            self.setWindowTitle(self.translator.tr("preference_title"))
+            self.setWindowTitle(self.translator.tr("WinPreferenceTitle"))
+            self.setMinimumSize(500, 320)
             self.settings = load_settings()
+            self.original_settings = self.settings.copy()  # Save original settings for cancel
+            self._load_fields()
             self._init_ui()
+            self._apply_current_style(global_apply=True)
             log_info("PreferencesWindow initialized successfully.")
         except Exception as e:
             log_exception("Error initializing PreferencesWindow", e)
 
+    def _load_fields(self):
+        """
+        Loads preference field definitions from form_fields.json.
+        """
+        try:
+            with open("/home/frank/Dokumente/CSNova/core/config/form_fields.json", "r", encoding="utf-8") as f:
+                self.form_fields = json.load(f)["preferences"]
+        except Exception as e:
+            log_exception("Error loading form_fields.json", e)
+            self.form_fields = []
+
     def _init_ui(self):
+        """
+        Initializes all UI elements for the preferences dialog.
+        All options are loaded from central sources. Layout is compact and buttons are at the bottom.
+        """
         log_subsection("_init_ui")
         try:
-            layout = QVBoxLayout(self)
+            main_layout = QVBoxLayout(self)
+            main_layout.setSpacing(8)
+            main_layout.setContentsMargins(24, 18, 24, 18)
 
-            # Sprache
-            lang_label = QLabel(self.translator.tr("preference_language"), self)
-            self.lang_combo = QComboBox(self)
-            self.lang_combo.addItems(["de", "en", "es"])
-            self.lang_combo.setCurrentText(self.settings.get("language", "de"))
-            layout.addWidget(lang_label)
-            layout.addWidget(self.lang_combo)
+            self.combos = {}
+            self.labels = {}
 
-            # Theme
-            theme_label = QLabel(self.translator.tr("preference_theme"), self)
-            self.theme_combo = QComboBox(self)
-            self.theme_combo.addItems(["modern", "vintage"])
-            self.theme_combo.setCurrentText(self.settings.get("style", "modern"))
-            layout.addWidget(theme_label)
-            layout.addWidget(self.theme_combo)
+            # Dynamically create fields from form_fields.json
+            for field in self.form_fields:
+                label = QLabel(self.translator.tr(field["label_key"]), self)
+                combo = QComboBox(self)
+                option_labels = []
+                option_keys = []
+                for opt in field.get("options", []):
+                    option_labels.append(self.translator.tr(opt["label_key"]))
+                    option_keys.append(opt["key"])
+                combo.addItems(option_labels)
+                # Set current value from settings
+                current_value = self.settings.get(field["datafield_name"].replace("preference_", ""), option_keys[0])
+                try:
+                    idx = option_keys.index(current_value)
+                except ValueError:
+                    idx = 0
+                combo.setCurrentIndex(idx)
+                main_layout.addWidget(label)
+                main_layout.addWidget(combo)
+                self.combos[field["name"]] = (combo, option_keys)
+                self.labels[field["name"]] = label
 
-            # Buttons
+                # Connect style and theme changes to handlers
+                if field["name"] == "style":
+                    combo.currentIndexChanged.connect(self._on_style_changed)
+                if field["name"] == "theme":
+                    combo.currentIndexChanged.connect(self._on_theme_changed)
+
+            main_layout.addSpacerItem(QSpacerItem(20, 10, QSizePolicy.Minimum, QSizePolicy.Expanding))
+
+            # Action buttons at the bottom
             btn_layout = QHBoxLayout()
-            self.save_btn = QPushButton(self.translator.tr("preference_save"), self)
-            self.cancel_btn = QPushButton(self.translator.tr("preference_cancel"), self)
+            btn_layout.setSpacing(15)
+            btn_layout.setContentsMargins(0, 0, 0, 0)
+            self.save_btn = QPushButton(self.translator.tr("PreferenceActionSave"), self)
+            self.cancel_btn = QPushButton(self.translator.tr("PreferenceActionCancel"), self)
+            btn_layout.addStretch(1)
             btn_layout.addWidget(self.save_btn)
             btn_layout.addWidget(self.cancel_btn)
-            layout.addLayout(btn_layout)
+            btn_layout.addStretch(1)
+            main_layout.addLayout(btn_layout)
 
-            self.setLayout(layout)
+            self.setLayout(main_layout)
 
+            # Connect signals to slots for user interaction
             self.save_btn.clicked.connect(self._on_save)
             self.cancel_btn.clicked.connect(self._on_cancel)
-            self.lang_combo.currentTextChanged.connect(self._on_language_changed)
-            self.theme_combo.currentTextChanged.connect(self._on_theme_changed)
+            # Language change updates translations
+            if "language" in self.combos:
+                self.combos["language"][0].currentIndexChanged.connect(self._on_language_changed)
             log_info("UI initialized successfully.")
         except Exception as e:
             log_exception("Error initializing UI in PreferencesWindow", e)
 
+    def _apply_current_style(self, global_apply=False):
+        """
+        Applies the currently selected style and theme to the preferences window.
+        If global_apply is True, applies the style globally to the application.
+        """
+        style = self.settings.get("style", "modern")
+        mode = self.settings.get("mode", "light")
+        stylesheet = load_global_stylesheet(style, mode)
+        self.setStyleSheet(stylesheet)
+        if global_apply:
+            QApplication.instance().setStyleSheet(stylesheet)
+
+    def update_translations(self):
+        """
+        Updates all UI texts after a language change.
+        Also updates translated items in all comboboxes.
+        """
+        self.setWindowTitle(self.translator.tr("WinPreferenceTitle"))
+        for field in self.form_fields:
+            self.labels[field["name"]].setText(self.translator.tr(field["label_key"]))
+            combo, option_keys = self.combos[field["name"]]
+            combo.blockSignals(True)
+            combo.clear()
+            for opt in field.get("options", []):
+                combo.addItem(self.translator.tr(opt["label_key"]))
+            # Set current value from settings
+            current_value = self.settings.get(field["datafield_name"].replace("preference_", ""), option_keys[0])
+            try:
+                idx = option_keys.index(current_value)
+            except ValueError:
+                idx = 0
+            combo.setCurrentIndex(idx)
+            combo.blockSignals(False)
+        self.save_btn.setText(self.translator.tr("PreferenceActionSave"))
+        self.cancel_btn.setText(self.translator.tr("PreferenceActionCancel"))
+        self._apply_current_style(global_apply=True)
+
     def _on_save(self):
+        """
+        Saves the selected settings and closes the dialog.
+        Notifies parent window to update translations if possible.
+        """
         log_subsection("_on_save")
         try:
-            self.settings["language"] = self.lang_combo.currentText()
-            self.settings["style"] = self.theme_combo.currentText()
+            for field in self.form_fields:
+                combo, option_keys = self.combos[field["name"]]
+                self.settings[field["datafield_name"].replace("preference_", "")] = option_keys[combo.currentIndex()]
             save_settings(self.settings)
+            # Notify parent to update translations if method exists
+            if hasattr(self.parent(), "update_translations"):
+                self.parent().update_translations()
+            self._apply_current_style(global_apply=True)
             self.accept()
             log_info("Settings saved and dialog accepted.")
         except Exception as e:
             log_exception("Error saving settings in PreferencesWindow", e)
 
     def _on_cancel(self):
+        """
+        Cancels the dialog and reverts any unsaved changes.
+        Restores original settings and translations.
+        """
         log_subsection("_on_cancel")
         try:
+            self.settings = self.original_settings.copy()
+            # Restore original language in translator
+            original_lang = self.original_settings.get("language", "de")
+            self.translator.set_language(original_lang)
+            self.update_translations()
+            self._apply_current_style(global_apply=True)
             self.reject()
-            log_info("Dialog canceled and language reverted.")
+            log_info("Dialog canceled and settings reverted.")
         except Exception as e:
             log_exception("Error canceling PreferencesWindow", e)
 
-    def _on_language_changed(self, code):
+    def _on_language_changed(self, idx):
+        """
+        Handles language change event and updates translations.
+        Sets the language immediately in settings.
+        """
         log_subsection("_on_language_changed")
         try:
-            self.translator.set_language(code)
-            self.setWindowTitle(self.translator.tr("preference_title"))
-            log_info(f"Language changed to {code}.")
+            combo, option_keys = self.combos["language"]
+            lang_code = option_keys[idx]
+            self.translator.set_language(lang_code)
+            self.settings["language"] = lang_code  # Set immediately!
+            self.update_translations()
+            log_info(f"Language changed to {lang_code}.")
         except Exception as e:
             log_exception("Error changing language in PreferencesWindow", e)
 
-    def _on_theme_changed(self, theme):
+    def _on_style_changed(self, idx):
+        """
+        Applies the selected style immediately to the preferences window and globally.
+        """
+        log_subsection("_on_style_changed")
+        try:
+            combo, option_keys = self.combos["style"]
+            style_key = option_keys[idx].replace("style_", "")
+            self.settings["style"] = style_key
+            mode = self.settings.get("mode", "light")
+            self._apply_current_style(global_apply=True)
+            log_info(f"Style changed to {style_key}.")
+        except Exception as e:
+            log_exception("Error changing style in PreferencesWindow", e)
+
+    def _on_theme_changed(self, idx):
+        """
+        Applies the selected theme immediately to the preferences window and globally.
+        """
         log_subsection("_on_theme_changed")
         try:
-            # Theme-Änderung kann hier verarbeitet werden, falls nötig
-            log_info(f"Theme changed to {theme}.")
+            combo, option_keys = self.combos["theme"]
+            mode_key = option_keys[idx].replace("theme_", "")
+            self.settings["mode"] = mode_key
+            style = self.settings.get("style", "modern")
+            self._apply_current_style(global_apply=True)
+            log_info(f"Theme changed to {mode_key}.")
         except Exception as e:
             log_exception("Error changing theme in PreferencesWindow", e)
 ```
@@ -3876,7 +4299,7 @@ class PreferencesWindow(QDialog):
 ```python
 from PySide6.QtGui import QPalette, QColor
 from PySide6.QtCore import Qt
-from PySide6.QtWidgets import QWidget, QVBoxLayout, QSplitter, QHBoxLayout
+from PySide6.QtWidgets import QWidget, QSplitter, QHBoxLayout
 
 from gui.styles.form_styles import load_button_style, load_active_button_style
 from core.translator import Translator
@@ -3884,15 +4307,14 @@ from config.settings import load_settings, save_settings
 from gui.widgets.navigation_panel import NavigationPanel
 from gui.widgets.help_panel import HelpPanel
 
-# Import modular forms
-from gui.widgets.form_projects import ProjectForm
-from gui.widgets.form_characters import CharactersForm
-from gui.widgets.form_storylines import StorylinesForm
-from gui.widgets.form_chapters import ChaptersForm
-from gui.widgets.form_scenes import ScenesForm
-from gui.widgets.form_objects import ObjectsForm
-from gui.widgets.form_locations import LocationsForm
-from gui.widgets.form_start import StartForm
+from gui.widgets.form_projects import FormProjects
+from gui.widgets.form_characters import FormCharacters
+from gui.widgets.form_storylines import FormStorylines
+from gui.widgets.form_chapters import FormChapters
+from gui.widgets.form_scenes import FormScenes
+from gui.widgets.form_objects import FormObjects
+from gui.widgets.form_locations import FormLocations
+from gui.widgets.form_start import FormStart
 
 from core.logger import log_section, log_subsection, log_info, log_exception
 
@@ -3901,13 +4323,18 @@ class ProjectWindow(QWidget):
     BUTTON_HEIGHT = 70
 
     def __init__(self, translator=None, parent=None, start_window=None):
+        """
+        Main project window for csNova.
+        Initializes navigation, help, and form panels.
+        Applies global styles and translations.
+        """
         log_section("project_window.py")
         log_subsection("__init__")
         try:
             self.translator = translator or Translator(lang="en")
             super().__init__(parent)
             self.resize(1600, 900)
-            self.setWindowTitle(self.translator.tr("project_title"))
+            self.setWindowTitle(self.translator.tr("ProWinTitle"))
             self.settings = load_settings()
             self.button_style = load_button_style(18)
             self.button_style_active = load_active_button_style(18)
@@ -3924,6 +4351,9 @@ class ProjectWindow(QWidget):
             log_exception("Error initializing ProjectWindow", e)
 
     def _set_background(self):
+        """
+        Sets the background color for the main window.
+        """
         log_subsection("_set_background")
         try:
             palette = self.palette()
@@ -3935,37 +4365,40 @@ class ProjectWindow(QWidget):
             log_exception("Error setting background", e)
 
     def _init_ui(self):
+        """
+        Initializes navigation, help, and form panels.
+        """
         log_subsection("_init_ui")
         try:
-            # Standard-Keys für die Navigation gemäß translator.py
             keys = [
-                "project_btn_project", "project_btn_characters", "project_btn_storylines",
-                "project_btn_chapters", "project_btn_scenes", "project_btn_objects", "project_btn_locations", "project_btn_exit"
+                "ProBtnProject", "ProBtnCharacters", "ProBtnStorylines",
+                "ProBtnChapters", "ProBtnScenes", "ProBtnObjects", "ProBtnLocations", "ProBtnExit"
             ]
             callbacks = {
-                "project_btn_project": lambda: self._on_nav_clicked("project_btn_project", self._show_project_form),
-                "project_btn_characters": lambda: self._on_nav_clicked("project_btn_characters", self._show_characters_form),
-                "project_btn_storylines": lambda: self._on_nav_clicked("project_btn_storylines", self._show_storylines_form),
-                "project_btn_chapters": lambda: self._on_nav_clicked("project_btn_chapters", self._show_chapters_form),
-                "project_btn_scenes": lambda: self._on_nav_clicked("project_btn_scenes", self._show_scenes_form),
-                "project_btn_objects": lambda: self._on_nav_clicked("project_btn_objects", self._show_objects_form),
-                "project_btn_locations": lambda: self._on_nav_clicked("project_btn_locations", self._show_locations_form),
-                "project_btn_exit": self._exit_application
+                "ProBtnProject": lambda: self._on_nav_clicked("ProBtnProject", self._show_project_form),
+                "ProBtnCharacters": lambda: self._on_nav_clicked("ProBtnCharacters", self._show_characters_form),
+                "ProBtnStorylines": lambda: self._on_nav_clicked("ProBtnStorylines", self._show_storylines_form),
+                "ProBtnChapters": lambda: self._on_nav_clicked("ProBtnChapters", self._show_chapters_form),
+                "ProBtnScenes": lambda: self._on_nav_clicked("ProBtnScenes", self._show_scenes_form),
+                "ProBtnObjects": lambda: self._on_nav_clicked("ProBtnObjects", self._show_objects_form),
+                "ProBtnLocations": lambda: self._on_nav_clicked("ProBtnLocations", self._show_locations_form),
+                "ProBtnExit": self._exit_application
             }
             self.navigation_panel = NavigationPanel(
-                keys, self.translator, self, callbacks
+                self.translator, keys, self, callbacks
             )
 
-            help_text = self.translator.help_text("help_new_project")
-            self.help_panel = HelpPanel(help_text, self)
-            self.form_widget = StartForm(self.translator, self)
+            self.help_panel = HelpPanel(self.translator, self)
+            self.help_panel.set_help_text(self.translator.help_text("HelpNewProject"))
+            self.form_widget = FormStart(self.translator, self)
 
             self.splitter.addWidget(self.navigation_panel)
             self.splitter.addWidget(self.form_widget)
             self.splitter.addWidget(self.help_panel)
             self.splitter.setSizes(self.settings.get("splitter_sizes", [300, 900, 300]))
 
-            layout = QHBoxLayout(self)
+            # Corrected layout assignment
+            layout = QHBoxLayout()
             layout.addWidget(self.splitter)
             self.setLayout(layout)
             log_info("UI initialized successfully.")
@@ -3973,6 +4406,9 @@ class ProjectWindow(QWidget):
             log_exception("Error initializing UI", e)
 
     def _on_nav_clicked(self, key, handler):
+        """
+        Handles navigation button clicks and displays the corresponding form.
+        """
         log_subsection(f"_on_nav_clicked: {key}")
         try:
             self.active_nav_key = key
@@ -3982,11 +4418,14 @@ class ProjectWindow(QWidget):
             log_exception(f"Error in navigation click handler for '{key}'", e)
 
     def _show_project_form(self):
+        """
+        Displays the project form.
+        """
         log_subsection("_show_project_form")
         try:
-            form_widget = ProjectForm(self.translator, self)
+            form_widget = FormProjects(self.translator, self)
             self._replace_form_widget(form_widget)
-            help_text = self.translator.help_text("help_project")
+            help_text = self.translator.help_text("HelpProject")
             self.help_panel.set_help_text(help_text)
             self.splitter.setSizes([300, 900, 300])
             log_info("Project form displayed successfully.")
@@ -3994,11 +4433,14 @@ class ProjectWindow(QWidget):
             log_exception("Error displaying project form", e)
 
     def _show_characters_form(self):
+        """
+        Displays the characters form.
+        """
         log_subsection("_show_characters_form")
         try:
-            form_widget = CharactersForm(self.translator, self)
+            form_widget = FormCharacters(self.translator, self)
             self._replace_form_widget(form_widget)
-            help_text = self.translator.help_text("help_chars")
+            help_text = self.translator.help_text("HelpChars")
             self.help_panel.set_help_text(help_text)
             self.splitter.setSizes([300, 900, 300])
             log_info("Characters form displayed successfully.")
@@ -4006,11 +4448,14 @@ class ProjectWindow(QWidget):
             log_exception("Error displaying characters form", e)
 
     def _show_storylines_form(self):
+        """
+        Displays the storylines form.
+        """
         log_subsection("_show_storylines_form")
         try:
-            form_widget = StorylinesForm(self.translator, self)
+            form_widget = FormStorylines(self.translator, self)
             self._replace_form_widget(form_widget)
-            help_text = self.translator.help_text("help_storylines")
+            help_text = self.translator.help_text("HelpStorylines")
             self.help_panel.set_help_text(help_text)
             self.splitter.setSizes([300, 900, 300])
             log_info("Storylines form displayed successfully.")
@@ -4018,11 +4463,14 @@ class ProjectWindow(QWidget):
             log_exception("Error displaying storylines form", e)
 
     def _show_chapters_form(self):
+        """
+        Displays the chapters form.
+        """
         log_subsection("_show_chapters_form")
         try:
-            form_widget = ChaptersForm(self.translator, self)
+            form_widget = FormChapters(self.translator, self)
             self._replace_form_widget(form_widget)
-            help_text = self.translator.help_text("help_chapters")
+            help_text = self.translator.help_text("HelpChapters")
             self.help_panel.set_help_text(help_text)
             self.splitter.setSizes([300, 900, 300])
             log_info("Chapters form displayed successfully.")
@@ -4030,11 +4478,14 @@ class ProjectWindow(QWidget):
             log_exception("Error displaying chapters form", e)
 
     def _show_scenes_form(self):
+        """
+        Displays the scenes form.
+        """
         log_subsection("_show_scenes_form")
         try:
-            form_widget = ScenesForm(self.translator, self)
+            form_widget = FormScenes(self.translator, self)
             self._replace_form_widget(form_widget)
-            help_text = self.translator.help_text("help_scenes")
+            help_text = self.translator.help_text("HelpScenes")
             self.help_panel.set_help_text(help_text)
             self.splitter.setSizes([300, 900, 300])
             log_info("Scenes form displayed successfully.")
@@ -4042,11 +4493,14 @@ class ProjectWindow(QWidget):
             log_exception("Error displaying scenes form", e)
 
     def _show_objects_form(self):
+        """
+        Displays the objects form.
+        """
         log_subsection("_show_objects_form")
         try:
-            form_widget = ObjectsForm(self.translator, self)
+            form_widget = FormObjects(self.translator, self)
             self._replace_form_widget(form_widget)
-            help_text = self.translator.help_text("help_objects")
+            help_text = self.translator.help_text("HelpObjects")
             self.help_panel.set_help_text(help_text)
             self.splitter.setSizes([300, 900, 300])
             log_info("Objects form displayed successfully.")
@@ -4054,11 +4508,14 @@ class ProjectWindow(QWidget):
             log_exception("Error displaying objects form", e)
 
     def _show_locations_form(self):
+        """
+        Displays the locations form.
+        """
         log_subsection("_show_locations_form")
         try:
-            form_widget = LocationsForm(self.translator, self)
+            form_widget = FormLocations(self.translator, self)
             self._replace_form_widget(form_widget)
-            help_text = self.translator.help_text("help_locations")
+            help_text = self.translator.help_text("HelpLocations")
             self.help_panel.set_help_text(help_text)
             self.splitter.setSizes([300, 900, 300])
             log_info("Locations form displayed successfully.")
@@ -4066,12 +4523,18 @@ class ProjectWindow(QWidget):
             log_exception("Error displaying locations form", e)
 
     def _replace_form_widget(self, new_widget):
+        """
+        Replaces the current form widget in the splitter with a new one.
+        """
         old_widget = self.splitter.widget(1)
         if old_widget:
             old_widget.setParent(None)
         self.splitter.insertWidget(1, new_widget)
 
     def _exit_application(self):
+        """
+        Handles application exit and shows the start window.
+        """
         log_subsection("_exit_application")
         try:
             if self.start_window:
@@ -4082,6 +4545,9 @@ class ProjectWindow(QWidget):
             log_exception("Error during application exit", e)
 
     def closeEvent(self, event):
+        """
+        Saves splitter sizes and handles window close event.
+        """
         log_subsection("closeEvent")
         try:
             self.settings["splitter_sizes"] = self.splitter.sizes()

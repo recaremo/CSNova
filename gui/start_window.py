@@ -8,11 +8,12 @@ from gui.preferences import PreferencesWindow
 from core.translator import Translator
 from gui.project_window import ProjectWindow
 from gui.widgets.help_panel import HelpPanel
-from gui.styles.form_styles import load_button_style, load_global_stylesheet
+from gui.styles.form_styles import load_button_style
 import sys
 
 from core.logger import log_section, log_subsection, log_info, log_exception
 from config.dev import BG_IMAGE_PATH
+from config.settings import load_settings
 
 class StartWindow(QWidget):
     DEFAULT_WIDTH        = 1920
@@ -28,8 +29,10 @@ class StartWindow(QWidget):
         log_subsection("__init__")
         try:
             super().__init__()
-            self.translator = Translator(default_language)
-            self.setWindowTitle(self.translator.tr("window_start_title"))
+            self.settings = load_settings()
+            lang = self.settings.get("language", default_language)
+            self.translator = Translator(lang)
+            self.setWindowTitle(self.translator.tr("WinStartTitle"))
             self.resize(self.DEFAULT_WIDTH, self.DEFAULT_HEIGHT)
             self.setAutoFillBackground(False)
             self.bg_pixmap = QPixmap(str(BG_IMAGE_PATH))
@@ -37,7 +40,8 @@ class StartWindow(QWidget):
             self._create_ui()
             self._retranslate_and_position()
             help_text = self.translator.help_text("help_new_project")
-            self.help_panel = HelpPanel(help_text, self)
+            self.help_panel = HelpPanel(self.translator, self)
+            self.help_panel.set_help_text(help_text)
             log_info("StartWindow initialized successfully.")
         except Exception as e:
             log_exception("Error initializing StartWindow", e)
@@ -45,13 +49,12 @@ class StartWindow(QWidget):
     def _create_ui(self):
         log_subsection("_create_ui")
         try:
-            # Standard-Keys für die Buttons gemäß translator.py
             self.button_keys = [
-                "start_btn_new_project",
-                "start_btn_load_project",
-                "start_btn_settings",
-                "start_btn_help",
-                "start_btn_exit"
+                "botn_st_01",
+                "botn_st_02",
+                "botn_st_03",
+                "botn_st_04",
+                "botn_st_05"
             ]
 
             self.buttons = []
@@ -128,6 +131,7 @@ class StartWindow(QWidget):
         log_subsection("_on_language_changed")
         try:
             self.translator.set_language(code)
+            self.settings["language"] = code
             self._retranslate_and_position()
             log_info(f"Language changed to {code}.")
         except Exception as e:
@@ -138,7 +142,7 @@ class StartWindow(QWidget):
         try:
             for key, btn in zip(self.button_keys, self.buttons):
                 btn.setText(self.translator.tr(key))
-            self.setWindowTitle(self.translator.tr("window_start_title"))
+            self.setWindowTitle(self.translator.tr("WinStartTitle"))
             self.update_button_positions()
             log_info("Button texts and window title updated.")
         except Exception as e:
@@ -163,6 +167,15 @@ class StartWindow(QWidget):
     def resizeEvent(self, event):
         self.update_button_positions()
         super().resizeEvent(event)
+    
+    def update_translations(self):
+        # Called by PreferencesWindow after language change
+        self.settings = load_settings()
+        lang = self.settings.get("language", "en")
+        self.translator.set_language(lang)
+        self._retranslate_and_position()
+        help_text = self.translator.help_text("help_new_project")
+        self.help_panel.set_help_text(help_text)
 
     def update_button_positions(self):
         log_subsection("update_button_positions")
@@ -193,8 +206,7 @@ if __name__ == "__main__":
     log_subsection("__main__")
     try:
         app = QApplication(sys.argv)
-        app.setStyleSheet(load_global_stylesheet())
-        window = StartWindow(default_language="en")
+        window = StartWindow()
         window.show()
         log_info("StartWindow shown.")
         sys.exit(app.exec())

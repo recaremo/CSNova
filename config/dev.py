@@ -19,7 +19,7 @@ TABLES_DIR       = CORE_DIR / "tables"
 
 # Important files
 DB_PATH          = DATA_DIR / "csnova.db"
-SETTINGS_FILE    = CONFIG_DIR / "user_settings.json"
+USER_SETTINGS_FILE    = CONFIG_DIR / "user_settings.json"
 FORM_FIELDS_FILE = CORE_DIR / "config" / "form_fields.json"
 BG_IMAGE_PATH    = ASSETS_DIR / "media" / "csNova_background_start.png"
 

@@ -1,6 +1,6 @@
 from PySide6.QtGui import QPalette, QColor
 from PySide6.QtCore import Qt
-from PySide6.QtWidgets import QWidget, QVBoxLayout, QSplitter, QHBoxLayout
+from PySide6.QtWidgets import QWidget, QSplitter, QHBoxLayout
 
 from gui.styles.form_styles import load_button_style, load_active_button_style
 from core.translator import Translator
@@ -8,15 +8,14 @@ from config.settings import load_settings, save_settings
 from gui.widgets.navigation_panel import NavigationPanel
 from gui.widgets.help_panel import HelpPanel
 
-# Import modular forms
-from gui.widgets.form_projects import ProjectForm
-from gui.widgets.form_characters import CharactersForm
-from gui.widgets.form_storylines import StorylinesForm
-from gui.widgets.form_chapters import ChaptersForm
-from gui.widgets.form_scenes import ScenesForm
-from gui.widgets.form_objects import ObjectsForm
-from gui.widgets.form_locations import LocationsForm
-from gui.widgets.form_start import StartForm
+from gui.widgets.form_projects import FormProjects
+from gui.widgets.form_characters import FormCharacters
+from gui.widgets.form_storylines import FormStorylines
+from gui.widgets.form_chapters import FormChapters
+from gui.widgets.form_scenes import FormScenes
+from gui.widgets.form_objects import FormObjects
+from gui.widgets.form_locations import FormLocations
+from gui.widgets.form_start import FormStart
 
 from core.logger import log_section, log_subsection, log_info, log_exception
 
@@ -25,13 +24,18 @@ class ProjectWindow(QWidget):
     BUTTON_HEIGHT = 70
 
     def __init__(self, translator=None, parent=None, start_window=None):
+        """
+        Main project window for csNova.
+        Initializes navigation, help, and form panels.
+        Applies global styles and translations.
+        """
         log_section("project_window.py")
         log_subsection("__init__")
         try:
             self.translator = translator or Translator(lang="en")
             super().__init__(parent)
             self.resize(1600, 900)
-            self.setWindowTitle(self.translator.tr("project_title"))
+            self.setWindowTitle(self.translator.tr("ProWinTitle"))
             self.settings = load_settings()
             self.button_style = load_button_style(18)
             self.button_style_active = load_active_button_style(18)
@@ -48,6 +52,9 @@ class ProjectWindow(QWidget):
             log_exception("Error initializing ProjectWindow", e)
 
     def _set_background(self):
+        """
+        Sets the background color for the main window.
+        """
         log_subsection("_set_background")
         try:
             palette = self.palette()
@@ -59,37 +66,40 @@ class ProjectWindow(QWidget):
             log_exception("Error setting background", e)
 
     def _init_ui(self):
+        """
+        Initializes navigation, help, and form panels.
+        """
         log_subsection("_init_ui")
         try:
-            # Standard-Keys für die Navigation gemäß translator.py
             keys = [
-                "project_btn_project", "project_btn_characters", "project_btn_storylines",
-                "project_btn_chapters", "project_btn_scenes", "project_btn_objects", "project_btn_locations", "project_btn_exit"
+                "ProBtnProject", "ProBtnCharacters", "ProBtnStorylines",
+                "ProBtnChapters", "ProBtnScenes", "ProBtnObjects", "ProBtnLocations", "ProBtnExit"
             ]
             callbacks = {
-                "project_btn_project": lambda: self._on_nav_clicked("project_btn_project", self._show_project_form),
-                "project_btn_characters": lambda: self._on_nav_clicked("project_btn_characters", self._show_characters_form),
-                "project_btn_storylines": lambda: self._on_nav_clicked("project_btn_storylines", self._show_storylines_form),
-                "project_btn_chapters": lambda: self._on_nav_clicked("project_btn_chapters", self._show_chapters_form),
-                "project_btn_scenes": lambda: self._on_nav_clicked("project_btn_scenes", self._show_scenes_form),
-                "project_btn_objects": lambda: self._on_nav_clicked("project_btn_objects", self._show_objects_form),
-                "project_btn_locations": lambda: self._on_nav_clicked("project_btn_locations", self._show_locations_form),
-                "project_btn_exit": self._exit_application
+                "ProBtnProject": lambda: self._on_nav_clicked("ProBtnProject", self._show_project_form),
+                "ProBtnCharacters": lambda: self._on_nav_clicked("ProBtnCharacters", self._show_characters_form),
+                "ProBtnStorylines": lambda: self._on_nav_clicked("ProBtnStorylines", self._show_storylines_form),
+                "ProBtnChapters": lambda: self._on_nav_clicked("ProBtnChapters", self._show_chapters_form),
+                "ProBtnScenes": lambda: self._on_nav_clicked("ProBtnScenes", self._show_scenes_form),
+                "ProBtnObjects": lambda: self._on_nav_clicked("ProBtnObjects", self._show_objects_form),
+                "ProBtnLocations": lambda: self._on_nav_clicked("ProBtnLocations", self._show_locations_form),
+                "ProBtnExit": self._exit_application
             }
             self.navigation_panel = NavigationPanel(
-                keys, self.translator, self, callbacks
+                self.translator, keys, self, callbacks
             )
 
-            help_text = self.translator.help_text("help_new_project")
-            self.help_panel = HelpPanel(help_text, self)
-            self.form_widget = StartForm(self.translator, self)
+            self.help_panel = HelpPanel(self.translator, self)
+            self.help_panel.set_help_text(self.translator.help_text("HelpNewProject"))
+            self.form_widget = FormStart(self.translator, self)
 
             self.splitter.addWidget(self.navigation_panel)
             self.splitter.addWidget(self.form_widget)
             self.splitter.addWidget(self.help_panel)
             self.splitter.setSizes(self.settings.get("splitter_sizes", [300, 900, 300]))
 
-            layout = QHBoxLayout(self)
+            # Corrected layout assignment
+            layout = QHBoxLayout()
             layout.addWidget(self.splitter)
             self.setLayout(layout)
             log_info("UI initialized successfully.")
@@ -97,6 +107,9 @@ class ProjectWindow(QWidget):
             log_exception("Error initializing UI", e)
 
     def _on_nav_clicked(self, key, handler):
+        """
+        Handles navigation button clicks and displays the corresponding form.
+        """
         log_subsection(f"_on_nav_clicked: {key}")
         try:
             self.active_nav_key = key
@@ -106,11 +119,14 @@ class ProjectWindow(QWidget):
             log_exception(f"Error in navigation click handler for '{key}'", e)
 
     def _show_project_form(self):
+        """
+        Displays the project form.
+        """
         log_subsection("_show_project_form")
         try:
-            form_widget = ProjectForm(self.translator, self)
+            form_widget = FormProjects(self.translator, self)
             self._replace_form_widget(form_widget)
-            help_text = self.translator.help_text("help_project")
+            help_text = self.translator.help_text("HelpProject")
             self.help_panel.set_help_text(help_text)
             self.splitter.setSizes([300, 900, 300])
             log_info("Project form displayed successfully.")
@@ -118,11 +134,14 @@ class ProjectWindow(QWidget):
             log_exception("Error displaying project form", e)
 
     def _show_characters_form(self):
+        """
+        Displays the characters form.
+        """
         log_subsection("_show_characters_form")
         try:
-            form_widget = CharactersForm(self.translator, self)
+            form_widget = FormCharacters(self.translator, self)
             self._replace_form_widget(form_widget)
-            help_text = self.translator.help_text("help_chars")
+            help_text = self.translator.help_text("HelpChars")
             self.help_panel.set_help_text(help_text)
             self.splitter.setSizes([300, 900, 300])
             log_info("Characters form displayed successfully.")
@@ -130,11 +149,14 @@ class ProjectWindow(QWidget):
             log_exception("Error displaying characters form", e)
 
     def _show_storylines_form(self):
+        """
+        Displays the storylines form.
+        """
         log_subsection("_show_storylines_form")
         try:
-            form_widget = StorylinesForm(self.translator, self)
+            form_widget = FormStorylines(self.translator, self)
             self._replace_form_widget(form_widget)
-            help_text = self.translator.help_text("help_storylines")
+            help_text = self.translator.help_text("HelpStorylines")
             self.help_panel.set_help_text(help_text)
             self.splitter.setSizes([300, 900, 300])
             log_info("Storylines form displayed successfully.")
@@ -142,11 +164,14 @@ class ProjectWindow(QWidget):
             log_exception("Error displaying storylines form", e)
 
     def _show_chapters_form(self):
+        """
+        Displays the chapters form.
+        """
         log_subsection("_show_chapters_form")
         try:
-            form_widget = ChaptersForm(self.translator, self)
+            form_widget = FormChapters(self.translator, self)
             self._replace_form_widget(form_widget)
-            help_text = self.translator.help_text("help_chapters")
+            help_text = self.translator.help_text("HelpChapters")
             self.help_panel.set_help_text(help_text)
             self.splitter.setSizes([300, 900, 300])
             log_info("Chapters form displayed successfully.")
@@ -154,11 +179,14 @@ class ProjectWindow(QWidget):
             log_exception("Error displaying chapters form", e)
 
     def _show_scenes_form(self):
+        """
+        Displays the scenes form.
+        """
         log_subsection("_show_scenes_form")
         try:
-            form_widget = ScenesForm(self.translator, self)
+            form_widget = FormScenes(self.translator, self)
             self._replace_form_widget(form_widget)
-            help_text = self.translator.help_text("help_scenes")
+            help_text = self.translator.help_text("HelpScenes")
             self.help_panel.set_help_text(help_text)
             self.splitter.setSizes([300, 900, 300])
             log_info("Scenes form displayed successfully.")
@@ -166,11 +194,14 @@ class ProjectWindow(QWidget):
             log_exception("Error displaying scenes form", e)
 
     def _show_objects_form(self):
+        """
+        Displays the objects form.
+        """
         log_subsection("_show_objects_form")
         try:
-            form_widget = ObjectsForm(self.translator, self)
+            form_widget = FormObjects(self.translator, self)
             self._replace_form_widget(form_widget)
-            help_text = self.translator.help_text("help_objects")
+            help_text = self.translator.help_text("HelpObjects")
             self.help_panel.set_help_text(help_text)
             self.splitter.setSizes([300, 900, 300])
             log_info("Objects form displayed successfully.")
@@ -178,11 +209,14 @@ class ProjectWindow(QWidget):
             log_exception("Error displaying objects form", e)
 
     def _show_locations_form(self):
+        """
+        Displays the locations form.
+        """
         log_subsection("_show_locations_form")
         try:
-            form_widget = LocationsForm(self.translator, self)
+            form_widget = FormLocations(self.translator, self)
             self._replace_form_widget(form_widget)
-            help_text = self.translator.help_text("help_locations")
+            help_text = self.translator.help_text("HelpLocations")
             self.help_panel.set_help_text(help_text)
             self.splitter.setSizes([300, 900, 300])
             log_info("Locations form displayed successfully.")
@@ -190,12 +224,18 @@ class ProjectWindow(QWidget):
             log_exception("Error displaying locations form", e)
 
     def _replace_form_widget(self, new_widget):
+        """
+        Replaces the current form widget in the splitter with a new one.
+        """
         old_widget = self.splitter.widget(1)
         if old_widget:
             old_widget.setParent(None)
         self.splitter.insertWidget(1, new_widget)
 
     def _exit_application(self):
+        """
+        Handles application exit and shows the start window.
+        """
         log_subsection("_exit_application")
         try:
             if self.start_window:
@@ -206,6 +246,9 @@ class ProjectWindow(QWidget):
             log_exception("Error during application exit", e)
 
     def closeEvent(self, event):
+        """
+        Saves splitter sizes and handles window close event.
+        """
         log_subsection("closeEvent")
         try:
             self.settings["splitter_sizes"] = self.splitter.sizes()

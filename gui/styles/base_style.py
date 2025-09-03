@@ -1,187 +1,248 @@
-# Central default parameters for stylesheets
-DEFAULTS = {
-    "border_radius": 8,
-    "font_size": 14,
-    "input_width": 400,
-    "border_radius": 8,
-    "font_size": 14,
-    "input_width": 400,
-    "border": "#b6c2e1",
-    "highlight": "#ff0",
-    "background": "#e7eaf3",
-    "foreground": "#1a1a1a",
-    "button_bg": "#e7eaf3",
-    "button_fg": "#1a1a1a",
-    "button_hover": "#d0d6e6",
-    "button_active": "#b6c2e1",
-    "input_bg": "#ffffff",
-    "input_fg": "#1a1a1a",
-}
-
 # Central CSS templates for all GUI components
+
 CSS_TEMPLATES = {
+    "window": """
+        QWidget, QDialog {{
+            background-color: {background};
+            color: {foreground};
+            font-family: {font_family};
+            font-size: {font_size}px;
+        }}
+    """,
+    "label": """
+        QLabel {{
+            color: {foreground};
+            font-size: {font_size}px;
+            background: transparent;
+        }}
+    """,
+    "groupbox": """
+        QGroupBox {{
+            border: 1px solid {border};
+            border-radius: {border_radius}px;
+            margin-top: 10px;
+            color: {foreground};
+            font-size: {font_size}px;
+        }}
+        QGroupBox::title {{
+            subcontrol-origin: margin;
+            left: 10px;
+            padding: 0 3px 0 3px;
+        }}
+    """,
     "button": """
-        QPushButton, QToolButton {{
+        QPushButton {{
             background-color: {button_bg};
             color: {button_fg};
-            font-size: {font_size}px;
-            border: 2px solid {border};
             border-radius: {border_radius}px;
+            border: 1px solid {border};
+            font-size: {font_size}px;
+            padding: 6px 18px;
         }}
-        QPushButton:hover, QToolButton:hover {{
+        QPushButton:hover {{
             background-color: {button_hover};
         }}
-        QPushButton:pressed, QToolButton:pressed {{
+        QPushButton:pressed {{
             background-color: {button_active};
         }}
-        QPushButton:disabled, QToolButton:disabled {{
-            background-color: {border};
-            color: {input_fg};
+        QPushButton:disabled {{
+            background-color: #cccccc;
+            color: #888888;
         }}
     """,
-
-    "active_button": """
-        QPushButton {{
-            background-color: {highlight};
-            color: {button_fg};
-            font-size: {font_size}px;
-            border: 2px solid {border};
-            border-radius: {border_radius}px;
-            font-weight: bold;
-        }}
-    """,
-
     "input": """
-        QLineEdit, QTextEdit, QPlainTextEdit, QComboBox, QSpinBox, QDateEdit {{
+        QLineEdit, QTextEdit, QPlainTextEdit, QSpinBox, QDoubleSpinBox, QDateEdit, QTimeEdit, QComboBox {{
             background-color: {input_bg};
             color: {input_fg};
+            border-radius: {border_radius}px;
             border: 1px solid {border};
-            border-radius: 4px;
             font-size: {font_size}px;
-            padding: 6px;
+            padding: 4px 8px;
             min-width: {input_width}px;
-            max-width: {input_width}px;
+        }}
+        QComboBox QAbstractItemView {{
+            background-color: {input_bg};
+            color: {input_fg};
+            selection-background-color: {highlight};
         }}
     """,
-
     "tab": """
         QTabWidget::pane {{
             border: 1px solid {border};
+            border-radius: {border_radius}px;
         }}
         QTabBar::tab {{
             background: {button_bg};
             color: {button_fg};
+            border: 1px solid {border};
             border-radius: {border_radius}px;
-            min-width: 120px;
-            padding: 8px;
+            padding: 6px 18px;
+            font-size: {font_size}px;
         }}
         QTabBar::tab:selected {{
-            background: {highlight};
-            color: {button_fg};
+            background: {button_active};
+            color: {highlight};
+        }}
+        QTabBar::tab:hover {{
+            background: {button_hover};
         }}
     """,
-
-    "listview": """
+    "list": """
         QListView, QTreeView {{
-            background-color: {input_bg};
+            background: {input_bg};
             color: {input_fg};
             border: 1px solid {border};
-            selection-background-color: {highlight};
-            selection-color: {button_fg};
+            border-radius: {border_radius}px;
+            font-size: {font_size}px;
+        }}
+        QListView::item:selected, QTreeView::item:selected {{
+            background: {highlight};
+            color: {foreground};
         }}
     """,
-
-    "label": """
-        QLabel, QGroupBox {{
-            color: {foreground};
+    "table": """
+        QTableView {{
+            background: {input_bg};
+            color: {input_fg};
+            border: 1px solid {border};
+            border-radius: {border_radius}px;
+            font-size: {font_size}px;
+            gridline-color: {border};
+        }}
+        QHeaderView::section {{
+            background: {button_bg};
+            color: {button_fg};
+            border: 1px solid {border};
             font-size: {font_size}px;
         }}
     """,
-
-    "tooltip": """
-        QToolTip {{
-            background-color: {highlight};
-            color: {background};
+    "progress": """
+        QProgressBar {{
             border: 1px solid {border};
+            border-radius: {border_radius}px;
+            text-align: center;
+            background: {input_bg};
+            color: {input_fg};
+            font-size: {font_size}px;
+        }}
+        QProgressBar::chunk {{
+            background-color: {highlight};
+            width: 20px;
         }}
     """,
-
+    "slider": """
+        QSlider::groove:horizontal {{
+            border: 1px solid {border};
+            height: 8px;
+            background: {input_bg};
+            border-radius: 4px;
+        }}
+        QSlider::handle:horizontal {{
+            background: {highlight};
+            border: 1px solid {border};
+            width: 18px;
+            margin: -5px 0;
+            border-radius: 9px;
+        }}
+    """,
     "splitter": """
         QSplitter::handle {{
             background: {border};
-            border: 1px solid {highlight};
-            width: 8px;
-        }}
-        QSplitter::handle:hover {{
-            background: {highlight};
         }}
     """,
-
     "panel": """
         QWidget#NavigationPanel, QWidget#HelpPanel, QWidget#CenterPanel {{
-            background-color: {background};
-            border: 1px solid {border};
+            background: {background};
+            color: {foreground};
             border-radius: {border_radius}px;
         }}
     """,
-
     "toolbar": """
         QToolBar {{
-            background: {background};
+            background: {button_bg};
             border-bottom: 1px solid {border};
-            min-height: 44px;
-            padding-top: 6px;
-            padding-bottom: 6px;
-        }}
-        QToolButton {{
-            min-width: 36px;
-            min-height: 36px;
-            padding: 6px 12px;
-            font-size: {font_size}px;
-            qproperty-toolButtonStyle: ToolButtonTextBesideIcon;
-        }}
-        QToolButton:hover {{
-            background-color: {button_hover};
-        }}
-        QToolButton:pressed {{
-            background-color: {button_active};
+            spacing: 6px;
         }}
     """,
-
     "form": """
-        QLineEdit, QDateEdit, QSpinBox {{
-            padding: 6px;
-            border: 1px solid {border};
-            border-radius: 4px;
-            background-color: {input_bg};
-            color: {input_fg};
+        QFormLayout QLabel {{
+            color: {foreground};
             font-size: {font_size}px;
-            font-family: 'Segoe UI', sans-serif;
-            min-width: {input_width}px;
-            max-width: {input_width}px;
         }}
-        QLabel {{
+        QFormLayout QLineEdit, QFormLayout QDateEdit, QFormLayout QSpinBox {{
+            background: {input_bg};
+            color: {input_fg};
+            border-radius: {border_radius}px;
+            border: 1px solid {border};
             font-size: {font_size}px;
+        }}
+    """,
+    "tooltip": """
+        QToolTip {{
+            background: {button_bg};
+            color: {button_fg};
+            border: 1px solid {border};
+            font-size: {font_size}px;
+        }}
+    """,
+    "menu": """
+        QMenu {{
+            background: {button_bg};
+            color: {button_fg};
+            border: 1px solid {border};
+            font-size: {font_size}px;
+        }}
+        QMenu::item:selected {{
+            background: {highlight};
             color: {foreground};
         }}
-        QFormLayout {{
-            margin: 12px;
+    """,
+    "contextmenu": """
+        QMenu {{
+            background: {button_bg};
+            color: {button_fg};
+            border: 1px solid {border};
+            font-size: {font_size}px;
+        }}
+        QMenu::item:selected {{
+            background: {highlight};
+            color: {foreground};
         }}
     """,
+    "error": """
+        QLabel#error, QLineEdit[error="true"], QTextEdit[error="true"] {{
+            color: {error};
+            border: 1px solid {error};
+            background: #fff0f0;
+        }}
+    """
 }
 
-def render_css(template_name, style_dict, defaults=DEFAULTS):
+def extract_params(theme):
     """
-    Renders the requested CSS template with style parameters and defaults.
+    Converts the nested theme dict from themes_style.py into flat parameters for CSS rendering.
+    Assumes all relevant values are set in the theme.
     """
-    params = {**defaults, **style_dict}
-    # Map template parameters for compatibility with all style dicts
-    params.update({
-        "button_bg": style_dict.get("button", {}).get("background", style_dict.get("button_bg", "#e7eaf3")),
-        "button_fg": style_dict.get("button", {}).get("foreground", style_dict.get("button_fg", "#1a1a1a")),
-        "button_hover": style_dict.get("button", {}).get("hover", style_dict.get("button_hover", "#d0d6e6")),
-        "button_active": style_dict.get("button", {}).get("active", style_dict.get("button_active", "#b6c2e1")),
-        "input_bg": style_dict.get("input", {}).get("background", style_dict.get("input_bg", "#ffffff")),
-        "input_fg": style_dict.get("input", {}).get("foreground", style_dict.get("input_fg", "#1a1a1a")),
-    })
-    return CSS_TEMPLATES[template_name].format(**params)
+    params = {}
+    params.update({k: v for k, v in theme.items() if not isinstance(v, dict)})
+    # Button
+    button = theme.get("button", {})
+    params["button_bg"] = button.get("background")
+    params["button_fg"] = button.get("foreground")
+    params["button_hover"] = button.get("hover")
+    params["button_active"] = button.get("active")
+    # Input
+    input_ = theme.get("input", {})
+    params["input_bg"] = input_.get("background")
+    params["input_fg"] = input_.get("foreground")
+    return params
+
+def render_css(theme):
+    """
+    Renders the full CSS stylesheet for all GUI components using the given theme dict.
+    """
+    params = extract_params(theme)
+    css = ""
+    for key, template in CSS_TEMPLATES.items():
+        css += template.format(**params)
+    return css

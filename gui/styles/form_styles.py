@@ -1,9 +1,8 @@
-from config.settings import load_settings
-from gui.styles.base_style import render_css, DEFAULTS
+from gui.styles.base_style import render_css, CSS_TEMPLATES
 from gui.styles.registry_style import get_current_style
 from core.logger import log_section, log_subsection, log_info, log_exception
 
-def load_global_stylesheet(style_code=None, mode_code=None, font_size=14):
+def load_global_stylesheet(style_code=None, mode_code=None):
     """
     Loads the global stylesheet for the application using the given style and mode.
     If style_code or mode_code are not provided, uses current settings.
@@ -11,47 +10,18 @@ def load_global_stylesheet(style_code=None, mode_code=None, font_size=14):
     log_section("form_styles.py")
     log_subsection("load_global_stylesheet")
     try:
-        # Korrektur: get_current_style muss zwei Parameter akzeptieren
         style = get_current_style(style_code, mode_code)
-        # Defensive: Falls get_current_style None zurückgibt, nutze Defaults
-        if style is None:
-            style = DEFAULTS.copy()
-        style["font_size"] = font_size
-        style["border_radius"] = DEFAULTS.get("border_radius", 8)
-        style["input_width"] = DEFAULTS.get("input_width", 400)
-
-        # Combine all relevant templates
-        button_css = render_css("button", style)
-        input_css = render_css("input", style)
-        tab_css = render_css("tab", style)
-        listview_css = render_css("listview", style)
-        label_css = render_css("label", style)
-        tooltip_css = render_css("tooltip", style)
-        splitter_css = render_css("splitter", style)
-        panel_css = render_css("panel", style)
-        toolbar_css = render_css("toolbar", style)
-        form_css = render_css("form", style)
-
-        # Concatenate all CSS parts
-        stylesheet = (
-            button_css +
-            input_css +
-            tab_css +
-            listview_css +
-            label_css +
-            tooltip_css +
-            splitter_css +
-            panel_css +
-            toolbar_css +
-            form_css
-        )
+        # Render all CSS templates at once
+        stylesheet = ""
+        for key in CSS_TEMPLATES:
+            stylesheet += CSS_TEMPLATES[key].format(**style)
         log_info("Global stylesheet loaded.")
         return stylesheet
     except Exception as e:
         log_exception("Error loading global stylesheet", e)
         return ""
 
-def load_button_style(style_code=None, mode_code=None, font_size=14):
+def load_button_style(style_code=None, mode_code=None):
     """
     Loads the stylesheet for buttons and toolbars.
     """
@@ -59,16 +29,14 @@ def load_button_style(style_code=None, mode_code=None, font_size=14):
     log_subsection("load_button_style")
     try:
         style = get_current_style(style_code, mode_code)
-        if style is None:
-            style = DEFAULTS.copy()
-        style["font_size"] = font_size
-        style["border_radius"] = DEFAULTS.get("border_radius", 8)
-        return render_css("button", style) + render_css("toolbar", style)
+        css = CSS_TEMPLATES["button"].format(**style)
+        css += CSS_TEMPLATES["toolbar"].format(**style)
+        return css
     except Exception as e:
         log_exception("Error loading button stylesheet", e)
         return ""
 
-def load_active_button_style(style_code=None, mode_code=None, font_size=16):
+def load_active_button_style(style_code=None, mode_code=None):
     """
     Loads the stylesheet for active buttons.
     """
@@ -76,16 +44,15 @@ def load_active_button_style(style_code=None, mode_code=None, font_size=16):
     log_subsection("load_active_button_style")
     try:
         style = get_current_style(style_code, mode_code)
-        if style is None:
-            style = DEFAULTS.copy()
-        style["font_size"] = font_size
-        style["border_radius"] = DEFAULTS.get("border_radius", 8)
-        return render_css("active_button", style)
+        if "active_button" in CSS_TEMPLATES:
+            return CSS_TEMPLATES["active_button"].format(**style)
+        else:
+            return CSS_TEMPLATES["button"].format(**style)
     except Exception as e:
         log_exception("Error loading active button stylesheet", e)
         return ""
 
-def load_form_style(style_code=None, mode_code=None, input_font_size=14, label_font_size=14, input_width=400):
+def load_form_style(style_code=None, mode_code=None):
     """
     Loads the stylesheet for forms and input fields.
     """
@@ -93,12 +60,7 @@ def load_form_style(style_code=None, mode_code=None, input_font_size=14, label_f
     log_subsection("load_form_style")
     try:
         style = get_current_style(style_code, mode_code)
-        if style is None:
-            style = DEFAULTS.copy()
-        style["font_size"] = input_font_size
-        style["border_radius"] = DEFAULTS.get("border_radius", 8)
-        style["input_width"] = input_width
-        return render_css("form", style)
+        return CSS_TEMPLATES["form"].format(**style)
     except Exception as e:
         log_exception("Error loading form stylesheet", e)
         return ""

@@ -70,7 +70,7 @@
 │   │   └── translations.json
 │   └── translator.py
 ├── csnova.log
-├── csnova.py
+├── csNova.py
 ├── data
 │   └── csnova.db
 ├── dist
@@ -101,7 +101,6 @@
 │   └── widgets
 │       ├── base_form_widget.py
 │       ├── center_panel.py
-│       ├── dialog.py
 │       ├── form_chapters.py
 │       ├── form_characters.py
 │       ├── form_locations.py
