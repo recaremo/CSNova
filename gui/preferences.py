@@ -14,6 +14,7 @@ class PreferencesWindow(QDialog):
     PreferencesWindow: Dialog for user settings such as language, style and theme.
     All options and translations are loaded centrally from form_fields.json and translations.json.
     Styles and themes are applied immediately in the preferences window and globally.
+    Robust error handling is implemented for file and UI operations.
     """
 
     def __init__(self, parent=None):
@@ -22,7 +23,7 @@ class PreferencesWindow(QDialog):
         try:
             super().__init__(parent)
             self.translator = parent.translator if parent and hasattr(parent, "translator") else Translator()
-            self.setWindowTitle(self.translator.tr("WinPreferenceTitle"))
+            self.setWindowTitle(self.translator.tr("PrefWinTitle"))
             self.setMinimumSize(500, 320)
             self.settings = load_settings()
             self.original_settings = self.settings.copy()  # Save original settings for cancel
@@ -36,18 +37,26 @@ class PreferencesWindow(QDialog):
     def _load_fields(self):
         """
         Loads preference field definitions from form_fields.json.
+        Robust error handling for file operations.
         """
         try:
             with open("/home/frank/Dokumente/CSNova/core/config/form_fields.json", "r", encoding="utf-8") as f:
-                self.form_fields = json.load(f)["preferences"]
+                self.form_fields = json.load(f).get("preferences", [])
+        except FileNotFoundError as fnf_error:
+            log_exception("form_fields.json not found in PreferencesWindow.", fnf_error)
+            self.form_fields = []
+        except json.JSONDecodeError as json_error:
+            log_exception("JSON decode error in form_fields.json for PreferencesWindow.", json_error)
+            self.form_fields = []
         except Exception as e:
-            log_exception("Error loading form_fields.json", e)
+            log_exception("Unexpected error loading form_fields.json in PreferencesWindow.", e)
             self.form_fields = []
 
     def _init_ui(self):
         """
         Initializes all UI elements for the preferences dialog.
         All options are loaded from central sources. Layout is compact and buttons are at the bottom.
+        Robust error handling for UI initialization.
         """
         log_subsection("_init_ui")
         try:
@@ -60,16 +69,16 @@ class PreferencesWindow(QDialog):
 
             # Dynamically create fields from form_fields.json
             for field in self.form_fields:
-                label = QLabel(self.translator.tr(field["label_key"]), self)
+                label = QLabel(self.translator.tr(field.get("label_key", "")), self)
                 combo = QComboBox(self)
                 option_labels = []
                 option_keys = []
                 for opt in field.get("options", []):
-                    option_labels.append(self.translator.tr(opt["label_key"]))
-                    option_keys.append(opt["key"])
+                    option_labels.append(self.translator.tr(opt.get("label_key", "")))
+                    option_keys.append(opt.get("key", ""))
                 combo.addItems(option_labels)
                 # Set current value from settings
-                current_value = self.settings.get(field["datafield_name"].replace("preference_", ""), option_keys[0])
+                current_value = self.settings.get(field.get("datafield_name", "").replace("preference_", ""), option_keys[0] if option_keys else "")
                 try:
                     idx = option_keys.index(current_value)
                 except ValueError:
@@ -77,13 +86,13 @@ class PreferencesWindow(QDialog):
                 combo.setCurrentIndex(idx)
                 main_layout.addWidget(label)
                 main_layout.addWidget(combo)
-                self.combos[field["name"]] = (combo, option_keys)
-                self.labels[field["name"]] = label
+                self.combos[field.get("name", "")] = (combo, option_keys)
+                self.labels[field.get("name", "")] = label
 
                 # Connect style and theme changes to handlers
-                if field["name"] == "style":
+                if field.get("name", "") == "style":
                     combo.currentIndexChanged.connect(self._on_style_changed)
-                if field["name"] == "theme":
+                if field.get("name", "") == "theme":
                     combo.currentIndexChanged.connect(self._on_theme_changed)
 
             main_layout.addSpacerItem(QSpacerItem(20, 10, QSizePolicy.Minimum, QSizePolicy.Expanding))
@@ -116,49 +125,60 @@ class PreferencesWindow(QDialog):
         """
         Applies the currently selected style and theme to the preferences window.
         If global_apply is True, applies the style globally to the application.
+        Robust error handling for stylesheet application.
         """
-        style = self.settings.get("style", "modern")
-        mode = self.settings.get("mode", "light")
-        stylesheet = load_global_stylesheet(style, mode)
-        self.setStyleSheet(stylesheet)
-        if global_apply:
-            QApplication.instance().setStyleSheet(stylesheet)
+        try:
+            style = self.settings.get("style", "modern")
+            mode = self.settings.get("mode", "light")
+            stylesheet = load_global_stylesheet(style, mode)
+            self.setStyleSheet(stylesheet)
+            if global_apply:
+                QApplication.instance().setStyleSheet(stylesheet)
+        except Exception as e:
+            log_exception("Error applying stylesheet in PreferencesWindow", e)
 
     def update_translations(self):
         """
         Updates all UI texts after a language change.
         Also updates translated items in all comboboxes.
+        Robust error handling for translation updates.
         """
-        self.setWindowTitle(self.translator.tr("WinPreferenceTitle"))
-        for field in self.form_fields:
-            self.labels[field["name"]].setText(self.translator.tr(field["label_key"]))
-            combo, option_keys = self.combos[field["name"]]
-            combo.blockSignals(True)
-            combo.clear()
-            for opt in field.get("options", []):
-                combo.addItem(self.translator.tr(opt["label_key"]))
-            # Set current value from settings
-            current_value = self.settings.get(field["datafield_name"].replace("preference_", ""), option_keys[0])
-            try:
-                idx = option_keys.index(current_value)
-            except ValueError:
-                idx = 0
-            combo.setCurrentIndex(idx)
-            combo.blockSignals(False)
-        self.save_btn.setText(self.translator.tr("PreferenceActionSave"))
-        self.cancel_btn.setText(self.translator.tr("PreferenceActionCancel"))
-        self._apply_current_style(global_apply=True)
+        try:
+            self.setWindowTitle(self.translator.tr("PrefWinTitle"))
+            for field in self.form_fields:
+                name = field.get("name", "")
+                self.labels[name].setText(self.translator.tr(field.get("label_key", "")))
+                combo, option_keys = self.combos[name]
+                combo.blockSignals(True)
+                combo.clear()
+                for opt in field.get("options", []):
+                    combo.addItem(self.translator.tr(opt.get("label_key", "")))
+                # Set current value from settings
+                current_value = self.settings.get(field.get("datafield_name", "").replace("preference_", ""), option_keys[0] if option_keys else "")
+                try:
+                    idx = option_keys.index(current_value)
+                except ValueError:
+                    idx = 0
+                combo.setCurrentIndex(idx)
+                combo.blockSignals(False)
+            self.save_btn.setText(self.translator.tr("PreferenceActionSave"))
+            self.cancel_btn.setText(self.translator.tr("PreferenceActionCancel"))
+            self._apply_current_style(global_apply=True)
+        except Exception as e:
+            log_exception("Error updating translations in PreferencesWindow", e)
 
     def _on_save(self):
         """
         Saves the selected settings and closes the dialog.
         Notifies parent window to update translations if possible.
+        Robust error handling for saving settings.
         """
         log_subsection("_on_save")
         try:
             for field in self.form_fields:
-                combo, option_keys = self.combos[field["name"]]
-                self.settings[field["datafield_name"].replace("preference_", "")] = option_keys[combo.currentIndex()]
+                name = field.get("name", "")
+                combo, option_keys = self.combos[name]
+                self.settings[field.get("datafield_name", "").replace("preference_", "")] = option_keys[combo.currentIndex()]
             save_settings(self.settings)
             # Notify parent to update translations if method exists
             if hasattr(self.parent(), "update_translations"):
@@ -173,6 +193,7 @@ class PreferencesWindow(QDialog):
         """
         Cancels the dialog and reverts any unsaved changes.
         Restores original settings and translations.
+        Robust error handling for cancel operation.
         """
         log_subsection("_on_cancel")
         try:
@@ -191,6 +212,7 @@ class PreferencesWindow(QDialog):
         """
         Handles language change event and updates translations.
         Sets the language immediately in settings.
+        Robust error handling for language change.
         """
         log_subsection("_on_language_changed")
         try:
@@ -206,6 +228,7 @@ class PreferencesWindow(QDialog):
     def _on_style_changed(self, idx):
         """
         Applies the selected style immediately to the preferences window and globally.
+        Robust error handling for style change.
         """
         log_subsection("_on_style_changed")
         try:
@@ -221,6 +244,7 @@ class PreferencesWindow(QDialog):
     def _on_theme_changed(self, idx):
         """
         Applies the selected theme immediately to the preferences window and globally.
+        Robust error handling for theme change.
         """
         log_subsection("_on_theme_changed")
         try:

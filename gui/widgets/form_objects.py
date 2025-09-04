@@ -13,6 +13,7 @@ class FormObjects(QWidget):
     translates all labels and options via translator.py,
     and updates translations after language change.
     All formatting and styles are centralized.
+    Robust error handling is implemented for file and JSON operations.
     """
 
     def __init__(self, translator, toolbar_actions=None, parent=None):
@@ -26,17 +27,27 @@ class FormObjects(QWidget):
             self.translator = translator
             self.setStyleSheet(load_form_style())
 
-            # Load object fields from form_fields.json
-            with open(FORM_FIELDS_FILE, "r", encoding="utf-8") as f:
-                fields_config = json.load(f)
-            object_fields = fields_config.get("project_objects", [])
+            # Load object fields from form_fields.json with robust error handling
+            try:
+                with open(FORM_FIELDS_FILE, "r", encoding="utf-8") as f:
+                    fields_config = json.load(f)
+                object_fields = fields_config.get("project_objects", [])
+            except FileNotFoundError as fnf_error:
+                log_exception("form_fields.json not found for FormObjects.", fnf_error)
+                object_fields = []
+            except json.JSONDecodeError as json_error:
+                log_exception("JSON decode error in form_fields.json for FormObjects.", json_error)
+                object_fields = []
+            except Exception as e:
+                log_exception("Unexpected error loading object fields in FormObjects.", e)
+                object_fields = []
 
             # Create the base form widget
             self.form_widget = BaseFormWidget(
-                title=self.translator.tr("Object"),
+                title=None,
                 fields=object_fields,
                 toolbar_actions=toolbar_actions,
-                form_prefix="object",
+                form_prefix="proj_ob",
                 translator=self.translator,
                 parent=self
             )
@@ -53,4 +64,7 @@ class FormObjects(QWidget):
         """
         Updates all labels and option texts after a language change.
         """
-        self.form_widget.update_translations()
+        try:
+            self.form_widget.update_translations()
+        except Exception as e:
+            log_exception("Error updating translations in FormObjects", e)

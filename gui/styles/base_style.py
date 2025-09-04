@@ -209,6 +209,14 @@ CSS_TEMPLATES = {
             color: {foreground};
         }}
     """,
+    "form_header": """
+    QLabel#FormHeaderLabel {{
+        font-size: 22px;
+        font-weight: bold;
+        color: {foreground};
+        margin-bottom: 12px;
+    }}
+    """,
     "error": """
         QLabel#error, QLineEdit[error="true"], QTextEdit[error="true"] {{
             color: {error};

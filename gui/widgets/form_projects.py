@@ -13,6 +13,7 @@ class FormProjects(QWidget):
     translates all labels and options via translator.py,
     and updates translations after language change.
     All formatting and styles are centralized.
+    Robust error handling is implemented for file and JSON operations.
     """
 
     def __init__(self, translator, toolbar_actions=None, parent=None):
@@ -26,17 +27,27 @@ class FormProjects(QWidget):
             self.translator = translator
             self.setStyleSheet(load_form_style())
 
-            # Load project fields from form_fields.json
-            with open(FORM_FIELDS_FILE, "r", encoding="utf-8") as f:
-                fields_config = json.load(f)
-            project_fields = fields_config.get("projects", [])
+            # Load project fields from form_fields.json with robust error handling
+            try:
+                with open(FORM_FIELDS_FILE, "r", encoding="utf-8") as f:
+                    fields_config = json.load(f)
+                project_fields = fields_config.get("projects", [])
+            except FileNotFoundError as fnf_error:
+                log_exception("form_fields.json not found for FormProjects.", fnf_error)
+                project_fields = []
+            except json.JSONDecodeError as json_error:
+                log_exception("JSON decode error in form_fields.json for FormProjects.", json_error)
+                project_fields = []
+            except Exception as e:
+                log_exception("Unexpected error loading project fields in FormProjects.", e)
+                project_fields = []
 
             # Create the base form widget
             self.form_widget = BaseFormWidget(
-                title=self.translator.tr("Pro"),
+                title=None,
                 fields=project_fields,
                 toolbar_actions=toolbar_actions,
-                form_prefix="project",
+                form_prefix="proj_ma",
                 translator=self.translator,
                 parent=self
             )
@@ -53,4 +64,7 @@ class FormProjects(QWidget):
         """
         Updates all labels and option texts after a language change.
         """
-        self.form_widget.update_translations()
+        try:
+            self.form_widget.update_translations()
+        except Exception as e:
+            log_exception("Error updating translations in FormProjects", e)
