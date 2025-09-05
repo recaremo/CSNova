@@ -1,0 +1,4 @@
+Vergleiche ausschließlich die Inhalte der über Add Context eingebundenen Dateien mit den entsprechenden Abschnitten in der aktuell geöffneten Datei csNova_de.md.
+Führe keinen vollständigen Review der csNova_de.md durch, sondern gib nur eine prägnante Zusammenfassung aller inhaltlichen Abweichungen, Inkonsistenzen oder fehlenden Übereinstimmungen zwischen den eingebundenen Dateien und der Dokumentation.
+Verzichte auf Hinweise, was bereits korrekt ist.
+Nutze für die Analyse das beste verfügbare Sprachmodell und stelle sicher, dass die Ergebnisse so präzise und zuverlässig wie möglich sind.

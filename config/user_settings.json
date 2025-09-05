@@ -1,9 +1,9 @@
 {
-  "first_start": false,
-  "screen_resolution": "2560x1368",
+  "first_start": true,
+  "screen_resolution": "1920x1080",
   "screen_dpi": 96.0,
   "scale_factor": 1.0,
-  "language": "de",
+  "language": "en",
   "style": "style_old",
   "theme": "theme_neutral",
   "splitter_sizes": [

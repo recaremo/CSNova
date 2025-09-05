@@ -2,23 +2,7 @@
 
 [Projektbeschreibung](/readme.md)
 
-## 1. Hauptfunktionen
-
-- Projektverwaltung: Anlegen, Bearbeiten und Archivieren von Buchprojekten  
-- Charakterdatenbank: Haupt- und Nebentabellen (Physiognomie, Psychologie, Ausbildung, Herkunft, …)  
-- Kapitel- & Szeneverwaltung inkl. Handlungsstränge, Zeitlinien, Orte, Gegenstände  
-- Beziehungs- und Mindmap‑Modul (Charaktere, Gruppen, Verbindungen)  
-- Statistiken & Übersichten (Steckbriefe, ToDo‑Listen, Fortschritt)  
-- Integrierte Schreib‑Tipps, Genre‑Guides, Quellenverwaltung, Brainstorming‑Tools  
-- Multimedia‑Integration (Bilder, Audio, Video, Animationen)  
-- Export in diverse Formate (EPUB, PDF, HTML, eigenes Reader‑Format)  
-- Custom Multimedia‑Reader mit responsivem Layout pro Plattform  
-- KI‑Interviewfunktion für Figurenentwicklung, Plotideen, Textanalyse  
-- Sprachen: Deutsch (Standard), Englisch, Französisch, Spanisch  
-- Rechtschreibprüfung: Deutsch, Englisch  
-- Dynamische Sprachauswahl mit automatischer Anpassung aller Menü- und UI-Texte
-
-## 2. Projektfahrplan & Fortschritt
+## 1. Projektfahrplan & Fortschritt
 
 [ToDo](../To-Do.md)
 
@@ -26,7 +10,28 @@
 
 [Mermaid-Diagramm: Projektstruktur und Datenbank](../csNova_mermaid.mmd)
 
-## 3. JSON Translation
+## 2. JSON Translation
+
+In der JSON Translation werden alle GUI-Elemente, Tabellenfelder und Hilfetexte in die Sprachen: Deutsch, Englisch, Spanisch und Französisch übersetzt und mit einem eindeutigen Schlüssel (key) versehen.  
+Die Reihenfolge und die Bezeichnungen der Schlüssel müssen in allen Sprachen identisch sein.  
+Diese Schlüssel = Übersetzungen können beliebig erweitert werden, müssen aber die Reihenfolge und Eindeutigkeit der Schlüssel in den Sprachblöcken sicherstellen.
+
+Die Übersetzungen werden zentral in **translator.py** erstellt.  
+Der Aufruf und die Initialisierung erfolgen zentral über **csNova.py** und **preferences.py** – wenn eine andere Sprache von den Anwender:innen ausgewählt wird.
+
+Diese JSON muss mit dem Modul **translations.json** identisch sein.  
+Der Code ` ```json ` am Anfang und ` ``` ` am Ende wird nur in der Dokumentation verwendet.  
+Der in dieser Dokumentation und in der **translations.json** verwendete Inhalt muss den Richtlinien für das JSON-Format entsprechen:
+
+* keine Kommentare
+* beginnt und endet mit einer {}
+* die Sprachblöcke werden durch die internationalen Kürzel für Sprachen definiert: "de":, "en": usw.
+* jeder Sprachblock beginnt ebenfalls mit einer {}
+* zwischen den einzelnen Sprachblöcken muss in der schließenden geschweiften Klammer ein Komma stehen },
+* dieses Komma entfällt nach dem letzten Sprachblock
+* die Schlüssel verwenden folgendes Format: "key": "Text" und werden mit einem Komma voneinander getrennt
+* beim letzten Schlüssel entfällt das Komma
+
 
 ```json
  {
@@ -1074,307 +1079,40 @@
 }
 ```
 
-## 4. Character Tabellen
+## 3. Projekttabellen
 
-In diesem Abschnitt sind die Tabellen zur Erstellung von Charakteren zusammengefasst.
+Die SQL-Definitionen der Projekttabellen befinden sich im Verzeichnis **/core/tables**.  
+Die Projekttabellen bestehen aus:
 
-### 4.1 character_main.py
+* **project.py**: Erfasst alle notwendigen Daten für ein Projekt. 
+    + Ein Projekt darf innerhalb der Datenbank nur einmal vorkommen.
+    + Folgende Datenfelder verwenden ausschließlich Daten aus den Bezugstabellen: 
+        + **project_style** ← **project_style.py**
+        + **genre** ← **project_genre.py**
+        + **targetgroup** ← **project_targetgroup.py**
+        + **narrative_perspective** ← **narrative_perspektive.py**
+    + Folgende Datenfelder werden berechnet und erwarten keine Eingaben:
+        + **project_words_count_days** = project_words_count_goal / project_days_count
+        + **project_days_count** = project_deadline - project_startdate
+    + Folgende Datenfelder werden auf Basis der Inhalte anderer Tabellen mit statistischen Werten gefüllt und erwarten keine Eingaben:
+        + **project_chapters** ← project_chapters.py = Anzahl Kapitel zur Anzahl der fertigen Artikel
+        + **project_scenes** ← project_scenes.py = Anzahl Szenen zur Anzahl der fertigen Szenen
+        + **project_storylines** ← project_storylines.py = Anzahl Storylines zur Anzahl der fertigen Storylines
+        + **project_locations** ← project_locations.py = Anzahl der Orte im Projekt = definiert
+        + **project_objects** ← project_objects.py = Anzahl der Objekte = definiert
+        + **project_main_character** ← characters.py = Anzahl Charaktere = definiert
+        + **project_supporting_characters** ← characters.py = Anzahl Nebencharaktere = definiert
+        + **project_groups_characters** ← character_groups.py = Anzahl Gruppen = definiert
+    + Die Zuordnung der externen Parameter erfolgt über ein Mapping der benötigten Tabellen.
 
-```python
-# character_main.py
-# table: character_main
-# description: base stats for a character
-# access to the tables: gender.py, sex_orientation.py
-def create_table(cursor):
-    cursor.execute("""
-    CREATE TABLE IF NOT EXISTS character_main (
-        character_ID INTEGER PRIMARY KEY AUTOINCREMENT,
-        main_character BOOL,
-        name TEXT,
-        first_name TEXT,
-        nick_name TEXT,
-        born DATE,
-        age INTEGER,
-        role TEXT,
-        status TEXT,
-        gender_ID INTEGER,
-        sex_orientation_ID INTEGER,
-        notes TEXT
-    );
-    """)
-```
+* **project_storylines.py**: Umfasst alle Storylines, die zu einem Projekt gehören. Bei Serien kann es vorkommen, dass eine Storyline über mehrere Projekte entwickelt wird.
+* **project_chapters.py**: Umfasst alle Kapitel eines Projekts. Ein Kapitel ist einmalig und findet nur in einem Projekt Verwendung.
+* **project_chapters_scenes.py**: Umfasst alle Szenen innerhalb eines Kapitels (siehe Mapping-Tabellen unten).
+* **project_objects.py**: Umfasst alle Objekte eines Projekts. Da Objekte auch in anderen Projekten genutzt werden können, ohne dass es einen inhaltlichen Bezug zwischen den Projekten gibt, erfolgt die Zuweisung über **project_scene_object_map.py**.
+* **project_locations.py**: Die Zuordnung erfolgt über die Mapping-Tabelle **project_scene_location_map.py**.
+* **project_characters.py**: Die Zuordnung erfolgt über die Mapping-Tabelle **project_scene_character_map.py**.
 
-#### 4.1.1 gender.py
-
-```python
-# gender.py
-# table: gender_data.py
-# description: the different types of gender that can be assigned to a character
-# access from the tables: character_main
-def create_table(cursor):
-    cursor.execute("""
-    CREATE TABLE IF NOT EXISTS gender (
-        gender_ID INTEGER PRIMARY KEY AUTOINCREMENT,
-        gender TEXT,
-        short_description TEXT
-    );
-    """)
-```
-##### gender_data.py
-
-```python
-# gender_data.py
-# description: data for gender.py
-
-def data_gender(cursor):
-    cursor.executemany("""
-        INSERT INTO gender (gender, short_description)
-        VALUES (?, ?)
-    """, [
-        ('Male', 'Identifies as male'),
-        ('Female', 'Identifies as female'),
-        ('Non-binary', 'Does not identify exclusively as male or female'),
-        ('Transgender', 'Gender identity differs from assigned sex at birth'),
-        ('Intersex', 'Born with physical sex characteristics that don’t fit typical definitions'),
-        ('Agender', 'Does not identify with any gender'),
-        ('Genderfluid', 'Gender identity varies over time'),
-        ('Bigender', 'Identifies as two genders'),
-        ('Other', 'Gender identity not listed above')
-    ])
-```
-
-#### 4.1.2 sex_orientation.py
-
-```python
-# sex_orientation.py
-# table: sex_orientation_data.py
-# description: the different types of sexual orientation that can be assigned to a character
-# access from the tables: character_main
-def create_table(cursor):
-    cursor.execute("""
-    CREATE TABLE IF NOT EXISTS sex_orientation (
-        sex_orientation_ID INTEGER PRIMARY KEY AUTOINCREMENT,
-        sex_orientation TEXT,
-        short_description TEXT
-    );
-    """)
-```
-##### sex_orientation_data.py
-
-```python
-# sex_orientation_data.py
-# description: data for sex_orientation.py
-
-def sex_orientation_data(cursor):
-    cursor.executemany("""
-        INSERT INTO sex_orientation (sex_orientation, short_description)
-        VALUES (?, ?)
-    """, [
-        ('Heterosexual', 'Attracted to the opposite gender'),
-        ('Homosexual', 'Attracted to the same gender'),
-        ('Bisexual', 'Attracted to both genders'),
-        ('Asexual', 'Experiences little or no sexual attraction'),
-        ('Pansexual', 'Attracted to people regardless of gender'),
-        ('Queer', 'Non-normative sexual orientation'),
-        ('Questioning', 'Exploring or unsure about sexual orientation')
-    ])
-```
-
-### 4.2 character_origin.py
-
-```python
-# character_origin.py
-# table: subtable for character_main
-# description: family and origin of a character
-# connected with: character_main
-def create_table(cursor):
-    cursor.execute("""
-    CREATE TABLE IF NOT EXISTS character_origin (
-        origin_ID INTEGER PRIMARY KEY AUTOINCREMENT,
-        character_ID INTEGER NOT NULL,
-        father TEXT,
-        mother TEXT,
-        reference_person TEXT,
-        siblings TEXT,
-        birthplace TEXT,
-        notes TEXT,
-        FOREIGN KEY(character_ID) REFERENCES character_main(character_ID)
-    );
-    """)
-```
-
-### 4.3 character_education.py
-
-```python
-# character_education.py
-# table: subtable for character_main
-# description: educations of a character
-# connected with: character_main
-def create_table(cursor):
-    cursor.execute("""
-    CREATE TABLE IF NOT EXISTS character_education (
-        education_ID INTEGER PRIMARY KEY AUTOINCREMENT,
-        character_ID INTEGER NOT NULL,
-        school TEXT,
-        university TEXT,
-        job_education TEXT,
-        autodidactic TEXT,
-        job TEXT,
-        art_music TEXT,
-        sport TEXT,
-        technology TEXT,
-        notes TEXT,
-        FOREIGN KEY(character_ID) REFERENCES character_main(character_ID)
-    );
-    """)
-```
-
-### 4.4 character_personality.py
-
-```python
-# character_personality.py
-# table: subtable for character_main
-# description: personality of a character
-# connected with: character_main
-def create_table(cursor):
-    cursor.execute("""
-    CREATE TABLE IF NOT EXISTS character_personality (
-        personality_ID INTEGER PRIMARY KEY AUTOINCREMENT,
-        character_ID INTEGER NOT NULL,
-        pos_characteristic TEXT,
-        neg_characteristic TEXT,
-        fears TEXT,
-        weaknesses TEXT,
-        strengths TEXT,
-        talents TEXT,
-        beliefs TEXT,
-        life_goals TEXT,
-        motivation TEXT,
-        behavior TEXT,
-        notes TEXT,
-        FOREIGN KEY(character_ID) REFERENCES character_main(character_ID)
-    );
-    """)
-```
-
-### 4.5 character_psychological_profile.py
-
-```python
-# character_psychological_profile.py
-# table: subtable for character_main
-# description: psychological profile of a character
-# connected with: character_main
-def create_table(cursor):
-    cursor.execute("""
-    CREATE TABLE IF NOT EXISTS character_psychological_profile (
-        psychological_profile_ID INTEGER PRIMARY KEY AUTOINCREMENT,
-        character_ID INTEGER NOT NULL,
-        diagnosis TEXT,
-        symptoms TEXT,
-        therapy TEXT,
-        medication TEXT,
-        temperament TEXT,
-        values_set TEXT,
-        moral_concepts TEXT,
-        character_strength TEXT,
-        character_weakness TEXT,
-        self_image TEXT,
-        humor TEXT,
-        aggression TEXT,
-        trauma TEXT,
-        formative_personality TEXT,
-        socialization TEXT,
-        norms TEXT,
-        taboos TEXT,
-        notes TEXT,
-        FOREIGN KEY(character_ID) REFERENCES character_main(character_ID)
-    );
-    """)
-```
-
-### 4.6 character_appearance_main.py
-
-```python
-# character_appearance_main.py
-# table: subtable for character_main
-# description: main appearance of a character
-# connected with: character_main
-def create_table(cursor):
-    cursor.execute("""
-    CREATE TABLE IF NOT EXISTS character_appearance_main (
-        appearance_main_ID INTEGER PRIMARY KEY AUTOINCREMENT,
-        character_ID INTEGER NOT NULL,
-        height TEXT,
-        body_type TEXT,
-        posture TEXT,
-        face_shape TEXT,
-        eye_shape TEXT,
-        eye_color TEXT,
-        hair TEXT,
-        hair_color TEXT,
-        skin TEXT,
-        charisma TEXT,
-        specials TEXT,
-        notes TEXT,
-        FOREIGN KEY(character_ID) REFERENCES character_main(character_ID)
-    );
-    """)
-```
-
-### 4.7 character_appearance_detail.py
-
-```python
-# character_appearance_detail.py
-# table: subtable for character_main
-# description: more appearance details of a character
-# connected with: character_main
-def create_table(cursor):
-    cursor.execute("""
-    CREATE TABLE IF NOT EXISTS character_appearance_detail (
-        appearance_detail_ID INTEGER PRIMARY KEY AUTOINCREMENT,
-        character_ID INTEGER NOT NULL,
-        head TEXT,
-        neck TEXT,
-        shoulder TEXT,
-        arms TEXT,
-        hands TEXT,
-        finger TEXT,
-        chest TEXT,
-        hips_waist TEXT,
-        buttocks TEXT,
-        legs TEXT,
-        feet TEXT,
-        toes TEXT,
-        notes TEXT,
-        FOREIGN KEY(character_ID) REFERENCES character_main(character_ID)
-    );
-    """)
-```
-
-### 4.8 character_groups.py
-
-```python
-# character_groups.py
-# table: subtable for character_main
-# description: character membership in a group
-# connected with: character_main
-def create_table(cursor):
-    cursor.execute("""
-    CREATE TABLE IF NOT EXISTS character_groups (
-        groups_ID INTEGER PRIMARY KEY AUTOINCREMENT,
-        character_ID INTEGER NOT NULL,
-        groups_title TEXT,
-        groups_description TEXT,
-        FOREIGN KEY(character_ID) REFERENCES character_main(character_ID)
-    );
-    """)
-```
-
-## 5. Projekttabellen
-
-In diesem Abschnitt sind die Tabellen zur Erstellung von Projekten zusammengefasst.
-
-### 5.1 project.py
+### 3.1 project.py
 
 ```python
 # project.py
@@ -1386,6 +1124,7 @@ def create_table(cursor):
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS project (
         project_ID INTEGER PRIMARY KEY AUTOINCREMENT,
+        project_style TEXT,
         project_premise TEXT,
         project_title TEXT,
         project_subtitle TEXT,
@@ -1412,7 +1151,7 @@ def create_table(cursor):
     """)
 ```
 
-### 5.2 project_storylines.py
+### 3.2 project_storylines.py
 
 ```python
 # project_storylines.py
@@ -1433,7 +1172,7 @@ def create_table(cursor):
     """)
 ```
 
-### 5.3 project_chapters.py
+### 3.3 project_chapters.py
 
 ```python
 # project_chapters.py
@@ -1452,7 +1191,7 @@ def create_table(cursor):
     """)
 ```
 
-### 5.4 project_chapters_scenes.py
+### 3.4 project_chapters_scenes.py
 
 ```python
 # project_chapters_scenes.py
@@ -1480,7 +1219,7 @@ def create_table(cursor):
     """)
 ```
 
-### 5.5 project_objects.py
+### 3.5 project_objects.py
 
 ```python
 # project_objects.py
@@ -1497,7 +1236,7 @@ def create_table(cursor):
     """)
 ```
 
-### 5.6 project_locations.py
+### 3.6 project_locations.py
 
 ```python
 # project_locations.py
@@ -1514,11 +1253,46 @@ def create_table(cursor):
     """)
 ```
 
-### 5.7 Mapping
+### 3.6 project_characters.py
 
-In diesem Abschnitt werden die gemappten Tabellen sowie deren Verbindungen übersichtlich dargestellt.
+```python
+# project_characters.py
+# table: project_characters.py
+# description: locations can be used in different scenes
+# 
+def create_table(cursor):
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS project_characters (
+        project_characters_ID INTEGER PRIMARY KEY AUTOINCREMENT,
+        project_characters_title TEXT,
+        project_characters_description TEXT
+    );
+    """)
+```
 
-#### 5.7.1 project_scene_character_map.py
+## 4. Mapping
+
+Die Mapping-Tabellen sind die Schnittstelle zwischen den Projekt- und den Charaktertabellen.  
+Die **form_fields.json** stellt eine zentralisierte Definition und Formate für alle Datenfelder aus allen Tabellen zur Verfügung. Im Programm werden diese Formatierungen dann auf die Formulare übertragen:
+
+* base_form_widget.py: Lädt alle Felder und Labels aus **form_fields.json**, initialisiert die dynamischen Übersetzungen via **translator.py** und wendet alle Styles an.
+* center_panel.py → initialisiert:
+    + form_center_start.py
+    + form_chapters.py
+    + form_characters.py
+    + form_locations.py
+    + form_projects.py
+    + form_scenes.py
+    + form_storylines.py
+    + form_toolbar.py
+
+* help_panel.py → initialisiert und formatiert alle Hilfetexte → siehe auch [GUI](#65-gui)  
+* navigation_panel.py → initialisiert und formatiert alle Navigations-Buttons → siehe auch [GUI](#65-gui)  
+
+Die Mapping-Tabellen sorgen für die korrekte Verknüpfung und Datenintegrität zwischen den einzelnen Projekt- und Charaktertabellen. Sie gewährleisten, dass Beziehungen und Zuordnungen konsistent und nachvollziehbar in der Datenbank abgebildet werden.
+
+
+### 4.1 project_scene_character_map.py
 ```python
 # project_scene_character_map.py
 # table: scene_character_map
@@ -1537,7 +1311,7 @@ def create_table(cursor):
     """)
 ```
 
-#### 5.7.2 project_scene_location_map.py
+### 4.2 project_scene_location_map.py
 ```python
 # project_scene_location_map.py
 # table: scene_location_map
@@ -1555,7 +1329,7 @@ def create_table(cursor):
     """)
 ```
 
-#### 5.7.3 scene_objects_map.py
+### 4.3 scene_objects_map.py
 ```python
 # scene_objects_map.py
 # table: scene_objects_map
@@ -1573,7 +1347,7 @@ def create_table(cursor):
     """)
 ```
 
-#### 5.7.4 project_scene_storyline_map.py
+### 4.4 project_scene_storyline_map.py
 ```python
 # project_scene_storyline_map.py
 # table: scene_storyline_map
@@ -1591,7 +1365,7 @@ def create_table(cursor):
     """)
 ```
 
-#### 5.7.5 project_character_group_map.py
+### 4.5 project_character_group_map.py
 ```python
 # project_character_group_map.py
 # table: character_group_map
@@ -1610,7 +1384,7 @@ def create_table(cursor):
     """)
 ```
 
-#### 5.7.6 project_charcter_storyline_map.py
+### 4.6 project_charcter_storyline_map.py
 ```python
 # project_character_storyline_map.py
 # table: character_storyline_map
@@ -1629,7 +1403,7 @@ def create_table(cursor):
     """)
 ```
 
-### 5.8 form_fields.json
+### 4.7 form_fields.json
 ```json
 {
   "projects": [
@@ -1874,9 +1648,365 @@ def create_table(cursor):
 }
 ```
 
-## 6. - Programmecode
+## 5. Charakter-Tabellen
 
-In diesem Abschnitt sind alle Programmcodes zusammengefasst.
+Die SQL-Definitionen der Charakter-Tabellen befinden sich im Verzeichnis **/core/tables**.  
+In diesem Abschnitt sind alle Tabellen zur Erstellung und Verwaltung von Charakteren zusammengefasst.  
+Die Charakter-Tabellen bilden die Grundlage für die Erfassung, Zuordnung und Auswertung aller relevanten Charakterdaten innerhalb eines Projekts.  
+Die Beziehungen zwischen den einzelnen Tabellen gewährleisten eine konsistente und nachvollziehbare Abbildung von Eigenschaften, Herkunft, Ausbildung, Persönlichkeit und weiteren Merkmalen der Charaktere in der Datenbank.
+
+Die Charakter-Tabellen bestehen aus:
+
+* **character_main.py**: Erfasst die Basisdaten eines Charakters, wie Name, Hauptcharakter-Status, Geschlecht, sexuelle Orientierung und weitere Grundinformationen.
+* **gender.py** und **gender_data.py**: Enthalten die verschiedenen Geschlechtsidentitäten, die einem Charakter zugeordnet werden können.
+* **sex_orientation.py** und **sex_orientation_data.py**: Enthalten die verschiedenen sexuellen Orientierungen, die einem Charakter zugeordnet werden können.
+* **character_origin.py**: Erfasst die familiäre Herkunft eines Charakters, wie Vater, Mutter, Bezugspersonen, Geschwister und Geburtsort.
+* **character_education.py**: Dokumentiert die Ausbildung eines Charakters, einschließlich Schule, Universität, Berufsausbildung, autodidaktischer Bildung, Beruf, künstlerischer und sportlicher Aktivitäten sowie technischer Kenntnisse.
+* **character_personality.py**: Beschreibt die Persönlichkeit eines Charakters, einschließlich positiver und negativer Eigenschaften, Ängste, Schwächen, Stärken, Talente, Glaubenssätze, Lebensziele, Motivation und Verhalten.
+* **character_psychological_profile.py**: Erfasst das psychologische Profil eines Charakters, wie Diagnosen, Symptome, Therapien, Medikamente, Temperament, Werte, Moralvorstellungen, Charakterstärken und -schwächen, Selbstbild, Humor, Aggressivität, Traumata, Prägungen, Sozialisation, Normen und Tabus.
+* **character_appearance_main.py** und **character_appearance_detail.py**: Dokumentieren das äußere Erscheinungsbild eines Charakters, von allgemeinen Merkmalen wie Größe, Körperbau, Gesicht, Augen, Haare, Haut und Ausstrahlung bis hin zu detaillierten Merkmalen wie Kopf, Nacken, Schultern, Arme, Hände, Finger, Brust, Hüfte, Gesäß, Beine, Füße und Zehen.
+* **character_groups.py**: Erfasst die Gruppenzugehörigkeit eines Charakters und beschreibt die jeweiligen Gruppen und deren Eigenschaften.
+
+Diese Tabellen ermöglichen eine umfassende und strukturierte Erfassung aller relevanten Charaktermerkmale und deren Beziehungen innerhalb eines
+
+
+### 5.1 character_main.py
+
+```python
+# character_main.py
+# table: character_main
+# description: base stats for a character
+# access to the tables: gender.py, sex_orientation.py
+def create_table(cursor):
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS character_main (
+        character_ID INTEGER PRIMARY KEY AUTOINCREMENT,
+        main_character BOOL,
+        name TEXT,
+        first_name TEXT,
+        nick_name TEXT,
+        born DATE,
+        age INTEGER,
+        role TEXT,
+        status TEXT,
+        gender_ID INTEGER,
+        sex_orientation_ID INTEGER,
+        notes TEXT
+    );
+    """)
+```
+
+#### 4.1.1 gender.py
+
+```python
+# gender.py
+# table: gender_data.py
+# description: the different types of gender that can be assigned to a character
+# access from the tables: character_main
+def create_table(cursor):
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS gender (
+        gender_ID INTEGER PRIMARY KEY AUTOINCREMENT,
+        gender TEXT,
+        short_description TEXT
+    );
+    """)
+```
+##### gender_data.py
+
+```python
+# gender_data.py
+# description: data for gender.py
+
+def data_gender(cursor):
+    cursor.executemany("""
+        INSERT INTO gender (gender, short_description)
+        VALUES (?, ?)
+    """, [
+        ('Male', 'Identifies as male'),
+        ('Female', 'Identifies as female'),
+        ('Non-binary', 'Does not identify exclusively as male or female'),
+        ('Transgender', 'Gender identity differs from assigned sex at birth'),
+        ('Intersex', 'Born with physical sex characteristics that don’t fit typical definitions'),
+        ('Agender', 'Does not identify with any gender'),
+        ('Genderfluid', 'Gender identity varies over time'),
+        ('Bigender', 'Identifies as two genders'),
+        ('Other', 'Gender identity not listed above')
+    ])
+```
+
+#### 4.1.2 sex_orientation.py
+
+```python
+# sex_orientation.py
+# table: sex_orientation_data.py
+# description: the different types of sexual orientation that can be assigned to a character
+# access from the tables: character_main
+def create_table(cursor):
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS sex_orientation (
+        sex_orientation_ID INTEGER PRIMARY KEY AUTOINCREMENT,
+        sex_orientation TEXT,
+        short_description TEXT
+    );
+    """)
+```
+##### sex_orientation_data.py
+
+```python
+# sex_orientation_data.py
+# description: data for sex_orientation.py
+
+def sex_orientation_data(cursor):
+    cursor.executemany("""
+        INSERT INTO sex_orientation (sex_orientation, short_description)
+        VALUES (?, ?)
+    """, [
+        ('Heterosexual', 'Attracted to the opposite gender'),
+        ('Homosexual', 'Attracted to the same gender'),
+        ('Bisexual', 'Attracted to both genders'),
+        ('Asexual', 'Experiences little or no sexual attraction'),
+        ('Pansexual', 'Attracted to people regardless of gender'),
+        ('Queer', 'Non-normative sexual orientation'),
+        ('Questioning', 'Exploring or unsure about sexual orientation')
+    ])
+```
+
+### 5.2 character_origin.py
+
+```python
+# character_origin.py
+# table: subtable for character_main
+# description: family and origin of a character
+# connected with: character_main
+def create_table(cursor):
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS character_origin (
+        origin_ID INTEGER PRIMARY KEY AUTOINCREMENT,
+        character_ID INTEGER NOT NULL,
+        father TEXT,
+        mother TEXT,
+        reference_person TEXT,
+        siblings TEXT,
+        birthplace TEXT,
+        notes TEXT,
+        FOREIGN KEY(character_ID) REFERENCES character_main(character_ID)
+    );
+    """)
+```
+
+### 5.3 character_education.py
+
+```python
+# character_education.py
+# table: subtable for character_main
+# description: educations of a character
+# connected with: character_main
+def create_table(cursor):
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS character_education (
+        education_ID INTEGER PRIMARY KEY AUTOINCREMENT,
+        character_ID INTEGER NOT NULL,
+        school TEXT,
+        university TEXT,
+        job_education TEXT,
+        autodidactic TEXT,
+        job TEXT,
+        art_music TEXT,
+        sport TEXT,
+        technology TEXT,
+        notes TEXT,
+        FOREIGN KEY(character_ID) REFERENCES character_main(character_ID)
+    );
+    """)
+```
+
+### 5.4 character_personality.py
+
+```python
+# character_personality.py
+# table: subtable for character_main
+# description: personality of a character
+# connected with: character_main
+def create_table(cursor):
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS character_personality (
+        personality_ID INTEGER PRIMARY KEY AUTOINCREMENT,
+        character_ID INTEGER NOT NULL,
+        pos_characteristic TEXT,
+        neg_characteristic TEXT,
+        fears TEXT,
+        weaknesses TEXT,
+        strengths TEXT,
+        talents TEXT,
+        beliefs TEXT,
+        life_goals TEXT,
+        motivation TEXT,
+        behavior TEXT,
+        notes TEXT,
+        FOREIGN KEY(character_ID) REFERENCES character_main(character_ID)
+    );
+    """)
+```
+
+### 5.5 character_psychological_profile.py
+
+```python
+# character_psychological_profile.py
+# table: subtable for character_main
+# description: psychological profile of a character
+# connected with: character_main
+def create_table(cursor):
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS character_psychological_profile (
+        psychological_profile_ID INTEGER PRIMARY KEY AUTOINCREMENT,
+        character_ID INTEGER NOT NULL,
+        diagnosis TEXT,
+        symptoms TEXT,
+        therapy TEXT,
+        medication TEXT,
+        temperament TEXT,
+        values_set TEXT,
+        moral_concepts TEXT,
+        character_strength TEXT,
+        character_weakness TEXT,
+        self_image TEXT,
+        humor TEXT,
+        aggression TEXT,
+        trauma TEXT,
+        formative_personality TEXT,
+        socialization TEXT,
+        norms TEXT,
+        taboos TEXT,
+        notes TEXT,
+        FOREIGN KEY(character_ID) REFERENCES character_main(character_ID)
+    );
+    """)
+```
+
+### 5.6 character_appearance_main.py
+
+```python
+# character_appearance_main.py
+# table: subtable for character_main
+# description: main appearance of a character
+# connected with: character_main
+def create_table(cursor):
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS character_appearance_main (
+        appearance_main_ID INTEGER PRIMARY KEY AUTOINCREMENT,
+        character_ID INTEGER NOT NULL,
+        height TEXT,
+        body_type TEXT,
+        posture TEXT,
+        face_shape TEXT,
+        eye_shape TEXT,
+        eye_color TEXT,
+        hair TEXT,
+        hair_color TEXT,
+        skin TEXT,
+        charisma TEXT,
+        specials TEXT,
+        notes TEXT,
+        FOREIGN KEY(character_ID) REFERENCES character_main(character_ID)
+    );
+    """)
+```
+
+### 5.7 character_appearance_detail.py
+
+```python
+# character_appearance_detail.py
+# table: subtable for character_main
+# description: more appearance details of a character
+# connected with: character_main
+def create_table(cursor):
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS character_appearance_detail (
+        appearance_detail_ID INTEGER PRIMARY KEY AUTOINCREMENT,
+        character_ID INTEGER NOT NULL,
+        head TEXT,
+        neck TEXT,
+        shoulder TEXT,
+        arms TEXT,
+        hands TEXT,
+        finger TEXT,
+        chest TEXT,
+        hips_waist TEXT,
+        buttocks TEXT,
+        legs TEXT,
+        feet TEXT,
+        toes TEXT,
+        notes TEXT,
+        FOREIGN KEY(character_ID) REFERENCES character_main(character_ID)
+    );
+    """)
+```
+
+### 5.8 character_groups.py
+
+```python
+# character_groups.py
+# table: subtable for character_main
+# description: character membership in a group
+# connected with: character_main
+def create_table(cursor):
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS character_groups (
+        groups_ID INTEGER PRIMARY KEY AUTOINCREMENT,
+        character_ID INTEGER NOT NULL,
+        groups_title TEXT,
+        groups_description TEXT,
+        FOREIGN KEY(character_ID) REFERENCES character_main(character_ID)
+    );
+    """)
+```
+
+
+
+## 6. Programmcode
+
+Die Programmcodes von CSNova sind modular aufgebaut und befinden sich in den Verzeichnissen **/core**, **/config** und **/gui**.  
+In diesem Kapitel sind alle zentralen Module, Hilfsfunktionen und GUI-Komponenten zusammengefasst, die für die Funktionalität, Datenverwaltung und Benutzeroberfläche der Anwendung verantwortlich sind.  
+Die klare Strukturierung der Module gewährleistet eine effiziente Entwicklung, Wartung und Erweiterbarkeit des Programms.
+
+Die wichtigsten Module und Komponenten sind:
+
+* **Hauptprogramm**
+    * **csNova.py**: Hauptprogramm, steuert den Programmstart, das Laden der Einstellungen und die Initialisierung der Hauptfenster.
+    * **Einstellungen**
+    * **settings.py**: Verwaltung und Speicherung der Benutzereinstellungen.
+    * **dev.py**: Definition der Verzeichnisse, Dateipfade und zentralen Variablen.
+    * **logger.py**: Zentrales Logging-Modul für Fehler, Informationen und Debug-Ausgaben.
+
+* **Datenbank**
+    * **database.py**: Initialisierung und Verwaltung der Datenbank, Tabellen und Seed-Daten.
+
+* **Übersetzungen**
+    * **translator.py**: Verwaltung der Übersetzungen und dynamische Sprachumschaltung.
+    * **user_settings.json**: Speicherung der Spracheinstellungen und weiterer Nutzerpräferenzen.
+
+* **GUI**
+    * **Styles**
+        + **base_style.py**: Zentrale CSS-Templates für alle GUI-Komponenten.
+        + **themes_style.py**: Definition der verfügbaren Themes und Farbschemata.
+        + **registry_style.py**: Auswahl und Anwendung des aktuellen Styles und Themes.
+        + **form_styles.py**: Laden und Anwenden der Stylesheets für die GUI.
+    * **Panels**
+        + **navigation_panel.py**: Panel für die Navigation zwischen den Hauptbereichen.
+        + **center_panel.py**: Panel für die Anzeige und Steuerung der Hauptinhalte.
+        + **help_panel.py**: Panel für die Anzeige von Hilfetexten und Kontextinformationen.
+    * **Widgets**
+        + **form_toolbar.py**: Zentrale Toolbar für Formularaktionen.
+        + **base_form_widget.py**: Generisches Widget für die dynamische Erstellung von Formularen.
+        + **form_projects.py**, **form_chapters.py**, **form_characters.py**, **form_locations.py**, **form_objects.py**, **form_scenes.py**, **form_storylines.py**: Spezifische Formulare für die jeweiligen Datenbereiche.
+        + **form_center_start.py**: Widget für die Startansicht im CenterPanel.
+    * **Fenster**
+        + **start_window.py**: Hauptfenster der Anwendung mit zentralen Buttons und Hintergrundbild.
+        + **preferences.py**: Dialogfenster für Sprache, Stil und Theme-Einstellungen.
+        + **project_window.py**: Projektfenster mit Navigation, Hauptinhalt und Hilfepanel.
+
+Diese Module bilden die Grundlage für die gesamte Funktionalität und das Erscheinungsbild von CSNova.
 
 ### 6.1 Hauptprogramm (csNova.py)
 
@@ -2097,7 +2227,6 @@ for dir_path in [DATA_DIR, CONFIG_DIR, ASSETS_DIR, DOCS_DIR]:
     dir_path.mkdir(exist_ok=True)
 
 LOG_FILE = BASE_DIR / "csnova.log"
-LOG_FILE = BASE_DIR / "csnova.log"
 ```
 
 #### 6.2.3 logger.py
@@ -2274,14 +2403,26 @@ def init_schema():
 
 ```json
 {
-  "language": "de",
+  "first_start": true,
+  "screen_resolution": "1920x1080",
+  "screen_dpi": 96.0,
+  "scale_factor": 1.0,
+  "language": "en",
+  "style": "style_old",
+  "theme": "theme_neutral",
   "splitter_sizes": [
-    316,
-    948,
-    316
+    176,
+    1270,
+    466
   ],
-  "style": "modern",
-  "mode": "middle"
+  "mode": "neutral",
+  "start_window_bnt_width": 240,
+  "start_window_bnt_height": 60,
+  "start_window_bnt_top_offset": 270,
+  "start_window_bnt_left_offset": 1350,
+  "start_window_bnt_spacing": 42,
+  "screen_resolution_changed": true,
+  "sreen_resolution": "1920x1080"
 }
 ```
 

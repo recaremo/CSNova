@@ -1,4 +1,6 @@
-[English](#english) [Español](#espa%C3%B1ol) [Français](#fran%C3%A7ais)
+## Deutsch
+
+[English](#english) • [Español](#espa%C3%B1ol) • [Français](#fran%C3%A7ais)
 
 # Lizenzbedingungen für Codices Scriptoria Nova (CSNova)
 
@@ -82,10 +84,11 @@ Die Nutzung des Namens „CSNova“, „Codices Scriptoria Nova“, „CSNova-Re
 © 2025 Frank Reiser  
 Kontakt: reiserfrank@t-online.de
 
------------------------------------------------------------------------------
-[Deutsch](#deutsch) [Español](#espa%C3%B1ol) [Français](#fran%C3%A7ais)
-
+---
 ## English
+
+[Deutsch](#deutsch) • [Español](#espa%C3%B1ol) • [Français](#fran%C3%A7ais)
+
 # License Terms for Codices Scriptoria Nova (CSNova)
 
 ## Introduction
@@ -155,10 +158,11 @@ Use of the names “CSNova,” “Codices Scriptoria Nova,” “CSNova Reader,�
 © 2025 Frank Reiser\
 Contact: reiserfrank@t-online.de
 
------------------------------------------------------------------------------
-[Deutsch](#deutsch) [English](#english) [Français](#fran%C3%A7ais)
-
+---
 ## Español
+
+[Deutsch](#deutsch) • [English](#english) • [Français](#fran%C3%A7ais)
+
 # Términos de Licencia para Codices Scriptoria Nova (CSNova)
 
 ## Introducción
@@ -228,10 +232,11 @@ El uso de los nombres “CSNova”, “Codices Scriptoria Nova”, “CSNova Rea
 © 2025 Frank Reiser  
 Contacto: reiserfrank@t-online.de
 
------------------------------------------------------------------------------
-[Deutsch](#deutsch) [English](#english) [Español](#espa%C3%B1ol)
-
+---
 ## Français
+
+[Deutsch](#deutsch) • [English](#english) • [Español](#espa%C3%B1ol)
+
 # Conditions de Licence pour Codices Scriptoria Nova (CSNova)
 
 ## Introduction
