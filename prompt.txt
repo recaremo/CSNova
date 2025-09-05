@@ -1,4 +1,73 @@
-Vergleiche ausschließlich die Inhalte der über Add Context eingebundenen Dateien mit den entsprechenden Abschnitten in der aktuell geöffneten Datei csNova_de.md.
-Führe keinen vollständigen Review der csNova_de.md durch, sondern gib nur eine prägnante Zusammenfassung aller inhaltlichen Abweichungen, Inkonsistenzen oder fehlenden Übereinstimmungen zwischen den eingebundenen Dateien und der Dokumentation.
-Verzichte auf Hinweise, was bereits korrekt ist.
-Nutze für die Analyse das beste verfügbare Sprachmodell und stelle sicher, dass die Ergebnisse so präzise und zuverlässig wie möglich sind.
+vergleiche ob der Code in: 
+- Abschnitt 6.1 mit dem in csNova.py identisch ist,
+- Abschnitt 6.2.1 mit dem von settings.py identisch ist,
+- Abschnitt 6.2.2 mit dem von dev.py identisch ist,
+- Abschnitt 6.2.3 mit dem von looger.py identisch ist,
+- Abschnitt 6.3 mit dem von database.py identisch ist,
+- Abschnitt 6.4.1 mit dem von user_settings.json identisch ist.
+
+vergleiche ob der Code in: 
+- Abschnitt 6.4.2 mit dem in translator.py identisch ist,
+- Abschnitt 6.5.1.1 mit dem von base_style.py identisch ist,
+- Abschnitt 6.5.1.2 mit dem von themes_style.py identisch ist,
+- Abschnitt 6.5.1.3 mit dem von registy_style.py identisch ist,
+- Abschnitt 6.5.1.4 mit dem von form_styles.py identisch ist,
+- Abschnitt 6.5.2.1 mit dem von navigation_panel.py identisch ist,
+- Abschnitt 6.5.2.2 mit dem von help_panel.py identisch ist,
+- Abschnitt 6.5.2.3 mit dem von center_panel.py identisch ist.
+
+vergleiche ob der Code in: 
+- Abschnitt 6.5.3.1 mit dem in form_toolbar.py identisch ist,
+- Abschnitt 6.5.3.2 mit dem von base_form_widget.py identisch ist,
+- Abschnitt 6.5.3.3 mit dem von form_chapters.py identisch ist,
+- Abschnitt 6.5.3.4 mit dem von form_characters.py identisch ist,
+- Abschnitt 6.5.3.5 mit dem von form_locations.py identisch ist,
+- Abschnitt 6.5.3.6 mit dem von form_objects.py identisch ist,
+- Abschnitt 6.5.3.7 mit dem von form_projects.py identisch ist,
+- Abschnitt 6.5.3.8 mit dem von form_scenes.py identisch ist.
+- Abschnitt 6.5.3.9 mit dem von form_storylines.py identisch ist,
+- Abschnitt 6.5.3.10 mit dem von form_center_start.py identisch ist.
+
+vergleiche ob der Code in: 
+- Abschnitt 6.5.4.1 mit dem in start_window.py identisch ist,
+- Abschnitt 6.5.4.2 mit dem von preferences.py identisch ist,
+- Abschnitt 6.5.4.3 mit dem von project_window.py identisch ist,
+- Abschnitt 2, mit dem von translation.json identisch ist,
+- Abschnitt 3.1 mit dem von project.py identisch ist,
+- Abschnitt 3.2 mit den von project_storylines.py identisch ist, 
+- Abschnitt 3.3 mit dem von project_chapters.py identisch ist,
+- Abschnitt 3.4 mit den von project_chapters_scenes.py identisch ist, 
+- Abschnitt 3.5 mit dem von project_objects.py identisch ist,
+- Abschnitt 3.6 mit den von project_locations.py identisch ist, 
+- Abschnitt 3.7 mit den von project_characters.py identisch ist.
+
+vergleiche ob der Code in: 
+- Abschnitt 4.1 mit dem von project_scene_character_map.py identisch ist,
+- Abschnitt 4.2 mit den von project_scene_locations_map.py identisch ist, 
+- Abschnitt 4.3 mit dem von project_scene_object_map.py identisch ist,
+- Abschnitt 4.4 mit den von project_scene_storyline_map identisch ist, 
+- Abschnitt 4.5 mit dem von project_character_group_map.py identisch ist,
+- Abschnitt 4.6 mit den von project_charcter_storyline_map.py identisch ist, 
+- Abschnitt 4.7 mit den von form_fields.json identisch ist.
+
+vergleiche ob der Code in: 
+- Abschnitt 5.1 mit dem von character_main.py identisch ist,
+- Abschnitt 5.2 mit den von character_origin.py identisch ist, 
+- Abschnitt 5.3 mit dem von character_education.py identisch ist,
+- Abschnitt 5.4 mit den von character_personality.py identisch ist, 
+- Abschnitt 5.5 mit dem von character_psychological_profile.py identisch ist,
+- Abschnitt 5.6 mit den von character_appearance_main.py identisch ist, 
+- Abschnitt 5.7 mit den von character_appearance_detail.py identisch ist,
+- Abschnitt 5.8 mit den von character_groups.py identisch ist.
+
+vergleiche ob der Code in: 
+- Abschnitt 5.1.1 gender.py
+- Abschnitt 5.1.1 gender_data.py
+- Abschnitt 5.1.2 sex_orientation.py
+- Abschnitt 5.1.2 sex_orientation_data-py
+
+analysiere, ob die in csNova_de.py 
+- beschriebenen und erkennbaren Abhängigkeiten korrekt in csNova_mermaid.mmd dargestellt wurden. 
+- verwendeten Dateinamen mit denen in project_tree.md übereinstimmen, sind alle Dateien vorhanden? 
+- To-Do
+

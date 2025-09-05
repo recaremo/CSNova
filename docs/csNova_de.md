@@ -1253,7 +1253,7 @@ def create_table(cursor):
     """)
 ```
 
-### 3.6 project_characters.py
+### 3.7 project_characters.py
 
 ```python
 # project_characters.py
@@ -1329,7 +1329,7 @@ def create_table(cursor):
     """)
 ```
 
-### 4.3 scene_objects_map.py
+### 4.3 project_scene_object_map.py
 ```python
 # scene_objects_map.py
 # table: scene_objects_map
@@ -1696,7 +1696,7 @@ def create_table(cursor):
     """)
 ```
 
-#### 4.1.1 gender.py
+#### 5.1.1 gender.py
 
 ```python
 # gender.py
@@ -1735,7 +1735,7 @@ def data_gender(cursor):
     ])
 ```
 
-#### 4.1.2 sex_orientation.py
+#### 5.1.2 sex_orientation.py
 
 ```python
 # sex_orientation.py
@@ -2023,7 +2023,7 @@ from gui.styles.form_styles import load_global_stylesheet
 # Default settings used as fallback if user_settings.json is missing or incomplete
 DEFAULT_SETTINGS = {
     "first_start": True,
-    "sreen_resolution": "1920x1080",
+    "screen_resolution": "1920x1080",
     "screen_dpi": 96,
     "scale_factor": 1.0,
     "language": "en",
@@ -2084,7 +2084,7 @@ def initialize_screen_settings(settings, app):
     dpi = screen.logicalDotsPerInch()
     scale_factor = dpi / 96  # 96 DPI is standard
 
-    settings["sreen_resolution"] = f"{size.width()}x{size.height()}"
+    settings["screen_resolution"] = f"{size.width()}x{size.height()}"
     settings["screen_dpi"] = dpi
     settings["scale_factor"] = scale_factor
 
@@ -2111,7 +2111,7 @@ def check_and_update_screen_settings(settings, app):
     current_dpi = dpi
 
     # Check for changes in resolution or DPI
-    if (settings.get("sreen_resolution") != current_resolution or
+    if (settings.get("screen_resolution") != current_resolution or
         settings.get("screen_dpi") != current_dpi):
         settings["screen_resolution_changed"] = True
         initialize_screen_settings(settings, app)
@@ -2154,7 +2154,7 @@ if __name__ == "__main__":
 ```
 
 ### 6.2 Settings 
-#### 6.2.1 setting.py
+#### 6.2.1 settings.py
 
 ```python
 import json
@@ -2192,7 +2192,6 @@ def save_settings(settings):
         log_info("Settings saved successfully.")
     except Exception as e:
         log_exception("Error while saving settings", e)
-```
 
 #### 6.2.2 dev.py
 
