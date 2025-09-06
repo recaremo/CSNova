@@ -1,6 +1,6 @@
 from PySide6.QtWidgets import QWidget, QVBoxLayout
 from gui.widgets.base_form_widget import BaseFormWidget
-from gui.styles.form_styles import load_form_style
+from gui.styles.python_gui_styles import apply_theme_style
 from core.logger import log_section, log_subsection, log_info, log_exception
 from config.dev import FORM_FIELDS_FILE
 import json
@@ -16,7 +16,7 @@ class FormProjects(QWidget):
     Robust error handling is implemented for file and JSON operations.
     """
 
-    def __init__(self, translator, toolbar_actions=None, parent=None):
+    def __init__(self, translator, toolbar_actions=None, parent=None, style=None):
         """
         Initializes the projects form with dynamic fields and translations.
         """
@@ -25,7 +25,8 @@ class FormProjects(QWidget):
         try:
             super().__init__(parent)
             self.translator = translator
-            self.setStyleSheet(load_form_style())
+            self.style = style
+            apply_theme_style(self, "panel", self.style)
 
             # Load project fields from form_fields.json with robust error handling
             try:
@@ -47,9 +48,10 @@ class FormProjects(QWidget):
                 title=None,
                 fields=project_fields,
                 toolbar_actions=toolbar_actions,
-                form_prefix="proj_ma",
+                form_prefix="projects",
                 translator=self.translator,
-                parent=self
+                parent=self,
+                style=self.style
             )
 
             layout = QVBoxLayout(self)

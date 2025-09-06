@@ -1,6 +1,6 @@
 from PySide6.QtWidgets import QWidget, QVBoxLayout, QPushButton
-from gui.styles.form_styles import load_form_style
 from core.logger import log_section, log_subsection, log_info, log_exception
+from gui.styles.python_gui_styles import apply_theme_style
 
 class NavigationPanel(QWidget):
     """
@@ -9,13 +9,14 @@ class NavigationPanel(QWidget):
     All button labels are translated via translator.py.
     """
 
-    def __init__(self, translator, nav_keys=None, parent=None, start_window=None, help_panel=None, center_panel=None):
+    def __init__(self, translator, nav_keys=None, parent=None, start_window=None, help_panel=None, center_panel=None, style=None):
         """
         Initializes the navigation panel with translated buttons.
         nav_keys: List of label_keys for navigation buttons.
         start_window: Reference to the StartWindow instance for back navigation.
         help_panel: Reference to the HelpPanel instance for updating help text.
         center_panel: Reference to the CenterPanel instance for switching forms.
+        style: Combined style dict from csNova_base_style.json and csNova_themes_style.json.
         """
         log_section("navigation_panel.py")
         log_subsection("__init__")
@@ -26,7 +27,9 @@ class NavigationPanel(QWidget):
             self.project_window = parent  # Save reference to the actual ProjectWindow
             self.help_panel = help_panel
             self.center_panel = center_panel
-            self.setStyleSheet(load_form_style())
+            self.style = style
+
+            apply_theme_style(self, "panel", self.style)
 
             layout = QVBoxLayout(self)
             layout.setContentsMargins(12, 12, 12, 12)
@@ -51,6 +54,7 @@ class NavigationPanel(QWidget):
                 layout.addWidget(btn)
                 # Connect navigation buttons to update help and center panel
                 btn.clicked.connect(lambda checked, k=key: self.handle_navigation_click(k))
+                apply_theme_style(btn, "button", self.style)
 
             # Add a stretch to push the last button to the bottom
             layout.addStretch()
@@ -61,6 +65,7 @@ class NavigationPanel(QWidget):
             back_btn.setObjectName(back_key)
             self.buttons[back_key] = back_btn
             layout.addWidget(back_btn)
+            apply_theme_style(back_btn, "button", self.style)
 
             # Connect back button to close project window and show start window
             back_btn.clicked.connect(self.go_back_to_start)

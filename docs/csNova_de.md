@@ -3601,13 +3601,12 @@ class FormToolbar(QWidget):
 ```python
 import json
 from PySide6.QtWidgets import (
-    QWidget, QVBoxLayout, QHBoxLayout, QLabel, QFormLayout,
-    QLineEdit, QSpinBox, QDateEdit, QComboBox
+    QWidget, QVBoxLayout, QFormLayout, QLabel, QLineEdit, QSpinBox, QDateEdit, QComboBox, QCheckBox
 )
+from PySide6.QtCore import Qt
 from gui.widgets.form_toolbar import FormToolbar
 from gui.styles.form_styles import load_form_style
 from core.logger import log_section, log_subsection, log_info, log_exception
-from config.dev import FORM_FIELDS_FILE
 
 class BaseFormWidget(QWidget):
     """
@@ -3615,11 +3614,13 @@ class BaseFormWidget(QWidget):
     translates all labels and options dynamically via translator.py,
     updates labels and options after language change.
     All styles are applied centrally via form_styles.py.
+    Field-specific settings (e.g. width) are applied if present.
     """
 
     def __init__(self, title, fields, toolbar_actions, form_prefix, translator, parent=None):
         """
         Initializes the form widget with dynamic fields, translations, and toolbar.
+        Applies field-specific settings such as width if defined in fields.
         """
         log_section("base_form_widget.py")
         log_subsection("__init__")
@@ -3628,66 +3629,84 @@ class BaseFormWidget(QWidget):
             self.translator = translator
             self.setStyleSheet(load_form_style())
 
-            main_layout = QVBoxLayout()
+            main_layout = QVBoxLayout(self)
+            main_layout.setSpacing(12)
 
-            # Toolbar
+            # Toolbar always shown
             self.toolbar = FormToolbar(self.translator, form_prefix, self)
+            main_layout.addWidget(self.toolbar)
             if toolbar_actions:
                 toolbar_actions(self.toolbar)
-                main_layout.addWidget(self.toolbar)
-                main_layout.addSpacing(12)
 
-            # Form fields
             self.form_layout = QFormLayout()
             self.inputs = {}
             self.labels = {}
             self.option_keys = {}
 
+            # Store fields for translation updates
+            self._fields = fields
+
             for field in fields:
                 if field.get("type") == "header":
                     header_text = self.translator.tr(field["label_key"])
                     header_label = QLabel(header_text if header_text else field.get("default_label", ""), self)
-                    # Use centralized style for header if available, else fallback
+                    header_label.setObjectName("FormHeaderLabel")
                     header_label.setProperty("header", True)
                     self.form_layout.addRow(header_label)
                     continue
 
                 label_text = self.translator.tr(field["label_key"])
                 label = QLabel(label_text if label_text else field.get("default_label", ""), self)
+                label.setProperty("label_key", field["label_key"])
                 self.labels[field["name"]] = label
                 input_widget = None
 
+                # --- Widget creation with field-specific settings ---
                 if field["type"] == "text":
                     input_widget = QLineEdit(self)
                     if "max_length" in field:
                         input_widget.setMaxLength(field["max_length"])
+                    if "width" in field:
+                        input_widget.setFixedWidth(field["width"])
                 elif field["type"] == "spin":
                     input_widget = QSpinBox(self)
                     if "max" in field:
                         input_widget.setMaximum(field["max"])
                     if "min" in field:
                         input_widget.setMinimum(field["min"])
+                    if "width" in field:
+                        input_widget.setFixedWidth(field["width"])
                 elif field["type"] == "date":
                     input_widget = QDateEdit(self)
+                    if "width" in field:
+                        input_widget.setFixedWidth(field["width"])
                 elif field["type"] == "select":
                     input_widget = QComboBox(self)
                     self.option_keys[field["name"]] = []
                     for option in field.get("options", []):
-                        # Use translated label for each option
                         option_label = self.translator.tr(option.get("label_key", str(option)))
                         input_widget.addItem(option_label)
-                        self.option_keys[field["name"]].append(option.get("key", option_label))
+                        self.option_keys[field["name"]].append(option.get("label_key", option_label))
+                    if "width" in field:
+                        input_widget.setFixedWidth(field["width"])
                 elif field["type"] == "display":
                     input_widget = QLabel("", self)
+                    if "width" in field:
+                        input_widget.setFixedWidth(field["width"])
+                elif field["type"] == "checkbox":
+                    input_widget = QCheckBox(self)
+                    if "width" in field:
+                        input_widget.setFixedWidth(field["width"])
                 else:
                     input_widget = QLineEdit(self)
+                    if "width" in field:
+                        input_widget.setFixedWidth(field["width"])
 
                 self.inputs[field["name"]] = input_widget
                 self.form_layout.addRow(label, input_widget)
 
             main_layout.addLayout(self.form_layout)
             main_layout.addStretch()
-
             self.setLayout(main_layout)
             log_info("BaseFormWidget initialized successfully.")
         except Exception as e:
@@ -3697,30 +3716,30 @@ class BaseFormWidget(QWidget):
         """
         Updates all labels and option texts after a language change.
         """
-        for field_name, label in self.labels.items():
-            # Find the field definition for this label
-            field = next((f for f in self.inputs if f == field_name), None)
-            if field:
-                label_key = None
-                # Try to get label_key from form_fields.json if available
-                # This assumes you pass the fields array to the widget and can access it here
-                # If not, you may need to store label_keys in self.labels
-                label_key = getattr(label, "label_key", None)
-                if not label_key:
-                    # Fallback: try to get from label text
-                    label_key = field_name
-                label.setText(self.translator.tr(label_key))
-
-            # Update options for QComboBox
-            input_widget = self.inputs.get(field_name)
-            if isinstance(input_widget, QComboBox) and field_name in self.option_keys:
-                input_widget.blockSignals(True)
-                input_widget.clear()
-                for idx, option_key in enumerate(self.option_keys[field_name]):
-                    # Try to get the label_key from form_fields.json options
-                    option_label = self.translator.tr(option_key)
-                    input_widget.addItem(option_label)
-                input_widget.blockSignals(False)
+        try:
+            for field in self._fields:
+                field_name = field["name"]
+                if field.get("type") == "header":
+                    # Update header label
+                    for i in range(self.form_layout.count()):
+                        item = self.form_layout.itemAt(i)
+                        widget = item.widget()
+                        if isinstance(widget, QLabel) and widget.property("header"):
+                            widget.setText(self.translator.tr(field["label_key"]))
+                else:
+                    label = self.labels.get(field_name)
+                    if label:
+                        label.setText(self.translator.tr(field["label_key"]))
+                    input_widget = self.inputs.get(field_name)
+                    if isinstance(input_widget, QComboBox) and field_name in self.option_keys:
+                        input_widget.blockSignals(True)
+                        input_widget.clear()
+                        for option_label_key in self.option_keys[field_name]:
+                            input_widget.addItem(self.translator.tr(option_label_key))
+                        input_widget.blockSignals(False)
+            log_info("BaseFormWidget translations updated.")
+        except Exception as e:
+            log_exception("Error updating translations in BaseFormWidget", e)
 ```
 
 ##### 6.5.3.3 form_chapters.py

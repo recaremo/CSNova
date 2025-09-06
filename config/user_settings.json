@@ -1,22 +1,38 @@
 {
-  "first_start": true,
-  "screen_resolution": "1920x1080",
-  "screen_dpi": 96.0,
-  "scale_factor": 1.0,
-  "language": "en",
-  "style": "style_old",
-  "theme": "theme_neutral",
-  "splitter_sizes": [
-    176,
-    1270,
-    466
-  ],
-  "mode": "neutral",
-  "start_window_bnt_width": 240,
-  "start_window_bnt_height": 60,
-  "start_window_bnt_top_offset": 270,
-  "start_window_bnt_left_offset": 1350,
-  "start_window_bnt_spacing": 42,
-  "screen_resolution_changed": true,
-  "sreen_resolution": "1920x1080"
+  "monitor": {
+    "screen_resolution": "2560x1440",
+    "screen_dpi": 96.0,
+    "scale_factor": 1.0,
+    "screen_resolution_changed": true
+  },
+  "window": {
+    "start_window_bnt_width": 240,
+    "start_window_bnt_height": 60,
+    "start_window_bnt_top_offset": 270,
+    "start_window_bnt_left_offset": 1350,
+    "start_window_bnt_spacing": 42
+  },
+  "preferences_window": {
+    "width": 500,
+    "height": 320
+  },
+  "panels": {
+    "splitter_sizes": [
+      200,
+      1200,
+      520
+    ]
+  },
+  "gui": {
+    "style": "future",
+    "theme": "middle"
+  },
+  "general": {
+    "language": "de"
+  },
+  "help": {
+    "show_help_panel": true,
+    "show_button_hints": true,
+    "show_start_image": true
+  }
 }

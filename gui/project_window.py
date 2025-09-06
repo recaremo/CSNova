@@ -5,6 +5,9 @@ from gui.widgets.center_panel import CenterPanel
 from gui.widgets.help_panel import HelpPanel
 from config.settings import load_settings, save_settings
 from core.logger import log_section, log_subsection, log_info, log_exception
+from config.dev import CSNOVA_BASE_STYLE_FILE, CSNOVA_THEMES_STYLE_FILE
+from gui.styles.python_gui_styles import apply_theme_style
+import json
 
 class ProjectWindow(QWidget):
     """
@@ -12,21 +15,10 @@ class ProjectWindow(QWidget):
     - Left: NavigationPanel
     - Center: CenterPanel (main content)
     - Right: HelpPanel
-    The splitter sizes are loaded from user_settings.json and saved on change.
-    If missing, fallback values are used based on the current window size.
-    All GUI elements are defined in form_fields.json.
-    Styles and modes are set globally via preferences.py and style modules.
-    Translations are handled by the globally initialized Translator.
-    Robust error handling is implemented for all UI and file operations.
+    Uses centralized translation and style system.
     """
 
     def __init__(self, translator, parent=None, start_window=None):
-        """
-        Initializes the ProjectWindow with navigation, center, and help panels.
-        Loads splitter sizes and window size from user_settings.json or uses fallback values.
-        Passes start_window reference to NavigationPanel for back navigation.
-        Passes help_panel and center_panel references to NavigationPanel for help text and form updates.
-        """
         log_section("project_window.py")
         log_subsection("__init__")
         try:
@@ -34,6 +26,14 @@ class ProjectWindow(QWidget):
             self.translator = translator
             self.settings = load_settings()
             self.start_window = start_window
+
+            # Load centralized styles
+            with open(CSNOVA_BASE_STYLE_FILE, "r", encoding="utf-8") as f:
+                base_style = json.load(f)
+            with open(CSNOVA_THEMES_STYLE_FILE, "r", encoding="utf-8") as f:
+                theme_style = json.load(f)
+            self.combined_style = {**base_style, **theme_style}
+
             self.setWindowTitle(self.translator.tr("ProWinTitle"))
 
             # Use the current start window size from settings
@@ -47,13 +47,13 @@ class ProjectWindow(QWidget):
 
             # Create center and help panels first
             try:
-                self.center_panel = CenterPanel(self.translator, parent=self)
+                self.center_panel = CenterPanel(self.translator, parent=self, style=self.combined_style)
             except Exception as e:
                 log_exception("Error initializing CenterPanel", e)
                 self.center_panel = None
 
             try:
-                self.help_panel = HelpPanel(self.translator, parent=self)
+                self.help_panel = HelpPanel(self.translator, parent=self, style=self.combined_style)
             except Exception as e:
                 log_exception("Error initializing HelpPanel", e)
                 self.help_panel = None
@@ -65,7 +65,8 @@ class ProjectWindow(QWidget):
                     parent=self,
                     start_window=self.start_window,
                     help_panel=self.help_panel,
-                    center_panel=self.center_panel
+                    center_panel=self.center_panel,
+                    style=self.combined_style
                 )
             except Exception as e:
                 log_exception("Error initializing NavigationPanel", e)
@@ -107,6 +108,12 @@ class ProjectWindow(QWidget):
             except Exception as e:
                 log_exception("Error initializing layout in ProjectWindow", e)
 
+            # Apply global style to main window
+            try:
+                apply_theme_style(self, "panel", self.combined_style)
+            except Exception as e:
+                log_exception("Error applying global style to ProjectWindow", e)
+
             log_info("ProjectWindow initialized successfully.")
         except Exception as e:
             log_exception("Error initializing ProjectWindow", e)
@@ -131,6 +138,7 @@ class ProjectWindow(QWidget):
         Robust error handling for translation update.
         """
         try:
+            self.setWindowTitle(self.translator.tr("ProWinTitle"))
             if self.navigation_panel:
                 self.navigation_panel.update_translations()
             if self.center_panel:

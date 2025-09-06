@@ -1,18 +1,22 @@
 from PySide6.QtWidgets import QWidget, QVBoxLayout, QLabel
-from gui.styles.form_styles import load_form_style
+from gui.styles.python_gui_styles import apply_theme_style
 
 class FormCenterStart(QWidget):
     """
     Placeholder widget for the initial empty state of CenterPanel.
     Displays a message or nothing until a form is selected.
+    Applies centralized style from preferences/themes.
     """
 
-    def __init__(self, parent=None):
+    def __init__(self, parent=None, style=None):
         super().__init__(parent)
-        self.setStyleSheet(load_form_style())
+        self.style = style
+        apply_theme_style(self, "panel", self.style)
+
         layout = QVBoxLayout(self)
         layout.setContentsMargins(24, 24, 24, 24)
         layout.setSpacing(18)
+
         # Show placeholder text in the center
         label = QLabel("Hier Inhalte ergänzen", self)
         label.setObjectName("CenterStartLabel")

@@ -1,63 +1,90 @@
 from PySide6.QtWidgets import (
     QDialog, QLabel, QComboBox, QPushButton,
-    QHBoxLayout, QVBoxLayout, QSpacerItem, QSizePolicy, QApplication
+    QHBoxLayout, QVBoxLayout, QSpacerItem, QSizePolicy
 )
-from core.translator import Translator
-from config.settings import load_settings, save_settings
-from core.logger import log_section, log_subsection, log_info, log_exception
 import json
-
-from gui.styles.form_styles import load_global_stylesheet
+from gui.styles.python_gui_styles import apply_theme_style
+from core.logger import log_section, log_subsection, log_info, log_exception
+from config.dev import (
+    CSNOVA_BASE_STYLE_FILE, CSNOVA_THEMES_STYLE_FILE, CSNOVA_FORMS_STYLE_FILE,
+    BASE_STYLE_FILE, THEMES_STYLE_FILE, USER_SETTINGS_FILE, GUI_DIR, TRANSLATIONS_DIR, FORM_FIELDS_FILE
+)
+from core.style_utils import (
+    generate_csnova_styles,
+    save_user_settings,
+    generate_translation_file
+)
+from pathlib import Path
 
 class PreferencesWindow(QDialog):
     """
-    PreferencesWindow: Dialog for user settings such as language, style and theme.
-    All options and translations are loaded centrally from form_fields.json and translations.json.
-    Styles and themes are applied immediately in the preferences window and globally.
-    Robust error handling is implemented for file and UI operations.
+    Dialog für Benutzereinstellungen wie Sprache, Style und Theme.
+    Lädt zentrale Styles und Themes aus den generierten JSON-Dateien.
+    Änderungen werden über einen Callback ans Hauptfenster weitergegeben.
     """
 
-    def __init__(self, parent=None):
+    def __init__(self, parent, settings, translation_file, combined_style=None):
         log_section("preferences.py")
         log_subsection("__init__")
         try:
             super().__init__(parent)
-            self.translator = parent.translator if parent and hasattr(parent, "translator") else Translator()
-            self.setWindowTitle(self.translator.tr("PrefWinTitle"))
-            self.setMinimumSize(500, 320)
-            self.settings = load_settings()
-            self.original_settings = self.settings.copy()  # Save original settings for cancel
+            self.settings = settings
+            if translation_file is None:
+                raise ValueError("translation_file must be a valid file path string.")
+            if isinstance(translation_file, Path):
+                translation_file = str(translation_file)
+            if not isinstance(translation_file, (str, bytes)):
+                raise ValueError("translation_file must be a valid file path string.")
+            self.translation_file = translation_file
+
+            self._load_translations()
+            if combined_style is not None:
+                self.combined_style = combined_style
+            else:
+                self._load_styles()
+
+            self.setWindowTitle(self.translations.get("PrefWinTitle", "Einstellungen"))
+            self.resize(
+                self.settings.get("preferences_window", {}).get("width", 500),
+                self.settings.get("preferences_window", {}).get("height", 320)
+            )
             self._load_fields()
             self._init_ui()
-            self._apply_current_style(global_apply=True)
+            self._apply_current_style()
             log_info("PreferencesWindow initialized successfully.")
         except Exception as e:
             log_exception("Error initializing PreferencesWindow", e)
+            self.translations = {}
+            self.combined_style = {}
+
+    def _load_translations(self):
+        try:
+            with open(self.translation_file, "r", encoding="utf-8") as f:
+                self.translations = json.load(f)
+        except Exception as e:
+            log_exception("Error loading translations in PreferencesWindow", e)
+            self.translations = {}
+
+    def _load_styles(self):
+        try:
+            with open(CSNOVA_BASE_STYLE_FILE, "r", encoding="utf-8") as f:
+                base_style = json.load(f)
+            with open(CSNOVA_THEMES_STYLE_FILE, "r", encoding="utf-8") as f:
+                theme_style = json.load(f)
+            self.combined_style = {**base_style, **theme_style}
+        except Exception as e:
+            log_exception("Error loading styles in PreferencesWindow", e)
+            self.combined_style = {}
 
     def _load_fields(self):
-        """
-        Loads preference field definitions from form_fields.json.
-        Robust error handling for file operations.
-        """
         try:
-            with open("/home/frank/Dokumente/CSNova/core/config/form_fields.json", "r", encoding="utf-8") as f:
+            with open(FORM_FIELDS_FILE, "r", encoding="utf-8") as f:
                 self.form_fields = json.load(f).get("preferences", [])
-        except FileNotFoundError as fnf_error:
-            log_exception("form_fields.json not found in PreferencesWindow.", fnf_error)
-            self.form_fields = []
-        except json.JSONDecodeError as json_error:
-            log_exception("JSON decode error in form_fields.json for PreferencesWindow.", json_error)
-            self.form_fields = []
         except Exception as e:
-            log_exception("Unexpected error loading form_fields.json in PreferencesWindow.", e)
+            log_exception("Error loading form_fields.json in PreferencesWindow.", e)
             self.form_fields = []
 
     def _init_ui(self):
-        """
-        Initializes all UI elements for the preferences dialog.
-        All options are loaded from central sources. Layout is compact and buttons are at the bottom.
-        Robust error handling for UI initialization.
-        """
         log_subsection("_init_ui")
         try:
             main_layout = QVBoxLayout(self)
@@ -67,42 +94,51 @@ class PreferencesWindow(QDialog):
             self.combos = {}
             self.labels = {}
 
-            # Dynamically create fields from form_fields.json
             for field in self.form_fields:
-                label = QLabel(self.translator.tr(field.get("label_key", "")), self)
+                label = QLabel(self.translations.get(field.get("label_key", ""), field.get("label_key", "")), self)
                 combo = QComboBox(self)
                 option_labels = []
                 option_keys = []
                 for opt in field.get("options", []):
-                    option_labels.append(self.translator.tr(opt.get("label_key", "")))
+                    option_labels.append(self.translations.get(opt.get("label_key", ""), opt.get("label_key", "")))
                     option_keys.append(opt.get("key", ""))
+
                 combo.addItems(option_labels)
-                # Set current value from settings
-                current_value = self.settings.get(field.get("datafield_name", "").replace("preference_", ""), option_keys[0] if option_keys else "")
+
+                # Sichere Initialisierung der aktuellen Werte
+                name = field.get("name", "")
+                if name == "language":
+                    current_value = self.settings.get("general", {}).get("language", option_keys[0])
+                elif name == "style":
+                    current_value = self.settings.get("gui", {}).get("style", option_keys[0])
+                elif name == "theme":
+                    current_value = self.settings.get("gui", {}).get("theme", option_keys[0])
+                else:
+                    current_value = option_keys[0]
+
                 try:
                     idx = option_keys.index(current_value)
                 except ValueError:
                     idx = 0
                 combo.setCurrentIndex(idx)
+
                 main_layout.addWidget(label)
                 main_layout.addWidget(combo)
-                self.combos[field.get("name", "")] = (combo, option_keys)
-                self.labels[field.get("name", "")] = label
+                self.combos[name] = (combo, option_keys)
+                self.labels[name] = label
 
-                # Connect style and theme changes to handlers
-                if field.get("name", "") == "style":
+                if name == "style":
                     combo.currentIndexChanged.connect(self._on_style_changed)
-                if field.get("name", "") == "theme":
+                if name == "theme":
                     combo.currentIndexChanged.connect(self._on_theme_changed)
 
             main_layout.addSpacerItem(QSpacerItem(20, 10, QSizePolicy.Minimum, QSizePolicy.Expanding))
 
-            # Action buttons at the bottom
             btn_layout = QHBoxLayout()
             btn_layout.setSpacing(15)
             btn_layout.setContentsMargins(0, 0, 0, 0)
-            self.save_btn = QPushButton(self.translator.tr("PreferenceActionSave"), self)
-            self.cancel_btn = QPushButton(self.translator.tr("PreferenceActionCancel"), self)
+            self.save_btn = QPushButton(self.translations.get("PreferenceActionSave", "Speichern"), self)
+            self.cancel_btn = QPushButton(self.translations.get("PreferenceActionCancel", "Abbrechen"), self)
             btn_layout.addStretch(1)
             btn_layout.addWidget(self.save_btn)
             btn_layout.addWidget(self.cancel_btn)
@@ -111,148 +147,164 @@ class PreferencesWindow(QDialog):
 
             self.setLayout(main_layout)
 
-            # Connect signals to slots for user interaction
             self.save_btn.clicked.connect(self._on_save)
             self.cancel_btn.clicked.connect(self._on_cancel)
-            # Language change updates translations
             if "language" in self.combos:
                 self.combos["language"][0].currentIndexChanged.connect(self._on_language_changed)
+
+            try:
+                apply_theme_style(self.save_btn, "button", self.combined_style)
+                apply_theme_style(self.cancel_btn, "button", self.combined_style)
+            except Exception as e:
+                log_exception("Error applying theme style to preferences buttons", e)
+
             log_info("UI initialized successfully.")
         except Exception as e:
             log_exception("Error initializing UI in PreferencesWindow", e)
 
-    def _apply_current_style(self, global_apply=False):
-        """
-        Applies the currently selected style and theme to the preferences window.
-        If global_apply is True, applies the style globally to the application.
-        Robust error handling for stylesheet application.
-        """
+    def _apply_current_style(self):
         try:
-            style = self.settings.get("style", "modern")
-            mode = self.settings.get("mode", "light")
-            stylesheet = load_global_stylesheet(style, mode)
-            self.setStyleSheet(stylesheet)
-            if global_apply:
-                QApplication.instance().setStyleSheet(stylesheet)
+            apply_theme_style(self.save_btn, "button", self.combined_style)
+            apply_theme_style(self.cancel_btn, "button", self.combined_style)
         except Exception as e:
             log_exception("Error applying stylesheet in PreferencesWindow", e)
 
     def update_translations(self):
-        """
-        Updates all UI texts after a language change.
-        Also updates translated items in all comboboxes.
-        Robust error handling for translation updates.
-        """
         try:
-            self.setWindowTitle(self.translator.tr("PrefWinTitle"))
+            self.setWindowTitle(self.translations.get("PrefWinTitle", "Einstellungen"))
             for field in self.form_fields:
                 name = field.get("name", "")
-                self.labels[name].setText(self.translator.tr(field.get("label_key", "")))
+                self.labels[name].setText(self.translations.get(field.get("label_key", ""), field.get("label_key", "")))
                 combo, option_keys = self.combos[name]
                 combo.blockSignals(True)
                 combo.clear()
                 for opt in field.get("options", []):
-                    combo.addItem(self.translator.tr(opt.get("label_key", "")))
-                # Set current value from settings
-                current_value = self.settings.get(field.get("datafield_name", "").replace("preference_", ""), option_keys[0] if option_keys else "")
+                    combo.addItem(self.translations.get(opt.get("label_key", ""), opt.get("label_key", "")))
+                if name == "language":
+                    current_value = self.settings.get("general", {}).get("language", option_keys[0])
+                elif name == "style":
+                    current_value = self.settings.get("gui", {}).get("style", option_keys[0])
+                elif name == "theme":
+                    current_value = self.settings.get("gui", {}).get("theme", option_keys[0])
+                else:
+                    current_value = option_keys[0]
                 try:
                     idx = option_keys.index(current_value)
                 except ValueError:
                     idx = 0
                 combo.setCurrentIndex(idx)
                 combo.blockSignals(False)
-            self.save_btn.setText(self.translator.tr("PreferenceActionSave"))
-            self.cancel_btn.setText(self.translator.tr("PreferenceActionCancel"))
-            self._apply_current_style(global_apply=True)
+            self.save_btn.setText(self.translations.get("PreferenceActionSave", "Speichern"))
+            self.cancel_btn.setText(self.translations.get("PreferenceActionCancel", "Abbrechen"))
+            self._apply_current_style()
         except Exception as e:
             log_exception("Error updating translations in PreferencesWindow", e)
 
     def _on_save(self):
-        """
-        Saves the selected settings and closes the dialog.
-        Notifies parent window to update translations if possible.
-        Robust error handling for saving settings.
-        """
         log_subsection("_on_save")
         try:
             for field in self.form_fields:
                 name = field.get("name", "")
                 combo, option_keys = self.combos[name]
-                self.settings[field.get("datafield_name", "").replace("preference_", "")] = option_keys[combo.currentIndex()]
-            save_settings(self.settings)
-            # Notify parent to update translations if method exists
-            if hasattr(self.parent(), "update_translations"):
-                self.parent().update_translations()
-            self._apply_current_style(global_apply=True)
+                selected = option_keys[combo.currentIndex()]
+                if name == "language":
+                    self.settings.setdefault("general", {})["language"] = selected
+                elif name == "style":
+                    self.settings.setdefault("gui", {})["style"] = selected
+                elif name == "theme":
+                    self.settings.setdefault("gui", {})["theme"] = selected
+            # Entferne flache Keys, falls vorhanden
+            self.settings.pop("language", None)
+            self.settings.pop("style", None)
+            self.settings.pop("theme", None)
+            save_user_settings(self.settings, USER_SETTINGS_FILE)
+            if hasattr(self.parent(), "on_preferences_saved"):
+                self.parent().on_preferences_saved(self.settings)
             self.accept()
             log_info("Settings saved and dialog accepted.")
         except Exception as e:
             log_exception("Error saving settings in PreferencesWindow", e)
 
     def _on_cancel(self):
-        """
-        Cancels the dialog and reverts any unsaved changes.
-        Restores original settings and translations.
-        Robust error handling for cancel operation.
-        """
         log_subsection("_on_cancel")
         try:
-            self.settings = self.original_settings.copy()
-            # Restore original language in translator
-            original_lang = self.original_settings.get("language", "de")
-            self.translator.set_language(original_lang)
-            self.update_translations()
-            self._apply_current_style(global_apply=True)
             self.reject()
             log_info("Dialog canceled and settings reverted.")
         except Exception as e:
             log_exception("Error canceling PreferencesWindow", e)
 
     def _on_language_changed(self, idx):
-        """
-        Handles language change event and updates translations.
-        Sets the language immediately in settings.
-        Robust error handling for language change.
-        """
         log_subsection("_on_language_changed")
         try:
             combo, option_keys = self.combos["language"]
             lang_code = option_keys[idx]
-            self.translator.set_language(lang_code)
-            self.settings["language"] = lang_code  # Set immediately!
+            self.settings.setdefault("general", {})["language"] = lang_code
+            translation_file = generate_translation_file(lang_code, TRANSLATIONS_DIR)
+            self.translation_file = str(translation_file)
+            self._load_translations()
             self.update_translations()
+            save_user_settings(self.settings, USER_SETTINGS_FILE)
+            if hasattr(self.parent(), "on_language_changed"):
+                self.parent().on_language_changed(lang_code)
             log_info(f"Language changed to {lang_code}.")
         except Exception as e:
             log_exception("Error changing language in PreferencesWindow", e)
 
     def _on_style_changed(self, idx):
-        """
-        Applies the selected style immediately to the preferences window and globally.
-        Robust error handling for style change.
-        """
         log_subsection("_on_style_changed")
         try:
             combo, option_keys = self.combos["style"]
-            style_key = option_keys[idx].replace("style_", "")
-            self.settings["style"] = style_key
-            mode = self.settings.get("mode", "light")
-            self._apply_current_style(global_apply=True)
+            style_key = option_keys[idx]
+            self.settings.setdefault("gui", {})["style"] = style_key
+            generate_csnova_styles(
+                self.settings,
+                BASE_STYLE_FILE,
+                THEMES_STYLE_FILE,
+                CSNOVA_BASE_STYLE_FILE,
+                CSNOVA_THEMES_STYLE_FILE,
+                CSNOVA_FORMS_STYLE_FILE,
+                GUI_DIR
+            )
+            self._load_styles()
+            self._apply_current_style()
+            save_user_settings(self.settings, USER_SETTINGS_FILE)
+            if hasattr(self.parent(), "on_style_changed"):
+                self.parent().on_style_changed(style_key)
             log_info(f"Style changed to {style_key}.")
         except Exception as e:
             log_exception("Error changing style in PreferencesWindow", e)
 
     def _on_theme_changed(self, idx):
-        """
-        Applies the selected theme immediately to the preferences window and globally.
-        Robust error handling for theme change.
-        """
         log_subsection("_on_theme_changed")
         try:
             combo, option_keys = self.combos["theme"]
-            mode_key = option_keys[idx].replace("theme_", "")
-            self.settings["mode"] = mode_key
-            style = self.settings.get("style", "modern")
-            self._apply_current_style(global_apply=True)
+            mode_key = option_keys[idx]
+            self.settings.setdefault("gui", {})["theme"] = mode_key
+            generate_csnova_styles(
+                self.settings,
+                BASE_STYLE_FILE,
+                THEMES_STYLE_FILE,
+                CSNOVA_BASE_STYLE_FILE,
+                CSNOVA_THEMES_STYLE_FILE,
+                CSNOVA_FORMS_STYLE_FILE,
+                GUI_DIR
+            )
+            self._load_styles()
+            self._apply_current_style()
+            save_user_settings(self.settings, USER_SETTINGS_FILE)
+            if hasattr(self.parent(), "on_theme_changed"):
+                self.parent().on_theme_changed(mode_key)
             log_info(f"Theme changed to {mode_key}.")
         except Exception as e:
             log_exception("Error changing theme in PreferencesWindow", e)
+
+    def closeEvent(self, event):
+        width = self.width()
+        height = self.height()
+        self.settings.setdefault("preferences_window", {})
+        self.settings["preferences_window"]["width"] = width
+        self.settings["preferences_window"]["height"] = height
+        save_user_settings(self.settings, USER_SETTINGS_FILE)
+        if hasattr(self.parent(), "on_preferences_saved"):
+            self.parent().on_preferences_saved(self.settings)
+        super().closeEvent(event)

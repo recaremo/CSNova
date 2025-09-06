@@ -1,11 +1,11 @@
 from PySide6.QtWidgets import QWidget, QVBoxLayout, QLabel, QStackedWidget
-from gui.styles.form_styles import load_form_style
 from gui.widgets.form_toolbar import FormToolbar
 from gui.widgets.form_center_start import FormCenterStart
 from gui.widgets.form_projects import FormProjects
 from gui.widgets.form_characters import FormCharacters
 from gui.widgets.form_locations import FormLocations
 from gui.widgets.form_objects import FormObjects
+from gui.styles.python_gui_styles import apply_theme_style
 from core.logger import log_section, log_subsection, log_info, log_exception
 
 class CenterPanel(QWidget):
@@ -24,7 +24,7 @@ class CenterPanel(QWidget):
         "objects": "proj_ob_01"
     }
 
-    def __init__(self, translator, parent=None):
+    def __init__(self, translator, parent=None, style=None):
         """
         Initializes the center panel with a stacked widget for dynamic content.
         Adds all available forms and shows the start/empty form initially.
@@ -34,7 +34,8 @@ class CenterPanel(QWidget):
         try:
             super().__init__(parent)
             self.translator = translator
-            self.setStyleSheet(load_form_style())
+            self.style = style
+            apply_theme_style(self, "panel", self.style)
 
             self.layout = QVBoxLayout(self)
             self.layout.setContentsMargins(24, 24, 24, 24)
@@ -92,13 +93,14 @@ class CenterPanel(QWidget):
             # Dynamically create toolbar for the form
             toolbar = FormToolbar(self.translator, form_prefix=form_type, parent=self)
             self.layout.insertWidget(0, toolbar)
+            apply_theme_style(toolbar, "panel", self.style)
 
             # Use correct translation key for heading
-            #header_key = self.HEADER_KEYS.get(form_type, "")
-            #heading_label = QLabel(self.translator.tr(header_key), self)
-            #heading_label.setObjectName("FormHeadingLabel")
-            #heading_label.setStyleSheet("font-size: 22px; font-weight: bold; margin-bottom: 12px;")
-            #self.layout.insertWidget(1, heading_label)
+            header_key = self.HEADER_KEYS.get(form_type, "")
+            heading_label = QLabel(self.translator.tr(header_key), self)
+            heading_label.setObjectName("FormHeadingLabel")
+            apply_theme_style(heading_label, "chip", self.style)
+            self.layout.insertWidget(1, heading_label)
 
         # Show the form
         form_widget = self.forms[form_type]

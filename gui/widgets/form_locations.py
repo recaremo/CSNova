@@ -1,6 +1,6 @@
 from PySide6.QtWidgets import QWidget, QVBoxLayout
 from gui.widgets.base_form_widget import BaseFormWidget
-from gui.styles.form_styles import load_form_style
+from gui.styles.python_gui_styles import apply_theme_style
 from core.logger import log_section, log_subsection, log_info, log_exception
 from config.dev import FORM_FIELDS_FILE
 import json
@@ -16,7 +16,7 @@ class FormLocations(QWidget):
     Robust error handling is implemented for file and JSON operations.
     """
 
-    def __init__(self, translator, toolbar_actions=None, parent=None):
+    def __init__(self, translator, toolbar_actions=None, parent=None, style=None):
         """
         Initializes the locations form with dynamic fields and translations.
         """
@@ -25,7 +25,8 @@ class FormLocations(QWidget):
         try:
             super().__init__(parent)
             self.translator = translator
-            self.setStyleSheet(load_form_style())
+            self.style = style
+            apply_theme_style(self, "panel", self.style)
 
             # Load location fields from form_fields.json with robust error handling
             try:
@@ -47,9 +48,10 @@ class FormLocations(QWidget):
                 title=None,
                 fields=location_fields,
                 toolbar_actions=toolbar_actions,
-                form_prefix="proj_lo",
+                form_prefix="locations",
                 translator=self.translator,
-                parent=self
+                parent=self,
+                style=self.style
             )
 
             layout = QVBoxLayout(self)
