@@ -242,5 +242,22 @@
   "help_wi_02": "Projekte",
   "help_wi_03": "Charakter",
   "help_wi_04": "Objekte",
-  "help_wi_05": "Orte"
+  "help_wi_05": "Orte",
+  "start_window_text_1": "Codicies Scriptoria Nova (CSNova)",
+  "start_window_text_2": "Eine Software die dir hilft, deine Geschichten zu planen und zu schreiben.",
+  "start_window_text_3": "CSNova bietet dir eine übersichtliche und strukturierte Oberfläche, nach dem Motto:",
+  "start_window_text_4": "Nicht du musst lernen, wie die Software funktioniert, sondern die Software muss sich deinem Arbeitsstil anpassen!",
+  "start_window_text_5": "CSNova ermöglicht, dass du dich voll und ganz auf das Schreiben konzentrieren kannst, ohne von unnötigen Funktionen abgelenkt zu werden.",
+  "start_window_text_6": "Du musst deinen Schreibfluss nicht unterbrechen, um herauszufinden, wie du eine Funktion nutzen kannst.",
+  "start_window_text_7": "CSNova hat festgestellt, dass dein Betriebssystem die Sprache: ",
+  "start_window_text_8": "verwendet. Du kannst jetzt in der Auswahl eine andere Sprache auswählen, wenn du möchtest.",
+  "start_window_text_9": "Beim ersten Start verwendet CSNova für die Anzeige von Schaltflächen und anderen Bedienelementen, eine vorgebenes Design. Diese Voreinstellung ist aktuell:",
+  "start_window_text_10": "Wenn du das änderen möchtest kann du ein anderes Design auswählen. Die Änderungen werden dir direkt angezeigt .",
+  "start_window_text_11": "Wenn dir die getroffenen Auswahl nicht gefällt, kannst du einfach ein anderes Design auswählen.",
+  "start_window_text_12": "CSNova, bittet dir verschiedene Hilfestellungen an, wenn diese nicht nutzen möchtest, dann kannst du sie deaktvieren.",
+  "start_window_text_13": "Entferne einfach die Häckchen in Feldern, die du nicht nutzen möchtest.",
+  "start_window_text_14": "Diese und weitere Einstellungen - die jetzt nicht abgefragt wurden - kannst du jederzeit in den Einstellungen anpassen.",
+  "start_window_centerBtn_save": "Änderungen speichern ",
+  "start_window_centerBtn_defaults": "Standardeinstellungen wiederherstellen",
+  "start_window_centerBtn_next": "weiter ..."
 }

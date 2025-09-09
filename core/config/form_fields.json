@@ -1,202 +1,1286 @@
 {
   "projects": [
-    {"name": "pro_header", "label_key": "proj_ma_01", "type": "header", "datafield_name": null},
-    {"name": "title", "label_key": "proj_ma_02", "type": "text", "required": true, "max_length": 120, "width": 320, "datafield_name": "project_title"},
-    {"name": "subtitle", "label_key": "proj_ma_03", "type": "text", "required": false, "max_length": 120, "width": 320, "datafield_name": "project_subtitle"},
-    {"name": "author", "label_key": "proj_ma_04", "type": "text", "required": true, "max_length": 80, "width": 220, "datafield_name": "project_author"},
-    {"name": "premise", "label_key": "proj_ma_05", "type": "text", "required": false, "max_length": 200, "width": 480, "datafield_name": "project_premise"},
-    {"name": "genre", "label_key": "proj_ma_06", "type": "text", "required": false, "max_length": 80, "width": 220, "datafield_name": "project_genre"},
-    {"name": "cover_image", "label_key": "proj_ma_07", "type": "text", "required": false, "max_length": 120, "width": 320, "datafield_name": "project_cover_image"},
-    {"name": "target_group", "label_key": "proj_ma_08", "type": "text", "required": false, "max_length": 80, "width": 220, "datafield_name": "project_targetgroup"},
-    {"name": "narrative_perspective", "label_key": "proj_ma_09", "type": "text", "required": false, "max_length": 80, "width": 220, "datafield_name": "project_narrative_perspective"},
-    {"name": "deadline", "label_key": "proj_ma_10", "type": "date", "required": false, "width": 140, "datafield_name": "project_deadline"},
-    {"name": "start_date", "label_key": "proj_ma_11", "type": "date", "required": false, "width": 140, "datafield_name": "project_startdate"},
-    {"name": "words_count_goal", "label_key": "proj_ma_12", "type": "spin", "required": false, "max": 1000000, "width": 120, "datafield_name": "project_words_count_goal"},
-    {"name": "timeline", "label_key": "proj_ma_13", "type": "text", "required": false, "max_length": 80, "width": 220, "datafield_name": "project_timeline"}
+    {
+      "name": "pro_header",
+      "label_key": "proj_ma_01",
+      "type": "header",
+      "datafield_name": null
+    },
+    {
+      "name": "title",
+      "label_key": "proj_ma_02",
+      "type": "text",
+      "required": true,
+      "max_length": 120,
+      "width": 320,
+      "datafield_name": "project_title"
+    },
+    {
+      "name": "subtitle",
+      "label_key": "proj_ma_03",
+      "type": "text",
+      "required": false,
+      "max_length": 120,
+      "width": 320,
+      "datafield_name": "project_subtitle"
+    },
+    {
+      "name": "author",
+      "label_key": "proj_ma_04",
+      "type": "text",
+      "required": false,
+      "max_length": 80,
+      "width": 220,
+      "datafield_name": "project_author"
+    },
+    {
+      "name": "premise",
+      "label_key": "proj_ma_05",
+      "type": "text",
+      "required": false,
+      "max_length": 200,
+      "width": 480,
+      "datafield_name": "project_premise"
+    },
+    {
+      "name": "genre",
+      "label_key": "proj_ma_06",
+      "type": "text",
+      "required": false,
+      "max_length": 80,
+      "width": 220,
+      "datafield_name": "project_genre"
+    },
+    {
+      "name": "cover_image",
+      "label_key": "proj_ma_07",
+      "type": "text",
+      "required": false,
+      "max_length": 120,
+      "width": 320,
+      "datafield_name": "project_cover_image"
+    },
+    {
+      "name": "target_group",
+      "label_key": "proj_ma_08",
+      "type": "text",
+      "required": false,
+      "max_length": 80,
+      "width": 220,
+      "datafield_name": "project_targetgroup"
+    },
+    {
+      "name": "narrative_perspective",
+      "label_key": "proj_ma_09",
+      "type": "text",
+      "required": false,
+      "max_length": 80,
+      "width": 220,
+      "datafield_name": "project_narrative_perspective"
+    },
+    {
+      "name": "deadline",
+      "label_key": "proj_ma_10",
+      "type": "date",
+      "required": false,
+      "width": 140,
+      "datafield_name": "project_deadline"
+    },
+    {
+      "name": "start_date",
+      "label_key": "proj_ma_11",
+      "type": "date",
+      "required": false,
+      "width": 140,
+      "datafield_name": "project_startdate"
+    },
+    {
+      "name": "words_count_goal",
+      "label_key": "proj_ma_12",
+      "type": "spin",
+      "required": false,
+      "max": 1000000,
+      "width": 120,
+      "datafield_name": "project_words_count_goal"
+    },
+    {
+      "name": "timeline",
+      "label_key": "proj_ma_13",
+      "type": "text",
+      "required": false,
+      "max_length": 80,
+      "width": 220,
+      "datafield_name": "project_timeline"
+    }
   ],
-
   "project_chapters": [
-    {"name": "chapters_header", "label_key": "proj_ch_01", "type": "header", "datafield_name": null},
-    {"name": "chapter_title", "label_key": "proj_ch_02", "type": "text", "required": true, "max_length": 120, "width": 320, "datafield_name": "project_chapters_title"},
-    {"name": "chapter_premise", "label_key": "proj_ch_03", "type": "text", "required": false, "max_length": 200, "width": 480, "datafield_name": "project_chapters_premise"}
+    {
+      "name": "chapters_header",
+      "label_key": "proj_ch_01",
+      "type": "header",
+      "datafield_name": null
+    },
+    {
+      "name": "chapter_title",
+      "label_key": "proj_ch_02",
+      "type": "text",
+      "required": true,
+      "max_length": 120,
+      "width": 320,
+      "datafield_name": "project_chapters_title"
+    },
+    {
+      "name": "chapter_premise",
+      "label_key": "proj_ch_03",
+      "type": "text",
+      "required": false,
+      "max_length": 200,
+      "width": 480,
+      "datafield_name": "project_chapters_premise"
+    }
   ],
-
   "project_chapters_scenes": [
-    {"name": "scenes_header", "label_key": "proj_cs_01", "type": "header", "datafield_name": null},
-    {"name": "scene_title", "label_key": "proj_cs_02", "type": "text", "required": true, "max_length": 120, "width": 320, "datafield_name": "project_chapters_scenes_title"},
-    {"name": "scene_premise", "label_key": "proj_cs_03", "type": "text", "required": false, "max_length": 200, "width": 480, "datafield_name": "project_chapters_scenes_premise"},
-    {"name": "scene_goal", "label_key": "proj_cs_04", "type": "text", "required": false, "max_length": 120, "width": 320, "datafield_name": "project_chapters_scenes_goal"},
-    {"name": "scene_conflict", "label_key": "proj_cs_05", "type": "text", "required": false, "max_length": 120, "width": 320, "datafield_name": "project_chapters_scenes_conflict"},
-    {"name": "scene_outcome", "label_key": "proj_cs_06", "type": "text", "required": false, "max_length": 120, "width": 320, "datafield_name": "project_chapters_scenes_outcome"},
-    {"name": "scene_type", "label_key": "proj_cs_07", "type": "text", "required": false, "max_length": 80, "width": 220, "datafield_name": "project_chapters_scenes_type"},
-    {"name": "scene_mood", "label_key": "proj_cs_08", "type": "text", "required": false, "max_length": 80, "width": 220, "datafield_name": "project_chapters_scenes_mood"},
-    {"name": "scene_duration", "label_key": "proj_cs_09", "type": "text", "required": false, "max_length": 80, "width": 220, "datafield_name": "project_chapters_scenes_duration"},
-    {"name": "scene_characters", "label_key": "proj_cs_10", "type": "text", "required": false, "max_length": 200, "width": 480, "datafield_name": "project_chapters_scenes_characters"},
-    {"name": "scene_locations", "label_key": "proj_cs_11", "type": "text", "required": false, "max_length": 200, "width": 480, "datafield_name": "project_chapters_scenes_locations"},
-    {"name": "scene_notes", "label_key": "proj_cs_12", "type": "multiline", "required": false, "max_length": 500, "width": 1200, "datafield_name": "project_chapters_scenes_notes"}
+    {
+      "name": "scenes_header",
+      "label_key": "proj_cs_01",
+      "type": "header",
+      "datafield_name": null
+    },
+    {
+      "name": "scene_title",
+      "label_key": "proj_cs_02",
+      "type": "text",
+      "required": true,
+      "max_length": 120,
+      "width": 320,
+      "datafield_name": "project_chapters_scenes_title"
+    },
+    {
+      "name": "scene_premise",
+      "label_key": "proj_cs_03",
+      "type": "text",
+      "required": false,
+      "max_length": 200,
+      "width": 480,
+      "datafield_name": "project_chapters_scenes_premise"
+    },
+    {
+      "name": "scene_goal",
+      "label_key": "proj_cs_04",
+      "type": "text",
+      "required": false,
+      "max_length": 120,
+      "width": 320,
+      "datafield_name": "project_chapters_scenes_goal"
+    },
+    {
+      "name": "scene_conflict",
+      "label_key": "proj_cs_05",
+      "type": "text",
+      "required": false,
+      "max_length": 120,
+      "width": 320,
+      "datafield_name": "project_chapters_scenes_conflict"
+    },
+    {
+      "name": "scene_outcome",
+      "label_key": "proj_cs_06",
+      "type": "text",
+      "required": false,
+      "max_length": 120,
+      "width": 320,
+      "datafield_name": "project_chapters_scenes_outcome"
+    },
+    {
+      "name": "scene_type",
+      "label_key": "proj_cs_07",
+      "type": "text",
+      "required": false,
+      "max_length": 80,
+      "width": 220,
+      "datafield_name": "project_chapters_scenes_type"
+    },
+    {
+      "name": "scene_mood",
+      "label_key": "proj_cs_08",
+      "type": "text",
+      "required": false,
+      "max_length": 80,
+      "width": 220,
+      "datafield_name": "project_chapters_scenes_mood"
+    },
+    {
+      "name": "scene_duration",
+      "label_key": "proj_cs_09",
+      "type": "text",
+      "required": false,
+      "max_length": 80,
+      "width": 220,
+      "datafield_name": "project_chapters_scenes_duration"
+    },
+    {
+      "name": "scene_characters",
+      "label_key": "proj_cs_10",
+      "type": "text",
+      "required": false,
+      "max_length": 200,
+      "width": 480,
+      "datafield_name": "project_chapters_scenes_characters"
+    },
+    {
+      "name": "scene_locations",
+      "label_key": "proj_cs_11",
+      "type": "text",
+      "required": false,
+      "max_length": 200,
+      "width": 480,
+      "datafield_name": "project_chapters_scenes_locations"
+    },
+    {
+      "name": "scene_notes",
+      "label_key": "proj_cs_12",
+      "type": "multiline",
+      "required": false,
+      "max_length": 500,
+      "width": 1200,
+      "datafield_name": "project_chapters_scenes_notes"
+    }
   ],
-
   "project_locations": [
-    {"name": "locations_header", "label_key": "proj_lo_01", "type": "header", "datafield_name": null},
-    {"name": "location_title", "label_key": "proj_lo_02", "type": "text", "required": true, "max_length": 120, "width": 320, "datafield_name": "project_locations_title"},
-    {"name": "location_description", "label_key": "proj_lo_03", "type": "multiline", "required": false, "max_length": 500, "width": 1200, "datafield_name": "project_locations_description"}
+    {
+      "name": "locations_header",
+      "label_key": "proj_lo_01",
+      "type": "header",
+      "datafield_name": null
+    },
+    {
+      "name": "location_title",
+      "label_key": "proj_lo_02",
+      "type": "text",
+      "required": false,
+      "max_length": 120,
+      "width": 320,
+      "datafield_name": "project_locations_title"
+    },
+    {
+      "name": "location_description",
+      "label_key": "proj_lo_03",
+      "type": "multiline",
+      "required": false,
+      "max_length": 500,
+      "width": 1200,
+      "datafield_name": "project_locations_description"
+    }
   ],
-
   "project_storylines": [
-    {"name": "storylines_header", "label_key": "proj_st_01", "type": "header", "datafield_name": null},
-    {"name": "storyline_title", "label_key": "proj_st_02", "type": "text", "required": true, "max_length": 120, "width": 320, "datafield_name": "project_storylines_title"},
-    {"name": "storyline_premise", "label_key": "proj_st_03", "type": "text", "required": false, "max_length": 200, "width": 480, "datafield_name": "project_storylines_premise"},
-    {"name": "storyline_description", "label_key": "proj_st_04", "type": "text", "required": false, "max_length": 500, "width": 1200, "datafield_name": "project_storylines_description"},
-    {"name": "storyline_transformation", "label_key": "proj_st_05", "type": "text", "required": false, "max_length": 200, "width": 480, "datafield_name": "project_storylines_transformation"},
-    {"name": "storyline_timeline", "label_key": "proj_st_06", "type": "text", "required": false, "max_length": 200, "width": 480, "datafield_name": "project_storylines_timeline"},
-    {"name": "storyline_notes", "label_key": "proj_st_07", "type": "multiline", "required": false, "max_length": 500, "width": 1200, "datafield_name": "project_storylines_notes"}
+    {
+      "name": "storylines_header",
+      "label_key": "proj_st_01",
+      "type": "header",
+      "datafield_name": null
+    },
+    {
+      "name": "storyline_title",
+      "label_key": "proj_st_02",
+      "type": "text",
+      "required": false,
+      "max_length": 120,
+      "width": 320,
+      "datafield_name": "project_storylines_title"
+    },
+    {
+      "name": "storyline_premise",
+      "label_key": "proj_st_03",
+      "type": "text",
+      "required": false,
+      "max_length": 200,
+      "width": 480,
+      "datafield_name": "project_storylines_premise"
+    },
+    {
+      "name": "storyline_description",
+      "label_key": "proj_st_04",
+      "type": "text",
+      "required": false,
+      "max_length": 500,
+      "width": 1200,
+      "datafield_name": "project_storylines_description"
+    },
+    {
+      "name": "storyline_transformation",
+      "label_key": "proj_st_05",
+      "type": "text",
+      "required": false,
+      "max_length": 200,
+      "width": 480,
+      "datafield_name": "project_storylines_transformation"
+    },
+    {
+      "name": "storyline_timeline",
+      "label_key": "proj_st_06",
+      "type": "text",
+      "required": false,
+      "max_length": 200,
+      "width": 480,
+      "datafield_name": "project_storylines_timeline"
+    },
+    {
+      "name": "storyline_notes",
+      "label_key": "proj_st_07",
+      "type": "multiline",
+      "required": false,
+      "max_length": 500,
+      "width": 1200,
+      "datafield_name": "project_storylines_notes"
+    }
   ],
-
-    "project_objects": [
-    {"name": "objects_header", "label_key": "proj_ob_01", "type": "header", "datafield_name": null},
-    {"name": "object_title", "label_key": "proj_ob_02", "type": "text", "required": true, "max_length": 120, "width": 320, "datafield_name": "project_objects_title"},
-    {"name": "object_description", "label_key": "proj_ob_03", "type": "multiline", "required": false, "max_length": 500, "width": 1200, "datafield_name": "project_objects_description"}
+  "project_objects": [
+    {
+      "name": "objects_header",
+      "label_key": "proj_ob_01",
+      "type": "header",
+      "datafield_name": null
+    },
+    {
+      "name": "object_title",
+      "label_key": "proj_ob_02",
+      "type": "text",
+      "required": false,
+      "max_length": 120,
+      "width": 320,
+      "datafield_name": "project_objects_title"
+    },
+    {
+      "name": "object_description",
+      "label_key": "proj_ob_03",
+      "type": "multiline",
+      "required": false,
+      "max_length": 500,
+      "width": 1200,
+      "datafield_name": "project_objects_description"
+    }
   ],
-
   "character_main": [
-    {"name": "main_header", "label_key": "char_ma_01", "type": "header", "datafield_name": null},
-    {"name": "main_character", "label_key": "char_ma_02", "type": "checkbox", "required": false, "datafield_name": "main_character"},
-    {"name": "name", "label_key": "char_ma_03", "type": "text", "required": true, "max_length": 80, "width": 220, "datafield_name": "name"},
-    {"name": "first_name", "label_key": "char_ma_04", "type": "text", "required": true, "max_length": 80, "width": 220, "datafield_name": "first_name"},
-    {"name": "nick_name", "label_key": "char_ma_05", "type": "text", "required": false, "max_length": 80, "width": 220, "datafield_name": "nick_name"},
-    {"name": "born", "label_key": "char_ma_06", "type": "date", "required": false, "width": 140, "datafield_name": "born"},
-    {"name": "age", "label_key": "char_ma_07", "type": "spin", "required": false, "max": 150, "width": 120, "datafield_name": "age"},
-    {"name": "role", "label_key": "char_ma_08", "type": "text", "required": false, "max_length": 80, "width": 220, "datafield_name": "role"},
-    {"name": "status", "label_key": "char_ma_09", "type": "text", "required": false, "max_length": 80, "width": 220, "datafield_name": "status"},
-    {"name": "gender_ID", "label_key": "char_ma_10", "type": "select", "required": false, "width": 180, "datafield_name": "gender_ID"},
-    {"name": "sex_orientation_ID", "label_key": "char_ma_11", "type": "select", "required": false, "width": 180, "datafield_name": "sex_orientation_ID"},
-    {"name": "notes", "label_key": "char_ma_12", "type": "multiline", "required": false, "max_length": 500, "width": 1200, "datafield_name": "notes"}
+    {
+      "name": "main_header",
+      "label_key": "char_ma_01",
+      "type": "header",
+      "datafield_name": null
+    },
+    {
+      "name": "main_character",
+      "label_key": "char_ma_02",
+      "type": "checkbox",
+      "required": true,
+      "datafield_name": "main_character"
+    },
+    {
+      "name": "name",
+      "label_key": "char_ma_03",
+      "type": "text",
+      "required": true,
+      "max_length": 80,
+      "width": 220,
+      "datafield_name": "name"
+    },
+    {
+      "name": "first_name",
+      "label_key": "char_ma_04",
+      "type": "text",
+      "required": true,
+      "max_length": 80,
+      "width": 220,
+      "datafield_name": "first_name"
+    },
+    {
+      "name": "nick_name",
+      "label_key": "char_ma_05",
+      "type": "text",
+      "required": false,
+      "max_length": 80,
+      "width": 220,
+      "datafield_name": "nick_name"
+    },
+    {
+      "name": "born",
+      "label_key": "char_ma_06",
+      "type": "date",
+      "required": false,
+      "width": 140,
+      "datafield_name": "born"
+    },
+    {
+      "name": "age",
+      "label_key": "char_ma_07",
+      "type": "spin",
+      "required": false,
+      "max": 150,
+      "width": 120,
+      "datafield_name": "age"
+    },
+    {
+      "name": "role",
+      "label_key": "char_ma_08",
+      "type": "text",
+      "required": false,
+      "max_length": 80,
+      "width": 220,
+      "datafield_name": "role"
+    },
+    {
+      "name": "status",
+      "label_key": "char_ma_09",
+      "type": "text",
+      "required": false,
+      "max_length": 80,
+      "width": 220,
+      "datafield_name": "status"
+    },
+    {
+      "name": "gender_ID",
+      "label_key": "char_ma_10",
+      "type": "select",
+      "required": false,
+      "width": 180,
+      "datafield_name": "gender_ID"
+    },
+    {
+      "name": "sex_orientation_ID",
+      "label_key": "char_ma_11",
+      "type": "select",
+      "required": false,
+      "width": 180,
+      "datafield_name": "sex_orientation_ID"
+    },
+    {
+      "name": "notes",
+      "label_key": "char_ma_12",
+      "type": "multiline",
+      "required": false,
+      "max_length": 500,
+      "width": 1200,
+      "datafield_name": "notes"
+    }
   ],
-
   "character_groups": [
-    {"name": "groups_header", "label_key": "char_gr_01", "type": "header", "datafield_name": null},
-    {"name": "groups_title", "label_key": "char_gr_02", "type": "text", "required": true, "max_length": 80, "width": 220, "datafield_name": "groups_title"},
-    {"name": "groups_description", "label_key": "char_gr_03", "type": "multiline", "required": false, "max_length": 200, "width": 480, "datafield_name": "groups_description"}
+    {
+      "name": "groups_header",
+      "label_key": "char_gr_01",
+      "type": "header",
+      "datafield_name": null
+    },
+    {
+      "name": "groups_title",
+      "label_key": "char_gr_02",
+      "type": "text",
+      "required": true,
+      "max_length": 80,
+      "width": 220,
+      "datafield_name": "groups_title"
+    },
+    {
+      "name": "groups_description",
+      "label_key": "char_gr_03",
+      "type": "multiline",
+      "required": false,
+      "max_length": 200,
+      "width": 480,
+      "datafield_name": "groups_description"
+    }
   ],
-
   "character_origin": [
-    {"name": "origin_header", "label_key": "char_or_01", "type": "header", "datafield_name": null},
-    {"name": "father", "label_key": "char_or_02", "type": "text", "required": false, "max_length": 80, "width": 220, "datafield_name": "father"},
-    {"name": "mother", "label_key": "char_or_03", "type": "text", "required": false, "max_length": 80, "width": 220, "datafield_name": "mother"},
-    {"name": "reference_person", "label_key": "char_or_04", "type": "text", "required": false, "max_length": 80, "width": 220, "datafield_name": "reference_person"},
-    {"name": "siblings", "label_key": "char_or_05", "type": "text", "required": false, "max_length": 120, "width": 320, "datafield_name": "siblings"},
-    {"name": "birthplace", "label_key": "char_or_06", "type": "text", "required": false, "max_length": 120, "width": 320, "datafield_name": "birthplace"},
-    {"name": "notes", "label_key": "char_or_07", "type": "multiline", "required": false, "max_length": 500, "width": 1200, "datafield_name": "notes"}
+    {
+      "name": "origin_header",
+      "label_key": "char_or_01",
+      "type": "header",
+      "datafield_name": null
+    },
+    {
+      "name": "father",
+      "label_key": "char_or_02",
+      "type": "text",
+      "required": false,
+      "max_length": 80,
+      "width": 220,
+      "datafield_name": "father"
+    },
+    {
+      "name": "mother",
+      "label_key": "char_or_03",
+      "type": "text",
+      "required": false,
+      "max_length": 80,
+      "width": 220,
+      "datafield_name": "mother"
+    },
+    {
+      "name": "reference_person",
+      "label_key": "char_or_04",
+      "type": "text",
+      "required": false,
+      "max_length": 80,
+      "width": 220,
+      "datafield_name": "reference_person"
+    },
+    {
+      "name": "siblings",
+      "label_key": "char_or_05",
+      "type": "text",
+      "required": false,
+      "max_length": 120,
+      "width": 320,
+      "datafield_name": "siblings"
+    },
+    {
+      "name": "birthplace",
+      "label_key": "char_or_06",
+      "type": "text",
+      "required": false,
+      "max_length": 120,
+      "width": 320,
+      "datafield_name": "birthplace"
+    },
+    {
+      "name": "notes",
+      "label_key": "char_or_07",
+      "type": "multiline",
+      "required": false,
+      "max_length": 500,
+      "width": 1200,
+      "datafield_name": "notes"
+    }
   ],
-
   "character_education": [
-    {"name": "education_header", "label_key": "char_ed_01", "type": "header", "datafield_name": null},
-    {"name": "school", "label_key": "char_ed_02", "type": "text", "required": false, "max_length": 120, "width": 320, "datafield_name": "school"},
-    {"name": "university", "label_key": "char_ed_03", "type": "text", "required": false, "max_length": 120, "width": 320, "datafield_name": "university"},
-    {"name": "job_education", "label_key": "char_ed_04", "type": "text", "required": false, "max_length": 120, "width": 320, "datafield_name": "job_education"},
-    {"name": "autodidactic", "label_key": "char_ed_05", "type": "text", "required": false, "max_length": 120, "width": 320, "datafield_name": "autodidactic"},
-    {"name": "job", "label_key": "char_ed_06", "type": "text", "required": false, "max_length": 120, "width": 320, "datafield_name": "job"},
-    {"name": "art_music", "label_key": "char_ed_07", "type": "text", "required": false, "max_length": 120, "width": 320, "datafield_name": "art_music"},
-    {"name": "sport", "label_key": "char_ed_08", "type": "text", "required": false, "max_length": 120, "width": 320, "datafield_name": "sport"},
-    {"name": "technology", "label_key": "char_ed_09", "type": "text", "required": false, "max_length": 120, "width": 320, "datafield_name": "technology"},
-    {"name": "notes", "label_key": "char_ed_10", "type": "multiline", "required": false, "max_length": 500, "width": 1200, "datafield_name": "notes"}
+    {
+      "name": "education_header",
+      "label_key": "char_ed_01",
+      "type": "header",
+      "datafield_name": null
+    },
+    {
+      "name": "school",
+      "label_key": "char_ed_02",
+      "type": "text",
+      "required": false,
+      "max_length": 120,
+      "width": 320,
+      "datafield_name": "school"
+    },
+    {
+      "name": "university",
+      "label_key": "char_ed_03",
+      "type": "text",
+      "required": false,
+      "max_length": 120,
+      "width": 320,
+      "datafield_name": "university"
+    },
+    {
+      "name": "job_education",
+      "label_key": "char_ed_04",
+      "type": "text",
+      "required": false,
+      "max_length": 120,
+      "width": 320,
+      "datafield_name": "job_education"
+    },
+    {
+      "name": "autodidactic",
+      "label_key": "char_ed_05",
+      "type": "text",
+      "required": false,
+      "max_length": 120,
+      "width": 320,
+      "datafield_name": "autodidactic"
+    },
+    {
+      "name": "job",
+      "label_key": "char_ed_06",
+      "type": "text",
+      "required": false,
+      "max_length": 120,
+      "width": 320,
+      "datafield_name": "job"
+    },
+    {
+      "name": "art_music",
+      "label_key": "char_ed_07",
+      "type": "text",
+      "required": false,
+      "max_length": 120,
+      "width": 320,
+      "datafield_name": "art_music"
+    },
+    {
+      "name": "sport",
+      "label_key": "char_ed_08",
+      "type": "text",
+      "required": false,
+      "max_length": 120,
+      "width": 320,
+      "datafield_name": "sport"
+    },
+    {
+      "name": "technology",
+      "label_key": "char_ed_09",
+      "type": "text",
+      "required": false,
+      "max_length": 120,
+      "width": 320,
+      "datafield_name": "technology"
+    },
+    {
+      "name": "notes",
+      "label_key": "char_ed_10",
+      "type": "multiline",
+      "required": false,
+      "max_length": 500,
+      "width": 1200,
+      "datafield_name": "notes"
+    }
   ],
-
   "character_appearance_main": [
-    {"name": "appearance_main_header", "label_key": "char_am_01", "type": "header", "datafield_name": null},
-    {"name": "height", "label_key": "char_am_02", "type": "text", "required": false, "max_length": 80, "width": 220, "datafield_name": "height"},
-    {"name": "body_type", "label_key": "char_am_03", "type": "text", "required": false, "max_length": 80, "width": 220, "datafield_name": "body_type"},
-    {"name": "posture", "label_key": "char_am_04", "type": "text", "required": false, "max_length": 80, "width": 220, "datafield_name": "posture"},
-    {"name": "face_shape", "label_key": "char_am_05", "type": "text", "required": false, "max_length": 80, "width": 220, "datafield_name": "face_shape"},
-    {"name": "eye_shape", "label_key": "char_am_06", "type": "text", "required": false, "max_length": 80, "width": 220, "datafield_name": "eye_shape"},
-    {"name": "eye_color", "label_key": "char_am_07", "type": "text", "required": false, "max_length": 80, "width": 220, "datafield_name": "eye_color"},
-    {"name": "hair", "label_key": "char_am_08", "type": "text", "required": false, "max_length": 80, "width": 220, "datafield_name": "hair"},
-    {"name": "hair_color", "label_key": "char_am_09", "type": "text", "required": false, "max_length": 80, "width": 220, "datafield_name": "hair_color"},
-    {"name": "skin", "label_key": "char_am_10", "type": "text", "required": false, "max_length": 80, "width": 220, "datafield_name": "skin"},
-    {"name": "charisma", "label_key": "char_am_11", "type": "text", "required": false, "max_length": 80, "width": 220, "datafield_name": "charisma"},
-    {"name": "specials", "label_key": "char_am_12", "type": "text", "required": false, "max_length": 120, "width": 320, "datafield_name": "specials"},
-    {"name": "notes", "label_key": "char_am_13", "type": "multiline", "required": false, "max_length": 500, "width": 1200, "datafield_name": "notes"}
+    {
+      "name": "appearance_main_header",
+      "label_key": "char_am_01",
+      "type": "header",
+      "datafield_name": null
+    },
+    {
+      "name": "height",
+      "label_key": "char_am_02",
+      "type": "text",
+      "required": false,
+      "max_length": 80,
+      "width": 220,
+      "datafield_name": "height"
+    },
+    {
+      "name": "body_type",
+      "label_key": "char_am_03",
+      "type": "text",
+      "required": false,
+      "max_length": 80,
+      "width": 220,
+      "datafield_name": "body_type"
+    },
+    {
+      "name": "posture",
+      "label_key": "char_am_04",
+      "type": "text",
+      "required": false,
+      "max_length": 80,
+      "width": 220,
+      "datafield_name": "posture"
+    },
+    {
+      "name": "face_shape",
+      "label_key": "char_am_05",
+      "type": "text",
+      "required": false,
+      "max_length": 80,
+      "width": 220,
+      "datafield_name": "face_shape"
+    },
+    {
+      "name": "eye_shape",
+      "label_key": "char_am_06",
+      "type": "text",
+      "required": false,
+      "max_length": 80,
+      "width": 220,
+      "datafield_name": "eye_shape"
+    },
+    {
+      "name": "eye_color",
+      "label_key": "char_am_07",
+      "type": "text",
+      "required": false,
+      "max_length": 80,
+      "width": 220,
+      "datafield_name": "eye_color"
+    },
+    {
+      "name": "hair",
+      "label_key": "char_am_08",
+      "type": "text",
+      "required": false,
+      "max_length": 80,
+      "width": 220,
+      "datafield_name": "hair"
+    },
+    {
+      "name": "hair_color",
+      "label_key": "char_am_09",
+      "type": "text",
+      "required": false,
+      "max_length": 80,
+      "width": 220,
+      "datafield_name": "hair_color"
+    },
+    {
+      "name": "skin",
+      "label_key": "char_am_10",
+      "type": "text",
+      "required": false,
+      "max_length": 80,
+      "width": 220,
+      "datafield_name": "skin"
+    },
+    {
+      "name": "charisma",
+      "label_key": "char_am_11",
+      "type": "text",
+      "required": false,
+      "max_length": 80,
+      "width": 220,
+      "datafield_name": "charisma"
+    },
+    {
+      "name": "specials",
+      "label_key": "char_am_12",
+      "type": "text",
+      "required": false,
+      "max_length": 120,
+      "width": 320,
+      "datafield_name": "specials"
+    },
+    {
+      "name": "notes",
+      "label_key": "char_am_13",
+      "type": "multiline",
+      "required": false,
+      "max_length": 500,
+      "width": 1200,
+      "datafield_name": "notes"
+    }
   ],
-
   "character_appearance_detail": [
-    {"name": "appearance_detail_header", "label_key": "char_ad_01", "type": "header", "datafield_name": null},
-    {"name": "head", "label_key": "char_ad_02", "type": "text", "required": false, "max_length": 80, "width": 220, "datafield_name": "head"},
-    {"name": "neck", "label_key": "char_ad_03", "type": "text", "required": false, "max_length": 80, "width": 220, "datafield_name": "neck"},
-    {"name": "shoulder", "label_key": "char_ad_04", "type": "text", "required": false, "max_length": 80, "width": 220, "datafield_name": "shoulder"},
-    {"name": "arms", "label_key": "char_ad_05", "type": "text", "required": false, "max_length": 80, "width": 220, "datafield_name": "arms"},
-    {"name": "hands", "label_key": "char_ad_06", "type": "text", "required": false, "max_length": 80, "width": 220, "datafield_name": "hands"},
-    {"name": "finger", "label_key": "char_ad_07", "type": "text", "required": false, "max_length": 80, "width": 220, "datafield_name": "finger"},
-    {"name": "chest", "label_key": "char_ad_08", "type": "text", "required": false, "max_length": 80, "width": 220, "datafield_name": "chest"},
-    {"name": "hips_waist", "label_key": "char_ad_09", "type": "text", "required": false, "max_length": 80, "width": 220, "datafield_name": "hips_waist"},
-    {"name": "buttocks", "label_key": "char_ad_10", "type": "text", "required": false, "max_length": 80, "width": 220, "datafield_name": "buttocks"},
-    {"name": "legs", "label_key": "char_ad_11", "type": "text", "required": false, "max_length": 80, "width": 220, "datafield_name": "legs"},
-    {"name": "feet", "label_key": "char_ad_12", "type": "text", "required": false, "max_length": 80, "width": 220, "datafield_name": "feet"},
-    {"name": "toes", "label_key": "char_ad_13", "type": "text", "required": false, "max_length": 80, "width": 220, "datafield_name": "toes"},
-    {"name": "notes", "label_key": "char_ad_14", "type": "multiline", "required": false, "max_length": 500, "width": 1200, "datafield_name": "notes"}
+    {
+      "name": "appearance_detail_header",
+      "label_key": "char_ad_01",
+      "type": "header",
+      "datafield_name": null
+    },
+    {
+      "name": "head",
+      "label_key": "char_ad_02",
+      "type": "text",
+      "required": false,
+      "max_length": 80,
+      "width": 220,
+      "datafield_name": "head"
+    },
+    {
+      "name": "neck",
+      "label_key": "char_ad_03",
+      "type": "text",
+      "required": false,
+      "max_length": 80,
+      "width": 220,
+      "datafield_name": "neck"
+    },
+    {
+      "name": "shoulder",
+      "label_key": "char_ad_04",
+      "type": "text",
+      "required": false,
+      "max_length": 80,
+      "width": 220,
+      "datafield_name": "shoulder"
+    },
+    {
+      "name": "arms",
+      "label_key": "char_ad_05",
+      "type": "text",
+      "required": false,
+      "max_length": 80,
+      "width": 220,
+      "datafield_name": "arms"
+    },
+    {
+      "name": "hands",
+      "label_key": "char_ad_06",
+      "type": "text",
+      "required": false,
+      "max_length": 80,
+      "width": 220,
+      "datafield_name": "hands"
+    },
+    {
+      "name": "finger",
+      "label_key": "char_ad_07",
+      "type": "text",
+      "required": false,
+      "max_length": 80,
+      "width": 220,
+      "datafield_name": "finger"
+    },
+    {
+      "name": "chest",
+      "label_key": "char_ad_08",
+      "type": "text",
+      "required": false,
+      "max_length": 80,
+      "width": 220,
+      "datafield_name": "chest"
+    },
+    {
+      "name": "hips_waist",
+      "label_key": "char_ad_09",
+      "type": "text",
+      "required": false,
+      "max_length": 80,
+      "width": 220,
+      "datafield_name": "hips_waist"
+    },
+    {
+      "name": "buttocks",
+      "label_key": "char_ad_10",
+      "type": "text",
+      "required": false,
+      "max_length": 80,
+      "width": 220,
+      "datafield_name": "buttocks"
+    },
+    {
+      "name": "legs",
+      "label_key": "char_ad_11",
+      "type": "text",
+      "required": false,
+      "max_length": 80,
+      "width": 220,
+      "datafield_name": "legs"
+    },
+    {
+      "name": "feet",
+      "label_key": "char_ad_12",
+      "type": "text",
+      "required": false,
+      "max_length": 80,
+      "width": 220,
+      "datafield_name": "feet"
+    },
+    {
+      "name": "toes",
+      "label_key": "char_ad_13",
+      "type": "text",
+      "required": false,
+      "max_length": 80,
+      "width": 220,
+      "datafield_name": "toes"
+    },
+    {
+      "name": "notes",
+      "label_key": "char_ad_14",
+      "type": "multiline",
+      "required": false,
+      "max_length": 500,
+      "width": 1200,
+      "datafield_name": "notes"
+    }
   ],
-
   "character_personality": [
-    {"name": "personality_header", "label_key": "char_ps_01", "type": "header", "datafield_name": null},
-    {"name": "pos_characteristic", "label_key": "char_ps_02", "type": "text", "required": false, "max_length": 120, "width": 320, "datafield_name": "pos_characteristic"},
-    {"name": "neg_characteristic", "label_key": "char_ps_03", "type": "text", "required": false, "max_length": 120, "width": 320, "datafield_name": "neg_characteristic"},
-    {"name": "fears", "label_key": "char_ps_04", "type": "text", "required": false, "max_length": 120, "width": 320, "datafield_name": "fears"},
-    {"name": "weaknesses", "label_key": "char_ps_05", "type": "text", "required": false, "max_length": 120, "width": 320, "datafield_name": "weaknesses"},
-    {"name": "strengths", "label_key": "char_ps_06", "type": "text", "required": false, "max_length": 120, "width": 320, "datafield_name": "strengths"},
-    {"name": "talents", "label_key": "char_ps_07", "type": "text", "required": false, "max_length": 120, "width": 320, "datafield_name": "talents"},
-    {"name": "beliefs", "label_key": "char_ps_08", "type": "text", "required": false, "max_length": 120, "width": 320, "datafield_name": "beliefs"},
-    {"name": "life_goals", "label_key": "char_ps_09", "type": "text", "required": false, "max_length": 120, "width": 320, "datafield_name": "life_goals"},
-    {"name": "motivation", "label_key": "char_ps_10", "type": "text", "required": false, "max_length": 120, "width": 320, "datafield_name": "motivation"},
-    {"name": "behavior", "label_key": "char_ps_11", "type": "text", "required": false, "max_length": 120, "width": 320, "datafield_name": "behavior"},
-    {"name": "notes", "label_key": "char_ps_12", "type": "multiline", "required": false, "max_length": 500, "width": 1200, "datafield_name": "notes"}
+    {
+      "name": "personality_header",
+      "label_key": "char_ps_01",
+      "type": "header",
+      "datafield_name": null
+    },
+    {
+      "name": "pos_characteristic",
+      "label_key": "char_ps_02",
+      "type": "text",
+      "required": false,
+      "max_length": 120,
+      "width": 320,
+      "datafield_name": "pos_characteristic"
+    },
+    {
+      "name": "neg_characteristic",
+      "label_key": "char_ps_03",
+      "type": "text",
+      "required": false,
+      "max_length": 120,
+      "width": 320,
+      "datafield_name": "neg_characteristic"
+    },
+    {
+      "name": "fears",
+      "label_key": "char_ps_04",
+      "type": "text",
+      "required": false,
+      "max_length": 120,
+      "width": 320,
+      "datafield_name": "fears"
+    },
+    {
+      "name": "weaknesses",
+      "label_key": "char_ps_05",
+      "type": "text",
+      "required": false,
+      "max_length": 120,
+      "width": 320,
+      "datafield_name": "weaknesses"
+    },
+    {
+      "name": "strengths",
+      "label_key": "char_ps_06",
+      "type": "text",
+      "required": false,
+      "max_length": 120,
+      "width": 320,
+      "datafield_name": "strengths"
+    },
+    {
+      "name": "talents",
+      "label_key": "char_ps_07",
+      "type": "text",
+      "required": false,
+      "max_length": 120,
+      "width": 320,
+      "datafield_name": "talents"
+    },
+    {
+      "name": "beliefs",
+      "label_key": "char_ps_08",
+      "type": "text",
+      "required": false,
+      "max_length": 120,
+      "width": 320,
+      "datafield_name": "beliefs"
+    },
+    {
+      "name": "life_goals",
+      "label_key": "char_ps_09",
+      "type": "text",
+      "required": false,
+      "max_length": 120,
+      "width": 320,
+      "datafield_name": "life_goals"
+    },
+    {
+      "name": "motivation",
+      "label_key": "char_ps_10",
+      "type": "text",
+      "required": false,
+      "max_length": 120,
+      "width": 320,
+      "datafield_name": "motivation"
+    },
+    {
+      "name": "behavior",
+      "label_key": "char_ps_11",
+      "type": "text",
+      "required": false,
+      "max_length": 120,
+      "width": 320,
+      "datafield_name": "behavior"
+    },
+    {
+      "name": "notes",
+      "label_key": "char_ps_12",
+      "type": "multiline",
+      "required": false,
+      "max_length": 500,
+      "width": 1200,
+      "datafield_name": "notes"
+    }
   ],
-
   "character_psychological_profile": [
-    {"name": "psychological_profile_header", "label_key": "char_pp_01", "type": "header", "datafield_name": null},
-    {"name": "diagnosis", "label_key": "char_pp_02", "type": "text", "required": false, "max_length": 120, "width": 320, "datafield_name": "diagnosis"},
-    {"name": "symptoms", "label_key": "char_pp_03", "type": "text", "required": false, "max_length": 120, "width": 320, "datafield_name": "symptoms"},
-    {"name": "therapy", "label_key": "char_pp_04", "type": "text", "required": false, "max_length": 120, "width": 320, "datafield_name": "therapy"},
-    {"name": "medication", "label_key": "char_pp_05", "type": "text", "required": false, "max_length": 120, "width": 320, "datafield_name": "medication"},
-    {"name": "temperament", "label_key": "char_pp_06", "type": "text", "required": false, "max_length": 120, "width": 320, "datafield_name": "temperament"},
-    {"name": "values_set", "label_key": "char_pp_07", "type": "text", "required": false, "max_length": 120, "width": 320, "datafield_name": "values_set"},
-    {"name": "moral_concepts", "label_key": "char_pp_08", "type": "text", "required": false, "max_length": 120, "width": 320, "datafield_name": "moral_concepts"},
-    {"name": "character_strength", "label_key": "char_pp_09", "type": "text", "required": false, "max_length": 120, "width": 320, "datafield_name": "character_strength"},
-    {"name": "character_weakness", "label_key": "char_pp_10", "type": "text", "required": false, "max_length": 120, "width": 320, "datafield_name": "character_weakness"},
-    {"name": "self_image", "label_key": "char_pp_11", "type": "text", "required": false, "max_length": 120, "width": 320, "datafield_name": "self_image"},
-    {"name": "humor", "label_key": "char_pp_12", "type": "text", "required": false, "max_length": 120, "width": 320, "datafield_name": "humor"},
-    {"name": "aggression", "label_key": "char_pp_13", "type": "text", "required": false, "max_length": 120, "width": 320, "datafield_name": "aggression"},
-    {"name": "trauma", "label_key": "char_pp_14", "type": "text", "required": false, "max_length": 120, "width": 320, "datafield_name": "trauma"},
-    {"name": "formative_personality", "label_key": "char_pp_15", "type": "text", "required": false, "max_length": 120, "width": 320, "datafield_name": "formative_personality"},
-    {"name": "socialization", "label_key": "char_pp_16", "type": "text", "required": false, "max_length": 120, "width": 320, "datafield_name": "socialization"},
-    {"name": "norms", "label_key": "char_pp_17", "type": "text", "required": false, "max_length": 120, "width": 320, "datafield_name": "norms"},
-    {"name": "taboos", "label_key": "char_pp_18", "type": "text", "required": false, "max_length": 120, "width": 320, "datafield_name": "taboos"},
-    {"name": "notes", "label_key": "char_pp_19", "type": "multiline", "required": false, "max_length": 500, "width": 1200, "datafield_name": "notes"}
+    {
+      "name": "psychological_profile_header",
+      "label_key": "char_pp_01",
+      "type": "header",
+      "datafield_name": null
+    },
+    {
+      "name": "diagnosis",
+      "label_key": "char_pp_02",
+      "type": "text",
+      "required": false,
+      "max_length": 120,
+      "width": 320,
+      "datafield_name": "diagnosis"
+    },
+    {
+      "name": "symptoms",
+      "label_key": "char_pp_03",
+      "type": "text",
+      "required": false,
+      "max_length": 120,
+      "width": 320,
+      "datafield_name": "symptoms"
+    },
+    {
+      "name": "therapy",
+      "label_key": "char_pp_04",
+      "type": "text",
+      "required": false,
+      "max_length": 120,
+      "width": 320,
+      "datafield_name": "therapy"
+    },
+    {
+      "name": "medication",
+      "label_key": "char_pp_05",
+      "type": "text",
+      "required": false,
+      "max_length": 120,
+      "width": 320,
+      "datafield_name": "medication"
+    },
+    {
+      "name": "temperament",
+      "label_key": "char_pp_06",
+      "type": "text",
+      "required": false,
+      "max_length": 120,
+      "width": 320,
+      "datafield_name": "temperament"
+    },
+    {
+      "name": "values_set",
+      "label_key": "char_pp_07",
+      "type": "text",
+      "required": false,
+      "max_length": 120,
+      "width": 320,
+      "datafield_name": "values_set"
+    },
+    {
+      "name": "moral_concepts",
+      "label_key": "char_pp_08",
+      "type": "text",
+      "required": false,
+      "max_length": 120,
+      "width": 320,
+      "datafield_name": "moral_concepts"
+    },
+    {
+      "name": "character_strength",
+      "label_key": "char_pp_09",
+      "type": "text",
+      "required": false,
+      "max_length": 120,
+      "width": 320,
+      "datafield_name": "character_strength"
+    },
+    {
+      "name": "character_weakness",
+      "label_key": "char_pp_10",
+      "type": "text",
+      "required": false,
+      "max_length": 120,
+      "width": 320,
+      "datafield_name": "character_weakness"
+    },
+    {
+      "name": "self_image",
+      "label_key": "char_pp_11",
+      "type": "text",
+      "required": false,
+      "max_length": 120,
+      "width": 320,
+      "datafield_name": "self_image"
+    },
+    {
+      "name": "humor",
+      "label_key": "char_pp_12",
+      "type": "text",
+      "required": false,
+      "max_length": 120,
+      "width": 320,
+      "datafield_name": "humor"
+    },
+    {
+      "name": "aggression",
+      "label_key": "char_pp_13",
+      "type": "text",
+      "required": false,
+      "max_length": 120,
+      "width": 320,
+      "datafield_name": "aggression"
+    },
+    {
+      "name": "trauma",
+      "label_key": "char_pp_14",
+      "type": "text",
+      "required": false,
+      "max_length": 120,
+      "width": 320,
+      "datafield_name": "trauma"
+    },
+    {
+      "name": "formative_personality",
+      "label_key": "char_pp_15",
+      "type": "text",
+      "required": false,
+      "max_length": 120,
+      "width": 320,
+      "datafield_name": "formative_personality"
+    },
+    {
+      "name": "socialization",
+      "label_key": "char_pp_16",
+      "type": "text",
+      "required": false,
+      "max_length": 120,
+      "width": 320,
+      "datafield_name": "socialization"
+    },
+    {
+      "name": "norms",
+      "label_key": "char_pp_17",
+      "type": "text",
+      "required": false,
+      "max_length": 120,
+      "width": 320,
+      "datafield_name": "norms"
+    },
+    {
+      "name": "taboos",
+      "label_key": "char_pp_18",
+      "type": "text",
+      "required": false,
+      "max_length": 120,
+      "width": 320,
+      "datafield_name": "taboos"
+    },
+    {
+      "name": "notes",
+      "label_key": "char_pp_19",
+      "type": "multiline",
+      "required": false,
+      "max_length": 500,
+      "width": 1200,
+      "datafield_name": "notes"
+    }
   ],
-
   "sex_orientation": [
-    {"name": "sex_orientation_header", "label_key": "sexo_sx_01", "type": "header", "datafield_name": null},
-    {"name": "sex_orientation", "label_key": "sexo_sx_02", "type": "text", "required": true, "max_length": 80, "width": 220, "datafield_name": "sex_orientation"},
-    {"name": "short_description", "label_key": "sexo_sx_03", "type": "multiline", "required": false, "max_length": 200, "width": 480, "datafield_name": "short_description"}
+    {
+      "name": "sex_orientation_header",
+      "label_key": "sexo_sx_01",
+      "type": "header",
+      "datafield_name": null
+    },
+    {
+      "name": "sex_orientation",
+      "label_key": "sexo_sx_02",
+      "type": "text",
+      "required": true,
+      "max_length": 80,
+      "width": 220,
+      "datafield_name": "sex_orientation"
+    },
+    {
+      "name": "short_description",
+      "label_key": "sexo_sx_03",
+      "type": "multiline",
+      "required": false,
+      "max_length": 200,
+      "width": 480,
+      "datafield_name": "short_description"
+    }
   ],
-
   "gender": [
-    {"name": "gender_header", "label_key": "gend_ge_01", "type": "header", "datafield_name": null},
-    {"name": "gender", "label_key": "gend_ge_02", "type": "text", "required": true, "max_length": 80, "width": 220, "datafield_name": "gender"},
-    {"name": "short_description", "label_key": "gend_ge_03", "type": "multiline", "required": false, "max_length": 200, "width": 480, "datafield_name": "short_description"}
+    {
+      "name": "gender_header",
+      "label_key": "gend_ge_01",
+      "type": "header",
+      "datafield_name": null
+    },
+    {
+      "name": "gender",
+      "label_key": "gend_ge_02",
+      "type": "text",
+      "required": true,
+      "max_length": 80,
+      "width": 220,
+      "datafield_name": "gender"
+    },
+    {
+      "name": "short_description",
+      "label_key": "gend_ge_03",
+      "type": "multiline",
+      "required": false,
+      "max_length": 200,
+      "width": 480,
+      "datafield_name": "short_description"
+    }
   ],
-
   "project_statistics": [
-    {"name": "words_count_days", "label_key": "stat_pr_01", "type": "display", "width": 120, "datafield_name": "project_words_count_days"},
-    {"name": "days_count", "label_key": "stat_pr_02", "type": "display", "width": 120, "datafield_name": "project_days_count"},
-    {"name": "chapters_count", "label_key": "stat_pr_03", "type": "display", "width": 120, "datafield_name": "project_chapters"},
-    {"name": "scenes_count", "label_key": "stat_pr_04", "type": "display", "width": 120, "datafield_name": "project_scenes"},
-    {"name": "storylines_count", "label_key": "stat_pr_05", "type": "display", "width": 120, "datafield_name": "project_storylines"},
-    {"name": "main_characters_count", "label_key": "stat_pr_06", "type": "display", "width": 120, "datafield_name": "project_main_characters"},
-    {"name": "supporting_characters_count", "label_key": "stat_pr_07", "type": "display", "width": 120, "datafield_name": "project_supporting_characters"},
-    {"name": "groups_characters_count", "label_key": "stat_pr_08", "type": "display", "width": 120, "datafield_name": "project_groups_characters"},
-    {"name": "locations_count", "label_key": "stat_pr_09", "type": "display", "width": 120, "datafield_name": "project_locations"},
-    {"name": "objects_count", "label_key": "stat_pr_10", "type": "display", "width": 120, "datafield_name": "project_objects"}
+    {
+      "name": "words_count_days",
+      "label_key": "stat_pr_01",
+      "type": "display",
+      "width": 120,
+      "datafield_name": "project_words_count_days"
+    },
+    {
+      "name": "days_count",
+      "label_key": "stat_pr_02",
+      "type": "display",
+      "width": 120,
+      "datafield_name": "project_days_count"
+    },
+    {
+      "name": "chapters_count",
+      "label_key": "stat_pr_03",
+      "type": "display",
+      "width": 120,
+      "datafield_name": "project_chapters"
+    },
+    {
+      "name": "scenes_count",
+      "label_key": "stat_pr_04",
+      "type": "display",
+      "width": 120,
+      "datafield_name": "project_scenes"
+    },
+    {
+      "name": "storylines_count",
+      "label_key": "stat_pr_05",
+      "type": "display",
+      "width": 120,
+      "datafield_name": "project_storylines"
+    },
+    {
+      "name": "main_characters_count",
+      "label_key": "stat_pr_06",
+      "type": "display",
+      "width": 120,
+      "datafield_name": "project_main_characters"
+    },
+    {
+      "name": "supporting_characters_count",
+      "label_key": "stat_pr_07",
+      "type": "display",
+      "width": 120,
+      "datafield_name": "project_supporting_characters"
+    },
+    {
+      "name": "groups_characters_count",
+      "label_key": "stat_pr_08",
+      "type": "display",
+      "width": 120,
+      "datafield_name": "project_groups_characters"
+    },
+    {
+      "name": "locations_count",
+      "label_key": "stat_pr_09",
+      "type": "display",
+      "width": 120,
+      "datafield_name": "project_locations"
+    },
+    {
+      "name": "objects_count",
+      "label_key": "stat_pr_10",
+      "type": "display",
+      "width": 120,
+      "datafield_name": "project_objects"
+    }
   ],
-
   "preferences": [
     {
       "name": "language",
@@ -205,24 +1289,22 @@
       "required": true,
       "datafield_name": "preference_language",
       "options": [
-        {"key": "de", "label_key": "PreferenceLanguageDe"},
-        {"key": "en", "label_key": "PreferenceLanguageEn"},
-        {"key": "es", "label_key": "PreferenceLanguageEs"},
-        {"key": "fr", "label_key": "PreferenceLanguageFr"}
-      ]
-    },
-    {
-      "name": "style",
-      "label_key": "PreferenceStyle",
-      "type": "combobox",
-      "required": true,
-      "datafield_name": "preference_style",
-      "options": [
-        {"key": "old", "label_key": "PreferenceStyleOld"},
-        {"key": "vintage", "label_key": "PreferenceStyleVintage"},
-        {"key": "modern", "label_key": "PreferenceStyleModern"},
-        {"key": "future", "label_key": "PreferenceStyleFuture"},
-        {"key": "minimal", "label_key": "PreferenceStyleMinimal"}
+        {
+          "key": "de",
+          "label_key": "PreferenceLanguageDe"
+        },
+        {
+          "key": "en",
+          "label_key": "PreferenceLanguageEn"
+        },
+        {
+          "key": "es",
+          "label_key": "PreferenceLanguageEs"
+        },
+        {
+          "key": "fr",
+          "label_key": "PreferenceLanguageFr"
+        }
       ]
     },
     {
@@ -232,9 +1314,18 @@
       "required": true,
       "datafield_name": "preference_theme",
       "options": [
-        {"key": "dark", "label_key": "PreferenceThemeDark"},
-        {"key": "middle", "label_key": "PreferenceThemeNeutral"},
-        {"key": "light", "label_key": "PreferenceThemeLight"}
+        {
+          "key": "dark",
+          "label_key": "PreferenceThemeDark"
+        },
+        {
+          "key": "middle",
+          "label_key": "PreferenceThemeNeutral"
+        },
+        {
+          "key": "light",
+          "label_key": "PreferenceThemeLight"
+        }
       ]
     }
   ]

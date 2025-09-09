@@ -5,27 +5,23 @@
     "scale_factor": 1.0,
     "screen_resolution_changed": true
   },
-  "window": {
-    "start_window_bnt_width": 240,
-    "start_window_bnt_height": 60,
-    "start_window_bnt_top_offset": 270,
-    "start_window_bnt_left_offset": 1350,
-    "start_window_bnt_spacing": 42
-  },
   "preferences_window": {
     "width": 500,
     "height": 320
   },
+  "start_window": {
+    "width": 1920,
+    "height": 1080
+  },
   "panels": {
     "splitter_sizes": [
-      200,
+      400,
       1200,
-      520
+      320
     ]
   },
   "gui": {
-    "style": "future",
-    "theme": "middle"
+    "style_theme": "theme_Modern_neutral"
   },
   "general": {
     "language": "de"

@@ -242,5 +242,22 @@
   "help_wi_02": "Proyectos",
   "help_wi_03": "Personaje",
   "help_wi_04": "Objetos",
-  "help_wi_05": "Lugares"
+  "help_wi_05": "Lugares",
+  "start_window_text_1": "Codices Scriptoria Nova (CSNova)",
+  "start_window_text_2": "Un software que te ayuda a planificar y escribir tus historias.",
+  "start_window_text_3": "CSNova te ofrece una interfaz clara y estructurada, siguiendo el lema:",
+  "start_window_text_4": "¡No tienes que aprender cómo funciona el software, el software tiene que adaptarse a tu estilo de trabajo!",
+  "start_window_text_5": "CSNova te permite concentrarte completamente en la escritura sin distraerte con funciones innecesarias.",
+  "start_window_text_6": "No tienes que interrumpir tu flujo de escritura para descubrir cómo usar una función.",
+  "start_window_text_7": "CSNova ha detectado que tu sistema operativo utiliza el idioma: ",
+  "start_window_text_8": "Ahora puedes seleccionar un idioma diferente en la selección",
+  "start_window_text_9": "Al iniciar por primera vez, CSNova utiliza un diseño predefinido para mostrar botones y otros controles. Esta configuración es actualmente:",
+  "start_window_text_10": "Si deseas cambiar eso, puedes seleccionar un diseño diferente. Los cambios se te mostrarán de inmediato.",
+  "start_window_text_11": "Si no te gustan las elecciones hechas, simplemente puedes seleccionar un diseño diferente.",
+  "start_window_text_12": "CSNova te ofrece varias ayudas, si no deseas usarlas, puedes desactivarlas.",
+  "start_window_text_13": "Simplemente elimina las marcas de verificación en los campos que no deseas usar.",
+  "start_window_text_14": "Estos y otros ajustes, que no se consultaron ahora, se pueden ajustar en cualquier momento en la configuración.",
+  "start_window_centerBtn_save": "Guardar cambios",
+  "start_window_centerBtn_defaults": "Restaurar configuración predeterminada",
+  "start_window_centerBtn_next": "siguiente ..."
 }

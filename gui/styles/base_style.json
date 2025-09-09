@@ -16,25 +16,13 @@
     "font-size": "{font_size}px",
     "background": "transparent"
   },
-  "QGroupBox": {
-    "border": "1px solid {border}",
-    "border-radius": "{border_radius}px",
-    "margin-top": "10px",
-    "color": "{foreground}",
-    "font-size": "{font_size}px"
-  },
-  "QGroupBox::title": {
-    "subcontrol-origin": "margin",
-    "left": "10px",
-    "padding": "0 3px 0 3px"
-  },
   "QPushButton": {
     "background-color": "{button_bg}",
     "color": "{button_fg}",
-    "border-radius": "{border_radius}px",
-    "border": "1px solid {border}",
-    "font-size": "{font_size}px",
-    "padding": "6px 18px"
+    "border-radius": "{button_radius}px",
+    "border": "{button_border}",
+    "font-size": "{button_font_size}px",
+    "padding": "{button_padding}"
   },
   "QPushButton:hover": {
     "background-color": "{button_hover}"
@@ -43,17 +31,17 @@
     "background-color": "{button_active}"
   },
   "QPushButton:disabled": {
-    "background-color": "#cccccc",
-    "color": "#888888"
+    "background-color": "{button_disabled_bg}",
+    "color": "{button_disabled_fg}"
   },
   "QPushButton#FloatingActionButton": {
     "background-color": "{button_bg}",
     "color": "{button_fg}",
     "border-radius": "50%",
     "border": "none",
-    "font-size": "{font_size}px",
-    "width": "56px",
-    "height": "56px"
+    "font-size": "{button_font_size}px",
+    "width": "{fab_width}px",
+    "height": "{fab_height}px"
   },
   "QPushButton#FloatingActionButton:hover": {
     "background-color": "{button_hover}"
@@ -64,73 +52,73 @@
   "QLineEdit": {
     "background-color": "{input_bg}",
     "color": "{input_fg}",
-    "border-radius": "{border_radius}px",
-    "border": "1px solid {border}",
-    "font-size": "{font_size}px",
-    "padding": "4px 8px",
+    "border-radius": "{input_radius}px",
+    "border": "{input_border}",
+    "font-size": "{input_font_size}px",
+    "padding": "{input_padding}",
     "min-width": "{input_width}px"
   },
   "QTextEdit": {
     "background-color": "{input_bg}",
     "color": "{input_fg}",
-    "border-radius": "{border_radius}px",
-    "border": "1px solid {border}",
-    "font-size": "{font_size}px",
-    "padding": "4px 8px",
+    "border-radius": "{input_radius}px",
+    "border": "{input_border}",
+    "font-size": "{input_font_size}px",
+    "padding": "{input_padding}",
     "min-width": "{input_width}px"
   },
   "QPlainTextEdit": {
     "background-color": "{input_bg}",
     "color": "{input_fg}",
-    "border-radius": "{border_radius}px",
-    "border": "1px solid {border}",
-    "font-size": "{font_size}px",
-    "padding": "4px 8px",
+    "border-radius": "{input_radius}px",
+    "border": "{input_border}",
+    "font-size": "{input_font_size}px",
+    "padding": "{input_padding}",
     "min-width": "{input_width}px"
   },
   "QSpinBox": {
     "background-color": "{input_bg}",
     "color": "{input_fg}",
-    "border-radius": "{border_radius}px",
-    "border": "1px solid {border}",
-    "font-size": "{font_size}px",
-    "padding": "4px 8px",
+    "border-radius": "{input_radius}px",
+    "border": "{input_border}",
+    "font-size": "{input_font_size}px",
+    "padding": "{input_padding}",
     "min-width": "{input_width}px"
   },
   "QDoubleSpinBox": {
     "background-color": "{input_bg}",
     "color": "{input_fg}",
-    "border-radius": "{border_radius}px",
-    "border": "1px solid {border}",
-    "font-size": "{font_size}px",
-    "padding": "4px 8px",
+    "border-radius": "{input_radius}px",
+    "border": "{input_border}",
+    "font-size": "{input_font_size}px",
+    "padding": "{input_padding}",
     "min-width": "{input_width}px"
   },
   "QDateEdit": {
     "background-color": "{input_bg}",
     "color": "{input_fg}",
-    "border-radius": "{border_radius}px",
-    "border": "1px solid {border}",
-    "font-size": "{font_size}px",
-    "padding": "4px 8px",
+    "border-radius": "{input_radius}px",
+    "border": "{input_border}",
+    "font-size": "{input_font_size}px",
+    "padding": "{input_padding}",
     "min-width": "{input_width}px"
   },
   "QTimeEdit": {
     "background-color": "{input_bg}",
     "color": "{input_fg}",
-    "border-radius": "{border_radius}px",
-    "border": "1px solid {border}",
-    "font-size": "{font_size}px",
-    "padding": "4px 8px",
+    "border-radius": "{input_radius}px",
+    "border": "{input_border}",
+    "font-size": "{input_font_size}px",
+    "padding": "{input_padding}",
     "min-width": "{input_width}px"
   },
   "QComboBox": {
     "background-color": "{input_bg}",
     "color": "{input_fg}",
-    "border-radius": "{border_radius}px",
-    "border": "1px solid {border}",
-    "font-size": "{font_size}px",
-    "padding": "4px 8px",
+    "border-radius": "{input_radius}px",
+    "border": "{input_border}",
+    "font-size": "{input_font_size}px",
+    "padding": "{input_padding}",
     "min-width": "{input_width}px"
   },
   "QComboBox QAbstractItemView": {
@@ -141,181 +129,181 @@
   "QLabel.chip": {
     "background": "{chip_bg}",
     "color": "{chip_fg}",
-    "border-radius": "16px",
-    "padding": "4px 12px",
-    "font-size": "{font_size}px"
+    "border-radius": "{chip_radius}px",
+    "padding": "{chip_padding}",
+    "font-size": "{chip_font_size}px"
   },
   "QTabWidget::pane": {
-    "border": "1px solid {border}",
-    "border-radius": "{border_radius}px"
+    "border": "{tab_border}",
+    "border-radius": "{tab_radius}px"
   },
   "QTabBar::tab": {
-    "background": "{button_bg}",
-    "color": "{button_fg}",
-    "border": "1px solid {border}",
-    "border-radius": "{border_radius}px",
-    "padding": "6px 18px",
-    "font-size": "{font_size}px"
+    "background": "{tab_bg}",
+    "color": "{tab_fg}",
+    "border": "{tab_border}",
+    "border-radius": "{tab_radius}px",
+    "padding": "{tab_padding}",
+    "font-size": "{tab_font_size}px"
   },
   "QTabBar::tab:selected": {
-    "background": "{button_active}",
-    "color": "{highlight}"
+    "background": "{tab_active_bg}",
+    "color": "{tab_active_fg}"
   },
   "QTabBar::tab:hover": {
-    "background": "{button_hover}"
+    "background": "{tab_hover_bg}"
   },
   "QListView": {
-    "background": "{input_bg}",
-    "color": "{input_fg}",
-    "border": "1px solid {border}",
-    "border-radius": "{border_radius}px",
-    "font-size": "{font_size}px"
+    "background": "{list_bg}",
+    "color": "{list_fg}",
+    "border": "{list_border}",
+    "border-radius": "{list_radius}px",
+    "font-size": "{list_font_size}px"
   },
   "QTreeView": {
-    "background": "{input_bg}",
-    "color": "{input_fg}",
-    "border": "1px solid {border}",
-    "border-radius": "{border_radius}px",
-    "font-size": "{font_size}px"
+    "background": "{tree_bg}",
+    "color": "{tree_fg}",
+    "border": "{tree_border}",
+    "border-radius": "{tree_radius}px",
+    "font-size": "{tree_font_size}px"
   },
   "QListView::item:selected": {
-    "background": "{highlight}",
-    "color": "{foreground}"
+    "background": "{list_selected_bg}",
+    "color": "{list_selected_fg}"
   },
   "QTreeView::item:selected": {
-    "background": "{highlight}",
-    "color": "{foreground}"
+    "background": "{tree_selected_bg}",
+    "color": "{tree_selected_fg}"
   },
   "QTableView": {
-    "background": "{input_bg}",
-    "color": "{input_fg}",
-    "border": "1px solid {border}",
-    "border-radius": "{border_radius}px",
-    "font-size": "{font_size}px",
-    "gridline-color": "{border}"
+    "background": "{table_bg}",
+    "color": "{table_fg}",
+    "border": "{table_border}",
+    "border-radius": "{table_radius}px",
+    "font-size": "{table_font_size}px",
+    "gridline-color": "{table_gridline}"
   },
   "QHeaderView::section": {
-    "background": "{button_bg}",
-    "color": "{button_fg}",
-    "border": "1px solid {border}",
-    "font-size": "{font_size}px"
+    "background": "{header_bg}",
+    "color": "{header_fg}",
+    "border": "{header_border}",
+    "font-size": "{header_font_size}px"
   },
   "QProgressBar": {
-    "border": "1px solid {border}",
-    "border-radius": "{border_radius}px",
+    "border": "{progress_border}",
+    "border-radius": "{progress_radius}px",
     "text-align": "center",
-    "background": "{input_bg}",
-    "color": "{input_fg}",
-    "font-size": "{font_size}px"
+    "background": "{progress_bg}",
+    "color": "{progress_fg}",
+    "font-size": "{progress_font_size}px"
   },
   "QProgressBar::chunk": {
-    "background-color": "{highlight}",
-    "width": "20px"
+    "background-color": "{progress_chunk_bg}",
+    "width": "{progress_chunk_width}px"
   },
   "QSlider::groove:horizontal": {
-    "border": "1px solid {border}",
-    "height": "8px",
-    "background": "{input_bg}",
-    "border-radius": "4px"
+    "border": "{slider_border}",
+    "height": "{slider_groove_height}px",
+    "background": "{slider_groove_bg}",
+    "border-radius": "{slider_groove_radius}px"
   },
   "QSlider::handle:horizontal": {
-    "background": "{highlight}",
-    "border": "1px solid {border}",
-    "width": "18px",
-    "margin": "-5px 0",
-    "border-radius": "9px"
+    "background": "{slider_handle_bg}",
+    "border": "{slider_handle_border}",
+    "width": "{slider_handle_width}px",
+    "margin": "{slider_handle_margin}",
+    "border-radius": "{slider_handle_radius}px"
   },
   "QSplitter::handle": {
-    "background": "{border}"
+    "background": "{splitter_handle_bg}"
   },
   "QWidget#NavigationPanel": {
-    "background": "{background}",
-    "color": "{foreground}",
-    "border-radius": "{border_radius}px"
+    "background": "{nav_bg}",
+    "color": "{nav_fg}",
+    "border-radius": "{nav_radius}px"
   },
   "QWidget#HelpPanel": {
-    "background": "{background}",
-    "color": "{foreground}",
-    "border-radius": "{border_radius}px"
+    "background": "{help_bg}",
+    "color": "{help_fg}",
+    "border-radius": "{help_radius}px"
   },
   "QWidget#CenterPanel": {
-    "background": "{background}",
-    "color": "{foreground}",
-    "border-radius": "{border_radius}px"
+    "background": "{center_bg}",
+    "color": "{center_fg}",
+    "border-radius": "{center_radius}px"
   },
   "QToolBar": {
-    "background": "{button_bg}",
-    "border-bottom": "1px solid {border}",
-    "spacing": "6px"
+    "background": "{toolbar_bg}",
+    "border-bottom": "{toolbar_border}",
+    "spacing": "{toolbar_spacing}"
   },
   "QFormLayout QLabel": {
-    "color": "{foreground}",
-    "font-size": "{font_size}px"
+    "color": "{form_label_fg}",
+    "font-size": "{form_label_font_size}px"
   },
   "QFormLayout QLineEdit": {
-    "background": "{input_bg}",
-    "color": "{input_fg}",
-    "border-radius": "{border_radius}px",
-    "border": "1px solid {border}",
-    "font-size": "{font_size}px"
+    "background": "{form_input_bg}",
+    "color": "{form_input_fg}",
+    "border-radius": "{form_input_radius}px",
+    "border": "{form_input_border}",
+    "font-size": "{form_input_font_size}px"
   },
   "QFormLayout QDateEdit": {
-    "background": "{input_bg}",
-    "color": "{input_fg}",
-    "border-radius": "{border_radius}px",
-    "border": "1px solid {border}",
-    "font-size": "{font_size}px"
+    "background": "{form_input_bg}",
+    "color": "{form_input_fg}",
+    "border-radius": "{form_input_radius}px",
+    "border": "{form_input_border}",
+    "font-size": "{form_input_font_size}px"
   },
   "QFormLayout QSpinBox": {
-    "background": "{input_bg}",
-    "color": "{input_fg}",
-    "border-radius": "{border_radius}px",
-    "border": "1px solid {border}",
-    "font-size": "{font_size}px"
+    "background": "{form_input_bg}",
+    "color": "{form_input_fg}",
+    "border-radius": "{form_input_radius}px",
+    "border": "{form_input_border}",
+    "font-size": "{form_input_font_size}px"
   },
   "QFormLayout QTextEdit": {
-    "background": "{input_bg}",
-    "color": "{input_fg}",
-    "border-radius": "{border_radius}px",
-    "border": "1px solid {border}",
-    "font-size": "{font_size}px"
+    "background": "{form_input_bg}",
+    "color": "{form_input_fg}",
+    "border-radius": "{form_input_radius}px",
+    "border": "{form_input_border}",
+    "font-size": "{form_input_font_size}px"
   },
   "QToolTip": {
-    "background": "{button_bg}",
-    "color": "{button_fg}",
-    "border": "1px solid {border}",
-    "font-size": "{font_size}px"
+    "background": "{tooltip_bg}",
+    "color": "{tooltip_fg}",
+    "border": "{tooltip_border}",
+    "font-size": "{tooltip_font_size}px"
   },
   "QMenu": {
-    "background": "{button_bg}",
-    "color": "{button_fg}",
-    "border": "1px solid {border}",
-    "font-size": "{font_size}px"
+    "background": "{menu_bg}",
+    "color": "{menu_fg}",
+    "border": "{menu_border}",
+    "font-size": "{menu_font_size}px"
   },
   "QMenu::item:selected": {
-    "background": "{highlight}",
-    "color": "{foreground}"
+    "background": "{menu_selected_bg}",
+    "color": "{menu_selected_fg}"
   },
   "QLabel#FormHeaderLabel": {
-    "font-size": "22px",
+    "font-size": "{form_header_font_size}px",
     "font-weight": "bold",
-    "color": "{foreground}",
-    "margin-bottom": "12px"
+    "color": "{form_header_fg}",
+    "margin-bottom": "{form_header_margin_bottom}px"
   },
   "QLabel#error": {
     "color": "{error}",
     "border": "1px solid {error}",
-    "background": "#fff0f0"
+    "background": "{error_bg}"
   },
   "QLineEdit[error=\"true\"]": {
     "color": "{error}",
     "border": "1px solid {error}",
-    "background": "#fff0f0"
+    "background": "{error_bg}"
   },
   "QTextEdit[error=\"true\"]": {
     "color": "{error}",
     "border": "1px solid {error}",
-    "background": "#fff0f0"
+    "background": "{error_bg}"
   },
   "QLabel.link": {
     "color": "{link_fg}",
