@@ -1315,16 +1315,64 @@
       "datafield_name": "preference_theme",
       "options": [
         {
-          "key": "dark",
-          "label_key": "PreferenceThemeDark"
+          "key": "PreferenceStyleOldSchool_light",
+          "label_key": "PreferenceStyleOldSchool_light"
         },
         {
-          "key": "middle",
-          "label_key": "PreferenceThemeNeutral"
+          "key": "PreferenceStyleOldSchool_neutral",
+          "label_key": "PreferenceStyleOldSchool_neutral"
         },
         {
-          "key": "light",
-          "label_key": "PreferenceThemeLight"
+          "key": "PreferenceStyleOldSchool_dark",
+          "label_key": "PreferenceStyleOldSchool_dark"
+        },
+        {
+          "key": "PreferenceStyleModern_light",
+          "label_key": "PreferenceStyleModern_light"
+        },
+        {
+          "key": "PreferenceStyleModern_neutral",
+          "label_key": "PreferenceStyleModern_neutral"
+        },
+        {
+          "key": "PreferenceStyleModern_dark",
+          "label_key": "PreferenceStyleModern_dark"
+        },
+        {
+          "key": "PreferenceStyleVintage_light",
+          "label_key": "PreferenceStyleVintage_light"
+        },
+        {
+          "key": "PreferenceStyleVintage_neutral",
+          "label_key": "PreferenceStyleVintage_neutral"
+        },
+        {
+          "key": "PreferenceStyleVintage_dark",
+          "label_key": "PreferenceStyleVintage_dark"
+        },
+        {
+          "key": "PreferenceStyleFuture_light",
+          "label_key": "PreferenceStyleFuture_light"
+        },
+        {
+          "key": "PreferenceStyleFuture_neutral",
+          "label_key": "PreferenceStyleFuture_neutral"
+        },
+        {
+          "key": "PreferenceStyleFuture_dark",
+          "label_key": "PreferenceStyleFuture_dark"
+        },
+        {
+          "key": "PreferenceStyleMinimal_light",
+          "label_key": "PreferenceStyleMinimal_light"
+        },
+        {
+          "key": "PreferenceStyleMinimal_neutral",
+          "label_key": "PreferenceStyleMinimal_neutral"
+        },
+        {
+          "key": "PreferenceStyleMinimal_dark",
+          "label_key": "PreferenceStyleMinimal_dark"
         }
       ]
     }
