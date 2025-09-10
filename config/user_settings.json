@@ -1,8 +1,9 @@
 {
   "monitor": {
-    "screen_resolution": "2560x1440",
+    "screen_max_resolution": "2560x1440",
+    "screen_actual_resolution": "2560x1080",
     "screen_dpi": 96.0,
-    "scale_factor": 1.0,
+    "scale_factor": 0.75,
     "screen_resolution_changed": true
   },
   "preferences_window": {
@@ -11,13 +12,13 @@
   },
   "start_window": {
     "width": 2560,
-    "height": 1368
+    "height": 1080
   },
   "panels": {
     "splitter_sizes": [
-      531,
-      1713,
-      290
+      379,
+      2044,
+      136
     ]
   },
   "gui": {
@@ -26,7 +27,8 @@
   },
   "general": {
     "language": "de",
-    "file_path_lang": "/home/frank/Dokumente/CSNova/core/translations/translation_de.json"
+    "file_path_lang": "/home/frank/Dokumente/CSNova/core/translations/translation_de.json",
+    "first_start": true
   },
   "help": {
     "show_help_panel": true,

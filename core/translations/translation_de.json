@@ -264,6 +264,9 @@
   "start_window_text_12": "CSNova, bittet dir verschiedene Hilfestellungen an, wenn diese nicht nutzen möchtest, dann kannst du sie deaktvieren.",
   "start_window_text_13": "Entferne einfach die Häckchen in Feldern, die du nicht nutzen möchtest.",
   "start_window_text_14": "Diese und weitere Einstellungen - die jetzt nicht abgefragt wurden - kannst du jederzeit in den Einstellungen anpassen.",
+  "start_window_text_15": "Wenn du Änderungen vorgenommen hast, dann klicke auf 'Änderungen speichern', damit diese übernommen werden.",
+  "start_window_text_16": "Wenn du die Standardeinstellungen wiederherstellen möchtest, klicke auf 'Standardeinstellungen wiederherstellen'.",
+  "start_window_text_17": "Klicke auf 'weiter ...', um das Startfenster zu schließen und mit der Arbeit zu beginnen.",
   "start_window_centerBtn_save": "Änderungen speichern ",
   "start_window_centerBtn_defaults": "Standardeinstellungen wiederherstellen",
   "start_window_centerBtn_next": "weiter ..."

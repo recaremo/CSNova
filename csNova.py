@@ -10,7 +10,8 @@ from PySide6.QtWidgets import QApplication
 # --- DEFAULT SETTINGS ---
 DEFAULT_SETTINGS = {
   "monitor": {
-    "screen_resolution": "2560x1440",
+    "screen_max_resolution": "2560x1440",
+    "screen_actual_resolution": "1920x1080",
     "screen_dpi": 96.0,
     "scale_factor": 1.0,
     "screen_resolution_changed": True
@@ -38,6 +39,7 @@ DEFAULT_SETTINGS = {
   "general": {
     "language": "de",
     "file_path_lang": str(TRANSLATIONS_DIR / "translation_de.json"),
+    "first_start": True
   },
   "help": {
     "show_help_panel": True,
@@ -314,6 +316,9 @@ LANGUAGE_DEFAULTS = {
         "start_window_text_12": "CSNova, bittet dir verschiedene Hilfestellungen an, wenn diese nicht nutzen möchtest, dann kannst du sie deaktvieren.",
         "start_window_text_13": "Entferne einfach die Häckchen in Feldern, die du nicht nutzen möchtest.",
         "start_window_text_14": "Diese und weitere Einstellungen - die jetzt nicht abgefragt wurden - kannst du jederzeit in den Einstellungen anpassen.",
+        "start_window_text_15": "Wenn du Änderungen vorgenommen hast, dann klicke auf 'Änderungen speichern', damit diese übernommen werden.",
+        "start_window_text_16": "Wenn du die Standardeinstellungen wiederherstellen möchtest, klicke auf 'Standardeinstellungen wiederherstellen'.",
+        "start_window_text_17": "Klicke auf 'weiter ...', um das Startfenster zu schließen und mit der Arbeit zu beginnen.",
         "start_window_centerBtn_save": "Änderungen speichern ",
         "start_window_centerBtn_defaults": "Standardeinstellungen wiederherstellen",
         "start_window_centerBtn_next": "weiter ..."
@@ -584,6 +589,9 @@ LANGUAGE_DEFAULTS = {
         "start_window_text_12": "CSNova offers you various aids, if you do not want to use them, you can deactivate them.",
         "start_window_text_13": "Just remove the checkmarks in fields you don't want to use.",
         "start_window_text_14": "These and other settings - which were not queried now - can be adjusted at any time in the settings.",
+        "start_window_text_15": "If you have made changes, click on 'Save changes' to apply them.",
+        "start_window_text_16": "If you want to restore the default settings, click on 'Restore default settings'.",
+        "start_window_text_17": "Click on 'next ...' to close the start window and start working.", 
         "start_window_centerBtn_save": "Save changes",
         "start_window_centerBtn_defaults": "Restore default settings",
         "start_window_centerBtn_next": "next ..."
@@ -854,6 +862,9 @@ LANGUAGE_DEFAULTS = {
         "start_window_text_12": "CSNova te ofrece varias ayudas, si no deseas usarlas, puedes desactivarlas.",
         "start_window_text_13": "Simplemente elimina las marcas de verificación en los campos que no deseas usar.",
         "start_window_text_14": "Estos y otros ajustes, que no se consultaron ahora, se pueden ajustar en cualquier momento en la configuración.",
+        "start_window_text_15": "Si has realizado cambios, haz clic en 'Guardar cambios' para aplicarlos.",
+        "start_window_text_16": "Si deseas restaurar la configuración predeterminada, haz clic en 'Restaurar configuración predeterminada'.",
+        "start_window_text_17": "Haz clic en 'siguiente ...' para cerrar la ventana de inicio y comenzar a trabajar.",  
         "start_window_centerBtn_save": "Guardar cambios",
         "start_window_centerBtn_defaults": "Restaurar configuración predeterminada",
         "start_window_centerBtn_next": "siguiente ..."
@@ -1124,6 +1135,9 @@ LANGUAGE_DEFAULTS = {
         "start_window_text_12": "CSNova vous offre diverses aides, si vous ne souhaitez pas les utiliser, vous pouvez les désactiver.",
         "start_window_text_13": "Il vous suffit de décocher les champs que vous ne souhaitez pas utiliser.",
         "start_window_text_14": "Ces paramètres et d'autres, qui n'ont pas été demandés maintenant, peuvent être ajustés à tout moment dans les paramètres.",
+        "start_window_text_15": "Si vous avez apporté des modifications, cliquez sur 'Enregistrer les modifications' pour les appliquer.",
+        "start_window_text_16": "Si vous souhaitez restaurer les paramètres par défaut, cliquez sur 'Restaurer les paramètres par défaut'.",
+        "start_window_text_17": "Cliquez sur 'suivant ...' pour fermer la fenêtre de démarrage et commencer à travailler",
         "start_window_centerBtn_save": "Enregistrer les modifications",
         "start_window_centerBtn_defaults": "Restaurer les paramètres par défaut",
         "start_window_centerBtn_next": "suivant ..."
@@ -3540,13 +3554,19 @@ def get_monitor_info():
         return "1920x1080", 96.0
 
 @log_call
-def calculate_scale_factor(resolution, dpi):
+def calculate_scale_factor_from_settings(settings):
+    monitor = settings.get("monitor", {})
+    max_res = monitor.get("screen_max_resolution", "2560x1440")
+    actual_res = monitor.get("screen_actual_resolution", "1920x1080")
     try:
-        scale = float(dpi) / 96.0
-        log_info(f"Calculated scale factor: {scale}")
-        return round(scale, 2)
+        max_w, max_h = map(int, max_res.split("x"))
+        act_w, act_h = map(int, actual_res.split("x"))
+        scale_w = act_w / max_w
+        scale_h = act_h / max_h
+        scale_factor = min(scale_w, scale_h)
+        return round(scale_factor, 2)
     except Exception as e:
-        log_exception("Error calculating scale factor", e)
+        log_exception("Error calculating scale factor from settings", e)
         return 1.0
 
 @log_call
@@ -3559,23 +3579,52 @@ def save_user_settings(settings):
         log_exception("Error saving user_settings.json", e)
 
 @log_call
+def update_monitor_settings(settings, actual_resolution=None):
+    max_resolution, dpi = get_monitor_info()
+    monitor = settings.setdefault("monitor", {})
+    monitor["screen_max_resolution"] = max_resolution
+    monitor["screen_dpi"] = dpi
+
+    # Setze aktuelle Fenstergröße
+    if actual_resolution:
+        monitor["screen_actual_resolution"] = actual_resolution
+    else:
+        try:
+            max_w, max_h = map(int, max_resolution.split("x"))
+            if max_w < 1920 or max_h < 1080:
+                monitor["screen_actual_resolution"] = max_resolution
+            else:
+                monitor["screen_actual_resolution"] = "1920x1080"
+        except Exception:
+            monitor["screen_actual_resolution"] = "1920x1080"
+
+    monitor["scale_factor"] = calculate_scale_factor_from_settings(settings)
+    monitor["screen_resolution_changed"] = True
+    settings["monitor"] = monitor
+    save_user_settings(settings)
+    log_info(f"Monitor settings updated: {monitor}")
+    return settings
+
+@log_call
+def handle_window_resize(settings, new_resolution):
+    monitor = settings.setdefault("monitor", {})
+    monitor["screen_actual_resolution"] = new_resolution
+    monitor["scale_factor"] = calculate_scale_factor_from_settings(settings)
+    monitor["screen_resolution_changed"] = True
+    settings["monitor"] = monitor
+    save_user_settings(settings)
+    log_info(f"Window resized. New settings: {monitor}")
+    return settings
+
+@log_call
 def check_monitor_and_update(settings):
-    resolution, dpi = get_monitor_info()
-    scale_factor = calculate_scale_factor(resolution, dpi)
     monitor = settings.get("monitor", {})
-    changed = (
-        monitor.get("screen_resolution") != resolution or
-        monitor.get("screen_dpi") != dpi or
-        monitor.get("scale_factor") != scale_factor
-    )
-    if changed:
-        monitor["screen_resolution"] = resolution
-        monitor["screen_dpi"] = dpi
-        monitor["scale_factor"] = scale_factor
-        monitor["screen_resolution_changed"] = True
+    if not monitor.get("screen_max_resolution") or not monitor.get("screen_actual_resolution"):
+        settings = update_monitor_settings(settings)
+    else:
+        monitor["scale_factor"] = calculate_scale_factor_from_settings(settings)
         settings["monitor"] = monitor
         save_user_settings(settings)
-        log_info("Monitor settings updated and saved.")
     return settings
 
 @log_call
@@ -3625,7 +3674,7 @@ def ensure_theme_file(style_theme):
     except Exception as e:
         log_exception("Error creating theme file", e)
         return None
-    
+
 @log_call
 def ensure_base_style_file():
     if not BASE_STYLE_FILE.exists():
@@ -3646,14 +3695,12 @@ def main():
         os_language = get_os_language()
         log_info(f"Detected OS language: {os_language}")
 
-        # Lade Settings, prüfe und setze Defaults robust
         try:
             settings = load_user_settings()
         except Exception as e:
             log_exception("Failed to load user_settings.json, using DEFAULT_SETTINGS.", e)
             settings = DEFAULT_SETTINGS.copy()
 
-        # Sprache prüfen und setzen
         try:
             settings.setdefault("general", {})
             language = settings["general"].get("language", os_language)
@@ -3666,7 +3713,6 @@ def main():
             log_exception("Error setting language in settings.", e)
             settings["general"]["language"] = "en"
 
-        # Theme prüfen und setzen
         try:
             if "gui" not in settings or "style_theme" not in settings["gui"]:
                 settings.setdefault("gui", {})
@@ -3676,7 +3722,6 @@ def main():
             log_exception("Error setting theme in settings.", e)
             settings["gui"] = DEFAULT_SETTINGS["gui"].copy()
 
-        # Language-Pfad prüfen und setzen
         try:
             if "general" not in settings or "language" not in settings["general"]:
                 settings.setdefault("general", {})
@@ -3686,13 +3731,11 @@ def main():
             log_exception("Error setting language path in settings.", e)
             settings["general"] = DEFAULT_SETTINGS["general"].copy()
 
-        # Monitor-Infos prüfen und aktualisieren
         try:
             settings = check_monitor_and_update(settings)
         except Exception as e:
             log_exception("Error updating monitor info.", e)
 
-        # Translation-Datei sicherstellen
         try:
             translation_file = ensure_translation_file(language)
             log_info(f"Translation file: {translation_file}")
@@ -3700,7 +3743,6 @@ def main():
             log_exception("Error ensuring translation file.", e)
             translation_file = DEFAULT_SETTINGS["general"]["file_path_lang"]
 
-        # Theme-Datei sicherstellen
         try:
             style_theme = settings.get("gui", {}).get("style_theme", DEFAULT_SETTINGS["gui"].get("style_theme", "theme_Modern_neutral"))
             theme_file = ensure_theme_file(style_theme)
@@ -3709,14 +3751,12 @@ def main():
             log_exception("Error ensuring theme file.", e)
             theme_file = DEFAULT_SETTINGS["gui"]["file_path_gui"]
 
-        # Settings speichern
         try:
             save_user_settings(settings)
             log_info("Settings saved.")
         except Exception as e:
             log_exception("Error saving settings.", e)
 
-        # Form Fields und Base Style sicherstellen
         try:
             ensure_form_fields_file()
         except Exception as e:
@@ -3726,7 +3766,6 @@ def main():
         except Exception as e:
             log_exception("Error ensuring base_style.json.", e)
 
-        # StartWindow starten
         try:
             app = QApplication(sys.argv)
             from gui.start_window import StartWindow
@@ -3735,6 +3774,8 @@ def main():
                 translation_file,
                 theme_file
             )
+            # Beispiel: Fenstergröße ändern und scale_factor neu berechnen
+            # start_window.on_resize = lambda new_res: handle_window_resize(settings, new_res)
             start_window.run()
             log_info("start_window.py successfully called.")
             app.exec()

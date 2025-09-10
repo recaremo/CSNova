@@ -264,6 +264,9 @@
   "start_window_text_12": "CSNova offers you various aids, if you do not want to use them, you can deactivate them.",
   "start_window_text_13": "Just remove the checkmarks in fields you don't want to use.",
   "start_window_text_14": "These and other settings - which were not queried now - can be adjusted at any time in the settings.",
+  "start_window_text_15": "If you have made changes, click on 'Save changes' to apply them.",
+  "start_window_text_16": "If you want to restore the default settings, click on 'Restore default settings'.",
+  "start_window_text_17": "Click on 'next ...' to close the start window and start working.",
   "start_window_centerBtn_save": "Save changes",
   "start_window_centerBtn_defaults": "Restore default settings",
   "start_window_centerBtn_next": "next ..."
