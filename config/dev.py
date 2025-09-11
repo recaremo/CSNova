@@ -19,27 +19,31 @@ TABLES_DIR       = CORE_DIR / "tables"
 
 # Important files
 DB_PATH          = DATA_DIR / "csnova.db"
-USER_SETTINGS_FILE    = CONFIG_DIR / "user_settings.json"
-FORM_FIELDS_FILE = CORE_DIR / "config" / "form_fields.json"
-BASE_STYLE_FILE = GUI_DIR / "styles" / "base_style.json"
-THEME_FUTURE_DARK_FILE = GUI_DIR / "styles" / "theme_Future_dark.json"
-THEME_FUTURE_LIGHT_FILE = GUI_DIR / "styles" / "theme_Future_light.json"
-THEME_FUTURE_NEUTRAL_FILE = GUI_DIR / "styles" / "theme_Future_neutral.json"
-THEME_MODERN_DARK_FILE = GUI_DIR / "styles" / "theme_Modern_dark.json"
-THEME_MODERN_LIGHT_FILE = GUI_DIR / "styles" / "theme_Modern_light.json"
-THEME_MODERN_NEUTRAL_FILE = GUI_DIR / "styles" / "theme_Modern_neutral.json"
-THEME_MINIMAL_DARK_FILE = GUI_DIR / "styles" / "theme_Minimal_dark.json"
-THEME_MINIMAL_LIGHT_FILE = GUI_DIR / "styles" / "theme_Minimal_light.json"
-THEME_MINIMAL_NEUTRAL_FILE = GUI_DIR / "styles" / "theme_Minimal_neutral.json"
-THEME_OLDSCHOOL_DARK_FILE = GUI_DIR / "styles" / "theme_Oldschool_dark.json"
-THEME_OLDSCHOOL_LIGHT_FILE = GUI_DIR / "styles" / "theme_Oldschool_light.json"
-THEME_OLDSCHOOL_NEUTRAL_FILE = GUI_DIR / "styles" / "theme_Oldschool_neutral.json"
-THEME_VINTAGE_DARK_FILE = GUI_DIR / "styles" / "theme_Vintage_dark.json"
-THEME_VINTAGE_LIGHT_FILE = GUI_DIR / "styles" / "theme_Vintage_light.json"
-THEME_VINTAGE_NEUTRAL_FILE = GUI_DIR / "styles" / "theme_Vintage_neutral.json"
+USER_SETTINGS_FILE = CONFIG_DIR / "user_settings.json"
+FORM_FIELDS_FILE   = CORE_DIR / "config" / "form_fields.json"
+BASE_STYLE_FILE    = GUI_DIR / "styles" / "base_style.json"
 
-# Ensure directories exist (no logging here!)
-for dir_path in [DATA_DIR, CONFIG_DIR, ASSETS_DIR, DOCS_DIR]:
-    dir_path.mkdir(exist_ok=True)
+# Theme file dictionary for dynamic access
+THEME_FILES = {
+    "Future_dark":    GUI_DIR / "styles" / "theme_Future_dark.json",
+    "Future_light":   GUI_DIR / "styles" / "theme_Future_light.json",
+    "Future_neutral": GUI_DIR / "styles" / "theme_Future_neutral.json",
+    "Modern_dark":    GUI_DIR / "styles" / "theme_Modern_dark.json",
+    "Modern_light":   GUI_DIR / "styles" / "theme_Modern_light.json",
+    "Modern_neutral": GUI_DIR / "styles" / "theme_Modern_neutral.json",
+    "Minimal_dark":   GUI_DIR / "styles" / "theme_Minimal_dark.json",
+    "Minimal_light":  GUI_DIR / "styles" / "theme_Minimal_light.json",
+    "Minimal_neutral":GUI_DIR / "styles" / "theme_Minimal_neutral.json",
+    "Oldschool_dark": GUI_DIR / "styles" / "theme_Oldschool_dark.json",
+    "Oldschool_light":GUI_DIR / "styles" / "theme_Oldschool_light.json",
+    "Oldschool_neutral":GUI_DIR / "styles" / "theme_Oldschool_neutral.json",
+    "Vintage_dark":   GUI_DIR / "styles" / "theme_Vintage_dark.json",
+    "Vintage_light":  GUI_DIR / "styles" / "theme_Vintage_light.json",
+    "Vintage_neutral":GUI_DIR / "styles" / "theme_Vintage_neutral.json"
+}
 
 LOG_FILE = BASE_DIR / "csnova.log"
+
+# Ensure directories exist (no logging here!)
+for dir_path in [DATA_DIR, CONFIG_DIR, ASSETS_DIR, DOCS_DIR, GUI_DIR, CORE_DIR, TRANSLATIONS_DIR, TABLES_DIR]:
+    dir_path.mkdir(exist_ok=True)

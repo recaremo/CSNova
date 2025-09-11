@@ -1,13 +1,15 @@
 import sys
 import json
 import locale
+import platform
+import subprocess
 from pathlib import Path
 from config.dev import USER_SETTINGS_FILE, TRANSLATIONS_DIR, GUI_DIR, FORM_FIELDS_FILE, BASE_STYLE_FILE
 from core.logger import log_info, log_error, log_exception, log_section, log_header, log_call, setup_logging
 
 from PySide6.QtWidgets import QApplication
 
-# --- DEFAULT SETTINGS ---
+# --- DEFAULT SETTINGS = Standardeinstellung und Basisparameter ---
 DEFAULT_SETTINGS = {
   "monitor": {
     "screen_max_resolution": "2560x1440",
@@ -25,16 +27,14 @@ DEFAULT_SETTINGS = {
     "height": 1080
   },
   "panels": {
-    "splitter_sizes": [
-      600,
-      1100,
-      220
-    ]
+    "left_panel": {},
+    "center_panel": {},
+    "right_panel": {},
+    "splitter_sizes": [600, 1100, 220]
   },
   "gui": {
     "style_theme": "theme_Modern_neutral",
-    "file_path_gui": str(GUI_DIR / "styles" / "theme_Modern_neutral.json"),
-    
+    "file_path_gui": str(GUI_DIR / "styles" / "theme_Modern_neutral.json")
   },
   "general": {
     "language": "de",
@@ -48,7 +48,7 @@ DEFAULT_SETTINGS = {
   }
 }
 
-# --- LANGUAGE DEFAULTS (direkt aus den Dateien in Add Context) ---
+# --- LANGUAGE DEFAULTS (alle Sprachdateien mit einem einheitlichen Schlüssel in korrekter Reihenfolge) ---
 LANGUAGE_DEFAULTS = {
     "de": {
         "proj_ma_header": "Projekte",
@@ -1143,7 +1143,7 @@ LANGUAGE_DEFAULTS = {
         "start_window_centerBtn_next": "suivant ..."
     }
 }
-# --- Default styles and themes ---
+# --- Default styles and themes (alle Theme die für die GUI verwendet werden können) ---
 THEMES_STYLES_DEFAULTS = {
 "Future_dark": {
     "background": "rgba(30, 34, 45, 0.92)",
@@ -2958,7 +2958,7 @@ THEMES_STYLES_DEFAULTS = {
 }
 }
 
-# Base style template with placeholders
+# --- Base style template with placeholders (alle Basiswerte für die Theme - die für alle GUI Elemente gelten - werden hier definiert) ---
 BASE_STYLE_DEFAULT = {
     "QWidget": {
         "background-color": "{background}",
@@ -3275,7 +3275,7 @@ BASE_STYLE_DEFAULT = {
     }
 }
 
-# --- Default form field values ---
+# --- Default form field values (für alle Eingabefelder aus den Tabellen, werden hier die Basisparameter definiert ---
 FORM_FIELDS_DEFAULT = {  
   "projects": [
     {"name": "pro_header", "label_key": "proj_ma_01", "type": "header", "datafield_name": None},
@@ -3461,63 +3461,20 @@ FORM_FIELDS_DEFAULT = {
     {"name": "gender", "label_key": "gend_ge_02", "type": "text", "required": True, "max_length": 80, "width": 220, "datafield_name": "gender"},
     {"name": "short_description", "label_key": "gend_ge_03", "type": "multiline", "required": False, "max_length": 200, "width": 480, "datafield_name": "short_description"}
   ],
+}
 
-  "project_statistics": [
-    {"name": "words_count_days", "label_key": "stat_pr_01", "type": "display", "width": 120, "datafield_name": "project_words_count_days"},
-    {"name": "days_count", "label_key": "stat_pr_02", "type": "display", "width": 120, "datafield_name": "project_days_count"},
-    {"name": "chapters_count", "label_key": "stat_pr_03", "type": "display", "width": 120, "datafield_name": "project_chapters"},
-    {"name": "scenes_count", "label_key": "stat_pr_04", "type": "display", "width": 120, "datafield_name": "project_scenes"},
-    {"name": "storylines_count", "label_key": "stat_pr_05", "type": "display", "width": 120, "datafield_name": "project_storylines"},
-    {"name": "main_characters_count", "label_key": "stat_pr_06", "type": "display", "width": 120, "datafield_name": "project_main_characters"},
-    {"name": "supporting_characters_count", "label_key": "stat_pr_07", "type": "display", "width": 120, "datafield_name": "project_supporting_characters"},
-    {"name": "groups_characters_count", "label_key": "stat_pr_08", "type": "display", "width": 120, "datafield_name": "project_groups_characters"},
-    {"name": "locations_count", "label_key": "stat_pr_09", "type": "display", "width": 120, "datafield_name": "project_locations"},
-    {"name": "objects_count", "label_key": "stat_pr_10", "type": "display", "width": 120, "datafield_name": "project_objects"}
-  ],
 
-  "preferences": [
-    {
-      "name": "language",
-      "label_key": "PreferenceLanguage",
-      "type": "combobox",
-      "required": True,
-      "datafield_name": "preference_language",
-      "options": [
-        {"key": "de", "label_key": "PreferenceLanguageDe"},
-        {"key": "en", "label_key": "PreferenceLanguageEn"},
-        {"key": "es", "label_key": "PreferenceLanguageEs"},
-        {"key": "fr", "label_key": "PreferenceLanguageFr"}
-      ]
-    },
-    {
-      "name": "theme",
-      "label_key": "PreferenceTheme",
-      "type": "combobox",
-      "required": True,
-      "datafield_name": "preference_theme",
-      "options": [
-        { "key": "PreferenceStyleOldSchool_light", "label_key": "PreferenceStyleOldSchool_light" },
-        { "key": "PreferenceStyleOldSchool_neutral", "label_key": "PreferenceStyleOldSchool_neutral" },
-        { "key": "PreferenceStyleOldSchool_dark", "label_key": "PreferenceStyleOldSchool_dark" },
-        { "key": "PreferenceStyleModern_light", "label_key": "PreferenceStyleModern_light" },
-        { "key": "PreferenceStyleModern_neutral", "label_key": "PreferenceStyleModern_neutral" },
-        { "key": "PreferenceStyleModern_dark", "label_key": "PreferenceStyleModern_dark" },
-        { "key": "PreferenceStyleVintage_light", "label_key": "PreferenceStyleVintage_light" },
-        { "key": "PreferenceStyleVintage_neutral", "label_key": "PreferenceStyleVintage_neutral" },
-        { "key": "PreferenceStyleVintage_dark", "label_key": "PreferenceStyleVintage_dark" },
-        { "key": "PreferenceStyleFuture_light", "label_key": "PreferenceStyleFuture_light" },
-        { "key": "PreferenceStyleFuture_neutral", "label_key": "PreferenceStyleFuture_neutral" },
-        { "key": "PreferenceStyleFuture_dark", "label_key": "PreferenceStyleFuture_dark" },
-        { "key": "PreferenceStyleMinimal_light", "label_key": "PreferenceStyleMinimal_light" },
-        { "key": "PreferenceStyleMinimal_neutral", "label_key": "PreferenceStyleMinimal_neutral" },
-        { "key": "PreferenceStyleMinimal_dark", "label_key": "PreferenceStyleMinimal_dark" }
-      ]
-    }
-    ]
-    }
+def get_theme_path(theme_name):
+    # Nutze pathlib für plattformübergreifende Pfade
+    theme_file = Path(GUI_DIR) / "styles" / f"{theme_name}.json"
+    return str(theme_file)
 
+def get_translation_path(language):
+    translation_file = Path(TRANSLATIONS_DIR) / f"translation_{language}.json"
+    return str(translation_file)
 
 @log_call
+# Erhalte die Betriebssystemsprache und gib den entsprechenden Sprachcode zurück
 def get_os_language():
     lang_tuple = locale.getlocale()
     lang = lang_tuple[0] if lang_tuple and lang_tuple[0] else None
@@ -3528,6 +3485,38 @@ def get_os_language():
     return "en"
 
 @log_call
+# Erhalte die aktuelle Bildschirmauflösung
+def get_monitor_resolution():
+    """Gibt die aktuelle Bildschirmauflösung zurück (Linux/Windows/macOS)."""
+    try:
+        system = platform.system()
+        if system == "Linux":
+            output = subprocess.check_output("xrandr | grep '*'", shell=True).decode()
+            resolution = output.split()[0]
+            return resolution
+        elif system == "Windows":
+            from ctypes import windll
+            user32 = windll.user32
+            user32.SetProcessDPIAware()
+            width = user32.GetSystemMetrics(0)
+            height = user32.GetSystemMetrics(1)
+            return f"{width}x{height}"
+        elif system == "Darwin":
+            try:
+                import AppKit
+                screen = AppKit.NSScreen.screens()[0]
+                width = int(screen.frame().size.width)
+                height = int(screen.frame().size.height)
+                return f"{width}x{height}"
+            except ImportError:
+                log_error("AppKit (pyobjc) not installed. Run 'pip install pyobjc' on macOS.")
+                return "1920x1080"
+    except Exception as e:
+        log_exception("Error detecting monitor resolution.", e)
+        return "1920x1080"
+
+@log_call
+# Lade die Benutzereinstellungen aus der JSON-Datei oder verwende die Standardwerte
 def load_user_settings():
     if USER_SETTINGS_FILE.exists():
         try:
@@ -3541,35 +3530,7 @@ def load_user_settings():
     return DEFAULT_SETTINGS.copy()
 
 @log_call
-def get_monitor_info():
-    try:
-        import subprocess
-        output = subprocess.check_output("xrandr | grep '*'", shell=True).decode()
-        resolution = output.split()[0]
-        dpi = 96.0  # Default, can be improved
-        log_info(f"Monitor info detected: resolution={resolution}, dpi={dpi}")
-        return resolution, dpi
-    except Exception as e:
-        log_exception("Error detecting monitor info", e)
-        return "1920x1080", 96.0
-
-@log_call
-def calculate_scale_factor_from_settings(settings):
-    monitor = settings.get("monitor", {})
-    max_res = monitor.get("screen_max_resolution", "2560x1440")
-    actual_res = monitor.get("screen_actual_resolution", "1920x1080")
-    try:
-        max_w, max_h = map(int, max_res.split("x"))
-        act_w, act_h = map(int, actual_res.split("x"))
-        scale_w = act_w / max_w
-        scale_h = act_h / max_h
-        scale_factor = min(scale_w, scale_h)
-        return round(scale_factor, 2)
-    except Exception as e:
-        log_exception("Error calculating scale factor from settings", e)
-        return 1.0
-
-@log_call
+# Speichere die Benutzereinstellungen in der JSON-Datei
 def save_user_settings(settings):
     try:
         with open(USER_SETTINGS_FILE, "w", encoding="utf-8") as f:
@@ -3579,55 +3540,7 @@ def save_user_settings(settings):
         log_exception("Error saving user_settings.json", e)
 
 @log_call
-def update_monitor_settings(settings, actual_resolution=None):
-    max_resolution, dpi = get_monitor_info()
-    monitor = settings.setdefault("monitor", {})
-    monitor["screen_max_resolution"] = max_resolution
-    monitor["screen_dpi"] = dpi
-
-    # Setze aktuelle Fenstergröße
-    if actual_resolution:
-        monitor["screen_actual_resolution"] = actual_resolution
-    else:
-        try:
-            max_w, max_h = map(int, max_resolution.split("x"))
-            if max_w < 1920 or max_h < 1080:
-                monitor["screen_actual_resolution"] = max_resolution
-            else:
-                monitor["screen_actual_resolution"] = "1920x1080"
-        except Exception:
-            monitor["screen_actual_resolution"] = "1920x1080"
-
-    monitor["scale_factor"] = calculate_scale_factor_from_settings(settings)
-    monitor["screen_resolution_changed"] = True
-    settings["monitor"] = monitor
-    save_user_settings(settings)
-    log_info(f"Monitor settings updated: {monitor}")
-    return settings
-
-@log_call
-def handle_window_resize(settings, new_resolution):
-    monitor = settings.setdefault("monitor", {})
-    monitor["screen_actual_resolution"] = new_resolution
-    monitor["scale_factor"] = calculate_scale_factor_from_settings(settings)
-    monitor["screen_resolution_changed"] = True
-    settings["monitor"] = monitor
-    save_user_settings(settings)
-    log_info(f"Window resized. New settings: {monitor}")
-    return settings
-
-@log_call
-def check_monitor_and_update(settings):
-    monitor = settings.get("monitor", {})
-    if not monitor.get("screen_max_resolution") or not monitor.get("screen_actual_resolution"):
-        settings = update_monitor_settings(settings)
-    else:
-        monitor["scale_factor"] = calculate_scale_factor_from_settings(settings)
-        settings["monitor"] = monitor
-        save_user_settings(settings)
-    return settings
-
-@log_call
+# Stelle sicher, dass die form_fields.json Datei existiert, andernfalls erstelle sie mit Standardwerten
 def ensure_form_fields_file():
     if not FORM_FIELDS_FILE.exists():
         try:
@@ -3640,6 +3553,7 @@ def ensure_form_fields_file():
         log_info(f"form_fields.json found: {FORM_FIELDS_FILE}")
 
 @log_call
+# Stelle sicher, dass die Übersetzungsdatei für die gewählte Sprache existiert, andernfalls erstelle sie mit Standardwerten
 def ensure_translation_file(language):
     translation_filename = f"translation_{language}.json"
     translation_path = TRANSLATIONS_DIR / translation_filename
@@ -3658,6 +3572,7 @@ def ensure_translation_file(language):
         return None
 
 @log_call
+# Stelle sicher, dass die Theme-Datei für das gewählte Design existiert, andernfalls erstelle sie mit Standardwerten
 def ensure_theme_file(style_theme):
     theme_filename = f"{style_theme}.json" if not style_theme.endswith(".json") else style_theme
     theme_path = Path(GUI_DIR) / "styles" / theme_filename
@@ -3676,6 +3591,7 @@ def ensure_theme_file(style_theme):
         return None
 
 @log_call
+#  Stelle sicher, dass die base_style.json Datei existiert, andernfalls erstelle sie mit Standardwerten
 def ensure_base_style_file():
     if not BASE_STYLE_FILE.exists():
         try:
@@ -3687,100 +3603,166 @@ def ensure_base_style_file():
     else:
         log_info(f"base_style.json found: {BASE_STYLE_FILE}")
 
+@log_call
+# Ergänzt fehlende Keys in den Einstellungen aus den Default-Objekten (rekursiv)
+def ensure_settings_keys(settings, defaults):
+    """
+    Ergänzt fehlende Keys in den Einstellungen aus den Default-Objekten.
+    """
+    for key, value in defaults.items():
+        if key not in settings:
+            settings[key] = value
+        elif isinstance(value, dict):
+            ensure_settings_keys(settings[key], value)
+
+@log_call
+# Validiert die Keys in den Default-Objekten auf Eindeutigkeit und Konsistenz
+def validate_keys():
+    """
+    Prüft, ob die Keys in LANGUAGE_DEFAULTS, THEMES_STYLES_DEFAULTS und BASE_STYLE_DEFAULT eindeutig und konsistent sind.
+    """
+    # Sprach-Keys
+    lang_keys = [list(LANGUAGE_DEFAULTS[lang].keys()) for lang in LANGUAGE_DEFAULTS]
+    first_keys = lang_keys[0]
+    for keys in lang_keys[1:]:
+        if keys != first_keys:
+            log_error("LANGUAGE_DEFAULTS keys are not in the same order or not identical.")
+            return False
+    # Theme-Keys: Nur innerhalb eines Theme prüfen!
+    for theme_name, theme in THEMES_STYLES_DEFAULTS.items():
+        theme_keys = set()
+        for key in theme.keys():
+            if key in theme_keys:
+                log_error(f"Duplicate key '{key}' found in theme '{theme_name}'")
+                return False
+            theme_keys.add(key)
+    # Base-Style-Keys: Nur innerhalb eines Style prüfen!
+    for style_name, style in BASE_STYLE_DEFAULT.items():
+        style_keys = set()
+        for key in style.keys():
+            if key in style_keys:
+                log_error(f"Duplicate key '{key}' found in base style '{style_name}'")
+                return False
+            style_keys.add(key)
+    return True
+
+# --- Initialisierungsfunktionen für die Anwendung ---
+@log_call
+# Initialisiere die Einstellungen und prüfe/aktualisiere die Monitorauflösung
+def init_settings():
+    """Initialisiert die Settings beim Erststart und prüft/aktualisiert die Monitorauflösung."""
+    first_start = not USER_SETTINGS_FILE.exists()
+    settings = load_user_settings()
+    ensure_settings_keys(settings, DEFAULT_SETTINGS)
+    # Nur beim Erststart Monitorauflösung prüfen und ggf. setzen
+    if first_start:
+        current_resolution = get_monitor_resolution()
+        settings.setdefault("monitor", {})
+        settings["monitor"]["screen_max_resolution"] = current_resolution
+        log_info(f"Initial screen_max_resolution set to {current_resolution}")
+    else:
+        # Prüfe, ob die Auflösung sich geändert hat
+        current_resolution = get_monitor_resolution()
+        max_resolution = settings.get("monitor", {}).get("screen_max_resolution")
+        if max_resolution != current_resolution:
+            settings["monitor"]["screen_max_resolution"] = current_resolution
+            log_info(f"Updated screen_max_resolution to {current_resolution}")
+    save_user_settings(settings)
+    return settings
+
+@log_call
+# Initialisiere und stelle sicher, dass alle notwendigen Dateien existieren
+def init_files(language, style_theme):
+    """Stellt sicher, dass alle notwendigen Dateien existieren und gibt die Pfade zurück."""
+    translation_file = ensure_translation_file(language)
+    theme_file = ensure_theme_file(style_theme)
+    ensure_form_fields_file()
+    ensure_base_style_file()
+    return translation_file, theme_file
+
+@log_call
+# Initialisiere das Design in den Einstellungen   
+def init_theme(settings):
+    """Setzt das Design in den Einstellungen, falls nicht vorhanden."""
+    if "gui" not in settings or "style_theme" not in settings["gui"]:
+        settings.setdefault("gui", {})
+        settings["gui"]["style_theme"] = DEFAULT_SETTINGS["gui"]["style_theme"]
+    style_theme = settings["gui"]["style_theme"]
+    settings["gui"]["file_path_gui"] = get_theme_path(style_theme)
+    return style_theme
+
+@log_call
+# Initialisiere die Sprache in den Einstellungen
+def init_language(settings, os_language):
+    """Setzt die Sprache in den Einstellungen, falls nicht vorhanden."""
+    settings.setdefault("general", {})
+    language = settings["general"].get("language", os_language)
+    if language not in LANGUAGE_DEFAULTS:
+        log_error(f"Language '{language}' not found in LANGUAGE_DEFAULTS. Falling back to 'en'.")
+        language = "en"
+    settings["general"]["language"] = language
+    settings["general"]["file_path_lang"] = get_translation_path(language)
+    log_info(f"Using language: {language}")
+    return language
+
+@log_call
+# Starte die GUI und importiere StartWindow mit Fehlerbehandlung
+def run_gui(settings, translation_file, theme_file):
+    """Startet die GUI und importiert StartWindow mit Fehlerbehandlung."""
+    app = QApplication(sys.argv)
+    try:
+        from gui.start_window import StartWindow
+    except ImportError as e:
+        log_exception("Could not import StartWindow from gui.start_window.", e)
+        sys.exit(1)
+    start_window = StartWindow(
+        settings,
+        translation_file,
+        theme_file
+    )
+    start_window.run()
+    log_info("start_window.py successfully called.")
+    app.exec()
+
+# --- Unit Tests für die wichtigsten Funktionen ---
+def run_unit_tests():
+    """Einfache Unit-Tests für die Initialisierungsfunktionen."""
+    log_section("Unit Tests")
+    # Test: Settings-Key-Vervollständigung
+    test_settings = {"monitor": {}}
+    ensure_settings_keys(test_settings, DEFAULT_SETTINGS)
+    assert "general" in test_settings, "Settings-Key-Vervollständigung fehlgeschlagen"
+    # Test: Sprache
+    lang = get_os_language()
+    assert lang in LANGUAGE_DEFAULTS, "OS-Sprache nicht in LANGUAGE_DEFAULTS"
+    # Test: Monitorauflösung
+    res = get_monitor_resolution()
+    assert isinstance(res, str) and "x" in res, "Monitorauflösung ungültig"
+    log_info("Alle Unit-Tests erfolgreich.")
+
+# Hauptfunktion zum Initialisieren und Starten der Anwendung
 def main():
     setup_logging()
     log_header()
     log_section("csNova.py Start")
+
     try:
+        if not validate_keys():
+            log_error("Key validation failed. Please check LANGUAGE_DEFAULTS, THEMES_STYLES_DEFAULTS, BASE_STYLE_DEFAULT.")
+            sys.exit(1)
+
         os_language = get_os_language()
         log_info(f"Detected OS language: {os_language}")
 
-        try:
-            settings = load_user_settings()
-        except Exception as e:
-            log_exception("Failed to load user_settings.json, using DEFAULT_SETTINGS.", e)
-            settings = DEFAULT_SETTINGS.copy()
+        settings = init_settings()
+        language = init_language(settings, os_language)
+        style_theme = init_theme(settings)
+        translation_file, theme_file = init_files(language, style_theme)
+        save_user_settings(settings)
 
-        try:
-            settings.setdefault("general", {})
-            language = settings["general"].get("language", os_language)
-            if language not in LANGUAGE_DEFAULTS:
-                log_error(f"Language '{language}' not found in LANGUAGE_DEFAULTS. Falling back to 'en'.")
-                language = "en"
-            settings["general"]["language"] = language
-            log_info(f"Using language: {language}")
-        except Exception as e:
-            log_exception("Error setting language in settings.", e)
-            settings["general"]["language"] = "en"
+        run_unit_tests()  # Unit-Tests werden beim Start ausgeführt
 
-        try:
-            if "gui" not in settings or "style_theme" not in settings["gui"]:
-                settings.setdefault("gui", {})
-                settings["gui"]["style_theme"] = DEFAULT_SETTINGS["gui"]["style_theme"]
-                settings["gui"]["file_path_gui"] = DEFAULT_SETTINGS["gui"]["file_path_gui"]
-        except Exception as e:
-            log_exception("Error setting theme in settings.", e)
-            settings["gui"] = DEFAULT_SETTINGS["gui"].copy()
-
-        try:
-            if "general" not in settings or "language" not in settings["general"]:
-                settings.setdefault("general", {})
-                settings["general"]["language"] = DEFAULT_SETTINGS["general"]["language"]
-                settings["general"]["file_path_lang"] = DEFAULT_SETTINGS["general"]["file_path_lang"]
-        except Exception as e:
-            log_exception("Error setting language path in settings.", e)
-            settings["general"] = DEFAULT_SETTINGS["general"].copy()
-
-        try:
-            settings = check_monitor_and_update(settings)
-        except Exception as e:
-            log_exception("Error updating monitor info.", e)
-
-        try:
-            translation_file = ensure_translation_file(language)
-            log_info(f"Translation file: {translation_file}")
-        except Exception as e:
-            log_exception("Error ensuring translation file.", e)
-            translation_file = DEFAULT_SETTINGS["general"]["file_path_lang"]
-
-        try:
-            style_theme = settings.get("gui", {}).get("style_theme", DEFAULT_SETTINGS["gui"].get("style_theme", "theme_Modern_neutral"))
-            theme_file = ensure_theme_file(style_theme)
-            log_info(f"Theme file: {theme_file}")
-        except Exception as e:
-            log_exception("Error ensuring theme file.", e)
-            theme_file = DEFAULT_SETTINGS["gui"]["file_path_gui"]
-
-        try:
-            save_user_settings(settings)
-            log_info("Settings saved.")
-        except Exception as e:
-            log_exception("Error saving settings.", e)
-
-        try:
-            ensure_form_fields_file()
-        except Exception as e:
-            log_exception("Error ensuring form_fields.json.", e)
-        try:
-            ensure_base_style_file()
-        except Exception as e:
-            log_exception("Error ensuring base_style.json.", e)
-
-        try:
-            app = QApplication(sys.argv)
-            from gui.start_window import StartWindow
-            start_window = StartWindow(
-                settings,
-                translation_file,
-                theme_file
-            )
-            # Beispiel: Fenstergröße ändern und scale_factor neu berechnen
-            # start_window.on_resize = lambda new_res: handle_window_resize(settings, new_res)
-            start_window.run()
-            log_info("start_window.py successfully called.")
-            app.exec()
-        except Exception as e:
-            log_exception("Error initializing or running StartWindow.", e)
+        run_gui(settings, translation_file, theme_file)
 
     except Exception as e:
         log_exception("Unhandled exception in main()", e)
