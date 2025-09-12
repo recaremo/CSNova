@@ -1,174 +1,210 @@
-from PySide6.QtWidgets import QWidget, QPushButton, QLabel, QLineEdit, QTextEdit, QComboBox, QSpinBox, QPlainTextEdit, QTabWidget, QTabBar
-from PySide6.QtCore import Qt
+import json
+import re
+from PySide6.QtWidgets import QGraphicsDropShadowEffect, QGraphicsOpacityEffect
+from PySide6.QtCore import QPropertyAnimation
+from PySide6.QtGui import QColor
+from core.logger import log_info, log_error, log_exception
+
+def load_theme(theme_path):
+    try:
+        with open(theme_path, "r", encoding="utf-8") as f:
+            theme = json.load(f)
+        log_info(f"Theme loaded from {theme_path}: {list(theme.keys())}")
+        return theme
+    except Exception as e:
+        log_exception(f"Failed to load theme from {theme_path}", e)
+        return {}
+
+def parse_shadow(shadow_str):
+    # rgba-Format: "0 2px 12px rgba(37,99,235,0.08)"
+    match = re.match(r"(\d+)\s+(\d+)px\s+(\d+)px\s+rgba\((\d+),(\d+),(\d+),([0-9.]+)\)", shadow_str)
+    if match:
+        offset_x = int(match.group(1))
+        offset_y = int(match.group(2))
+        blur_radius = int(match.group(3))
+        r = int(match.group(4))
+        g = int(match.group(5))
+        b = int(match.group(6))
+        a = float(match.group(7))
+        color = QColor(r, g, b, int(a * 255))
+        return offset_x, offset_y, blur_radius, color
+    # Hex-Format: "0 0 0 2px #2563eb44"
+    match = re.match(r"(\d+)\s+(\d+)\s+(\d+)\s+(\d+)px\s+#([0-9a-fA-F]{6})([0-9a-fA-F]{2})", shadow_str)
+    if match:
+        offset_x = int(match.group(1))
+        offset_y = int(match.group(2))
+        blur_radius = int(match.group(4))
+        hex_color = match.group(5)
+        alpha = int(match.group(6), 16)
+        r = int(hex_color[0:2], 16)
+        g = int(hex_color[2:4], 16)
+        b = int(hex_color[4:6], 16)
+        color = QColor(r, g, b, alpha)
+        return offset_x, offset_y, blur_radius, color
+    log_error(f"Shadow string could not be parsed: {shadow_str}")
+    return 0, 2, 12, QColor(0, 0, 0, 30)
+
+def apply_panel_shadow(widget, theme):
+    shadow = theme.get("panel_shadow")
+    if shadow:
+        try:
+            effect = QGraphicsDropShadowEffect(widget)
+            offset_x, offset_y, blur_radius, color = parse_shadow(shadow)
+            effect.setOffset(offset_x, offset_y)
+            effect.setBlurRadius(blur_radius)
+            effect.setColor(color)
+            widget.setGraphicsEffect(effect)
+            log_info(f"Panel shadow applied to {widget}: {shadow}")
+        except Exception as e:
+            log_exception(f"Failed to apply panel shadow to {widget}", e)
+
+def apply_card_shadow(widget, theme):
+    shadow = theme.get("card_shadow")
+    if shadow:
+        try:
+            effect = QGraphicsDropShadowEffect(widget)
+            offset_x, offset_y, blur_radius, color = parse_shadow(shadow)
+            effect.setOffset(offset_x, offset_y)
+            effect.setBlurRadius(blur_radius)
+            effect.setColor(color)
+            widget.setGraphicsEffect(effect)
+            log_info(f"Card shadow applied to {widget}: {shadow}")
+        except Exception as e:
+            log_exception(f"Failed to apply card shadow to {widget}", e)
+
+def apply_avatar_shadow(widget, theme):
+    shadow = theme.get("avatar_shadow")
+    if shadow:
+        try:
+            effect = QGraphicsDropShadowEffect(widget)
+            offset_x, offset_y, blur_radius, color = parse_shadow(shadow)
+            effect.setOffset(offset_x, offset_y)
+            effect.setBlurRadius(blur_radius)
+            effect.setColor(color)
+            widget.setGraphicsEffect(effect)
+            log_info(f"Avatar shadow applied to {widget}: {shadow}")
+        except Exception as e:
+            log_exception(f"Failed to apply avatar shadow to {widget}", e)
+
+def apply_badge_shadow(widget, theme):
+    shadow = theme.get("badge_shadow")
+    if shadow:
+        try:
+            effect = QGraphicsDropShadowEffect(widget)
+            offset_x, offset_y, blur_radius, color = parse_shadow(shadow)
+            effect.setOffset(offset_x, offset_y)
+            effect.setBlurRadius(blur_radius)
+            effect.setColor(color)
+            widget.setGraphicsEffect(effect)
+            log_info(f"Badge shadow applied to {widget}: {shadow}")
+        except Exception as e:
+            log_exception(f"Failed to apply badge shadow to {widget}", e)
+
+def apply_animation(widget, theme):
+    duration = theme.get("animation_duration")
+    if duration:
+        try:
+            effect = QGraphicsOpacityEffect(widget)
+            widget.setGraphicsEffect(effect)
+            animation = QPropertyAnimation(effect, b"opacity")
+            animation.setDuration(duration)
+            animation.setStartValue(1.0)
+            animation.setEndValue(0.5)
+            log_info(f"Animation applied to {widget}: duration={duration}")
+            return animation
+        except Exception as e:
+            log_exception(f"Failed to apply animation to {widget}", e)
+
+def apply_focus_shadow(widget, theme):
+    shadow = theme.get("focus_shadow")
+    if shadow:
+        try:
+            offset_x, offset_y, blur_radius, color = parse_shadow(shadow)
+            effect = QGraphicsDropShadowEffect(widget)
+            effect.setOffset(offset_x, offset_y)
+            effect.setBlurRadius(blur_radius)
+            effect.setColor(color)
+            widget.setGraphicsEffect(effect)
+            log_info(f"Focus shadow applied to {widget}: {shadow}")
+        except Exception as e:
+            log_exception(f"Failed to apply focus shadow to {widget}", e)
+
+def apply_disabled_opacity(widget, theme):
+    opacity = theme.get("disabled_opacity")
+    if opacity is not None and not widget.isEnabled():
+        try:
+            widget.setWindowOpacity(opacity)
+            log_info(f"Disabled opacity applied to {widget}: {opacity}")
+        except Exception as e:
+            log_exception(f"Failed to apply disabled opacity to {widget}", e)
 
 def apply_theme_style(widget, widget_type, theme, extra=None):
     """
-    Applies dynamic style to a widget based on widget_type and theme dict.
-    Optionally merges extra dict for overrides.
+    Hauptfunktion zum Anwenden aller nicht-Qt-kompatiblen Styles auf ein Widget.
+    Zusätzlich werden Qt-StyleSheets für Buttons und Header gesetzt.
     """
-    style = theme.copy()
-    if extra:
-        style.update(extra)
-    # Button
-    if widget_type == "button":
-        button_style = style.get("button", {})
-        widget.setStyleSheet(f"""
+    try:
+        log_info(f"Applying theme style: widget_type={widget_type}, widget={widget}, theme_keys={list(theme.keys())}")
+
+        # Schatten und Effekte
+        if widget_type == "panel":
+            apply_panel_shadow(widget, theme)
+        elif widget_type == "card":
+            apply_card_shadow(widget, theme)
+        elif widget_type == "avatar":
+            apply_avatar_shadow(widget, theme)
+        elif widget_type == "badge":
+            apply_badge_shadow(widget, theme)
+        elif widget_type == "focus":
+            apply_focus_shadow(widget, theme)
+        elif widget_type == "disabled":
+            apply_disabled_opacity(widget, theme)
+
+        # Animationen
+        if theme.get("animation_duration"):
+            apply_animation(widget, theme)
+
+        # Qt-StyleSheet für Buttons
+        if widget_type == "button":
+            style = f"""
             QPushButton {{
-                background-color: {button_style.get('background', style.get('background', '#e7eaf3'))};
-                color: {button_style.get('foreground', style.get('foreground', '#23272f'))};
-                border-radius: {style.get('border_radius', 8)}px;
-                border: {button_style.get('border', 'none')};
-                font-size: {style.get('font_size', 14)}px;
-                font-family: {style.get('font_family', 'Arial, sans-serif')};
-                padding: 8px 24px;
+                background-color: {theme.get('button_bg', '#fff')};
+                color: {theme.get('button_fg', '#222')};
+                border-radius: {theme.get('button_radius', 4)}px;
+                border: {theme.get('button_border', 'none')};
+                font-size: {theme.get('button_font_size', 13)}px;
+                padding: {theme.get('button_padding', '8px 24px')};
             }}
             QPushButton:hover {{
-                background-color: {button_style.get('hover', style.get('highlight', '#2563eb'))};
+                background-color: {theme.get('button_hover', '#eee')};
             }}
             QPushButton:pressed {{
-                background-color: {button_style.get('active', style.get('highlight', '#2563eb'))};
+                background-color: {theme.get('button_active', '#ccc')};
             }}
             QPushButton:disabled {{
-                background-color: #cccccc;
-                color: #888888;
+                background-color: {theme.get('button_disabled_bg', '#e5e5e5')};
+                color: {theme.get('button_disabled_fg', '#888899')};
             }}
-        """)
-    # Floating Action Button
-    elif widget_type == "fab":
-        button_style = style.get("button", {})
-        widget.setStyleSheet(f"""
-            QPushButton {{
-                background-color: {button_style.get('background', style.get('background', '#e7eaf3'))};
-                color: {button_style.get('foreground', style.get('foreground', '#23272f'))};
-                border-radius: 50%;
-                border: {button_style.get('border', 'none')};
-                font-size: {style.get('font_size', 14)}px;
-                font-family: {style.get('font_family', 'Arial, sans-serif')};
-                width: 48px;
-                height: 48px;
-            }}
-            QPushButton:hover {{
-                background-color: {button_style.get('hover', style.get('highlight', '#2563eb'))};
-            }}
-            QPushButton:pressed {{
-                background-color: {button_style.get('active', style.get('highlight', '#2563eb'))};
-            }}
-        """)
-    # Label
-    elif widget_type == "label":
-        widget.setStyleSheet(f"""
-            QLabel {{
-                color: {style.get('foreground', '#23272f')};
-                font-size: {style.get('font_size', 14)}px;
-                font-family: {style.get('font_family', 'Arial, sans-serif')};
-                background: transparent;
-            }}
-        """)
-    # Chip Label
-    elif widget_type == "chip":
-        chip_style = style.get("chip", {})
-        widget.setStyleSheet(f"""
-            QLabel {{
-                background: {chip_style.get('background', '#e7eaf3')};
-                color: {chip_style.get('foreground', '#2563eb')};
-                border-radius: {style.get('border_radius', 8)}px;
-                padding: 4px 12px;
-                font-size: {style.get('font_size', 13)}px;
-                font-family: {style.get('font_family', 'Arial, sans-serif')};
-            }}
-        """)
-    # Input
-    elif widget_type == "input":
-        input_style = style.get("input", {})
-        widget.setStyleSheet(f"""
-            QLineEdit, QTextEdit, QPlainTextEdit, QSpinBox {{
-                background-color: {input_style.get('background', style.get('background', '#ffffff'))};
-                color: {input_style.get('foreground', style.get('foreground', '#23272f'))};
-                border-radius: {style.get('border_radius', 8)}px;
-                border: 1px solid {style.get('border', '#cfd8dc')};
-                font-size: {style.get('font_size', 14)}px;
-                font-family: {style.get('font_family', 'Arial, sans-serif')};
-                padding: 6px 12px;
-                min-width: {style.get('input_width', 320)}px;
-            }}
-        """)
-    # ComboBox
-    elif widget_type == "combobox":
-        input_style = style.get("input", {})
-        widget.setStyleSheet(f"""
-            QComboBox {{
-                background-color: {input_style.get('background', style.get('background', '#ffffff'))};
-                color: {input_style.get('foreground', style.get('foreground', '#23272f'))};
-                border-radius: {style.get('border_radius', 8)}px;
-                border: 1px solid {style.get('border', '#cfd8dc')};
-                font-size: {style.get('font_size', 14)}px;
-                font-family: {style.get('font_family', 'Arial, sans-serif')};
-                padding: 6px 12px;
-                min-width: {style.get('input_width', 320)}px;
-            }}
-            QComboBox QAbstractItemView {{
-                background-color: {input_style.get('background', style.get('background', '#ffffff'))};
-                color: {input_style.get('foreground', style.get('foreground', '#23272f'))};
-                selection-background-color: {style.get('highlight', '#2563eb')};
-            }}
-        """)
-    # TabWidget/TabBar
-    elif widget_type == "tab":
-        widget.setStyleSheet(f"""
-            QTabWidget::pane {{
-                border: 1px solid {style.get('border', '#cfd8dc')};
-                border-radius: {style.get('border_radius', 8)}px;
-            }}
-            QTabBar::tab {{
-                background: {style.get('background', '#e7eaf3')};
-                color: {style.get('foreground', '#23272f')};
-                border: 1px solid {style.get('border', '#cfd8dc')};
-                border-radius: {style.get('border_radius', 8)}px;
-                padding: 8px 24px;
-                font-size: {style.get('font_size', 14)}px;
-                font-family: {style.get('font_family', 'Arial, sans-serif')};
-            }}
-            QTabBar::tab:selected {{
-                background: {style.get('highlight', '#2563eb')};
-                color: {style.get('foreground', '#e7eaf3')};
-            }}
-            QTabBar::tab:hover {{
-                background: {style.get('highlight', '#60a5fa')};
-            }}
-        """)
-    # Panel (z.B. QWidget als Panel)
-    elif widget_type == "panel":
-        widget.setStyleSheet(f"""
-            QWidget {{
-                background-color: {style.get('background', '#e7eaf3')};
-                color: {style.get('foreground', '#23272f')};
-                border-radius: {style.get('border_radius', 8)}px;
-                font-size: {style.get('font_size', 14)}px;
-                font-family: {style.get('font_family', 'Arial, sans-serif')};
-            }}
-        """)
-    # CenterPanel (optional, falls spezielle Styles)
-    elif widget_type == "center_panel":
-        widget.setStyleSheet(f"""
-            QWidget {{
-                background-color: {style.get('background', '#e7eaf3')};
-                color: {style.get('foreground', '#23272f')};
-                border-radius: {style.get('border_radius', 8)}px;
-                font-size: {style.get('font_size', 16)}px;
-                font-family: {style.get('font_family', 'Arial, sans-serif')};
-            }}
-        """)
-    # Add more widget types as needed...
+            """
+            widget.setStyleSheet(style)
+            log_info(f"Button stylesheet applied to {widget}: {style}")
 
-def update_dynamic_styles(widgets, theme, window_size):
-    """
-    Dynamically update styles for a list of widgets based on theme and window size.
-    """
-    scale = max(window_size.width() / 1400, 1)
-    dynamic_theme = theme.copy()
-    dynamic_theme["font_size"] = int(theme.get("font_size", 14) * scale)
-    dynamic_theme["input_width"] = int(theme.get("input_width", 320) * scale)
-    dynamic_theme["border_radius"] = int(theme.get("border_radius", 8) * scale)
-    # Update all widgets
-    for widget, widget_type in widgets:
-        apply_theme_style(widget, widget_type, dynamic_theme)
+        # Qt-StyleSheet für Header
+        if widget_type == "header":
+            style = f"""
+            QLabel {{
+                background-color: {theme.get('header_bg', '#fff')};
+                color: {theme.get('header_fg', '#222')};
+                font-size: {theme.get('header_font_size', 15)}px;
+                border-bottom: {theme.get('header_border', 'none')};
+            }}
+            """
+            widget.setStyleSheet(style)
+            log_info(f"Header stylesheet applied to {widget}: {style}")
+
+        # Qt-StyleSheet für Chips, Tabs, etc. können analog ergänzt werden
+
+    except Exception as e:
+        log_exception(f"Failed to apply theme style to {widget_type} ({widget})", e)
+
+__all__ = ["apply_theme_style"]

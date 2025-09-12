@@ -216,7 +216,7 @@
   "QSplitter::handle": {
     "background": "{splitter_handle_bg}"
   },
-  "QWidget#NavigationPanel": {
+  "QWidget#NavigationsPanel": {
     "background": "{nav_bg}",
     "color": "{nav_fg}",
     "border-radius": "{nav_radius}px"
