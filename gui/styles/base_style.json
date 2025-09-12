@@ -285,6 +285,7 @@
     "color": "{menu_selected_fg}"
   },
   "QLabel#FormHeaderLabel": {
+    "background": "transparent",
     "font-size": "{form_header_font_size}px",
     "font-weight": "bold",
     "color": "{form_header_fg}",

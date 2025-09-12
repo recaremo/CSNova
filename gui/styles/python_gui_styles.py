@@ -189,14 +189,14 @@ def apply_theme_style(widget, widget_type, theme, extra=None):
             widget.setStyleSheet(style)
             log_info(f"Button stylesheet applied to {widget}: {style}")
 
-        # Qt-StyleSheet für Header
         if widget_type == "header":
             style = f"""
-            QLabel {{
-                background-color: {theme.get('header_bg', '#fff')};
-                color: {theme.get('header_fg', '#222')};
-                font-size: {theme.get('header_font_size', 15)}px;
-                border-bottom: {theme.get('header_border', 'none')};
+            QLabel#FormHeaderLabel {{
+                background: transparent;
+                font-size: {theme.get('form_header_font_size', 18)}px;
+                font-weight: bold;
+                color: {theme.get('form_header_fg', '#23272f')};
+                margin-bottom: {theme.get('form_header_margin_bottom', 12)}px;
             }}
             """
             widget.setStyleSheet(style)

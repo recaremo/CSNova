@@ -7,7 +7,11 @@ from config.dev import ASSETS_DIR
 from core.logger import log_info, log_error, log_exception, log_call
 from gui.styles.python_gui_styles import apply_theme_style
 
-@log_call
+
+# Hilfsfunktion für Listen-Logging
+def log_list(title, items):
+    log_info(f"{title}:\n" + "\n".join(f"  - {item}" for item in items))
+
 # Funktion zum Laden von JSON-Dateien
 def load_json_file(path):
     """Lädt eine JSON-Datei und gibt deren Inhalt als Dictionary zurück."""
@@ -20,7 +24,7 @@ def load_json_file(path):
         log_exception(f"Error loading JSON file: {path}", e)
         return {}
 
-@log_call
+
 # Funktion zum Anwenden des globalen Stylesheets auf die QApplication    
 def apply_global_stylesheet(app, base_style_path, theme):
     with open(base_style_path, "r", encoding="utf-8") as f:
@@ -51,7 +55,7 @@ def apply_global_stylesheet(app, base_style_path, theme):
     full_stylesheet = "\n".join(stylesheet_parts)
     app.setStyleSheet(full_stylesheet)
 
-@log_call
+
 # StartWindow Klasse
 class StartWindow(QMainWindow):
 
@@ -101,7 +105,7 @@ class StartWindow(QMainWindow):
     # PANELS FUNKTIONEN (PLATZHALTER) - LEFT_PANEL
     # ..............................................................
 
-    @log_call
+    
     # Dieses left_panel_start wird beim Systemstart angezeigt und beinhaltet das Programmlogo
     # und grundelegende Informationen: (c), Version, Autor, Lizenz und evtl. weitere Hinweise.
     def create_left_panel_start(self, splitter_sizes):
@@ -163,32 +167,32 @@ class StartWindow(QMainWindow):
                 log_error("Fehler: Pixmap ist null, Bild konnte nicht geladen werden.")
         return panel_widget, update_image_on_splitter_move
     
-    @log_call
+    
     # Dieses left_panel_editor wird im Editor-Modus angezeigt und beinhaltet
     # die Inhalte aus den Tabellen: Charaktere, Orte, Objekte, Kapitel, Szenen
     def create_left_panel_editor(self):
         return QWidget()  # Placeholder for potential future functionality
-    @log_call
+    
     # Dieses left_panel_project wird angezeigt, wenn ein Projekt erstellt oder bearbeitert wird.
     def create_left_panel_project(self):
         return QWidget()  # Placeholder for potential future functionality
 
-    @log_call
+    
     # Dieses left_panel_settings wird angezeigt, wenn die Einstellungen geöffnet werden.
     def create_left_panel_settings(self):
         return QWidget()  # Placeholder for potential future functionality
 
-    @log_call
+    
     # Dieses left_panel_character wird angezeigt, wenn ein Charakter erstellt oder bearbeitert wird.
     def create_left_panel_character(self):
         return QWidget()  # Placeholder for potential future functionality 
 
-    @log_call
+    
     # Dieses left_panel_location wird angezeigt, wenn ein Ort erstellt oder bearbeitert wird.
     def create_left_panel_location(self):
         return QWidget()  # Placeholder for potential future functionality
 
-    @log_call
+    
     # Dieses left_panel_object wird angezeigt, wenn ein Objekt erstellt oder bearbeitert wird.
     def create_left_panel_object(self):
         return QWidget()  # Placeholder for potential future functionality
@@ -196,39 +200,39 @@ class StartWindow(QMainWindow):
     # PANELS FUNKTIONEN (PLATZHALTER) - CENTER_PANEL
     # ..............................................................
 
-    @log_call
+    
     # Dieses center_panel_start wird beim Systemstart angezeigt und beinhaltet
     # grundlegende Informationen und Anpassungsmöglichkeiten für die Einstellungen: Sprache und Theme
     def create_center_panel_start(self):
         return QWidget()  # Placeholder for potential future functionality
 
-    @log_call
+    
     # Dieses center_panel_editor wird im Editor-Modus angezeigt und beinhaltet
     # die Textverarbeitung für die Szenen usw.
     def create_center_panel_editor(self):
         return QWidget()  # Placeholder for potential future functionality
 
-    @log_call
+    
     # Dieses center_panel_project wird angezeigt, wenn ein Projekt erstellt oder bearbeitert wird.
     def create_center_panel_project(self):
         return QWidget()  # Placeholder for potential future functionality  
 
-    @log_call
+    
     # Dieses center_panel_settings wird angezeigt, wenn die Einstellungen bearbeitet werden sollen.
     def create_center_panel_settings(self):
         return QWidget()  # Placeholder for potential future functionality
 
-    @log_call
+    
     # Dieses center_panel_character wird angezeigt, wenn ein Charakter erstellt oder bearbeitert wird.
     def create_center_panel_character(self):
         return QWidget()  # Placeholder for potential future functionality  
 
-    @log_call
+    
     # Dieses center_panel_location wird angezeigt, wenn ein Ort erstellt oder bearbeitert wird.
     def create_center_panel_location(self):
         return QWidget()  # Placeholder for potential future functionality  
 
-    @log_call
+    
     # Dieses center_panel_object wird angezeigt, wenn ein Objekt erstellt oder bearbeitert wird.
     def create_center_panel_object(self):
         return QWidget()  # Placeholder for potential future functionality  
@@ -236,7 +240,7 @@ class StartWindow(QMainWindow):
     # PANELS FUNKTIONEN (PLATZHALTER) - RIGHT_PANEL
     # ..............................................................
 
-    @log_call
+    
     # Dieses right_panel_start wird beim Systemstart angezeigt und beinhaltet
     # die Navigation zum Aufruf von: Editor, Projekt, Einstellungen, Hilfe, Über
     def create_right_panel_start(self):
@@ -249,6 +253,7 @@ class StartWindow(QMainWindow):
         # Header
         header_text = self.get_translation("startWinHeader", "Projektübersicht")
         header_label = QLabel(header_text, panel_widget)
+        header_label.setObjectName("FormHeaderLabel")
         header_label.setAlignment(Qt.AlignHCenter | Qt.AlignTop)
         self.safe_apply_theme_style(header_label, "header", self.theme)
         panel_layout.addWidget(header_label)
@@ -289,38 +294,38 @@ class StartWindow(QMainWindow):
 
         return panel_widget
 
-    @log_call
+    
     # Dieses right_panel_editor wird im Editor-Modus angezeigt und beinhaltet
     # die Navigation, ob in left_panel die Charaktere, Orte, Objekte, Kapitel oder Szenen angezeigt werden sollen.
     # Außerdem wird hier der Editor-Modus beendet.
     def create_right_panel_editor(self):
         return QWidget()  # Placeholder for potential future functionality
 
-    @log_call
+    
     # Dieses right_panel_project wird angezeigt, wenn ein Projekt erstellt oder bearbeitert wird.
     # Es beinhaltet die Navigation zu den verschiedenen Projekt-Einstellungen und beendet den Projekt-Modus.
     def create_right_panel_project(self):
         return QWidget()  # Placeholder for potential future functionality
 
-    @log_call
+    
     # Dieses right_panel_settings wird angezeigt, wenn die Einstellungen bearbeitet werden sollen.
     # Es beinhaltet die Navigation zu den verschiedenen Einstellungs-Kategorien und beendet den Einstellungs-Modus.
     def create_right_panel_settings(self):
         return QWidget()  # Placeholder for potential future functionality
 
-    @log_call
+    
     # Dieses right_panel_character wird angezeigt, wenn ein Charakter erstellt oder bearbeitert wird.
     # Es beinhaltet die Navigation zu den verschiedenen Charakter-Einstellungen und beendet den Charakter-Modus.
     def create_right_panel_character(self):
         return QWidget()  # Placeholder for potential future functionality
 
-    @log_call
+    
     # Dieses right_panel_location wird angezeigt, wenn ein Ort erstellt oder bearbeitert wird.
     # Es beinhaltet die Navigation zu den verschiedenen Ort-Einstellungen und beendet den Ort-Modus.
     def create_right_panel_location(self):
         return QWidget()  # Placeholder for potential future functionality
 
-    @log_call
+    
     # Dieses right_panel_object wird angezeigt, wenn ein Objekt erstellt oder bearbeitert wird.
     # Es beinhaltet die Navigation zu den verschiedenen Objekt-Einstellungen und beendet den Objekt-Modus.
     def create_right_panel_object(self):
@@ -328,14 +333,20 @@ class StartWindow(QMainWindow):
 
     # --------------------------------------------------------------           )
     # --------------------------------------------------------------
-
+    @log_call
     def init_ui(self):
         # Setze den Fenstertitel und die Mindestgröße
         self.setWindowTitle(self.get_translation("WinStartTitle", "CSNova"))
-        self.setMinimumSize(1200, 800)
+        window_width = self.window_settings.get("width", 1200)
+        window_height = self.window_settings.get("height", 800)
+        window_size = [window_width, window_height]
+        self.resize(*window_size)
+        self.setMinimumSize(*window_size)
+        log_info(f"Fenstergröße aus Settings: {window_size}")
 
         # Splitter-Größen aus den Settings oder Default
-        splitter_sizes = self.window_settings.get("splitter_sizes", [300, 600, 300])
+        splitter_sizes = self.panel_settings.get("splitter_sizes", [300, 600, 300])
+        log_info(f"Splitter-Größen aus Settings: {splitter_sizes}")
 
         # Erzeuge die Panels
         left_panel, update_left_panel_image = self.create_left_panel_start(splitter_sizes)
@@ -364,6 +375,7 @@ class StartWindow(QMainWindow):
 
         log_info("UI erfolgreich initialisiert.")
 
+    @log_call
     def __init__(self, settings, translation_file, theme_file):
         super().__init__()
         self.settings = settings
@@ -381,7 +393,7 @@ class StartWindow(QMainWindow):
         self.theme = load_json_file(self.theme_file)
         if self.theme:
             log_info(f"Theme file loaded: {self.theme_file}")
-            log_info(f"Theme keys: {list(self.theme.keys())}")
+            log_list("Theme keys", self.theme.keys())
         else:
             log_error("Theme konnte nicht geladen werden, Standardfarben werden verwendet.")
 
@@ -389,7 +401,7 @@ class StartWindow(QMainWindow):
         self.base_style = load_json_file(base_style_path)
         if self.base_style:
             log_info(f"Base style file loaded: {base_style_path}")
-            log_info(f"Base style keys: {list(self.base_style.keys())}")
+            log_list("Base style keys", self.base_style.keys())
         else:
             log_error("Base Style konnte nicht geladen werden, Standardwerte werden verwendet.")
 
@@ -405,7 +417,7 @@ class StartWindow(QMainWindow):
         self.translations = load_json_file(self.translation_file)
         if self.translations:
             log_info(f"Translations loaded: {self.translation_file}")
-            log_info(f"Translation keys: {list(self.translations.keys())}")
+            log_list("Translation keys", self.translations.keys())
         else:
             log_error("Übersetzungsdatei ist leer oder konnte nicht geladen werden.")
 
@@ -415,14 +427,12 @@ class StartWindow(QMainWindow):
         self.init_ui()
 
     # Hilfsfunktion, um die QApplication-Instanz zu bekommen
-    @log_call
     def _get_qapplication_instance(self):
         # Hilfsfunktion, um die QApplication-Instanz zu bekommen
         from PySide6.QtWidgets import QApplication
         return QApplication.instance()
     
     # Funktion zum Abrufen von Übersetzungen
-    @log_call
     def get_translation(self, key, default=""):
         """Gibt die Übersetzung für einen Schlüssel zurück, falls vorhanden, sonst den Default-Wert."""
         return self.translations.get(key, default)

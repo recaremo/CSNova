@@ -5,9 +5,10 @@ import platform
 import subprocess
 from pathlib import Path
 from config.dev import USER_SETTINGS_FILE, TRANSLATIONS_DIR, GUI_DIR, FORM_FIELDS_FILE, BASE_STYLE_FILE
-from core.logger import log_info, log_error, log_exception, log_section, log_header, log_call, setup_logging
+from core.logger import log_info, log_error, log_exception, log_section, log_header, setup_logging, log_call
 
 from PySide6.QtWidgets import QApplication
+
 
 # --- DEFAULT SETTINGS = Standardeinstellung und Basisparameter ---
 DEFAULT_SETTINGS = {
@@ -3648,6 +3649,7 @@ BASE_STYLE_DEFAULT = {
         "color": "{menu_selected_fg}"
     },
     "QLabel#FormHeaderLabel": {
+        "background": "transparent",
         "font-size": "{form_header_font_size}px",
         "font-weight": "bold",
         "color": "{form_header_fg}",
@@ -3876,7 +3878,6 @@ def get_translation_path(language):
     return str(translation_file)
 
 # Die Systemsprache wird ermittelt
-@log_call
 def get_os_language():
     lang_tuple = locale.getlocale()
     lang = lang_tuple[0] if lang_tuple and lang_tuple[0] else None
@@ -3887,7 +3888,6 @@ def get_os_language():
     return "en"
 
 # Die Bildschirmauflösung wird ermittelt
-@log_call
 def get_monitor_resolution():
     try:
         system = platform.system()
@@ -3917,7 +3917,6 @@ def get_monitor_resolution():
         return "1920x1080"
 
 # Die Benutzereinstellungen werden geladen oder mit Standardwerten initialisiert
-@log_call
 def load_user_settings():
     if USER_SETTINGS_FILE.exists():
         try:
@@ -3931,7 +3930,6 @@ def load_user_settings():
     return DEFAULT_SETTINGS.copy()
 
 # Die Benutzereinstellungen werden gespeichert
-@log_call
 def save_user_settings(settings):
     try:
         with open(USER_SETTINGS_FILE, "w", encoding="utf-8") as f:
@@ -3941,7 +3939,6 @@ def save_user_settings(settings):
         log_exception("Error saving user_settings.json", e)
 
 # Die Standarddateien werden überschrieben
-@log_call
 def overwrite_form_fields_file():
     try:
         with open(FORM_FIELDS_FILE, "w", encoding="utf-8") as f:
@@ -3951,7 +3948,6 @@ def overwrite_form_fields_file():
         log_exception("Error overwriting form_fields.json", e)
 
 # Übersetzungsdatei wird überschrieben
-@log_call
 def overwrite_translation_file(language):
     translation_filename = f"translation_{language}.json"
     translation_path = TRANSLATIONS_DIR / translation_filename
@@ -3967,7 +3963,6 @@ def overwrite_translation_file(language):
         return None
     
 # Design-Datei wird überschrieben
-@log_call
 def overwrite_theme_file(style_theme):
     theme_filename = f"{style_theme}.json" if not style_theme.endswith(".json") else style_theme
     theme_path = Path(GUI_DIR) / "styles" / theme_filename
@@ -3983,7 +3978,6 @@ def overwrite_theme_file(style_theme):
         return None
 
 # Basis-Design-Datei wird überschrieben
-@log_call
 def overwrite_base_style_file():
     try:
         with open(BASE_STYLE_FILE, "w", encoding="utf-8") as f:
@@ -3993,7 +3987,6 @@ def overwrite_base_style_file():
         log_exception("Error overwriting base_style.json", e)
 
 # Fehlende Schlüssel in den Einstellungen werden mit Standardwerten ergänzt
-@log_call
 def ensure_settings_keys(settings, defaults):
     for key, value in defaults.items():
         if key not in settings:
@@ -4002,7 +3995,6 @@ def ensure_settings_keys(settings, defaults):
             ensure_settings_keys(settings[key], value)
 
 # Validierung der Schlüssel in den Standardkonfigurationen
-@log_call
 def validate_keys():
     lang_keys = [list(LANGUAGE_DEFAULTS[lang].keys()) for lang in LANGUAGE_DEFAULTS]
     first_keys = lang_keys[0]
@@ -4027,7 +4019,6 @@ def validate_keys():
     return True
 
 # Initialisierung der Benutzereinstellungen
-@log_call
 def init_settings():
     first_start = not USER_SETTINGS_FILE.exists()
     settings = load_user_settings()
@@ -4046,8 +4037,7 @@ def init_settings():
     save_user_settings(settings)
     return settings
 
-# 
-@log_call
+# Initialisierung der Dateien (Übersetzung, Design, Formularfelder, Basis-Design)
 def init_files(language, style_theme):
     translation_file = overwrite_translation_file(language)
     theme_file = overwrite_theme_file(style_theme)
@@ -4056,7 +4046,6 @@ def init_files(language, style_theme):
     return translation_file, theme_file
 
 # Initialisierung des Designs
-@log_call
 def init_theme(settings):
     if "gui" not in settings or "style_theme" not in settings["gui"]:
         settings.setdefault("gui", {})
@@ -4066,7 +4055,6 @@ def init_theme(settings):
     return style_theme
 
 # Initialisierung der Sprache
-@log_call
 def init_language(settings, os_language):
     settings.setdefault("general", {})
     language = settings["general"].get("language", os_language)
@@ -4112,25 +4100,40 @@ def run_unit_tests():
 def main():
     setup_logging()
     log_header()
-    log_section("csNova.py Start")
+    log_section("CSNova Start")
 
     try:
+        log_section("Validierung der Konfigurationsschlüssel")
         if not validate_keys():
-            log_error("Key validation failed. Please check LANGUAGE_DEFAULTS, THEMES_STYLES_DEFAULTS, BASE_STYLE_DEFAULT.")
+            log_error("Key validation failed. Check LANGUAGE_DEFAULTS, THEMES_STYLES_DEFAULTS, BASE_STYLE_DEFAULT.")
             sys.exit(1)
 
+        log_section("Systemsprache und Einstellungen")
         os_language = get_os_language()
         log_info(f"Detected OS language: {os_language}")
 
         settings = init_settings()
+        log_info("Benutzereinstellungen geladen und geprüft.")
+
         language = init_language(settings, os_language)
+        log_info(f"Sprache gesetzt: {language}")
+
         style_theme = init_theme(settings)
+        log_info(f"Theme gesetzt: {style_theme}")
+
         translation_file, theme_file = init_files(language, style_theme)
+        log_info(f"Dateien erstellt: {translation_file}, {theme_file}")
+
         save_user_settings(settings)
+        log_info("Benutzereinstellungen gespeichert.")
 
+        log_section("Unit-Tests")
         run_unit_tests()
+        log_info("Unit-Tests erfolgreich.")
 
+        log_section("GUI-Start")
         run_gui(settings, translation_file, theme_file)
+        log_info("GUI gestartet.")
 
     except Exception as e:
         log_exception("Unhandled exception in main()", e)
