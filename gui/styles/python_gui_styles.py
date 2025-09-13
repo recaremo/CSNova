@@ -16,7 +16,6 @@ def load_theme(theme_path):
         return {}
 
 def parse_shadow(shadow_str):
-    # rgba-Format: "0 2px 12px rgba(37,99,235,0.08)"
     match = re.match(r"(\d+)\s+(\d+)px\s+(\d+)px\s+rgba\((\d+),(\d+),(\d+),([0-9.]+)\)", shadow_str)
     if match:
         offset_x = int(match.group(1))
@@ -28,7 +27,6 @@ def parse_shadow(shadow_str):
         a = float(match.group(7))
         color = QColor(r, g, b, int(a * 255))
         return offset_x, offset_y, blur_radius, color
-    # Hex-Format: "0 0 0 2px #2563eb44"
     match = re.match(r"(\d+)\s+(\d+)\s+(\d+)\s+(\d+)px\s+#([0-9a-fA-F]{6})([0-9a-fA-F]{2})", shadow_str)
     if match:
         offset_x = int(match.group(1))
@@ -141,7 +139,6 @@ def apply_disabled_opacity(widget, theme):
 def apply_theme_style(widget, widget_type, theme, extra=None):
     """
     Hauptfunktion zum Anwenden aller nicht-Qt-kompatiblen Styles auf ein Widget.
-    Zusätzlich werden Qt-StyleSheets für Buttons und Header gesetzt.
     """
     try:
         log_info(f"Applying theme style: widget_type={widget_type}, widget={widget}, theme_keys={list(theme.keys())}")
@@ -161,48 +158,11 @@ def apply_theme_style(widget, widget_type, theme, extra=None):
             apply_disabled_opacity(widget, theme)
 
         # Animationen
-        if theme.get("animation_duration"):
-            apply_animation(widget, theme)
+        # if theme.get("animation_duration"):
+        #     apply_animation(widget, theme)
 
-        # Qt-StyleSheet für Buttons
-        if widget_type == "button":
-            style = f"""
-            QPushButton {{
-                background-color: {theme.get('button_bg', '#fff')};
-                color: {theme.get('button_fg', '#222')};
-                border-radius: {theme.get('button_radius', 4)}px;
-                border: {theme.get('button_border', 'none')};
-                font-size: {theme.get('button_font_size', 13)}px;
-                padding: {theme.get('button_padding', '8px 24px')};
-            }}
-            QPushButton:hover {{
-                background-color: {theme.get('button_hover', '#eee')};
-            }}
-            QPushButton:pressed {{
-                background-color: {theme.get('button_active', '#ccc')};
-            }}
-            QPushButton:disabled {{
-                background-color: {theme.get('button_disabled_bg', '#e5e5e5')};
-                color: {theme.get('button_disabled_fg', '#888899')};
-            }}
-            """
-            widget.setStyleSheet(style)
-            log_info(f"Button stylesheet applied to {widget}: {style}")
-
-        if widget_type == "header":
-            style = f"""
-            QLabel#FormHeaderLabel {{
-                background: transparent;
-                font-size: {theme.get('form_header_font_size', 18)}px;
-                font-weight: bold;
-                color: {theme.get('form_header_fg', '#23272f')};
-                margin-bottom: {theme.get('form_header_margin_bottom', 12)}px;
-            }}
-            """
-            widget.setStyleSheet(style)
-            log_info(f"Header stylesheet applied to {widget}: {style}")
-
-        # Qt-StyleSheet für Chips, Tabs, etc. können analog ergänzt werden
+        # Keine Qt-StyleSheet-Generierung mehr hier!
+        # Alle StyleSheet-Parameter werden über base_style.json abgedeckt.
 
     except Exception as e:
         log_exception(f"Failed to apply theme style to {widget_type} ({widget})", e)

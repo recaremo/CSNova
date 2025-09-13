@@ -1,4 +1,4 @@
-from PySide6.QtWidgets import QMainWindow, QLabel, QWidget, QVBoxLayout, QSplitter, QPushButton, QSpacerItem, QSizePolicy, QDialog, QHBoxLayout
+from PySide6.QtWidgets import QMainWindow, QLabel, QWidget, QVBoxLayout, QSplitter, QPushButton, QSpacerItem, QSizePolicy, QDialog, QHBoxLayout, QApplication, QComboBox
 from PySide6.QtCore import Qt
 from PySide6.QtGui import QPixmap
 import json
@@ -6,7 +6,7 @@ import os
 from config.dev import ASSETS_DIR
 from core.logger import log_info, log_error, log_exception, log_call
 from gui.styles.python_gui_styles import apply_theme_style
-
+from csNova import LANGUAGE_DEFAULTS, THEMES_STYLES_DEFAULTS
 
 # Hilfsfunktion für Listen-Logging
 def log_list(title, items):
@@ -69,7 +69,7 @@ class StartWindow(QMainWindow):
         layout.setSpacing(16)
 
         # Sicherheitsabfrage-Text
-        label = QLabel(self.get_translation("secureExitTitle", "Möchtest du CSNova wirklich beenden?"), dialog)
+        label = QLabel(self.get_translation("secureExitTitle", "Do you really want to exit CSNova"), dialog)
         label.setAlignment(Qt.AlignCenter)
         if self.apply_theme_style and self.theme:
             self.apply_theme_style(label, "label", self.theme)
@@ -77,8 +77,8 @@ class StartWindow(QMainWindow):
 
         # Buttons
         btn_layout = QHBoxLayout()
-        btn_yes = QPushButton(self.get_translation("botn_yes", "Ja"), dialog)
-        btn_no = QPushButton(self.get_translation("botn_no", "Nein"), dialog)
+        btn_yes = QPushButton(self.get_translation("botn_yes", "Yes"), dialog)
+        btn_no = QPushButton(self.get_translation("botn_no", "No"), dialog)
         if self.apply_theme_style and self.theme:
             self.apply_theme_style(btn_yes, "button", self.theme)
             self.apply_theme_style(btn_no, "button", self.theme)
@@ -101,6 +101,255 @@ class StartWindow(QMainWindow):
         """Wendet Theme/Style sicher auf ein Widget an, falls möglich."""
         if self.apply_theme_style and (theme or self.theme):
             self.apply_theme_style(widget, widget_type, theme or self.theme, extra)
+
+    # Funktion zum sicheren Abrufen von Übersetzungen
+    def on_language_changed(self, index):
+        # Hole den Sprachcode aus den Items oder einer Mapping-Liste
+        language_codes = ["de", "en", "fr", "es"]  # Beispiel, passe ggf. an
+        new_language = language_codes[index]  
+        self.change_language(new_language)
+
+    # Update Texte in Center_panel_start
+    def update_center_panel_start_texts(self):
+        # Header aktualisieren
+        if hasattr(self, "header_label"):
+            self.header_label.setText(self.get_translation("startWinInfoHeader", "Codices Scriptoria Nova <br><br>"))
+
+        # Info-Label 1 aktualisieren
+        if hasattr(self, "info_label1"):
+            info_text1 = self.get_translation(
+                "startWinInfoText1",
+                "Thank you for choosing <b>CSNova</b>! <br><br>"
+                "CSNova is an open-source project designed to help you organize and manage your creative writing projects. <br>"
+                "You can customize the program to fit your workflow. Additionally, CSNova has a clear philosophy: <br>"
+                "'You don't have to learn how the program works - the program should <b>understand</b> how you want to work.' <br><br>"
+                "Before you get started, you can make some basic settings: <br><br>"
+                "- Choose your preferred language. <br>"
+                "- Choose a theme for CSNova to use. <br><br>"
+            )
+            self.info_label1.setText(info_text1)
+
+        # Sprach-Label aktualisieren
+        if hasattr(self, "language_label"):
+            self.language_label.setText(self.get_translation("comboBox_se_01", "Language"))
+            self.language_label.setToolTip(self.get_translation("comboBox_se_01_hint", "Select your language."))
+
+        # Sprach-ComboBox aktualisieren
+        if hasattr(self, "language_combo"):
+            language_items = [
+                self.get_translation(f"comboBox_se_01_item_{i}", f"Language {i+1}")
+                for i in range(self.language_combo.count())
+            ]
+            for i, item in enumerate(language_items):
+                self.language_combo.setItemText(i, item)
+            self.language_combo.setToolTip(self.get_translation("comboBox_se_01_hint", "Select your language."))
+
+        # Theme-Label aktualisieren
+        if hasattr(self, "theme_label"):
+            self.theme_label.setText(self.get_translation("comboBox_se_02", "Theme"))
+            self.theme_label.setToolTip(self.get_translation("comboBox_se_02_hint", "Select the theme."))
+
+        # Theme-ComboBox aktualisieren
+        if hasattr(self, "theme_combo"):
+            theme_items = [
+                self.get_translation(f"comboBox_se_02_item_{i}", f"Theme {i+1}")
+                for i in range(self.theme_combo.count())
+            ]
+            for i, item in enumerate(theme_items):
+                self.theme_combo.setItemText(i, item)
+            self.theme_combo.setToolTip(self.get_translation("comboBox_se_02_hint", "Select the theme."))
+
+        # Info-Label 2 aktualisieren
+        if hasattr(self, "info_label2"):
+            info_text2 = self.get_translation(
+                "startWinInfoText2",
+                "You can also change these and other settings later in the settings. <br><br>"
+                "Once you've made your selections - and are satisfied - click <b>Save</b><br><br>"
+                "You can restore the default settings by clicking <b>Reset</b>. <br>"
+                "Or simply click <b>Next</b> to continue. <br><br>"
+            )
+            self.info_label2.setText(info_text2)
+
+        # Buttons aktualisieren
+        if hasattr(self, "btn_save"):
+            self.btn_save.setText(self.get_translation("btn_save", "Save"))
+            self.btn_save.setToolTip(self.get_translation("btn_save_hint", "Here you can save the current settings."))
+        if hasattr(self, "btn_reset"):
+            self.btn_reset.setText(self.get_translation("btn_reset", "Reset"))
+            self.btn_reset.setToolTip(self.get_translation("btn_reset_hint", "Here you can reset the settings to the default settings."))
+        if hasattr(self, "btn_continue"):
+            self.btn_continue.setText(self.get_translation("btn_next", "Next"))
+            self.btn_continue.setToolTip(self.get_translation("btn_next_hint", "Here you can proceed to the next step."))
+
+        # Fenster-Titel aktualisieren
+        self.setWindowTitle(self.get_translation("WinStartTitle", "CSNova"))
+
+    # Update Texte in Right_panel_start
+    def update_right_panel_start_texts(self):
+        # Header aktualisieren
+        if hasattr(self, "right_panel_header_label"):
+            self.right_panel_header_label.setText(self.get_translation("startWinHeader", "Project Overview <br>"))
+
+        # Navigationselemente 1-8 aktualisieren
+        nav_keys = [
+            ("botn_st_01", "botn_st_01_hint"),
+            ("botn_st_02", "botn_st_02_hint"),
+            ("botn_st_03", "botn_st_03_hint"),
+            ("botn_st_04", "botn_st_04_hint"),
+            ("botn_st_05", "botn_st_05_hint"),
+            ("botn_st_06", "botn_st_06_hint"),
+            ("botn_st_07", "botn_st_07_hint"),
+            ("botn_st_08", "botn_st_08_hint"),
+        ]
+        for i, (key, hint_key) in enumerate(nav_keys, start=1):
+            btn_attr = f"botn_st_{i:02d}"
+            if hasattr(self, btn_attr):
+                btn = getattr(self, btn_attr)
+                btn.setText(self.get_translation(key, f"Button {i}"))
+                btn.setToolTip(self.get_translation(hint_key, ""))
+
+        # Navigationselement 9 (Exit) aktualisieren
+        if hasattr(self, "botn_st_09"):
+            self.botn_st_09.setText(self.get_translation("botn_st_09", "Exit"))
+            self.botn_st_09.setToolTip(self.get_translation("botn_st_09_hint", "Exit CSNova."))
+
+        # Fenster-Titel aktualisieren
+        self.setWindowTitle(self.get_translation("WinStartTitle", "CSNova"))
+   
+    # Funktion wenn über language_combo die Sprache geändert wird
+    def change_language(self, new_language):
+        # Mapping-Liste wie in on_language_changed
+        language_codes = ["de", "en", "fr", "es"]
+        if hasattr(self, "language_combo"):
+            try:
+                index = language_codes.index(new_language)
+                self.language_combo.blockSignals(True)
+                self.language_combo.setCurrentIndex(index)
+                self.language_combo.blockSignals(False)
+            except ValueError:
+                self.language_combo.blockSignals(True)
+                self.language_combo.setCurrentIndex(0)
+                self.language_combo.blockSignals(False)
+
+        # Neue Übersetzungsdatei laden und speichern
+        translation_data = LANGUAGE_DEFAULTS.get(new_language, {})
+        translation_path = os.path.join(os.path.dirname(self.translation_file), f"translation_{new_language}.json")
+        try:
+            with open(translation_path, "w", encoding="utf-8") as f:
+                json.dump(translation_data, f, ensure_ascii=False, indent=2)
+            log_info(f"Neue Übersetzungsdatei gespeichert: {translation_path}")
+        except Exception as e:
+            log_exception(f"Fehler beim Speichern der Übersetzungsdatei: {translation_path}", e)
+            return
+
+        # Übersetzungen temporär anwenden
+        self.translations = translation_data
+        self.language = new_language
+
+        # Texte der Panels aktualisieren
+        self.update_center_panel_start_texts()
+        #self.update_left_panel_texts()
+        self.update_right_panel_start_texts()
+
+        # Wenn die Sprache geändert wurde, sind die Buttons btn_save und btn_reset aktiv
+        if hasattr(self, "btn_save"):
+            self.btn_save.setEnabled(True)
+        if hasattr(self, "btn_reset"):
+            self.btn_reset.setEnabled(True)
+        
+    # Update Themes/Styles in allen Panels
+    def update_all_themes(self):
+        # Globales Stylesheet neu anwenden
+        if hasattr(self, "app") and self.app:
+            apply_global_stylesheet(self.app, self.base_style_file, self.theme)
+        # Theme für Center-Panel
+        if hasattr(self, "header_label"):
+            self.safe_apply_theme_style(self.header_label, "header", self.theme)
+        if hasattr(self, "info_label1"):
+            self.safe_apply_theme_style(self.info_label1, "label", self.theme)
+        if hasattr(self, "language_label"):
+            self.safe_apply_theme_style(self.language_label, "label", self.theme)
+        if hasattr(self, "language_combo"):
+            self.safe_apply_theme_style(self.language_combo, "combo", self.theme)
+        if hasattr(self, "theme_label"):
+            self.safe_apply_theme_style(self.theme_label, "label", self.theme)
+        if hasattr(self, "theme_combo"):
+            self.safe_apply_theme_style(self.theme_combo, "combo", self.theme)
+        if hasattr(self, "info_label2"):
+            self.safe_apply_theme_style(self.info_label2, "label", self.theme)
+        if hasattr(self, "btn_save"):
+            self.safe_apply_theme_style(self.btn_save, "button", self.theme)
+        if hasattr(self, "btn_reset"):
+            self.safe_apply_theme_style(self.btn_reset, "button", self.theme)
+        if hasattr(self, "btn_continue"):
+            self.safe_apply_theme_style(self.btn_continue, "button", self.theme)
+
+        # Theme für Right-Panel
+        if hasattr(self, "right_panel_header_label"):
+            self.safe_apply_theme_style(self.right_panel_header_label, "header", self.theme)
+        for i in range(1, 10):
+            btn_attr = f"botn_st_{i:02d}"
+            if hasattr(self, btn_attr):
+                self.safe_apply_theme_style(getattr(self, btn_attr), "button", self.theme)
+
+        # Theme für Left-Panel (z.B. Bild-Panel)
+        if hasattr(self, "left_panel_widget"):
+            self.safe_apply_theme_style(self.left_panel_widget, "panel", self.theme)
+        # Weitere Widgets im Left-Panel ggf. ergänzen
+        # Optional: Theme für weitere dynamische Widgets aktualisieren
+        # Beispiel: Dialoge, Popups, etc.
+    
+    # Funktion on theme_changed
+    def on_theme_changed(self, index):
+        # Hole den Themecode aus den Items oder einer Mapping-Liste
+        theme_codes = ("Modern_neutral", "Modern_dark", "Modern_light", "OldSchool_neutral", "OldSchool_dark", "OldSchool_light", "Vintage_neutral", "Vintage_dark", "Vintage_light", "Future_neutral", "Future_dark", "Future_light", "Minimal_neutral", "Minimal_dark", "Minimal_light")
+        new_theme = theme_codes[index]  
+        self.change_theme(new_theme)
+
+    # Funktion wenn über theme_combo das Theme geändert wird
+    def change_theme(self, new_theme):
+        # Mapping-Liste wie in on_theme_changed
+        theme_codes = ("Modern_neutral", "Modern_dark", "Modern_light", "OldSchool_neutral", "OldSchool_dark", "OldSchool_light", "Vintage_neutral", "Vintage_dark", "Vintage_light", "Future_neutral", "Future_dark", "Future_light", "Minimal_neutral", "Minimal_dark", "Minimal_light")
+        if hasattr(self, "theme_combo"):
+            try:
+                index = theme_codes.index(new_theme)
+                self.theme_combo.blockSignals(True)
+                self.theme_combo.setCurrentIndex(index)
+                self.theme_combo.blockSignals(False)
+            except ValueError:
+                self.theme_combo.blockSignals(True)
+                self.theme_combo.setCurrentIndex(0)
+                self.theme_combo.blockSignals(False)
+
+        # Neue Theme-Datei laden und speichern
+        theme_data = THEMES_STYLES_DEFAULTS.get(new_theme, {})
+        theme_path = os.path.join(os.path.dirname(self.theme_file), f"theme_{new_theme}.json")
+        try:
+            with open(theme_path, "w", encoding="utf-8") as f:
+                json.dump(theme_data, f, ensure_ascii=False, indent=2)
+            log_info(f"Neues Theme gespeichert: {theme_path}")
+        except Exception as e:
+            log_exception(f"Fehler beim Speichern des Themes: {theme_path}", e)
+            return
+
+        # Theme temporär anwenden
+        log_info(f"Theme-Daten: {theme_data}")
+        log_info(f"Theme-Pfad: {theme_path}")
+        self.theme = theme_data
+
+        # Globales Stylesheet neu anwenden
+        if hasattr(self, "app") and self.app:
+            apply_global_stylesheet(self.app, self.base_style_file, self.theme)
+
+        # Theme für alle Panels aktualisieren
+        self.update_all_themes()
+
+        # Buttons aktivieren, wenn Theme geändert wurde
+        if hasattr(self, "btn_save"):
+            self.btn_save.setEnabled(True)
+        if hasattr(self, "btn_reset"):
+            self.btn_reset.setEnabled(True)
+
 
     # PANELS FUNKTIONEN (PLATZHALTER) - LEFT_PANEL
     # ..............................................................
@@ -204,9 +453,157 @@ class StartWindow(QMainWindow):
     # Dieses center_panel_start wird beim Systemstart angezeigt und beinhaltet
     # grundlegende Informationen und Anpassungsmöglichkeiten für die Einstellungen: Sprache und Theme
     def create_center_panel_start(self):
-        return QWidget()  # Placeholder for potential future functionality
+        first_start = self.general_settings.get("first_start", True)
+        panel_widget = QWidget()
+        panel_layout = QVBoxLayout(panel_widget)
+        panel_layout.setContentsMargins(20, 20, 20, 20)
+        panel_layout.setSpacing(16)
+        panel_layout.setAlignment(Qt.AlignTop)
 
-    
+        # Header
+        header_text = self.get_translation("startWinInfoHeader", "Codices Scriptoria Nova <br><br>")
+        header_label = QLabel(header_text, panel_widget)
+        header_label.setObjectName("FormHeaderLabel")
+        header_label.setAlignment(Qt.AlignHCenter | Qt.AlignTop)
+        self.safe_apply_theme_style(header_label, "header", self.theme)
+        panel_layout.addWidget(header_label)
+
+        # Info-Text 1
+        if first_start:
+            info_text1 = self.get_translation(
+                "startWinInfoText1",
+                "Thank you for choosing <b>CSNova</b>! <br><br>"
+                "CSNova is an open-source project designed to help you organize and manage your creative writing projects. <br>"
+                "You can customize the program to fit your workflow. Additionally, CSNova has a clear philosophy: <br>"
+                "'You don't have to learn how the program works - the program should <b>understand</b> how you want to work.' <br><br>"
+                "Before you get started, you can make some basic settings: <br><br>"
+                "- Choose your preferred language. <br>"
+                "- Choose a theme for CSNova to use. <br><br>"
+            )
+            info_label1 = QLabel(info_text1, panel_widget)
+            info_label1.setWordWrap(True)
+            info_label1.setAlignment(Qt.AlignTop | Qt.AlignLeft)
+            info_label1.setTextFormat(Qt.RichText)
+            self.safe_apply_theme_style(info_label1, "label", self.theme)
+            panel_layout.addWidget(info_label1)
+
+            # Sprach-Label und ComboBox
+            language_label = QLabel(self.get_translation("comboBox_se_01", "Language"), panel_widget)
+            language_label.setToolTip(self.get_translation("comboBox_se_01_hint", "Select your language."))
+            self.safe_apply_theme_style(language_label, "label", self.theme)
+            panel_layout.addWidget(language_label)
+
+            
+            language_combo = QComboBox(panel_widget)
+            language_items = [
+                self.get_translation(f"comboBox_se_01_item_{i}", f"Language {i+1}")
+                for i in range(4)
+            ]
+            language_combo.addItems(language_items)
+            language_combo.setToolTip(self.get_translation("comboBox_se_01_hint", "Select your language."))
+            panel_layout.addWidget(language_combo)
+            self.language_combo = language_combo
+            self.language_combo.currentIndexChanged.connect(self.on_language_changed)
+
+            # Theme-Label und ComboBox
+            theme_label = QLabel(self.get_translation("comboBox_se_02", "Theme"), panel_widget)
+            theme_label.setToolTip(self.get_translation("comboBox_se_02_hint", "Select the theme."))
+            self.safe_apply_theme_style(theme_label, "label", self.theme)
+            panel_layout.addWidget(theme_label)
+
+            theme_combo = QComboBox(panel_widget)
+            theme_items = [
+                self.get_translation(f"comboBox_se_02_item_{i}", f"Design {i+1}")
+                for i in range(15)
+            ]
+            theme_combo.addItems(theme_items)
+            theme_combo.setToolTip(self.get_translation("comboBox_se_02_hint", "Select the theme."))
+            panel_layout.addWidget(theme_combo)
+            self.theme_combo = theme_combo
+            self.theme_combo.currentIndexChanged.connect(self.on_theme_changed)
+
+            # Info-Text 2
+            info_text2 = self.get_translation(
+                "startWinInfoText2",
+                "You can also change these and other settings later in the settings. <br><br>"
+                "Once you've made your selections - and are satisfied - click <b>Save</b><br><br>"
+                "You can restore the default settings by clicking <b>Reset</b>. <br>"
+                "Or simply click <b>Next</b> to continue. <br><br>"
+            )
+            info_label2 = QLabel(info_text2, panel_widget)
+            info_label2.setWordWrap(True)
+            info_label2.setAlignment(Qt.AlignTop | Qt.AlignLeft)
+            info_label2.setTextFormat(Qt.RichText)
+            self.safe_apply_theme_style(info_label2, "label", self.theme)
+            panel_layout.addWidget(info_label2)
+        else:
+            info_text = self.get_translation(
+                "startWinInfoTextReturn",
+                "Welcome back to CSNova!\n\n"
+            )
+            info_label = QLabel(info_text, panel_widget)
+            info_label.setWordWrap(True)
+            info_label.setAlignment(Qt.AlignTop | Qt.AlignLeft)
+            info_label.setTextFormat(Qt.RichText)
+            self.safe_apply_theme_style(info_label, "label", self.theme)
+            panel_layout.addWidget(info_label)
+
+        # Spacer, damit die Buttons weiter unten sind
+        panel_layout.addSpacerItem(QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding))
+
+        # Button-Bereich unten
+        button_layout = QHBoxLayout()
+        button_layout.setSpacing(16)
+
+        # Speichern-Button
+        btn_save_text = self.get_translation("btn_save", "Save")
+        btn_save_hint = self.get_translation("btn_save_hint", "Here you can save the current settings.")
+        self.btn_save = QPushButton(btn_save_text, panel_widget)  # <--- als Attribut speichern!
+        self.btn_save.setToolTip(btn_save_hint)
+        self.safe_apply_theme_style(self.btn_save, "button", self.theme)
+        self.btn_save.clicked.connect(lambda: log_info("Speichern-Button im Start-Panel geklickt."))
+        self.btn_save.setEnabled(False)
+        button_layout.addWidget(self.btn_save)
+
+        # Standardeinstellungen-Button
+        btn_reset_text = self.get_translation("btn_reset", "Reset")
+        btn_reset_hint = self.get_translation("btn_reset_hint", "Here you can reset the settings to the default settings.")
+        self.btn_reset = QPushButton(btn_reset_text, panel_widget)  # <--- als Attribut speichern!
+        self.btn_reset.setToolTip(btn_reset_hint)
+        self.safe_apply_theme_style(self.btn_reset, "button", self.theme)
+        self.btn_reset.clicked.connect(lambda: log_info("Reset-Button im Start-Panel geklickt."))
+        self.btn_reset.setEnabled(False)
+        button_layout.addWidget(self.btn_reset)
+
+        # Weiter-Button
+        btn_continue_text = self.get_translation("btn_next", "Next")
+        btn_continue_hint = self.get_translation("btn_next_hint", "Here you can proceed to the next step.")
+        btn_continue = QPushButton(btn_continue_text, panel_widget)
+        btn_continue.setToolTip(btn_continue_hint)
+        self.safe_apply_theme_style(btn_continue, "button", self.theme)
+        btn_continue.clicked.connect(lambda: log_info("Weiter-Button im Start-Panel geklickt."))
+        button_layout.addWidget(btn_continue)
+        self.btn_continue = btn_continue
+
+        panel_layout.addLayout(button_layout)
+
+        panel_widget.setObjectName("WelcomePanel")
+        self.safe_apply_theme_style(panel_widget, "panel", {**self.theme, "background": self.theme.get("nav_bg", self.theme.get("background"))})
+
+        # Als Attribute speichern für spätere Updates
+        self.header_label = header_label
+        if first_start:
+            self.info_label1 = info_label1
+            self.language_label = language_label
+            self.language_combo = language_combo
+            self.theme_label = theme_label
+            self.theme_combo = theme_combo
+            self.info_label2 = info_label2
+        else:
+            self.info_label = info_label
+
+        return panel_widget
+   
     # Dieses center_panel_editor wird im Editor-Modus angezeigt und beinhaltet
     # die Textverarbeitung für die Szenen usw.
     def create_center_panel_editor(self):
@@ -251,7 +648,7 @@ class StartWindow(QMainWindow):
         panel_layout.setAlignment(Qt.AlignTop)
 
         # Header
-        header_text = self.get_translation("startWinHeader", "Projektübersicht")
+        header_text = self.get_translation("startWinHeader", "Project Overview <br>")
         header_label = QLabel(header_text, panel_widget)
         header_label.setObjectName("FormHeaderLabel")
         header_label.setAlignment(Qt.AlignHCenter | Qt.AlignTop)
@@ -281,8 +678,8 @@ class StartWindow(QMainWindow):
         panel_layout.addSpacerItem(QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding))
 
         # Navigationselement 9 (unten)
-        btn9_text = self.get_translation("botn_st_09", "Beenden")
-        btn9_hint = self.get_translation("botn_st_09_hint", "")
+        btn9_text = self.get_translation("botn_st_09", "Exit")
+        btn9_hint = self.get_translation("botn_st_09_hint", "Exit CSNova.")
         btn9 = QPushButton(btn9_text, panel_widget)
         btn9.setToolTip(btn9_hint)
         self.safe_apply_theme_style(btn9, "button")
@@ -291,6 +688,13 @@ class StartWindow(QMainWindow):
 
         panel_widget.setObjectName("NavigationPanelStart")
         self.safe_apply_theme_style(panel_widget, "panel", {**self.theme, "background": self.theme.get("nav_bg", self.theme.get("background"))})
+
+        # Als Attribute speichern für spätere Updates
+        self.right_panel_header_label = header_label
+        for i in range(1, 10):
+            btn_attr = f"botn_st_{i:02d}"
+            btn = panel_layout.itemAt(i).widget() if i < 9 else btn9
+            setattr(self, btn_attr, btn)
 
         return panel_widget
 
@@ -392,7 +796,7 @@ class StartWindow(QMainWindow):
         # 2. Lade Theme und Base-Style
         self.theme = load_json_file(self.theme_file)
         if self.theme:
-            log_info(f"Theme file loaded: {self.theme_file}")
+            log_info(f"Theme file geladen: {self.theme_file}")
             log_list("Theme keys", self.theme.keys())
         else:
             log_error("Theme konnte nicht geladen werden, Standardfarben werden verwendet.")
@@ -400,7 +804,7 @@ class StartWindow(QMainWindow):
         base_style_path = os.path.join(os.path.dirname(self.theme_file), "base_style.json")
         self.base_style = load_json_file(base_style_path)
         if self.base_style:
-            log_info(f"Base style file loaded: {base_style_path}")
+            log_info(f"Base style file geladen: {base_style_path}")
             log_list("Base style keys", self.base_style.keys())
         else:
             log_error("Base Style konnte nicht geladen werden, Standardwerte werden verwendet.")
@@ -416,7 +820,7 @@ class StartWindow(QMainWindow):
         # 4. Lade Übersetzungen
         self.translations = load_json_file(self.translation_file)
         if self.translations:
-            log_info(f"Translations loaded: {self.translation_file}")
+            log_info(f"Translations geladen: {self.translation_file}")
             log_list("Translation keys", self.translations.keys())
         else:
             log_error("Übersetzungsdatei ist leer oder konnte nicht geladen werden.")
@@ -429,7 +833,7 @@ class StartWindow(QMainWindow):
     # Hilfsfunktion, um die QApplication-Instanz zu bekommen
     def _get_qapplication_instance(self):
         # Hilfsfunktion, um die QApplication-Instanz zu bekommen
-        from PySide6.QtWidgets import QApplication
+        #from PySide6.QtWidgets import QApplication
         return QApplication.instance()
     
     # Funktion zum Abrufen von Übersetzungen
