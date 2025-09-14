@@ -358,55 +358,17 @@ class StartWindow(QMainWindow):
             log_exception("Fehler beim Speichern der Einstellungen", e)
 
     def reset_settings(self):
-        try:
-            # Lade die gespeicherten Einstellungen neu
-            with open("config/user_settings.json", "r", encoding="utf-8") as f:
-                saved_settings = json.load(f)
-
-            # 1. Sprache zurücksetzen
-            language = saved_settings["general"]["language"]
-            self.change_language(language)
-
-            # 2. Theme zurücksetzen
-            theme_name = saved_settings["gui"]["style_theme"]
-            self.change_theme(theme_name)
-
-            log_info("Sprache und Theme wurden auf die gespeicherten Werte zurückgesetzt.")
-            self.btn_reset.setEnabled(False)
-            self.btn_save.setEnabled(False)
-        except Exception as e:
-            log_exception("Fehler beim Zurücksetzen der Einstellungen", e)
+        # Beispiel: Einstellungen zurücksetzen
+        # Hier könntest du DEFAULT_SETTINGS laden und anwenden
+        log_info("Einstellungen werden auf Standard zurückgesetzt.")
+        # ...Logik zum Zurücksetzen...
+        self.btn_reset.setEnabled(False)
+        self.btn_save.setEnabled(True)
 
     def go_to_next_step(self):
-        try:
-            # Setze "first_start" auf False und speichere die Einstellungen
-            self.settings["general"]["first_start"] = False
-            with open("config/user_settings.json", "w", encoding="utf-8") as f:
-                json.dump(self.settings, f, indent=2, ensure_ascii=False)
-            log_info('"first_start" wurde auf False gesetzt und Einstellungen gespeichert.')
-
-            # Center-Panel neu erzeugen und im Splitter ersetzen
-            splitter = self.centralWidget()
-            if isinstance(splitter, QSplitter):
-                new_center_panel = self.create_center_panel_start()
-                # Entferne das alte Center-Panel
-                old_center_panel = splitter.widget(1)
-                splitter.insertWidget(1, new_center_panel)
-                splitter.setStretchFactor(1, 1)
-                if old_center_panel is not None:
-                    old_center_panel.setParent(None)
-                self.center_panel_widget = new_center_panel
-
-                # Splitter-Größen aus den Settings setzen
-                splitter_sizes = self.panel_settings.get("splitter_sizes", [300, 600, 300])
-                splitter.setSizes(splitter_sizes)
-            else:
-                self.center_panel_widget = self.create_center_panel_start()
-                self.setCentralWidget(self.center_panel_widget)
-
-            log_info("Center-Panel wurde nach Next-Step aktualisiert und korrekt angezeigt.")
-        except Exception as e:
-            log_exception("Fehler beim Wechsel zum nächsten Schritt", e)
+        # Beispiel: Weiter zum nächsten Schritt
+        log_info("Weiter-Button geklickt. Nächster Schritt wird ausgeführt.")
+        # ...Logik für den nächsten Schritt...
     
     # PANELS FUNKTIONEN (PLATZHALTER) - LEFT_PANEL
     # ..............................................................

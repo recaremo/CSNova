@@ -16,6 +16,9 @@ def load_theme(theme_path):
         return {}
 
 def parse_shadow(shadow_str):
+    if not shadow_str or shadow_str == "none":
+        # Kein Schatten anwenden
+        return 0, 0, 0, QColor(0, 0, 0, 0)
     match = re.match(r"(\d+)\s+(\d+)px\s+(\d+)px\s+rgba\((\d+),(\d+),(\d+),([0-9.]+)\)", shadow_str)
     if match:
         offset_x = int(match.group(1))
