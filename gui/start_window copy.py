@@ -1,5 +1,5 @@
 from PySide6.QtWidgets import QMainWindow, QLabel, QWidget, QVBoxLayout, QSplitter, QPushButton, QSpacerItem, QSizePolicy, QDialog, QHBoxLayout, QApplication, QComboBox
-from PySide6.QtCore import Qt
+from PySide6.QtCore import Qt, QEvent
 from PySide6.QtGui import QPixmap
 import json
 import os
@@ -7,6 +7,7 @@ from config.dev import ASSETS_DIR
 from core.logger import log_info, log_error, log_exception, log_call
 from gui.styles.python_gui_styles import apply_theme_style
 from csNova import LANGUAGE_DEFAULTS, THEMES_STYLES_DEFAULTS
+
 
 # Hilfsfunktion für Listen-Logging
 def log_list(title, items):
@@ -58,6 +59,26 @@ def apply_global_stylesheet(app, base_style_path, theme):
 # StartWindow Klasse
 class StartWindow(QMainWindow):
 
+    # Change Event
+    def changeEvent(self, event):
+        if event.type() == QEvent.WindowStateChange:
+                start_window = self.settings.setdefault("start_window", {})
+                if self.isMaximized():
+                    start_window["is_maximized"] = True
+                    # Maximierte Größe NICHT speichern!
+                else:
+                    # Fenster wurde gerade von maximiert auf normal gesetzt
+                    window_width = start_window.get("width", 1920)
+                    window_height = start_window.get("height", 1080)
+                    self.resize(window_width, window_height)
+                    start_window["is_maximized"] = False
+                    start_window["width"] = window_width
+                    start_window["height"] = window_height
+                with open("config/user_settings.json", "w", encoding="utf-8") as f:
+                    json.dump(self.settings, f, indent=2, ensure_ascii=False)
+                log_info(f"Fensterstatus geändert: Maximized={start_window['is_maximized']}, Größe={self.width()}x{self.height()}")
+        super().changeEvent(event)
+    
     # Sicherheitsabfrage beim Beenden des Programms
     @log_call
     def show_secure_exit_dialog(self):    
@@ -98,7 +119,13 @@ class StartWindow(QMainWindow):
     # Fenstergröße wurde verändert
     def resizeEvent(self, event):
         super().resizeEvent(event)
-        #self.save_settings()
+        start_window = self.settings.setdefault("start_window", {})
+        if not self.isMaximized():
+            start_window["width"] = self.width()
+            start_window["height"] = self.height()
+            with open("config/user_settings.json", "w", encoding="utf-8") as f:
+                json.dump(self.settings, f, indent=2, ensure_ascii=False)
+            log_info(f"Fenstergröße geändert: {self.width()}x{self.height()}")
 
     # Funktion zum sicheren Abrufen von Übersetzungen
     def on_language_changed(self, index):
@@ -347,25 +374,18 @@ class StartWindow(QMainWindow):
                     self.settings["gui"]["style_theme"] = theme_name
                     self.settings["gui"]["file_path_gui"] = f"./gui/styles/theme_{theme_name}.json"
 
-            # 3a. Fensterstatus und Größe speichern
-            try:
-                self.settings["start_window"]["is_maximized"] = self.isMaximized()
-                # Speichere die Größe nur, wenn das Fenster nicht maximiert ist
-                if not self.isMaximized():
-                    self.settings["start_window"]["width"] = self.width()
-                    self.settings["start_window"]["height"] = self.height()
-                # ... Splitter-Größen und weitere Settings wie gehabt ...
-                with open("config/user_settings.json", "w", encoding="utf-8") as f:
-                    json.dump(self.settings, f, indent=2, ensure_ascii=False)
-                log_info("Einstellungen erfolgreich gespeichert.")
-            except Exception as e:
-                log_exception("Fehler beim Speichern der Einstellungen", e)
+            # Fensterstatus und Größe speichern
+            start_window = self.settings.setdefault("start_window", {})
+            start_window["is_maximized"] = self.isMaximized()
+            if not self.isMaximized():
+                start_window["width"] = self.width()
+                start_window["height"] = self.height()
 
-            # 3b. Splitter-Größen
+            # Splitter-Größen
+            panels = self.settings.setdefault("panels", {})
             splitter = self.centralWidget()
             if isinstance(splitter, QSplitter):
-                sizes = splitter.sizes()
-                self.settings["panels"]["splitter_sizes"] = sizes
+                panels["splitter_sizes"] = splitter.sizes()
 
             # Speichern in user_settings.json
             with open("config/user_settings.json", "w", encoding="utf-8") as f:
@@ -521,9 +541,17 @@ class StartWindow(QMainWindow):
     def create_left_panel_object(self):
         return QWidget()  # Placeholder for potential future functionality
 
+    # Dieses left_panel_help wird angezeigt, wenn die Hilfe geöffnet wird.
+    def create_left_panel_help(self):
+        return QWidget()  # Placeholder for potential future functionality
+    
+    # Dieses left_panel_about wird angezeigt, wenn "Über" geöffnet wird.
+    def create_left_panel_about(self):
+        return QWidget()  # Placeholder for potential future functionality
+    
+    # ..............................................................
     # PANELS FUNKTIONEN - CENTER_PANEL
     # ..............................................................
-
     
     # Dieses center_panel_start wird beim Systemstart angezeigt und beinhaltet
     # grundlegende Informationen und Anpassungsmöglichkeiten für die Einstellungen: Sprache und Theme
@@ -722,6 +750,15 @@ class StartWindow(QMainWindow):
     def create_center_panel_object(self):
         return QWidget()  # Placeholder for potential future functionality  
 
+    # Dieses center_panel_help wird angezeigt, wenn die Hilfe geöffnet wird.
+    def create_center_panel_help(self):
+        return QWidget()  # Placeholder for potential future functionality
+    
+    # Dieses center_panel_about wird angezeigt, wenn "Über" geöffnet wird.
+    def create_center_panel_about(self):
+        return QWidget()  # Placeholder for potential future functionality
+    # ..............................................................
+
     # PANELS FUNKTIONEN (PLATZHALTER) - RIGHT_PANEL
     # ..............................................................
 
@@ -817,6 +854,15 @@ class StartWindow(QMainWindow):
     def create_right_panel_object(self):
         return QWidget()  # Placeholder for potential future functionality
 
+    # Dieses right_panel_help wird angezeigt, wenn die Hilfe geöffnet wird.
+    def create_right_panel_help(self):
+        return QWidget()  # Placeholder for potential future functionality 
+    
+    # Dieses right_panel_about wird angezeigt, wenn "Über" geöffnet wird.
+    def create_right_panel_about(self):
+        return QWidget()  # Placeholder for potential future functionality
+    
+
     # --------------------------------------------------------------           )
     # --------------------------------------------------------------
     @log_call
@@ -873,7 +919,9 @@ class StartWindow(QMainWindow):
         self.translation_file = translation_file
         self.theme_file = theme_file
         self.apply_theme_style = apply_theme_style
-
+        self._was_maximized = settings.get("start_window", {}).get("is_maximized", False)
+        self._restore_size_on_unmaximize = False
+        
         # 1. Lade Einstellungen
         self.gui_settings = settings.get("gui", {})
         self.general_settings = settings.get("general", {})

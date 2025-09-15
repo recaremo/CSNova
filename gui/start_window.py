@@ -58,7 +58,171 @@ def apply_global_stylesheet(app, base_style_path, theme):
 
 # StartWindow Klasse
 class StartWindow(QMainWindow):
+    
+    # Initialisierung der Panels
+    def create_left_panel_with_header(self, header_key, default_text):
+        panel_widget = QWidget()
+        panel_layout = QVBoxLayout(panel_widget)
+        panel_layout.setContentsMargins(10, 10, 10, 10)
+        panel_layout.setSpacing(10)
+        panel_layout.setAlignment(Qt.AlignTop | Qt.AlignHCenter)
 
+        header_text = self.get_translation(header_key, default_text)
+        header_label = QLabel(header_text, panel_widget)
+        header_label.setAlignment(Qt.AlignHCenter | Qt.AlignTop)
+        header_label.setObjectName("LeftPanelHeaderLabel")
+        panel_layout.addWidget(header_label)
+
+        self.safe_apply_theme_style(panel_widget, "panel", self.theme)
+        self.safe_apply_theme_style(header_label, "label", self.theme)
+
+        return panel_widget
+
+    # Anzeige des jeweils ausgewählten left_panels über die Buttons in right_panel_start
+    def show_left_panel(self, panel_index, left_panel_functions):
+        splitter = self.centralWidget()
+        if isinstance(splitter, QSplitter):
+            new_left_panel = left_panel_functions[panel_index]()
+            old_left_panel = splitter.widget(0)
+            splitter.insertWidget(0, new_left_panel)
+            splitter.setStretchFactor(0, 1)
+            if old_left_panel is not None:
+                old_left_panel.setParent(None)
+            self.left_panel_widget = new_left_panel
+            self.safe_apply_theme_style(new_left_panel, "panel", self.theme)
+            log_info(f"Left panel {panel_index} wurde angezeigt.")
+            # Splitter-Größen wiederherstellen
+            splitter_sizes = self.panel_settings.get("splitter_sizes", [300, 600, 300])
+            splitter.setSizes(splitter_sizes)
+
+    # Anzeige des jeweils ausgewählten center_panels über die Buttons in right_panel_start
+    def create_center_panel_with_header(self, header_key, default_text):
+        panel_widget = QWidget()
+        panel_layout = QVBoxLayout(panel_widget)
+        panel_layout.setContentsMargins(10, 10, 10, 10)
+        panel_layout.setSpacing(10)
+        panel_layout.setAlignment(Qt.AlignTop | Qt.AlignHCenter)
+
+        header_text = self.get_translation(header_key, default_text)
+        header_label = QLabel(header_text, panel_widget)
+        header_label.setAlignment(Qt.AlignHCenter | Qt.AlignTop)
+        header_label.setObjectName("CenterPanelHeaderLabel")
+        panel_layout.addWidget(header_label)
+
+        self.safe_apply_theme_style(panel_widget, "panel", self.theme)
+        self.safe_apply_theme_style(header_label, "label", self.theme)
+
+        return panel_widget
+    
+    # Anzeige des jeweils ausgewählten center_panels über die Buttons in right_panel_start
+    def show_center_panel(self, panel_index, center_panel_functions):
+        splitter = self.centralWidget()
+        if isinstance(splitter, QSplitter):
+            new_center_panel = center_panel_functions[panel_index]()
+            old_center_panel = splitter.widget(1)
+            splitter.insertWidget(1, new_center_panel)
+            splitter.setStretchFactor(1, 1)
+            if old_center_panel is not None:
+                old_center_panel.setParent(None)
+            self.center_panel_widget = new_center_panel
+            self.safe_apply_theme_style(new_center_panel, "panel", self.theme)
+            log_info(f"Center panel {panel_index} wurde angezeigt.")
+            # Splitter-Größen wiederherstellen
+            splitter_sizes = self.panel_settings.get("splitter_sizes", [300, 600, 300])
+            splitter.setSizes(splitter_sizes)
+    
+    # Right Panels mit den jeweiligen Buttons
+    def create_right_panel_project(self):
+        panel_widget = QWidget()
+        panel_layout = QVBoxLayout(panel_widget)
+        panel_layout.setContentsMargins(20, 20, 20, 20)
+        panel_layout.setSpacing(16)
+        panel_layout.setAlignment(Qt.AlignTop)
+
+        # Header
+        header_text = self.get_translation("ProjectWinHeader", "Project Management")
+        header_label = QLabel(header_text, panel_widget)
+        header_label.setObjectName("ProjectPanelHeaderLabel")
+        header_label.setAlignment(Qt.AlignHCenter | Qt.AlignTop)
+        panel_layout.addWidget(header_label)
+
+        # Button-Konfiguration: (Key, Hint-Key)
+        button_keys = [
+            ("botn_fo_01", "botn_fo_01_hint"),
+            ("botn_fo_02", "botn_fo_02_hint"),
+            ("botn_fo_03", "botn_fo_03_hint"),
+            ("botn_fo_04", "botn_fo_04_hint"),
+            ("botn_fo_05", "botn_fo_05_hint"),
+        ]
+        for i, (key, hint_key) in enumerate(button_keys, start=1):
+            btn_text = self.get_translation(key, key)
+            btn_hint = self.get_translation(hint_key, "")
+            btn = QPushButton(btn_text, panel_widget)
+            btn.setToolTip(btn_hint)
+            panel_layout.addWidget(btn)
+            setattr(self, f"botn_fo_{i:02d}", btn)
+            # Hier kannst du später die Button-Handler ergänzen
+
+        panel_widget.setObjectName("ProjectRightPanel")
+        self.safe_apply_theme_style(panel_widget, "panel", self.theme)
+        self.safe_apply_theme_style(header_label, "label", self.theme)
+        return panel_widget
+
+    # Right Panels mit den jeweiligen Buttons
+    def create_right_panel_character(self):
+        panel_widget = QWidget()
+        panel_layout = QVBoxLayout(panel_widget)
+        panel_layout.setContentsMargins(20, 20, 20, 20)
+        panel_layout.setSpacing(16)
+        panel_layout.setAlignment(Qt.AlignTop)
+
+        # Header
+        header_text = self.get_translation("CharacterWinHeader", "Character Management")
+        header_label = QLabel(header_text, panel_widget)
+        header_label.setObjectName("CharacterPanelHeaderLabel")
+        header_label.setAlignment(Qt.AlignHCenter | Qt.AlignTop)
+        panel_layout.addWidget(header_label)
+
+        # Button-Konfiguration: (Key, Hint-Key)
+        button_keys = [
+            ("botn_ch_01", "botn_ch_01_hint"),
+            ("botn_ch_02a", "botn_ch_02b_hint"),
+            ("botn_ch_02b", "botn_ch_02b_hint"),
+            ("botn_ch_03", "botn_ch_03_hint"),
+            ("botn_ch_04", "botn_ch_04_hint"),
+            ("botn_ch_05", "botn_ch_05_hint"),
+        ]
+        for i, (key, hint_key) in enumerate(button_keys, start=1):
+            btn_text = self.get_translation(key, key)
+            btn_hint = self.get_translation(hint_key, "")
+            btn = QPushButton(btn_text, panel_widget)
+            btn.setToolTip(btn_hint)
+            panel_layout.addWidget(btn)
+            setattr(self, f"botn_ch_{i:02d}", btn)
+            # Hier kannst du später die Button-Handler ergänzen
+
+        panel_widget.setObjectName("CharacterRightPanel")
+        self.safe_apply_theme_style(panel_widget, "panel", self.theme)
+        self.safe_apply_theme_style(header_label, "label", self.theme)
+        return panel_widget
+    
+    # Anzeige des jeweils ausgewählten right_panels über die Buttons in right_panel_start
+    def show_right_panel(self, panel_index, right_panel_functions):
+        splitter = self.centralWidget()
+        if isinstance(splitter, QSplitter):
+            new_right_panel = right_panel_functions[panel_index]()
+            old_right_panel = splitter.widget(2)
+            splitter.insertWidget(2, new_right_panel)
+            splitter.setStretchFactor(2, 1)
+            if old_right_panel is not None:
+                old_right_panel.setParent(None)
+            self.right_panel_widget = new_right_panel
+            self.safe_apply_theme_style(new_right_panel, "panel", self.theme)
+            log_info(f"Right panel {panel_index} wurde angezeigt.")
+            # Splitter-Größen wiederherstellen
+            splitter_sizes = self.panel_settings.get("splitter_sizes", [300, 600, 300])
+            splitter.setSizes(splitter_sizes)
+    
     # Change Event
     def changeEvent(self, event):
         if event.type() == QEvent.WindowStateChange:
@@ -459,11 +623,11 @@ class StartWindow(QMainWindow):
         panel_layout.setSpacing(10)
         panel_layout.setAlignment(Qt.AlignTop | Qt.AlignHCenter)
 
-        label = QLabel(self.get_translation("left_panel_label", "left_panel"), panel_widget)
+        """ label = QLabel(self.get_translation("left_panel_label", "left_panel"), panel_widget)
         label.setAlignment(Qt.AlignCenter)
         if self.apply_theme_style and self.theme:
             self.apply_theme_style(label, "label", self.theme)
-        panel_layout.addWidget(label)
+        panel_layout.addWidget(label) """
 
         image_path = ASSETS_DIR / "media" / "csNova_background_start.png"
         image_label = QLabel(panel_widget)
@@ -515,35 +679,42 @@ class StartWindow(QMainWindow):
     # Dieses left_panel_editor wird im Editor-Modus angezeigt und beinhaltet
     # die Inhalte aus den Tabellen: Charaktere, Orte, Objekte, Kapitel, Szenen
     def create_left_panel_editor(self):
-        return QWidget()  # Placeholder for potential future functionality
+        return self.create_left_panel_with_header("edit_lp_header", "Editor")
     
     # Dieses left_panel_project wird angezeigt, wenn ein Projekt erstellt oder bearbeitert wird.
     def create_left_panel_project(self):
-        return QWidget()  # Placeholder for potential future functionality
-
+        return self.create_left_panel_with_header("proj_ma_header", "Projects")
     
     # Dieses left_panel_settings wird angezeigt, wenn die Einstellungen geöffnet werden.
     def create_left_panel_settings(self):
-        return QWidget()  # Placeholder for potential future functionality
+        return self.create_left_panel_with_header("pref_lp_header", "Preferences")
 
     
     # Dieses left_panel_character wird angezeigt, wenn ein Charakter erstellt oder bearbeitert wird.
     def create_left_panel_character(self):
-        return QWidget()  # Placeholder for potential future functionality 
+        return self.create_left_panel_with_header("char_ma_header", "Characteres")
 
     
     # Dieses left_panel_location wird angezeigt, wenn ein Ort erstellt oder bearbeitert wird.
     def create_left_panel_location(self):
-        return QWidget()  # Placeholder for potential future functionality
+        return self.create_left_panel_with_header("proj_lo_header", "Locations")
 
     
     # Dieses left_panel_object wird angezeigt, wenn ein Objekt erstellt oder bearbeitert wird.
     def create_left_panel_object(self):
-        return QWidget()  # Placeholder for potential future functionality
+        return self.create_left_panel_with_header("proj_ob_header", "Objects")
 
+    # Dieses left_panel_help wird angezeigt, wenn die Hilfe geöffnet wird.
+    def create_left_panel_help(self):
+        return self.create_left_panel_with_header("help_lp_header", "Help")
+    
+    # Dieses left_panel_about wird angezeigt, wenn "Über" geöffnet wird.
+    def create_left_panel_about(self):
+        return self.create_left_panel_with_header("abou_lp_header", "About")
+    
+    # ..............................................................
     # PANELS FUNKTIONEN - CENTER_PANEL
     # ..............................................................
-
     
     # Dieses center_panel_start wird beim Systemstart angezeigt und beinhaltet
     # grundlegende Informationen und Anpassungsmöglichkeiten für die Einstellungen: Sprache und Theme
@@ -715,37 +886,85 @@ class StartWindow(QMainWindow):
     # Dieses center_panel_editor wird im Editor-Modus angezeigt und beinhaltet
     # die Textverarbeitung für die Szenen usw.
     def create_center_panel_editor(self):
-        return QWidget()  # Placeholder for potential future functionality
+        return self.create_center_panel_with_header("edit_lp_header", "Editor")
 
     
     # Dieses center_panel_project wird angezeigt, wenn ein Projekt erstellt oder bearbeitert wird.
     def create_center_panel_project(self):
-        return QWidget()  # Placeholder for potential future functionality  
+        return self.create_center_panel_with_header("proj_ma_header", "Projects")
 
     
     # Dieses center_panel_settings wird angezeigt, wenn die Einstellungen bearbeitet werden sollen.
     def create_center_panel_settings(self):
-        return QWidget()  # Placeholder for potential future functionality
+        return self.create_center_panel_with_header("pref_lp_header", "Preferences")
 
     
     # Dieses center_panel_character wird angezeigt, wenn ein Charakter erstellt oder bearbeitert wird.
     def create_center_panel_character(self):
-        return QWidget()  # Placeholder for potential future functionality  
+        return self.create_center_panel_with_header("char_ma_header", "Characters")  
 
     
     # Dieses center_panel_location wird angezeigt, wenn ein Ort erstellt oder bearbeitert wird.
     def create_center_panel_location(self):
-        return QWidget()  # Placeholder for potential future functionality  
+        return self.create_center_panel_with_header("proj_lo_header", "Locations")  
 
     
     # Dieses center_panel_object wird angezeigt, wenn ein Objekt erstellt oder bearbeitert wird.
     def create_center_panel_object(self):
-        return QWidget()  # Placeholder for potential future functionality  
+        return self.create_center_panel_with_header("proj_ob_header", "Objects")  
+
+    # Dieses center_panel_help wird angezeigt, wenn die Hilfe geöffnet wird.
+    def create_center_panel_help(self):
+        return self.create_center_panel_with_header("help_lp_header", "Help")
+    
+    # Dieses center_panel_about wird angezeigt, wenn "Über" geöffnet wird.
+    def create_center_panel_about(self):
+        return self.create_center_panel_with_header("abou_lp_header", "About")
+    # ..............................................................
 
     # PANELS FUNKTIONEN (PLATZHALTER) - RIGHT_PANEL
     # ..............................................................
 
-    
+    # Dieses right_panel_start wird beim Systemstart angezeigt und beinhaltet
+    # die Navigation zum Aufruf von: Editor, Projekt, Einstellungen, Hilfe, Über
+    def show_start_panels(self):
+        splitter = self.centralWidget()
+        if isinstance(splitter, QSplitter):
+            # Left Panel zurücksetzen
+            splitter_sizes = self.panel_settings.get("splitter_sizes", [300, 600, 300])
+            new_left_panel, update_left_panel_image = self.create_left_panel_start(splitter_sizes)
+            old_left_panel = splitter.widget(0)
+            splitter.insertWidget(0, new_left_panel)
+            splitter.setStretchFactor(0, 1)
+            if old_left_panel is not None:
+                old_left_panel.setParent(None)
+            self.left_panel_widget = new_left_panel
+            self.safe_apply_theme_style(new_left_panel, "panel", self.theme)
+
+            # Center Panel zurücksetzen
+            new_center_panel = self.create_center_panel_start()
+            old_center_panel = splitter.widget(1)
+            splitter.insertWidget(1, new_center_panel)
+            splitter.setStretchFactor(1, 1)
+            if old_center_panel is not None:
+                old_center_panel.setParent(None)
+            self.center_panel_widget = new_center_panel
+            self.safe_apply_theme_style(new_center_panel, "panel", self.theme)
+
+            # Right Panel zurücksetzen
+            new_right_panel = self.create_right_panel_start()
+            old_right_panel = splitter.widget(2)
+            splitter.insertWidget(2, new_right_panel)
+            splitter.setStretchFactor(2, 1)
+            if old_right_panel is not None:
+                old_right_panel.setParent(None)
+            self.right_panel_widget = new_right_panel
+            self.safe_apply_theme_style(new_right_panel, "panel", self.theme)
+
+            # Splitter-Größen wiederherstellen
+            splitter.setSizes(splitter_sizes)
+            log_info("Alle Panels wurden auf die Startansicht zurückgesetzt.")
+
     # Dieses right_panel_start wird beim Systemstart angezeigt und beinhaltet
     # die Navigation zum Aufruf von: Editor, Projekt, Einstellungen, Hilfe, Über
     def create_right_panel_start(self):
@@ -762,6 +981,40 @@ class StartWindow(QMainWindow):
         header_label.setAlignment(Qt.AlignHCenter | Qt.AlignTop)
         panel_layout.addWidget(header_label)
 
+        # Mapping: Button-Index zu left_panel-Funktion
+        self.left_panel_functions = [
+            self.create_left_panel_project,
+            self.create_left_panel_character,
+            self.create_left_panel_object,
+            self.create_left_panel_location,
+            self.create_left_panel_editor,
+            self.create_left_panel_settings,
+            self.create_left_panel_help,
+            self.create_left_panel_about,
+        ]
+        # Mapping: Button-Index zu center_panel-Funktion
+        self.center_panel_functions = [
+            self.create_center_panel_project,
+            self.create_center_panel_character,
+            self.create_center_panel_object,
+            self.create_center_panel_location,
+            self.create_center_panel_editor,
+            self.create_center_panel_settings,
+            self.create_center_panel_help,
+            self.create_center_panel_about,
+        ]
+
+        self.right_panel_functions = [
+            self.create_right_panel_project,
+            self.create_right_panel_character,
+            self.create_right_panel_object,
+            self.create_right_panel_location,
+            self.create_right_panel_editor,
+            self.create_right_panel_settings,
+            self.create_right_panel_help,
+            self.create_right_panel_about,
+        ]
+
         # Navigationselemente 1-8
         nav_keys = [
             ("botn_st_01", "botn_st_01_hint"),
@@ -773,6 +1026,7 @@ class StartWindow(QMainWindow):
             ("botn_st_07", "botn_st_07_hint"),
             ("botn_st_08", "botn_st_08_hint"),
         ]
+
         for i, (key, hint_key) in enumerate(nav_keys, start=1):
             btn_text = self.get_translation(key, key)
             btn_hint = self.get_translation(hint_key, "")
@@ -780,6 +1034,13 @@ class StartWindow(QMainWindow):
             btn.setToolTip(btn_hint)
             panel_layout.addWidget(btn)
             setattr(self, f"botn_st_{i:02d}", btn)
+            # Button-Handler verbinden
+            btn.clicked.connect(
+                lambda checked, idx=i-1: (
+                self.show_left_panel(idx, self.left_panel_functions),
+                self.show_center_panel(idx, self.center_panel_functions),
+                self.show_right_panel(idx, self.right_panel_functions)
+            ))
 
         # Spacer, damit Button 9 unten ist
         panel_layout.addSpacerItem(QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding))
@@ -805,37 +1066,415 @@ class StartWindow(QMainWindow):
     # die Navigation, ob in left_panel die Charaktere, Orte, Objekte, Kapitel oder Szenen angezeigt werden sollen.
     # Außerdem wird hier der Editor-Modus beendet.
     def create_right_panel_editor(self):
-        return QWidget()  # Placeholder for potential future functionality
+        panel_widget = QWidget()
+        panel_layout = QVBoxLayout(panel_widget)
+        panel_layout.setContentsMargins(20, 20, 20, 20)
+        panel_layout.setSpacing(16)
+        panel_layout.setAlignment(Qt.AlignTop)
+
+        # Header
+        header_text = self.get_translation("EditorWinHeader", "Text Editor")
+        header_label = QLabel(header_text, panel_widget)
+        header_label.setObjectName("EditorPanelHeaderLabel")
+        header_label.setAlignment(Qt.AlignHCenter | Qt.AlignTop)
+        panel_layout.addWidget(header_label)
+
+        # Button-Konfiguration: (Key, Hint-Key)
+        button_keys = [
+            ("botn_ed_01", "botn_ed_01_hint"),
+            ("botn_ed_02", "botn_ed_02_hint"),
+            ("botn_ed_03", "botn_ed_03_hint"),
+            ("botn_ed_04", "botn_ed_04_hint"),
+        ]
+        for i, (key, hint_key) in enumerate(button_keys, start=1):
+            btn_text = self.get_translation(key, key)
+            btn_hint = self.get_translation(hint_key, "")
+            btn = QPushButton(btn_text, panel_widget)
+            btn.setToolTip(btn_hint)
+            panel_layout.addWidget(btn)
+            setattr(self, f"botn_ed_{i:02d}", btn)
+            # Hier kannst du später die Button-Handler ergänzen
+
+        # Spacer, damit der Zurück-Button unten steht
+        panel_layout.addSpacerItem(QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding))
+
+        # Zurück-Button
+        btn_back_text = self.get_translation("botn_ed_05", "Back")
+        btn_back_hint = self.get_translation("botn_ed_05_hint", "Back to main navigation.")
+        btn_back = QPushButton(btn_back_text, panel_widget)
+        btn_back.setToolTip(btn_back_hint)
+        panel_layout.addWidget(btn_back, alignment=Qt.AlignBottom)
+        self.botn_ed_05 = btn_back
+
+        # Handler für Zurück-Button: Panels zurücksetzen
+        btn_back.clicked.connect(lambda: self.show_start_panels())
+
+        panel_widget.setObjectName("EditorRightPanel")
+        self.safe_apply_theme_style(panel_widget, "panel", self.theme)
+        self.safe_apply_theme_style(header_label, "label", self.theme)
+        return panel_widget
 
     
     # Dieses right_panel_project wird angezeigt, wenn ein Projekt erstellt oder bearbeitert wird.
     # Es beinhaltet die Navigation zu den verschiedenen Projekt-Einstellungen und beendet den Projekt-Modus.
     def create_right_panel_project(self):
-        return QWidget()  # Placeholder for potential future functionality
+        panel_widget = QWidget()
+        panel_layout = QVBoxLayout(panel_widget)
+        panel_layout.setContentsMargins(20, 20, 20, 20)
+        panel_layout.setSpacing(16)
+        panel_layout.setAlignment(Qt.AlignTop)
+
+        # Header
+        header_text = self.get_translation("ProjectWinHeader", "Project Management")
+        header_label = QLabel(header_text, panel_widget)
+        header_label.setObjectName("ProjectPanelHeaderLabel")
+        header_label.setAlignment(Qt.AlignHCenter | Qt.AlignTop)
+        panel_layout.addWidget(header_label)
+
+        # Button-Konfiguration: (Key, Hint-Key)
+        button_keys = [
+            ("botn_fo_01", "botn_fo_01_hint"),
+            ("botn_fo_02", "botn_fo_02_hint"),
+            ("botn_fo_03", "botn_fo_03_hint"),
+            ("botn_fo_04", "botn_fo_04_hint"),
+        ]
+        for i, (key, hint_key) in enumerate(button_keys, start=1):
+            btn_text = self.get_translation(key, key)
+            btn_hint = self.get_translation(hint_key, "")
+            btn = QPushButton(btn_text, panel_widget)
+            btn.setToolTip(btn_hint)
+            panel_layout.addWidget(btn)
+            setattr(self, f"botn_fo_{i:02d}", btn)
+            # Hier kannst du später die Button-Handler ergänzen
+
+        # Spacer, damit der Zurück-Button unten steht
+        panel_layout.addSpacerItem(QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding))
+
+        # Zurück-Button
+        btn_back_text = self.get_translation("botn_fo_05", "Back")
+        btn_back_hint = self.get_translation("botn_fo_05_hint", "Back to main navigation.")
+        btn_back = QPushButton(btn_back_text, panel_widget)
+        btn_back.setToolTip(btn_back_hint)
+        panel_layout.addWidget(btn_back, alignment=Qt.AlignBottom)
+        self.botn_fo_05 = btn_back
+
+        # Handler für Zurück-Button: Right Panel zurücksetzen
+        btn_back.clicked.connect(lambda: self.show_start_panels())
+
+        panel_widget.setObjectName("ProjectRightPanel")
+        self.safe_apply_theme_style(panel_widget, "panel", self.theme)
+        self.safe_apply_theme_style(header_label, "label", self.theme)
+        return panel_widget
 
     
     # Dieses right_panel_settings wird angezeigt, wenn die Einstellungen bearbeitet werden sollen.
     # Es beinhaltet die Navigation zu den verschiedenen Einstellungs-Kategorien und beendet den Einstellungs-Modus.
     def create_right_panel_settings(self):
-        return QWidget()  # Placeholder for potential future functionality
+        panel_widget = QWidget()
+        panel_layout = QVBoxLayout(panel_widget)
+        panel_layout.setContentsMargins(20, 20, 20, 20)
+        panel_layout.setSpacing(16)
+        panel_layout.setAlignment(Qt.AlignTop)
 
+        # Header
+        header_text = self.get_translation("SettingsWinHeader", "Settings")
+        header_label = QLabel(header_text, panel_widget)
+        header_label.setObjectName("SettingsPanelHeaderLabel")
+        header_label.setAlignment(Qt.AlignHCenter | Qt.AlignTop)
+        panel_layout.addWidget(header_label)
+
+        # Button-Konfiguration: (Key, Hint-Key)
+        button_keys = [
+            ("botn_se_01", "botn_se_01_hint"),
+            ("botn_se_02", "botn_se_02_hint"),
+        ]
+        for i, (key, hint_key) in enumerate(button_keys, start=1):
+            btn_text = self.get_translation(key, key)
+            btn_hint = self.get_translation(hint_key, "")
+            btn = QPushButton(btn_text, panel_widget)
+            btn.setToolTip(btn_hint)
+            panel_layout.addWidget(btn)
+            setattr(self, f"botn_se_{i:02d}", btn)
+            # Hier kannst du später die Button-Handler ergänzen
+
+        # Spacer, damit der Zurück-Button unten steht
+        panel_layout.addSpacerItem(QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding))
+
+        # Zurück-Button (Button 3)
+        btn_back_text = self.get_translation("botn_se_03", "Back")
+        btn_back_hint = self.get_translation("botn_se_03_hint", "Back to main navigation.")
+        btn_back = QPushButton(btn_back_text, panel_widget)
+        btn_back.setToolTip(btn_back_hint)
+        panel_layout.addWidget(btn_back, alignment=Qt.AlignBottom)
+        self.botn_se_03 = btn_back
+
+        # Handler für Zurück-Button: Panels zurücksetzen
+        btn_back.clicked.connect(lambda: self.show_start_panels())
+
+        panel_widget.setObjectName("SettingsRightPanel")
+        self.safe_apply_theme_style(panel_widget, "panel", self.theme)
+        self.safe_apply_theme_style(header_label, "label", self.theme)
+        return panel_widget
     
     # Dieses right_panel_character wird angezeigt, wenn ein Charakter erstellt oder bearbeitert wird.
     # Es beinhaltet die Navigation zu den verschiedenen Charakter-Einstellungen und beendet den Charakter-Modus.
     def create_right_panel_character(self):
-        return QWidget()  # Placeholder for potential future functionality
+        panel_widget = QWidget()
+        panel_layout = QVBoxLayout(panel_widget)
+        panel_layout.setContentsMargins(20, 20, 20, 20)
+        panel_layout.setSpacing(16)
+        panel_layout.setAlignment(Qt.AlignTop)
 
-    
+        # Header
+        header_text = self.get_translation("CharacterWinHeader", "Character Management")
+        header_label = QLabel(header_text, panel_widget)
+        header_label.setObjectName("CharacterPanelHeaderLabel")
+        header_label.setAlignment(Qt.AlignHCenter | Qt.AlignTop)
+        panel_layout.addWidget(header_label)
+
+        # Button-Konfiguration: (Key, Hint-Key)
+        button_keys = [
+            ("botn_ch_01", "botn_ch_01_hint"),
+            ("botn_ch_02a", "botn_ch_02a_hint"),
+            ("botn_ch_02b", "botn_ch_02b_hint"),
+            ("botn_ch_03", "botn_ch_03_hint"),
+            ("botn_ch_04", "botn_ch_04_hint"),
+        ]
+        for i, (key, hint_key) in enumerate(button_keys, start=1):
+            btn_text = self.get_translation(key, key)
+            btn_hint = self.get_translation(hint_key, "")
+            btn = QPushButton(btn_text, panel_widget)
+            btn.setToolTip(btn_hint)
+            panel_layout.addWidget(btn)
+            setattr(self, f"botn_ch_{i:02d}", btn)
+            # Hier kannst du später die Button-Handler ergänzen
+
+        # Spacer, damit der Zurück-Button unten steht
+        panel_layout.addSpacerItem(QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding))
+
+        # Zurück-Button
+        btn_back_text = self.get_translation("botn_ch_05", "Back")
+        btn_back_hint = self.get_translation("botn_ch_05_hint", "Back to main navigation.")
+        btn_back = QPushButton(btn_back_text, panel_widget)
+        btn_back.setToolTip(btn_back_hint)
+        panel_layout.addWidget(btn_back, alignment=Qt.AlignBottom)
+        self.botn_ch_05 = btn_back
+
+        # Handler für Zurück-Button: Right Panel zurücksetzen
+        btn_back.clicked.connect(lambda: self.show_start_panels())
+
+        panel_widget.setObjectName("CharacterRightPanel")
+        self.safe_apply_theme_style(panel_widget, "panel", self.theme)
+        self.safe_apply_theme_style(header_label, "label", self.theme)
+        return panel_widget
+
     # Dieses right_panel_location wird angezeigt, wenn ein Ort erstellt oder bearbeitert wird.
     # Es beinhaltet die Navigation zu den verschiedenen Ort-Einstellungen und beendet den Ort-Modus.
     def create_right_panel_location(self):
-        return QWidget()  # Placeholder for potential future functionality
+        panel_widget = QWidget()
+        panel_layout = QVBoxLayout(panel_widget)
+        panel_layout.setContentsMargins(20, 20, 20, 20)
+        panel_layout.setSpacing(16)
+        panel_layout.setAlignment(Qt.AlignTop)
+
+        # Header
+        header_text = self.get_translation("LocationWinHeader", "Location Management")
+        header_label = QLabel(header_text, panel_widget)
+        header_label.setObjectName("LocationPanelHeaderLabel")
+        header_label.setAlignment(Qt.AlignHCenter | Qt.AlignTop)
+        panel_layout.addWidget(header_label)
+
+        # Button-Konfiguration: (Key, Hint-Key)
+        button_keys = [
+            ("botn_lo_01", "botn_lo_01_hint"),
+            ("botn_lo_02a", "botn_lo_02a_hint"),
+            ("botn_lo_02b", "botn_lo_02b_hint"),
+            ("botn_lo_03", "botn_lo_03_hint"),
+            ("botn_lo_04", "botn_lo_04_hint"),
+        ]
+        for i, (key, hint_key) in enumerate(button_keys, start=1):
+            btn_text = self.get_translation(key, key)
+            btn_hint = self.get_translation(hint_key, "")
+            btn = QPushButton(btn_text, panel_widget)
+            btn.setToolTip(btn_hint)
+            panel_layout.addWidget(btn)
+            setattr(self, f"botn_lo_{i:02d}", btn)
+            # Hier kannst du später die Button-Handler ergänzen
+
+        # Spacer, damit der Zurück-Button unten steht
+        panel_layout.addSpacerItem(QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding))
+
+        # Zurück-Button
+        btn_back_text = self.get_translation("botn_lo_05", "Back")
+        btn_back_hint = self.get_translation("botn_lo_05_hint", "Back to main navigation.")
+        btn_back = QPushButton(btn_back_text, panel_widget)
+        btn_back.setToolTip(btn_back_hint)
+        panel_layout.addWidget(btn_back, alignment=Qt.AlignBottom)
+        self.botn_lo_05 = btn_back
+
+        # Handler für Zurück-Button: Panels zurücksetzen
+        btn_back.clicked.connect(lambda: self.show_start_panels())
+
+        panel_widget.setObjectName("LocationRightPanel")
+        self.safe_apply_theme_style(panel_widget, "panel", self.theme)
+        self.safe_apply_theme_style(header_label, "label", self.theme)
+        return panel_widget
 
     
     # Dieses right_panel_object wird angezeigt, wenn ein Objekt erstellt oder bearbeitert wird.
     # Es beinhaltet die Navigation zu den verschiedenen Objekt-Einstellungen und beendet den Objekt-Modus.
     def create_right_panel_object(self):
-        return QWidget()  # Placeholder for potential future functionality
+        panel_widget = QWidget()
+        panel_layout = QVBoxLayout(panel_widget)
+        panel_layout.setContentsMargins(20, 20, 20, 20)
+        panel_layout.setSpacing(16)
+        panel_layout.setAlignment(Qt.AlignTop)
+
+        # Header
+        header_text = self.get_translation("ObjectWinHeader", "Object Management")
+        header_label = QLabel(header_text, panel_widget)
+        header_label.setObjectName("ObjectPanelHeaderLabel")
+        header_label.setAlignment(Qt.AlignHCenter | Qt.AlignTop)
+        panel_layout.addWidget(header_label)
+
+        # Button-Konfiguration: (Key, Hint-Key)
+        button_keys = [
+            ("botn_ob_01", "botn_ob_01_hint"),
+            ("botn_ob_02a", "botn_ob_02a_hint"),
+            ("botn_ob_02b", "botn_ob_02b_hint"),
+            ("botn_ob_03", "botn_ob_03_hint"),
+            ("botn_ob_04", "botn_ob_04_hint"),
+        ]
+        for i, (key, hint_key) in enumerate(button_keys, start=1):
+            btn_text = self.get_translation(key, key)
+            btn_hint = self.get_translation(hint_key, "")
+            btn = QPushButton(btn_text, panel_widget)
+            btn.setToolTip(btn_hint)
+            panel_layout.addWidget(btn)
+            setattr(self, f"botn_ob_{i:02d}", btn)
+            # Hier kannst du später die Button-Handler ergänzen
+
+        # Spacer, damit der Zurück-Button unten steht
+        panel_layout.addSpacerItem(QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding))
+
+        # Zurück-Button
+        btn_back_text = self.get_translation("botn_ob_05", "Back")
+        btn_back_hint = self.get_translation("botn_ob_05_hint", "Back to main navigation.")
+        btn_back = QPushButton(btn_back_text, panel_widget)
+        btn_back.setToolTip(btn_back_hint)
+        panel_layout.addWidget(btn_back, alignment=Qt.AlignBottom)
+        self.botn_ob_05 = btn_back
+
+        # Handler für Zurück-Button: Panels zurücksetzen
+        btn_back.clicked.connect(lambda: self.show_start_panels())
+
+        panel_widget.setObjectName("ObjectRightPanel")
+        self.safe_apply_theme_style(panel_widget, "panel", self.theme)
+        self.safe_apply_theme_style(header_label, "label", self.theme)
+        return panel_widget
+
+    # Dieses right_panel_help wird angezeigt, wenn die Hilfe geöffnet wird.
+    def create_right_panel_help(self):
+        panel_widget = QWidget()
+        panel_layout = QVBoxLayout(panel_widget)
+        panel_layout.setContentsMargins(20, 20, 20, 20)
+        panel_layout.setSpacing(16)
+        panel_layout.setAlignment(Qt.AlignTop)
+
+        # Header
+        header_text = self.get_translation("HelpWinHeader", "Help")
+        header_label = QLabel(header_text, panel_widget)
+        header_label.setObjectName("HelpPanelHeaderLabel")
+        header_label.setAlignment(Qt.AlignHCenter | Qt.AlignTop)
+        panel_layout.addWidget(header_label)
+
+        # Button-Konfiguration: (Key, Hint-Key)
+        button_keys = [
+            ("botn_he_01", "botn_he_01_hint"),
+            ("botn_he_02", "botn_he_02_hint"),
+            ("botn_he_03", "botn_he_03_hint"),
+            ("botn_he_04", "botn_he_04_hint"),
+        ]
+        for i, (key, hint_key) in enumerate(button_keys, start=1):
+            btn_text = self.get_translation(key, key)
+            btn_hint = self.get_translation(hint_key, "")
+            btn = QPushButton(btn_text, panel_widget)
+            btn.setToolTip(btn_hint)
+            panel_layout.addWidget(btn)
+            setattr(self, f"botn_he_{i:02d}", btn)
+            # Hier kannst du später die Button-Handler ergänzen
+
+        # Spacer, damit der Zurück-Button unten steht
+        panel_layout.addSpacerItem(QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding))
+
+        # Zurück-Button
+        btn_back_text = self.get_translation("botn_he_05", "Back")
+        btn_back_hint = self.get_translation("botn_he_05_hint", "Back to main navigation.")
+        btn_back = QPushButton(btn_back_text, panel_widget)
+        btn_back.setToolTip(btn_back_hint)
+        panel_layout.addWidget(btn_back, alignment=Qt.AlignBottom)
+        self.botn_he_05 = btn_back
+
+        # Handler für Zurück-Button: Panels zurücksetzen
+        btn_back.clicked.connect(lambda: self.show_start_panels())
+
+        panel_widget.setObjectName("HelpRightPanel")
+        self.safe_apply_theme_style(panel_widget, "panel", self.theme)
+        self.safe_apply_theme_style(header_label, "label", self.theme)
+        return panel_widget
+    
+    # Dieses right_panel_about wird angezeigt, wenn "Über" geöffnet wird.
+    def create_right_panel_about(self):
+        panel_widget = QWidget()
+        panel_layout = QVBoxLayout(panel_widget)
+        panel_layout.setContentsMargins(20, 20, 20, 20)
+        panel_layout.setSpacing(16)
+        panel_layout.setAlignment(Qt.AlignTop)
+
+        # Header
+        header_text = self.get_translation("AboutWinHeader", "About")
+        header_label = QLabel(header_text, panel_widget)
+        header_label.setObjectName("AboutPanelHeaderLabel")
+        header_label.setAlignment(Qt.AlignHCenter | Qt.AlignTop)
+        panel_layout.addWidget(header_label)
+
+        # Button-Konfiguration: (Key, Hint-Key)
+        button_keys = [
+            ("botn_ab_01", "botn_ab_01_hint"),
+            ("botn_ab_02", "botn_ab_02_hint"),
+            ("botn_ab_03", "botn_ab_03_hint"),
+            ("botn_ab_04", "botn_ab_04_hint"),
+            ("botn_ab_05", "botn_ab_05_hint"),
+            ("botn_ab_06", "botn_ab_06_hint"),
+        ]
+        for i, (key, hint_key) in enumerate(button_keys, start=1):
+            btn_text = self.get_translation(key, key)
+            btn_hint = self.get_translation(hint_key, "")
+            btn = QPushButton(btn_text, panel_widget)
+            btn.setToolTip(btn_hint)
+            panel_layout.addWidget(btn)
+            setattr(self, f"botn_ab_{i:02d}", btn)
+            # Hier kannst du später die Button-Handler ergänzen
+
+        # Spacer, damit der Zurück-Button unten steht
+        panel_layout.addSpacerItem(QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding))
+
+        # Zurück-Button (Button 7)
+        btn_back_text = self.get_translation("botn_ab_07", "Back")
+        btn_back_hint = self.get_translation("botn_ab_07_hint", "Back to main navigation.")
+        btn_back = QPushButton(btn_back_text, panel_widget)
+        btn_back.setToolTip(btn_back_hint)
+        panel_layout.addWidget(btn_back, alignment=Qt.AlignBottom)
+        self.botn_ab_07 = btn_back
+
+        # Handler für Zurück-Button: Panels zurücksetzen
+        btn_back.clicked.connect(lambda: self.show_start_panels())
+
+        panel_widget.setObjectName("AboutRightPanel")
+        self.safe_apply_theme_style(panel_widget, "panel", self.theme)
+        self.safe_apply_theme_style(header_label, "label", self.theme)
+        return panel_widget
+    
 
     # --------------------------------------------------------------           )
     # --------------------------------------------------------------

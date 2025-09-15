@@ -11,8 +11,8 @@
     "height": 320
   },
   "start_window": {
-    "width": 1836,
-    "height": 983,
+    "width": 1920,
+    "height": 1080,
     "is_maximized": false
   },
   "panels": {
@@ -20,18 +20,18 @@
     "center_panel": {},
     "right_panel": {},
     "splitter_sizes": [
-      600,
-      1100,
-      220
+      599,
+      1094,
+      219
     ]
   },
   "gui": {
-    "style_theme": "theme_Modern_neutral",
-    "file_path_gui": "/home/frank/Dokumente/CSNova/gui/styles/theme_Modern_neutral.json"
+    "style_theme": "Vintage_neutral",
+    "file_path_gui": "/home/frank/Dokumente/CSNova/gui/styles/Vintage_neutral.json"
   },
   "general": {
-    "language": "de",
-    "file_path_lang": "/home/frank/Dokumente/CSNova/core/translations/translation_de.json",
+    "language": "en",
+    "file_path_lang": "/home/frank/Dokumente/CSNova/core/translations/translation_en.json",
     "first_start": false
   },
   "help": {
