@@ -139,5 +139,6 @@
   "animation_duration": 120,
   "focus_border": "2px solid #0078d7",
   "focus_shadow": "none",
-  "disabled_opacity": 0.5
+  "disabled_opacity": 0.5,
+  "theme_name": "Minimal_dark"
 }

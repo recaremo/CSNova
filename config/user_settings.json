@@ -11,22 +11,23 @@
     "height": 320
   },
   "start_window": {
-    "width": 1920,
-    "height": 1080
+    "width": 1853,
+    "height": 1011,
+    "is_maximized": false
   },
   "panels": {
     "left_panel": {},
     "center_panel": {},
     "right_panel": {},
     "splitter_sizes": [
-      600,
-      1100,
-      220
+      599,
+      904,
+      342
     ]
   },
   "gui": {
-    "style_theme": "Modern_neutral",
-    "file_path_gui": "/home/frank/Dokumente/CSNova/gui/styles/Modern_neutral.json"
+    "style_theme": "theme_Modern_neutral",
+    "file_path_gui": "/home/frank/Dokumente/CSNova/gui/styles/theme_Modern_neutral.json"
   },
   "general": {
     "language": "de",

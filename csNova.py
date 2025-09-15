@@ -25,7 +25,8 @@ DEFAULT_SETTINGS = {
   },
   "start_window": {
     "width": 1920,
-    "height": 1080
+    "height": 1080,
+    "is_maximized": False   
   },
   "panels": {
     "left_panel": {},
@@ -419,7 +420,19 @@ LANGUAGE_DEFAULTS = {
                             "Wenn du die Einstellungen vorgenommen hast - und damit zufrieden bist - klicke auf <b>Speichern</b> <br>"
                             "Mit einem Klick auf <b>Zurücksetzen</b> kannst du die Standardeinstellungen wiederherstellen. <br>"
                             "Oder klicke einfach auf <b>Weiter</b>, um fortzufahren. <br><br>",
-    "startWinInfoTextReturn":   "Willkommen zurück bei CSNova! <br><br>",
+    "startWinInfoTextReturn":   "Aktuell werden dir auf der rechten Seite (= <b>Navigationspanel</b>) Schaltflächen angezeigt, mit denen du alle Programmfunktionen aufrufen kannst: <br><br>"
+                                "- <b>Projektdaten:</b> ein neues Projekt erstellen oder ein bestehendes Projekt öffnen und bearbeiten. <br>"
+                                "- <b>Charaktere:</b> Haupt- und Nebencharaktere erstellen und verwalten <br>"
+                                "- <b>Objekte:</b> Objekte erstellen und verwalten <br>"
+                                "- <b>Orte:</b> Orte erstellen und verwalten <br>"
+                                "- <b>Editor:</b> deine Geschichten schreiben und bearbeiten <br>"
+                                "- <b>Einstellungen:</b> die Einstellungen der Software anpassen <br>"
+                                "- <b>Hilfe:</b> Hilfe und Unterstützung zur Nutzung der Software <br>"
+                                "- <b>Über:</b> Informationen über die Software <br>"
+                                "- <b>Beenden:</b> CSNova beenden <br><br>"
+                                "Wenn du diesen Infotext hier im <b>Centerpanel</b> nicht bei jedem Neustart sehen willst, kannst du ihn in den Einstellungen deaktivieren."
+                                " Im linken Bereich dieses Fensters (= <b>Infopanel</b>) werden dir - je nach Programmfunktion - hilfreiche Informationen und Tipps angezeigt. <br><br>"
+                                " Im nächsten Schritt kannst du dein erstes Projekt erstellen - klicke dazu einfach auf <b>Projektdaten</b> im Navigationspanel<br><br>",
     "btn_save": "Speichern",
     "btn_save_hint": "Hier kannst du die aktuellen Einstellungen speichern.",
     "btn_reset": "Zurücksetzen",
@@ -795,7 +808,19 @@ LANGUAGE_DEFAULTS = {
                             "Once you've made your selections - and are satisfied - click <b>Save</b> <br>"
                             "You can restore the default settings by clicking <b>Reset</b>. <br>"
                             "Or simply click <b>Next</b> to continue. <br><br>",
-    "startWinInfoTextReturn":   "Welcome back to CSNova! <br><br>",
+    "startWinInfoTextReturn":   "Currently, you see buttons on the right side (= <b>Navigation Panel</b>) that allow you to access all program functions: <br><br>"
+                                "- <b>Project Data:</b> create a new project or open and edit an existing project. <br>"
+                                "- <b>Characters:</b> create and manage main and supporting characters <br>"
+                                "- <b>Objects:</b> create and manage objects <br>"
+                                "- <b>Places:</b> create and manage places <br>"
+                                "- <b>Editor:</b> write and edit your stories <br>"
+                                "- <b>Settings:</b> adjust the software settings <br>"
+                                "- <b>Help:</b> find help and support for using the software <br>"
+                                "- <b>About:</b> find information about the software <br>"
+                                "- <b>Exit:</b> exit CSNova <br><br>"
+                                "If you don't want to see this info text here in the <b>Center Panel</b> every time you restart, you can disable it in the settings."
+                                " In the left area of this window (= <b>Info Panel</b>), helpful information and tips are displayed depending on the program function. <br><br>"
+                                " In the next step, you can create your first project - simply click on <b>Project Data</b> in the Navigation Panel<br><br>",
     "btn_save": "Save",
     "btn_save_hint": "Here you can save the current settings.",
     "btn_reset": "Reset",
@@ -1171,7 +1196,19 @@ LANGUAGE_DEFAULTS = {
                             "Una vez que hayas hecho tus selecciones - y estés satisfecho - haz clic en <b>Guardar</b> <br>"
                             "Puedes restaurar los ajustes predeterminados haciendo clic en <b>Restablecer</b>. <br>"
                             "O simplemente haz clic en <b>Siguiente</b> para continuar. <br><br>",
-    "startWinInfoTextReturn":   "¡Bienvenido de nuevo a CSNova! <br><br>",
+    "startWinInfoTextReturn":   "Actualmente, ves botones en el lado derecho (= <b>Panel de navegación</b>) que te permiten acceder a todas las funciones del programa: <br><br>"
+                                "- <b>Datos del proyecto:</b> crea un nuevo proyecto o abre y edita un proyecto existente. <br>"
+                                "- <b>Personajes:</b> crea y gestiona personajes principales y secundarios <br>"
+                                "- <b>Objetos:</b> crea y gestiona objetos <br>"
+                                "- <b>Lugares:</b> crea y gestiona lugares <br>"
+                                "- <b>Editor:</b> escribe y edita tus historias <br>"
+                                "- <b>Ajustes:</b> ajusta los ajustes del software <br>"
+                                "- <b>Ayuda:</b> encuentra ayuda y soporte para el uso del software <br>"
+                                "- <b>Acerca de:</b> encuentra información sobre el software <br>"
+                                "- <b>Salir:</b> salir de CSNova <br><br>"
+                                "Si no quieres ver este texto de información aquí en el <b>Panel central</b> cada vez que reinicies, puedes desactivarlo en los ajustes."
+                                " En el área izquierda de esta ventana (= <b>Panel de información</b>), se muestra información y consejos útiles según la función del programa. <br><br>"
+                                " En el siguiente paso, puedes crear tu primer proyecto - simplemente haz clic en <b>Datos del proyecto</b> en el Panel de navegación<br><br>",
     "btn_save": "Guardar",
     "btn_save_hint": "Aquí puedes guardar los ajustes actuales.",
     "btn_reset": "Restablecer",
@@ -1547,7 +1584,19 @@ LANGUAGE_DEFAULTS = {
                             "Une fois que vous avez fait vos sélections - et que vous êtes satisfait - cliquez sur <b>Enregistrer</b> <br>"
                             "Vous pouvez restaurer les paramètres par défaut en cliquant sur <b>Réinitialiser</b>. <br>"
                             "Ou cliquez simplement sur <b>Suivant</b> pour continuer. <br><br>",
-    "startWinInfoTextReturn":   "Bienvenue de nouveau à CSNova! <br><br",
+    "startWinInfoTextReturn":   "Actuellement, vous voyez des boutons sur le côté droit (= <b>Panneau de navigation</b>) qui vous permettent d'accéder à toutes les fonctions du programme: <br><br>"
+                                "- <b>Données du projet:</b> créez un nouveau projet ou ouvrez et modifiez un projet existant. <br>"
+                                "- <b>Personnages:</b> créez et gérez des personnages principaux et secondaires <br>"
+                                "- <b>Objets:</b> créez et gérez des objets <br>"
+                                "- <b>Lieux:</b> créez et gérez des lieux <br>"
+                                "- <b>Éditeur:</b> écrivez et éditez vos histoires <br>"
+                                "- <b>Paramètres:</b> ajustez les paramètres du logiciel <br>"
+                                "- <b>Aide:</b> trouvez de l'aide et du support pour l'utilisation du logiciel <br>"
+                                "- <b>À propos:</b> trouvez des informations sur le logiciel <br>"
+                                "- <b>Quitter:</b> quitter CSNova <br><br>"
+                                "Si vous ne souhaitez pas voir ce texte d'information ici dans le <b>Panneau central</b> chaque fois que vous redémarrez, vous pouvez le désactiver dans les paramètres."
+                                " Dans la zone gauche de cette fenêtre (= <b>Panneau d'information</b>), des informations et des conseils utiles sont affichés en fonction de la fonction du programme. <br><br>"
+                                " Dans l'étape suivante, vous pouvez créer votre premier projet - il vous suffit de cliquer sur <b>Données du projet</b> dans le Panneau de navigation<br><br>",
     "btn_save": "Enregistrer",
     "btn_save_hint": "Ici, vous pouvez enregistrer les paramètres actuels.",
     "btn_reset": "Réinitialiser",

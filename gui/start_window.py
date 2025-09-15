@@ -95,6 +95,11 @@ class StartWindow(QMainWindow):
 
         dialog.exec()
    
+    # Fenstergröße wurde verändert
+    def resizeEvent(self, event):
+        super().resizeEvent(event)
+        #self.save_settings()
+
     # Funktion zum sicheren Abrufen von Übersetzungen
     def on_language_changed(self, index):
         # Hole den Sprachcode aus den Items oder einer Mapping-Liste
@@ -317,46 +322,54 @@ class StartWindow(QMainWindow):
     # Einstellungen speichern
     def save_settings(self):
         try:
-            # 1. Sprache aus language_combo
-            language_codes = ["de", "en", "fr", "es"]
-            lang_index = self.language_combo.currentIndex()
-            language = language_codes[lang_index]
-            self.settings["general"]["language"] = language
-            self.settings["general"]["file_path_lang"] = f"./core/translations/translation_{language}.json"
+            # Prüfe, ob die Einstellungen für Sprache und Theme gespeichert werden sollen
+            first_start = self.settings.get("general", {}).get("first_start", True)
+            if first_start:
+                # 1. Sprache aus language_combo
+                language_codes = ["de", "en", "fr", "es"]
+                if hasattr(self, "language_combo"):
+                    lang_index = self.language_combo.currentIndex()
+                    language = language_codes[lang_index]
+                    self.settings["general"]["language"] = language
+                    self.settings["general"]["file_path_lang"] = f"./core/translations/translation_{language}.json"
 
-            # 2. Theme aus theme_combo
-            theme_names = [
-                "Modern_neutral", "Modern_dark", "Modern_light",
-                "OldSchool_neutral", "OldSchool_dark", "OldSchool_light",
-                "Vintage_neutral", "Vintage_dark", "Vintage_light",
-                "Future_neutral", "Future_dark", "Future_light",
-                "Minimal_neutral", "Minimal_dark", "Minimal_light"
-            ]
-            theme_index = self.theme_combo.currentIndex()
-            theme_name = theme_names[theme_index]
-            self.settings["gui"]["style_theme"] = theme_name
-            self.settings["gui"]["file_path_gui"] = f"./gui/styles/theme_{theme_name}.json"
+                # 2. Theme aus theme_combo
+                theme_names = [
+                    "Modern_neutral", "Modern_dark", "Modern_light",
+                    "OldSchool_neutral", "OldSchool_dark", "OldSchool_light",
+                    "Vintage_neutral", "Vintage_dark", "Vintage_light",
+                    "Future_neutral", "Future_dark", "Future_light",
+                    "Minimal_neutral", "Minimal_dark", "Minimal_light"
+                ]
+                if hasattr(self, "theme_combo"):
+                    theme_index = self.theme_combo.currentIndex()
+                    theme_name = theme_names[theme_index]
+                    self.settings["gui"]["style_theme"] = theme_name
+                    self.settings["gui"]["file_path_gui"] = f"./gui/styles/theme_{theme_name}.json"
 
-            # 3a. Fenstergröße
-            width = self.width()
-            height = self.height()
-            self.settings["start_window"]["width"] = width
-            self.settings["start_window"]["height"] = height
+            # Fensterstatus und Größe speichern
+            start_window = self.settings.setdefault("start_window", {})
+            start_window["is_maximized"] = self.isMaximized()
+            if not self.isMaximized():
+                start_window["width"] = self.width()
+                start_window["height"] = self.height()
 
-            # 3b. Splitter-Größen
+            # Splitter-Größen
+            panels = self.settings.setdefault("panels", {})
             splitter = self.centralWidget()
             if isinstance(splitter, QSplitter):
-                sizes = splitter.sizes()
-                self.settings["panels"]["splitter_sizes"] = sizes
+                panels["splitter_sizes"] = splitter.sizes()
 
             # Speichern in user_settings.json
             with open("config/user_settings.json", "w", encoding="utf-8") as f:
                 json.dump(self.settings, f, indent=2, ensure_ascii=False)
             log_info("Einstellungen erfolgreich gespeichert.")
-            self.btn_save.setEnabled(False)
+            if hasattr(self, "btn_save"):
+                self.btn_save.setEnabled(False)
         except Exception as e:
             log_exception("Fehler beim Speichern der Einstellungen", e)
 
+    # Einstellungen zurücksetzen
     def reset_settings(self):
         try:
             # Lade die gespeicherten Einstellungen neu
@@ -377,19 +390,17 @@ class StartWindow(QMainWindow):
         except Exception as e:
             log_exception("Fehler beim Zurücksetzen der Einstellungen", e)
 
+    # 
     def go_to_next_step(self):
         try:
-            # Setze "first_start" auf False und speichere die Einstellungen
             self.settings["general"]["first_start"] = False
             with open("config/user_settings.json", "w", encoding="utf-8") as f:
                 json.dump(self.settings, f, indent=2, ensure_ascii=False)
             log_info('"first_start" wurde auf False gesetzt und Einstellungen gespeichert.')
 
-            # Center-Panel neu erzeugen und im Splitter ersetzen
             splitter = self.centralWidget()
             if isinstance(splitter, QSplitter):
                 new_center_panel = self.create_center_panel_start()
-                # Entferne das alte Center-Panel
                 old_center_panel = splitter.widget(1)
                 splitter.insertWidget(1, new_center_panel)
                 splitter.setStretchFactor(1, 1)
@@ -397,7 +408,7 @@ class StartWindow(QMainWindow):
                     old_center_panel.setParent(None)
                 self.center_panel_widget = new_center_panel
 
-                # Splitter-Größen aus den Settings setzen
+                # Splitter-Größen aus den Settings setzen und Speichern unterdrücken
                 splitter_sizes = self.panel_settings.get("splitter_sizes", [300, 600, 300])
                 splitter.setSizes(splitter_sizes)
             else:
@@ -408,7 +419,7 @@ class StartWindow(QMainWindow):
         except Exception as e:
             log_exception("Fehler beim Wechsel zum nächsten Schritt", e)
     
-    # PANELS FUNKTIONEN (PLATZHALTER) - LEFT_PANEL
+    # PANELS FUNKTIONEN - LEFT_PANEL
     # ..............................................................
 
     
@@ -503,7 +514,7 @@ class StartWindow(QMainWindow):
     def create_left_panel_object(self):
         return QWidget()  # Placeholder for potential future functionality
 
-    # PANELS FUNKTIONEN (PLATZHALTER) - CENTER_PANEL
+    # PANELS FUNKTIONEN - CENTER_PANEL
     # ..............................................................
 
     
@@ -803,16 +814,19 @@ class StartWindow(QMainWindow):
     # --------------------------------------------------------------
     @log_call
     def init_ui(self):
-        # Setze den Fenstertitel und die Mindestgröße
         self.setWindowTitle(self.get_translation("WinStartTitle", "CSNova"))
         window_width = self.window_settings.get("width", 1200)
         window_height = self.window_settings.get("height", 800)
-        window_size = [window_width, window_height]
-        self.resize(*window_size)
-        self.setMinimumSize(*window_size)
-        log_info(f"Fenstergröße aus Settings: {window_size}")
+        is_maximized = self.window_settings.get("is_maximized", False)
 
-        # Splitter-Größen aus den Settings oder Default
+        if is_maximized:
+            self.showMaximized()
+            log_info("Fenster wird maximiert geöffnet.")
+        else:
+            self.resize(window_width, window_height)
+            self.setMinimumSize(800, 600)
+            log_info(f"Fenstergröße aus Settings: {[window_width, window_height]}")
+
         splitter_sizes = self.panel_settings.get("splitter_sizes", [300, 600, 300])
         log_info(f"Splitter-Größen aus Settings: {splitter_sizes}")
 
@@ -821,27 +835,24 @@ class StartWindow(QMainWindow):
         center_panel = self.create_center_panel_start()
         right_panel = self.create_right_panel_start()
 
-        # Panels als Attribute speichern (für update_all_themes)
         self.left_panel_widget = left_panel
         self.center_panel_widget = center_panel
         self.right_panel_widget = right_panel
 
-        # Splitter für die Hauptbereiche
         splitter = QSplitter(Qt.Horizontal, self)
         splitter.addWidget(left_panel)
         splitter.addWidget(center_panel)
         splitter.addWidget(right_panel)
-        splitter.setSizes(splitter_sizes)
 
-        # Dynamische Bildanpassung bei Splitterbewegung
         def on_splitter_moved(pos, index):
             update_left_panel_image(pos, index)
+            log_info("Splitter bewegt, speichere neue Größen.")
+            self.save_settings()
         splitter.splitterMoved.connect(on_splitter_moved)
 
-        # Setze das zentrale Widget
         self.setCentralWidget(splitter)
+        splitter.setSizes(splitter_sizes)
 
-        # Wende Theme-Effekte auf die Panels an
         self.safe_apply_theme_style(left_panel, "panel", self.theme)
         self.safe_apply_theme_style(center_panel, "panel", self.theme)
         self.safe_apply_theme_style(right_panel, "panel", self.theme)
