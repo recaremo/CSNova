@@ -11,8 +11,8 @@
     "height": 320
   },
   "start_window": {
-    "width": 1853,
-    "height": 1011,
+    "width": 1836,
+    "height": 983,
     "is_maximized": false
   },
   "panels": {
@@ -20,9 +20,9 @@
     "center_panel": {},
     "right_panel": {},
     "splitter_sizes": [
-      599,
-      904,
-      342
+      600,
+      1100,
+      220
     ]
   },
   "gui": {
