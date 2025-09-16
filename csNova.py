@@ -4276,6 +4276,67 @@ FORM_FIELDS_DEFAULT = {
   ],
 }
 
+# Tabellen Defaults 
+
+TABLES_PROJECTS_DEFAULTS = {
+    "project_ID_01": {
+    "project_titel": "",
+    "project_subtitle": "",
+    "project_author": "",
+    "project_premise": "",
+    "project_narrative_perspective": None,
+    "project_genre_ID": None,
+    "project_theme_ID": None,
+    "project_deadline": None,
+    "project_startdate": None,
+    "project_words_count_goal": 0,
+    "project_cover_image": "",
+    "project_target_audience": None
+    },
+    "project_ID_02": {
+    "project_title": "",
+    "project_subtitle": "",
+    "project_author": "",
+    "project_premise": "",
+    "project_genre_ID": None,
+    "project_theme_ID": None,
+    "project_deadline": None,
+    "project_startdate": None,
+    "project_words_count_goal": 0,
+    "project_cover_image": "",
+    "project_target_audience": None
+    }
+}
+
+# Tabellen Defaults für Charaktere
+TABLES_CHARACTERS_DEFAULTS = {
+    "character_ID_01": {
+        "main_character": False,
+        "name": "",
+        "first_name": "",
+        "nick_name": "",
+        "born": None,
+        "age": 0,
+        "role_ID": None,
+        "status_ID": None,
+        "group_ID": None,
+        "image": "",
+        "icon": ""
+    },
+    "character_ID_02": {
+        "main_character": False,
+        "name": "",
+        "first_name": "",
+        "nick_name": "",
+        "born": None,
+        "age": 0,
+        "role_ID": None,
+        "status_ID": None,
+        "group_ID": None,
+        "image": "",
+        "icon": ""
+    }
+}
 # Der aktuelle Pfad der GUI wird ermittelt
 def get_theme_path(theme_name):
     # Entferne ggf. .json am Ende, hänge es dann einmalig an
