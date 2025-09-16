@@ -4277,7 +4277,7 @@ FORM_FIELDS_DEFAULT = {
 }
 
 # Tabellen Defaults 
-
+# Tabellen Defaults für Projekte
 TABLES_PROJECTS_DEFAULTS = {
     "project_ID_01": {
     "project_titel": "",
@@ -4291,7 +4291,12 @@ TABLES_PROJECTS_DEFAULTS = {
     "project_startdate": None,
     "project_words_count_goal": 0,
     "project_cover_image": "",
-    "project_target_audience": None
+    "project_target_audience": None,
+    "project_characters": [],
+    "project_locations": [],
+    "project_storylines": [],
+    "project_objects": [],
+    "project_chapters": []
     },
     "project_ID_02": {
     "project_title": "",
@@ -4304,7 +4309,12 @@ TABLES_PROJECTS_DEFAULTS = {
     "project_startdate": None,
     "project_words_count_goal": 0,
     "project_cover_image": "",
-    "project_target_audience": None
+    "project_target_audience": None,
+    "project_characters": [],
+    "project_locations": [],
+    "project_storylines": [],
+    "project_objects": [],
+    "project_chapters": []
     }
 }
 
@@ -4317,11 +4327,95 @@ TABLES_CHARACTERS_DEFAULTS = {
         "nick_name": "",
         "born": None,
         "age": 0,
+        "gender_ID": None,
+        "sex_orientation_ID": None,
         "role_ID": None,
         "status_ID": None,
         "group_ID": None,
         "image": "",
-        "icon": ""
+        "icon": "",
+        "notes": "",
+        "origin": {
+            "father": "",
+            "mother": "",
+            "reference_person": "",
+            "siblings": "",
+            "birthplace": "",
+            "notes": ""
+        },
+        "education": {
+            "school": "",
+            "university": "",
+            "job_education": "",
+            "autodidactic": "",
+            "job": "",
+            "art_music": "",
+            "sport": "",
+            "technology": "",
+            "notes": ""
+        },
+        "personality": {
+            "pos_characteristic": "",
+            "neg_characteristic": "",
+            "fears": "",
+            "weaknesses": "",
+            "strengths": "",
+            "talents": "",
+            "beliefs": "",
+            "life_goals": "",
+            "motivation": "",
+            "behavior": "",
+            "notes": ""
+        },
+        "psychological_profile": {
+            "diagnosis": "",
+            "symptoms": "",
+            "therapy": "",
+            "medication": "",
+            "temperament": "",
+            "values_set": "",
+            "moral_concepts": "",
+            "character_strength": "",
+            "character_weakness": "",
+            "self_image": "",
+            "humor": "",
+            "aggression": "",
+            "trauma": "",
+            "formative_personality": "",
+            "socialization": "",
+            "norms": "",
+            "taboos": "",
+            "notes": ""
+        },
+        "appearance_main": {
+            "height": "",
+            "body_type": "",
+            "posture": "",
+            "face_shape": "",
+            "eye_shape": "",
+            "eye_color": "",
+            "hair": "",
+            "hair_color": "",
+            "skin": "",
+            "charisma": "",
+            "specials": "",
+            "notes": ""
+        },
+        "appearance_detail": {
+            "head": "",
+            "neck": "",
+            "shoulder": "",
+            "arms": "",
+            "hands": "",
+            "finger": "",
+            "chest": "",
+            "hips_waist": "",
+            "buttocks": "",
+            "legs": "",
+            "feet": "",
+            "toes": "",
+            "notes": ""
+        }
     },
     "character_ID_02": {
         "main_character": False,
@@ -4334,9 +4428,136 @@ TABLES_CHARACTERS_DEFAULTS = {
         "status_ID": None,
         "group_ID": None,
         "image": "",
-        "icon": ""
+        "icon": "",
+        "notes": "",
+        "origin": {
+            "father": "",
+            "mother": "",
+            "reference_person": "",
+            "siblings": "",
+            "birthplace": "",
+            "notes": ""
+        },
+        "education": {
+            "school": "",
+            "university": "",
+            "job_education": "",
+            "autodidactic": "",
+            "job": "",
+            "art_music": "",
+            "sport": "",
+            "technology": "",
+            "notes": ""
+        },
+        "personality": {
+            "pos_characteristic": "",
+            "neg_characteristic": "",
+            "fears": "",
+            "weaknesses": "",
+            "strengths": "",
+            "talents": "",
+            "beliefs": "",
+            "life_goals": "",
+            "motivation": "",
+            "behavior": "",
+            "notes": ""
+        },
+        "psychological_profile": {
+            "diagnosis": "",
+            "symptoms": "",
+            "therapy": "",
+            "medication": "",
+            "temperament": "",
+            "values_set": "",
+            "moral_concepts": "",
+            "character_strength": "",
+            "character_weakness": "",
+            "self_image": "",
+            "humor": "",
+            "aggression": "",
+            "trauma": "",
+            "formative_personality": "",
+            "socialization": "",
+            "norms": "",
+            "taboos": "",
+            "notes": ""
+        },
+        "appearance_main": {
+            "height": "",
+            "body_type": "",
+            "posture": "",
+            "face_shape": "",
+            "eye_shape": "",
+            "eye_color": "",
+            "hair": "",
+            "hair_color": "",
+            "skin": "",
+            "charisma": "",
+            "specials": "",
+            "notes": ""
+        },
+        "appearance_detail": {
+            "head": "",
+            "neck": "",
+            "shoulder": "",
+            "arms": "",
+            "hands": "",
+            "finger": "",
+            "chest": "",
+            "hips_waist": "",
+            "buttocks": "",
+            "legs": "",
+            "feet": "",
+            "toes": "",
+            "notes": ""
+        }
     }
 }
+
+# Tabellen für Objekte und Requisiten
+TABLES_OBJECTS_DEFAULTS = {
+    "object_ID_01": {
+        "title": "",
+        "description": ""
+    },
+    "object_ID_02": {
+        "title": "",
+        "description": ""
+    }
+}
+
+# Tabellen für Storylines
+TABLES_STORYLINES_DEFAULTS = {
+    "storyline_ID_01": {
+        "title": "",
+        "premise": "",
+        "description": "",
+        "transformation": "",
+        "timeline": "",
+        "notes": ""
+    },
+    "storyline_ID_02": {
+        "title": "",
+        "premise": "",
+        "description": "",
+        "transformation": "",
+        "timeline": "",
+        "notes": ""
+    }
+}
+
+# Tabellen für Locations
+TABLES_LOCATIONS_DEFAULTS = {
+    "location_ID_01": {
+        "title": "",
+        "description": ""
+    },
+    "location_ID_02": {
+        "title": "",
+        "description": ""
+    }
+}
+
 # Der aktuelle Pfad der GUI wird ermittelt
 def get_theme_path(theme_name):
     # Entferne ggf. .json am Ende, hänge es dann einmalig an
