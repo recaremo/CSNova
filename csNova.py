@@ -35,12 +35,13 @@ DEFAULT_SETTINGS = {
     "splitter_sizes": [600, 1100, 220]
   },
   "gui": {
-    "style_theme": "theme_Modern_neutral",
+    "style_theme": "Modern_neutral",
     "file_path_gui": str(GUI_DIR / "styles" / "theme_Modern_neutral.json")
   },
   "general": {
     "language": "de",
     "file_path_lang": str(TRANSLATIONS_DIR / "translation_de.json"),
+    "file_path_combo": str(TRANSLATIONS_DIR / "translation_data_combobox_de.json"),
     "first_start": True
   },
   "help": {
@@ -67,6 +68,11 @@ LANGUAGE_DEFAULTS = {
     "proj_ma_11": "Startdatum",
     "proj_ma_12": "Ziel Wortanzahl",
     "proj_ma_13": "Zeitlinie",
+    "proj_ma_14": "Stil",
+    "proj_ma_15": "Arbeitstyp",
+    "proj_ma_16": "Motive",
+    "proj_ma_17": "Status",
+    "proj_ma_18": "Notizen",
     "proj_ch_header": "Kapitel",
     "proj_ch_01": "Kapitel",
     "proj_ch_02": "Kapitel-Titel",
@@ -459,6 +465,11 @@ LANGUAGE_DEFAULTS = {
     "proj_ma_11": "Start date",
     "proj_ma_12": "Target word count",
     "proj_ma_13": "Timeline",
+    "proj_ma_14": "Style",
+    "proj_ma_15": "Type of work",
+    "proj_ma_16": "Motifs",
+    "proj_ma_17": "Status",
+    "proj_ma_18": "Notes",
     "proj_ch_header": "Chapters",
     "proj_ch_01": "Chapter",
     "proj_ch_02": "Chapter title",
@@ -851,6 +862,11 @@ LANGUAGE_DEFAULTS = {
     "proj_ma_11": "Fecha de inicio",
     "proj_ma_12": "Cantidad de palabras objetivo",
     "proj_ma_13": "Cronología",
+    "proj_ma_14": "Estilo",
+    "proj_ma_15": "Tipo de obra",
+    "proj_ma_16": "Motivos",
+    "proj_ma_17": "Estado",
+    "proj_ma_18": "Notas",
     "proj_ch_header": "Capítulos",
     "proj_ch_01": "Capítulo",
     "proj_ch_02": "Título del capítulo",
@@ -1243,6 +1259,11 @@ LANGUAGE_DEFAULTS = {
     "proj_ma_11": "Date de début",
     "proj_ma_12": "Nombre de mots cible",
     "proj_ma_13": "Chronologie",
+    "proj_ma_14": "Style",
+    "proj_ma_15": "Type d'œuvre",
+    "proj_ma_16": "Motifs",
+    "proj_ma_17": "Statut",
+    "proj_ma_18": "Notes",
     "proj_ch_header": "Chapitres",
     "proj_ch_01": "Chapitre",
     "proj_ch_02": "Titre du chapitre",
@@ -1621,6 +1642,747 @@ LANGUAGE_DEFAULTS = {
     "btn_next_hint": "Ici, vous pouvez passer à l'étape suivante."
 }
 }
+
+# --- Übersetzungen für die Inhalte von Auswahlfeldern (ComboBoxen), innerhalb eines Projektes ---
+LANGUAGE_DATA_COMBOBOX_DEFAULTS = {
+"de": {
+    "gender": {
+        "male": "identifiziert sich als männlich",
+        "female": "identifiziert sich als weiblich",
+        "non-binary": "identifiziert sich nicht ausschließlich als männlich oder weiblich",
+        "transgender": "Geschlechtsidentität unterscheidet sich vom bei der Geburt zugewiesenen Geschlecht",
+        "intersex": "mit körperlichen Geschlechtsmerkmalen geboren, die nicht den typischen Definitionen entsprechen",
+        "agender": "identifiziert sich mit keinem Geschlecht",
+        "genderfluid": "Geschlechtsidentität variiert über die Zeit",
+        "bigender": "identifiziert sich mit zwei Geschlechtern",
+        "other": "Geschlechtsidentität nicht aufgeführt"
+    },
+    "sexual_orientation": {
+        "heterosexual": "sexuell und emotional zum anderen Geschlecht hingezogen",
+        "homosexual": "sexuell und emotional zum gleichen Geschlecht hingezogen",
+        "bisexual": "sexuell und emotional zu beiden Geschlechtern hingezogen",
+        "asexual": "erlebt wenig oder keine sexuelle Anziehung zu anderen",
+        "pansexual": "sexuell und emotional zu Menschen aller Geschlechter hingezogen",
+        "demisexual": "erlebt sexuelle Anziehung nur nach dem Aufbau einer starken emotionalen Bindung",
+        "queer": "nicht heterosexuell oder cisgender",
+        "other": "sexuelle Orientierung nicht oben aufgeführt"       
+    },
+    "narrative_perspective": {
+        "first_person": "Ich-Erzähler",
+        "second_person": "Du-Erzähler",
+        "third_person_limited": "Dritte Person, begrenzte Perspektive",
+        "third_person_omniscient": "Dritte Person, allwissender Erzähler",
+        "stream_of_consciousness": "Bewusstseinsstrom",
+        "epistolary": "Epistolarer Stil",
+        "multiple_perspectives": "Mehrere Perspektiven",
+        "unreliable_narrator": "Unzuverlässiger Erzähler",
+        "other": "Andere Erzählperspektive"
+    },
+    "style": {
+        "realism": "Realismus",
+        "romanticism": "Romantik",
+        "modernism": "Modernismus",
+        "postmodernism": "Postmodernismus",
+        "minimalism": "Minimalismus",
+        "surrealism": "Surrealismus",
+        "absurdism": "Absurdität",
+        "satire": "Satire",
+        "dystopian": "Dystopie",
+        "utopian": "Utopie",
+        "magical_realism": "Magischer Realismus",
+        "gothic": "Gotik",
+        "cyberpunk": "Cyberpunk",
+        "steampunk": "Steampunk",
+        "noir": "Noir",
+        "baroque": "Barock",
+        "expressionism": "Expressionismus",
+        "romantic_gothic": "Romantische Gotik",
+        "naturalism": "Naturalismus",
+        "symbolism": "Symbolismus",
+        "classicism": "Klassizismus",
+        "renaissance": "Renaissance",
+        "enlightenment": "Aufklärung",
+        "classic": "Klassik",
+        "other": "Anderer Stil"
+    },
+    "genre": {
+        "fantasy": "Fantasy",
+        "science_fiction": "Science-Fiction",
+        "horror": "Horror",
+        "mystery": "Mystery",
+        "thriller": "Thriller",
+        "historical_fiction": "Historischer Roman",
+        "adventure": "Abenteuer",
+        "coming_of_age": "Coming-of-Age",
+        "romance": "Romanze",
+        "crime": "Krimi",
+        "drama": "Drama",
+        "comedy": "Komödie",
+        "western": "Western",
+        "biography": "Biografie",
+        "memoir": "Memoiren",
+        "satire": "Satire",
+        "poetry": "Poesie",
+        "other": "Anderer Stil"
+    },
+    "work_type": {
+        "novel": "Roman",
+        "short_story": "Kurzgeschichte",
+        "non_fiction": "Sachbuch",
+        "biography": "Biografie",
+        "autobiography": "Autobiografie",
+        "memoir": "Memoiren",
+        "essay": "Essay",
+        "script": "Drehbuch",
+        "graphic_novel": "Graphic Novel",
+        "game_writing": "Game Writing",
+        "storyboard": "Storyboard",
+        "theatre_play": "Theaterstück",
+        "diary": "Tagebuch",
+        "poetry": "Poesie",
+        "blog": "Blog",
+        "article": "Artikel",
+        "report": "Bericht",
+        "speech": "Rede",
+        "other": "Anderes Genre"
+    },
+    "motifs": {
+        "love": "Liebe",
+        "friendship": "Freundschaft",
+        "betrayal": "Verrat",
+        "courage": "Mut",
+        "revenge": "Rache",
+        "redemption": "Erlösung",
+        "power": "Macht",
+        "freedom": "Freiheit",
+        "identity": "Identität",
+        "justice": "Gerechtigkeit",
+        "survival": "Überleben",
+        "good_vs_evil": "Gut gegen Böse",
+        "coming_of_age": "Erwachsenwerden",
+        "sacrifice": "Opfer",
+        "friendship_vs_loyalty": "Freundschaft vs. Loyalität",
+        "loss": "Verlust",
+        "hope": "Hoffnung",
+        "fear": "Angst",
+        "isolation": "Isolation",
+        "technology_vs_nature": "Technologie vs. Natur",
+        "war_and_peace": "Krieg und Frieden",
+        "family": "Familie",
+        "death": "Tod",
+        "faith": "Glaube",
+        "identity_and_self_discovery": "Identität und Selbstfindung",
+        "power_and_corruption": "Macht und Korruption",
+        "good_and_evil": "Gut und Böse",
+        "freedom_and_confinement": "Freiheit und Gefangenschaft",
+        "knowledge_and_ignorance": "Wissen und Ignoranz",
+        "nature_and_environment": "Natur und Umwelt",
+        "time_and_memory": "Zeit und Erinnerung",
+        "truth_and_deception": "Wahrheit und Täuschung",
+        "coming_of_age": "Erwachsenwerden",
+        "love_and_loss": "Liebe und Verlust",
+        "other": "Anderes Motiv"
+    },
+    "target_audience": {
+        "children": "Kinder",
+        "young_adults": "Junge Erwachsene",
+        "adults": "Erwachsene",
+        "seniors": "Senioren",
+        "general_audience": "Allgemeines Publikum",
+        "niche_audience": "Nischenpublikum",
+        "teens": "Teenager",
+        "middle_grade": "Mittleres Alter",
+        "new_adults": "Neue Erwachsene",
+        "families": "Familien",
+        "academics": "Akademiker",
+        "professionals": "Fachleute",
+        "hobbyists": "Hobbyisten",
+        "fans_of_genre": "Fans des Genres",
+        "critics": "Kritiker",
+        "collectors": "Sammler",
+        "influencers": "Influencer",
+        "bloggers": "Blogger",
+        "vloggers": "Vlogger",
+        "podcasters": "Podcaster",
+        "streamers": "Streamer",
+        "educators": "Pädagogen",
+        "students": "Studenten",
+        "researchers": "Forscher",
+        "librarians": "Bibliothekare",
+        "booksellers": "Buchhändler",
+        "publishers": "Verleger",
+        "translators": "Übersetzer",
+        "editors": "Redakteure",
+        "literary_agents": "Literarische Agenten",
+        "other": "Andere Zielgruppe"
+    },
+    "status": {
+        "in_planning": "In Planung",
+        "in_progress": "In Arbeit",
+        "on_hold": "In Wartestellung",
+        "completed": "Abgeschlossen",
+        "cancelled": "Abgebrochen",
+        "published": "Veröffentlicht",
+        "archived": "Archiviert",
+        "draft": "Entwurf",
+        "review": "In Überprüfung",
+        "other": "Anderer Status"
+    }
+    },
+"en": {
+    "gender": {
+        "male": "identifies as male",
+        "female": "identifies as female",
+        "non-binary": "does not identify exclusively as male or female",
+        "transgender": "gender identity differs from assigned sex at birth",
+        "intersex": "born with physical sex characteristics that don’t fit typical definitions",
+        "agender": "does not identify with any gender",
+        "genderfluid": "gender identity varies over time",
+        "bigender": "identifies as two genders",
+        "other": "gender identity not listed"
+    },
+    "sexual_orientation": {
+        "heterosexual": "sexually and emotionally attracted to the opposite gender",
+        "homosexual": "sexually and emotionally attracted to the same gender",
+        "bisexual": "sexually and emotionally attracted to both genders",
+        "asexual": "experiences little or no sexual attraction to others",
+        "pansexual": "sexually and emotionally attracted to people regardless of gender",
+        "demisexual": "experiences sexual attraction only after forming a strong emotional bond",
+        "queer": "not heterosexual or cisgender",
+        "other": "sexual orientation not listed"
+    },
+    "narrative_perspective": {
+        "first_person": "First-person narrator",
+        "second_person": "Second-person narrator",
+        "third_person_limited": "Third-person, limited perspective",
+        "third_person_omniscient": "Third-person, omniscient narrator",
+        "stream_of_consciousness": "Stream of consciousness",
+        "epistolary": "Epistolary style",
+        "multiple_perspectives": "Multiple perspectives",
+        "unreliable_narrator": "Unreliable narrator",
+        "other": "Other narrative perspective"
+    },
+    "style": {
+        "realism": "Realism",
+        "romanticism": "Romanticism",
+        "modernism": "Modernism",
+        "postmodernism": "Postmodernism",
+        "minimalism": "Minimalism",
+        "surrealism": "Surrealism",
+        "absurdism": "Absurdism",
+        "satire": "Satire",
+        "dystopian": "Dystopian",
+        "utopian": "Utopian",
+        "magical_realism": "Magical Realism",
+        "gothic": "Gothic",
+        "cyberpunk": "Cyberpunk",
+        "steampunk": "Steampunk",
+        "noir": "Noir",
+        "baroque": "Baroque",
+        "expressionism": "Expressionism",
+        "romantic_gothic": "Romantic Gothic",
+        "naturalism": "Naturalism",
+        "symbolism": "Symbolism",
+        "classicism": "Classicism",
+        "renaissance": "Renaissance",
+        "enlightenment": "Enlightenment",
+        "classic": "Classic",
+        "other": "Other style"
+    },
+    "genre": {
+        "fantasy": "Fantasy",
+        "science_fiction": "Science Fiction",
+        "horror": "Horror",
+        "mystery": "Mystery",
+        "thriller": "Thriller",
+        "historical_fiction": "Historical Fiction",
+        "adventure": "Adventure",
+        "coming_of_age": "Coming of Age",
+        "romance": "Romance",
+        "crime": "Crime",
+        "drama": "Drama",
+        "comedy": "Comedy",
+        "western": "Western",
+        "biography": "Biography",
+        "memoir": "Memoir",
+        "satire": "Satire",
+        "poetry": "Poetry",
+        "other": "Other genre"
+    },
+    "work_type": {
+        "novel": "Novel",
+        "short_story": "Short Story",
+        "non_fiction": "Non-Fiction",
+        "biography": "Biography",
+        "autobiography": "Autobiography",
+        "memoir": "Memoir",
+        "essay": "Essay",
+        "script": "Script",
+        "graphic_novel": "Graphic Novel",
+        "game_writing": "Game Writing",
+        "storyboard": "Storyboard",
+        "theatre_play": "Theatre Play",
+        "diary": "Diary",
+        "poetry": "Poetry",
+        "blog": "Blog",
+        "article": "Article",
+        "report": "Report",
+        "speech": "Speech",
+        "other": "Other type"
+    },
+    "motifs": {
+        "love": "Love",
+        "friendship": "Friendship",
+        "betrayal": "Betrayal",
+        "courage": "Courage",
+        "revenge": "Revenge",
+        "redemption": "Redemption",
+        "power": "Power",
+        "freedom": "Freedom",
+        "identity": "Identity",
+        "justice": "Justice",
+        "survival": "Survival",
+        "good_vs_evil": "Good vs. Evil",
+        "coming_of_age": "Coming of Age",
+        "sacrifice": "Sacrifice",
+        "friendship_vs_loyalty": "Friendship vs. Loyalty",
+        "loss": "Loss",
+        "hope": "Hope",
+        "fear": "Fear",
+        "isolation": "Isolation",
+        "technology_vs_nature": "Technology vs. Nature",
+        "war_and_peace": "War and Peace",
+        "family": "Family",
+        "death": "Death",
+        "faith": "Faith",
+        "identity_and_self_discovery": "Identity and Self-Discovery",
+        "power_and_corruption": "Power and Corruption",
+        "good_and_evil": "Good and Evil",
+        "freedom_and_confinement": "Freedom and Confinement",
+        "knowledge_and_ignorance": "Knowledge and Ignorance",
+        "nature_and_environment": "Nature and Environment",
+        "time_and_memory": "Time and Memory",
+        "truth_and_deception": "Truth and Deception",
+        "coming_of_age": "Coming of Age",
+        "love_and_loss": "Love and Loss",
+        "other": "Other motif"
+    },
+    "target_audience": {
+        "children": "Children",
+        "young_adults": "Young Adults",
+        "adults": "Adults",
+        "seniors": "Seniors",
+        "general_audience": "General Audience",
+        "niche_audience": "Niche Audience",
+        "teens": "Teens",
+        "middle_grade": "Middle Grade",
+        "new_adults": "New Adults",
+        "families": "Families",
+        "academics": "Academics",
+        "professionals": "Professionals",
+        "hobbyists": "Hobbyists",
+        "fans_of_genre": "Fans of Genre",
+        "critics": "Critics",
+        "collectors": "Collectors",
+        "influencers": "Influencers",
+        "bloggers": "Bloggers",
+        "vloggers": "Vloggers",
+        "podcasters": "Podcasters",
+        "streamers": "Streamers",
+        "educators": "Educators",
+        "students": "Students",
+        "researchers": "Researchers",
+        "librarians": "Librarians",
+        "booksellers": "Booksellers",
+        "publishers": "Publishers",
+        "translators": "Translators",
+        "editors": "Editors",
+        "literary_agents": "Literary Agents",
+        "other": "Other audience"
+    },
+    "status": {
+        "in_planning": "In Planning",
+        "in_progress": "In Progress",
+        "on_hold": "On Hold",
+        "completed": "Completed",
+        "cancelled": "Cancelled",
+        "published": "Published",
+        "archived": "Archived",
+        "draft": "Draft",
+        "review": "In Review",
+        "other": "Other status"
+    }
+    },
+"es": {
+    "gender": {
+        "male": "se identifica como hombre",
+        "female": "se identifica como mujer",
+        "non-binary": "no se identifica exclusivamente como hombre o mujer",
+        "transgender": "la identidad de género difiere del sexo asignado al nacer",
+        "intersex": "nacido con características sexuales físicas que no encajan en las definiciones típicas",
+        "agender": "no se identifica con ningún género",
+        "genderfluid": "la identidad de género varía con el tiempo",
+        "bigender": "se identifica con dos géneros",
+        "other": "identidad de género no listada"
+    },
+    "sexual_orientation": {
+        "heterosexual": "atraído sexual y emocionalmente por el género opuesto",
+        "homosexual": "atraído sexual y emocionalmente por el mismo género",
+        "bisexual": "atraído sexual y emocionalmente por ambos géneros",
+        "asexual": "experimenta poca o ninguna atracción sexual hacia otros",
+        "pansexual": "atraído sexual y emocionalmente por personas independientemente de su género",
+        "demisexual": "experimenta atracción sexual solo después de formar un fuerte vínculo emocional",
+        "queer": "no es heterosexual ni cisgénero",
+        "other": "orientación sexual no listada"
+    },
+    "narrative_perspective": {
+        "first_person": "Narrador en primera persona",
+        "second_person": "Narrador en segunda persona",
+        "third_person_limited": "Tercera persona, perspectiva limitada",
+        "third_person_omniscient": "Tercera persona, narrador omnisciente",
+        "stream_of_consciousness": "Flujo de conciencia",
+        "epistolary": "Estilo epistolar",
+        "multiple_perspectives": "Múltiples perspectivas",
+        "unreliable_narrator": "Narrador poco fiable",
+        "other": "Otra perspectiva narrativa"
+    },
+    "style": {
+        "realism": "Realismo",
+        "romanticism": "Romanticismo",
+        "modernism": "Modernismo",
+        "postmodernism": "Posmodernismo",
+        "minimalism": "Minimalismo",
+        "surrealism": "Surrealismo",
+        "absurdism": "Absurdismo",
+        "satire": "Sátira",
+        "dystopian": "Distopía",
+        "utopian": "Utopía",
+        "magical_realism": "Realismo mágico",
+        "gothic": "Gótico",
+        "cyberpunk": "Cyberpunk",
+        "steampunk": "Steampunk",
+        "noir": "Noir",
+        "baroque": "Barroco",
+        "expressionism": "Expresionismo",
+        "romantic_gothic": "Gótico romántico",
+        "naturalism": "Naturalismo",
+        "symbolism": "Simbolismo",
+        "classicism": "Clasicismo",
+        "renaissance": "Renacimiento",
+        "enlightenment": "Ilustración",
+        "classic": "Clásico",
+        "other": "Otro estilo"
+    },
+    "genre": {
+        "fantasy": "Fantasía",
+        "science_fiction": "Ciencia ficción",
+        "horror": "Horror",
+        "mystery": "Misterio",
+        "thriller": "Suspenso",
+        "historical_fiction": "Ficción histórica",
+        "adventure": "Aventura",
+        "coming_of_age": "Novela de formación",
+        "romance": "Romance",
+        "crime": "Crimen",
+        "drama": "Drama",
+        "comedy": "Comedia",
+        "western": "Western",
+        "biography": "Biografía",
+        "memoir": "Memorias",
+        "satire": "Sátira",
+        "poetry": "Poesía",
+        "other": "Otro género"
+    },
+    "work_type": {
+        "novel": "Novela",
+        "short_story": "Cuento",
+        "non_fiction": "No ficción",
+        "biography": "Biografía",
+        "autobiography": "Autobiografía",
+        "memoir": "Memorias",
+        "essay": "Ensayo",
+        "script": "Guion",
+        "graphic_novel": "Novela gráfica",
+        "game_writing": "Escritura de juegos",
+        "storyboard": "Guion gráfico",
+        "theatre_play": "Obra de teatro",
+        "diary": "Diario",
+        "poetry": "Poesía",
+        "blog": "Blog",
+        "article": "Artículo",
+        "report": "Informe",
+        "speech": "Discurso",
+        "other": "Otro tipo"
+    },
+    "motifs": {
+        "love": "Amor",
+        "friendship": "Amistad",
+        "betrayal": "Traición",
+        "courage": "Valor",
+        "revenge": "Venganza",
+        "redemption": "Redención",
+        "power": "Poder",
+        "freedom": "Libertad",
+        "identity": "Identidad",
+        "justice": "Justicia",
+        "survival": "Supervivencia",
+        "good_vs_evil": "Bien contra mal",
+        "coming_of_age": "Madurez",
+        "sacrifice": "Sacrificio",
+        "friendship_vs_loyalty": "Amistad vs. Lealtad",
+        "loss": "Pérdida",
+        "hope": "Esperanza",
+        "fear": "Miedo",
+        "isolation": "Aislamiento",
+        "technology_vs_nature": "Tecnología vs. Naturaleza",
+        "war_and_peace": "Guerra y paz",
+        "family": "Familia",
+        "death": "Muerte",
+        "faith": "Fe",
+        "identity_and_self_discovery": "Identidad y autodescubrimiento",
+        "power_and_corruption": "Poder y corrupción",
+        "good_and_evil": "Bien y mal",
+        "freedom_and_confinement": "Libertad y confinamiento",
+        "knowledge_and_ignorance": "Conocimiento e ignorancia",
+        "nature_and_environment": "Naturaleza y medio ambiente",
+        "time_and_memory": "Tiempo y memoria",
+        "truth_and_deception": "Verdad y engaño",
+        "coming_of_age": "Madurez",
+        "love_and_loss": "Amor y pérdida",
+        "other": "Otro motivo"
+    },
+    "target_audience": {
+        "children": "Niños",
+        "young_adults": "Jóvenes adultos",
+        "adults": "Adultos",
+        "seniors": "Personas mayores",
+        "general_audience": "Público general",
+        "niche_audience": "Público de nicho",
+        "teens": "Adolescentes",
+        "middle_grade": "Edad media",
+        "new_adults": "Nuevos adultos",
+        "families": "Familias",
+        "academics": "Académicos",
+        "professionals": "Profesionales",
+        "hobbyists": "Aficionados",
+        "fans_of_genre": "Fans del género",
+        "critics": "Críticos",
+        "collectors": "Coleccionistas",
+        "influencers": "Influencers",
+        "bloggers": "Blogueros",
+        "vloggers": "Vlogueros",
+        "podcasters": "Podcasters",
+        "streamers": "Streamers",
+        "educators": "Educadores",
+        "students": "Estudiantes",
+        "researchers": "Investigadores",
+        "librarians": "Bibliotecarios",
+        "booksellers": "Libreros",
+        "publishers": "Editores",
+        "translators": "Traductores",
+        "editors": "Editores",
+        "literary_agents": "Agentes literarios",
+        "other": "Otro público"
+    },
+    "status": {
+        "in_planning": "En planificación",
+        "in_progress": "En progreso",
+        "on_hold": "En espera",
+        "completed": "Completado",
+        "cancelled": "Cancelado",
+        "published": "Publicado",
+        "archived": "Archivado",
+        "draft": "Borrador",
+        "review": "En revisión",
+        "other": "Otro estado"
+    }
+    },
+"fr": {
+    "gender": {
+        "male": "s'identifie comme un homme",
+        "female": "s'identifie comme une femme",
+        "non-binary": "ne s'identifie pas exclusivement comme un homme ou une femme",
+        "transgender": "l'identité de genre diffère du sexe assigné à la naissance",
+        "intersex": "né avec des caractéristiques sexuelles physiques qui ne correspondent pas aux définitions typiques",
+        "agender": "ne s'identifie à aucun genre",
+        "genderfluid": "l'identité de genre varie au fil du temps",
+        "bigender": "s'identifie à deux genres",
+        "other": "identité de genre non listée"
+    },
+    "sexual_orientation": {
+        "heterosexual": "attiré sexuellement et émotionnellement par le genre opposé",
+        "homosexual": "attiré sexuellement et émotionnellement par le même genre",
+        "bisexual": "attiré sexuellement et émotionnellement par les deux genres",
+        "asexual": "ressent peu ou pas d'attirance sexuelle pour les autres",
+        "pansexual": "attiré sexuellement et émotionnellement par les personnes indépendamment de leur genre",
+        "demisexual": "ressent une attirance sexuelle uniquement après avoir formé un fort lien émotionnel",
+        "queer": "n'est pas hétérosexuel ou cisgenre",
+        "other": "orientation sexuelle non listée"
+    },
+    "narrative_perspective": {
+        "first_person": "Narrateur à la première personne",
+        "second_person": "Narrateur à la deuxième personne",
+        "third_person_limited": "Troisième personne, perspective limitée",
+        "third_person_omniscient": "Troisième personne, narrateur omniscient",
+        "stream_of_consciousness": "Flux de conscience",
+        "epistolary": "Style épistolaire",
+        "multiple_perspectives": "Multiples perspectives",
+        "unreliable_narrator": "Narrateur peu fiable",
+        "other": "Autre perspective narrative"
+    },
+    "style": {
+        "realism": "Réalisme",
+        "romanticism": "Romantisme",
+        "modernism": "Modernisme",
+        "postmodernism": "Postmodernisme",
+        "minimalism": "Minimalisme",
+        "surrealism": "Surréalisme",
+        "absurdism": "Absurdisme",
+        "satire": "Satire",
+        "dystopian": "Dystopie",
+        "utopian": "Utopie",
+        "magical_realism": "Réalisme magique",
+        "gothic": "Gothique",
+        "cyberpunk": "Cyberpunk",
+        "steampunk": "Steampunk",
+        "noir": "Noir",
+        "baroque": "Baroque",
+        "expressionism": "Expressionnisme",
+        "romantic_gothic": "Gothique romantique",
+        "naturalism": "Naturalisme",
+        "symbolism": "Symbolisme",
+        "classicism": "Classicisme",
+        "renaissance": "Renaissance",
+        "enlightenment": "Lumières",
+        "classic": "Classique",
+        "other": "Autre style"
+    },
+    "genre": {
+        "fantasy": "Fantastique",
+        "science_fiction": "Science-fiction",
+        "horror": "Horreur",
+        "mystery": "Mystère",
+        "thriller": "Thriller",
+        "historical_fiction": "Fiction historique",
+        "adventure": "Aventure",
+        "coming_of_age": "Roman d'apprentissage",
+        "romance": "Romance",
+        "crime": "Crime",
+        "drama": "Drame",
+        "comedy": "Comédie",
+        "western": "Western",
+        "biography": "Biographie",
+        "memoir": "Mémoires",
+        "satire": "Satire",
+        "poetry": "Poésie",
+        "other": "Autre genre"
+    },
+    "work_type": {
+        "novel": "Roman",
+        "short_story": "Nouvelle",
+        "non_fiction": "Non-fiction",
+        "biography": "Biographie",
+        "autobiography": "Autobiographie",
+        "memoir": "Mémoires",
+        "essay": "Essai",
+        "script": "Scénario",
+        "graphic_novel": "Roman graphique",
+        "game_writing": "Écriture de jeux",
+        "storyboard": "Storyboard",
+        "theatre_play": "Pièce de théâtre",
+        "diary": "Journal",
+        "poetry": "Poésie",
+        "blog": "Blog",
+        "article": "Article",
+        "report": "Rapport",
+        "speech": "Discours",
+        "other": "Autre type"
+    },
+    "motifs": {
+        "love": "Amour",
+        "friendship": "Amitié",
+        "betrayal": "Trahison",
+        "courage": "Courage",
+        "revenge": "Vengeance",
+        "redemption": "Rédemption",
+        "power": "Pouvoir",
+        "freedom": "Liberté",
+        "identity": "Identité",
+        "justice": "Justice",
+        "survival": "Survie",
+        "good_vs_evil": "Bien contre mal",
+        "coming_of_age": "Apprentissage",
+        "sacrifice": "Sacrifice",
+        "friendship_vs_loyalty": "Amitié vs Loyauté",
+        "loss": "Perte",
+        "hope": "Espoir",
+        "fear": "Peur",
+        "isolation": "Isolement",
+        "technology_vs_nature": "Technologie vs Nature",
+        "war_and_peace": "Guerre et paix",
+        "family": "Famille",
+        "death": "Mort",
+        "faith": "Foi",
+        "identity_and_self_discovery": "Identité et découverte de soi",
+        "power_and_corruption": "Pouvoir et corruption",
+        "good_and_evil": "Bien et mal",
+        "freedom_and_confinement": "Liberté et confinement",
+        "knowledge_and_ignorance": "Connaissance et ignorance",
+        "nature_and_environment": "Nature et environnement",
+        "time_and_memory": "Temps et mémoire",
+        "truth_and_deception": "Vérité et tromperie",
+        "coming_of_age": "Apprentissage",
+        "love_and_loss": "Amour et perte",
+        "other": "Autre motif"
+    },
+    "target_audience": {
+        "children": "Enfants",
+        "young_adults": "Jeunes adultes",
+        "adults": "Adultes",
+        "seniors": "Seniors",
+        "general_audience": "Public général",
+        "niche_audience": "Public de niche",
+        "teens": "Adolescents",
+        "middle_grade": "Âge moyen",
+        "new_adults": "Nouveaux adultes",
+        "families": "Familles",
+        "academics": "Universitaires",
+        "professionals": "Professionnels",
+        "hobbyists": "Passionnés",
+        "fans_of_genre": "Fans du genre",
+        "critics": "Critiques",
+        "collectors": "Collectionneurs",
+        "influencers": "Influenceurs",
+        "bloggers": "Blogueurs",
+        "vloggers": "Vlogueurs",
+        "podcasters": "Podcasteurs",
+        "streamers": "Streamers",
+        "educators": "Éducateurs",
+        "students": "Étudiants",
+        "researchers": "Chercheurs",
+        "librarians": "Bibliothécaires",
+        "booksellers": "Libraires",
+        "publishers": "Éditeurs",
+        "translators": "Traducteurs",
+        "editors": "Éditeurs",
+        "literary_agents": "Agents littéraires",
+        "other": "Autre public"
+    },
+    "status": {
+        "in_planning": "En planification",
+        "in_progress": "En cours",
+        "on_hold": "En attente",
+        "completed": "Terminé",
+        "cancelled": "Annulé",
+        "published": "Publié",
+        "archived": "Archivé",
+        "draft": "Brouillon",
+        "review": "En révision",
+        "other": "Autre statut"
+    }   
+    }
+}
+
 # --- Default styles and themes (alle Theme die für die GUI verwendet werden können) ---
 THEMES_STYLES_DEFAULTS = {
 "Modern_neutral": {
@@ -4092,188 +4854,27 @@ BASE_STYLE_DEFAULT = {
 FORM_FIELDS_DEFAULT = {  
   "projects": [
     {"name": "pro_header", "label_key": "proj_ma_01", "type": "header", "datafield_name": None},
-    {"name": "title", "label_key": "proj_ma_02", "type": "text", "required": True, "max_length": 120, "width": 320, "datafield_name": "project_title"},
-    {"name": "subtitle", "label_key": "proj_ma_03", "type": "text", "required": False, "max_length": 120, "width": 320, "datafield_name": "project_subtitle"},
-    {"name": "author", "label_key": "proj_ma_04", "type": "text", "required": False, "max_length": 80, "width": 220, "datafield_name": "project_author"},
-    {"name": "premise", "label_key": "proj_ma_05", "type": "text", "required": False, "max_length": 200, "width": 480, "datafield_name": "project_premise"},
-    {"name": "genre", "label_key": "proj_ma_06", "type": "text", "required": False, "max_length": 80, "width": 220, "datafield_name": "project_genre"},
-    {"name": "cover_image", "label_key": "proj_ma_07", "type": "text", "required": False, "max_length": 120, "width": 320, "datafield_name": "project_cover_image"},
-    {"name": "target_group", "label_key": "proj_ma_08", "type": "text", "required": False, "max_length": 80, "width": 220, "datafield_name": "project_targetgroup"},
-    {"name": "narrative_perspective", "label_key": "proj_ma_09", "type": "text", "required": False, "max_length": 80, "width": 220, "datafield_name": "project_narrative_perspective"},
-    {"name": "deadline", "label_key": "proj_ma_10", "type": "date", "required": False, "width": 140, "datafield_name": "project_deadline"},
-    {"name": "start_date", "label_key": "proj_ma_11", "type": "date", "required": False, "width": 140, "datafield_name": "project_startdate"},
-    {"name": "words_count_goal", "label_key": "proj_ma_12", "type": "spin", "required": False, "max": 1000000, "width": 120, "datafield_name": "project_words_count_goal"},
-    {"name": "timeline", "label_key": "proj_ma_13", "type": "text", "required": False, "max_length": 80, "width": 220, "datafield_name": "project_timeline"}
-  ],
 
-  "project_chapters": [
-    {"name": "chapters_header", "label_key": "proj_ch_01", "type": "header", "datafield_name": None},
-    {"name": "chapter_title", "label_key": "proj_ch_02", "type": "text", "required": True, "max_length": 120, "width": 320, "datafield_name": "project_chapters_title"},
-    {"name": "chapter_premise", "label_key": "proj_ch_03", "type": "text", "required": False, "max_length": 200, "width": 480, "datafield_name": "project_chapters_premise"}
-  ],
+    {"name": "project_title", "label_key": "proj_ma_02", "type": "text", "required": True, "max_length": 120, "width": 320, "datafield_name": "project_titel"},
+    {"name": "project_subtitle", "label_key": "proj_ma_03", "type": "text", "required": False, "max_length": 120, "width": 320, "datafield_name": "project_subtitle"},
+    {"name": "project_author", "label_key": "proj_ma_04", "type": "text", "required": False, "max_length": 80, "width": 220, "datafield_name": "project_author"},
+    {"name": "project_premise", "label_key": "proj_ma_05", "type": "text", "required": False, "max_length": 200, "width": 480, "datafield_name": "project_premise"},
 
-  "project_chapters_scenes": [
-    {"name": "scenes_header", "label_key": "proj_cs_01", "type": "header", "datafield_name": None},
-    {"name": "scene_title", "label_key": "proj_cs_02", "type": "text", "required": True, "max_length": 120, "width": 320, "datafield_name": "project_chapters_scenes_title"},
-    {"name": "scene_premise", "label_key": "proj_cs_03", "type": "text", "required": False, "max_length": 200, "width": 480, "datafield_name": "project_chapters_scenes_premise"},
-    {"name": "scene_goal", "label_key": "proj_cs_04", "type": "text", "required": False, "max_length": 120, "width": 320, "datafield_name": "project_chapters_scenes_goal"},
-    {"name": "scene_conflict", "label_key": "proj_cs_05", "type": "text", "required": False, "max_length": 120, "width": 320, "datafield_name": "project_chapters_scenes_conflict"},
-    {"name": "scene_outcome", "label_key": "proj_cs_06", "type": "text", "required": False, "max_length": 120, "width": 320, "datafield_name": "project_chapters_scenes_outcome"},
-    {"name": "scene_type", "label_key": "proj_cs_07", "type": "text", "required": False, "max_length": 80, "width": 220, "datafield_name": "project_chapters_scenes_type"},
-    {"name": "scene_mood", "label_key": "proj_cs_08", "type": "text", "required": False, "max_length": 80, "width": 220, "datafield_name": "project_chapters_scenes_mood"},
-    {"name": "scene_duration", "label_key": "proj_cs_09", "type": "text", "required": False, "max_length": 80, "width": 220, "datafield_name": "project_chapters_scenes_duration"},
-    {"name": "scene_characters", "label_key": "proj_cs_10", "type": "text", "required": False, "max_length": 200, "width": 480, "datafield_name": "project_chapters_scenes_characters"},
-    {"name": "scene_locations", "label_key": "proj_cs_11", "type": "text", "required": False, "max_length": 200, "width": 480, "datafield_name": "project_chapters_scenes_locations"},
-    {"name": "scene_notes", "label_key": "proj_cs_12", "type": "multiline", "required": False, "max_length": 500, "width": 1200, "datafield_name": "project_chapters_scenes_notes"}
-  ],
+    {"name": "project_narrative_perspective", "label_key": "proj_ma_09", "type": "combobox", "required": False, "width": 220, "datafield_name": "project_narrative_perspective", "combo_key": "narrative_perspective"},
+    {"name": "project_style_ID", "label_key": "proj_ma_14", "type": "combobox", "required": False, "width": 220, "datafield_name": "project_style_ID", "combo_key": "style"},
+    {"name": "project_genre_ID", "label_key": "proj_ma_06", "type": "combobox", "required": False, "width": 220, "datafield_name": "project_genre_ID", "combo_key": "genre"},
+    {"name": "project_worktype_ID", "label_key": "proj_ma_15", "type": "combobox", "required": False, "width": 220, "datafield_name": "poject_worktype_ID", "combo_key": "work_type"},
+    {"name": "project_motifs_ID", "label_key": "proj_ma_16", "type": "combobox", "required": False, "width": 220, "datafield_name": "project_motifs_ID", "combo_key": "motifs"},
 
-  "project_locations": [
-    {"name": "locations_header", "label_key": "proj_lo_01", "type": "header", "datafield_name": None},
-    {"name": "location_title", "label_key": "proj_lo_02", "type": "text", "required": False, "max_length": 120, "width": 320, "datafield_name": "project_locations_title"},
-    {"name": "location_description", "label_key": "proj_lo_03", "type": "multiline", "required": False, "max_length": 500, "width": 1200, "datafield_name": "project_locations_description"}
-  ],
+    {"name": "project_deadline", "label_key": "proj_ma_10", "type": "date", "required": False, "width": 140, "datafield_name": "project_deadline"},
+    {"name": "project_startdate", "label_key": "proj_ma_11", "type": "date", "required": False, "width": 140, "datafield_name": "project_startdate"},
+    {"name": "project_words_count_goal", "label_key": "proj_ma_12", "type": "spin", "required": False, "max": 1000000, "width": 120, "datafield_name": "project_words_count_goal"},
+    {"name": "project_cover_image", "label_key": "proj_ma_07", "type": "text", "required": False, "max_length": 120, "width": 320, "datafield_name": "project_cover_image"},
+    {"name": "project_target_audience", "label_key": "proj_ma_08", "type": "combobox", "required": False, "width": 220, "datafield_name": "project_target_audience", "combo_key": "target_audience"},
+    {"name": "project_status_ID", "label_key": "proj_ma_17", "type": "combobox", "required": False, "width": 220, "datafield_name": "project_status_ID", "combo_key": "status"},
 
-  "project_storylines": [
-    {"name": "storylines_header", "label_key": "proj_st_01", "type": "header", "datafield_name": None},
-    {"name": "storyline_title", "label_key": "proj_st_02", "type": "text", "required": False, "max_length": 120, "width": 320, "datafield_name": "project_storylines_title"},
-    {"name": "storyline_premise", "label_key": "proj_st_03", "type": "text", "required": False, "max_length": 200, "width": 480, "datafield_name": "project_storylines_premise"},
-    {"name": "storyline_description", "label_key": "proj_st_04", "type": "text", "required": False, "max_length": 500, "width": 1200, "datafield_name": "project_storylines_description"},
-    {"name": "storyline_transformation", "label_key": "proj_st_05", "type": "text", "required": False, "max_length": 200, "width": 480, "datafield_name": "project_storylines_transformation"},
-    {"name": "storyline_timeline", "label_key": "proj_st_06", "type": "text", "required": False, "max_length": 200, "width": 480, "datafield_name": "project_storylines_timeline"},
-    {"name": "storyline_notes", "label_key": "proj_st_07", "type": "multiline", "required": False, "max_length": 500, "width": 1200, "datafield_name": "project_storylines_notes"}
-  ],
-
-   "project_objects": [
-    {"name": "objects_header", "label_key": "proj_ob_01", "type": "header", "datafield_name": None},
-    {"name": "object_title", "label_key": "proj_ob_02", "type": "text", "required": False, "max_length": 120, "width": 320, "datafield_name": "project_objects_title"},
-    {"name": "object_description", "label_key": "proj_ob_03", "type": "multiline", "required": False, "max_length": 500, "width": 1200, "datafield_name": "project_objects_description"}
-  ],
-
-  "character_main": [
-    {"name": "main_header", "label_key": "char_ma_01", "type": "header", "datafield_name": None},
-    {"name": "main_character", "label_key": "char_ma_02", "type": "checkbox", "required": True, "datafield_name": "main_character"},
-    {"name": "name", "label_key": "char_ma_03", "type": "text", "required": True, "max_length": 80, "width": 220, "datafield_name": "name"},
-    {"name": "first_name", "label_key": "char_ma_04", "type": "text", "required": True, "max_length": 80, "width": 220, "datafield_name": "first_name"},
-    {"name": "nick_name", "label_key": "char_ma_05", "type": "text", "required": False, "max_length": 80, "width": 220, "datafield_name": "nick_name"},
-    {"name": "born", "label_key": "char_ma_06", "type": "date", "required": False, "width": 140, "datafield_name": "born"},
-    {"name": "age", "label_key": "char_ma_07", "type": "spin", "required": False, "max": 150, "width": 120, "datafield_name": "age"},
-    {"name": "role", "label_key": "char_ma_08", "type": "text", "required": False, "max_length": 80, "width": 220, "datafield_name": "role"},
-    {"name": "status", "label_key": "char_ma_09", "type": "text", "required": False, "max_length": 80, "width": 220, "datafield_name": "status"},
-    {"name": "gender_ID", "label_key": "char_ma_10", "type": "select", "required": False, "width": 180, "datafield_name": "gender_ID"},
-    {"name": "sex_orientation_ID", "label_key": "char_ma_11", "type": "select", "required": False, "width": 180, "datafield_name": "sex_orientation_ID"},
-    {"name": "notes", "label_key": "char_ma_12", "type": "multiline", "required": False, "max_length": 500, "width": 1200, "datafield_name": "notes"}
-  ],
-
-  "character_groups": [
-    {"name": "groups_header", "label_key": "char_gr_01", "type": "header", "datafield_name": None},
-    {"name": "groups_title", "label_key": "char_gr_02", "type": "text", "required": True, "max_length": 80, "width": 220, "datafield_name": "groups_title"},
-    {"name": "groups_description", "label_key": "char_gr_03", "type": "multiline", "required": False, "max_length": 200, "width": 480, "datafield_name": "groups_description"}
-  ],
-
-  "character_origin": [
-    {"name": "origin_header", "label_key": "char_or_01", "type": "header", "datafield_name": None},
-    {"name": "father", "label_key": "char_or_02", "type": "text", "required": False, "max_length": 80, "width": 220, "datafield_name": "father"},
-    {"name": "mother", "label_key": "char_or_03", "type": "text", "required": False, "max_length": 80, "width": 220, "datafield_name": "mother"},
-    {"name": "reference_person", "label_key": "char_or_04", "type": "text", "required": False, "max_length": 80, "width": 220, "datafield_name": "reference_person"},
-    {"name": "siblings", "label_key": "char_or_05", "type": "text", "required": False, "max_length": 120, "width": 320, "datafield_name": "siblings"},
-    {"name": "birthplace", "label_key": "char_or_06", "type": "text", "required": False, "max_length": 120, "width": 320, "datafield_name": "birthplace"},
-    {"name": "notes", "label_key": "char_or_07", "type": "multiline", "required": False, "max_length": 500, "width": 1200, "datafield_name": "notes"}
-  ],
-
-  "character_education": [
-    {"name": "education_header", "label_key": "char_ed_01", "type": "header", "datafield_name": None},
-    {"name": "school", "label_key": "char_ed_02", "type": "text", "required": False, "max_length": 120, "width": 320, "datafield_name": "school"},
-    {"name": "university", "label_key": "char_ed_03", "type": "text", "required": False, "max_length": 120, "width": 320, "datafield_name": "university"},
-    {"name": "job_education", "label_key": "char_ed_04", "type": "text", "required": False, "max_length": 120, "width": 320, "datafield_name": "job_education"},
-    {"name": "autodidactic", "label_key": "char_ed_05", "type": "text", "required": False, "max_length": 120, "width": 320, "datafield_name": "autodidactic"},
-    {"name": "job", "label_key": "char_ed_06", "type": "text", "required": False, "max_length": 120, "width": 320, "datafield_name": "job"},
-    {"name": "art_music", "label_key": "char_ed_07", "type": "text", "required": False, "max_length": 120, "width": 320, "datafield_name": "art_music"},
-    {"name": "sport", "label_key": "char_ed_08", "type": "text", "required": False, "max_length": 120, "width": 320, "datafield_name": "sport"},
-    {"name": "technology", "label_key": "char_ed_09", "type": "text", "required": False, "max_length": 120, "width": 320, "datafield_name": "technology"},
-    {"name": "notes", "label_key": "char_ed_10", "type": "multiline", "required": False, "max_length": 500, "width": 1200, "datafield_name": "notes"}
-  ],
-
-  "character_appearance_main": [
-    {"name": "appearance_main_header", "label_key": "char_am_01", "type": "header", "datafield_name": None},
-    {"name": "height", "label_key": "char_am_02", "type": "text", "required": False, "max_length": 80, "width": 220, "datafield_name": "height"},
-    {"name": "body_type", "label_key": "char_am_03", "type": "text", "required": False, "max_length": 80, "width": 220, "datafield_name": "body_type"},
-    {"name": "posture", "label_key": "char_am_04", "type": "text", "required": False, "max_length": 80, "width": 220, "datafield_name": "posture"},
-    {"name": "face_shape", "label_key": "char_am_05", "type": "text", "required": False, "max_length": 80, "width": 220, "datafield_name": "face_shape"},
-    {"name": "eye_shape", "label_key": "char_am_06", "type": "text", "required": False, "max_length": 80, "width": 220, "datafield_name": "eye_shape"},
-    {"name": "eye_color", "label_key": "char_am_07", "type": "text", "required": False, "max_length": 80, "width": 220, "datafield_name": "eye_color"},
-    {"name": "hair", "label_key": "char_am_08", "type": "text", "required": False, "max_length": 80, "width": 220, "datafield_name": "hair"},
-    {"name": "hair_color", "label_key": "char_am_09", "type": "text", "required": False, "max_length": 80, "width": 220, "datafield_name": "hair_color"},
-    {"name": "skin", "label_key": "char_am_10", "type": "text", "required": False, "max_length": 80, "width": 220, "datafield_name": "skin"},
-    {"name": "charisma", "label_key": "char_am_11", "type": "text", "required": False, "max_length": 80, "width": 220, "datafield_name": "charisma"},
-    {"name": "specials", "label_key": "char_am_12", "type": "text", "required": False, "max_length": 120, "width": 320, "datafield_name": "specials"},
-    {"name": "notes", "label_key": "char_am_13", "type": "multiline", "required": False, "max_length": 500, "width": 1200, "datafield_name": "notes"}
-  ],
-
-  "character_appearance_detail": [
-    {"name": "appearance_detail_header", "label_key": "char_ad_01", "type": "header", "datafield_name": None},
-    {"name": "head", "label_key": "char_ad_02", "type": "text", "required": False, "max_length": 80, "width": 220, "datafield_name": "head"},
-    {"name": "neck", "label_key": "char_ad_03", "type": "text", "required": False, "max_length": 80, "width": 220, "datafield_name": "neck"},
-    {"name": "shoulder", "label_key": "char_ad_04", "type": "text", "required": False, "max_length": 80, "width": 220, "datafield_name": "shoulder"},
-    {"name": "arms", "label_key": "char_ad_05", "type": "text", "required": False, "max_length": 80, "width": 220, "datafield_name": "arms"},
-    {"name": "hands", "label_key": "char_ad_06", "type": "text", "required": False, "max_length": 80, "width": 220, "datafield_name": "hands"},
-    {"name": "finger", "label_key": "char_ad_07", "type": "text", "required": False, "max_length": 80, "width": 220, "datafield_name": "finger"},
-    {"name": "chest", "label_key": "char_ad_08", "type": "text", "required": False, "max_length": 80, "width": 220, "datafield_name": "chest"},
-    {"name": "hips_waist", "label_key": "char_ad_09", "type": "text", "required": False, "max_length": 80, "width": 220, "datafield_name": "hips_waist"},
-    {"name": "buttocks", "label_key": "char_ad_10", "type": "text", "required": False, "max_length": 80, "width": 220, "datafield_name": "buttocks"},
-    {"name": "legs", "label_key": "char_ad_11", "type": "text", "required": False, "max_length": 80, "width": 220, "datafield_name": "legs"},
-    {"name": "feet", "label_key": "char_ad_12", "type": "text", "required": False, "max_length": 80, "width": 220, "datafield_name": "feet"},
-    {"name": "toes", "label_key": "char_ad_13", "type": "text", "required": False, "max_length": 80, "width": 220, "datafield_name": "toes"},
-    {"name": "notes", "label_key": "char_ad_14", "type": "multiline", "required": False, "max_length": 500, "width": 1200, "datafield_name": "notes"}
-  ],
-
-  "character_personality": [
-    {"name": "personality_header", "label_key": "char_ps_01", "type": "header", "datafield_name": None},
-    {"name": "pos_characteristic", "label_key": "char_ps_02", "type": "text", "required": False, "max_length": 120, "width": 320, "datafield_name": "pos_characteristic"},
-    {"name": "neg_characteristic", "label_key": "char_ps_03", "type": "text", "required": False, "max_length": 120, "width": 320, "datafield_name": "neg_characteristic"},
-    {"name": "fears", "label_key": "char_ps_04", "type": "text", "required": False, "max_length": 120, "width": 320, "datafield_name": "fears"},
-    {"name": "weaknesses", "label_key": "char_ps_05", "type": "text", "required": False, "max_length": 120, "width": 320, "datafield_name": "weaknesses"},
-    {"name": "strengths", "label_key": "char_ps_06", "type": "text", "required": False, "max_length": 120, "width": 320, "datafield_name": "strengths"},
-    {"name": "talents", "label_key": "char_ps_07", "type": "text", "required": False, "max_length": 120, "width": 320, "datafield_name": "talents"},
-    {"name": "beliefs", "label_key": "char_ps_08", "type": "text", "required": False, "max_length": 120, "width": 320, "datafield_name": "beliefs"},
-    {"name": "life_goals", "label_key": "char_ps_09", "type": "text", "required": False, "max_length": 120, "width": 320, "datafield_name": "life_goals"},
-    {"name": "motivation", "label_key": "char_ps_10", "type": "text", "required": False, "max_length": 120, "width": 320, "datafield_name": "motivation"},
-    {"name": "behavior", "label_key": "char_ps_11", "type": "text", "required": False, "max_length": 120, "width": 320, "datafield_name": "behavior"},
-    {"name": "notes", "label_key": "char_ps_12", "type": "multiline", "required": False, "max_length": 500, "width": 1200, "datafield_name": "notes"}
-  ],
-
-  "character_psychological_profile": [
-    {"name": "psychological_profile_header", "label_key": "char_pp_01", "type": "header", "datafield_name": None},
-    {"name": "diagnosis", "label_key": "char_pp_02", "type": "text", "required": False, "max_length": 120, "width": 320, "datafield_name": "diagnosis"},
-    {"name": "symptoms", "label_key": "char_pp_03", "type": "text", "required": False, "max_length": 120, "width": 320, "datafield_name": "symptoms"},
-    {"name": "therapy", "label_key": "char_pp_04", "type": "text", "required": False, "max_length": 120, "width": 320, "datafield_name": "therapy"},
-    {"name": "medication", "label_key": "char_pp_05", "type": "text", "required": False, "max_length": 120, "width": 320, "datafield_name": "medication"},
-    {"name": "temperament", "label_key": "char_pp_06", "type": "text", "required": False, "max_length": 120, "width": 320, "datafield_name": "temperament"},
-    {"name": "values_set", "label_key": "char_pp_07", "type": "text", "required": False, "max_length": 120, "width": 320, "datafield_name": "values_set"},
-    {"name": "moral_concepts", "label_key": "char_pp_08", "type": "text", "required": False, "max_length": 120, "width": 320, "datafield_name": "moral_concepts"},
-    {"name": "character_strength", "label_key": "char_pp_09", "type": "text", "required": False, "max_length": 120, "width": 320, "datafield_name": "character_strength"},
-    {"name": "character_weakness", "label_key": "char_pp_10", "type": "text", "required": False, "max_length": 120, "width": 320, "datafield_name": "character_weakness"},
-    {"name": "self_image", "label_key": "char_pp_11", "type": "text", "required": False, "max_length": 120, "width": 320, "datafield_name": "self_image"},
-    {"name": "humor", "label_key": "char_pp_12", "type": "text", "required": False, "max_length": 120, "width": 320, "datafield_name": "humor"},
-    {"name": "aggression", "label_key": "char_pp_13", "type": "text", "required": False, "max_length": 120, "width": 320, "datafield_name": "aggression"},
-    {"name": "trauma", "label_key": "char_pp_14", "type": "text", "required": False, "max_length": 120, "width": 320, "datafield_name": "trauma"},
-    {"name": "formative_personality", "label_key": "char_pp_15", "type": "text", "required": False, "max_length": 120, "width": 320, "datafield_name": "formative_personality"},
-    {"name": "socialization", "label_key": "char_pp_16", "type": "text", "required": False, "max_length": 120, "width": 320, "datafield_name": "socialization"},
-    {"name": "norms", "label_key": "char_pp_17", "type": "text", "required": False, "max_length": 120, "width": 320, "datafield_name": "norms"},
-    {"name": "taboos", "label_key": "char_pp_18", "type": "text", "required": False, "max_length": 120, "width": 320, "datafield_name": "taboos"},
-    {"name": "notes", "label_key": "char_pp_19", "type": "multiline", "required": False, "max_length": 500, "width": 1200, "datafield_name": "notes"}
-  ],
-
-  "sex_orientation": [
-    {"name": "sex_orientation_header", "label_key": "sexo_sx_01", "type": "header", "datafield_name": None},
-    {"name": "sex_orientation", "label_key": "sexo_sx_02", "type": "text", "required": True, "max_length": 80, "width": 220, "datafield_name": "sex_orientation"},
-    {"name": "short_description", "label_key": "sexo_sx_03", "type": "multiline", "required": False, "max_length": 200, "width": 480, "datafield_name": "short_description"}
-  ],
-
-  "gender": [
-    {"name": "gender_header", "label_key": "gend_ge_01", "type": "header", "datafield_name": None},
-    {"name": "gender", "label_key": "gend_ge_02", "type": "text", "required": True, "max_length": 80, "width": 220, "datafield_name": "gender"},
-    {"name": "short_description", "label_key": "gend_ge_03", "type": "multiline", "required": False, "max_length": 200, "width": 480, "datafield_name": "short_description"}
-  ],
+    {"name": "project_notes", "label_key": "proj_ma_18", "type": "text", "required": False, "max_length": 500, "width": 480, "datafield_name": "project_notes"}
+]
 }
 
 # Tabellen Defaults 
@@ -4285,8 +4886,10 @@ TABLES_PROJECTS_DEFAULTS = {
     "project_author": "",
     "project_premise": "",
     "project_narrative_perspective": None,
+    "project_style_ID": None,
     "project_genre_ID": None,
-    "project_theme_ID": None,
+    "project_worktype_ID": None,
+    "project_motifs_ID": None, 
     "project_deadline": None,
     "project_startdate": None,
     "project_words_count_goal": 0,
@@ -4296,15 +4899,20 @@ TABLES_PROJECTS_DEFAULTS = {
     "project_locations": [],
     "project_storylines": [],
     "project_objects": [],
-    "project_chapters": []
+    "project_chapters": [],
+    "project_status_ID": None,
+    "project_notes": ""
     },
     "project_ID_02": {
-    "project_title": "",
+    "project_titel": "",
     "project_subtitle": "",
     "project_author": "",
     "project_premise": "",
+    "project_narrative_perspective": None,
+    "project_style_ID": None,
     "project_genre_ID": None,
-    "project_theme_ID": None,
+    "poject_worktype_ID": None,
+    "project_motifs_ID": None, 
     "project_deadline": None,
     "project_startdate": None,
     "project_words_count_goal": 0,
@@ -4314,7 +4922,9 @@ TABLES_PROJECTS_DEFAULTS = {
     "project_locations": [],
     "project_storylines": [],
     "project_objects": [],
-    "project_chapters": []
+    "project_chapters": [],
+    "project_status_ID": None,
+    "project_notes": ""
     }
 }
 
@@ -4558,6 +5168,71 @@ TABLES_LOCATIONS_DEFAULTS = {
     }
 }
 
+# Standardwerte für die Kapitel und Szenen in einem Projekt
+# für jedes Projekt werden daraus eigene Tabellen angelegt
+TABLES_CHAPTERS_SZENES_DEFAULTS = {
+    "chapter_ID_01": {
+        "title": "",
+        "premise": "",
+        "scenes": {
+            "scene_ID_01": {
+                "title": "",
+                "summary": "",
+                "goal": "",
+                "conflict": "",
+                "climax": "",
+                "characters_involved": [],
+                "location_ID": None,
+                "storyline_ID": None,
+                "word_count": 0,
+                "text": ""
+            },
+            "scene_ID_02": {
+                "title": "",
+                "summary": "",
+                "goal": "",
+                "conflict": "",
+                "climax": "",
+                "characters_involved": [],
+                "location_ID": None,
+                "storyline_ID": None,
+                "word_count": 0,
+                "text": ""
+            }
+        }
+    },
+    "chapter_ID_02": {
+        "title": "",
+        "premise": "",
+        "scenes": {
+            "scene_ID_01": {
+                "title": "",
+                "summary": "",
+                "goal": "",
+                "conflict": "",
+                "climax": "",
+                "characters_involved": [],
+                "location_ID": None,
+                "storyline_ID": None,
+                "word_count": 0,
+                "text": ""
+            },
+            "scene_ID_02": {
+                "title": "",
+                "summary": "",
+                "goal": "",
+                "conflict": "",
+                "climax": "",
+                "characters_involved": [],
+                "location_ID": None,
+                "storyline_ID": None,
+                "word_count": 0,
+                "text": ""
+            }
+        }
+    }
+}
+
 # Der aktuelle Pfad der GUI wird ermittelt
 def get_theme_path(theme_name):
     # Entferne ggf. .json am Ende, hänge es dann einmalig an
@@ -4656,6 +5331,21 @@ def overwrite_translation_file(language):
         log_exception("Error overwriting translation file", e)
         return None
     
+# Übersetzungsdatei für ComboBox-Daten wird überschrieben
+def overwrite_combobox_translation_file(language):
+    translation_filename = f"translation_data_combobox_{language}.json"
+    translation_path = TRANSLATIONS_DIR / translation_filename
+    fallback_language = language if language in LANGUAGE_DATA_COMBOBOX_DEFAULTS else "en"
+    translation_content = LANGUAGE_DATA_COMBOBOX_DEFAULTS.get(fallback_language, {})
+    try:
+        with open(translation_path, "w", encoding="utf-8") as f:
+            json.dump(translation_content, f, indent=2, ensure_ascii=False)
+        log_info(f"ComboBox translation file overwritten: {translation_path}")
+        return translation_path
+    except Exception as e:
+        log_exception("Error overwriting ComboBox translation file", e)
+        return None
+
 # Design-Datei wird überschrieben
 def overwrite_theme_file(style_theme):
     # Stelle sicher, dass der Dateiname immer mit "theme_" beginnt
@@ -4732,13 +5422,14 @@ def init_settings():
     save_user_settings(settings)
     return settings
 
-# Initialisierung der Dateien (Übersetzung, Design, Formularfelder, Basis-Design)
+# Initialisierung der Dateien (Übersetzung, Design, Formularfelder, Basis-Design, ComboBox-Übersetzung)
 def init_files(language, style_theme):
     translation_file = overwrite_translation_file(language)
     theme_file = overwrite_theme_file(style_theme)
     overwrite_form_fields_file()
     overwrite_base_style_file()
-    return translation_file, theme_file
+    combobox_translation_file = overwrite_combobox_translation_file(language)
+    return translation_file, theme_file, combobox_translation_file
 
 # Initialisierung des Designs
 def init_theme(settings):
@@ -4816,8 +5507,9 @@ def main():
         style_theme = init_theme(settings)
         log_info(f"Theme gesetzt: {style_theme}")
 
-        translation_file, theme_file = init_files(language, style_theme)
-        log_info(f"Dateien erstellt: {translation_file}, {theme_file}")
+        # Jetzt werden drei Dateien zurückgegeben
+        translation_file, theme_file, combobox_translation_file = init_files(language, style_theme)
+        log_info(f"Dateien erstellt: {translation_file}, {theme_file}, {combobox_translation_file}")
 
         save_user_settings(settings)
         log_info("Benutzereinstellungen gespeichert.")

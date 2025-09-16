@@ -1,13 +1,13 @@
-from PySide6.QtWidgets import QMainWindow, QLabel, QWidget, QVBoxLayout, QSplitter, QPushButton, QSpacerItem, QSizePolicy, QDialog, QHBoxLayout, QApplication, QComboBox
+from PySide6.QtWidgets import QMainWindow, QLineEdit, QDateEdit, QFormLayout, QSpinBox , QLabel, QWidget, QVBoxLayout, QSplitter, QPushButton, QSpacerItem, QSizePolicy, QDialog, QHBoxLayout, QApplication, QComboBox
 from PySide6.QtCore import Qt, QEvent
 from PySide6.QtGui import QPixmap
 import json
 import os
-from config.dev import ASSETS_DIR
+import datetime
+from config.dev import ASSETS_DIR, DATA_DIR
 from core.logger import log_info, log_error, log_exception, log_call
 from gui.styles.python_gui_styles import apply_theme_style
-from csNova import LANGUAGE_DEFAULTS, THEMES_STYLES_DEFAULTS
-
+from csNova import LANGUAGE_DEFAULTS, THEMES_STYLES_DEFAULTS, LANGUAGE_DATA_COMBOBOX_DEFAULTS
 
 # Hilfsfunktion für Listen-Logging
 def log_list(title, items):
@@ -407,7 +407,6 @@ class StartWindow(QMainWindow):
    
     # Funktion wenn über language_combo die Sprache geändert wird
     def change_language(self, new_language):
-        # Mapping-Liste wie in on_language_changed
         language_codes = ["de", "en", "fr", "es"]
         if hasattr(self, "language_combo"):
             try:
@@ -431,16 +430,26 @@ class StartWindow(QMainWindow):
             log_exception(f"Fehler beim Speichern der Übersetzungsdatei: {translation_path}", e)
             return
 
+        # Neue Übersetzungsdatei für die ComboBox-Daten laden und speichern
+        combobox_translation_data = LANGUAGE_DATA_COMBOBOX_DEFAULTS.get(new_language, {})
+        combobox_translation_path = os.path.join(os.path.dirname(self.translation_file), f"translation_data_combobox_{new_language}.json")
+        try:
+            with open(combobox_translation_path, "w", encoding="utf-8") as f:
+                json.dump(combobox_translation_data, f, ensure_ascii=False, indent=2)
+            log_info(f"Neue ComboBox-Übersetzungsdatei gespeichert: {combobox_translation_path}")
+        except Exception as e:
+            log_exception(f"Fehler beim Speichern der ComboBox-Übersetzungsdatei: {combobox_translation_path}", e)
+            return
+
         # Übersetzungen temporär anwenden
         self.translations = translation_data
+        self.translations_combobox = combobox_translation_data
         self.language = new_language
 
         # Texte der Panels aktualisieren
         self.update_center_panel_start_texts()
-        #self.update_left_panel_texts()
         self.update_right_panel_start_texts()
 
-        # Wenn die Sprache geändert wurde, sind die Buttons btn_save und btn_reset aktiv
         if hasattr(self, "btn_save"):
             self.btn_save.setEnabled(True)
         if hasattr(self, "btn_reset"):
@@ -523,6 +532,7 @@ class StartWindow(QMainWindow):
                     language = language_codes[lang_index]
                     self.settings["general"]["language"] = language
                     self.settings["general"]["file_path_lang"] = f"./core/translations/translation_{language}.json"
+                    self.settings["general"]["file_path_combo"] = f"./core/translations/translation_data_combobox_{language}.json"
 
                 # 2. Theme aus theme_combo
                 theme_names = [
@@ -891,7 +901,74 @@ class StartWindow(QMainWindow):
     
     # Dieses center_panel_project wird angezeigt, wenn ein Projekt erstellt oder bearbeitert wird.
     def create_center_panel_project(self):
-        return self.create_center_panel_with_header("proj_ma_header", "Projects")
+        panel_widget = QWidget()
+        panel_layout = QFormLayout(panel_widget)
+        panel_layout.setContentsMargins(20, 20, 20, 20)
+        panel_layout.setSpacing(12)
+
+        # Felder aus form_fields.json laden
+        with open("core/config/form_fields.json", "r", encoding="utf-8") as f:
+            form_fields = json.load(f)
+        project_fields = form_fields.get("projects", [])
+
+        self.project_form_widgets = {}
+
+        for field in project_fields:
+            field_name = field.get("datafield_name")
+            if not field_name:
+                continue
+
+            label_key = field.get("label_key", field_name)
+            label_text = self.get_translation(label_key, field_name)
+            field_type = field.get("type", "text")
+            width = field.get("width")
+
+            if field_type == "text":
+                widget = QLineEdit(panel_widget)
+            elif field_type == "combobox":
+                widget = QComboBox(panel_widget)
+                combo_key = field.get("combo_key")
+                if combo_key and self.combobox_translations:
+                    items = list(self.combobox_translations.get(combo_key, {}).values())
+                    widget.addItems(items)
+                    if items:
+                        widget.setCurrentIndex(len(items) - 1)  # Letzter Eintrag als Standard
+            elif field_type == "spin":
+                widget = QSpinBox(panel_widget)
+                widget.setMaximum(field.get("max", 1000000))
+                widget.setSingleStep(10000)  # Schrittweite 10.000
+                widget.setValue(10000)       # Startwert 10.000
+            elif field_type == "date":
+                widget = QDateEdit(panel_widget)
+                widget.setCalendarPopup(True)
+                today = datetime.date.today()
+                widget.setDate(today)
+                # Sprachabhängiges Datumsformat
+                if self.language == "de":
+                    widget.setDisplayFormat("dd.MM.yyyy")
+                elif self.language == "en":
+                    widget.setDisplayFormat("MM dd yyyy")
+                elif self.language == "fr":
+                    widget.setDisplayFormat("dd/MM/yyyy")
+                elif self.language == "es":
+                    widget.setDisplayFormat("dd/MM/yyyy")
+                else:
+                    widget.setDisplayFormat("yyyy-MM-dd")
+            else:
+                widget = QLineEdit(panel_widget)
+
+            if width:
+                try:
+                    widget.setFixedWidth(int(width))
+                except Exception:
+                    pass
+
+            panel_layout.addRow(label_text, widget)
+            self.project_form_widgets[field_name] = widget
+
+        panel_widget.setObjectName("ProjectFormPanel")
+        self.safe_apply_theme_style(panel_widget, "panel", self.theme)
+        return panel_widget
 
     
     # Dieses center_panel_settings wird angezeigt, wenn die Einstellungen bearbeitet werden sollen.
@@ -1060,8 +1137,7 @@ class StartWindow(QMainWindow):
         self.right_panel_header_label = header_label
 
         return panel_widget
-
-    
+ 
     # Dieses right_panel_editor wird im Editor-Modus angezeigt und beinhaltet
     # die Navigation, ob in left_panel die Charaktere, Orte, Objekte, Kapitel oder Szenen angezeigt werden sollen.
     # Außerdem wird hier der Editor-Modus beendet.
@@ -1113,8 +1189,7 @@ class StartWindow(QMainWindow):
         self.safe_apply_theme_style(panel_widget, "panel", self.theme)
         self.safe_apply_theme_style(header_label, "label", self.theme)
         return panel_widget
-
-    
+   
     # Dieses right_panel_project wird angezeigt, wenn ein Projekt erstellt oder bearbeitert wird.
     # Es beinhaltet die Navigation zu den verschiedenen Projekt-Einstellungen und beendet den Projekt-Modus.
     def create_right_panel_project(self):
@@ -1156,6 +1231,7 @@ class StartWindow(QMainWindow):
         btn_back = QPushButton(btn_back_text, panel_widget)
         btn_back.setToolTip(btn_back_hint)
         panel_layout.addWidget(btn_back, alignment=Qt.AlignBottom)
+        self.botn_fo_01.clicked.connect(self.on_create_project_clicked)
         self.botn_fo_05 = btn_back
 
         # Handler für Zurück-Button: Right Panel zurücksetzen
@@ -1165,7 +1241,6 @@ class StartWindow(QMainWindow):
         self.safe_apply_theme_style(panel_widget, "panel", self.theme)
         self.safe_apply_theme_style(header_label, "label", self.theme)
         return panel_widget
-
     
     # Dieses right_panel_settings wird angezeigt, wenn die Einstellungen bearbeitet werden sollen.
     # Es beinhaltet die Navigation zu den verschiedenen Einstellungs-Kategorien und beendet den Einstellungs-Modus.
@@ -1319,7 +1394,6 @@ class StartWindow(QMainWindow):
         self.safe_apply_theme_style(panel_widget, "panel", self.theme)
         self.safe_apply_theme_style(header_label, "label", self.theme)
         return panel_widget
-
     
     # Dieses right_panel_object wird angezeigt, wenn ein Objekt erstellt oder bearbeitert wird.
     # Es beinhaltet die Navigation zu den verschiedenen Objekt-Einstellungen und beendet den Objekt-Modus.
@@ -1475,6 +1549,65 @@ class StartWindow(QMainWindow):
         self.safe_apply_theme_style(header_label, "label", self.theme)
         return panel_widget
     
+    # Lege ein neues Projekt an
+    def on_create_project_clicked(self):
+        import datetime
+
+        # 1. Daten aus den Eingabefeldern auslesen
+        project_data = {}
+        for field_name, widget in self.project_form_widgets.items():
+            if isinstance(widget, QLineEdit):
+                project_data[field_name] = widget.text()
+            elif isinstance(widget, QComboBox):
+                project_data[field_name] = widget.currentText()
+            elif isinstance(widget, QSpinBox):
+                project_data[field_name] = widget.value()
+            elif isinstance(widget, QDateEdit):
+                # Speichere das Datum im aktuell angezeigten Format
+                project_data[field_name] = widget.date().toString(widget.displayFormat())
+            else:
+                project_data[field_name] = str(widget.text())
+
+        # 2. Neue ID bestimmen
+        DATA_DIR.mkdir(exist_ok=True)
+        existing_projects = list(DATA_DIR.glob("project_*.json"))
+        max_id = 0
+        for file in existing_projects:
+            try:
+                id_num = int(file.stem.split("_")[1])
+                if id_num > max_id:
+                    max_id = id_num
+            except Exception:
+                continue
+        new_id = max_id + 1
+
+        # 3. Datei speichern
+        filename = DATA_DIR / f"project_{new_id}.json"
+        with open(filename, "w", encoding="utf-8") as f:
+            json.dump(project_data, f, ensure_ascii=False, indent=2)
+        log_info(f"Neues Projekt gespeichert: {filename}")
+
+        # 4. Felder im Formular mit den gespeicherten Werten befüllen
+        for field_name, widget in self.project_form_widgets.items():
+            value = project_data.get(field_name, "")
+            if isinstance(widget, QLineEdit):
+                widget.setText(value)
+            elif isinstance(widget, QComboBox):
+                idx = widget.findText(value)
+                if idx >= 0:
+                    widget.setCurrentIndex(idx)
+            elif isinstance(widget, QSpinBox):
+                try:
+                    widget.setValue(int(value))
+                except Exception:
+                    pass
+            elif isinstance(widget, QDateEdit):
+                # Setze das Datum im aktuell angezeigten Format zurück
+                try:
+                    date = datetime.datetime.strptime(value, widget.displayFormat().replace("dd", "%d").replace("MM", "%m").replace("yyyy", "%Y"))
+                    widget.setDate(date.date())
+                except Exception:
+                    widget.setDate(datetime.date.today())
 
     # --------------------------------------------------------------           )
     # --------------------------------------------------------------
@@ -1540,6 +1673,7 @@ class StartWindow(QMainWindow):
         self.general_settings = settings.get("general", {})
         self.window_settings = settings.get("start_window", {})
         self.panel_settings = settings.get("panels", {})
+        self.language = self.general_settings.get("language", "de")
 
         # 2. Lade Theme und Base-Style
         self.theme = load_json_file(self.theme_file)
@@ -1576,6 +1710,17 @@ class StartWindow(QMainWindow):
             log_list("Translation keys", self.translations.keys())
         else:
             log_error("Übersetzungsdatei ist leer oder konnte nicht geladen werden.")
+
+        combobox_translation_path = self.general_settings.get(
+            "file_path_combo",
+            os.path.join(os.path.dirname(self.translation_file), f"translation_data_combobox_{self.language}.json")
+        )
+        self.combobox_translations = load_json_file(combobox_translation_path)
+        if self.combobox_translations:
+            log_info(f"ComboBox-Translations geladen: {combobox_translation_path}")
+            log_list("ComboBox-Translation keys", self.combobox_translations.keys())
+        else:
+            log_error("ComboBox-Übersetzungsdatei ist leer oder konnte nicht geladen werden.")
 
         self.language = self.general_settings.get("language", "de")
 

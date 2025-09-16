@@ -26,12 +26,13 @@
     ]
   },
   "gui": {
-    "style_theme": "theme_Modern_neutral",
-    "file_path_gui": "/home/frank/Dokumente/CSNova/gui/styles/theme_Modern_neutral.json"
+    "style_theme": "Modern_neutral",
+    "file_path_gui": "/home/frank/Dokumente/CSNova/gui/styles/Modern_neutral.json"
   },
   "general": {
     "language": "de",
     "file_path_lang": "/home/frank/Dokumente/CSNova/core/translations/translation_de.json",
+    "file_path_combo": "/home/frank/Dokumente/CSNova/core/translations/translation_data_combobox_de.json",
     "first_start": false
   },
   "help": {
