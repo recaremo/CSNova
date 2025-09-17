@@ -1267,10 +1267,14 @@ class StartWindow(QMainWindow):
 
         # Button-Konfiguration: (Key, Hint-Key)
         button_keys = [
-            ("botn_fo_01", "botn_fo_01_hint"),  # Neues Projekt
-            ("botn_fo_02", "botn_fo_02_hint"),  # Projekt laden
-            ("botn_fo_03", "botn_fo_03_hint"),  # Projekt speichern
-            ("botn_fo_04", "botn_fo_04_hint"),  # Projekt löschen
+            # Neues Projekt erstellen
+            ("botn_fo_01", "botn_fo_01_hint"),
+            # Bestehendes Projekt laden
+            ("botn_fo_02", "botn_fo_02_hint"),
+            # Projekt speichern
+            ("botn_fo_03", "botn_fo_03_hint"),
+            # Projekt löschen
+            ("botn_fo_04", "botn_fo_04_hint"),
         ]
         for i, (key, hint_key) in enumerate(button_keys, start=1):
             btn_text = self.get_translation(key, key)
@@ -1279,17 +1283,7 @@ class StartWindow(QMainWindow):
             btn.setToolTip(btn_hint)
             panel_layout.addWidget(btn)
             setattr(self, f"botn_fo_{i:02d}", btn)
-
-        # Buttons initial deaktivieren (außer "Neues Projekt")
-        self.botn_fo_02.setEnabled(False)
-        self.botn_fo_03.setEnabled(False)
-        self.botn_fo_04.setEnabled(False)
-
-        # Button-Handler verbinden
-        self.botn_fo_01.clicked.connect(self.show_project_form_new)
-        self.botn_fo_02.clicked.connect(self.show_project_form_load)
-        self.botn_fo_03.clicked.connect(self.on_create_project_clicked)
-        self.botn_fo_04.clicked.connect(self.delete_selected_project)
+            # Hier kannst du später die Button-Handler ergänzen
 
         # Spacer, damit der Zurück-Button unten steht
         panel_layout.addSpacerItem(QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding))
@@ -1300,29 +1294,17 @@ class StartWindow(QMainWindow):
         btn_back = QPushButton(btn_back_text, panel_widget)
         btn_back.setToolTip(btn_back_hint)
         panel_layout.addWidget(btn_back, alignment=Qt.AlignBottom)
+        self.botn_fo_01.clicked.connect(self.show_project_form_new)
+        self.botn_fo_02.clicked.connect(self.show_project_form_load)
         self.botn_fo_05 = btn_back
+
+        # Handler für Zurück-Button: Right Panel zurücksetzen
         btn_back.clicked.connect(lambda: self.show_start_panels())
 
         panel_widget.setObjectName("ProjectRightPanel")
         self.safe_apply_theme_style(panel_widget, "panel", self.theme)
         self.safe_apply_theme_style(header_label, "label", self.theme)
-
-        # --- Projektliste-Selection-Handler verbinden ---
-        if hasattr(self, "project_list_widget"):
-            self.project_list_widget.itemSelectionChanged.connect(self.update_project_buttons_state)
-            self.update_project_buttons_state()  # Initialer Zustand
-
         return panel_widget
-    
-    # Aktualisiere den Zustand der Projekt-Buttons basierend auf der Auswahl
-    def update_project_buttons_state(self):
-        # Prüfe, ob Projekte vorhanden und eines ausgewählt ist
-        has_projects = self.project_list_widget.count() > 0
-        selected = self.project_list_widget.selectedItems()
-        self.botn_fo_02.setEnabled(bool(selected))
-        self.botn_fo_04.setEnabled(bool(selected))
-        # Speichern-Button bleibt deaktiviert, bis im Formular etwas geändert wird
-        self.botn_fo_03.setEnabled(False)    
     
     # Dieses right_panel_settings wird angezeigt, wenn die Einstellungen bearbeitet werden sollen.
     # Es beinhaltet die Navigation zu den verschiedenen Einstellungs-Kategorien und beendet den Einstellungs-Modus.
@@ -1633,8 +1615,9 @@ class StartWindow(QMainWindow):
     
     # Lege ein neues Projekt an
     def on_create_project_clicked(self):
+        import datetime
 
-        # 1. Daten auslesen
+        # 1. Daten aus den Eingabefeldern auslesen
         project_data = {}
         for field_name, widget in self.project_form_widgets.items():
             if isinstance(widget, QLineEdit):
@@ -1644,35 +1627,51 @@ class StartWindow(QMainWindow):
             elif isinstance(widget, QSpinBox):
                 project_data[field_name] = widget.value()
             elif isinstance(widget, QDateEdit):
+                # Speichere das Datum im aktuell angezeigten Format
                 project_data[field_name] = widget.date().toString(widget.displayFormat())
             else:
                 project_data[field_name] = str(widget.text())
 
-        # 2. Bestimme Dateiname
-        if hasattr(self, "current_project_file") and self.current_project_file:
-            filename = self.current_project_file
-        else:
-            DATA_DIR.mkdir(exist_ok=True)
-            existing_projects = list(DATA_DIR.glob("project_*.json"))
-            max_id = 0
-            for file in existing_projects:
-                try:
-                    id_num = int(file.stem.split("_")[1])
-                    if id_num > max_id:
-                        max_id = id_num
-                except Exception:
-                    continue
-            new_id = max_id + 1
-            filename = DATA_DIR / f"project_{new_id}.json"
-            self.current_project_file = filename
+        # 2. Neue ID bestimmen
+        DATA_DIR.mkdir(exist_ok=True)
+        existing_projects = list(DATA_DIR.glob("project_*.json"))
+        max_id = 0
+        for file in existing_projects:
+            try:
+                id_num = int(file.stem.split("_")[1])
+                if id_num > max_id:
+                    max_id = id_num
+            except Exception:
+                continue
+        new_id = max_id + 1
 
-        # 3. Speichern
+        # 3. Datei speichern
+        filename = DATA_DIR / f"project_{new_id}.json"
         with open(filename, "w", encoding="utf-8") as f:
             json.dump(project_data, f, ensure_ascii=False, indent=2)
-        log_info(f"Projekt gespeichert: {filename}")
+        log_info(f"Neues Projekt gespeichert: {filename}")
 
-        # 4. Speichern-Button wieder deaktivieren
-        self.botn_fo_03.setEnabled(False)
+        # 4. Felder im Formular mit den gespeicherten Werten befüllen
+        for field_name, widget in self.project_form_widgets.items():
+            value = project_data.get(field_name, "")
+            if isinstance(widget, QLineEdit):
+                widget.setText(value)
+            elif isinstance(widget, QComboBox):
+                idx = widget.findText(value)
+                if idx >= 0:
+                    widget.setCurrentIndex(idx)
+            elif isinstance(widget, QSpinBox):
+                try:
+                    widget.setValue(int(value))
+                except Exception:
+                    pass
+            elif isinstance(widget, QDateEdit):
+                # Setze das Datum im aktuell angezeigten Format zurück
+                try:
+                    date = datetime.datetime.strptime(value, widget.displayFormat().replace("dd", "%d").replace("MM", "%m").replace("yyyy", "%Y"))
+                    widget.setDate(date.date())
+                except Exception:
+                    widget.setDate(datetime.date.today())
 
     # Lade ein bestehendes Projekt
     def show_project_form_new(self):
@@ -1686,26 +1685,14 @@ class StartWindow(QMainWindow):
                 old_center_panel.setParent(None)
             self.center_panel_widget = new_center_panel
             self.safe_apply_theme_style(new_center_panel, "panel", self.theme)
-        # Nur Speichern-Button aktivieren, andere deaktivieren
-        self.botn_fo_03.setEnabled(True)
-        self.botn_fo_02.setEnabled(False)
-        self.botn_fo_04.setEnabled(False)
-        # Beobachte Änderungen im Formular, um Speichern-Button zu aktivieren
-        for widget in self.project_form_widgets.values():
-            widget.textChanged.connect(self.enable_save_button) if isinstance(widget, QLineEdit) else None
-            widget.currentIndexChanged.connect(self.enable_save_button) if isinstance(widget, QComboBox) else None
-            widget.valueChanged.connect(self.enable_save_button) if isinstance(widget, QSpinBox) else None
-            widget.dateChanged.connect(self.enable_save_button) if isinstance(widget, QDateEdit) else None
-
-    def enable_save_button(self):
-        self.botn_fo_03.setEnabled(True)
 
     # Lade ein bestehendes Projekt        
     def show_project_form_load(self):
         selected_items = self.project_list_widget.selectedItems()
         if not selected_items:
-            return
+            return  # Kein Projekt ausgewählt
         project_title = selected_items[0].text()
+        # Finde die passende Datei
         for file in DATA_DIR.glob("project_*.json"):
             try:
                 with open(file, "r", encoding="utf-8") as f:
@@ -1716,7 +1703,8 @@ class StartWindow(QMainWindow):
             except Exception:
                 continue
         else:
-            return
+            return  # Kein passendes Projekt gefunden
+
         splitter = self.centralWidget()
         if isinstance(splitter, QSplitter):
             new_center_panel = self.create_center_panel_project_form(project_data)
@@ -1726,43 +1714,8 @@ class StartWindow(QMainWindow):
             if old_center_panel is not None:
                 old_center_panel.setParent(None)
             self.center_panel_widget = new_center_panel
-            self.safe_apply_theme_style(new_center_panel, "panel", self.theme)
-        # Speichern-Button deaktivieren, bis etwas geändert wird
-        self.botn_fo_03.setEnabled(False)
-        self.botn_fo_04.setEnabled(False)
-        self.botn_fo_02.setEnabled(False)
-        # Beobachte Änderungen im Formular
-        for widget in self.project_form_widgets.values():
-            widget.textChanged.connect(self.enable_save_button) if isinstance(widget, QLineEdit) else None
-            widget.currentIndexChanged.connect(self.enable_save_button) if isinstance(widget, QComboBox) else None
-            widget.valueChanged.connect(self.enable_save_button) if isinstance(widget, QSpinBox) else None
-            widget.dateChanged.connect(self.enable_save_button) if isinstance(widget, QDateEdit) else None   
+            self.safe_apply_theme_style(new_center_panel, "panel", self.theme)   
 
-    # Lösche das ausgewählte Projekt
-    def delete_selected_project(self):
-        selected_items = self.project_list_widget.selectedItems()
-        if not selected_items:
-            return
-        project_title = selected_items[0].text()
-        # Sicherheitsabfrage (z.B. QMessageBox)
-        from PySide6.QtWidgets import QMessageBox
-        reply = QMessageBox.question(self, "Projekt löschen",
-                                    f"Möchten Sie das Projekt '{project_title}' wirklich löschen?",
-                                    QMessageBox.Yes | QMessageBox.No)
-        if reply == QMessageBox.Yes:
-            for file in DATA_DIR.glob("project_*.json"):
-                try:
-                    with open(file, "r", encoding="utf-8") as f:
-                        data = json.load(f)
-                    if data.get("project_title") == project_title or file.stem == project_title:
-                        file.unlink()
-                        log_info(f"Projekt gelöscht: {file}")
-                        break
-                except Exception:
-                    continue
-            # Projektliste aktualisieren
-            self.show_center_panel(0, self.center_panel_functions)
-            self.update_project_buttons_state()
 
     # --------------------------------------------------------------           )
     # --------------------------------------------------------------
