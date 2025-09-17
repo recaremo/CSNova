@@ -75,7 +75,7 @@
       "type": "combobox",
       "required": false,
       "width": 220,
-      "datafield_name": "poject_worktype_ID",
+      "datafield_name": "project_worktype_ID",
       "combo_key": "work_type"
     },
     {

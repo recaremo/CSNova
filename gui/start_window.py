@@ -1,4 +1,4 @@
-from PySide6.QtWidgets import QMainWindow, QLineEdit, QDateEdit, QFormLayout, QSpinBox , QLabel, QWidget, QVBoxLayout, QSplitter, QPushButton, QSpacerItem, QSizePolicy, QDialog, QHBoxLayout, QApplication, QComboBox
+from PySide6.QtWidgets import QFileDialog, QMainWindow, QLineEdit, QDateEdit, QFormLayout, QSpinBox , QLabel, QWidget, QVBoxLayout, QSplitter, QPushButton, QSpacerItem, QSizePolicy, QDialog, QHBoxLayout, QApplication, QComboBox
 from PySide6.QtCore import Qt, QEvent
 from PySide6.QtGui import QPixmap
 import json
@@ -131,43 +131,6 @@ class StartWindow(QMainWindow):
             splitter_sizes = self.panel_settings.get("splitter_sizes", [300, 600, 300])
             splitter.setSizes(splitter_sizes)
     
-    # Right Panels mit den jeweiligen Buttons
-    def create_right_panel_project(self):
-        panel_widget = QWidget()
-        panel_layout = QVBoxLayout(panel_widget)
-        panel_layout.setContentsMargins(20, 20, 20, 20)
-        panel_layout.setSpacing(16)
-        panel_layout.setAlignment(Qt.AlignTop)
-
-        # Header
-        header_text = self.get_translation("ProjectWinHeader", "Project Management")
-        header_label = QLabel(header_text, panel_widget)
-        header_label.setObjectName("ProjectPanelHeaderLabel")
-        header_label.setAlignment(Qt.AlignHCenter | Qt.AlignTop)
-        panel_layout.addWidget(header_label)
-
-        # Button-Konfiguration: (Key, Hint-Key)
-        button_keys = [
-            ("botn_fo_01", "botn_fo_01_hint"),
-            ("botn_fo_02", "botn_fo_02_hint"),
-            ("botn_fo_03", "botn_fo_03_hint"),
-            ("botn_fo_04", "botn_fo_04_hint"),
-            ("botn_fo_05", "botn_fo_05_hint"),
-        ]
-        for i, (key, hint_key) in enumerate(button_keys, start=1):
-            btn_text = self.get_translation(key, key)
-            btn_hint = self.get_translation(hint_key, "")
-            btn = QPushButton(btn_text, panel_widget)
-            btn.setToolTip(btn_hint)
-            panel_layout.addWidget(btn)
-            setattr(self, f"botn_fo_{i:02d}", btn)
-            # Hier kannst du später die Button-Handler ergänzen
-
-        panel_widget.setObjectName("ProjectRightPanel")
-        self.safe_apply_theme_style(panel_widget, "panel", self.theme)
-        self.safe_apply_theme_style(header_label, "label", self.theme)
-        return panel_widget
-
     # Right Panels mit den jeweiligen Buttons
     def create_right_panel_character(self):
         panel_widget = QWidget()
@@ -621,9 +584,7 @@ class StartWindow(QMainWindow):
             log_exception("Fehler beim Wechsel zum nächsten Schritt", e)
     
     # PANELS FUNKTIONEN - LEFT_PANEL
-    # ..............................................................
-
-    
+    # .............................................................. 
     # Dieses left_panel_start wird beim Systemstart angezeigt und beinhaltet das Programmlogo
     # und grundelegende Informationen: (c), Version, Autor, Lizenz und evtl. weitere Hinweise.
     def create_left_panel_start(self, splitter_sizes):
@@ -685,7 +646,6 @@ class StartWindow(QMainWindow):
                 log_error("Fehler: Pixmap ist null, Bild konnte nicht geladen werden.")
         return panel_widget, update_image_on_splitter_move
     
-    
     # Dieses left_panel_editor wird im Editor-Modus angezeigt und beinhaltet
     # die Inhalte aus den Tabellen: Charaktere, Orte, Objekte, Kapitel, Szenen
     def create_left_panel_editor(self):
@@ -704,11 +664,9 @@ class StartWindow(QMainWindow):
     def create_left_panel_character(self):
         return self.create_left_panel_with_header("char_ma_header", "Characteres")
 
-    
     # Dieses left_panel_location wird angezeigt, wenn ein Ort erstellt oder bearbeitert wird.
     def create_left_panel_location(self):
         return self.create_left_panel_with_header("proj_lo_header", "Locations")
-
     
     # Dieses left_panel_object wird angezeigt, wenn ein Objekt erstellt oder bearbeitert wird.
     def create_left_panel_object(self):
@@ -725,7 +683,6 @@ class StartWindow(QMainWindow):
     # ..............................................................
     # PANELS FUNKTIONEN - CENTER_PANEL
     # ..............................................................
-    
     # Dieses center_panel_start wird beim Systemstart angezeigt und beinhaltet
     # grundlegende Informationen und Anpassungsmöglichkeiten für die Einstellungen: Sprache und Theme
     def create_center_panel_start(self):
@@ -898,7 +855,6 @@ class StartWindow(QMainWindow):
     def create_center_panel_editor(self):
         return self.create_center_panel_with_header("edit_lp_header", "Editor")
 
-    
     # Dieses center_panel_project wird angezeigt, wenn ein Projekt erstellt oder bearbeitert wird.
     def create_center_panel_project(self):
         panel_widget = QWidget()
@@ -915,21 +871,18 @@ class StartWindow(QMainWindow):
         # Projektliste
         from PySide6.QtWidgets import QListWidget
         project_list = QListWidget(panel_widget)
-        project_files = sorted(DATA_DIR.glob("project_*.json"))
+        project_files = sorted(DATA_DIR.glob("Project_*.json"))
         for file in project_files:
-            # Optional: Lade Projekttitel aus Datei, sonst Dateiname
-            try:
-                with open(file, "r", encoding="utf-8") as f:
-                    data = json.load(f)
-                title = data.get("project_title") or file.stem
-            except Exception:
-                title = file.stem
-            project_list.addItem(title)
+            if file.is_file():
+                project_list.addItem(file.name)
         panel_layout.addWidget(project_list)
         self.project_list_widget = project_list
 
         panel_widget.setObjectName("ProjectOverviewPanel")
         self.safe_apply_theme_style(panel_widget, "panel", self.theme)
+
+        self.project_list_widget.itemSelectionChanged.connect(self.update_project_buttons_state)
+
         return panel_widget
 
     # Formular zur Erstellung oder Bearbeitung eines Projekts
@@ -941,7 +894,6 @@ class StartWindow(QMainWindow):
         panel_layout.setContentsMargins(20, 20, 20, 20)
         panel_layout.setSpacing(12)
 
-        # Felder aus form_fields.json laden
         with open("core/config/form_fields.json", "r", encoding="utf-8") as f:
             form_fields = json.load(f)
         project_fields = form_fields.get("projects", [])
@@ -951,14 +903,34 @@ class StartWindow(QMainWindow):
         for field in project_fields:
             field_name = field.get("datafield_name")
             if not field_name:
-                continue  # Überspringe Header oder ungültige Felder
+                continue
 
             label_key = field.get("label_key", field_name)
             label_text = self.get_translation(label_key, field_name)
             field_type = field.get("type", "text")
             width = field.get("width")
 
-            # Widget-Erstellung je nach Typ
+            # Spezialfall: project_cover_image mit Button
+            if field_name == "project_cover_image":
+                widget = QLineEdit(panel_widget)
+                if width:
+                    try:
+                        widget.setFixedWidth(int(width))
+                    except Exception:
+                        pass
+                btn = QPushButton(self.get_translation("btn_load_image", "Load image"), panel_widget)
+                # Nutze ein Lambda, um das aktuelle Widget zu binden!
+                btn.clicked.connect(lambda _, w=widget: self.load_image_for_field(w))
+                hbox = QHBoxLayout()
+                hbox.addWidget(widget)
+                hbox.addWidget(btn)
+                container = QWidget(panel_widget)
+                container.setLayout(hbox)
+                panel_layout.addRow(label_text, container)
+                self.project_form_widgets[field_name] = widget
+                continue
+
+            # Standard-Widget-Erstellung
             if field_type == "text":
                 widget = QLineEdit(panel_widget)
             elif field_type == "combobox":
@@ -968,7 +940,7 @@ class StartWindow(QMainWindow):
                     items = list(self.combobox_translations.get(combo_key, {}).values())
                     widget.addItems(items)
                     if items:
-                        widget.setCurrentIndex(len(items) - 1)  # Letzter Eintrag als Standard
+                        widget.setCurrentIndex(len(items) - 1)
             elif field_type == "spin":
                 widget = QSpinBox(panel_widget)
                 widget.setMaximum(field.get("max", 1000000))
@@ -979,7 +951,6 @@ class StartWindow(QMainWindow):
                 widget.setCalendarPopup(True)
                 today = datetime.date.today()
                 widget.setDate(today)
-                # Sprachabhängiges Datumsformat
                 if self.language == "de":
                     widget.setDisplayFormat("dd.MM.yyyy")
                 elif self.language == "en":
@@ -999,7 +970,7 @@ class StartWindow(QMainWindow):
                 except Exception:
                     pass
 
-            # Wenn Projektdaten übergeben wurden, Felder befüllen
+            # Felder befüllen, falls Daten vorhanden
             if project_data and field_name in project_data:
                 value = project_data[field_name]
                 if isinstance(widget, QLineEdit):
@@ -1015,7 +986,6 @@ class StartWindow(QMainWindow):
                         pass
                 elif isinstance(widget, QDateEdit):
                     try:
-                        # Versuche das Datum im aktuellen Anzeigeformat zu setzen
                         fmt = widget.displayFormat().replace("dd", "%d").replace("MM", "%m").replace("yyyy", "%Y")
                         date = datetime.datetime.strptime(value, fmt)
                         widget.setDate(date.date())
@@ -1027,24 +997,31 @@ class StartWindow(QMainWindow):
 
         panel_widget.setObjectName("ProjectFormPanel")
         self.safe_apply_theme_style(panel_widget, "panel", self.theme)
-        return panel_widget 
+        return panel_widget
 
+    # Funktion um ein Bild für ein Feld zu laden
+    def load_image_for_field(self, widget):
+        file_path, _ = QFileDialog.getOpenFileName(
+            self,
+            self.get_translation("select_image", "Select an image"),
+            "",
+            "Bilder (*.png *.jpg *.jpeg *.bmp *.gif);;alle Dateien (*)"
+        )
+        if file_path:
+            widget.setText(file_path)
 
     # Dieses center_panel_settings wird angezeigt, wenn die Einstellungen bearbeitet werden sollen.
     def create_center_panel_settings(self):
         return self.create_center_panel_with_header("pref_lp_header", "Preferences")
-
-    
+ 
     # Dieses center_panel_character wird angezeigt, wenn ein Charakter erstellt oder bearbeitert wird.
     def create_center_panel_character(self):
         return self.create_center_panel_with_header("char_ma_header", "Characters")  
-
-    
+   
     # Dieses center_panel_location wird angezeigt, wenn ein Ort erstellt oder bearbeitert wird.
     def create_center_panel_location(self):
         return self.create_center_panel_with_header("proj_lo_header", "Locations")  
-
-    
+   
     # Dieses center_panel_object wird angezeigt, wenn ein Objekt erstellt oder bearbeitert wird.
     def create_center_panel_object(self):
         return self.create_center_panel_with_header("proj_ob_header", "Objects")  
@@ -1056,11 +1033,10 @@ class StartWindow(QMainWindow):
     # Dieses center_panel_about wird angezeigt, wenn "Über" geöffnet wird.
     def create_center_panel_about(self):
         return self.create_center_panel_with_header("abou_lp_header", "About")
+    
     # ..............................................................
-
     # PANELS FUNKTIONEN (PLATZHALTER) - RIGHT_PANEL
     # ..............................................................
-
     # Dieses right_panel_start wird beim Systemstart angezeigt und beinhaltet
     # die Navigation zum Aufruf von: Editor, Projekt, Einstellungen, Hilfe, Über
     def show_start_panels(self):
@@ -1309,20 +1285,30 @@ class StartWindow(QMainWindow):
 
         # --- Projektliste-Selection-Handler verbinden ---
         if hasattr(self, "project_list_widget"):
-            self.project_list_widget.itemSelectionChanged.connect(self.update_project_buttons_state)
+            #self.project_list_widget.itemSelectionChanged.connect(self.update_project_buttons_state)
             self.update_project_buttons_state()  # Initialer Zustand
 
         return panel_widget
     
     # Aktualisiere den Zustand der Projekt-Buttons basierend auf der Auswahl
     def update_project_buttons_state(self):
+        # Stelle sicher, dass die Buttons existieren
+        if not (hasattr(self, "botn_fo_02") and hasattr(self, "botn_fo_03") and hasattr(self, "botn_fo_04")):
+            return
+        
+        # Prüfe, ob das Center-Panel die Projektübersicht ist
+        is_project_overview = (
+            hasattr(self, "center_panel_widget") and
+            self.center_panel_widget.objectName() == "ProjectOverviewPanel"
+        )
         # Prüfe, ob Projekte vorhanden und eines ausgewählt ist
         has_projects = self.project_list_widget.count() > 0
         selected = self.project_list_widget.selectedItems()
-        self.botn_fo_02.setEnabled(bool(selected))
-        self.botn_fo_04.setEnabled(bool(selected))
+        enable = bool(selected) and is_project_overview
+        self.botn_fo_02.setEnabled(enable)
+        self.botn_fo_04.setEnabled(enable)
         # Speichern-Button bleibt deaktiviert, bis im Formular etwas geändert wird
-        self.botn_fo_03.setEnabled(False)    
+        self.botn_fo_03.setEnabled(False)  
     
     # Dieses right_panel_settings wird angezeigt, wenn die Einstellungen bearbeitet werden sollen.
     # Es beinhaltet die Navigation zu den verschiedenen Einstellungs-Kategorien und beendet den Einstellungs-Modus.
@@ -1633,6 +1619,8 @@ class StartWindow(QMainWindow):
     
     # Lege ein neues Projekt an
     def on_create_project_clicked(self):
+        import datetime
+        import re
 
         # 1. Daten auslesen
         project_data = {}
@@ -1648,36 +1636,31 @@ class StartWindow(QMainWindow):
             else:
                 project_data[field_name] = str(widget.text())
 
-        # 2. Bestimme Dateiname
-        if hasattr(self, "current_project_file") and self.current_project_file:
-            filename = self.current_project_file
-        else:
-            DATA_DIR.mkdir(exist_ok=True)
-            existing_projects = list(DATA_DIR.glob("project_*.json"))
-            max_id = 0
-            for file in existing_projects:
-                try:
-                    id_num = int(file.stem.split("_")[1])
-                    if id_num > max_id:
-                        max_id = id_num
-                except Exception:
-                    continue
-            new_id = max_id + 1
-            filename = DATA_DIR / f"project_{new_id}.json"
-            self.current_project_file = filename
+        # 2. Dateinamen bestimmen
+        title = project_data.get("project_titel", "").strip()
+        start_date = project_data.get("project_startdate", "").strip()
+        # Entferne alle nicht-alphanumerischen Zeichen aus dem Titel (optional, für Dateisystem-Sicherheit)
+        safe_title = re.sub(r'[^A-Za-z0-9_\-]', '_', title) or "Unbenannt"
+        # Extrahiere nur die Ziffern aus dem Datum
+        date_digits = re.sub(r'\D', '', start_date) or "00000000"
+        filename = f"Project_{safe_title}_{date_digits}.json"
+        filepath = DATA_DIR / filename
 
         # 3. Speichern
-        with open(filename, "w", encoding="utf-8") as f:
+        with open(filepath, "w", encoding="utf-8") as f:
             json.dump(project_data, f, ensure_ascii=False, indent=2)
-        log_info(f"Projekt gespeichert: {filename}")
+        log_info(f"Projekt gespeichert: {filepath}")
 
         # 4. Speichern-Button wieder deaktivieren
         self.botn_fo_03.setEnabled(False)
+        self.show_center_panel(0, self.center_panel_functions)
 
     # Lade ein bestehendes Projekt
     def show_project_form_new(self):
         splitter = self.centralWidget()
         if isinstance(splitter, QSplitter):
+            # Speichere aktuelle Splitter-Größen
+            splitter_sizes = splitter.sizes()
             new_center_panel = self.create_center_panel_project_form()
             old_center_panel = splitter.widget(1)
             splitter.insertWidget(1, new_center_panel)
@@ -1686,6 +1669,8 @@ class StartWindow(QMainWindow):
                 old_center_panel.setParent(None)
             self.center_panel_widget = new_center_panel
             self.safe_apply_theme_style(new_center_panel, "panel", self.theme)
+            # Setze die Splitter-Größen zurück
+            splitter.setSizes(splitter_sizes)
         # Nur Speichern-Button aktivieren, andere deaktivieren
         self.botn_fo_03.setEnabled(True)
         self.botn_fo_02.setEnabled(False)
@@ -1697,28 +1682,40 @@ class StartWindow(QMainWindow):
             widget.valueChanged.connect(self.enable_save_button) if isinstance(widget, QSpinBox) else None
             widget.dateChanged.connect(self.enable_save_button) if isinstance(widget, QDateEdit) else None
 
+    # Aktiviere den Speichern-Button, wenn Änderungen im Formular vorgenommen werden
     def enable_save_button(self):
         self.botn_fo_03.setEnabled(True)
 
+    # Aktualisiere die Projektliste
+    def update_project_list(self):
+        """Zeigt alle Dateien aus dem DATA_DIR im ListView an (Dateiname, nicht Titel aus Datei)."""
+        if hasattr(self, "project_list_widget"):
+            self.project_list_widget.clear()
+            # Zeige ALLE Dateien im data-Verzeichnis an
+            for file in sorted(DATA_DIR.glob("Projekt_*.json")):
+                if file.is_file():
+                    self.project_list_widget.addItem(file.name)
+    
     # Lade ein bestehendes Projekt        
     def show_project_form_load(self):
         selected_items = self.project_list_widget.selectedItems()
         if not selected_items:
             return
-        project_title = selected_items[0].text()
-        for file in DATA_DIR.glob("project_*.json"):
-            try:
-                with open(file, "r", encoding="utf-8") as f:
-                    data = json.load(f)
-                if data.get("project_title") == project_title or file.stem == project_title:
-                    project_data = data
-                    break
-            except Exception:
-                continue
-        else:
+        filename = selected_items[0].text()
+        file = DATA_DIR / filename
+        if not file.exists():
             return
+        try:
+            with open(file, "r", encoding="utf-8") as f:
+                project_data = json.load(f)
+        except Exception as e:
+            log_exception(f"Fehler beim Laden des Projekts: {file}", e)
+            return
+
         splitter = self.centralWidget()
         if isinstance(splitter, QSplitter):
+            # Speichere aktuelle Splitter-Größen
+            splitter_sizes = splitter.sizes()
             new_center_panel = self.create_center_panel_project_form(project_data)
             old_center_panel = splitter.widget(1)
             splitter.insertWidget(1, new_center_panel)
@@ -1727,44 +1724,49 @@ class StartWindow(QMainWindow):
                 old_center_panel.setParent(None)
             self.center_panel_widget = new_center_panel
             self.safe_apply_theme_style(new_center_panel, "panel", self.theme)
+            # Setze die Splitter-Größen zurück
+            splitter.setSizes(splitter_sizes)
+
         # Speichern-Button deaktivieren, bis etwas geändert wird
         self.botn_fo_03.setEnabled(False)
         self.botn_fo_04.setEnabled(False)
         self.botn_fo_02.setEnabled(False)
         # Beobachte Änderungen im Formular
         for widget in self.project_form_widgets.values():
-            widget.textChanged.connect(self.enable_save_button) if isinstance(widget, QLineEdit) else None
-            widget.currentIndexChanged.connect(self.enable_save_button) if isinstance(widget, QComboBox) else None
-            widget.valueChanged.connect(self.enable_save_button) if isinstance(widget, QSpinBox) else None
-            widget.dateChanged.connect(self.enable_save_button) if isinstance(widget, QDateEdit) else None   
+            if isinstance(widget, QLineEdit):
+                widget.textChanged.connect(self.enable_save_button)
+            elif isinstance(widget, QComboBox):
+                widget.currentIndexChanged.connect(self.enable_save_button)
+            elif isinstance(widget, QSpinBox):
+                widget.valueChanged.connect(self.enable_save_button)
+            elif isinstance(widget, QDateEdit):
+                widget.dateChanged.connect(self.enable_save_button)
 
     # Lösche das ausgewählte Projekt
     def delete_selected_project(self):
         selected_items = self.project_list_widget.selectedItems()
         if not selected_items:
             return
-        project_title = selected_items[0].text()
-        # Sicherheitsabfrage (z.B. QMessageBox)
+        filename = selected_items[0].text()
+        file = DATA_DIR / filename
         from PySide6.QtWidgets import QMessageBox
-        reply = QMessageBox.question(self, "Projekt löschen",
-                                    f"Möchten Sie das Projekt '{project_title}' wirklich löschen?",
-                                    QMessageBox.Yes | QMessageBox.No)
+        reply = QMessageBox.question(
+            self, "Projekt löschen",
+            f"Möchten Sie das Projekt '{filename}' wirklich löschen?",
+            QMessageBox.Yes | QMessageBox.No
+        )
         if reply == QMessageBox.Yes:
-            for file in DATA_DIR.glob("project_*.json"):
-                try:
-                    with open(file, "r", encoding="utf-8") as f:
-                        data = json.load(f)
-                    if data.get("project_title") == project_title or file.stem == project_title:
-                        file.unlink()
-                        log_info(f"Projekt gelöscht: {file}")
-                        break
-                except Exception:
-                    continue
+            try:
+                if file.exists():
+                    file.unlink()
+                    log_info(f"Projekt gelöscht: {file}")
+            except Exception as e:
+                log_exception(f"Fehler beim Löschen der Datei: {file}", e)
             # Projektliste aktualisieren
             self.show_center_panel(0, self.center_panel_functions)
             self.update_project_buttons_state()
 
-    # --------------------------------------------------------------           )
+    # --------------------------------------------------------------
     # --------------------------------------------------------------
     @log_call
     def init_ui(self):
