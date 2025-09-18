@@ -864,19 +864,22 @@ class StartWindow(QMainWindow):
         panel_layout.setAlignment(Qt.AlignTop)
 
         # Infotext
-        info_label = QLabel(self.get_translation("project_overview_info", "Hier sehen Sie alle gespeicherten Projekte."))
+        info_label = QLabel(self.get_translation("project_overview_info", "All your projects are listed here. You can create a new project, edit an existing one, or delete a project."), panel_widget)
         info_label.setWordWrap(True)
         panel_layout.addWidget(info_label)
 
         # Projektliste
         from PySide6.QtWidgets import QListWidget
         project_list = QListWidget(panel_widget)
+        #project_list.setMaximumWidth(400)
+        #project_list.setMaximumHeight(600)
         project_files = sorted(DATA_DIR.glob("Project_*.json"))
         for file in project_files:
             if file.is_file():
                 project_list.addItem(file.name)
         panel_layout.addWidget(project_list)
         self.project_list_widget = project_list
+        panel_layout.addSpacerItem(QSpacerItem(20, 20, QSizePolicy.Minimum, QSizePolicy.Expanding))
 
         panel_widget.setObjectName("ProjectOverviewPanel")
         self.safe_apply_theme_style(panel_widget, "panel", self.theme)
@@ -919,15 +922,43 @@ class StartWindow(QMainWindow):
                     except Exception:
                         pass
                 btn = QPushButton(self.get_translation("btn_load_image", "Load image"), panel_widget)
-                # Nutze ein Lambda, um das aktuelle Widget zu binden!
+                btn.setFixedWidth(200)
                 btn.clicked.connect(lambda _, w=widget: self.load_image_for_field(w))
+
+                # Bild-Label rechts neben dem Button
+                image_label = QLabel(panel_widget)
+                image_label.setFixedSize(80, 80)  # z.B. 80x80 Pixel
+                image_label.setScaledContents(True)
+
+                # Bild laden, falls vorhanden
+                if project_data and field_name in project_data and project_data[field_name]:
+                    image_path = project_data[field_name]
+                    if os.path.exists(image_path):
+                        pixmap = QPixmap(image_path)
+                        if not pixmap.isNull():
+                            image_label.setPixmap(pixmap.scaled(80, 80, Qt.KeepAspectRatio, Qt.SmoothTransformation))
+                        else:
+                            image_label.clear()
+                    else:
+                        image_label.clear()
+                else:
+                    image_label.clear()
+
                 hbox = QHBoxLayout()
-                hbox.addWidget(widget)
-                hbox.addWidget(btn)
+                hbox.setContentsMargins(0, 0, 0, 0)
+                hbox.setSpacing(6)
+                hbox.setAlignment(Qt.AlignVCenter)
+                hbox.addWidget(widget, alignment=Qt.AlignVCenter)
+                hbox.addWidget(btn, alignment=Qt.AlignVCenter)
+                hbox.addWidget(image_label, alignment=Qt.AlignVCenter)
                 container = QWidget(panel_widget)
                 container.setLayout(hbox)
                 panel_layout.addRow(label_text, container)
                 self.project_form_widgets[field_name] = widget
+                # Optional: das Bild-Label merken, falls du es später aktualisieren willst
+                self.project_form_widgets[field_name + "_image_label"] = image_label
+                if project_data and field_name in project_data:
+                    widget.setText(project_data[field_name])
                 continue
 
             # Standard-Widget-Erstellung

@@ -1,4 +1,4 @@
-from PySide6.QtWidgets import QFileDialog, QMainWindow, QLineEdit, QDateEdit, QFormLayout, QSpinBox , QLabel, QWidget, QVBoxLayout, QSplitter, QPushButton, QSpacerItem, QSizePolicy, QDialog, QHBoxLayout, QApplication, QComboBox
+from PySide6.QtWidgets import QCheckBox, QTextEdit, QFileDialog, QMainWindow, QLineEdit, QDateEdit, QFormLayout, QSpinBox , QLabel, QWidget, QVBoxLayout, QSplitter, QPushButton, QSpacerItem, QSizePolicy, QDialog, QHBoxLayout, QApplication, QComboBox
 from PySide6.QtCore import Qt, QEvent
 from PySide6.QtGui import QPixmap
 import json
@@ -600,7 +600,7 @@ class StartWindow(QMainWindow):
             self.apply_theme_style(label, "label", self.theme)
         panel_layout.addWidget(label) """
 
-        image_path = ASSETS_DIR / "media" / "csNova_background_start.png"
+        image_path = ASSETS_DIR / "media" / "Buchcover_csNova.png"
         image_label = QLabel(panel_widget)
         image_label.setAlignment(Qt.AlignTop | Qt.AlignHCenter)
         pixmap = QPixmap(str(image_path))
@@ -864,19 +864,22 @@ class StartWindow(QMainWindow):
         panel_layout.setAlignment(Qt.AlignTop)
 
         # Infotext
-        info_label = QLabel(self.get_translation("project_overview_info", "Hier sehen Sie alle gespeicherten Projekte."))
+        info_label = QLabel(self.get_translation("project_overview_info", "All your projects are listed here. You can create a new project, edit an existing one, or delete a project."), panel_widget)
         info_label.setWordWrap(True)
         panel_layout.addWidget(info_label)
 
         # Projektliste
         from PySide6.QtWidgets import QListWidget
         project_list = QListWidget(panel_widget)
+        #project_list.setMaximumWidth(400)
+        #project_list.setMaximumHeight(600)
         project_files = sorted(DATA_DIR.glob("Project_*.json"))
         for file in project_files:
             if file.is_file():
                 project_list.addItem(file.name)
         panel_layout.addWidget(project_list)
         self.project_list_widget = project_list
+        panel_layout.addSpacerItem(QSpacerItem(20, 20, QSizePolicy.Minimum, QSizePolicy.Expanding))
 
         panel_widget.setObjectName("ProjectOverviewPanel")
         self.safe_apply_theme_style(panel_widget, "panel", self.theme)
@@ -890,10 +893,48 @@ class StartWindow(QMainWindow):
         import datetime
 
         panel_widget = QWidget()
-        panel_layout = QFormLayout(panel_widget)
-        panel_layout.setContentsMargins(20, 20, 20, 20)
-        panel_layout.setSpacing(12)
+        main_layout = QHBoxLayout(panel_widget)
+        main_layout.setContentsMargins(20, 20, 20, 20)
+        main_layout.setSpacing(16)
 
+        # Formular-Layout (links)
+        form_layout = QFormLayout()
+        form_layout.setSpacing(12)
+        form_layout.setContentsMargins(0, 0, 0, 0)
+
+        # Bild-Label (rechts oben)
+        self.project_image_label = QLabel(panel_widget)
+        self.project_image_label.setFixedSize(400, 600)  # Größe nach Wunsch anpassen
+        #self.project_image_label.setScaledContents(True)
+
+        # --- Bild setzen: Cover oder Platzhalter ---
+        cover_path = None
+        if project_data and "project_cover_image" in project_data and project_data["project_cover_image"]:
+            cover_path = project_data["project_cover_image"]
+            if not os.path.exists(cover_path):
+                cover_path = None
+
+        placeholder_path = os.path.join(DATA_DIR, "placeholder_cover.png")
+        if not cover_path and os.path.exists(placeholder_path):
+            cover_path = placeholder_path
+
+        if cover_path and os.path.exists(cover_path):
+            pixmap = QPixmap(cover_path)
+            if not pixmap.isNull():
+                self.project_image_label.setPixmap(
+                    pixmap.scaled(
+                        self.project_image_label.width(),
+                        self.project_image_label.height(),
+                        Qt.KeepAspectRatio,
+                        Qt.SmoothTransformation
+                    )
+                )
+            else:
+                self.project_image_label.clear()
+        else:
+            self.project_image_label.clear()
+
+        # Felder laden
         with open("core/config/form_fields.json", "r", encoding="utf-8") as f:
             form_fields = json.load(f)
         project_fields = form_fields.get("projects", [])
@@ -919,20 +960,42 @@ class StartWindow(QMainWindow):
                     except Exception:
                         pass
                 btn = QPushButton(self.get_translation("btn_load_image", "Load image"), panel_widget)
-                # Nutze ein Lambda, um das aktuelle Widget zu binden!
+                btn.setFixedWidth(200)
                 btn.clicked.connect(lambda _, w=widget: self.load_image_for_field(w))
+
                 hbox = QHBoxLayout()
-                hbox.addWidget(widget)
-                hbox.addWidget(btn)
+                hbox.setContentsMargins(0, 0, 0, 0)
+                hbox.setSpacing(6)
+                hbox.setAlignment(Qt.AlignVCenter)
+                hbox.addWidget(widget, alignment=Qt.AlignVCenter)
+                hbox.addWidget(btn, alignment=Qt.AlignVCenter)
                 container = QWidget(panel_widget)
                 container.setLayout(hbox)
-                panel_layout.addRow(label_text, container)
+                form_layout.addRow(label_text, container)
                 self.project_form_widgets[field_name] = widget
+
+                # Wert beim Laden setzen
+                if project_data and field_name in project_data:
+                    widget.setText(project_data[field_name])
                 continue
 
             # Standard-Widget-Erstellung
             if field_type == "text":
-                widget = QLineEdit(panel_widget)
+                if field.get("multiline"):
+                    widget = QTextEdit(panel_widget)
+                    if width:
+                        try:
+                            widget.setFixedWidth(int(width))
+                        except Exception:
+                            pass
+                    widget.setMinimumHeight(60)
+                else:
+                    widget = QLineEdit(panel_widget)
+                    if width:
+                        try:
+                            widget.setFixedWidth(int(width))
+                        except Exception:
+                            pass
             elif field_type == "combobox":
                 widget = QComboBox(panel_widget)
                 combo_key = field.get("combo_key")
@@ -975,6 +1038,8 @@ class StartWindow(QMainWindow):
                 value = project_data[field_name]
                 if isinstance(widget, QLineEdit):
                     widget.setText(value)
+                elif isinstance(widget, QTextEdit):
+                    widget.setPlainText(value)
                 elif isinstance(widget, QComboBox):
                     idx = widget.findText(value)
                     if idx >= 0:
@@ -992,31 +1057,196 @@ class StartWindow(QMainWindow):
                     except Exception:
                         widget.setDate(datetime.date.today())
 
-            panel_layout.addRow(label_text, widget)
+            form_layout.addRow(label_text, widget)
             self.project_form_widgets[field_name] = widget
+
+        # Layout zusammenbauen
+        main_layout.addLayout(form_layout, stretch=3)
+        main_layout.addWidget(self.project_image_label, stretch=1, alignment=Qt.AlignTop)
 
         panel_widget.setObjectName("ProjectFormPanel")
         self.safe_apply_theme_style(panel_widget, "panel", self.theme)
         return panel_widget
-
-    # Funktion um ein Bild für ein Feld zu laden
+    
+    # Bild für project_cover_image laden
     def load_image_for_field(self, widget):
+        from PySide6.QtGui import QPixmap
         file_path, _ = QFileDialog.getOpenFileName(
             self,
             self.get_translation("select_image", "Select an image"),
             "",
-            "Bilder (*.png *.jpg *.jpeg *.bmp *.gif);;alle Dateien (*)"
+            "Bilder (*.png *.jpg *.jpeg *.bmp *.gif);;Alle Dateien (*)"
         )
+        placeholder_path = os.path.join(DATA_DIR, "placeholder_cover.png")
         if file_path:
             widget.setText(file_path)
-
+            if hasattr(self, "project_image_label"):
+                pixmap = QPixmap(file_path)
+                if not pixmap.isNull():
+                    self.project_image_label.setPixmap(
+                        pixmap.scaled(
+                            self.project_image_label.width(),
+                            self.project_image_label.height(),
+                            Qt.KeepAspectRatio,
+                            Qt.SmoothTransformation
+                        )
+                    )
+                else:
+                    # Bild nicht gefunden, Platzhalter anzeigen
+                    if os.path.exists(placeholder_path):
+                        pixmap = QPixmap(placeholder_path)
+                        self.project_image_label.setPixmap(
+                            pixmap.scaled(
+                                self.project_image_label.width(),
+                                self.project_image_label.height(),
+                                Qt.KeepAspectRatio,
+                                Qt.SmoothTransformation
+                            )
+                        )
+                    else:
+                        self.project_image_label.clear()
+        else:
+            # Kein Bild ausgewählt, Platzhalter anzeigen
+            if hasattr(self, "project_image_label") and os.path.exists(placeholder_path):
+                pixmap = QPixmap(placeholder_path)
+                self.project_image_label.setPixmap(
+                    pixmap.scaled(
+                        self.project_image_label.width(),
+                        self.project_image_label.height(),
+                        Qt.KeepAspectRatio,
+                        Qt.SmoothTransformation
+                    )
+                )
+            elif hasattr(self, "project_image_label"):
+                self.project_image_label.clear()    
+    
     # Dieses center_panel_settings wird angezeigt, wenn die Einstellungen bearbeitet werden sollen.
     def create_center_panel_settings(self):
         return self.create_center_panel_with_header("pref_lp_header", "Preferences")
  
     # Dieses center_panel_character wird angezeigt, wenn ein Charakter erstellt oder bearbeitert wird.
-    def create_center_panel_character(self):
-        return self.create_center_panel_with_header("char_ma_header", "Characters")  
+    def create_center_panel_character(self, character_data=None):
+        panel_widget = QWidget()
+        form_layout = QFormLayout(panel_widget)
+        form_layout.setContentsMargins(20, 20, 20, 20)
+        form_layout.setSpacing(12)
+
+        # Felder aus form_fields.json laden
+        with open("core/config/form_fields.json", "r", encoding="utf-8") as f:
+            form_fields = json.load(f)
+        character_fields = form_fields.get("characters", [])
+
+        self.character_form_widgets = {}
+        age_label = None
+
+        for field in character_fields:
+            field_name = field.get("datafield_name")
+            if not field_name:
+                continue
+
+            label_key = field.get("label_key", field_name)
+            label_text = self.get_translation(label_key, field_name)
+            field_type = field.get("type", "text")
+            width = field.get("width")
+
+            # Checkbox für main_character
+            if field_type == "checkbox":
+                widget = QCheckBox(panel_widget)
+            # Combobox
+            elif field_type == "combobox":
+                widget = QComboBox(panel_widget)
+                combo_key = field.get("combo_key")
+                if combo_key and self.combobox_translations:
+                    items = list(self.combobox_translations.get(combo_key, {}).values())
+                    widget.addItems(items)
+            # Date für born
+            elif field_type == "date" and field_name == "born":
+                widget = QDateEdit(panel_widget)
+                widget.setCalendarPopup(True)
+                today = datetime.date.today()
+                widget.setDate(today)
+                # Format je nach Sprache
+                if self.language == "de":
+                    widget.setDisplayFormat("dd.MM.yyyy")
+                elif self.language == "en":
+                    widget.setDisplayFormat("MM.dd.yyyy")
+                elif self.language == "fr":
+                    widget.setDisplayFormat("dd/MM/yyyy")
+                elif self.language == "es":
+                    widget.setDisplayFormat("dd/MM/yyyy")
+                else:
+                    widget.setDisplayFormat("yyyy-MM-dd")
+            # Multiline
+            elif field.get("multiline"):
+                widget = QTextEdit(panel_widget)
+                widget.setMinimumHeight(60)
+            # Standard Textfeld
+            else:
+                widget = QLineEdit(panel_widget)
+
+            if width:
+                try:
+                    widget.setFixedWidth(int(width))
+                except Exception:
+                    pass
+
+            # Wert beim Laden setzen
+            if character_data and field_name in character_data:
+                value = character_data[field_name]
+                if isinstance(widget, QLineEdit):
+                    widget.setText(value)
+                elif isinstance(widget, QTextEdit):
+                    widget.setPlainText(value)
+                elif isinstance(widget, QComboBox):
+                    idx = widget.findText(value)
+                    if idx >= 0:
+                        widget.setCurrentIndex(idx)
+                elif isinstance(widget, QDateEdit):
+                    try:
+                        # Versuche verschiedene Formate
+                        if isinstance(value, str):
+                            # Prüfe auf alle unterstützten Formate
+                            for fmt in ["%d.%m.%Y", "%d/%m/%Y", "%m.%d.%Y", "%Y-%m-%d"]:
+                                try:
+                                    date = datetime.datetime.strptime(value, fmt).date()
+                                    widget.setDate(date)
+                                    break
+                                except Exception:
+                                    continue
+                    except Exception:
+                        widget.setDate(datetime.date.today())
+                elif isinstance(widget, QCheckBox):
+                    widget.setChecked(bool(value))
+
+            # Füge das Feld ins Formular ein
+            form_layout.addRow(label_text, widget)
+            self.character_form_widgets[field_name] = widget
+
+            # Nach dem Geburtsdatum das Alter als Label einfügen
+            if field_name == "born":
+                age_label = QLabel("0", panel_widget)
+                form_layout.addRow(self.get_translation("char_ma_07", "Alter"), age_label)
+                self.character_form_widgets["age_label"] = age_label
+
+                # Alter automatisch berechnen, wenn das Geburtsdatum geändert wird
+                def update_age_label():
+                    born_widget = self.character_form_widgets.get("born")
+                    age_label_widget = self.character_form_widgets.get("age_label")
+                    if isinstance(born_widget, QDateEdit) and age_label_widget:
+                        born = born_widget.date().toPython()
+                        today = datetime.date.today()
+                        age = today.year - born.year - ((today.month, today.day) < (born.month, born.day))
+                        age_label_widget.setText(str(age))
+                widget.dateChanged.connect(update_age_label)
+                update_age_label()
+
+            # Stoppe nach dem ersten notes-Feld
+            if field_name == "notes":
+                break
+
+        panel_widget.setObjectName("CharacterFormPanel")
+        self.safe_apply_theme_style(panel_widget, "panel", self.theme)
+        return panel_widget
    
     # Dieses center_panel_location wird angezeigt, wenn ein Ort erstellt oder bearbeitert wird.
     def create_center_panel_location(self):
@@ -1627,6 +1857,8 @@ class StartWindow(QMainWindow):
         for field_name, widget in self.project_form_widgets.items():
             if isinstance(widget, QLineEdit):
                 project_data[field_name] = widget.text()
+            elif isinstance(widget, QTextEdit):
+                project_data[field_name] = widget.toPlainText()
             elif isinstance(widget, QComboBox):
                 project_data[field_name] = widget.currentText()
             elif isinstance(widget, QSpinBox):
@@ -1634,7 +1866,7 @@ class StartWindow(QMainWindow):
             elif isinstance(widget, QDateEdit):
                 project_data[field_name] = widget.date().toString(widget.displayFormat())
             else:
-                project_data[field_name] = str(widget.text())
+                project_data[field_name] = ""
 
         # 2. Dateinamen bestimmen
         title = project_data.get("project_titel", "").strip()
@@ -1677,10 +1909,16 @@ class StartWindow(QMainWindow):
         self.botn_fo_04.setEnabled(False)
         # Beobachte Änderungen im Formular, um Speichern-Button zu aktivieren
         for widget in self.project_form_widgets.values():
-            widget.textChanged.connect(self.enable_save_button) if isinstance(widget, QLineEdit) else None
-            widget.currentIndexChanged.connect(self.enable_save_button) if isinstance(widget, QComboBox) else None
-            widget.valueChanged.connect(self.enable_save_button) if isinstance(widget, QSpinBox) else None
-            widget.dateChanged.connect(self.enable_save_button) if isinstance(widget, QDateEdit) else None
+            if isinstance(widget, QLineEdit):
+                widget.textChanged.connect(self.enable_save_button)
+            elif isinstance(widget, QTextEdit):
+                widget.textChanged.connect(self.enable_save_button)
+            elif isinstance(widget, QComboBox):
+                widget.currentIndexChanged.connect(self.enable_save_button)
+            elif isinstance(widget, QSpinBox):
+                widget.valueChanged.connect(self.enable_save_button)
+            elif isinstance(widget, QDateEdit):
+                widget.dateChanged.connect(self.enable_save_button)
 
     # Aktiviere den Speichern-Button, wenn Änderungen im Formular vorgenommen werden
     def enable_save_button(self):
@@ -1734,6 +1972,8 @@ class StartWindow(QMainWindow):
         # Beobachte Änderungen im Formular
         for widget in self.project_form_widgets.values():
             if isinstance(widget, QLineEdit):
+                widget.textChanged.connect(self.enable_save_button)
+            elif isinstance(widget, QTextEdit):
                 widget.textChanged.connect(self.enable_save_button)
             elif isinstance(widget, QComboBox):
                 widget.currentIndexChanged.connect(self.enable_save_button)

@@ -55,6 +55,9 @@ DEFAULT_SETTINGS = {
 LANGUAGE_DEFAULTS = {
 "de": {
     "proj_ma_header": "Projekte",
+    "project_overview_info": "Projekte, die du bereits erstellt hast, kannst du aus der Listenübersicht laden. <br>"
+                            " Du kannst jetzt auch ein neues Projekt erstellen. <br><br>"
+                            "Wähle und markiere ein Projekt aus der Liste und klicke dann auf <b>Projekt öffnen</b>, um es zu laden. <br>",
     "proj_ma_01": "Projekt",
     "proj_ma_02": "Titel",
     "proj_ma_03": "Untertitel",
@@ -114,6 +117,9 @@ LANGUAGE_DEFAULTS = {
     "char_ma_03": "Name",
     "char_ma_04": "Vorname",
     "char_ma_05": "Spitzname",
+    "char_image": "Charakter-Bild",
+    "char_btn_load_image": "Bild laden",
+    "char_select_image": "Bild auswählen",
     "char_ma_06": "Geburtsdatum",
     "char_ma_07": "Alter",
     "char_ma_08": "Rolle",
@@ -229,8 +235,8 @@ LANGUAGE_DEFAULTS = {
     "pref_lp_header": "Einstellungen",
     "help_lp_header": "Hilfe",
     "abou_lp_header": "Über",
-    "WinStartTitle": "Codicies Scriptoria Nova (CSNova)",
-    "startWinHeader": "Projektübersicht",
+    "WinStartTitle": "Codices Scriptoria Nova (CSNova)",
+    "startWinHeader": "Navigationspanel",
     "botn_st_01": "Projektdaten",
     "botn_st_01_hint": "Hier kannst du ein neues Projekt erstellen oder ein bestehendes Projekt öffnen und bearbeiten.",
     "botn_st_02": "Charaktere",
@@ -454,6 +460,9 @@ LANGUAGE_DEFAULTS = {
     },
 "en": {
     "proj_ma_header": "Projects",
+    "project_overview_info": "You can load projects you have already created from the list overview."
+                            " You can also create a new project now. <br><br>"
+                            "Select and highlight a project from the list and then click <b>Open Project</b> to load it. <br>",
     "proj_ma_01": "Project",
     "proj_ma_02": "Title",
     "proj_ma_03": "Subtitle",
@@ -513,6 +522,9 @@ LANGUAGE_DEFAULTS = {
     "char_ma_03": "Name",
     "char_ma_04": "First name",
     "char_ma_05": "Nickname",
+    "char_image": "Character image",
+    "char_btn_load_image": "Load image",
+    "char_select_image": "Select image",
     "char_ma_06": "Date of birth",
     "char_ma_07": "Age",
     "char_ma_08": "Role",
@@ -628,8 +640,8 @@ LANGUAGE_DEFAULTS = {
     "pref_lp_header": "Preferences",
     "help_lp_header": "Help",
     "abou_lp_header": "About",
-    "WinStartTitle": "Codicies Scriptoria Nova (CSNova)",
-    "startWinHeader": "Project Overview",
+    "WinStartTitle": "Codices Scriptoria Nova (CSNova)",
+    "startWinHeader": "Navigation Panel",
     "botn_st_01": "Project Data",
     "botn_st_01_hint": "Here you can create a new project or open and edit an existing project.",
     "botn_st_02": "Characters",
@@ -853,6 +865,9 @@ LANGUAGE_DEFAULTS = {
     },
 "es": {
     "proj_ma_header": "Proyectos",
+    "project_overview_info": "Puedes cargar proyectos que ya has creado desde la lista de vista general."
+                            " También puedes crear un nuevo proyecto ahora. <br><br>"
+                            "Selecciona y resalta un proyecto de la lista y luego haz clic en <b>Abrir proyecto</b> para cargarlo. <br>",
     "proj_ma_01": "Proyecto",
     "proj_ma_02": "Título",
     "proj_ma_03": "Subtítulo",
@@ -912,6 +927,9 @@ LANGUAGE_DEFAULTS = {
     "char_ma_03": "Nombre",
     "char_ma_04": "Nombre de pila",
     "char_ma_05": "Apodo",
+    "char_image": "Imagen del personaje",
+    "char_btn_load_image": "Cargar imagen",
+    "char_select_image": "Seleccionar imagen",
     "char_ma_06": "Fecha de nacimiento",
     "char_ma_07": "Edad",
     "char_ma_08": "Rol",
@@ -1027,8 +1045,8 @@ LANGUAGE_DEFAULTS = {
     "pref_lp_header": "Preferencias",
     "help_lp_header": "Ayuda",
     "abou_lp_header": "Acerca de",
-    "WinStartTitle": "Codicies Scriptoria Nova (CSNova)",
-    "startWinHeader": "Resumen del proyecto",
+    "WinStartTitle": "Codices Scriptoria Nova (CSNova)",
+    "startWinHeader": "Panel de navegación",
     "botn_st_01": "Datos del proyecto",
     "botn_st_01_hint": "Aquí puedes crear un nuevo proyecto o abrir y editar un proyecto existente.",
     "botn_st_02": "Personajes",
@@ -1252,6 +1270,9 @@ LANGUAGE_DEFAULTS = {
 },
 "fr": {
     "proj_ma_header": "Projets",
+    "project_overview_info": "Vous pouvez charger des projets que vous avez déjà créés à partir de la liste de vue d'ensemble."
+                            " Vous pouvez également créer un nouveau projet maintenant. <br><br>"
+                            "Sélectionnez et mettez en surbrillance un projet dans la liste, puis cliquez sur <b>Ouvrir le projet</b> pour le charger. <br>",
     "proj_ma_01": "Projet",
     "proj_ma_02": "Titre",
     "proj_ma_03": "Sous-titre",
@@ -1311,6 +1332,9 @@ LANGUAGE_DEFAULTS = {
     "char_ma_03": "Nom",
     "char_ma_04": "Prénom",
     "char_ma_05": "Surnom",
+    "char_image": "Image du personnage",
+    "char_btn_load_image": "Charger l'image",
+    "char_select_image": "Sélectionner une image",
     "char_ma_06": "Date de naissance",
     "char_ma_07": "Âge",
     "char_ma_08": "Rôle",
@@ -1426,8 +1450,8 @@ LANGUAGE_DEFAULTS = {
     "pref_lp_header": "Préférences",
     "help_lp_header": "Aide",
     "abou_lp_header": "À propos",
-    "WinStartTitle": "Codicies Scriptoria Nova (CSNova)",
-    "startWinHeader": "Aperçu du projet",
+    "WinStartTitle": "Codices Scriptoria Nova (CSNova)",
+    "startWinHeader": "Panneau de navigation",
     "botn_st_01": "Données du projet",
     "botn_st_01_hint": "Ici, vous pouvez créer un nouveau projet ou ouvrir et modifier un projet existant.",
     "botn_st_02": "Personnages",
@@ -4860,30 +4884,147 @@ BASE_STYLE_DEFAULT = {
 
 # --- Default form field values (für alle Eingabefelder aus den Tabellen, werden hier die Basisparameter definiert ---
 FORM_FIELDS_DEFAULT = {  
-  "projects": [
-    {"name": "pro_header", "label_key": "proj_ma_01", "type": "header", "datafield_name": None},
+    "projects": [
+        {"name": "pro_header", "label_key": "proj_ma_01", "type": "header", "datafield_name": None},
 
-    {"name": "project_title", "label_key": "proj_ma_02", "type": "text", "required": True, "max_length": 120, "width": 320, "datafield_name": "project_titel"},
-    {"name": "project_subtitle", "label_key": "proj_ma_03", "type": "text", "required": False, "max_length": 120, "width": 320, "datafield_name": "project_subtitle"},
-    {"name": "project_author", "label_key": "proj_ma_04", "type": "text", "required": False, "max_length": 80, "width": 220, "datafield_name": "project_author"},
-    {"name": "project_premise", "label_key": "proj_ma_05", "type": "text", "required": False, "max_length": 200, "width": 480, "datafield_name": "project_premise"},
+        {"name": "project_title", "label_key": "proj_ma_02", "type": "text", "required": True, "max_length": 120, "width": 320, "datafield_name": "project_titel"},
+        {"name": "project_subtitle", "label_key": "proj_ma_03", "type": "text", "required": False, "max_length": 120, "width": 320, "datafield_name": "project_subtitle"},
+        {"name": "project_author", "label_key": "proj_ma_04", "type": "text", "required": False, "max_length": 80, "width": 220, "datafield_name": "project_author"},
+        {"name": "project_premise", "label_key": "proj_ma_05", "type": "text", "required": False, "max_length": 200, "width": 480, "datafield_name": "project_premise", "multiline": True},
 
-    {"name": "project_narrative_perspective", "label_key": "proj_ma_09", "type": "combobox", "required": False, "width": 220, "datafield_name": "project_narrative_perspective", "combo_key": "narrative_perspective"},
-    {"name": "project_style_ID", "label_key": "proj_ma_14", "type": "combobox", "required": False, "width": 220, "datafield_name": "project_style_ID", "combo_key": "style"},
-    {"name": "project_genre_ID", "label_key": "proj_ma_06", "type": "combobox", "required": False, "width": 220, "datafield_name": "project_genre_ID", "combo_key": "genre"},
-    {"name": "project_worktype_ID", "label_key": "proj_ma_15", "type": "combobox", "required": False, "width": 220, "datafield_name": "project_worktype_ID", "combo_key": "work_type"},
-    {"name": "project_motifs_ID", "label_key": "proj_ma_16", "type": "combobox", "required": False, "width": 220, "datafield_name": "project_motifs_ID", "combo_key": "motifs"},
+        {"name": "project_narrative_perspective", "label_key": "proj_ma_09", "type": "combobox", "required": False, "width": 220, "datafield_name": "project_narrative_perspective", "combo_key": "narrative_perspective"},
+        {"name": "project_style_ID", "label_key": "proj_ma_14", "type": "combobox", "required": False, "width": 220, "datafield_name": "project_style_ID", "combo_key": "style"},
+        {"name": "project_genre_ID", "label_key": "proj_ma_06", "type": "combobox", "required": False, "width": 220, "datafield_name": "project_genre_ID", "combo_key": "genre"},
+        {"name": "project_worktype_ID", "label_key": "proj_ma_15", "type": "combobox", "required": False, "width": 220, "datafield_name": "project_worktype_ID", "combo_key": "work_type"},
+        {"name": "project_motifs_ID", "label_key": "proj_ma_16", "type": "combobox", "required": False, "width": 220, "datafield_name": "project_motifs_ID", "combo_key": "motifs"},
 
-    {"name": "project_deadline", "label_key": "proj_ma_10", "type": "date", "required": False, "width": 140, "datafield_name": "project_deadline"},
-    {"name": "project_startdate", "label_key": "proj_ma_11", "type": "date", "required": False, "width": 140, "datafield_name": "project_startdate"},
-    {"name": "project_words_count_goal", "label_key": "proj_ma_12", "type": "spin", "required": False, "max": 1000000, "width": 120, "datafield_name": "project_words_count_goal"},
-    {"name": "project_cover_image", "label_key": "proj_ma_07", "type": "text", "required": False, "max_length": 120, "width": 320, "datafield_name": "project_cover_image"},
-    {"name": "project_target_audience", "label_key": "proj_ma_08", "type": "combobox", "required": False, "width": 220, "datafield_name": "project_target_audience", "combo_key": "target_audience"},
-    {"name": "project_status_ID", "label_key": "proj_ma_17", "type": "combobox", "required": False, "width": 220, "datafield_name": "project_status_ID", "combo_key": "status"},
+        {"name": "project_deadline", "label_key": "proj_ma_10", "type": "date", "required": False, "width": 140, "datafield_name": "project_deadline"},
+        {"name": "project_startdate", "label_key": "proj_ma_11", "type": "date", "required": False, "width": 140, "datafield_name": "project_startdate"},
+        {"name": "project_words_count_goal", "label_key": "proj_ma_12", "type": "spin", "required": False, "max": 1000000, "width": 120, "datafield_name": "project_words_count_goal"},
+        {"name": "project_cover_image", "label_key": "proj_ma_07", "type": "text", "required": False, "max_length": 120, "width": 320, "datafield_name": "project_cover_image"},
+        {"name": "project_target_audience", "label_key": "proj_ma_08", "type": "combobox", "required": False, "width": 220, "datafield_name": "project_target_audience", "combo_key": "target_audience"},
+        {"name": "project_status_ID", "label_key": "proj_ma_17", "type": "combobox", "required": False, "width": 220, "datafield_name": "project_status_ID", "combo_key": "status"},
 
-    {"name": "project_notes", "label_key": "proj_ma_18", "type": "text", "required": False, "max_length": 500, "width": 480, "datafield_name": "project_notes"}
-]
+        {"name": "project_notes", "label_key": "proj_ma_18", "type": "text", "required": False, "max_length": 500, "width": 480, "datafield_name": "project_notes", "multiline": True}
+    ],
+    "characters": [
+        {"name": "char_header", "label_key": "char_ma_header", "type": "header", "datafield_name": None},
+
+        {"name": "main_character", "label_key": "char_ma_02", "type": "checkbox", "required": True, "datafield_name": "main_character"},
+        {"name": "name", "label_key": "char_ma_03", "type": "text", "required": True, "max_length": 80, "width": 220, "datafield_name": "name"},
+        {"name": "first_name", "label_key": "char_ma_04", "type": "text", "required": False, "max_length": 80, "width": 220, "datafield_name": "first_name"},
+        {"name": "nick_name", "label_key": "char_ma_05", "type": "text", "required": False, "max_length": 80, "width": 220, "datafield_name": "nick_name"},
+        {"name": "born", "label_key": "char_ma_06", "type": "date", "required": False, "width": 140, "datafield_name": "born"},
+        {"name": "gender_ID", "label_key": "char_ma_10", "type": "combobox", "required": False, "width": 120, "datafield_name": "gender_ID", "combo_key": "gender"},
+        {"name": "sex_orientation_ID", "label_key": "char_ma_11", "type": "combobox", "required": False, "width": 120, "datafield_name": "sex_orientation_ID", "combo_key": "sexual_orientation"},
+        {"name": "role_ID", "label_key": "char_ma_08", "type": "text", "required": False, "width": 120, "datafield_name": "role_ID"},
+        {"name": "status_ID", "label_key": "char_ma_09", "type": "combobox", "required": False, "width": 120, "datafield_name": "status_ID", "combo_key": "status"},
+        {"name": "group_ID", "label_key": "char_gr_01", "type": "text", "required": False, "width": 120, "datafield_name": "group_ID"},
+        {"name": "char_image", "label_key": "char_image", "type": "text", "required": False, "width": 220, "datafield_name": "char_image"},
+        {"name": "notes", "label_key": "char_ma_12", "type": "text", "required": False, "max_length": 500, "width": 480, "datafield_name": "notes", "multiline": True},
+
+        {
+        "origin": [
+            { "name": "origin_header", "label_key": "char_or_header", "type": "header", "datafield_name": None },
+            { "name": "father", "label_key": "char_or_02", "type": "text", "datafield_name": "origin.father" },
+            { "name": "mother", "label_key": "char_or_03", "type": "text", "datafield_name": "origin.mother" },
+            { "name": "reference_person", "label_key": "char_or_04", "type": "text", "datafield_name": "origin.reference_person" },
+            { "name": "siblings", "label_key": "char_or_05", "type": "text", "datafield_name": "origin.siblings" },
+            { "name": "birthplace", "label_key": "char_or_06", "type": "text", "datafield_name": "origin.birthplace" },
+            { "name": "notes", "label_key": "char_or_07", "type": "text", "datafield_name": "origin.notes", "multiline": True }
+        ]
+        },
+        {
+        "education": [
+            { "name": "education_header", "label_key": "char_ed_header", "type": "header", "datafield_name": None },
+            { "name": "school", "label_key": "char_ed_02", "type": "text", "datafield_name": "education.school" },
+            { "name": "university", "label_key": "char_ed_03", "type": "text", "datafield_name": "education.university" },
+            { "name": "job_education", "label_key": "char_ed_04", "type": "text", "datafield_name": "education.job_education" },
+            { "name": "autodidactic", "label_key": "char_ed_05", "type": "text", "datafield_name": "education.autodidactic" },
+            { "name": "job", "label_key": "char_ed_06", "type": "text", "datafield_name": "education.job" },
+            { "name": "art_music", "label_key": "char_ed_07", "type": "text", "datafield_name": "education.art_music" },
+            { "name": "sport", "label_key": "char_ed_08", "type": "text", "datafield_name": "education.sport" },
+            { "name": "technology", "label_key": "char_ed_09", "type": "text", "datafield_name": "education.technology" },
+            { "name": "notes", "label_key": "char_ed_10", "type": "text", "datafield_name": "education.notes", "multiline": True }
+        ]
+        },
+        {
+        "personality": [
+            { "name": "personality_header", "label_key": "char_ps_header", "type": "header", "datafield_name": None },
+            { "name": "pos_characteristic", "label_key": "char_ps_02", "type": "text", "datafield_name": "personality.pos_characteristic" },
+            { "name": "neg_characteristic", "label_key": "char_ps_03", "type": "text", "datafield_name": "personality.neg_characteristic" },
+            { "name": "fears", "label_key": "char_ps_04", "type": "text", "datafield_name": "personality.fears" },
+            { "name": "weaknesses", "label_key": "char_ps_05", "type": "text", "datafield_name": "personality.weaknesses" },
+            { "name": "strengths", "label_key": "char_ps_06", "type": "text", "datafield_name": "personality.strengths" },
+            { "name": "talents", "label_key": "char_ps_07", "type": "text", "datafield_name": "personality.talents" },
+            { "name": "beliefs", "label_key": "char_ps_08", "type": "text", "datafield_name": "personality.beliefs" },
+            { "name": "life_goals", "label_key": "char_ps_09", "type": "text", "datafield_name": "personality.life_goals" },
+            { "name": "motivation", "label_key": "char_ps_10", "type": "text", "datafield_name": "personality.motivation" },
+            { "name": "behavior", "label_key": "char_ps_11", "type": "text", "datafield_name": "personality.behavior" },
+            { "name": "notes", "label_key": "char_ps_12", "type": "text", "datafield_name": "personality.notes", "multiline": True }
+        ]
+        },
+        {
+        "psychological_profile": [
+            { "name": "psychological_profile_header", "label_key": "char_pp_header", "type": "header", "datafield_name": None },
+            { "name": "diagnosis", "label_key": "char_pp_02", "type": "text", "datafield_name": "psychological_profile.diagnosis" },
+            { "name": "symptoms", "label_key": "char_pp_03", "type": "text", "datafield_name": "psychological_profile.symptoms" },
+            { "name": "therapy", "label_key": "char_pp_04", "type": "text", "datafield_name": "psychological_profile.therapy" },
+            { "name": "medication", "label_key": "char_pp_05", "type": "text", "datafield_name": "psychological_profile.medication" },
+            { "name": "temperament", "label_key": "char_pp_06", "type": "text", "datafield_name": "psychological_profile.temperament" },
+            { "name": "values_set", "label_key": "char_pp_07", "type": "text", "datafield_name": "psychological_profile.values_set" },
+            { "name": "moral_concepts", "label_key": "char_pp_08", "type": "text", "datafield_name": "psychological_profile.moral_concepts" },
+            { "name": "character_strength", "label_key": "char_pp_09", "type": "text", "datafield_name": "psychological_profile.character_strength" },
+            { "name": "character_weakness", "label_key": "char_pp_10", "type": "text", "datafield_name": "psychological_profile.character_weakness" },
+            { "name": "self_image", "label_key": "char_pp_11", "type": "text", "datafield_name": "psychological_profile.self_image" },
+            { "name": "humor", "label_key": "char_pp_12", "type": "text", "datafield_name": "psychological_profile.humor" },
+            { "name": "aggression", "label_key": "char_pp_13", "type": "text", "datafield_name": "psychological_profile.aggression" },
+            { "name": "trauma", "label_key": "char_pp_14", "type": "text", "datafield_name": "psychological_profile.trauma" },
+            { "name": "formative_personality", "label_key": "char_pp_15", "type": "text", "datafield_name": "psychological_profile.formative_personality" },
+            { "name": "socialization", "label_key": "char_pp_16", "type": "text", "datafield_name": "psychological_profile.socialization" },
+            { "name": "norms", "label_key": "char_pp_17", "type": "text", "datafield_name": "psychological_profile.norms" },
+            { "name": "taboos", "label_key": "char_pp_18", "type": "text", "datafield_name": "psychological_profile.taboos" },
+            { "name": "notes", "label_key": "char_pp_19", "type": "text", "datafield_name": "psychological_profile.notes", "multiline": True }
+        ]
+        },
+        {
+        "appearance_main": [
+            { "name": "appearance_main_header", "label_key": "char_am_header", "type": "header", "datafield_name": None },
+            { "name": "height", "label_key": "char_am_02", "type": "text", "datafield_name": "appearance_main.height" },
+            { "name": "body_type", "label_key": "char_am_03", "type": "text", "datafield_name": "appearance_main.body_type" },
+            { "name": "posture", "label_key": "char_am_04", "type": "text", "datafield_name": "appearance_main.posture" },
+            { "name": "face_shape", "label_key": "char_am_05", "type": "text", "datafield_name": "appearance_main.face_shape" },
+            { "name": "eye_shape", "label_key": "char_am_06", "type": "text", "datafield_name": "appearance_main.eye_shape" },
+            { "name": "eye_color", "label_key": "char_am_07", "type": "text", "datafield_name": "appearance_main.eye_color" },
+            { "name": "hair", "label_key": "char_am_08", "type": "text", "datafield_name": "appearance_main.hair" },
+            { "name": "hair_color", "label_key": "char_am_09", "type": "text", "datafield_name": "appearance_main.hair_color" },
+            { "name": "skin", "label_key": "char_am_10", "type": "text", "datafield_name": "appearance_main.skin" },
+            { "name": "charisma", "label_key": "char_am_11", "type": "text", "datafield_name": "appearance_main.charisma" },
+            { "name": "specials", "label_key": "char_am_12", "type": "text", "datafield_name": "appearance_main.specials" },
+            { "name": "notes", "label_key": "char_am_13", "type": "text", "datafield_name": "appearance_main.notes", "multiline": True }
+        ]
+        },
+        {
+        "appearance_detail": [
+            { "name": "appearance_detail_header", "label_key": "char_ad_header", "type": "header", "datafield_name": None },
+            { "name": "head", "label_key": "char_ad_02", "type": "text", "datafield_name": "appearance_detail.head" },
+            { "name": "neck", "label_key": "char_ad_03", "type": "text", "datafield_name": "appearance_detail.neck" },
+            { "name": "shoulder", "label_key": "char_ad_04", "type": "text", "datafield_name": "appearance_detail.shoulder" },
+            { "name": "arms", "label_key": "char_ad_05", "type": "text", "datafield_name": "appearance_detail.arms" },
+            { "name": "hands", "label_key": "char_ad_06", "type": "text", "datafield_name": "appearance_detail.hands" },
+            { "name": "finger", "label_key": "char_ad_07", "type": "text", "datafield_name": "appearance_detail.finger" },
+            { "name": "chest", "label_key": "char_ad_08", "type": "text", "datafield_name": "appearance_detail.chest" },
+            { "name": "hips_waist", "label_key": "char_ad_09", "type": "text", "datafield_name": "appearance_detail.hips_waist" },
+            { "name": "buttocks", "label_key": "char_ad_10", "type": "text", "datafield_name": "appearance_detail.buttocks" },
+            { "name": "legs", "label_key": "char_ad_11", "type": "text", "datafield_name": "appearance_detail.legs" },
+            { "name": "feet", "label_key": "char_ad_12", "type": "text", "datafield_name": "appearance_detail.feet" },
+            { "name": "toes", "label_key": "char_ad_13", "type": "text", "datafield_name": "appearance_detail.toes" },
+            { "name": "notes", "label_key": "char_ad_14", "type": "text", "datafield_name": "appearance_detail.notes", "multiline": True }
+        ]
+    }
+  ]
 }
+
 
 # Tabellen Defaults 
 # Tabellen Defaults für Projekte
