@@ -428,6 +428,7 @@ LANGUAGE_DEFAULTS = {
     "botn_ab_07_hint": "Hier kannst du zum Startfenster zurückkehren.",
     "startWinInfoHeader": "Codices Scriptoria Nova <br><br>",
     "startWinInfoText1": "Vielen Dank, dass du dich für <b>CSNova</b> entschieden hast! <br><br>"
+                        "Codices Scriptoria Nova - Bücher die in neuen Schreibwerkstätten - in CSNova entstehen.<br>"
                         "CSNova ist ein Open-Source-Projekt, das dir helfen soll, deine kreativen Schreibprojekte zu organisieren und zu verwalten. <br>"
                         "Du kannst das Programm deinem Arbeitsstil anpassen. Darüber hinaus hat CSNova eine klare Philosophie: <br>"
                         "'Nicht du musst lernen, wie das Programm funktioniert - das Programm soll <b>verstehen</b>, wie du arbeiten willst.' <br><br>"
@@ -833,8 +834,9 @@ LANGUAGE_DEFAULTS = {
     "botn_ab_07_hint": "Here you can return to the start window.",
     "startWinInfoHeader": "Codices Scriptoria Nova <br><br>",
     "startWinInfoText1": "Thank you for choosing <b>CSNova</b>! <br><br>"
+                        "Codices Scriptoria Nova - books that are created in new writing workshops - in CSNova.<br>"
                         "CSNova is an open-source project designed to help you organize and manage your creative writing projects. <br>"
-                        "You can customize the program to fit your workflow. Additionally, CSNova has a clear philosophy: <br>"
+                        "You can customize the program to suit your working style. Furthermore, CSNova has a clear philosophy: <br>"
                         "'You don't have to learn how the program works - the program should <b>understand</b> how you want to work.' <br><br>"
                         "Before you get started, you can make some basic settings: <br><br>"
                         "- Choose your preferred language. <br>"
@@ -1238,12 +1240,13 @@ LANGUAGE_DEFAULTS = {
     "botn_ab_07_hint": "Aquí puedes volver a la ventana de inicio.",
     "startWinInfoHeader": "Codices Scriptoria Nova <br><br>",
     "startWinInfoText1": "¡Gracias por elegir <b>CSNova</b>! <br><br>"
+                        "Codices Scriptoria Nova - libros que se crean en nuevos talleres de escritura - en CSNova.<br>"
                         "CSNova es un proyecto de código abierto diseñado para ayudarte a organizar y gestionar tus proyectos de escritura creativa. <br>"
-                        "Puedes personalizar el programa para adaptarlo a tu flujo de trabajo. Además, CSNova tiene una filosofía clara: <br>"
-                        "'No tienes que aprender cómo funciona el programa - el programa debe <b>entender</b> cómo quieres trabajar.' <br><br>"
+                        "Puedes personalizar el programa para adaptarlo a tu estilo de trabajo. Además, CSNova tiene una filosofía clara: <br>"
+                        "'No tienes que aprender cómo funciona el programa - el programa debería <b>entender</b> cómo quieres trabajar.' <br><br>"
                         "Antes de empezar, puedes hacer algunos ajustes básicos: <br><br>"
                         "- Elige tu idioma preferido. <br>"
-                        "- Elige un tema para que CSNova lo use. <br>",
+                        "- Elige un tema para que lo use CSNova. <br>",
     "startWinInfoText2":    "También puedes cambiar estos y otros ajustes más adelante en los ajustes. <br><br>"
                             "Una vez que hayas hecho tus selecciones - y estés satisfecho - haz clic en <b>Guardar</b> <br>"
                             "Puedes restaurar los ajustes predeterminados haciendo clic en <b>Restablecer</b>. <br>"
@@ -1643,12 +1646,13 @@ LANGUAGE_DEFAULTS = {
     "botn_ab_07_hint": "Ici, vous pouvez revenir à la fenêtre de démarrage.",
     "startWinInfoHeader": "Codices Scriptoria Nova <br><br>",
     "startWinInfoText1": "Merci d'avoir choisi <b>CSNova</b>! <br><br>"
+                        "Codices Scriptoria Nova - livres qui sont créés dans de nouveaux ateliers d'écriture - dans CSNova.<br>"
                         "CSNova est un projet open source conçu pour vous aider à organiser et gérer vos projets d'écriture créative. <br>"
-                        "Vous pouvez personnaliser le programme pour l'adapter à votre flux de travail. De plus, CSNova a une philosophie claire: <br>"
-                        "'Vous n'avez pas à apprendre comment le programme fonctionne - le programme doit <b>comprendre</b> comment vous voulez travailler.' <br><br>"
+                        "Vous pouvez personnaliser le programme pour l'adapter à votre style de travail. De plus, CSNova a une philosophie claire: <br>"
+                        "'Vous n'avez pas à apprendre comment le programme fonctionne - le programme devrait <b>comprendre</b> comment vous voulez travailler.' <br><br>"
                         "Avant de commencer, vous pouvez faire quelques réglages de base: <br><br>"
                         "- Choisissez votre langue préférée. <br>"
-                        "- Choisissez un thème que CSNova utilisera. <br>",
+                        "- Choisissez un thème à utiliser par CSNova. <br>",
     "startWinInfoText2":    "Vous pouvez également modifier ces paramètres et d'autres plus tard dans les paramètres. <br><br>"
                             "Une fois que vous avez fait vos sélections - et que vous êtes satisfait - cliquez sur <b>Enregistrer</b> <br>"
                             "Vous pouvez restaurer les paramètres par défaut en cliquant sur <b>Réinitialiser</b>. <br>"

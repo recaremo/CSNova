@@ -20,9 +20,9 @@
     "center_panel": {},
     "right_panel": {},
     "splitter_sizes": [
-      563,
-      1052,
-      297
+      600,
+      1100,
+      220
     ]
   },
   "gui": {
@@ -33,7 +33,7 @@
     "language": "de",
     "file_path_lang": "/home/frank/Dokumente/CSNova/core/translations/translation_de.json",
     "file_path_combo": "/home/frank/Dokumente/CSNova/core/translations/translation_data_combobox_de.json",
-    "first_start": false
+    "first_start": true
   },
   "help": {
     "show_help_panel": true,

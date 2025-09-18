@@ -626,6 +626,9 @@ class StartWindow(QMainWindow):
 
         panel_widget.setObjectName("PicturePanel")
         self.safe_apply_theme_style(panel_widget, "panel", {**self.theme, "background": self.theme.get("nav_bg", self.theme.get("background"))})
+        copyright_label = QLabel("v 0.0.9 <br>(c) 2025 - CSNova - Frank Reiser", panel_widget)
+        copyright_label.setAlignment(Qt.AlignBottom | Qt.AlignHCenter)
+        panel_layout.addWidget(copyright_label, alignment=Qt.AlignBottom)
 
         # Dynamische Anpassung des Bildes bei Splitterbewegung
         def update_image_on_splitter_move(pos, index):
@@ -641,7 +644,6 @@ class StartWindow(QMainWindow):
                     Qt.SmoothTransformation
                 )
                 image_label.setPixmap(scaled_pixmap)
-
             else:
                 log_error("Fehler: Pixmap ist null, Bild konnte nicht geladen werden.")
         return panel_widget, update_image_on_splitter_move
@@ -657,9 +659,10 @@ class StartWindow(QMainWindow):
     
     # Dieses left_panel_settings wird angezeigt, wenn die Einstellungen geöffnet werden.
     def create_left_panel_settings(self):
-        return self.create_left_panel_with_header("pref_lp_header", "Preferences")
-
-    
+        splitter_sizes = self.panel_settings.get("splitter_sizes", [300, 600, 300])
+        panel_widget, _ = self.create_left_panel_start(splitter_sizes)
+        return panel_widget
+        
     # Dieses left_panel_character wird angezeigt, wenn ein Charakter erstellt oder bearbeitert wird.
     def create_left_panel_character(self):
         return self.create_left_panel_with_header("char_ma_header", "Characteres")
@@ -673,12 +676,18 @@ class StartWindow(QMainWindow):
         return self.create_left_panel_with_header("proj_ob_header", "Objects")
 
     # Dieses left_panel_help wird angezeigt, wenn die Hilfe geöffnet wird.
+    # Es wird vorerst das gleiche Panel wie left_panel_start verwendet.
     def create_left_panel_help(self):
-        return self.create_left_panel_with_header("help_lp_header", "Help")
+        splitter_sizes = self.panel_settings.get("splitter_sizes", [300, 600, 300])
+        panel_widget, _ = self.create_left_panel_start(splitter_sizes)
+        return panel_widget
     
     # Dieses left_panel_about wird angezeigt, wenn "Über" geöffnet wird.
+    # Es wird vorerst das gleiche Panel wie left_panel_start verwendet.
     def create_left_panel_about(self):
-        return self.create_left_panel_with_header("abou_lp_header", "About")
+        splitter_sizes = self.panel_settings.get("splitter_sizes", [300, 600, 300])
+        panel_widget, _ = self.create_left_panel_start(splitter_sizes)
+        return panel_widget
     
     # ..............................................................
     # PANELS FUNKTIONEN - CENTER_PANEL
@@ -1416,7 +1425,7 @@ class StartWindow(QMainWindow):
         # Header
         header_text = self.get_translation("EditorWinHeader", "Text Editor")
         header_label = QLabel(header_text, panel_widget)
-        header_label.setObjectName("EditorPanelHeaderLabel")
+        header_label.setObjectName("FormHeaderLabel")
         header_label.setAlignment(Qt.AlignHCenter | Qt.AlignTop)
         panel_layout.addWidget(header_label)
 
@@ -1467,7 +1476,7 @@ class StartWindow(QMainWindow):
         # Header
         header_text = self.get_translation("ProjectWinHeader", "Project Management")
         header_label = QLabel(header_text, panel_widget)
-        header_label.setObjectName("ProjectPanelHeaderLabel")
+        header_label.setObjectName("FormHeaderLabel")
         header_label.setAlignment(Qt.AlignHCenter | Qt.AlignTop)
         panel_layout.addWidget(header_label)
 
@@ -1552,7 +1561,7 @@ class StartWindow(QMainWindow):
         # Header
         header_text = self.get_translation("SettingsWinHeader", "Settings")
         header_label = QLabel(header_text, panel_widget)
-        header_label.setObjectName("SettingsPanelHeaderLabel")
+        header_label.setObjectName("FormHeaderLabel")
         header_label.setAlignment(Qt.AlignHCenter | Qt.AlignTop)
         panel_layout.addWidget(header_label)
 
@@ -1601,7 +1610,7 @@ class StartWindow(QMainWindow):
         # Header
         header_text = self.get_translation("CharacterWinHeader", "Character Management")
         header_label = QLabel(header_text, panel_widget)
-        header_label.setObjectName("CharacterPanelHeaderLabel")
+        header_label.setObjectName("FormHeaderLabel")
         header_label.setAlignment(Qt.AlignHCenter | Qt.AlignTop)
         panel_layout.addWidget(header_label)
 
@@ -1653,7 +1662,7 @@ class StartWindow(QMainWindow):
         # Header
         header_text = self.get_translation("LocationWinHeader", "Location Management")
         header_label = QLabel(header_text, panel_widget)
-        header_label.setObjectName("LocationPanelHeaderLabel")
+        header_label.setObjectName("FormHeaderLabel")
         header_label.setAlignment(Qt.AlignHCenter | Qt.AlignTop)
         panel_layout.addWidget(header_label)
 
@@ -1705,7 +1714,7 @@ class StartWindow(QMainWindow):
         # Header
         header_text = self.get_translation("ObjectWinHeader", "Object Management")
         header_label = QLabel(header_text, panel_widget)
-        header_label.setObjectName("ObjectPanelHeaderLabel")
+        header_label.setObjectName("FormHeaderLabel")
         header_label.setAlignment(Qt.AlignHCenter | Qt.AlignTop)
         panel_layout.addWidget(header_label)
 
@@ -1756,7 +1765,7 @@ class StartWindow(QMainWindow):
         # Header
         header_text = self.get_translation("HelpWinHeader", "Help")
         header_label = QLabel(header_text, panel_widget)
-        header_label.setObjectName("HelpPanelHeaderLabel")
+        header_label.setObjectName("FormHeaderLabel")
         header_label.setAlignment(Qt.AlignHCenter | Qt.AlignTop)
         panel_layout.addWidget(header_label)
 
@@ -1806,7 +1815,7 @@ class StartWindow(QMainWindow):
         # Header
         header_text = self.get_translation("AboutWinHeader", "About")
         header_label = QLabel(header_text, panel_widget)
-        header_label.setObjectName("AboutPanelHeaderLabel")
+        header_label.setObjectName("FormHeaderLabel")
         header_label.setAlignment(Qt.AlignHCenter | Qt.AlignTop)
         panel_layout.addWidget(header_label)
 
