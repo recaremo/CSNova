@@ -1,0 +1,44 @@
+{
+  "character_ID_01": {
+    "main_character": true,
+    "name": "Test1",
+    "first_name": "",
+    "nick_name": "",
+    "born": "2025-09-19",
+    "gender_ID": "identifiziert sich als männlich",
+    "sex_orientation_ID": "sexuell und emotional zum anderen Geschlecht hingezogen",
+    "role_ID": "None",
+    "status_ID": "In Planung",
+    "group_ID": "None",
+    "char_image": "",
+    "notes": ""
+  },
+  "character_ID_03": {
+    "main_character": false,
+    "name": "Test 4",
+    "first_name": "",
+    "nick_name": "",
+    "born": "2025-09-19",
+    "gender_ID": "identifiziert sich als männlich",
+    "sex_orientation_ID": "sexuell und emotional zum anderen Geschlecht hingezogen",
+    "role_ID": "",
+    "status_ID": "In Planung",
+    "group_ID": "",
+    "char_image": "",
+    "notes": ""
+  },
+  "character_ID_04": {
+    "main_character": false,
+    "name": "Test 5",
+    "first_name": "",
+    "nick_name": "",
+    "born": "2025-09-19",
+    "gender_ID": "identifiziert sich als männlich",
+    "sex_orientation_ID": "sexuell und emotional zum anderen Geschlecht hingezogen",
+    "role_ID": "",
+    "status_ID": "In Planung",
+    "group_ID": "",
+    "char_image": "",
+    "notes": ""
+  }
+}

@@ -4,7 +4,7 @@ import locale
 import platform
 import subprocess
 from pathlib import Path
-from config.dev import USER_SETTINGS_FILE, TRANSLATIONS_DIR, GUI_DIR, FORM_FIELDS_FILE, BASE_STYLE_FILE
+from config.dev import USER_SETTINGS_FILE, TRANSLATIONS_DIR, GUI_DIR, FORM_FIELDS_FILE, BASE_STYLE_FILE, DATA_DIR
 from core.logger import log_info, log_error, log_exception, log_section, log_header, setup_logging, log_call
 
 from PySide6.QtWidgets import QApplication
@@ -274,7 +274,7 @@ LANGUAGE_DEFAULTS = {
     "botn_ch_01": "Neuen Charakter erstellen",
     "botn_ch_01_hint": "Hier kannst du einen neuen Charakter erstellen.",
     "botn_ch_02a": "Nächster",
-    "botn_ch_02b_hint": "Hier kannst du zum nächsten Charakter wechseln.",
+    "botn_ch_02a_hint": "Hier kannst du zum nächsten Charakter wechseln.",
     "botn_ch_02b": "Vorheriger",
     "botn_ch_02b_hint": "Hier kannst du zum vorherigen Charakter wechseln.",
     "botn_ch_03": "Charakter speichern",
@@ -680,7 +680,7 @@ LANGUAGE_DEFAULTS = {
     "botn_ch_01": "Create New Character",
     "botn_ch_01_hint": "Here you can create a new character.",
     "botn_ch_02a": "Next",
-    "botn_ch_02b_hint": "Here you can switch to the next character.",
+    "botn_ch_02a_hint": "Here you can switch to the next character.",
     "botn_ch_02b": "Previous",
     "botn_ch_02b_hint": "Here you can switch to the previous character.",
     "botn_ch_03": "Save Character",
@@ -1086,7 +1086,7 @@ LANGUAGE_DEFAULTS = {
     "botn_ch_01": "Crear nuevo personaje",
     "botn_ch_01_hint": "Aquí puedes crear un nuevo personaje.",
     "botn_ch_02a": "Siguiente",
-    "botn_ch_02b_hint": "Aquí puedes cambiar al siguiente personaje.",
+    "botn_ch_02a_hint": "Aquí puedes cambiar al siguiente personaje.",
     "botn_ch_02b": "Anterior",
     "botn_ch_02b_hint": "Aquí puedes cambiar al personaje anterior.",
     "botn_ch_03": "Guardar personaje",
@@ -1492,7 +1492,7 @@ LANGUAGE_DEFAULTS = {
     "botn_ch_01": "Créer un nouveau personnage",
     "botn_ch_01_hint": "Ici, vous pouvez créer un nouveau personnage.",
     "botn_ch_02a": "Suivant",
-    "botn_ch_02b_hint": "Ici, vous pouvez passer au personnage suivant.",
+    "botn_ch_02a_hint": "Ici, vous pouvez passer au personnage suivant.",
     "botn_ch_02b": "Précédent",
     "botn_ch_02b_hint": "Ici, vous pouvez revenir au personnage précédent.",
     "botn_ch_03": "Enregistrer le personnage",
@@ -4925,107 +4925,7 @@ FORM_FIELDS_DEFAULT = {
         {"name": "status_ID", "label_key": "char_ma_09", "type": "combobox", "required": False, "width": 120, "datafield_name": "status_ID", "combo_key": "status"},
         {"name": "group_ID", "label_key": "char_gr_01", "type": "text", "required": False, "width": 120, "datafield_name": "group_ID"},
         {"name": "char_image", "label_key": "char_image", "type": "text", "required": False, "width": 220, "datafield_name": "char_image"},
-        {"name": "notes", "label_key": "char_ma_12", "type": "text", "required": False, "max_length": 500, "width": 480, "datafield_name": "notes", "multiline": True},
-
-        {
-        "origin": [
-            { "name": "origin_header", "label_key": "char_or_header", "type": "header", "datafield_name": None },
-            { "name": "father", "label_key": "char_or_02", "type": "text", "datafield_name": "origin.father" },
-            { "name": "mother", "label_key": "char_or_03", "type": "text", "datafield_name": "origin.mother" },
-            { "name": "reference_person", "label_key": "char_or_04", "type": "text", "datafield_name": "origin.reference_person" },
-            { "name": "siblings", "label_key": "char_or_05", "type": "text", "datafield_name": "origin.siblings" },
-            { "name": "birthplace", "label_key": "char_or_06", "type": "text", "datafield_name": "origin.birthplace" },
-            { "name": "notes", "label_key": "char_or_07", "type": "text", "datafield_name": "origin.notes", "multiline": True }
-        ]
-        },
-        {
-        "education": [
-            { "name": "education_header", "label_key": "char_ed_header", "type": "header", "datafield_name": None },
-            { "name": "school", "label_key": "char_ed_02", "type": "text", "datafield_name": "education.school" },
-            { "name": "university", "label_key": "char_ed_03", "type": "text", "datafield_name": "education.university" },
-            { "name": "job_education", "label_key": "char_ed_04", "type": "text", "datafield_name": "education.job_education" },
-            { "name": "autodidactic", "label_key": "char_ed_05", "type": "text", "datafield_name": "education.autodidactic" },
-            { "name": "job", "label_key": "char_ed_06", "type": "text", "datafield_name": "education.job" },
-            { "name": "art_music", "label_key": "char_ed_07", "type": "text", "datafield_name": "education.art_music" },
-            { "name": "sport", "label_key": "char_ed_08", "type": "text", "datafield_name": "education.sport" },
-            { "name": "technology", "label_key": "char_ed_09", "type": "text", "datafield_name": "education.technology" },
-            { "name": "notes", "label_key": "char_ed_10", "type": "text", "datafield_name": "education.notes", "multiline": True }
-        ]
-        },
-        {
-        "personality": [
-            { "name": "personality_header", "label_key": "char_ps_header", "type": "header", "datafield_name": None },
-            { "name": "pos_characteristic", "label_key": "char_ps_02", "type": "text", "datafield_name": "personality.pos_characteristic" },
-            { "name": "neg_characteristic", "label_key": "char_ps_03", "type": "text", "datafield_name": "personality.neg_characteristic" },
-            { "name": "fears", "label_key": "char_ps_04", "type": "text", "datafield_name": "personality.fears" },
-            { "name": "weaknesses", "label_key": "char_ps_05", "type": "text", "datafield_name": "personality.weaknesses" },
-            { "name": "strengths", "label_key": "char_ps_06", "type": "text", "datafield_name": "personality.strengths" },
-            { "name": "talents", "label_key": "char_ps_07", "type": "text", "datafield_name": "personality.talents" },
-            { "name": "beliefs", "label_key": "char_ps_08", "type": "text", "datafield_name": "personality.beliefs" },
-            { "name": "life_goals", "label_key": "char_ps_09", "type": "text", "datafield_name": "personality.life_goals" },
-            { "name": "motivation", "label_key": "char_ps_10", "type": "text", "datafield_name": "personality.motivation" },
-            { "name": "behavior", "label_key": "char_ps_11", "type": "text", "datafield_name": "personality.behavior" },
-            { "name": "notes", "label_key": "char_ps_12", "type": "text", "datafield_name": "personality.notes", "multiline": True }
-        ]
-        },
-        {
-        "psychological_profile": [
-            { "name": "psychological_profile_header", "label_key": "char_pp_header", "type": "header", "datafield_name": None },
-            { "name": "diagnosis", "label_key": "char_pp_02", "type": "text", "datafield_name": "psychological_profile.diagnosis" },
-            { "name": "symptoms", "label_key": "char_pp_03", "type": "text", "datafield_name": "psychological_profile.symptoms" },
-            { "name": "therapy", "label_key": "char_pp_04", "type": "text", "datafield_name": "psychological_profile.therapy" },
-            { "name": "medication", "label_key": "char_pp_05", "type": "text", "datafield_name": "psychological_profile.medication" },
-            { "name": "temperament", "label_key": "char_pp_06", "type": "text", "datafield_name": "psychological_profile.temperament" },
-            { "name": "values_set", "label_key": "char_pp_07", "type": "text", "datafield_name": "psychological_profile.values_set" },
-            { "name": "moral_concepts", "label_key": "char_pp_08", "type": "text", "datafield_name": "psychological_profile.moral_concepts" },
-            { "name": "character_strength", "label_key": "char_pp_09", "type": "text", "datafield_name": "psychological_profile.character_strength" },
-            { "name": "character_weakness", "label_key": "char_pp_10", "type": "text", "datafield_name": "psychological_profile.character_weakness" },
-            { "name": "self_image", "label_key": "char_pp_11", "type": "text", "datafield_name": "psychological_profile.self_image" },
-            { "name": "humor", "label_key": "char_pp_12", "type": "text", "datafield_name": "psychological_profile.humor" },
-            { "name": "aggression", "label_key": "char_pp_13", "type": "text", "datafield_name": "psychological_profile.aggression" },
-            { "name": "trauma", "label_key": "char_pp_14", "type": "text", "datafield_name": "psychological_profile.trauma" },
-            { "name": "formative_personality", "label_key": "char_pp_15", "type": "text", "datafield_name": "psychological_profile.formative_personality" },
-            { "name": "socialization", "label_key": "char_pp_16", "type": "text", "datafield_name": "psychological_profile.socialization" },
-            { "name": "norms", "label_key": "char_pp_17", "type": "text", "datafield_name": "psychological_profile.norms" },
-            { "name": "taboos", "label_key": "char_pp_18", "type": "text", "datafield_name": "psychological_profile.taboos" },
-            { "name": "notes", "label_key": "char_pp_19", "type": "text", "datafield_name": "psychological_profile.notes", "multiline": True }
-        ]
-        },
-        {
-        "appearance_main": [
-            { "name": "appearance_main_header", "label_key": "char_am_header", "type": "header", "datafield_name": None },
-            { "name": "height", "label_key": "char_am_02", "type": "text", "datafield_name": "appearance_main.height" },
-            { "name": "body_type", "label_key": "char_am_03", "type": "text", "datafield_name": "appearance_main.body_type" },
-            { "name": "posture", "label_key": "char_am_04", "type": "text", "datafield_name": "appearance_main.posture" },
-            { "name": "face_shape", "label_key": "char_am_05", "type": "text", "datafield_name": "appearance_main.face_shape" },
-            { "name": "eye_shape", "label_key": "char_am_06", "type": "text", "datafield_name": "appearance_main.eye_shape" },
-            { "name": "eye_color", "label_key": "char_am_07", "type": "text", "datafield_name": "appearance_main.eye_color" },
-            { "name": "hair", "label_key": "char_am_08", "type": "text", "datafield_name": "appearance_main.hair" },
-            { "name": "hair_color", "label_key": "char_am_09", "type": "text", "datafield_name": "appearance_main.hair_color" },
-            { "name": "skin", "label_key": "char_am_10", "type": "text", "datafield_name": "appearance_main.skin" },
-            { "name": "charisma", "label_key": "char_am_11", "type": "text", "datafield_name": "appearance_main.charisma" },
-            { "name": "specials", "label_key": "char_am_12", "type": "text", "datafield_name": "appearance_main.specials" },
-            { "name": "notes", "label_key": "char_am_13", "type": "text", "datafield_name": "appearance_main.notes", "multiline": True }
-        ]
-        },
-        {
-        "appearance_detail": [
-            { "name": "appearance_detail_header", "label_key": "char_ad_header", "type": "header", "datafield_name": None },
-            { "name": "head", "label_key": "char_ad_02", "type": "text", "datafield_name": "appearance_detail.head" },
-            { "name": "neck", "label_key": "char_ad_03", "type": "text", "datafield_name": "appearance_detail.neck" },
-            { "name": "shoulder", "label_key": "char_ad_04", "type": "text", "datafield_name": "appearance_detail.shoulder" },
-            { "name": "arms", "label_key": "char_ad_05", "type": "text", "datafield_name": "appearance_detail.arms" },
-            { "name": "hands", "label_key": "char_ad_06", "type": "text", "datafield_name": "appearance_detail.hands" },
-            { "name": "finger", "label_key": "char_ad_07", "type": "text", "datafield_name": "appearance_detail.finger" },
-            { "name": "chest", "label_key": "char_ad_08", "type": "text", "datafield_name": "appearance_detail.chest" },
-            { "name": "hips_waist", "label_key": "char_ad_09", "type": "text", "datafield_name": "appearance_detail.hips_waist" },
-            { "name": "buttocks", "label_key": "char_ad_10", "type": "text", "datafield_name": "appearance_detail.buttocks" },
-            { "name": "legs", "label_key": "char_ad_11", "type": "text", "datafield_name": "appearance_detail.legs" },
-            { "name": "feet", "label_key": "char_ad_12", "type": "text", "datafield_name": "appearance_detail.feet" },
-            { "name": "toes", "label_key": "char_ad_13", "type": "text", "datafield_name": "appearance_detail.toes" },
-            { "name": "notes", "label_key": "char_ad_14", "type": "text", "datafield_name": "appearance_detail.notes", "multiline": True }
-        ]
-    }
+        {"name": "notes", "label_key": "char_ma_12", "type": "text", "required": False, "max_length": 500, "width": 480, "datafield_name": "notes", "multiline": True}
   ]
 }
 
@@ -5089,194 +4989,15 @@ TABLES_CHARACTERS_DEFAULTS = {
         "first_name": "",
         "nick_name": "",
         "born": None,
-        "age": 0,
         "gender_ID": None,
         "sex_orientation_ID": None,
         "role_ID": None,
         "status_ID": None,
         "group_ID": None,
-        "image": "",
-        "icon": "",
-        "notes": "",
-        "origin": {
-            "father": "",
-            "mother": "",
-            "reference_person": "",
-            "siblings": "",
-            "birthplace": "",
-            "notes": ""
-        },
-        "education": {
-            "school": "",
-            "university": "",
-            "job_education": "",
-            "autodidactic": "",
-            "job": "",
-            "art_music": "",
-            "sport": "",
-            "technology": "",
-            "notes": ""
-        },
-        "personality": {
-            "pos_characteristic": "",
-            "neg_characteristic": "",
-            "fears": "",
-            "weaknesses": "",
-            "strengths": "",
-            "talents": "",
-            "beliefs": "",
-            "life_goals": "",
-            "motivation": "",
-            "behavior": "",
-            "notes": ""
-        },
-        "psychological_profile": {
-            "diagnosis": "",
-            "symptoms": "",
-            "therapy": "",
-            "medication": "",
-            "temperament": "",
-            "values_set": "",
-            "moral_concepts": "",
-            "character_strength": "",
-            "character_weakness": "",
-            "self_image": "",
-            "humor": "",
-            "aggression": "",
-            "trauma": "",
-            "formative_personality": "",
-            "socialization": "",
-            "norms": "",
-            "taboos": "",
-            "notes": ""
-        },
-        "appearance_main": {
-            "height": "",
-            "body_type": "",
-            "posture": "",
-            "face_shape": "",
-            "eye_shape": "",
-            "eye_color": "",
-            "hair": "",
-            "hair_color": "",
-            "skin": "",
-            "charisma": "",
-            "specials": "",
-            "notes": ""
-        },
-        "appearance_detail": {
-            "head": "",
-            "neck": "",
-            "shoulder": "",
-            "arms": "",
-            "hands": "",
-            "finger": "",
-            "chest": "",
-            "hips_waist": "",
-            "buttocks": "",
-            "legs": "",
-            "feet": "",
-            "toes": "",
-            "notes": ""
+        "char_image": "",
+        "notes": ""
         }
-    },
-    "character_ID_02": {
-        "main_character": False,
-        "name": "",
-        "first_name": "",
-        "nick_name": "",
-        "born": None,
-        "age": 0,
-        "role_ID": None,
-        "status_ID": None,
-        "group_ID": None,
-        "image": "",
-        "icon": "",
-        "notes": "",
-        "origin": {
-            "father": "",
-            "mother": "",
-            "reference_person": "",
-            "siblings": "",
-            "birthplace": "",
-            "notes": ""
-        },
-        "education": {
-            "school": "",
-            "university": "",
-            "job_education": "",
-            "autodidactic": "",
-            "job": "",
-            "art_music": "",
-            "sport": "",
-            "technology": "",
-            "notes": ""
-        },
-        "personality": {
-            "pos_characteristic": "",
-            "neg_characteristic": "",
-            "fears": "",
-            "weaknesses": "",
-            "strengths": "",
-            "talents": "",
-            "beliefs": "",
-            "life_goals": "",
-            "motivation": "",
-            "behavior": "",
-            "notes": ""
-        },
-        "psychological_profile": {
-            "diagnosis": "",
-            "symptoms": "",
-            "therapy": "",
-            "medication": "",
-            "temperament": "",
-            "values_set": "",
-            "moral_concepts": "",
-            "character_strength": "",
-            "character_weakness": "",
-            "self_image": "",
-            "humor": "",
-            "aggression": "",
-            "trauma": "",
-            "formative_personality": "",
-            "socialization": "",
-            "norms": "",
-            "taboos": "",
-            "notes": ""
-        },
-        "appearance_main": {
-            "height": "",
-            "body_type": "",
-            "posture": "",
-            "face_shape": "",
-            "eye_shape": "",
-            "eye_color": "",
-            "hair": "",
-            "hair_color": "",
-            "skin": "",
-            "charisma": "",
-            "specials": "",
-            "notes": ""
-        },
-        "appearance_detail": {
-            "head": "",
-            "neck": "",
-            "shoulder": "",
-            "arms": "",
-            "hands": "",
-            "finger": "",
-            "chest": "",
-            "hips_waist": "",
-            "buttocks": "",
-            "legs": "",
-            "feet": "",
-            "toes": "",
-            "notes": ""
-        }
-    }
 }
-
 # Tabellen für Objekte und Requisiten
 TABLES_OBJECTS_DEFAULTS = {
     "object_ID_01": {
@@ -5532,6 +5253,38 @@ def ensure_settings_keys(settings, defaults):
         elif isinstance(value, dict):
             ensure_settings_keys(settings[key], value)
 
+# Sicherstellen, dass die Character_main.json existiert und alle notwendigen Keys enthält
+def ensure_character_main_json():
+    file_path = DATA_DIR / "Character_main.json"
+    defaults = TABLES_CHARACTERS_DEFAULTS["character_ID_01"]
+
+    if not file_path.exists():
+        # Erstelle ein Dict mit einem Beispielcharakter
+        characters = {
+            "character_ID_01": defaults.copy()
+        }
+        with open(file_path, "w", encoding="utf-8") as f:
+            json.dump(characters, f, indent=2, ensure_ascii=False)
+        log_info("Character_main.json neu angelegt (mit Beispielcharakter als Dict).")
+        return
+
+    # Datei existiert: Keys prüfen und ggf. ergänzen
+    try:
+        with open(file_path, "r", encoding="utf-8") as f:
+            characters = json.load(f)
+        changed = False
+        for char_id, char in characters.items():
+            for key, default_value in defaults.items():
+                if key not in char:
+                    char[key] = default_value
+                    changed = True
+        if changed:
+            with open(file_path, "w", encoding="utf-8") as f:
+                json.dump(characters, f, indent=2, ensure_ascii=False)
+            log_info("Character_main.json: fehlende Keys ergänzt.")
+    except Exception as e:
+        log_error(f"Fehler beim Prüfen/Ergänzen von Character_main.json: {e}")
+
 # Validierung der Schlüssel in den Standardkonfigurationen
 def validate_keys():
     lang_keys = [list(LANGUAGE_DEFAULTS[lang].keys()) for lang in LANGUAGE_DEFAULTS]
@@ -5654,13 +5407,15 @@ def main():
         settings = init_settings()
         log_info("Benutzereinstellungen geladen und geprüft.")
 
+        # HIER EINFÜGEN:
+        ensure_character_main_json()
+
         language = init_language(settings, os_language)
         log_info(f"Sprache gesetzt: {language}")
 
         style_theme = init_theme(settings)
         log_info(f"Theme gesetzt: {style_theme}")
 
-        # Jetzt werden drei Dateien zurückgegeben
         translation_file, theme_file, combobox_translation_file = init_files(language, style_theme)
         log_info(f"Dateien erstellt: {translation_file}, {theme_file}, {combobox_translation_file}")
 

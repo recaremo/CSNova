@@ -1140,123 +1140,62 @@ class StartWindow(QMainWindow):
         form_layout.setContentsMargins(20, 20, 20, 20)
         form_layout.setSpacing(12)
 
-        # Felder aus form_fields.json laden
         with open("core/config/form_fields.json", "r", encoding="utf-8") as f:
             form_fields = json.load(f)
         character_fields = form_fields.get("characters", [])
 
         self.character_form_widgets = {}
-        age_label = None
 
         for field in character_fields:
+            if isinstance(field, dict) and len(field) == 1 and isinstance(next(iter(field.values())), list):
+                continue
             field_name = field.get("datafield_name")
             if not field_name:
                 continue
-
             label_key = field.get("label_key", field_name)
             label_text = self.get_translation(label_key, field_name)
             field_type = field.get("type", "text")
             width = field.get("width")
-
-            # Checkbox für main_character
             if field_type == "checkbox":
                 widget = QCheckBox(panel_widget)
-            # Combobox
             elif field_type == "combobox":
                 widget = QComboBox(panel_widget)
                 combo_key = field.get("combo_key")
                 if combo_key and self.combobox_translations:
                     items = list(self.combobox_translations.get(combo_key, {}).values())
                     widget.addItems(items)
-            # Date für born
-            elif field_type == "date" and field_name == "born":
+            elif field_type == "date":
                 widget = QDateEdit(panel_widget)
                 widget.setCalendarPopup(True)
-                today = datetime.date.today()
-                widget.setDate(today)
-                # Format je nach Sprache
-                if self.language == "de":
-                    widget.setDisplayFormat("dd.MM.yyyy")
-                elif self.language == "en":
-                    widget.setDisplayFormat("MM.dd.yyyy")
-                elif self.language == "fr":
-                    widget.setDisplayFormat("dd/MM/yyyy")
-                elif self.language == "es":
-                    widget.setDisplayFormat("dd/MM/yyyy")
-                else:
-                    widget.setDisplayFormat("yyyy-MM-dd")
-            # Multiline
             elif field.get("multiline"):
                 widget = QTextEdit(panel_widget)
                 widget.setMinimumHeight(60)
-            # Standard Textfeld
             else:
                 widget = QLineEdit(panel_widget)
-
             if width:
                 try:
                     widget.setFixedWidth(int(width))
                 except Exception:
                     pass
-
-            # Wert beim Laden setzen
-            if character_data and field_name in character_data:
-                value = character_data[field_name]
-                if isinstance(widget, QLineEdit):
-                    widget.setText(value)
-                elif isinstance(widget, QTextEdit):
-                    widget.setPlainText(value)
-                elif isinstance(widget, QComboBox):
-                    idx = widget.findText(value)
-                    if idx >= 0:
-                        widget.setCurrentIndex(idx)
-                elif isinstance(widget, QDateEdit):
-                    try:
-                        # Versuche verschiedene Formate
-                        if isinstance(value, str):
-                            # Prüfe auf alle unterstützten Formate
-                            for fmt in ["%d.%m.%Y", "%d/%m/%Y", "%m.%d.%Y", "%Y-%m-%d"]:
-                                try:
-                                    date = datetime.datetime.strptime(value, fmt).date()
-                                    widget.setDate(date)
-                                    break
-                                except Exception:
-                                    continue
-                    except Exception:
-                        widget.setDate(datetime.date.today())
-                elif isinstance(widget, QCheckBox):
-                    widget.setChecked(bool(value))
-
-            # Füge das Feld ins Formular ein
             form_layout.addRow(label_text, widget)
             self.character_form_widgets[field_name] = widget
 
-            # Nach dem Geburtsdatum das Alter als Label einfügen
-            if field_name == "born":
-                age_label = QLabel("0", panel_widget)
-                form_layout.addRow(self.get_translation("char_ma_07", "Alter"), age_label)
-                self.character_form_widgets["age_label"] = age_label
-
-                # Alter automatisch berechnen, wenn das Geburtsdatum geändert wird
-                def update_age_label():
-                    born_widget = self.character_form_widgets.get("born")
-                    age_label_widget = self.character_form_widgets.get("age_label")
-                    if isinstance(born_widget, QDateEdit) and age_label_widget:
-                        born = born_widget.date().toPython()
-                        today = datetime.date.today()
-                        age = today.year - born.year - ((today.month, today.day) < (born.month, born.day))
-                        age_label_widget.setText(str(age))
-                widget.dateChanged.connect(update_age_label)
-                update_age_label()
-
-            # Stoppe nach dem ersten notes-Feld
-            if field_name == "notes":
-                break
+        # Lade beim ersten Aufruf den ersten Charakter
+        if character_data is None:
+            characters = self.load_characters()
+            if characters:
+                first_id = sorted(characters.keys())[0]
+                self.current_character_id = first_id
+                self.fill_character_form(characters[first_id])
+            else:
+                self.current_character_id = None
+        else:
+            self.fill_character_form(character_data)
 
         panel_widget.setObjectName("CharacterFormPanel")
         self.safe_apply_theme_style(panel_widget, "panel", self.theme)
         return panel_widget
-   
+        
     # Dieses center_panel_location wird angezeigt, wenn ein Ort erstellt oder bearbeitert wird.
     def create_center_panel_location(self):
         return self.create_center_panel_with_header("proj_lo_header", "Locations")  
@@ -1529,26 +1468,6 @@ class StartWindow(QMainWindow):
 
         return panel_widget
     
-    # Aktualisiere den Zustand der Projekt-Buttons basierend auf der Auswahl
-    def update_project_buttons_state(self):
-        # Stelle sicher, dass die Buttons existieren
-        if not (hasattr(self, "botn_fo_02") and hasattr(self, "botn_fo_03") and hasattr(self, "botn_fo_04")):
-            return
-        
-        # Prüfe, ob das Center-Panel die Projektübersicht ist
-        is_project_overview = (
-            hasattr(self, "center_panel_widget") and
-            self.center_panel_widget.objectName() == "ProjectOverviewPanel"
-        )
-        # Prüfe, ob Projekte vorhanden und eines ausgewählt ist
-        has_projects = self.project_list_widget.count() > 0
-        selected = self.project_list_widget.selectedItems()
-        enable = bool(selected) and is_project_overview
-        self.botn_fo_02.setEnabled(enable)
-        self.botn_fo_04.setEnabled(enable)
-        # Speichern-Button bleibt deaktiviert, bis im Formular etwas geändert wird
-        self.botn_fo_03.setEnabled(False)  
-    
     # Dieses right_panel_settings wird angezeigt, wenn die Einstellungen bearbeitet werden sollen.
     # Es beinhaltet die Navigation zu den verschiedenen Einstellungs-Kategorien und beendet den Einstellungs-Modus.
     def create_right_panel_settings(self):
@@ -1607,31 +1526,28 @@ class StartWindow(QMainWindow):
         panel_layout.setSpacing(16)
         panel_layout.setAlignment(Qt.AlignTop)
 
-        # Header
         header_text = self.get_translation("CharacterWinHeader", "Character Management")
         header_label = QLabel(header_text, panel_widget)
         header_label.setObjectName("FormHeaderLabel")
         header_label.setAlignment(Qt.AlignHCenter | Qt.AlignTop)
         panel_layout.addWidget(header_label)
 
-        # Button-Konfiguration: (Key, Hint-Key)
         button_keys = [
-            ("botn_ch_01", "botn_ch_01_hint"),
-            ("botn_ch_02a", "botn_ch_02a_hint"),
-            ("botn_ch_02b", "botn_ch_02b_hint"),
-            ("botn_ch_03", "botn_ch_03_hint"),
-            ("botn_ch_04", "botn_ch_04_hint"),
+            ("botn_ch_01", "botn_ch_01_hint"),  # Neuer Charakter
+            ("botn_ch_02a", "botn_ch_02a_hint"),  # Charakter vorheriger
+            ("botn_ch_02b", "botn_ch_02b_hint"),  # Charakter nächster
+            ("botn_ch_03", "botn_ch_03_hint"),  # Charakter speichern
+            ("botn_ch_04", "botn_ch_04_hint"),  # Charakter löschen
         ]
-        for i, (key, hint_key) in enumerate(button_keys, start=1):
+        for key, hint_key in button_keys:
             btn_text = self.get_translation(key, key)
             btn_hint = self.get_translation(hint_key, "")
             btn = QPushButton(btn_text, panel_widget)
             btn.setToolTip(btn_hint)
             panel_layout.addWidget(btn)
-            setattr(self, f"botn_ch_{i:02d}", btn)
-            # Hier kannst du später die Button-Handler ergänzen
+            setattr(self, key, btn)
 
-        # Spacer, damit der Zurück-Button unten steht
+        # Spacer
         panel_layout.addSpacerItem(QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding))
 
         # Zurück-Button
@@ -1641,9 +1557,14 @@ class StartWindow(QMainWindow):
         btn_back.setToolTip(btn_back_hint)
         panel_layout.addWidget(btn_back, alignment=Qt.AlignBottom)
         self.botn_ch_05 = btn_back
+        btn_back.clicked.connect(self.show_start_panels)
 
-        # Handler für Zurück-Button: Right Panel zurücksetzen
-        btn_back.clicked.connect(lambda: self.show_start_panels())
+        # Button-Handler
+        self.botn_ch_01.clicked.connect(self.on_new_character_clicked)
+        self.botn_ch_02a.clicked.connect(self.on_previous_character_clicked)
+        self.botn_ch_02b.clicked.connect(self.on_next_character_clicked)
+        self.botn_ch_03.clicked.connect(self.on_save_character_clicked)
+        self.botn_ch_04.clicked.connect(self.on_delete_character_clicked)
 
         panel_widget.setObjectName("CharacterRightPanel")
         self.safe_apply_theme_style(panel_widget, "panel", self.theme)
@@ -1856,6 +1777,10 @@ class StartWindow(QMainWindow):
         self.safe_apply_theme_style(header_label, "label", self.theme)
         return panel_widget
     
+    # ..............................................................
+    # PROJEKT FUNKTIONEN
+    # ..............................................................
+    
     # Lege ein neues Projekt an
     def on_create_project_clicked(self):
         import datetime
@@ -2015,6 +1940,158 @@ class StartWindow(QMainWindow):
             self.show_center_panel(0, self.center_panel_functions)
             self.update_project_buttons_state()
 
+
+    # ..............................................................
+    # Charakter FUNKTIONEN
+    # ..............................................................
+
+    # Aktualisiere den Zustand der Projekt-Buttons basierend auf der Auswahl
+    def update_project_buttons_state(self):
+        # Stelle sicher, dass die Buttons existieren
+        if not (hasattr(self, "botn_fo_02a")
+            and hasattr(self, "botn_fo_02b") 
+            and hasattr(self, "botn_fo_03") 
+            and hasattr(self, "botn_fo_04")):
+            return
+        
+        # Prüfe, ob das Center-Panel die Projektübersicht ist
+        is_project_overview = (
+            hasattr(self, "center_panel_widget") and
+            self.center_panel_widget.objectName() == "ProjectOverviewPanel"
+        )
+        # Prüfe, ob Projekte vorhanden und eines ausgewählt ist
+        has_projects = self.project_list_widget.count() > 0
+        selected = self.project_list_widget.selectedItems()
+        enable = bool(selected) and is_project_overview
+        self.botn_fo_02a.setEnabled(enable)
+        self.botn_fo_02b.setEnabled(enable)
+        self.botn_fo_04.setEnabled(enable)
+        # Speichern-Button bleibt deaktiviert, bis im Formular etwas geändert wird
+        self.botn_fo_03.setEnabled(False)     
+    
+    # Lege einen neuen Charakter an
+    def load_characters(self):
+        file_path = DATA_DIR / "Character_main.json"
+        if not file_path.exists():
+            return {}
+        with open(file_path, "r", encoding="utf-8") as f:
+            return json.load(f)
+    # Speichere alle Charaktere
+    def save_characters(self, characters):
+        file_path = DATA_DIR / "Character_main.json"
+        with open(file_path, "w", encoding="utf-8") as f:
+            json.dump(characters, f, indent=2, ensure_ascii=False)
+    # Lösche den aktuellen Charakter
+    def on_delete_character_clicked(self):
+        characters = self.load_characters()
+        if not characters or not self.current_character_id:
+            return
+        # Charakter entfernen
+        if self.current_character_id in characters:
+            del characters[self.current_character_id]
+            self.save_characters(characters)
+            # Nach dem Löschen: nächsten Charakter anzeigen, oder leeres Formular
+            if characters:
+                first_id = sorted(characters.keys())[0]
+                self.current_character_id = first_id
+                self.fill_character_form(characters[first_id])
+            else:
+                self.current_character_id = None
+                empty_data = {k: "" for k in self.character_form_widgets}
+                self.fill_character_form(empty_data)
+
+    # Fülle das Charakter-Formular mit den Daten eines Charakters
+    def fill_character_form(self, character_data):
+        for field_name, widget in self.character_form_widgets.items():
+            value = character_data.get(field_name, "")
+            if isinstance(widget, QLineEdit):
+                widget.setText(str(value))
+            elif isinstance(widget, QTextEdit):
+                widget.setPlainText(str(value))
+            elif isinstance(widget, QComboBox):
+                idx = widget.findText(str(value))
+                if idx >= 0:
+                    widget.setCurrentIndex(idx)
+                else:
+                    widget.setCurrentIndex(0)
+            elif isinstance(widget, QCheckBox):
+                widget.setChecked(bool(value))
+            elif isinstance(widget, QDateEdit):
+                if value:
+                    try:
+                        widget.setDate(datetime.date.fromisoformat(value))
+                    except Exception:
+                        widget.setDate(datetime.date.today())
+                else:
+                    widget.setDate(datetime.date.today())
+
+    # Lese die Daten aus dem Charakter-Formular aus
+    def get_character_form_data(self):
+        data = {}
+        for field_name, widget in self.character_form_widgets.items():
+            if isinstance(widget, QLineEdit):
+                data[field_name] = widget.text()
+            elif isinstance(widget, QTextEdit):
+                data[field_name] = widget.toPlainText()
+            elif isinstance(widget, QComboBox):
+                data[field_name] = widget.currentText()
+            elif isinstance(widget, QCheckBox):
+                data[field_name] = widget.isChecked()
+            elif isinstance(widget, QDateEdit):
+                data[field_name] = widget.date().toString("yyyy-MM-dd")
+        return data
+
+    # Handler für "Neuer Charakter" Button
+    def on_new_character_clicked(self):
+        # Leeres Formular anzeigen, keine ID setzen
+        empty_data = {k: "" for k in self.character_form_widgets}
+        self.current_character_id = None
+        self.fill_character_form(empty_data)
+
+    # Handler für "Charakter speichern" Button
+    def on_save_character_clicked(self):
+        characters = self.load_characters()
+        data = self.get_character_form_data()
+        if self.current_character_id and self.current_character_id in characters:
+            # Bestehenden Charakter aktualisieren
+            characters[self.current_character_id] = data
+        else:
+            # Neuen Charakter anlegen
+            existing_ids = [int(k.split("_")[-1]) for k in characters.keys() if k.startswith("character_ID_")]
+            next_id = max(existing_ids, default=0) + 1
+            new_id = f"character_ID_{next_id:02d}"
+            characters[new_id] = data
+            self.current_character_id = new_id
+        self.save_characters(characters)    
+
+    # Handler für "Vorheriger Charakter" Button
+    def on_previous_character_clicked(self):
+        characters = self.load_characters()
+        if not characters:
+            return
+        ids = sorted(characters.keys())
+        if self.current_character_id in ids:
+            idx = ids.index(self.current_character_id)
+            new_idx = (idx - 1) % len(ids)
+        else:
+            new_idx = 0
+        self.current_character_id = ids[new_idx]
+        self.fill_character_form(characters[self.current_character_id])
+    
+    # Handler für "Nächster Charakter" Button
+    def on_next_character_clicked(self):
+        characters = self.load_characters()
+        if not characters:
+            return
+        ids = sorted(characters.keys())
+        if self.current_character_id in ids:
+            idx = ids.index(self.current_character_id)
+            new_idx = (idx + 1) % len(ids)
+        else:
+            new_idx = 0
+        self.current_character_id = ids[new_idx]
+        self.fill_character_form(characters[self.current_character_id])    
+    
     # --------------------------------------------------------------
     # --------------------------------------------------------------
     @log_call
