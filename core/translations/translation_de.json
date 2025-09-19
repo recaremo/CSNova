@@ -199,6 +199,7 @@
   "botn_st_09": "Beenden",
   "botn_st_09_hint": "Hier kannst du CSNova beenden.",
   "secureExitTitle": "Möchtest du CSNova wirklich beenden?",
+  "secureDeleteTitle": "Möchtest du folgenden Eintrag wirklich löschen?",
   "botn_yes": "Ja",
   "botn_no": "Nein",
   "botn_cancel": "Abbrechen",

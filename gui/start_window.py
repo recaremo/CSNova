@@ -554,7 +554,7 @@ class StartWindow(QMainWindow):
         except Exception as e:
             log_exception("Fehler beim Zurücksetzen der Einstellungen", e)
 
-    # 
+    # Wechsel zum nächsten Schritt
     def go_to_next_step(self):
         try:
             self.settings["general"]["first_start"] = False
@@ -1213,7 +1213,7 @@ class StartWindow(QMainWindow):
         return self.create_center_panel_with_header("abou_lp_header", "About")
     
     # ..............................................................
-    # PANELS FUNKTIONEN (PLATZHALTER) - RIGHT_PANEL
+    # PANELS FUNKTIONEN - RIGHT_PANEL
     # ..............................................................
     # Dieses right_panel_start wird beim Systemstart angezeigt und beinhaltet
     # die Navigation zum Aufruf von: Editor, Projekt, Einstellungen, Hilfe, Über
@@ -1778,9 +1778,94 @@ class StartWindow(QMainWindow):
         return panel_widget
     
     # ..............................................................
+    # Zentrale Funktionen
+    # ..............................................................
+
+    # Sichere Abfrage zum Löschen von Projekten, Charakteren, Objekten, Orten, Storylines
+    def show_secure_delete_dialog(self, delete_type, delete_data=None):
+        """
+        Zentrale Sicherheitsabfrage zum Löschen von Projekten, Charakteren, Objekten, Orten, Storylines.
+        delete_type: "project", "character", "object", "location", "storyline"
+        delete_data: z.B. Dateiname, ID, etc.
+        """
+        dialog = QDialog(self)
+        dialog.setWindowTitle(self.get_translation("WinStartTitle", "CSNova"))
+        layout = QVBoxLayout(dialog)
+        layout.setContentsMargins(24, 24, 24, 24)
+        layout.setSpacing(16)
+
+        # Übersetzungen holen
+        title = self.get_translation("secureDeleteTitle", "Do you really want to delete the following entry?")
+        type_label = {
+            "project": self.get_translation("proj_ma_header", "Project"),
+            "character": self.get_translation("char_ma_header", "Character"),
+            "object": self.get_translation("proj_ob_header", "Object"),
+            "location": self.get_translation("proj_lo_header", "Location"),
+            "storyline": self.get_translation("proj_st_header", "Storyline"),
+        }.get(delete_type, delete_type.capitalize())
+        yes = self.get_translation("botn_yes", "Yes")
+        no = self.get_translation("botn_no", "No")
+
+        # Detailtext (z.B. Name)
+        detail = str(delete_data) if delete_data else ""
+
+        # Sicherheitsabfrage-Text
+        label = QLabel(f"{title}<br><br><b>{type_label}:</b> {detail}", dialog)
+        label.setAlignment(Qt.AlignCenter)
+        label.setTextFormat(Qt.RichText)
+        if self.apply_theme_style and self.theme:
+            self.apply_theme_style(label, "label", self.theme)
+        layout.addWidget(label)
+
+        # Buttons
+        btn_layout = QHBoxLayout()
+        btn_yes = QPushButton(yes, dialog)
+        btn_no = QPushButton(no, dialog)
+        if self.apply_theme_style and self.theme:
+            self.apply_theme_style(btn_yes, "button", self.theme)
+            self.apply_theme_style(btn_no, "button", self.theme)
+        btn_layout.addWidget(btn_yes)
+        btn_layout.addWidget(btn_no)
+        layout.addLayout(btn_layout)
+
+        if self.apply_theme_style and self.theme:
+            self.apply_theme_style(dialog, "panel", self.theme)
+
+        # Button-Logik
+        def on_yes():
+            dialog.accept()
+            if delete_type == "project":
+                self._delete_project(delete_data)
+            elif delete_type == "character":
+                self._delete_character(delete_data)
+            # ...weitere Typen...
+
+        btn_yes.clicked.connect(on_yes)
+        btn_no.clicked.connect(dialog.reject)
+
+        dialog.exec()
+    
+    # ..............................................................
     # PROJEKT FUNKTIONEN
     # ..............................................................
     
+    # Aktualisiere den Zustand der Projekt-Buttons basierend auf der Auswahl
+    def update_project_buttons_state(self):
+        # Stelle sicher, dass die Buttons existieren
+        if not (hasattr(self, "botn_fo_02")
+            and hasattr(self, "botn_fo_03") 
+            and hasattr(self, "botn_fo_04")):
+            return
+
+        # Prüfe, ob Projekte vorhanden und eines ausgewählt ist
+        has_projects = self.project_list_widget.count() > 0
+        selected = self.project_list_widget.selectedItems()
+        enable = bool(selected) and has_projects
+
+        self.botn_fo_02.setEnabled(enable)  # Projekt laden
+        self.botn_fo_03.setEnabled(False)   # Speichern bleibt deaktiviert bis Änderung
+        self.botn_fo_04.setEnabled(enable)  # Projekt löschen 
+
     # Lege ein neues Projekt an
     def on_create_project_clicked(self):
         import datetime
@@ -1922,53 +2007,23 @@ class StartWindow(QMainWindow):
         if not selected_items:
             return
         filename = selected_items[0].text()
+        self.show_secure_delete_dialog("project", filename)
+    # Interne Löschfunktion
+    def _delete_project(self, filename):
         file = DATA_DIR / filename
-        from PySide6.QtWidgets import QMessageBox
-        reply = QMessageBox.question(
-            self, "Projekt löschen",
-            f"Möchten Sie das Projekt '{filename}' wirklich löschen?",
-            QMessageBox.Yes | QMessageBox.No
-        )
-        if reply == QMessageBox.Yes:
-            try:
-                if file.exists():
-                    file.unlink()
-                    log_info(f"Projekt gelöscht: {file}")
-            except Exception as e:
-                log_exception(f"Fehler beim Löschen der Datei: {file}", e)
-            # Projektliste aktualisieren
-            self.show_center_panel(0, self.center_panel_functions)
-            self.update_project_buttons_state()
-
+        try:
+            if file.exists():
+                file.unlink()
+                log_info(f"Projekt gelöscht: {file}")
+        except Exception as e:
+            log_exception(f"Fehler beim Löschen der Datei: {file}", e)
+        self.show_center_panel(0, self.center_panel_functions)
+        self.update_project_buttons_state()
 
     # ..............................................................
     # Charakter FUNKTIONEN
     # ..............................................................
 
-    # Aktualisiere den Zustand der Projekt-Buttons basierend auf der Auswahl
-    def update_project_buttons_state(self):
-        # Stelle sicher, dass die Buttons existieren
-        if not (hasattr(self, "botn_fo_02a")
-            and hasattr(self, "botn_fo_02b") 
-            and hasattr(self, "botn_fo_03") 
-            and hasattr(self, "botn_fo_04")):
-            return
-        
-        # Prüfe, ob das Center-Panel die Projektübersicht ist
-        is_project_overview = (
-            hasattr(self, "center_panel_widget") and
-            self.center_panel_widget.objectName() == "ProjectOverviewPanel"
-        )
-        # Prüfe, ob Projekte vorhanden und eines ausgewählt ist
-        has_projects = self.project_list_widget.count() > 0
-        selected = self.project_list_widget.selectedItems()
-        enable = bool(selected) and is_project_overview
-        self.botn_fo_02a.setEnabled(enable)
-        self.botn_fo_02b.setEnabled(enable)
-        self.botn_fo_04.setEnabled(enable)
-        # Speichern-Button bleibt deaktiviert, bis im Formular etwas geändert wird
-        self.botn_fo_03.setEnabled(False)     
-    
     # Lege einen neuen Charakter an
     def load_characters(self):
         file_path = DATA_DIR / "Character_main.json"
@@ -1983,12 +2038,16 @@ class StartWindow(QMainWindow):
             json.dump(characters, f, indent=2, ensure_ascii=False)
     # Lösche den aktuellen Charakter
     def on_delete_character_clicked(self):
-        characters = self.load_characters()
-        if not characters or not self.current_character_id:
+        if not self.current_character_id:
             return
-        # Charakter entfernen
-        if self.current_character_id in characters:
-            del characters[self.current_character_id]
+        self.show_secure_delete_dialog("character", self.current_character_id)
+    # Interne Löschfunktion    
+    def _delete_character(self, character_id):
+        characters = self.load_characters()
+        if not characters or not character_id:
+            return
+        if character_id in characters:
+            del characters[character_id]
             self.save_characters(characters)
             # Nach dem Löschen: nächsten Charakter anzeigen, oder leeres Formular
             if characters:
