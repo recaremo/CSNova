@@ -1,4 +1,15 @@
-from PySide6.QtWidgets import QCheckBox, QTextEdit, QFileDialog, QMainWindow, QLineEdit, QDateEdit, QFormLayout, QSpinBox , QLabel, QWidget, QVBoxLayout, QSplitter, QPushButton, QSpacerItem, QSizePolicy, QDialog, QHBoxLayout, QApplication, QComboBox
+from PySide6.QtWidgets import (
+    QTabWidget, QCheckBox,
+    QTextEdit, QFileDialog,
+    QMainWindow, QLineEdit,
+    QDateEdit, QFormLayout,
+    QSpinBox, QLabel,
+    QWidget, QVBoxLayout,
+    QSplitter, QPushButton,
+    QSpacerItem, QSizePolicy,
+    QDialog, QHBoxLayout,
+    QApplication, QComboBox
+)
 from PySide6.QtCore import Qt, QEvent
 from PySide6.QtGui import QPixmap
 import json
@@ -1136,40 +1147,32 @@ class StartWindow(QMainWindow):
     # Dieses center_panel_character wird angezeigt, wenn ein Charakter erstellt oder bearbeitert wird.
     def create_center_panel_character(self, character_data=None):
         panel_widget = QWidget()
-        form_layout = QFormLayout(panel_widget)
-        form_layout.setContentsMargins(20, 20, 20, 20)
-        form_layout.setSpacing(12)
+        main_layout = QVBoxLayout(panel_widget)
+        main_layout.setContentsMargins(20, 20, 20, 20)
+        main_layout.setSpacing(12)
 
+        # --- OBERER BEREICH: Hauptcharakter, Name, Vorname ---
+        top_form = QFormLayout()
+        top_form.setSpacing(8)
+        self.character_form_widgets = {}
+
+        # Felder für den oberen Bereich
+        upper_fields = ["main_character", "name", "first_name"]
         with open("core/config/form_fields.json", "r", encoding="utf-8") as f:
             form_fields = json.load(f)
         character_fields = form_fields.get("characters", [])
 
-        self.character_form_widgets = {}
-
         for field in character_fields:
-            if isinstance(field, dict) and len(field) == 1 and isinstance(next(iter(field.values())), list):
-                continue
             field_name = field.get("datafield_name")
-            if not field_name:
+            if field_name not in upper_fields:
                 continue
             label_key = field.get("label_key", field_name)
             label_text = self.get_translation(label_key, field_name)
             field_type = field.get("type", "text")
             width = field.get("width")
+            # Widget-Auswahl
             if field_type == "checkbox":
                 widget = QCheckBox(panel_widget)
-            elif field_type == "combobox":
-                widget = QComboBox(panel_widget)
-                combo_key = field.get("combo_key")
-                if combo_key and self.combobox_translations:
-                    items = list(self.combobox_translations.get(combo_key, {}).values())
-                    widget.addItems(items)
-            elif field_type == "date":
-                widget = QDateEdit(panel_widget)
-                widget.setCalendarPopup(True)
-            elif field.get("multiline"):
-                widget = QTextEdit(panel_widget)
-                widget.setMinimumHeight(60)
             else:
                 widget = QLineEdit(panel_widget)
             if width:
@@ -1177,25 +1180,118 @@ class StartWindow(QMainWindow):
                     widget.setFixedWidth(int(width))
                 except Exception:
                     pass
-            form_layout.addRow(label_text, widget)
+            top_form.addRow(label_text, widget)
             self.character_form_widgets[field_name] = widget
 
-        # Lade beim ersten Aufruf den ersten Charakter
-        if character_data is None:
-            characters = self.load_characters()
-            if characters:
-                first_id = sorted(characters.keys())[0]
-                self.current_character_id = first_id
-                self.fill_character_form(characters[first_id])
-            else:
-                self.current_character_id = None
-        else:
-            self.fill_character_form(character_data)
+        main_layout.addLayout(top_form)
 
+        # --- TAB-BEREICH ---
+        tab_widget = QTabWidget(panel_widget)
+        tab_widget.setTabPosition(QTabWidget.North)
+
+        # Tab-Konfiguration: (Tab-Key, Datenfeld(e))
+        tab_definitions = [
+            ("char_ma_01", ["nick_name", "born", "role_ID", "group_ID", "char_image", "gender_ID", "sexual_orientation_ID", "status_ID", "notes"]),  # Stammdaten
+            ("char_or_01", ["origin_father", "origin_mother", "origin_siblings", "origin_reference_person", "origin_place_of_birth", "origin_notes"]),  # Herkunft
+            ("char_ed_01", []),  # Ausbildung
+            ("char_am_01", []),  # Aussehen Merkmale
+            ("char_ad_01", []),  # Aussehen Details
+            ("char_ps_01", []),  # Persönlichkeit
+            ("char_pp_01", []),  # Psychologisches Profil
+        ]
+
+        for tab_key, tab_fields in tab_definitions:
+            tab = QWidget()
+            tab_layout = QFormLayout(tab)
+            tab_layout.setSpacing(8)
+            # Wenn Felder für diesen Tab definiert sind, füge sie ein
+            for field in character_fields:
+                field_name = field.get("datafield_name")
+                if not field_name or (tab_fields and field_name not in tab_fields):
+                    continue
+                label_key = field.get("label_key", field_name)
+                label_text = self.get_translation(label_key, field_name)
+                field_type = field.get("type", "text")
+                width = field.get("width")
+                # Spezialfall: Geburtsdatum + Alter
+                if field_name == "born":
+                    widget = QDateEdit(panel_widget)
+                    widget.setCalendarPopup(True)
+                    if self.language == "de":
+                        widget.setDisplayFormat("dd.MM.yyyy")
+                    elif self.language == "en":
+                        widget.setDisplayFormat("MM dd yyyy")
+                    elif self.language == "fr":
+                        widget.setDisplayFormat("dd/MM/yyyy")
+                    elif self.language == "es":
+                        widget.setDisplayFormat("dd/MM/yyyy")
+                    else:
+                        widget.setDisplayFormat("yyyy-MM-dd")
+                    if width:
+                        try:
+                            widget.setFixedWidth(int(width))
+                        except Exception:
+                            pass
+                    tab_layout.addRow(label_text, widget)
+                    self.character_form_widgets[field_name] = widget
+
+                    # Alter-Label
+                    age_label = self.get_translation("char_ma_07", "Alter")
+                    age_value_label = QLabel(panel_widget)
+                    age_value_label.setObjectName("CharAgeLabel")
+                    age_value_label.setAlignment(Qt.AlignLeft | Qt.AlignVCenter)
+                    tab_layout.addRow(age_label, age_value_label)
+                    self.character_form_widgets["char_age"] = age_value_label
+
+                    def update_age(qdate=None, widget=widget, age_value_label=age_value_label):
+                        if qdate is None:
+                            qdate = widget.date()
+                        try:
+                            birthdate = qdate.toPython()
+                        except AttributeError:
+                            birthdate = qdate
+                        today = datetime.date.today()
+                        if birthdate:
+                            age = today.year - birthdate.year - ((today.month, today.day) < (birthdate.month, birthdate.day))
+                            age_value_label.setText(str(age))
+                        else:
+                            age_value_label.setText("")
+                    widget.dateChanged.connect(update_age)
+                    update_age()
+                    continue
+
+                # Standard-Widget-Erstellung
+                if field_type == "checkbox":
+                    widget = QCheckBox(panel_widget)
+                elif field_type == "combobox":
+                    widget = QComboBox(panel_widget)
+                    combo_key = field.get("combo_key")
+                    if combo_key and self.combobox_translations:
+                        items = list(self.combobox_translations.get(combo_key, {}).values())
+                        widget.addItems(items)
+                elif field_type == "date":
+                    widget = QDateEdit(panel_widget)
+                    widget.setCalendarPopup(True)
+                elif field.get("multiline"):
+                    widget = QTextEdit(panel_widget)
+                    widget.setMinimumHeight(60)
+                else:
+                    widget = QLineEdit(panel_widget)
+                if width:
+                    try:
+                        widget.setFixedWidth(int(width))
+                    except Exception:
+                        pass
+                tab_layout.addRow(label_text, widget)
+                self.character_form_widgets[field_name] = widget
+
+            tab_widget.addTab(tab, self.get_translation(tab_key, tab_key))
+
+        main_layout.addWidget(tab_widget)
         panel_widget.setObjectName("CharacterFormPanel")
         self.safe_apply_theme_style(panel_widget, "panel", self.theme)
         return panel_widget
-        
+
     # Dieses center_panel_location wird angezeigt, wenn ein Ort erstellt oder bearbeitert wird.
     def create_center_panel_location(self):
         return self.create_center_panel_with_header("proj_lo_header", "Locations")  
@@ -1538,14 +1634,20 @@ class StartWindow(QMainWindow):
             ("botn_ch_02b", "botn_ch_02b_hint"),  # Charakter nächster
             ("botn_ch_03", "botn_ch_03_hint"),  # Charakter speichern
             ("botn_ch_04", "botn_ch_04_hint"),  # Charakter löschen
+            ("botn_ch_06", "botn_ch_06_hint"),  # Charakter Bild laden
         ]
-        for key, hint_key in button_keys:
-            btn_text = self.get_translation(key, key)
-            btn_hint = self.get_translation(hint_key, "")
-            btn = QPushButton(btn_text, panel_widget)
-            btn.setToolTip(btn_hint)
-            panel_layout.addWidget(btn)
-            setattr(self, key, btn)
+        for idx, (key, hint_key) in enumerate(button_keys):
+                btn_text = self.get_translation(key, key)
+                btn_hint = self.get_translation(hint_key, "")
+                btn = QPushButton(btn_text, panel_widget)
+                btn.setToolTip(btn_hint)
+                panel_layout.addWidget(btn)
+                setattr(self, key, btn)
+                # Nach botn_ch_06 einen größeren Abstand einfügen
+                if key == "botn_ch_06":
+                    spacer = QWidget()
+                    spacer.setFixedHeight(36)
+                    panel_layout.addWidget(spacer)
 
         # Spacer
         panel_layout.addSpacerItem(QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding))
@@ -2063,7 +2165,27 @@ class StartWindow(QMainWindow):
     def fill_character_form(self, character_data):
         for field_name, widget in self.character_form_widgets.items():
             value = character_data.get(field_name, "")
-            if isinstance(widget, QLineEdit):
+            if field_name == "born" and isinstance(widget, QDateEdit):
+                # Versuche verschiedene Formate zu erkennen
+                date_obj = None
+                for fmt in ("%Y-%m-%d", "%d.%m.%Y", "%m %d %Y", "%d/%m/%Y"):
+                    try:
+                        date_obj = datetime.datetime.strptime(value, fmt).date()
+                        break
+                    except Exception:
+                        continue
+                if date_obj:
+                    widget.setDate(date_obj)
+                else:
+                    widget.setDate(datetime.date.today())
+                # Alter-Feld aktualisieren
+                if "char_age" in self.character_form_widgets:
+                    today = datetime.date.today()
+                    age = today.year - widget.date().year() - ((today.month, today.day) < (widget.date().month(), widget.date().day()))
+                    self.character_form_widgets["char_age"].setText(str(age))
+            elif field_name == "char_age" and isinstance(widget, QLineEdit):
+                continue  # Alter wird automatisch berechnet
+            elif isinstance(widget, QLineEdit):
                 widget.setText(str(value))
             elif isinstance(widget, QTextEdit):
                 widget.setPlainText(str(value))

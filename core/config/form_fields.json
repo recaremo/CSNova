@@ -260,6 +260,419 @@
       "width": 480,
       "datafield_name": "notes",
       "multiline": true
+    },
+    {
+      "name": "origin_father",
+      "label_key": "char_or_02",
+      "type": "text",
+      "datafield_name": "origin_father"
+    },
+    {
+      "name": "origin_mother",
+      "label_key": "char_or_03",
+      "type": "text",
+      "datafield_name": "origin_mother"
+    },
+    {
+      "name": "origin_siblings",
+      "label_key": "char_or_05",
+      "type": "text",
+      "datafield_name": "origin_siblings"
+    },
+    {
+      "name": "origin_reference_persons",
+      "label_key": "char_or_04",
+      "type": "text",
+      "datafield_name": "origin_reference_persons"
+    },
+    {
+      "name": "origin_place_of_birth",
+      "label_key": "char_or_06",
+      "type": "text",
+      "datafield_name": "origin_place_of_birth"
+    },
+    {
+      "name": "origin_notes",
+      "label_key": "char_or_07",
+      "type": "text",
+      "datafield_name": "origin_notes",
+      "multiline": true
+    },
+    {
+      "name": "education_school",
+      "label_key": "char_ed_02",
+      "type": "text",
+      "datafield_name": "education_school"
+    },
+    {
+      "name": "education_university",
+      "label_key": "char_ed_03",
+      "type": "text",
+      "datafield_name": "education_university"
+    },
+    {
+      "name": "education_vocational_training",
+      "label_key": "char_ed_04",
+      "type": "text",
+      "datafield_name": "education_vocational_training"
+    },
+    {
+      "name": "education_self_tought",
+      "label_key": "char_ed_05",
+      "type": "text",
+      "datafield_name": "education_self_tought"
+    },
+    {
+      "name": "education_profession",
+      "label_key": "char_ed_06",
+      "type": "text",
+      "datafield_name": "education_profession"
+    },
+    {
+      "name": "education_art_music",
+      "label_key": "char_ed_07",
+      "type": "text",
+      "datafield_name": "education_art_music"
+    },
+    {
+      "name": "education_sports",
+      "label_key": "char_ed_08",
+      "type": "text",
+      "datafield_name": "education_sports"
+    },
+    {
+      "name": "education_technology",
+      "label_key": "char_ed_09",
+      "type": "text",
+      "datafield_name": "education_technology"
+    },
+    {
+      "name": "education_notes",
+      "label_key": "char_ed_10",
+      "type": "text",
+      "datafield_name": "education_notes",
+      "multiline": true
+    },
+    {
+      "name": "appearance_Height",
+      "label_key": "char_ap_02",
+      "type": "text",
+      "datafield_name": "appearance_Height"
+    },
+    {
+      "name": "appearance_Body_type",
+      "label_key": "char_ap_03",
+      "type": "text",
+      "datafield_name": "appearance_Body_type"
+    },
+    {
+      "name": "appearance_Stature",
+      "label_key": "char_ap_04",
+      "type": "text",
+      "datafield_name": "appearance_Stature"
+    },
+    {
+      "name": "appearance_Face_shape",
+      "label_key": "char_ap_05",
+      "type": "text",
+      "datafield_name": "appearance_Face_shape"
+    },
+    {
+      "name": "appearance_Eye_shape",
+      "label_key": "char_ap_06",
+      "type": "text",
+      "datafield_name": "appearance_Eye_shape"
+    },
+    {
+      "name": "appearance_Eye_color",
+      "label_key": "char_ap_07",
+      "type": "text",
+      "datafield_name": "appearance_Eye_color"
+    },
+    {
+      "name": "appearance_Hair",
+      "label_key": "char_ap_08",
+      "type": "text",
+      "datafield_name": "appearance_Hair"
+    },
+    {
+      "name": "appearance_Hair_color",
+      "label_key": "char_ap_09",
+      "type": "text",
+      "datafield_name": "appearance_Hair_color"
+    },
+    {
+      "name": "appearance_Skin",
+      "label_key": "char_ap_10",
+      "type": "text",
+      "datafield_name": "appearance_Skin"
+    },
+    {
+      "name": "appearance_Aura",
+      "label_key": "char_ap_11",
+      "type": "text",
+      "datafield_name": "appearance_Aura"
+    },
+    {
+      "name": "appearance_Special_features",
+      "label_key": "char_ap_12",
+      "type": "text",
+      "datafield_name": "appearance_Special_features"
+    },
+    {
+      "name": "appearance_Notes",
+      "label_key": "char_ap_13",
+      "type": "text",
+      "datafield_name": "appearance_Notes",
+      "multiline": true
+    },
+    {
+      "name": "appearance_details_Head",
+      "label_key": "char_ad_02",
+      "type": "text",
+      "datafield_name": "appearance_details_Head"
+    },
+    {
+      "name": "appearance_details_Neck",
+      "label_key": "char_ad_03",
+      "type": "text",
+      "datafield_name": "appearance_details_Neck"
+    },
+    {
+      "name": "appearance_details_Shoulders",
+      "label_key": "char_ad_04",
+      "type": "text",
+      "datafield_name": "appearance_details_Shoulders"
+    },
+    {
+      "name": "appearance_details_Arms",
+      "label_key": "char_ad_05",
+      "type": "text",
+      "datafield_name": "appearance_details_Arms"
+    },
+    {
+      "name": "appearance_details_Hands",
+      "label_key": "char_ad_06",
+      "type": "text",
+      "datafield_name": "appearance_details_Hands"
+    },
+    {
+      "name": "appearance_details_Fingers",
+      "label_key": "char_ad_07",
+      "type": "text",
+      "datafield_name": "appearance_details_Fingers"
+    },
+    {
+      "name": "appearance_details_Chest",
+      "label_key": "char_ad_08",
+      "type": "text",
+      "datafield_name": "appearance_details_Chest"
+    },
+    {
+      "name": "appearance_details_Hips_Waist",
+      "label_key": "char_ad_09",
+      "type": "text",
+      "datafield_name": "appearance_details_Hips_Waist"
+    },
+    {
+      "name": "appearance_details_Buttocks",
+      "label_key": "char_ad_10",
+      "type": "text",
+      "datafield_name": "appearance_details_Buttocks"
+    },
+    {
+      "name": "appearance_details_Legs",
+      "label_key": "char_ad_11",
+      "type": "text",
+      "datafield_name": "appearance_details_Legs"
+    },
+    {
+      "name": "appearance_details_Feet",
+      "label_key": "char_ad_12",
+      "type": "text",
+      "datafield_name": "appearance_details_Feet"
+    },
+    {
+      "name": "appearance_details_Toes",
+      "label_key": "char_ad_13",
+      "type": "text",
+      "datafield_name": "appearance_details_Toes"
+    },
+    {
+      "name": "personality_Positive trait",
+      "label_key": "char_pe_02",
+      "type": "text",
+      "datafield_name": "personality_Positive trait"
+    },
+    {
+      "name": "personality_Negative trait",
+      "label_key": "char_pe_03",
+      "type": "text",
+      "datafield_name": "personality_Negative trait"
+    },
+    {
+      "name": "personality_Fears",
+      "label_key": "char_pe_04",
+      "type": "text",
+      "datafield_name": "personality_Fears"
+    },
+    {
+      "name": "personality_Weaknesses",
+      "label_key": "char_pe_05",
+      "type": "text",
+      "datafield_name": "personality_Weaknesses"
+    },
+    {
+      "name": "personality_Strengths",
+      "label_key": "char_pe_06",
+      "type": "text",
+      "datafield_name": "personality_Strengths"
+    },
+    {
+      "name": "personality_Talents",
+      "label_key": "char_pe_07",
+      "type": "text",
+      "datafield_name": "personality_Talents"
+    },
+    {
+      "name": "personality_Belief principle",
+      "label_key": "char_pe_08",
+      "type": "text",
+      "datafield_name": "personality_Belief principle"
+    },
+    {
+      "name": "personality_Life goal",
+      "label_key": "char_pe_09",
+      "type": "text",
+      "datafield_name": "personality_Life goal"
+    },
+    {
+      "name": "personality_Motivation",
+      "label_key": "char_pe_10",
+      "type": "text",
+      "datafield_name": "personality_Motivation"
+    },
+    {
+      "name": "personality_Behavior",
+      "label_key": "char_pe_11",
+      "type": "text",
+      "datafield_name": "personality_Behavior"
+    },
+    {
+      "name": "personality_Notes",
+      "label_key": "char_pe_12",
+      "type": "text",
+      "datafield_name": "personality_Notes",
+      "multiline": true
+    },
+    {
+      "name": "psychlogical_profile_Diagnosis",
+      "label_key": "char_pp_02",
+      "type": "text",
+      "datafield_name": "psychlogical_profile_Diagnosis"
+    },
+    {
+      "name": "psychlogical_profile_Symptoms",
+      "label_key": "char_pp_03",
+      "type": "text",
+      "datafield_name": "psychlogical_profile_Symptoms"
+    },
+    {
+      "name": "psychlogical_profile_Therapy",
+      "label_key": "char_pp_04",
+      "type": "text",
+      "datafield_name": "psychlogical_profile_Therapy"
+    },
+    {
+      "name": "psychlogical_profile_Medication",
+      "label_key": "char_pp_05",
+      "type": "text",
+      "datafield_name": "psychlogical_profile_Medication"
+    },
+    {
+      "name": "psychlogical_profile_Temperament",
+      "label_key": "char_pp_06",
+      "type": "text",
+      "datafield_name": "psychlogical_profile_Temperament"
+    },
+    {
+      "name": "psychlogical_profile_Values",
+      "label_key": "char_pp_07",
+      "type": "text",
+      "datafield_name": "psychlogical_profile_Values"
+    },
+    {
+      "name": "psychlogical_profile_Moral concepts",
+      "label_key": "char_pp_08",
+      "type": "text",
+      "datafield_name": "psychlogical_profile_Moral concepts"
+    },
+    {
+      "name": "psychlogical_profile_Character strength",
+      "label_key": "char_pp_09",
+      "type": "text",
+      "datafield_name": "psychlogical_profile_Character strength"
+    },
+    {
+      "name": "psychlogical_profile_Character weakness",
+      "label_key": "char_pp_10",
+      "type": "text",
+      "datafield_name": "psychlogical_profile_Character weakness"
+    },
+    {
+      "name": "psychlogical_profile_Self-image",
+      "label_key": "char_pp_11",
+      "type": "text",
+      "datafield_name": "psychlogical_profile_Self-image"
+    },
+    {
+      "name": "psychlogical_profile_Humor",
+      "label_key": "char_pp_12",
+      "type": "text",
+      "datafield_name": "psychlogical_profile_Humor"
+    },
+    {
+      "name": "psychlogical_profile_Aggressiveness",
+      "label_key": "char_pp_13",
+      "type": "text",
+      "datafield_name": "psychlogical_profile_Aggressiveness"
+    },
+    {
+      "name": "psychlogical_profile_Trauma",
+      "label_key": "char_pp_14",
+      "type": "text",
+      "datafield_name": "psychlogical_profile_Trauma"
+    },
+    {
+      "name": "psychlogical_profile_Imprint",
+      "label_key": "char_pp_15",
+      "type": "text",
+      "datafield_name": "psychlogical_profile_Imprint"
+    },
+    {
+      "name": "psychlogical_profile_Socialization",
+      "label_key": "char_pp_16",
+      "type": "text",
+      "datafield_name": "psychlogical_profile_Socialization"
+    },
+    {
+      "name": "psychlogical_profile_Norms",
+      "label_key": "char_pp_17",
+      "type": "text",
+      "datafield_name": "psychlogical_profile_Norms"
+    },
+    {
+      "name": "psychlogical_profile_Taboos",
+      "label_key": "char_pp_18",
+      "type": "text",
+      "datafield_name": "psychlogical_profile_Taboos"
+    },
+    {
+      "name": "psychlogical_profile_Notes",
+      "label_key": "char_pp_19",
+      "type": "text",
+      "datafield_name": "psychlogical_profile_Notes",
+      "multiline": true
     }
   ]
 }
