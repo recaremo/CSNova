@@ -355,73 +355,73 @@
     },
     {
       "name": "appearance_Height",
-      "label_key": "char_ap_02",
+      "label_key": "char_am_02",
       "type": "text",
       "datafield_name": "appearance_Height"
     },
     {
       "name": "appearance_Body_type",
-      "label_key": "char_ap_03",
+      "label_key": "char_am_03",
       "type": "text",
       "datafield_name": "appearance_Body_type"
     },
     {
       "name": "appearance_Stature",
-      "label_key": "char_ap_04",
+      "label_key": "char_am_04",
       "type": "text",
       "datafield_name": "appearance_Stature"
     },
     {
       "name": "appearance_Face_shape",
-      "label_key": "char_ap_05",
+      "label_key": "char_am_05",
       "type": "text",
       "datafield_name": "appearance_Face_shape"
     },
     {
       "name": "appearance_Eye_shape",
-      "label_key": "char_ap_06",
+      "label_key": "char_am_06",
       "type": "text",
       "datafield_name": "appearance_Eye_shape"
     },
     {
       "name": "appearance_Eye_color",
-      "label_key": "char_ap_07",
+      "label_key": "char_am_07",
       "type": "text",
       "datafield_name": "appearance_Eye_color"
     },
     {
       "name": "appearance_Hair",
-      "label_key": "char_ap_08",
+      "label_key": "char_am_08",
       "type": "text",
       "datafield_name": "appearance_Hair"
     },
     {
       "name": "appearance_Hair_color",
-      "label_key": "char_ap_09",
+      "label_key": "char_am_09",
       "type": "text",
       "datafield_name": "appearance_Hair_color"
     },
     {
       "name": "appearance_Skin",
-      "label_key": "char_ap_10",
+      "label_key": "char_am_10",
       "type": "text",
       "datafield_name": "appearance_Skin"
     },
     {
       "name": "appearance_Aura",
-      "label_key": "char_ap_11",
+      "label_key": "char_am_11",
       "type": "text",
       "datafield_name": "appearance_Aura"
     },
     {
       "name": "appearance_Special_features",
-      "label_key": "char_ap_12",
+      "label_key": "char_am_12",
       "type": "text",
       "datafield_name": "appearance_Special_features"
     },
     {
       "name": "appearance_Notes",
-      "label_key": "char_ap_13",
+      "label_key": "char_am_13",
       "type": "text",
       "datafield_name": "appearance_Notes",
       "multiline": true
@@ -499,68 +499,75 @@
       "datafield_name": "appearance_details_Toes"
     },
     {
-      "name": "personality_Positive trait",
-      "label_key": "char_pe_02",
+      "name": "appearance_details_notes",
+      "label_key": "char_ad_14",
       "type": "text",
-      "datafield_name": "personality_Positive trait"
+      "datafield_name": "appearance_details_notes",
+      "multiline": true
     },
     {
-      "name": "personality_Negative trait",
-      "label_key": "char_pe_03",
+      "name": "personality_Positive_trait",
+      "label_key": "char_ps_02",
       "type": "text",
-      "datafield_name": "personality_Negative trait"
+      "datafield_name": "personality_Positive_trait"
+    },
+    {
+      "name": "personality_Negative_trait",
+      "label_key": "char_ps_03",
+      "type": "text",
+      "datafield_name": "personality_Negative_trait"
     },
     {
       "name": "personality_Fears",
-      "label_key": "char_pe_04",
+      "label_key": "char_ps_04",
       "type": "text",
       "datafield_name": "personality_Fears"
     },
     {
       "name": "personality_Weaknesses",
-      "label_key": "char_pe_05",
+      "label_key": "char_ps_05",
       "type": "text",
       "datafield_name": "personality_Weaknesses"
     },
     {
       "name": "personality_Strengths",
-      "label_key": "char_pe_06",
+      "label_key": "char_ps_06",
       "type": "text",
       "datafield_name": "personality_Strengths"
     },
     {
       "name": "personality_Talents",
-      "label_key": "char_pe_07",
+      "label_key": "char_ps_07",
       "type": "text",
       "datafield_name": "personality_Talents"
     },
     {
-      "name": "personality_Belief principle",
-      "label_key": "char_pe_08",
+      "name": "personality_Belief_principle",
+      "label_key": "char_ps_08",
       "type": "text",
-      "datafield_name": "personality_Belief principle"
+      "datafield_name": "personality_Belief_principle"
     },
     {
-      "name": "personality_Life goal",
-      "label_key": "char_pe_09",
+      "name": "personality_Life_goal",
+      "label_key": "char_ps_09",
       "type": "text",
-      "datafield_name": "personality_Life goal"
+      "datafield_name": "personality_Life_goal"
     },
     {
       "name": "personality_Motivation",
-      "label_key": "char_pe_10",
+      "label_key": "char_ps_10",
       "type": "text",
       "datafield_name": "personality_Motivation"
     },
     {
       "name": "personality_Behavior",
-      "label_key": "char_pe_11",
+      "label_key": "char_ps_11",
       "type": "text",
       "datafield_name": "personality_Behavior"
     },
     {
       "name": "personality_Notes",
-      "label_key": "char_pe_12",
+      "label_key": "char_ps_12",
       "type": "text",
       "datafield_name": "personality_Notes",
       "multiline": true
@@ -602,28 +609,28 @@
       "datafield_name": "psychlogical_profile_Values"
     },
     {
-      "name": "psychlogical_profile_Moral concepts",
+      "name": "psychlogical_profile_Moral_concepts",
       "label_key": "char_pp_08",
       "type": "text",
-      "datafield_name": "psychlogical_profile_Moral concepts"
+      "datafield_name": "psychlogical_profile_Moral_concepts"
     },
     {
-      "name": "psychlogical_profile_Character strength",
+      "name": "psychlogical_profile_Character_strength",
       "label_key": "char_pp_09",
       "type": "text",
-      "datafield_name": "psychlogical_profile_Character strength"
+      "datafield_name": "psychlogical_profile_Character_strength"
     },
     {
-      "name": "psychlogical_profile_Character weakness",
+      "name": "psychlogical_profile_Character_weakness",
       "label_key": "char_pp_10",
       "type": "text",
-      "datafield_name": "psychlogical_profile_Character weakness"
+      "datafield_name": "psychlogical_profile_Character_weakness"
     },
     {
-      "name": "psychlogical_profile_Self-image",
+      "name": "psychlogical_profile_Self_image",
       "label_key": "char_pp_11",
       "type": "text",
-      "datafield_name": "psychlogical_profile_Self-image"
+      "datafield_name": "psychlogical_profile_Self_image"
     },
     {
       "name": "psychlogical_profile_Humor",
@@ -672,6 +679,122 @@
       "label_key": "char_pp_19",
       "type": "text",
       "datafield_name": "psychlogical_profile_Notes",
+      "multiline": true
+    }
+  ],
+  "objects": [
+    {
+      "name": "obj_header",
+      "label_key": "proj_ob_01",
+      "type": "header",
+      "datafield_name": null
+    },
+    {
+      "name": "title",
+      "label_key": "proj_ob_02",
+      "type": "text",
+      "required": true,
+      "max_length": 120,
+      "width": 320,
+      "datafield_name": "ob_title"
+    },
+    {
+      "name": "description",
+      "label_key": "proj_ob_03",
+      "type": "text",
+      "required": false,
+      "max_length": 500,
+      "width": 480,
+      "datafield_name": "ob_description",
+      "multiline": true
+    }
+  ],
+  "storylines": [
+    {
+      "name": "st_header",
+      "label_key": "proj_st_01",
+      "type": "header",
+      "datafield_name": null
+    },
+    {
+      "name": "title",
+      "label_key": "proj_st_02",
+      "type": "text",
+      "required": true,
+      "max_length": 120,
+      "width": 320,
+      "datafield_name": "st_title"
+    },
+    {
+      "name": "premise",
+      "label_key": "proj_st_03",
+      "type": "text",
+      "required": false,
+      "max_length": 120,
+      "width": 320,
+      "datafield_name": "st_premise"
+    },
+    {
+      "name": "description",
+      "label_key": "proj_st_04",
+      "type": "text",
+      "required": false,
+      "max_length": 500,
+      "width": 480,
+      "datafield_name": "st_description",
+      "multiline": true
+    },
+    {
+      "name": "transformation",
+      "label_key": "proj_st_05",
+      "type": "text",
+      "required": false,
+      "width": 220,
+      "datafield_name": "status_IDst_transformation"
+    },
+    {
+      "name": "timeline",
+      "label_key": "proj_st_06",
+      "type": "text",
+      "required": false,
+      "width": 220,
+      "datafield_name": "st_timeline"
+    },
+    {
+      "name": "notes",
+      "label_key": "proj_st_07",
+      "type": "text",
+      "required": false,
+      "max_length": 500,
+      "width": 480,
+      "datafield_name": "st_notes",
+      "multiline": true
+    }
+  ],
+  "locations": [
+    {
+      "name": "loc_header",
+      "label_key": "proj_lo_01",
+      "type": "header",
+      "datafield_name": null
+    },
+    {
+      "name": "title",
+      "label_key": "proj_lo_02",
+      "type": "text",
+      "required": true,
+      "max_length": 120,
+      "width": 320,
+      "datafield_name": "lo_title"
+    },
+    {
+      "name": "description",
+      "label_key": "proj_lo_03",
+      "type": "text",
+      "required": false,
+      "max_length": 500,
+      "width": 480,
+      "datafield_name": "lo_description",
       "multiline": true
     }
   ]

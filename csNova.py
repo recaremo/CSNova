@@ -255,6 +255,8 @@ LANGUAGE_DEFAULTS = {
     "botn_st_08_hint": "Hier findest du Informationen über die Software.",
     "botn_st_09": "Beenden",
     "botn_st_09_hint": "Hier kannst du CSNova beenden.",
+    "botn_st_10": "Storylines",
+    "botn_st_10_hint": "Hier kannst du Erzählstränge erstellen und verwalten, die in einem oder mehreren Projekten verwendet werden.",
     "secureExitTitle": "Möchtest du CSNova wirklich beenden?",
     "secureDeleteTitle": "Möchtest du folgenden Eintrag wirklich löschen?",
     "botn_yes": "Ja",
@@ -324,6 +326,19 @@ LANGUAGE_DEFAULTS = {
     "botn_lo_04_hint": "Hier kannst du den aktuellen Ort löschen.",
     "botn_lo_05": "zurück",
     "botn_lo_05_hint": "Hier kannst du zum Startfenster zurückkehren.",
+    "StorylineWinHeader": "Erzählstrangverwaltung",
+    "botn_sl_01": "Neuen Erzählstrang erstellen",
+    "botn_sl_01_hint": "Hier kannst du einen neuen Erzählstrang erstellen.",
+    "botn_sl_02": "Nächster",
+    "botn_sl_02_hint": "Hier kannst du zum nächsten Erzählstrang wechseln.",
+    "botn_sl_03": "Vorheriger",
+    "botn_sl_03_hint": "Hier kannst du zum vorherigen Erzählstrang wechseln.",
+    "botn_sl_04": "Erzählstrang speichern",
+    "botn_sl_04_hint": "Hier kannst du den aktuellen Erzählstrang speichern.",
+    "botn_sl_05": "Erzählstrang löschen",
+    "botn_sl_05_hint": "Hier kannst du den aktuellen Erzählstrang löschen.",
+    "botn_sl_06": "zurück",
+    "botn_sl_06_hint": "Hier kannst du zum Startfenster zurückkehren.",
     "EditorWinHeader": "Texteditor",
     "botn_ed_01": "Neues Dokument",
     "botn_ed_01_hint": "Hier kannst du ein neues Dokument erstellen.",
@@ -676,6 +691,8 @@ LANGUAGE_DEFAULTS = {
     "botn_st_08_hint": "Here you can find information about the software.",
     "botn_st_09": "Exit",
     "botn_st_09_hint": "Here you can exit CSNova.",
+    "botn_st_10": "Storylines",
+    "botn_st_10_hint": "Here you can create and manage storylines that are used in one or more projects.",
     "secureExitTitle": "Do you really want to exit CSNova?",
     "secureDeleteTitle": "Do you really want to delete the following entry?",
     "botn_yes": "Yes",
@@ -745,6 +762,19 @@ LANGUAGE_DEFAULTS = {
     "botn_lo_04_hint": "Here you can delete the current location.",
     "botn_lo_05": "Back",
     "botn_lo_05_hint": "Here you can return to the start window.",
+    "StorylineWinHeader": "Storyline Management",
+    "botn_sl_01": "Create New Storyline",
+    "botn_sl_01_hint": "Here you can create a new storyline.",
+    "botn_sl_02": "Next",
+    "botn_sl_02_hint": "Here you can switch to the next storyline.",
+    "botn_sl_03": "Previous",
+    "botn_sl_03_hint": "Here you can switch to the previous storyline.",
+    "botn_sl_04": "Save Storyline",
+    "botn_sl_04_hint": "Here you can save the current storyline.",
+    "botn_sl_05": "Delete Storyline",
+    "botn_sl_05_hint": "Here you can delete the current storyline.",
+    "botn_sl_06": "Back",
+    "botn_sl_06_hint": "Here you can return to the start window.",
     "EditorWinHeader": "Text Editor",
     "botn_ed_01": "New Document",
     "botn_ed_01_hint": "Here you can create a new document.",
@@ -1097,6 +1127,8 @@ LANGUAGE_DEFAULTS = {
     "botn_st_08_hint": "Aquí puedes encontrar información sobre el software.",
     "botn_st_09": "Salir",
     "botn_st_09_hint": "Aquí puedes salir de CSNova.",
+    "botn_st_10": "Tramas",
+    "botn_st_10_hint": "Aquí puedes crear y gestionar tramas que se utilizan en uno o más proyectos.",
     "secureExitTitle": "¿Realmente quieres salir de CSNova?",
     "secureDeleteTitle": "¿Realmente quieres eliminar la siguiente entrada?",
     "botn_yes": "Sí",
@@ -1166,6 +1198,19 @@ LANGUAGE_DEFAULTS = {
     "botn_lo_04_hint": "Aquí puedes eliminar el lugar actual.",
     "botn_lo_05": "Atrás",
     "botn_lo_05_hint": "Aquí puedes volver a la ventana de inicio.",
+    "StorylineWinHeader": "Gestión de tramas",
+    "botn_sl_01": "Crear nueva trama",
+    "botn_sl_01_hint": "Aquí puedes crear una nueva trama.",
+    "botn_sl_02": "Siguiente",
+    "botn_sl_02_hint": "Aquí puedes cambiar a la siguiente trama.",
+    "botn_sl_03": "Anterior",
+    "botn_sl_03_hint": "Aquí puedes cambiar a la trama anterior.",
+    "botn_sl_04": "Guardar trama",
+    "botn_sl_04_hint": "Aquí puedes guardar la trama actual.",
+    "botn_sl_05": "Eliminar trama",
+    "botn_sl_05_hint": "Aquí puedes eliminar la trama actual.",
+    "botn_sl_06": "Atrás",
+    "botn_sl_06_hint": "Aquí puedes volver a la ventana de inicio.",
     "EditorWinHeader": "Editor de texto",
     "botn_ed_01": "Nuevo documento",
     "botn_ed_01_hint": "Aquí puedes crear un nuevo documento.",
@@ -1518,6 +1563,8 @@ LANGUAGE_DEFAULTS = {
     "botn_st_08_hint": "Ici, vous pouvez trouver des informations sur le logiciel.",
     "botn_st_09": "Quitter",
     "botn_st_09_hint": "Ici, vous pouvez quitter CSNova.",
+    "botn_st_10": "Intrigues",
+    "botn_st_10_hint": "Ici, vous pouvez créer et gérer des intrigues qui sont utilisées dans un ou plusieurs projets.",
     "secureExitTitle": "Voulez-vous vraiment quitter CSNova?",
     "secureDeleteTitle": "Voulez-vous vraiment supprimer l'entrée suivante?",
     "botn_yes": "Oui",
@@ -1587,6 +1634,19 @@ LANGUAGE_DEFAULTS = {
     "botn_lo_04_hint": "Ici, vous pouvez supprimer le lieu actuel.",
     "botn_lo_05": "Retour",
     "botn_lo_05_hint": "Ici, vous pouvez revenir à la fenêtre de démarrage.",
+    "StorylineWinHeader": "Gestion des intrigues",
+    "botn_sl_01": "Créer une nouvelle intrigue",
+    "botn_sl_01_hint": "Ici, vous pouvez créer une nouvelle intrigue.",
+    "botn_sl_02": "Suivant",
+    "botn_sl_02_hint": "Ici, vous pouvez passer à l'intrigue suivante.",
+    "botn_sl_03": "Précédent",
+    "botn_sl_03_hint": "Ici, vous pouvez revenir à l'intrigue précédente.",
+    "botn_sl_04": "Enregistrer l'intrigue",
+    "botn_sl_04_hint": "Ici, vous pouvez enregistrer l'intrigue actuelle.",
+    "botn_sl_05": "Supprimer l'intrigue",
+    "botn_sl_05_hint": "Ici, vous pouvez supprimer l'intrigue actuelle.",
+    "botn_sl_06": "Retour",
+    "botn_sl_06_hint": "Ici, vous pouvez revenir à la fenêtre de démarrage.",
     "EditorWinHeader": "Éditeur de texte",
     "botn_ed_01": "Nouveau document",
     "botn_ed_01_hint": "Ici, vous pouvez créer un nouveau document.",
@@ -1753,7 +1813,7 @@ LANGUAGE_DATA_COMBOBOX_DEFAULTS = {
         "bigender": "identifiziert sich mit zwei Geschlechtern",
         "other": "Geschlechtsidentität nicht aufgeführt"
     },
-    "sexual_orientation": {
+    "sex_orientation": {
         "heterosexual": "sexuell und emotional zum anderen Geschlecht hingezogen",
         "homosexual": "sexuell und emotional zum gleichen Geschlecht hingezogen",
         "bisexual": "sexuell und emotional zu beiden Geschlechtern hingezogen",
@@ -1937,7 +1997,7 @@ LANGUAGE_DATA_COMBOBOX_DEFAULTS = {
         "bigender": "identifies as two genders",
         "other": "gender identity not listed"
     },
-    "sexual_orientation": {
+    "sex_orientation": {
         "heterosexual": "sexually and emotionally attracted to the opposite gender",
         "homosexual": "sexually and emotionally attracted to the same gender",
         "bisexual": "sexually and emotionally attracted to both genders",
@@ -2121,7 +2181,7 @@ LANGUAGE_DATA_COMBOBOX_DEFAULTS = {
         "bigender": "se identifica con dos géneros",
         "other": "identidad de género no listada"
     },
-    "sexual_orientation": {
+    "sex_orientation": {
         "heterosexual": "atraído sexual y emocionalmente por el género opuesto",
         "homosexual": "atraído sexual y emocionalmente por el mismo género",
         "bisexual": "atraído sexual y emocionalmente por ambos géneros",
@@ -2305,7 +2365,7 @@ LANGUAGE_DATA_COMBOBOX_DEFAULTS = {
         "bigender": "s'identifie à deux genres",
         "other": "identité de genre non listée"
     },
-    "sexual_orientation": {
+    "sex_orientation": {
         "heterosexual": "attiré sexuellement et émotionnellement par le genre opposé",
         "homosexual": "attiré sexuellement et émotionnellement par le même genre",
         "bisexual": "attiré sexuellement et émotionnellement par les deux genres",
@@ -5006,18 +5066,18 @@ FORM_FIELDS_DEFAULT = {
         {"name": "education_notes", "label_key": "char_ed_10", "type": "text",  "datafield_name": "education_notes",  "multiline": True},
 
 
-        {"name": "appearance_Height", "label_key": "char_ap_02", "type": "text", "datafield_name": "appearance_Height"},
-        {"name": "appearance_Body_type", "label_key": "char_ap_03", "type": "text", "datafield_name": "appearance_Body_type"},
-        {"name": "appearance_Stature", "label_key": "char_ap_04", "type": "text", "datafield_name": "appearance_Stature"},
-        {"name": "appearance_Face_shape", "label_key": "char_ap_05", "type": "text", "datafield_name": "appearance_Face_shape"},
-        {"name": "appearance_Eye_shape", "label_key": "char_ap_06", "type": "text", "datafield_name": "appearance_Eye_shape"},
-        {"name": "appearance_Eye_color", "label_key": "char_ap_07", "type": "text", "datafield_name": "appearance_Eye_color"},
-        {"name": "appearance_Hair", "label_key": "char_ap_08", "type": "text", "datafield_name": "appearance_Hair"},
-        {"name": "appearance_Hair_color", "label_key": "char_ap_09", "type": "text",  "datafield_name": "appearance_Hair_color"},
-        {"name": "appearance_Skin", "label_key": "char_ap_10", "type": "text", "datafield_name": "appearance_Skin"},
-        {"name": "appearance_Aura", "label_key": "char_ap_11", "type": "text", "datafield_name": "appearance_Aura"},
-        {"name": "appearance_Special_features", "label_key": "char_ap_12", "type": "text", "datafield_name": "appearance_Special_features"},
-        {"name": "appearance_Notes", "label_key": "char_ap_13", "type": "text", "datafield_name": "appearance_Notes", "multiline": True},
+        {"name": "appearance_Height", "label_key": "char_am_02", "type": "text", "datafield_name": "appearance_Height"},
+        {"name": "appearance_Body_type", "label_key": "char_am_03", "type": "text", "datafield_name": "appearance_Body_type"},
+        {"name": "appearance_Stature", "label_key": "char_am_04", "type": "text", "datafield_name": "appearance_Stature"},
+        {"name": "appearance_Face_shape", "label_key": "char_am_05", "type": "text", "datafield_name": "appearance_Face_shape"},
+        {"name": "appearance_Eye_shape", "label_key": "char_am_06", "type": "text", "datafield_name": "appearance_Eye_shape"},
+        {"name": "appearance_Eye_color", "label_key": "char_am_07", "type": "text", "datafield_name": "appearance_Eye_color"},
+        {"name": "appearance_Hair", "label_key": "char_am_08", "type": "text", "datafield_name": "appearance_Hair"},
+        {"name": "appearance_Hair_color", "label_key": "char_am_09", "type": "text",  "datafield_name": "appearance_Hair_color"},
+        {"name": "appearance_Skin", "label_key": "char_am_10", "type": "text", "datafield_name": "appearance_Skin"},
+        {"name": "appearance_Aura", "label_key": "char_am_11", "type": "text", "datafield_name": "appearance_Aura"},
+        {"name": "appearance_Special_features", "label_key": "char_am_12", "type": "text", "datafield_name": "appearance_Special_features"},
+        {"name": "appearance_Notes", "label_key": "char_am_13", "type": "text", "datafield_name": "appearance_Notes", "multiline": True},
 
 
         {"name": "appearance_details_Head",	"label_key": "char_ad_02", "type": "text", "datafield_name": "appearance_details_Head"},
@@ -5032,19 +5092,19 @@ FORM_FIELDS_DEFAULT = {
         {"name": "appearance_details_Legs",	"label_key": "char_ad_11", "type": "text", "datafield_name": "appearance_details_Legs"},
         {"name": "appearance_details_Feet",	"label_key": "char_ad_12", "type": "text", "datafield_name": "appearance_details_Feet"},
         {"name": "appearance_details_Toes",	"label_key": "char_ad_13", "type": "text", "datafield_name": "appearance_details_Toes"},
+        {"name": "appearance_details_notes", "label_key": "char_ad_14", "type": "text", "datafield_name": "appearance_details_notes", "multiline": True},
 
-
-        {"name": "personality_Positive trait", "label_key":	"char_pe_02", "type": "text",	"datafield_name": "personality_Positive trait"},
-        {"name": "personality_Negative trait", "label_key":	"char_pe_03", "type": "text",	"datafield_name": "personality_Negative trait"},
-        {"name": "personality_Fears", "label_key": "char_pe_04", "type": "text", "datafield_name": "personality_Fears"},
-        {"name": "personality_Weaknesses", "label_key":	"char_pe_05", "type": "text", "datafield_name":	"personality_Weaknesses"},
-        {"name": "personality_Strengths", "label_key": "char_pe_06", "type": "text", "datafield_name": "personality_Strengths"},
-        {"name": "personality_Talents", "label_key": "char_pe_07", "type": "text", "datafield_name": "personality_Talents"},
-        {"name": "personality_Belief principle", "label_key": "char_pe_08", "type": "text",  "datafield_name": "personality_Belief principle"},
-        {"name": "personality_Life goal", "label_key": "char_pe_09", "type": "text", "datafield_name": "personality_Life goal"},
-        {"name": "personality_Motivation", "label_key": "char_pe_10", "type": "text", "datafield_name": "personality_Motivation"},
-        {"name": "personality_Behavior", "label_key": "char_pe_11", "type": "text", "datafield_name": "personality_Behavior"},
-        {"name": "personality_Notes", "label_key": "char_pe_12", "type": "text", "datafield_name": "personality_Notes",   "multiline": True},
+        {"name": "personality_Positive_trait", "label_key":	"char_ps_02", "type": "text",	"datafield_name": "personality_Positive_trait"},
+        {"name": "personality_Negative_trait", "label_key":	"char_ps_03", "type": "text",	"datafield_name": "personality_Negative_trait"},
+        {"name": "personality_Fears", "label_key": "char_ps_04", "type": "text", "datafield_name": "personality_Fears"},
+        {"name": "personality_Weaknesses", "label_key":	"char_ps_05", "type": "text", "datafield_name":	"personality_Weaknesses"},
+        {"name": "personality_Strengths", "label_key": "char_ps_06", "type": "text", "datafield_name": "personality_Strengths"},
+        {"name": "personality_Talents", "label_key": "char_ps_07", "type": "text", "datafield_name": "personality_Talents"},
+        {"name": "personality_Belief_principle", "label_key": "char_ps_08", "type": "text",  "datafield_name": "personality_Belief_principle"},
+        {"name": "personality_Life_goal", "label_key": "char_ps_09", "type": "text", "datafield_name": "personality_Life_goal"},
+        {"name": "personality_Motivation", "label_key": "char_ps_10", "type": "text", "datafield_name": "personality_Motivation"},
+        {"name": "personality_Behavior", "label_key": "char_ps_11", "type": "text", "datafield_name": "personality_Behavior"},
+        {"name": "personality_Notes", "label_key": "char_ps_12", "type": "text", "datafield_name": "personality_Notes", "multiline": True},
 
 
         {"name": "psychlogical_profile_Diagnosis", "label_key": "char_pp_02", "type":  "text", "datafield_name": "psychlogical_profile_Diagnosis"},
@@ -5053,10 +5113,10 @@ FORM_FIELDS_DEFAULT = {
         {"name": "psychlogical_profile_Medication", "label_key": "char_pp_05", "type":  "text", "datafield_name": "psychlogical_profile_Medication"},
         {"name": "psychlogical_profile_Temperament", "label_key": "char_pp_06",	"type":	"text",	"datafield_name": "psychlogical_profile_Temperament"},
         {"name": "psychlogical_profile_Values",	"label_key": "char_pp_07", "type": "text", "datafield_name": "psychlogical_profile_Values"},
-        {"name": "psychlogical_profile_Moral concepts",	"label_key": "char_pp_08", "type": "text", "datafield_name": "psychlogical_profile_Moral concepts"},
-        {"name": "psychlogical_profile_Character strength",	"label_key": "char_pp_09", "type": "text", "datafield_name": "psychlogical_profile_Character strength"},
-        {"name": "psychlogical_profile_Character weakness",	"label_key": "char_pp_10", "type": "text", "datafield_name": "psychlogical_profile_Character weakness"},
-        {"name": "psychlogical_profile_Self-image",	"label_key": "char_pp_11",	"type":	"text",	"datafield_name": "psychlogical_profile_Self-image"},
+        {"name": "psychlogical_profile_Moral_concepts",	"label_key": "char_pp_08", "type": "text", "datafield_name": "psychlogical_profile_Moral_concepts"},
+        {"name": "psychlogical_profile_Character_strength",	"label_key": "char_pp_09", "type": "text", "datafield_name": "psychlogical_profile_Character_strength"},
+        {"name": "psychlogical_profile_Character_weakness",	"label_key": "char_pp_10", "type": "text", "datafield_name": "psychlogical_profile_Character_weakness"},
+        {"name": "psychlogical_profile_Self_image",	"label_key": "char_pp_11",	"type":	"text",	"datafield_name": "psychlogical_profile_Self_image"},
         {"name": "psychlogical_profile_Humor", "label_key":	"char_pp_12", "type": "text", "datafield_name":	"psychlogical_profile_Humor"},
         {"name": "psychlogical_profile_Aggressiveness",	"label_key": "char_pp_13", "type": "text", "datafield_name": "psychlogical_profile_Aggressiveness"},
         {"name": "psychlogical_profile_Trauma",	"label_key": "char_pp_14",	"type":	"text",	"datafield_name": "psychlogical_profile_Trauma"},
@@ -5065,9 +5125,30 @@ FORM_FIELDS_DEFAULT = {
         {"name": "psychlogical_profile_Norms", "label_key": "char_pp_17", "type": "text", "datafield_name": "psychlogical_profile_Norms"},
         {"name": "psychlogical_profile_Taboos", "label_key": "char_pp_18", "type": "text", "datafield_name": "psychlogical_profile_Taboos"},
         {"name": "psychlogical_profile_Notes", "label_key": "char_pp_19", "type": "text", "datafield_name": "psychlogical_profile_Notes", "multiline": True}
-  ]
-}
+  ],
+    "objects": [
+        {"name": "obj_header", "label_key": "proj_ob_01", "type": "header", "datafield_name": None},
 
+        {"name": "title", "label_key": "proj_ob_02", "type": "text", "required": True, "max_length": 120, "width": 320, "datafield_name": "ob_title"},
+        {"name": "description", "label_key": "proj_ob_03", "type": "text", "required": False, "max_length": 500, "width": 480, "datafield_name": "ob_description", "multiline": True}
+    ],
+    "storylines": [
+        {"name": "st_header", "label_key": "proj_st_01", "type": "header", "datafield_name": None},
+
+        {"name": "title", "label_key": "proj_st_02", "type": "text", "required": True, "max_length": 120, "width": 320, "datafield_name": "st_title"},
+        {"name": "premise", "label_key": "proj_st_03", "type": "text", "required": False, "max_length": 120, "width": 320, "datafield_name": "st_premise"},
+        {"name": "description", "label_key": "proj_st_04", "type": "text",  "required": False,  "max_length": 500,  "width": 480,  "datafield_name":  "st_description",  "multiline": True},
+        {"name": "transformation", "label_key": "proj_st_05", "type": "text", "required": False, "width": 220, "datafield_name": "status_IDst_transformation"},
+        {"name": "timeline", "label_key": "proj_st_06", "type": "text", "required": False, "width": 220, "datafield_name": "st_timeline"},
+        {"name": "notes", "label_key": "proj_st_07", "type": "text", "required": False, "max_length": 500, "width": 480, "datafield_name": "st_notes", "multiline": True}
+    ],
+    "locations": [
+        {"name": "loc_header", "label_key": "proj_lo_01", "type": "header", "datafield_name": None},
+
+        {"name": "title", "label_key": "proj_lo_02", "type": "text", "required": True, "max_length": 120, "width": 320, "datafield_name": "lo_title"},
+        {"name": "description", "label_key": "proj_lo_03", "type": "text",  "required": False,  "max_length": 500,  "width": 480,  "datafield_name":  "lo_description",  "multiline": True}
+    ] 
+}
 
 # Tabellen Defaults 
 # Tabellen Defaults für Projekte
@@ -5138,8 +5219,8 @@ TABLES_CHARACTERS_DEFAULTS = {
         
         "origin_father": "" ,
         "origin_mother": "" ,
-        "origin_siblings": [] ,
-        "origin_reference_persons": [],
+        "origin_siblings": "" ,
+        "origin_reference_persons": "",
         "origin_place_of_birth": "",
         "origin_notes": "",
         
@@ -5180,15 +5261,16 @@ TABLES_CHARACTERS_DEFAULTS = {
         "appearance_details_Legs":"",
         "appearance_details_Feet":"",
         "appearance_details_Toes":"", 
+        "appearance_details_notes":"",
 
-        "personality_Positive trait": "",
-        "personality_Negative trait": "",
+        "personality_Positive_trait": "",
+        "personality_Negative_trait": "",
         "personality_Fears": "",
         "personality_Weaknesses": "",
         "personality_Strengths": "",
         "personality_Talents": "",
-        "personality_Belief principle": "",
-        "personality_Life goal": "",
+        "personality_Belief_principle": "",
+        "personality_Life_goal": "",
         "personality_Motivation": "",
         "personality_Behavior": "",
         "personality_Notes": "",
@@ -5199,10 +5281,10 @@ TABLES_CHARACTERS_DEFAULTS = {
         "psychlogical_profile_Medication": "",
         "psychlogical_profile_Temperament": "",
         "psychlogical_profile_Values": "",
-        "psychlogical_profile_Moral concepts": "",
-        "psychlogical_profile_Character strength": "",
-        "psychlogical_profile_Character weakness": "",
-        "psychlogical_profile_Self-image": "",
+        "psychlogical_profile_Moral_concepts": "",
+        "psychlogical_profile_Character_strength": "",
+        "psychlogical_profile_Character_weakness": "",
+        "psychlogical_profile_Self_image": "",
         "psychlogical_profile_Humor": "",
         "psychlogical_profile_Aggressiveness": "",
         "psychlogical_profile_Trauma": "",
@@ -5217,107 +5299,49 @@ TABLES_CHARACTERS_DEFAULTS = {
 # Tabellen für Objekte und Requisiten
 TABLES_OBJECTS_DEFAULTS = {
     "object_ID_01": {
-        "title": "",
-        "description": ""
-    },
-    "object_ID_02": {
-        "title": "",
-        "description": ""
+        "ob_title": "",
+        "ob_description": ""
     }
 }
 
 # Tabellen für Storylines
 TABLES_STORYLINES_DEFAULTS = {
     "storyline_ID_01": {
-        "title": "",
-        "premise": "",
-        "description": "",
-        "transformation": "",
-        "timeline": "",
-        "notes": ""
-    },
-    "storyline_ID_02": {
-        "title": "",
-        "premise": "",
-        "description": "",
-        "transformation": "",
-        "timeline": "",
-        "notes": ""
+        "st_title": "",
+        "st_premise": "",
+        "st_description": "",
+        "st_transformation": "",
+        "st_timeline": "",
+        "st_notes": ""
     }
 }
 
 # Tabellen für Locations
 TABLES_LOCATIONS_DEFAULTS = {
     "location_ID_01": {
-        "title": "",
-        "description": ""
-    },
-    "location_ID_02": {
-        "title": "",
-        "description": ""
+        "lo_title": "",
+        "lo_description": ""
     }
 }
 
 # Standardwerte für die Kapitel und Szenen in einem Projekt
 # für jedes Projekt werden daraus eigene Tabellen angelegt
-TABLES_CHAPTERS_SZENES_DEFAULTS = {
+TABLES_CHAPTERS_SCENES_DEFAULTS = {
     "chapter_ID_01": {
-        "title": "",
-        "premise": "",
+        "chapter_title": "",
+        "chapter_premise": "",
         "scenes": {
             "scene_ID_01": {
-                "title": "",
-                "summary": "",
-                "goal": "",
-                "conflict": "",
-                "climax": "",
-                "characters_involved": [],
-                "location_ID": None,
-                "storyline_ID": None,
-                "word_count": 0,
-                "text": ""
-            },
-            "scene_ID_02": {
-                "title": "",
-                "summary": "",
-                "goal": "",
-                "conflict": "",
-                "climax": "",
-                "characters_involved": [],
-                "location_ID": None,
-                "storyline_ID": None,
-                "word_count": 0,
-                "text": ""
-            }
-        }
-    },
-    "chapter_ID_02": {
-        "title": "",
-        "premise": "",
-        "scenes": {
-            "scene_ID_01": {
-                "title": "",
-                "summary": "",
-                "goal": "",
-                "conflict": "",
-                "climax": "",
-                "characters_involved": [],
-                "location_ID": None,
-                "storyline_ID": None,
-                "word_count": 0,
-                "text": ""
-            },
-            "scene_ID_02": {
-                "title": "",
-                "summary": "",
-                "goal": "",
-                "conflict": "",
-                "climax": "",
-                "characters_involved": [],
-                "location_ID": None,
-                "storyline_ID": None,
-                "word_count": 0,
-                "text": ""
+                "scene_title": "",
+                "scene_summary": "",
+                "scene_goal": "",
+                "scene_conflict": "",
+                "scene_climax": "",
+                "scene_characters_involved": [],
+                "scene_location_ID": None,
+                "scene_storyline_ID": None,
+                "scene_word_count": 0,
+                "scene_text": ""
             }
         }
     }
@@ -5501,6 +5525,25 @@ def ensure_character_main_json():
     except Exception as e:
         log_error(f"Fehler beim Prüfen/Ergänzen von Character_main.json: {e}")
 
+# Sicherstellen, dass eine Tabelle-Datei existiert und alle notwendigen Keys enthält
+def ensure_table_file(filename, defaults):
+    path = DATA_DIR / filename
+    if not path.exists():
+        with open(path, "w", encoding="utf-8") as f:
+            json.dump(defaults, f, indent=2, ensure_ascii=False)
+    else:
+        # Ergänze neue Keys in bestehender Datei
+        with open(path, "r", encoding="utf-8") as f:
+            data = json.load(f)
+        changed = False
+        for key, value in defaults.items():
+            if key not in data:
+                data[key] = value
+                changed = True
+        if changed:
+            with open(path, "w", encoding="utf-8") as f:
+                json.dump(data, f, indent=2, ensure_ascii=False)
+
 # Validierung der Schlüssel in den Standardkonfigurationen
 def validate_keys():
     lang_keys = [list(LANGUAGE_DEFAULTS[lang].keys()) for lang in LANGUAGE_DEFAULTS]
@@ -5625,6 +5668,10 @@ def main():
 
         # HIER EINFÜGEN:
         ensure_character_main_json()
+        ensure_table_file("Objects.json", TABLES_OBJECTS_DEFAULTS)
+        ensure_table_file("Storylines.json", TABLES_STORYLINES_DEFAULTS)
+        ensure_table_file("Locations.json", TABLES_LOCATIONS_DEFAULTS)
+        ensure_table_file("Chapters_scenes.json", TABLES_CHAPTERS_SCENES_DEFAULTS)
 
         language = init_language(settings, os_language)
         log_info(f"Sprache gesetzt: {language}")
