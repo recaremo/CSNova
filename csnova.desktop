@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=CSNova
+Comment=Codices Scriptoria Nova
+Exec=/home/frank/CSNova/csNova
+Icon=/home/frank/CSNova/assets/media/csnova.png
+Terminal=false
+Type=Application
+Categories=Office;Utility;

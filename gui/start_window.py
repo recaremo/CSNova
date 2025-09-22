@@ -11,11 +11,11 @@ from PySide6.QtWidgets import (
     QApplication, QComboBox
 )
 from PySide6.QtCore import Qt, QEvent
-from PySide6.QtGui import QPixmap
+from PySide6.QtGui import QPixmap, QIcon
 import json
-import os
+from pathlib import Path
 import datetime
-from config.dev import ASSETS_DIR, DATA_DIR
+from config.dev import GUI_DIR, ASSETS_DIR, DATA_DIR, USER_SETTINGS_FILE, FORM_FIELDS_FILE, BASE_STYLE_FILE, THEME_FILES, TRANSLATIONS_DIR
 from core.logger import log_info, log_error, log_exception, log_call
 from gui.styles.python_gui_styles import apply_theme_style
 from csNova import LANGUAGE_DEFAULTS, THEMES_STYLES_DEFAULTS, LANGUAGE_DATA_COMBOBOX_DEFAULTS
@@ -212,7 +212,7 @@ class StartWindow(QMainWindow):
                     start_window["is_maximized"] = False
                     start_window["width"] = window_width
                     start_window["height"] = window_height
-                with open("config/user_settings.json", "w", encoding="utf-8") as f:
+                with open(USER_SETTINGS_FILE, "w", encoding="utf-8") as f:
                     json.dump(self.settings, f, indent=2, ensure_ascii=False)
                 log_info(f"Fensterstatus geändert: Maximized={start_window['is_maximized']}, Größe={self.width()}x{self.height()}")
         super().changeEvent(event)
@@ -261,7 +261,7 @@ class StartWindow(QMainWindow):
         if not self.isMaximized():
             start_window["width"] = self.width()
             start_window["height"] = self.height()
-            with open("config/user_settings.json", "w", encoding="utf-8") as f:
+            with open(USER_SETTINGS_FILE, "w", encoding="utf-8") as f:
                 json.dump(self.settings, f, indent=2, ensure_ascii=False)
             log_info(f"Fenstergröße geändert: {self.width()}x{self.height()}")
 
@@ -395,7 +395,7 @@ class StartWindow(QMainWindow):
 
         # Neue Übersetzungsdatei laden und speichern
         translation_data = LANGUAGE_DEFAULTS.get(new_language, {})
-        translation_path = os.path.join(os.path.dirname(self.translation_file), f"translation_{new_language}.json")
+        translation_path = TRANSLATIONS_DIR / f"translation_{new_language}.json"
         try:
             with open(translation_path, "w", encoding="utf-8") as f:
                 json.dump(translation_data, f, ensure_ascii=False, indent=2)
@@ -406,7 +406,7 @@ class StartWindow(QMainWindow):
 
         # Neue Übersetzungsdatei für die ComboBox-Daten laden und speichern
         combobox_translation_data = LANGUAGE_DATA_COMBOBOX_DEFAULTS.get(new_language, {})
-        combobox_translation_path = os.path.join(os.path.dirname(self.translation_file), f"translation_data_combobox_{new_language}.json")
+        combobox_translation_path = TRANSLATIONS_DIR / f"translation_data_combobox_{new_language}.json"
         try:
             with open(combobox_translation_path, "w", encoding="utf-8") as f:
                 json.dump(combobox_translation_data, f, ensure_ascii=False, indent=2)
@@ -460,7 +460,9 @@ class StartWindow(QMainWindow):
 
         # Neue Theme-Datei laden und speichern
         theme_data = THEMES_STYLES_DEFAULTS.get(new_theme_name, {})
-        theme_path = os.path.join(os.path.dirname(self.theme_file), f"theme_{new_theme_name}.json")
+        theme_path = THEME_FILES.get(new_theme_name)
+        if not theme_path:
+            theme_path = GUI_DIR / "styles" / f"theme_{new_theme_name}.json"
         try:
             with open(theme_path, "w", encoding="utf-8") as f:
                 json.dump(theme_data, f, ensure_ascii=False, indent=2)
@@ -505,8 +507,7 @@ class StartWindow(QMainWindow):
                     lang_index = self.language_combo.currentIndex()
                     language = language_codes[lang_index]
                     self.settings["general"]["language"] = language
-                    self.settings["general"]["file_path_lang"] = f"./core/translations/translation_{language}.json"
-                    self.settings["general"]["file_path_combo"] = f"./core/translations/translation_data_combobox_{language}.json"
+                    # KEINE Pfade mehr speichern!
 
                 # 2. Theme aus theme_combo
                 theme_names = [
@@ -520,7 +521,7 @@ class StartWindow(QMainWindow):
                     theme_index = self.theme_combo.currentIndex()
                     theme_name = theme_names[theme_index]
                     self.settings["gui"]["style_theme"] = theme_name
-                    self.settings["gui"]["file_path_gui"] = f"./gui/styles/theme_{theme_name}.json"
+                    # KEINE Pfade mehr speichern!
 
             # Fensterstatus und Größe speichern
             start_window = self.settings.setdefault("start_window", {})
@@ -535,8 +536,8 @@ class StartWindow(QMainWindow):
             if isinstance(splitter, QSplitter):
                 panels["splitter_sizes"] = splitter.sizes()
 
-            # Speichern in user_settings.json
-            with open("config/user_settings.json", "w", encoding="utf-8") as f:
+            # Speichern in user_settings.json (immer über USER_SETTINGS_FILE!)
+            with open(USER_SETTINGS_FILE, "w", encoding="utf-8") as f:
                 json.dump(self.settings, f, indent=2, ensure_ascii=False)
             log_info("Einstellungen erfolgreich gespeichert.")
             if hasattr(self, "btn_save"):
@@ -548,7 +549,7 @@ class StartWindow(QMainWindow):
     def reset_settings(self):
         try:
             # Lade die gespeicherten Einstellungen neu
-            with open("config/user_settings.json", "r", encoding="utf-8") as f:
+            with open(USER_SETTINGS_FILE, "r", encoding="utf-8") as f:
                 saved_settings = json.load(f)
 
             # 1. Sprache zurücksetzen
@@ -569,7 +570,7 @@ class StartWindow(QMainWindow):
     def go_to_next_step(self):
         try:
             self.settings["general"]["first_start"] = False
-            with open("config/user_settings.json", "w", encoding="utf-8") as f:
+            with open(USER_SETTINGS_FILE, "w", encoding="utf-8") as f:
                 json.dump(self.settings, f, indent=2, ensure_ascii=False)
             log_info('"first_start" wurde auf False gesetzt und Einstellungen gespeichert.')
 
@@ -932,24 +933,24 @@ class StartWindow(QMainWindow):
         # --- Bild setzen: Cover oder Platzhalter ---
         cover_path = None
         if project_data and "project_cover_image" in project_data and project_data["project_cover_image"]:
-            cover_path = project_data["project_cover_image"]
-            if not os.path.exists(cover_path):
+            cover_path = Path(project_data["project_cover_image"])
+            if not cover_path.exists():
                 cover_path = None
 
-        placeholder_path = os.path.join(DATA_DIR, "placeholder_cover.png")
-        if not cover_path and os.path.exists(placeholder_path):
-            cover_path = placeholder_path
+            placeholder_path = DATA_DIR / "placeholder_cover.png"
+            if not cover_path and placeholder_path.exists():
+                cover_path = placeholder_path
 
-        if cover_path and os.path.exists(cover_path):
-            pixmap = QPixmap(cover_path)
-            if not pixmap.isNull():
-                self.project_image_label.setPixmap(
-                    pixmap.scaled(
-                        self.project_image_label.width(),
-                        self.project_image_label.height(),
-                        Qt.KeepAspectRatio,
-                        Qt.SmoothTransformation
-                    )
+            if cover_path and cover_path.exists():
+                pixmap = QPixmap(str(cover_path))
+                if not pixmap.isNull():
+                    self.project_image_label.setPixmap(
+                        pixmap.scaled(
+                    self.project_image_label.width(),
+                    self.project_image_label.height(),
+                    Qt.KeepAspectRatio,
+                    Qt.SmoothTransformation
+                )
                 )
             else:
                 self.project_image_label.clear()
@@ -957,7 +958,7 @@ class StartWindow(QMainWindow):
             self.project_image_label.clear()
 
         # Felder laden
-        with open("core/config/form_fields.json", "r", encoding="utf-8") as f:
+        with open(FORM_FIELDS_FILE, "r", encoding="utf-8") as f:
             form_fields = json.load(f)
         project_fields = form_fields.get("projects", [])
 
@@ -1098,7 +1099,7 @@ class StartWindow(QMainWindow):
             "",
             "Bilder (*.png *.jpg *.jpeg *.bmp *.gif);;Alle Dateien (*)"
         )
-        placeholder_path = os.path.join(DATA_DIR, "placeholder_cover.png")
+        placeholder_path = DATA_DIR / "placeholder_cover.png"
         if file_path:
             widget.setText(file_path)
             if hasattr(self, "project_image_label"):
@@ -1114,8 +1115,8 @@ class StartWindow(QMainWindow):
                     )
                 else:
                     # Bild nicht gefunden, Platzhalter anzeigen
-                    if os.path.exists(placeholder_path):
-                        pixmap = QPixmap(placeholder_path)
+                    if placeholder_path.exists():
+                        pixmap = QPixmap(str(placeholder_path))
                         self.project_image_label.setPixmap(
                             pixmap.scaled(
                                 self.project_image_label.width(),
@@ -1128,8 +1129,8 @@ class StartWindow(QMainWindow):
                         self.project_image_label.clear()
         else:
             # Kein Bild ausgewählt, Platzhalter anzeigen
-            if hasattr(self, "project_image_label") and os.path.exists(placeholder_path):
-                pixmap = QPixmap(placeholder_path)
+            if hasattr(self, "project_image_label") and placeholder_path.exists():
+                pixmap = QPixmap(str(placeholder_path))
                 self.project_image_label.setPixmap(
                     pixmap.scaled(
                         self.project_image_label.width(),
@@ -1159,7 +1160,7 @@ class StartWindow(QMainWindow):
 
         # Felder für den oberen Bereich
         upper_fields = ["main_character", "name", "first_name"]
-        with open("core/config/form_fields.json", "r", encoding="utf-8") as f:
+        with open(FORM_FIELDS_FILE, "r", encoding="utf-8") as f:
             form_fields = json.load(f)
         character_fields = form_fields.get("characters", [])
 
@@ -1308,7 +1309,7 @@ class StartWindow(QMainWindow):
         self.object_form_widgets = {}
 
         # Felder laden
-        with open("core/config/form_fields.json", "r", encoding="utf-8") as f:
+        with open(FORM_FIELDS_FILE, "r", encoding="utf-8") as f:
             form_fields = json.load(f)
         object_fields = form_fields.get("objects", [])
 
@@ -1385,7 +1386,7 @@ class StartWindow(QMainWindow):
         self.location_form_widgets = {}
 
         # Felder laden
-        with open("core/config/form_fields.json", "r", encoding="utf-8") as f:
+        with open(FORM_FIELDS_FILE, "r", encoding="utf-8") as f:
             form_fields = json.load(f)
         location_fields = form_fields.get("locations", [])
 
@@ -1462,7 +1463,7 @@ class StartWindow(QMainWindow):
         self.storyline_form_widgets = {}
 
         # Felder laden
-        with open("core/config/form_fields.json", "r", encoding="utf-8") as f:
+        with open(FORM_FIELDS_FILE, "r", encoding="utf-8") as f:
             form_fields = json.load(f)
         storyline_fields = form_fields.get("storylines", [])
 
@@ -3017,6 +3018,8 @@ class StartWindow(QMainWindow):
     @log_call
     def __init__(self, settings, translation_file, theme_file):
         super().__init__()
+        icon_path = ASSETS_DIR / "media" / "csnova.png"
+        self.setWindowIcon(QIcon(str(icon_path)))
         self.current_character_id = None
         self.current_object_id = None
         self.current_location_id = None
@@ -3039,18 +3042,17 @@ class StartWindow(QMainWindow):
         self.theme = load_json_file(self.theme_file)
         if self.theme:
             # Theme-Name ergänzen (Dateiname ohne Pfad und Endung)
-            theme_name = os.path.splitext(os.path.basename(self.theme_file))[0]
+            theme_name = Path(self.theme_file).stem
             self.theme["theme_name"] = theme_name
             log_info(f"Theme file geladen: {self.theme_file}")
             log_list("Theme keys", self.theme.keys())
         else:
             log_error("Theme konnte nicht geladen werden, Standardfarben werden verwendet.")
 
-        base_style_path = os.path.join(os.path.dirname(self.theme_file), "base_style.json")
-        self.base_style_path = base_style_path
-        self.base_style = load_json_file(base_style_path)
+        self.base_style_path = BASE_STYLE_FILE
+        self.base_style = load_json_file(BASE_STYLE_FILE)
         if self.base_style:
-            log_info(f"Base style file geladen: {base_style_path}")
+            log_info(f"Base style file geladen: {self.base_style_path}")
             log_list("Base style keys", self.base_style.keys())
         else:
             log_error("Base Style konnte nicht geladen werden, Standardwerte werden verwendet.")
@@ -3058,7 +3060,7 @@ class StartWindow(QMainWindow):
         # 3. Wende das globale Stylesheet direkt auf die QApplication an
         app = self._get_qapplication_instance()
         if app and self.base_style and self.theme:
-            apply_global_stylesheet(app, base_style_path, self.theme)
+            apply_global_stylesheet(app, self.base_style_path, self.theme)
             log_info("Globales Stylesheet aus base_style.json und Theme angewendet.")
         else:
             log_error("Globales Stylesheet konnte nicht angewendet werden.")
@@ -3071,10 +3073,8 @@ class StartWindow(QMainWindow):
         else:
             log_error("Übersetzungsdatei ist leer oder konnte nicht geladen werden.")
 
-        combobox_translation_path = self.general_settings.get(
-            "file_path_combo",
-            os.path.join(os.path.dirname(self.translation_file), f"translation_data_combobox_{self.language}.json")
-        )
+        combobox_translation_path = TRANSLATIONS_DIR / f"translation_data_combobox_{self.language}.json"
+
         self.combobox_translations = load_json_file(combobox_translation_path)
         if self.combobox_translations:
             log_info(f"ComboBox-Translations geladen: {combobox_translation_path}")

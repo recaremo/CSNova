@@ -1,10 +1,8 @@
-pyinstaller --onefile --windowed csnova.py \
-  --add-data "ai:ai" \
-  --add-data "assets:assets" \ 
-  --add-data "config:config" \   
+pyinstaller --noconfirm --onefile --windowed \
+  --add-data "assets:assets" \
+  --add-data "config:config" \
   --add-data "core:core" \
   --add-data "data:data" \
   --add-data "docs:docs" \
-  --add-data "export:export"    
   --add-data "gui:gui" \
-
+  csNova.py
