@@ -77,12 +77,17 @@ LANGUAGE_DEFAULTS = {
     "proj_ma_15": "Arbeitstyp",
     "proj_ma_16": "Motive",
     "proj_ma_17": "Status",
-    "proj_ma_18": "Notizen",
+    "proj_ma_18": "Datei",
+    "proj_ma_19": "Notizen",
     "proj_ch_header": "Kapitel",
+    "proj_ch_00": "Kapitel ID",
     "proj_ch_01": "Kapitel",
     "proj_ch_02": "Kapitel-Titel",
     "proj_ch_03": "Kapitel-Prämisse",
+    "proj_ch_04": "Kapitel Zusammenfassung",
+    "proj_ch_05": "Notizen",
     "proj_cs_header": "Szenen",
+    "proj_cs_00": "Szene ID",
     "proj_cs_01": "Szene",
     "proj_cs_02": "Titel",
     "proj_cs_03": "Prämisse",
@@ -93,8 +98,18 @@ LANGUAGE_DEFAULTS = {
     "proj_cs_08": "Stimmung",
     "proj_cs_09": "Dauer",
     "proj_cs_10": "Charaktere",
-    "proj_cs_11": "Orte",
-    "proj_cs_12": "Notizen",
+    "proj_cs_11": "Objekte",
+    "proj_cs_12": "Orte",
+    "proj_cs_13": "Storyline",
+    "proj_cs_14": "Wortanzahl",
+    "proj_cs_15": "Rich Text",
+    "proj_cs_16": "Text",
+    "proj_cs_17": "Notizen",
+    "proj_cs_18": "Reihenfolge",
+    "proj_cs_19": "Status",
+    "proj_cs_20": "Begonnen am",
+    "proj_cs_21": "Bearbeitet am",
+    "proj_cs_22": "Stichworte",
     "proj_lo_header": "Orte",
     "proj_lo_01": "Ort",
     "proj_lo_02": "Titel",
@@ -513,24 +528,39 @@ LANGUAGE_DEFAULTS = {
     "proj_ma_15": "Type of work",
     "proj_ma_16": "Motifs",
     "proj_ma_17": "Status",
-    "proj_ma_18": "Notes",
+    "proj_ma_18": "File",
+    "proj_ma_19": "Notes",
     "proj_ch_header": "Chapters",
+    "proj_ch_00": "Chapter ID",
     "proj_ch_01": "Chapter",
     "proj_ch_02": "Chapter title",
     "proj_ch_03": "Chapter premise",
+    "proj_ch_04": "Chapter summary",
+    "proj_ch_05": "Notes",
     "proj_cs_header": "Scenes",
+    "proj_cs_00": "Scene ID",
     "proj_cs_01": "Scene",
     "proj_cs_02": "Title",
-    "proj_cs_03": "Premise",
-    "proj_cs_04": "Goal",
-    "proj_cs_05": "Conflict",
-    "proj_cs_06": "Outcome",
-    "proj_cs_07": "Type",
-    "proj_cs_08": "Mood",
-    "proj_cs_09": "Duration",
-    "proj_cs_10": "Characters",
-    "proj_cs_11": "Places",
-    "proj_cs_12": "Notes",
+    "proj_cs_03": "premise",
+    "proj_cs_04": "goal",
+    "proj_cs_05": "conflict",
+    "proj_cs_06": "outcome",
+    "proj_cs_07": "type",
+    "proj_cs_08": "mood",
+    "proj_cs_09": "duration",
+    "proj_cs_10": "characters",
+    "proj_cs_11": "objects",
+    "proj_cs_12": "locations",
+    "proj_cs_13": "storyline",
+    "proj_cs_14": "word count",
+    "proj_cs_15": "rich text",
+    "proj_cs_16": "text",
+    "proj_cs_17": "notes",
+    "proj_cs_18": "order",
+    "proj_cs_19": "status",
+    "proj_cs_20": "creation date",
+    "proj_cs_21": "last modified",
+    "proj_cs_22": "tags", 
     "proj_lo_header": "Places",
     "proj_lo_01": "Place",
     "proj_lo_02": "Title",
@@ -949,12 +979,17 @@ LANGUAGE_DEFAULTS = {
     "proj_ma_15": "Tipo de obra",
     "proj_ma_16": "Motivos",
     "proj_ma_17": "Estado",
-    "proj_ma_18": "Notas",
+    "proj_ma_18": "Archivo",
+    "proj_ma_19": "Notas",
     "proj_ch_header": "Capítulos",
+    "proj_ch_00": "ID del capítulo",
     "proj_ch_01": "Capítulo",
     "proj_ch_02": "Título del capítulo",
     "proj_ch_03": "Premisa del capítulo",
+    "proj_ch_04": "Resumen del capítulo",
+    "proj_ch_05": "Notas",
     "proj_cs_header": "Escenas",
+    "proj_cs_00": "ID de la escena",
     "proj_cs_01": "Escena",
     "proj_cs_02": "Título",
     "proj_cs_03": "Premisa",
@@ -965,8 +1000,18 @@ LANGUAGE_DEFAULTS = {
     "proj_cs_08": "Estado de ánimo",
     "proj_cs_09": "Duración",
     "proj_cs_10": "Personajes",
-    "proj_cs_11": "Lugares",
-    "proj_cs_12": "Notas",
+    "proj_cs_11": "Objetos",
+    "proj_cs_12": "Lugares",
+    "proj_cs_13": "Trama",
+    "proj_cs_14": "Cantidad de palabras",
+    "proj_cs_15": "Texto enriquecido",
+    "proj_cs_16": "Texto",
+    "proj_cs_17": "Notas",
+    "proj_cs_18": "Orden",
+    "proj_cs_19": "Estado",
+    "proj_cs_20": "Fecha de creación",
+    "proj_cs_21": "Última modificación",
+    "proj_cs_22": "Etiquetas",
     "proj_lo_header": "Lugares",
     "proj_lo_01": "Lugar",
     "proj_lo_02": "Título",
@@ -1385,12 +1430,17 @@ LANGUAGE_DEFAULTS = {
     "proj_ma_15": "Type d'œuvre",
     "proj_ma_16": "Motifs",
     "proj_ma_17": "Statut",
-    "proj_ma_18": "Notes",
+    "proj_ma_18": "Fichier",
+    "proj_ma_19": "Notes",
     "proj_ch_header": "Chapitres",
+    "proj_ch_00": "ID du chapitre",
     "proj_ch_01": "Chapitre",
     "proj_ch_02": "Titre du chapitre",
     "proj_ch_03": "Prémisse du chapitre",
+    "proj_ch_04": "Résumé du chapitre",
+    "proj_ch_05": "Notes",
     "proj_cs_header": "Scènes",
+    "proj_cs_00": "ID de la scène",
     "proj_cs_01": "Scène",
     "proj_cs_02": "Titre",
     "proj_cs_03": "Prémisse",
@@ -1401,8 +1451,18 @@ LANGUAGE_DEFAULTS = {
     "proj_cs_08": "Humeur",
     "proj_cs_09": "Durée",
     "proj_cs_10": "Personnages",
-    "proj_cs_11": "Lieux",
-    "proj_cs_12": "Notes",
+    "proj_cs_11": "Objets",
+    "proj_cs_12": "Lieux",
+    "proj_cs_13": "Intrigue",
+    "proj_cs_14": "Nombre de mots",
+    "proj_cs_15": "Texte enrichi",
+    "proj_cs_16": "Texte",
+    "proj_cs_17": "Notes",
+    "proj_cs_18": "Ordre",
+    "proj_cs_19": "Statut",
+    "proj_cs_20": "Date de création",
+    "proj_cs_21": "Dernière modification",
+    "proj_cs_22": "Étiquettes",
     "proj_lo_header": "Lieux",
     "proj_lo_01": "Lieu",
     "proj_lo_02": "Titre",
@@ -5011,7 +5071,7 @@ FORM_FIELDS_DEFAULT = {
     "projects": [
         {"name": "pro_header", "label_key": "proj_ma_01", "type": "header", "datafield_name": None},
 
-        {"name": "project_title", "label_key": "proj_ma_02", "type": "text", "required": True, "max_length": 120, "width": 320, "datafield_name": "project_titel"},
+        {"name": "project_title", "label_key": "proj_ma_02", "type": "text", "required": True, "max_length": 120, "width": 320, "datafield_name": "project_title"},
         {"name": "project_subtitle", "label_key": "proj_ma_03", "type": "text", "required": False, "max_length": 120, "width": 320, "datafield_name": "project_subtitle"},
         {"name": "project_author", "label_key": "proj_ma_04", "type": "text", "required": False, "max_length": 80, "width": 220, "datafield_name": "project_author"},
         {"name": "project_premise", "label_key": "proj_ma_05", "type": "text", "required": False, "max_length": 200, "width": 480, "datafield_name": "project_premise", "multiline": True},
@@ -5029,7 +5089,8 @@ FORM_FIELDS_DEFAULT = {
         {"name": "project_target_audience", "label_key": "proj_ma_08", "type": "combobox", "required": False, "width": 220, "datafield_name": "project_target_audience", "combo_key": "target_audience"},
         {"name": "project_status_ID", "label_key": "proj_ma_17", "type": "combobox", "required": False, "width": 220, "datafield_name": "project_status_ID", "combo_key": "status"},
 
-        {"name": "project_notes", "label_key": "proj_ma_18", "type": "text", "required": False, "max_length": 500, "width": 480, "datafield_name": "project_notes", "multiline": True}
+        {"name": "project_file", "label_key": "proj_ma_18", "type": "text", "required": False, "max_length": 200, "width": 480, "datafield_name": "project_file", "multiline": True},
+        {"name": "project_notes", "label_key": "proj_ma_19", "type": "text", "required": False, "max_length": 500, "width": 480, "datafield_name": "project_notes", "multiline": True}
     ],
     "characters": [
         {"name": "char_header", "label_key": "char_ma_header", "type": "header", "datafield_name": None},
@@ -5147,13 +5208,70 @@ FORM_FIELDS_DEFAULT = {
 
         {"name": "title", "label_key": "proj_lo_02", "type": "text", "required": True, "max_length": 120, "width": 320, "datafield_name": "lo_title"},
         {"name": "description", "label_key": "proj_lo_03", "type": "text",  "required": False,  "max_length": 500,  "width": 480,  "datafield_name":  "lo_description",  "multiline": True}
-    ] 
+    ],
+    "chapters": [
+    {"name": "chapter_id", "label_key": "proj_ch_00", "type": "text", "required": False, "max_length": 10, "width": 80, "datafield_name": "chapter_id", "readonly": True},   
+    {"name": "ch_header", "label_key": "proj_ch_01", "type": "header", "datafield_name": None},
+    {"name": "chapter_title", "label_key": "proj_ch_02", "type": "text", "required": True, "max_length": 120, "width": 320, "datafield_name": "chapter_title"},
+    {"name": "chapter_premise", "label_key": "proj_ch_03", "type": "text", "required": False, "max_length": 200, "width": 480, "datafield_name": "chapter_premise"},
+    {"name": "chapter_summary", "label_key": "proj_ch_04", "type": "text", "required": False, "max_length": 300, "width": 480, "datafield_name": "chapter_summary", "multiline": True},
+    {"name": "chapter_notes", "label_key": "proj_ch_05", "type": "text", "required": False, "max_length": 500, "width": 480, "datafield_name": "chapter_notes", "multiline": True}
+    ],
+    "scenes": [
+        {"name": "scene_id", "label_key": "proj_cs_00", "type": "text", "required": False, "max_length": 10, "width": 80, "datafield_name": "scene_id", "readonly": True},
+        {"name": "sc_header", "label_key": "proj_cs_01", "type": "header", "datafield_name": None},
+        {"name": "scene_title", "label_key": "proj_cs_02", "type": "text", "required": True, "max_length": 120, "width": 320, "datafield_name": "scene_title"},
+        {"name": "scene_premise", "label_key": "proj_cs_03", "type": "text", "required": False, "max_length": 200, "width": 480, "datafield_name": "scene_premise"},
+        {"name": "scene_goal", "label_key": "proj_cs_04", "type": "text", "required": False, "max_length": 200, "width": 480, "datafield_name": "scene_goal"},
+        {"name": "scene_conflict", "label_key": "proj_cs_05", "type": "text", "required": False, "max_length": 200, "width": 480, "datafield_name": "scene_conflict"},
+        {"name": "scene_outcome", "label_key": "proj_cs_06", "type": "text", "required": False, "max_length": 200, "width": 480, "datafield_name": "scene_outcome"},
+        {"name": "scene_type", "label_key": "proj_cs_07", "type": "text", "required": False, "max_length": 200, "width": 480, "datafield_name": "scene_type"},
+        {"name": "scene_mood", "label_key": "proj_cs_08", "type": "text", "required": False, "width": 220, "datafield_name": "scene_mood"},
+        {"name": "scene_duration", "label_key": "proj_cs_09", "type": "text", "required": False, "width": 220, "datafield_name": "scene_duration"},
+        {"name": "scene_characters_involved", "label_key": "proj_cs_10", "type": "multiselect", "required": False, "width": 320, "datafield_name": "scene_characters_involved"},
+        {"name": "scene_objects_involved", "label_key": "proj_cs_11", "type": "multiselect", "required": False, "width": 320, "datafield_name": "scene_objects_involved"},
+        {"name": "scene_location_ID", "label_key": "proj_cs_12", "type": "combobox", "required": False, "width": 220, "datafield_name": "scene_location_ID"},
+        {"name": "scene_storyline_ID", "label_key": "proj_cs_13", "type": "combobox", "required": False, "width": 220, "datafield_name": "scene_storyline_ID"},
+        {"name": "scene_word_count", "label_key": "proj_cs_14", "type": "spin", "required": False, "max": 100000, "width": 120, "datafield_name": "scene_word_count"},
+        {"name": "scene_rich", "label_key": "proj_cs_15", "type": "richtext", "required": False, "width": 600, "height": 400, "datafield_name": "scene_rich"},
+        {"name": "scene_plain", "label_key": "proj_cs_16", "type": "text", "required": False, "max_length": 10000, "width": 600, "height": 400, "datafield_name": "scene_plain", "multiline": True},
+        {"name": "scene_notes", "label_key": "proj_cs_17", "type": "text", "required": False, "max_length": 500, "width": 480, "datafield_name": "scene_notes", "multiline": True},
+        {"name": "scene_order", "label_key": "proj_cs_18", "type": "spin", "required": False, "max": 1000, "width": 80, "datafield_name": "scene_order"},
+        {"name": "scene_status", "label_key": "proj_cs_19", "type": "combobox", "required": False, "width": 120, "datafield_name": "scene_status", "combo_key": "status"},
+        {"name": "scene_creation_date", "label_key": "proj_cs_20", "type": "date", "required": False, "width": 140, "datafield_name": "scene_creation_date"},
+        {"name": "scene_last_modified", "label_key": "proj_cs_21", "type": "date", "required": False, "width": 140, "datafield_name": "scene_last_modified"},
+        {"name": "scene_tags", "label_key": "proj_cs_22", "type": "text", "required": False, "max_length": 200, "width": 320, "datafield_name": "scene_tags"}
+    ]
 }
 
 # Tabellen Defaults 
 # Tabellen Defaults für Projekte
 TABLES_PROJECTS_DEFAULTS = {
     "project_ID_01": {
+    "project_title": "",
+    "project_subtitle": "",
+    "project_author": "",
+    "project_premise": "",
+    "project_narrative_perspective": None,
+    "project_style_ID": None,
+    "project_genre_ID": None,
+    "project_worktype_ID": None,
+    "project_motifs_ID": None, 
+    "project_deadline": None,
+    "project_startdate": None,
+    "project_words_count_goal": 0,
+    "project_cover_image": "",
+    "project_target_audience": None,
+    "project_characters": [],
+    "project_locations": [],
+    "project_storylines": [],
+    "project_objects": [],
+    "project_chapters": [],
+    "project_status_ID": None,
+    "project_file": "",
+    "project_notes": ""
+    },
+    "project_ID_02": {
     "project_titel": "",
     "project_subtitle": "",
     "project_author": "",
@@ -5174,29 +5292,7 @@ TABLES_PROJECTS_DEFAULTS = {
     "project_objects": [],
     "project_chapters": [],
     "project_status_ID": None,
-    "project_notes": ""
-    },
-    "project_ID_02": {
-    "project_titel": "",
-    "project_subtitle": "",
-    "project_author": "",
-    "project_premise": "",
-    "project_narrative_perspective": None,
-    "project_style_ID": None,
-    "project_genre_ID": None,
-    "poject_worktype_ID": None,
-    "project_motifs_ID": None, 
-    "project_deadline": None,
-    "project_startdate": None,
-    "project_words_count_goal": 0,
-    "project_cover_image": "",
-    "project_target_audience": None,
-    "project_characters": [],
-    "project_locations": [],
-    "project_storylines": [],
-    "project_objects": [],
-    "project_chapters": [],
-    "project_status_ID": None,
+    "project_file": "",
     "project_notes": ""
     }
 }
@@ -5328,20 +5424,35 @@ TABLES_LOCATIONS_DEFAULTS = {
 # für jedes Projekt werden daraus eigene Tabellen angelegt
 TABLES_CHAPTERS_SCENES_DEFAULTS = {
     "chapter_ID_01": {
+        "chapter_id": "",
         "chapter_title": "",
         "chapter_premise": "",
+        "chapter_summary": "",
+        "chapter_notes": "",
         "scenes": {
             "scene_ID_01": {
+                "scene_id": "",
                 "scene_title": "",
-                "scene_summary": "",
+                "scene_premise": "",
                 "scene_goal": "",
                 "scene_conflict": "",
-                "scene_climax": "",
+                "scene_outcome": "",
+                "scene_type": "",
+                "scene_mood": None,
+                "scene_duration": None,
                 "scene_characters_involved": [],
+                "scene_objects_involved": [],
                 "scene_location_ID": None,
                 "scene_storyline_ID": None,
                 "scene_word_count": 0,
-                "scene_text": ""
+                "scene_rich": "",
+                "scene_plain": "",
+                "scene_notes": "",
+                "scene_order": 1,
+                "scene_status" : "",
+                "scene_creation_date": None,
+                "scene_last_modified": None,
+                "scene_tags": []
             }
         }
     }
@@ -5408,7 +5519,7 @@ def load_user_settings():
             log_info("user_settings.json loaded successfully.")
             return settings
         except Exception as e:
-            log_exception("Error loading user_settings.json", e)
+            log_exception(f"Error loading user_settings.json from {USER_SETTINGS_FILE}", e)
     log_info("Using DEFAULT_SETTINGS as fallback for user_settings.")
     return DEFAULT_SETTINGS.copy()
 
@@ -5417,9 +5528,9 @@ def save_user_settings(settings):
     try:
         with open(USER_SETTINGS_FILE, "w", encoding="utf-8") as f:
             json.dump(settings, f, indent=2, ensure_ascii=False)
-        log_info("user_settings.json saved successfully.")
+        log_info(f"user_settings.json saved successfully: {USER_SETTINGS_FILE}")
     except Exception as e:
-        log_exception("Error saving user_settings.json", e)
+        log_exception(f"Error saving user_settings.json to {USER_SETTINGS_FILE}", e)
 
 # Die Standarddateien werden überschrieben
 def overwrite_form_fields_file():
@@ -5428,7 +5539,7 @@ def overwrite_form_fields_file():
             json.dump(FORM_FIELDS_DEFAULT, f, indent=2, ensure_ascii=False)
         log_info(f"form_fields.json overwritten: {FORM_FIELDS_FILE}")
     except Exception as e:
-        log_exception("Error overwriting form_fields.json", e)
+        log_exception(f"Error overwriting form_fields.json at {FORM_FIELDS_FILE}", e)
 
 # Übersetzungsdatei wird überschrieben
 def overwrite_translation_file(language):
@@ -5439,10 +5550,10 @@ def overwrite_translation_file(language):
     try:
         with open(translation_path, "w", encoding="utf-8") as f:
             json.dump(translation_content, f, indent=2, ensure_ascii=False)
-        log_info(f"Translation file overwritten: {translation_path}")
+        log_info(f"Translation file overwritten: {translation_path} (language: {language})")
         return translation_path
     except Exception as e:
-        log_exception("Error overwriting translation file", e)
+        log_exception(f"Error overwriting translation file {translation_path} (language: {language})", e)
         return None
     
 # Übersetzungsdatei für ComboBox-Daten wird überschrieben
@@ -5454,10 +5565,10 @@ def overwrite_combobox_translation_file(language):
     try:
         with open(translation_path, "w", encoding="utf-8") as f:
             json.dump(translation_content, f, indent=2, ensure_ascii=False)
-        log_info(f"ComboBox translation file overwritten: {translation_path}")
+        log_info(f"ComboBox translation file overwritten: {translation_path} (language: {language})")
         return translation_path
     except Exception as e:
-        log_exception("Error overwriting ComboBox translation file", e)
+        log_exception(f"Error overwriting ComboBox translation file {translation_path} (language: {language})", e)
         return None
 
 # Design-Datei wird überschrieben
@@ -5470,10 +5581,10 @@ def overwrite_theme_file(style_theme):
     try:
         with open(theme_path, "w", encoding="utf-8") as f:
             json.dump(theme_content, f, indent=2, ensure_ascii=False)
-        log_info(f"Theme file overwritten: {theme_path}")
+        log_info(f"Theme file overwritten: {theme_path} (theme: {style_theme})")
         return theme_path
     except Exception as e:
-        log_exception("Error overwriting theme file", e)
+        log_exception(f"Error overwriting theme file {theme_path} (theme: {style_theme})", e)
         return None
     
 # Basis-Design-Datei wird überschrieben
@@ -5483,7 +5594,7 @@ def overwrite_base_style_file():
             json.dump(BASE_STYLE_DEFAULT, f, indent=2, ensure_ascii=False)
         log_info(f"base_style.json overwritten: {BASE_STYLE_FILE}")
     except Exception as e:
-        log_exception("Error overwriting base_style.json", e)
+        log_exception(f"Error overwriting base_style.json at {BASE_STYLE_FILE}", e)
 
 # Fehlende Schlüssel in den Einstellungen werden mit Standardwerten ergänzt
 def ensure_settings_keys(settings, defaults):
@@ -5505,7 +5616,7 @@ def ensure_character_main_json():
         }
         with open(file_path, "w", encoding="utf-8") as f:
             json.dump(characters, f, indent=2, ensure_ascii=False)
-        log_info("Character_main.json neu angelegt (mit Beispielcharakter als Dict).")
+        log_info(f"Character_main.json created at {file_path} (with example character).")
         return
 
     # Datei existiert: Keys prüfen und ggf. ergänzen
@@ -5521,28 +5632,31 @@ def ensure_character_main_json():
         if changed:
             with open(file_path, "w", encoding="utf-8") as f:
                 json.dump(characters, f, indent=2, ensure_ascii=False)
-            log_info("Character_main.json: fehlende Keys ergänzt.")
+            log_info(f"Character_main.json: missing keys added at {file_path}.")
     except Exception as e:
-        log_error(f"Fehler beim Prüfen/Ergänzen von Character_main.json: {e}")
+        log_error(f"Error checking/adding keys in Character_main.json at {file_path}: {e}")
 
 # Sicherstellen, dass eine Tabelle-Datei existiert und alle notwendigen Keys enthält
 def ensure_table_file(filename, defaults):
     path = DATA_DIR / filename
-    if not path.exists():
-        with open(path, "w", encoding="utf-8") as f:
-            json.dump(defaults, f, indent=2, ensure_ascii=False)
-    else:
-        # Ergänze neue Keys in bestehender Datei
-        with open(path, "r", encoding="utf-8") as f:
-            data = json.load(f)
-        changed = False
-        for key, value in defaults.items():
-            if key not in data:
-                data[key] = value
-                changed = True
-        if changed:
+    try:
+        if not path.exists():
             with open(path, "w", encoding="utf-8") as f:
-                json.dump(data, f, indent=2, ensure_ascii=False)
+                json.dump(defaults, f, indent=2, ensure_ascii=False)
+        else:
+            # Ergänze neue Keys in bestehender Datei
+            with open(path, "r", encoding="utf-8") as f:
+                data = json.load(f)
+            changed = False
+            for key, value in defaults.items():
+                if key not in data:
+                    data[key] = value
+                    changed = True
+            if changed:
+                with open(path, "w", encoding="utf-8") as f:
+                    json.dump(data, f, indent=2, ensure_ascii=False)
+    except Exception as e:
+        log_exception(f"Error ensuring table file {path}", e)
 
 # Validierung der Schlüssel in den Standardkonfigurationen
 def validate_keys():
@@ -5641,10 +5755,13 @@ def run_unit_tests():
     test_settings = {"monitor": {}}
     ensure_settings_keys(test_settings, DEFAULT_SETTINGS)
     assert "general" in test_settings, "Settings-Key-Vervollständigung fehlgeschlagen"
+    log_info("Test: ensure_settings_keys passed.")
     lang = get_os_language()
     assert lang in LANGUAGE_DEFAULTS, "OS-Sprache nicht in LANGUAGE_DEFAULTS"
+    log_info("Test: get_os_language passed.")
     res = get_monitor_resolution()
     assert isinstance(res, str) and "x" in res, "Monitorauflösung ungültig"
+    log_info("Test: get_monitor_resolution passed.")
     log_info("Alle Unit-Tests erfolgreich.")
 
 # Hauptfunktion
@@ -5652,7 +5769,6 @@ def main():
     setup_logging()
     log_header()
     log_section("CSNova Start")
-
     try:
         log_section("Validierung der Konfigurationsschlüssel")
         if not validate_keys():

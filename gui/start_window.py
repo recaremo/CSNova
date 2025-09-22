@@ -8,15 +8,16 @@ from PySide6.QtWidgets import (
     QSplitter, QPushButton,
     QSpacerItem, QSizePolicy,
     QDialog, QHBoxLayout,
-    QApplication, QComboBox
+    QApplication, QComboBox,
+    QListWidget, QToolBar
 )
 from PySide6.QtCore import Qt, QEvent
-from PySide6.QtGui import QPixmap, QIcon
+from PySide6.QtGui import QPixmap, QIcon, QAction
 import json
 from pathlib import Path
 import datetime
 from config.dev import GUI_DIR, ASSETS_DIR, DATA_DIR, USER_SETTINGS_FILE, FORM_FIELDS_FILE, BASE_STYLE_FILE, THEME_FILES, TRANSLATIONS_DIR
-from core.logger import log_info, log_error, log_exception, log_call
+from core.logger import log_info, log_error, log_exception, log_call, log_debug
 from gui.styles.python_gui_styles import apply_theme_style
 from csNova import LANGUAGE_DEFAULTS, THEMES_STYLES_DEFAULTS, LANGUAGE_DATA_COMBOBOX_DEFAULTS
 
@@ -26,11 +27,15 @@ def log_list(title, items):
 
 # Funktion zum Laden von JSON-Dateien
 def load_json_file(path):
-    """Lädt eine JSON-Datei und gibt deren Inhalt als Dictionary zurück."""
     try:
         with open(path, "r", encoding="utf-8") as f:
             data = json.load(f)
-        log_info(f"Loaded JSON file: {path}")
+        if isinstance(data, dict):
+            log_info(f"Loaded JSON file: {path} ({len(data)} keys)")
+        elif isinstance(data, list):
+            log_info(f"Loaded JSON file: {path} ({len(data)} items)")
+        else:
+            log_info(f"Loaded JSON file: {path} (type: {type(data)})")
         return data
     except Exception as e:
         log_exception(f"Error loading JSON file: {path}", e)
@@ -57,15 +62,15 @@ def apply_global_stylesheet(app, base_style_path, theme):
                     break
             # Nach Ersetzung: Prüfen, ob noch Platzhalter übrig sind
             if "{" in value and "}" in value:
-                log_error(f"Unresolved placeholder in StyleSheet: {value}")
-                value = ""  # Ungültige Regel entfernen
+                log_error(f"Unresolved placeholder in StyleSheet: {value} (selector: {selector}, prop: {prop})")
+                value = ""
             rule_str += f"{prop}: {value}; "
         stylesheet_parts.append(f"{selector} {{ {rule_str} }}")
 
     full_stylesheet = "\n".join(stylesheet_parts)
     app.setStyleSheet(full_stylesheet)
-    log_info(f"Globales Stylesheet angewendet aus Theme: {theme.get('theme_name', 'Unbekannt')} und Datei: {base_style_path}")
-    log_info(f"Theme-Preview: {theme}")
+    log_info(f"Globales Stylesheet angewendet aus Theme: {theme.get('theme_name', 'Unbekannt')} und Datei: {base_style_path} ({len(stylesheet_parts)} CSS-Regeln)")
+    log_debug(f"Theme-Preview: {theme}")
 
 # StartWindow Klasse
 class StartWindow(QMainWindow):
@@ -86,7 +91,7 @@ class StartWindow(QMainWindow):
 
         self.safe_apply_theme_style(panel_widget, "panel", self.theme)
         self.safe_apply_theme_style(header_label, "label", self.theme)
-
+        log_info(f"Left panel with header '{header_key}' erstellt (Default: '{default_text}')")
         return panel_widget
 
     # Anzeige des jeweils ausgewählten left_panels über die Buttons in right_panel_start
@@ -101,7 +106,7 @@ class StartWindow(QMainWindow):
                 old_left_panel.setParent(None)
             self.left_panel_widget = new_left_panel
             self.safe_apply_theme_style(new_left_panel, "panel", self.theme)
-            log_info(f"Left panel {panel_index} wurde angezeigt.")
+            log_info(f"Left panel {panel_index} ({left_panel_functions[panel_index].__name__}) wurde angezeigt. Splitter-Größen: {splitter.sizes()}")
             # Splitter-Größen wiederherstellen
             splitter_sizes = self.panel_settings.get("splitter_sizes", [300, 600, 300])
             splitter.setSizes(splitter_sizes)
@@ -122,7 +127,7 @@ class StartWindow(QMainWindow):
 
         self.safe_apply_theme_style(panel_widget, "panel", self.theme)
         self.safe_apply_theme_style(header_label, "label", self.theme)
-
+        log_info(f"Center panel with header '{header_key}' erstellt (Default: '{default_text}')")
         return panel_widget
     
     # Anzeige des jeweils ausgewählten center_panels über die Buttons in right_panel_start
@@ -137,7 +142,7 @@ class StartWindow(QMainWindow):
                 old_center_panel.setParent(None)
             self.center_panel_widget = new_center_panel
             self.safe_apply_theme_style(new_center_panel, "panel", self.theme)
-            log_info(f"Center panel {panel_index} wurde angezeigt.")
+            log_info(f"center panel {panel_index} ({center_panel_functions[panel_index].__name__}) wurde angezeigt. Splitter-Größen: {splitter.sizes()}")
             # Splitter-Größen wiederherstellen
             splitter_sizes = self.panel_settings.get("splitter_sizes", [300, 600, 300])
             splitter.setSizes(splitter_sizes)
@@ -192,7 +197,7 @@ class StartWindow(QMainWindow):
                 old_right_panel.setParent(None)
             self.right_panel_widget = new_right_panel
             self.safe_apply_theme_style(new_right_panel, "panel", self.theme)
-            log_info(f"Right panel {panel_index} wurde angezeigt.")
+            log_info(f"right panel {panel_index} ({right_panel_functions[panel_index].__name__}) wurde angezeigt. Splitter-Größen: {splitter.sizes()}")
             # Splitter-Größen wiederherstellen
             splitter_sizes = self.panel_settings.get("splitter_sizes", [300, 600, 300])
             splitter.setSizes(splitter_sizes)
@@ -663,7 +668,33 @@ class StartWindow(QMainWindow):
     # Dieses left_panel_editor wird im Editor-Modus angezeigt und beinhaltet
     # die Inhalte aus den Tabellen: Charaktere, Orte, Objekte, Kapitel, Szenen
     def create_left_panel_editor(self):
-        return self.create_left_panel_with_header("edit_lp_header", "Editor")
+        """Erzeugt das linke Panel für den Editor-Modus mit der Kapitel-Liste."""
+        panel_widget = QWidget()
+        panel_layout = QVBoxLayout(panel_widget)
+        panel_layout.setContentsMargins(10, 10, 10, 10)
+        panel_layout.setSpacing(10)
+        panel_layout.setAlignment(Qt.AlignTop | Qt.AlignHCenter)
+
+        # Header
+        header_text = self.get_translation("edit_lp_header", "Chapters")
+        header_label = QLabel(header_text, panel_widget)
+        header_label.setAlignment(Qt.AlignHCenter | Qt.AlignTop)
+        header_label.setObjectName("LeftPanelHeaderLabel")
+        panel_layout.addWidget(header_label)
+
+        # Kapitel-Liste
+        self.chapter_list_widget = QListWidget(panel_widget)
+        chapters_data = load_json_file(DATA_DIR / "Chapters_scenes.json")
+        chapter_ids = list(chapters_data.keys())
+        for chapter_id in chapter_ids:
+            chapter_title = chapters_data[chapter_id].get("chapter_title", chapter_id)
+            self.chapter_list_widget.addItem(f"{chapter_id}: {chapter_title}")
+        panel_layout.addWidget(self.chapter_list_widget)
+
+        self.safe_apply_theme_style(panel_widget, "panel", self.theme)
+        self.safe_apply_theme_style(header_label, "label", self.theme)
+        log_info("Kapitel-Liste im linken Editor-Panel angezeigt.")
+        return panel_widget
     
     # Dieses left_panel_project wird angezeigt, wenn ein Projekt erstellt oder bearbeitet wird.
     def create_left_panel_project(self):
@@ -878,7 +909,34 @@ class StartWindow(QMainWindow):
     # Dieses center_panel_editor wird im Editor-Modus angezeigt und beinhaltet
     # die Textverarbeitung für die Szenen usw.
     def create_center_panel_editor(self):
-        return self.create_center_panel_with_header("edit_lp_header", "Editor")
+        """Erzeugt das Center-Panel für den Editor-Modus – zunächst nur mit Toolbar."""
+        panel = QWidget()
+        layout = QVBoxLayout(panel)
+        layout.setAlignment(Qt.AlignTop)
+
+        # Toolbar (Buttons aus translation_de.json)
+        toolbar = QToolBar()
+        toolbar_keys = [
+            ("toolbar_ed_06", "toolbar_ed_06_hint"),  # Fett
+            ("toolbar_ed_07", "toolbar_ed_07_hint"),  # Kursiv
+            ("toolbar_ed_08", "toolbar_ed_08_hint"),  # Unterstrichen
+            ("toolbar_ed_15", "toolbar_ed_15_hint"),  # Aufzählung
+            ("toolbar_ed_16", "toolbar_ed_16_hint"),  # Nummerierung
+            ("toolbar_ed_18", "toolbar_ed_18_hint"),  # Schriftgröße
+            ("toolbar_ed_19", "toolbar_ed_19_hint"),  # Textfarbe
+            ("toolbar_ed_03", "toolbar_ed_03_hint"),  # Ausschneiden
+            ("toolbar_ed_04", "toolbar_ed_04_hint"),  # Kopieren
+            ("toolbar_ed_05", "toolbar_ed_05_hint"),  # Einfügen
+        ]
+        for key, hint_key in toolbar_keys:
+            action = QAction(self.get_translation(key, key), self)
+            action.setToolTip(self.get_translation(hint_key, ""))
+            toolbar.addAction(action)
+            # Hier kannst du später die Action mit einer Methode verbinden
+
+        layout.addWidget(toolbar)
+
+        return panel
 
     # Dieses center_panel_project wird angezeigt, wenn ein Projekt erstellt oder bearbeitet wird.
     def create_center_panel_project(self):
@@ -2258,6 +2316,17 @@ class StartWindow(QMainWindow):
 
         dialog.exec()
     
+    # Erzeugt und befüllt die Projekt-Liste aus dem DATA_DIR.
+    def create_chapter_list_widget(self):
+        # Erzeugt und befüllt die Kapitel-Liste aus Chapters_scenes.json.
+        chapter_list = QListWidget()
+        chapters_data = load_json_file(DATA_DIR / "Chapters_scenes.json")
+        chapter_ids = list(chapters_data.keys())
+        for chapter_id in chapter_ids:
+            chapter_title = chapters_data[chapter_id].get("chapter_title", chapter_id)
+            chapter_list.addItem(f"{chapter_id}: {chapter_title}")
+        return chapter_list
+    
     # ..............................................................
     # PROJEKT FUNKTIONEN
     # ..............................................................
@@ -2358,7 +2427,7 @@ class StartWindow(QMainWindow):
 
     # Aktualisiere die Projektliste
     def update_project_list(self):
-        """Zeigt alle Dateien aus dem DATA_DIR im ListView an (Dateiname, nicht Titel aus Datei)."""
+        # Zeigt alle Dateien aus dem DATA_DIR im ListView an (Dateiname, nicht Titel aus Datei).
         if hasattr(self, "project_list_widget"):
             self.project_list_widget.clear()
             # Zeige ALLE Dateien im data-Verzeichnis an
@@ -2441,14 +2510,25 @@ class StartWindow(QMainWindow):
     def load_characters(self):
         file_path = DATA_DIR / "Character_main.json"
         if not file_path.exists():
+            log_info(f"Charakterdatei nicht gefunden: {file_path}")
             return {}
-        with open(file_path, "r", encoding="utf-8") as f:
-            return json.load(f)
+        try:
+            with open(file_path, "r", encoding="utf-8") as f:
+                data = json.load(f)
+            log_info(f"Charakterdatei geladen: {file_path} ({len(data)} Einträge)")
+            return data
+        except Exception as e:
+            log_exception(f"Fehler beim Laden der Charakterdatei: {file_path}", e)
+            return {}
     # Speichere alle Charaktere
     def save_characters(self, characters):
         file_path = DATA_DIR / "Character_main.json"
-        with open(file_path, "w", encoding="utf-8") as f:
-            json.dump(characters, f, indent=2, ensure_ascii=False)
+        try:
+            with open(file_path, "w", encoding="utf-8") as f:
+                json.dump(characters, f, indent=2, ensure_ascii=False)
+            log_info(f"Charakterdatei gespeichert: {file_path} ({len(characters)} Einträge)")
+        except Exception as e:
+            log_exception(f"Fehler beim Speichern der Charakterdatei: {file_path}", e)
     # Lösche den aktuellen Charakter
     def on_delete_character_clicked(self):
         if not self.current_character_id:
@@ -2458,10 +2538,12 @@ class StartWindow(QMainWindow):
     def _delete_character(self, character_id):
         characters = self.load_characters()
         if not characters or not character_id:
+            log_error(f"Kein Charakter zum Löschen gefunden (ID: {character_id})")
             return
         if character_id in characters:
             del characters[character_id]
             self.save_characters(characters)
+            log_info(f"Charakter gelöscht: {character_id}")
             # Nach dem Löschen: nächsten Charakter anzeigen, oder leeres Formular
             if characters:
                 first_id = sorted(characters.keys())[0]
@@ -2592,15 +2674,26 @@ class StartWindow(QMainWindow):
     def load_objects(self):
         file_path = DATA_DIR / "Objects.json"
         if not file_path.exists():
+            log_info(f"Objektdatei nicht gefunden: {file_path}")
             return {}
-        with open(file_path, "r", encoding="utf-8") as f:
-            return json.load(f)
+        try:
+            with open(file_path, "r", encoding="utf-8") as f:
+                data = json.load(f)
+            log_info(f"Objektdatei geladen: {file_path} ({len(data)} Einträge)")
+            return data
+        except Exception as e:
+            log_exception(f"Fehler beim Laden der Objektdatei: {file_path}", e)
+            return {}
     
     # Speichere alle Objekte
     def save_objects(self, objects):
         file_path = DATA_DIR / "Objects.json"
-        with open(file_path, "w", encoding="utf-8") as f:
-            json.dump(objects, f, indent=2, ensure_ascii=False)
+        try:
+            with open(file_path, "w", encoding="utf-8") as f:
+                json.dump(objects, f, indent=2, ensure_ascii=False)
+            log_info(f"Objektdatei gespeichert: {file_path} ({len(objects)} Einträge)")
+        except Exception as e:
+            log_exception(f"Fehler beim Speichern der Objektdatei: {file_path}", e)
 
     # Lösche das aktuelle Objekt
     def on_delete_object_clicked(self):
@@ -2612,10 +2705,12 @@ class StartWindow(QMainWindow):
     def _delete_object(self, object_id):
         objects = self.load_objects()
         if not objects or not object_id:
+            log_error(f"Kein Objekt zum Löschen gefunden (ID: {object_id})")
             return
         if object_id in objects:
             del objects[object_id]
             self.save_objects(objects)
+            log_info(f"Objekt gelöscht: {object_id}")
             # Nach dem Löschen: nächsten oder leeren Datensatz anzeigen
             if objects:
                 first_id = sorted(objects.keys())[0]
@@ -2717,18 +2812,25 @@ class StartWindow(QMainWindow):
     # ..............................................................
 
     # Lege einen neuen Ort an
-    def load_locations(self):
-        file_path = DATA_DIR / "Locations.json"
-        if not file_path.exists():
-            return {}
-        with open(file_path, "r", encoding="utf-8") as f:
-            return json.load(f)
+    def _delete_object(self, object_id):
+        objects = self.load_objects()
+        if not objects or not object_id:
+            log_error(f"Kein Objekt zum Löschen gefunden (ID: {object_id})")
+            return
+        if object_id in objects:
+            del objects[object_id]
+            self.save_objects(objects)
+            log_info(f"Objekt gelöscht: {object_id}")
     
     # Speichere alle Orte
     def save_locations(self, locations):
         file_path = DATA_DIR / "Locations.json"
-        with open(file_path, "w", encoding="utf-8") as f:
-            json.dump(locations, f, indent=2, ensure_ascii=False)
+        try:
+            with open(file_path, "w", encoding="utf-8") as f:
+                json.dump(locations, f, indent=2, ensure_ascii=False)
+            log_info(f"Orte-Datei gespeichert: {file_path} ({len(locations)} Einträge)")
+        except Exception as e:
+            log_exception(f"Fehler beim Speichern der Orte-Datei: {file_path}", e)
 
     # Lösche den aktuellen Ort
     def on_delete_location_clicked(self):
@@ -2739,10 +2841,12 @@ class StartWindow(QMainWindow):
     def _delete_location(self, location_id):
         locations = self.load_locations()
         if not locations or not location_id:
+            log_error(f"Kein Ort zum Löschen gefunden (ID: {location_id})")
             return
         if location_id in locations:
             del locations[location_id]
             self.save_locations(locations)
+            log_info(f"Ort gelöscht: {location_id}")
             # Nach dem Löschen: nächsten oder leeren Datensatz anzeigen
             if locations:
                 first_id = sorted(locations.keys())[0]
@@ -2847,15 +2951,26 @@ class StartWindow(QMainWindow):
     def load_storylines(self):
         file_path = DATA_DIR / "Storylines.json"
         if not file_path.exists():
+            log_info(f"Storyline-Datei nicht gefunden: {file_path}")
             return {}
-        with open(file_path, "r", encoding="utf-8") as f:
-            return json.load(f)
+        try:
+            with open(file_path, "r", encoding="utf-8") as f:
+                data = json.load(f)
+            log_info(f"Storyline-Datei geladen: {file_path} ({len(data)} Einträge)")
+            return data
+        except Exception as e:
+            log_exception(f"Fehler beim Laden der Storyline-Datei: {file_path}", e)
+            return {}
     
     # Speichere alle Storylines
     def save_storylines(self, storylines):
         file_path = DATA_DIR / "Storylines.json"
-        with open(file_path, "w", encoding="utf-8") as f:
-            json.dump(storylines, f, indent=2, ensure_ascii=False)
+        try:
+            with open(file_path, "w", encoding="utf-8") as f:
+                json.dump(storylines, f, indent=2, ensure_ascii=False)
+            log_info(f"Storyline-Datei gespeichert: {file_path} ({len(storylines)} Einträge)")
+        except Exception as e:
+            log_exception(f"Fehler beim Speichern der Storyline-Datei: {file_path}", e)
     
     # Lösche die aktuelle Storyline
     def on_delete_storyline_clicked(self):
@@ -2866,10 +2981,12 @@ class StartWindow(QMainWindow):
     def _delete_storyline(self, storyline_id):
         storylines = self.load_storylines()
         if not storylines or not storyline_id:
+            log_error(f"Keine Storyline zum Löschen gefunden (ID: {storyline_id})")
             return
         if storyline_id in storylines:
             del storylines[storyline_id]
             self.save_storylines(storylines)
+            log_info(f"Storyline gelöscht: {storyline_id}")
             # Nach dem Löschen: nächsten oder leeren Datensatz anzeigen
             if storylines:
                 first_id = sorted(storylines.keys())[0]
