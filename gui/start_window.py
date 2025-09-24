@@ -12,7 +12,7 @@ from PySide6.QtWidgets import (
     QListWidget, QToolBar
 )
 from PySide6.QtCore import Qt, QEvent
-from PySide6.QtGui import QPixmap, QIcon, QAction
+from PySide6.QtGui import QPixmap, QIcon, QAction, QFont, QTextListFormat
 import json
 from pathlib import Path
 import datetime
@@ -668,32 +668,93 @@ class StartWindow(QMainWindow):
     # Dieses left_panel_editor wird im Editor-Modus angezeigt und beinhaltet
     # die Inhalte aus den Tabellen: Charaktere, Orte, Objekte, Kapitel, Szenen
     def create_left_panel_editor(self):
-        """Erzeugt das linke Panel für den Editor-Modus mit der Kapitel-Liste."""
         panel_widget = QWidget()
         panel_layout = QVBoxLayout(panel_widget)
         panel_layout.setContentsMargins(10, 10, 10, 10)
         panel_layout.setSpacing(10)
         panel_layout.setAlignment(Qt.AlignTop | Qt.AlignHCenter)
 
-        # Header
-        header_text = self.get_translation("edit_lp_header", "Chapters")
-        header_label = QLabel(header_text, panel_widget)
-        header_label.setAlignment(Qt.AlignHCenter | Qt.AlignTop)
-        header_label.setObjectName("LeftPanelHeaderLabel")
-        panel_layout.addWidget(header_label)
+        tab_widget = QTabWidget(panel_widget)
+        tab_widget.setTabPosition(QTabWidget.West)
+        tab_widget.setMovable(False)
+        tab_widget.setUsesScrollButtons(True)
+        tab_widget.setElideMode(Qt.ElideRight)
+        tab_widget.tabBar().setStyleSheet("""
+            QTabBar::tab {
+                min-height: 180px;
+                max-height: 200x;
+            }
+        """)
 
-        # Kapitel-Liste
-        self.chapter_list_widget = QListWidget(panel_widget)
-        chapters_data = load_json_file(DATA_DIR / "Chapters_scenes.json")
-        chapter_ids = list(chapters_data.keys())
-        for chapter_id in chapter_ids:
-            chapter_title = chapters_data[chapter_id].get("chapter_title", chapter_id)
-            self.chapter_list_widget.addItem(f"{chapter_id}: {chapter_title}")
-        panel_layout.addWidget(self.chapter_list_widget)
+        # Szenen-Tab dynamisch mit Feldern aus form_fields.json
+        scenes_tab = QWidget()
+        scenes_layout = QFormLayout(scenes_tab)
+        scenes_layout.setSpacing(8)
 
+        scene_field_names = [
+            "scene_id", "scene_title", "scene_premise", "scene_goal", "scene_conflict", "scene_outcome",
+            "scene_type", "scene_mood", "scene_duration", "scene_characters_involved", "scene_objects_involved",
+            "scene_location_ID", "scene_storyline_ID", "scene_word_count", "scene_notes", "scene_order",
+            "scene_status", "scene_creation_date", "scene_last_modified", "scene_tags"
+        ]
+
+        with open(FORM_FIELDS_FILE, "r", encoding="utf-8") as f:
+            form_fields = json.load(f)
+        scene_fields = form_fields.get("scenes", [])
+
+        self.scene_form_widgets = {}
+        for field in scene_fields:
+            field_name = field.get("datafield_name")
+            if field_name not in scene_field_names or not field_name:
+                continue
+            label_key = field.get("label_key", field_name)
+            label_text = self.get_translation(label_key, field_name)
+            field_type = field.get("type", "text")
+            width = field.get("width")
+            # Widget-Auswahl
+            if field_type == "text":
+                widget = QLineEdit()
+            elif field_type == "spin":
+                widget = QSpinBox()
+                if "max" in field:
+                    widget.setMaximum(field["max"])
+            elif field_type == "date":
+                widget = QDateEdit()
+            elif field_type == "multiselect":
+                widget = QListWidget()
+                widget.setSelectionMode(QListWidget.MultiSelection)
+            elif field_type == "combobox":
+                widget = QComboBox()
+            else:
+                widget = QLineEdit()
+            if width:
+                widget.setFixedWidth(width)
+            scenes_layout.addRow(label_text, widget)
+            self.scene_form_widgets[field_name] = widget
+
+        tab_widget.addTab(scenes_tab, self.get_translation("proj_cs_header", "Szenen"))
+
+        # Weitere Tabs als Platzhalter
+        tab_definitions = [
+            ("storylines", "proj_st_header"),
+            ("characters", "char_ma_header"),
+            ("objects", "proj_ob_header"),
+            ("locations", "proj_lo_header"),
+        ]
+        for tab_key, label_key in tab_definitions:
+            tab = QWidget()
+            tab_layout = QVBoxLayout(tab)
+            tab_layout.setAlignment(Qt.AlignTop)
+            tab_label_text = self.get_translation(label_key, tab_key.capitalize())
+            tab_label_widget = QLabel(tab_label_text)
+            tab_label_widget.setAlignment(Qt.AlignCenter)
+            tab_layout.addWidget(tab_label_widget)
+            tab_widget.addTab(tab, tab_label_text)
+
+        panel_layout.addWidget(tab_widget)
         self.safe_apply_theme_style(panel_widget, "panel", self.theme)
-        self.safe_apply_theme_style(header_label, "label", self.theme)
-        log_info("Kapitel-Liste im linken Editor-Panel angezeigt.")
+        self.safe_apply_theme_style(tab_widget, "tab", self.theme)
+        log_info("Tab 'Szenen' im linken Editor-Panel mit dynamischen Feldern angezeigt.")
         return panel_widget
     
     # Dieses left_panel_project wird angezeigt, wenn ein Projekt erstellt oder bearbeitet wird.
@@ -909,34 +970,103 @@ class StartWindow(QMainWindow):
     # Dieses center_panel_editor wird im Editor-Modus angezeigt und beinhaltet
     # die Textverarbeitung für die Szenen usw.
     def create_center_panel_editor(self):
-        """Erzeugt das Center-Panel für den Editor-Modus – zunächst nur mit Toolbar."""
+        """Zeigt Toolbar und Editorfenster für scene_plain an."""
         panel = QWidget()
         layout = QVBoxLayout(panel)
         layout.setAlignment(Qt.AlignTop)
 
-        # Toolbar (Buttons aus translation_de.json)
         toolbar = QToolBar()
         toolbar_keys = [
-            ("toolbar_ed_06", "toolbar_ed_06_hint"),  # Fett
-            ("toolbar_ed_07", "toolbar_ed_07_hint"),  # Kursiv
-            ("toolbar_ed_08", "toolbar_ed_08_hint"),  # Unterstrichen
-            ("toolbar_ed_15", "toolbar_ed_15_hint"),  # Aufzählung
-            ("toolbar_ed_16", "toolbar_ed_16_hint"),  # Nummerierung
-            ("toolbar_ed_18", "toolbar_ed_18_hint"),  # Schriftgröße
-            ("toolbar_ed_19", "toolbar_ed_19_hint"),  # Textfarbe
-            ("toolbar_ed_03", "toolbar_ed_03_hint"),  # Ausschneiden
-            ("toolbar_ed_04", "toolbar_ed_04_hint"),  # Kopieren
-            ("toolbar_ed_05", "toolbar_ed_05_hint"),  # Einfügen
+            ("toolbar_ed_06", "toolbar_ed_06_hint", self.set_bold),           # Fett
+            ("toolbar_ed_07", "toolbar_ed_07_hint", self.set_italic),         # Kursiv
+            ("toolbar_ed_08", "toolbar_ed_08_hint", self.set_underline),      # Unterstrichen
+            ("toolbar_ed_15", "toolbar_ed_15_hint", self.insert_bullet_list), # Aufzählung
+            ("toolbar_ed_16", "toolbar_ed_16_hint", self.insert_number_list), # Nummerierung
+            ("toolbar_ed_18", "toolbar_ed_18_hint", self.set_font_size),      # Schriftgröße
+            ("toolbar_ed_19", "toolbar_ed_19_hint", self.set_text_color),     # Textfarbe
+            ("toolbar_ed_03", "toolbar_ed_03_hint", self.cut_text),           # Ausschneiden
+            ("toolbar_ed_04", "toolbar_ed_04_hint", self.copy_text),          # Kopieren
+            ("toolbar_ed_05", "toolbar_ed_05_hint", self.paste_text),         # Einfügen
         ]
-        for key, hint_key in toolbar_keys:
+        for key, hint_key, handler in toolbar_keys:
             action = QAction(self.get_translation(key, key), self)
             action.setToolTip(self.get_translation(hint_key, ""))
+            action.triggered.connect(handler)
             toolbar.addAction(action)
-            # Hier kannst du später die Action mit einer Methode verbinden
 
         layout.addWidget(toolbar)
 
+        # Editorfenster für scene_plain
+        self.scene_plain_editor = QTextEdit(panel)
+        self.scene_plain_editor.setObjectName("ScenePlainEditor")
+        self.scene_plain_editor.setMinimumHeight(400)
+        layout.addWidget(self.scene_plain_editor)
+
+        self.safe_apply_theme_style(self.scene_plain_editor, "editor", self.theme)
+        self.safe_apply_theme_style(toolbar, "toolbar", self.theme)
+
         return panel
+
+    # Beispielmethoden für die Toolbar-Buttons:
+    def set_bold(self):
+        cursor = self.scene_plain_editor.textCursor()
+        fmt = cursor.charFormat()
+        fmt.setFontWeight(QFont.Bold if fmt.fontWeight() != QFont.Bold else QFont.Normal)
+        cursor.setCharFormat(fmt)
+
+    def set_italic(self):
+        cursor = self.scene_plain_editor.textCursor()
+        fmt = cursor.charFormat()
+        fmt.setFontItalic(not fmt.fontItalic())
+        cursor.setCharFormat(fmt)
+
+    def set_underline(self):
+        cursor = self.scene_plain_editor.textCursor()
+        fmt = cursor.charFormat()
+        fmt.setFontUnderline(not fmt.fontUnderline())
+        cursor.setCharFormat(fmt)
+
+    def insert_bullet_list(self):
+        cursor = self.scene_plain_editor.textCursor()
+        cursor.beginEditBlock()
+        # Wenn Text markiert ist, wandle die markierten Zeilen in eine Liste um
+        if cursor.hasSelection():
+            cursor.createList(QTextListFormat.ListDisc)
+        else:
+            cursor.insertList(QTextListFormat.ListDisc)
+        cursor.endEditBlock()
+
+    def insert_number_list(self):
+        cursor = self.scene_plain_editor.textCursor()
+        cursor.beginEditBlock()
+        if cursor.hasSelection():
+            cursor.createList(QTextListFormat.ListDecimal)
+        else:
+            cursor.insertList(QTextListFormat.ListDecimal)
+        cursor.endEditBlock()
+
+    def set_font_size(self):
+        # Beispiel: Setze Schriftgröße auf 16
+        cursor = self.scene_plain_editor.textCursor()
+        fmt = cursor.charFormat()
+        fmt.setFontPointSize(16)
+        cursor.setCharFormat(fmt)
+
+    def set_text_color(self):
+        # Beispiel: Setze Textfarbe auf Blau
+        cursor = self.scene_plain_editor.textCursor()
+        fmt = cursor.charFormat()
+        fmt.setForeground(Qt.blue)
+        cursor.setCharFormat(fmt)
+
+    def cut_text(self):
+        self.scene_plain_editor.cut()
+
+    def copy_text(self):
+        self.scene_plain_editor.copy()
+
+    def paste_text(self):
+        self.scene_plain_editor.paste()
 
     # Dieses center_panel_project wird angezeigt, wenn ein Projekt erstellt oder bearbeitet wird.
     def create_center_panel_project(self):
@@ -1754,6 +1884,15 @@ class StartWindow(QMainWindow):
         header_label.setObjectName("FormHeaderLabel")
         header_label.setAlignment(Qt.AlignHCenter | Qt.AlignTop)
         panel_layout.addWidget(header_label)
+
+        # Kapitel-Liste
+        self.chapter_list_widget = QListWidget(panel_widget)
+        chapters_data = load_json_file(DATA_DIR / "Chapters_scenes.json")
+        chapter_ids = list(chapters_data.keys())
+        for chapter_id in chapter_ids:
+            chapter_title = chapters_data[chapter_id].get("chapter_title", chapter_id)
+            self.chapter_list_widget.addItem(f"{chapter_id}: {chapter_title}")
+        panel_layout.addWidget(self.chapter_list_widget)        
 
         # Button-Konfiguration: (Key, Hint-Key)
         button_keys = [
