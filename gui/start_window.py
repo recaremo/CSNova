@@ -12,7 +12,7 @@ from PySide6.QtWidgets import (
     QListWidget, QToolBar
 )
 from PySide6.QtCore import Qt, QEvent
-from PySide6.QtGui import QPixmap, QIcon, QAction, QFont, QTextListFormat
+from PySide6.QtGui import QPixmap, QIcon, QAction, QFont, QTextListFormat, QTextCharFormat
 import json
 from pathlib import Path
 import datetime
@@ -975,26 +975,50 @@ class StartWindow(QMainWindow):
         layout = QVBoxLayout(panel)
         layout.setAlignment(Qt.AlignTop)
 
-        toolbar = QToolBar()
-        toolbar_keys = [
-            ("toolbar_ed_06", "toolbar_ed_06_hint", self.set_bold),           # Fett
-            ("toolbar_ed_07", "toolbar_ed_07_hint", self.set_italic),         # Kursiv
-            ("toolbar_ed_08", "toolbar_ed_08_hint", self.set_underline),      # Unterstrichen
-            ("toolbar_ed_15", "toolbar_ed_15_hint", self.insert_bullet_list), # Aufzählung
-            ("toolbar_ed_16", "toolbar_ed_16_hint", self.insert_number_list), # Nummerierung
-            ("toolbar_ed_18", "toolbar_ed_18_hint", self.set_font_size),      # Schriftgröße
-            ("toolbar_ed_19", "toolbar_ed_19_hint", self.set_text_color),     # Textfarbe
+        toolbar1 = QToolBar()
+        toolbar2 = QToolBar()
+        toolbar1_keys = [
+            ("toolbar_ed_01", "toolbar_ed_01_hint", self.set_undone),         # Rückgängig
+            ("toolbar_ed_02", "toolbar_ed_02_hint", self.set_redone),         # Wiederherstellen
             ("toolbar_ed_03", "toolbar_ed_03_hint", self.cut_text),           # Ausschneiden
             ("toolbar_ed_04", "toolbar_ed_04_hint", self.copy_text),          # Kopieren
             ("toolbar_ed_05", "toolbar_ed_05_hint", self.paste_text),         # Einfügen
+            ("toolbar_ed_06", "toolbar_ed_06_hint", self.set_bold),           # Fett
+            ("toolbar_ed_07", "toolbar_ed_07_hint", self.set_italic),         # Kursiv
+            ("toolbar_ed_08", "toolbar_ed_08_hint", self.set_underline),      # Unterstrichen
+            ("toolbar_ed_09", "toolbar_ed_09_hint", self.set_superscript),    # Hochgestellt
+            ("toolbar_ed_10", "toolbar_ed_10_hint", self.set_subscript),      # Tiefgestellt
+            ("toolbar_ed_15", "toolbar_ed_15_hint", self.insert_bullet_list), # Aufzählung
+            ("toolbar_ed_16", "toolbar_ed_16_hint", self.insert_number_list), # Nummerierung
+
         ]
-        for key, hint_key, handler in toolbar_keys:
+        for key, hint_key, handler in toolbar1_keys:
             action = QAction(self.get_translation(key, key), self)
             action.setToolTip(self.get_translation(hint_key, ""))
             action.triggered.connect(handler)
-            toolbar.addAction(action)
+            toolbar1.addAction(action)
 
-        layout.addWidget(toolbar)
+        toolbar2_keys = [
+            ("toolbar_ed_11", "toolbar_ed_11_hint", self.set_left_align),     # Linksbündig
+            ("toolbar_ed_12", "toolbar_ed_12_hint", self.set_center_align),   # Zentriert
+            ("toolbar_ed_13", "toolbar_ed_13_hint", self.set_right_align),    # Rechtsbündig  
+            #("toolbar_ed_14", "toolbar_ed_14_hint", self.set_justify_align),  # Blocksatz
+            ("toolbar_ed_17", "toolbar_ed_17_hint", self.set_font_style),     # Schriftart
+            ("toolbar_ed_18", "toolbar_ed_18_hint", self.set_font_size),      # Schriftgröße
+            ("toolbar_ed_19", "toolbar_ed_19_hint", self.set_text_color),     # Textfarbe
+            ("toolbar_ed_20", "toolbar_ed_20_hint", self.set_highlight_color),# Hervorheben
+            #("toolbar_ed_21", "toolbar_ed_21_hint", self.insert_glossar),     # Glossar
+            #("toolbar_ed_22", "toolbar_ed_22_hint", self.insert_tags),        # Tags
+        ]
+        for key, hint_key, handler in toolbar2_keys:
+            action = QAction(self.get_translation(key, key), self)
+            action.setToolTip(self.get_translation(hint_key, ""))
+            action.triggered.connect(handler)
+            toolbar2.addAction(action)
+
+
+        layout.addWidget(toolbar1)
+        layout.addWidget(toolbar2)
 
         # Editorfenster für scene_plain
         self.scene_plain_editor = QTextEdit(panel)
@@ -1003,29 +1027,76 @@ class StartWindow(QMainWindow):
         layout.addWidget(self.scene_plain_editor)
 
         self.safe_apply_theme_style(self.scene_plain_editor, "editor", self.theme)
-        self.safe_apply_theme_style(toolbar, "toolbar", self.theme)
+        self.safe_apply_theme_style(toolbar1, "toolbar", self.theme)
 
         return panel
 
-    # Beispielmethoden für die Toolbar-Buttons:
+    # Methoden für die Toolbar-Buttons:
+    # Text hochstellen
+    def set_superscript(self):
+        """Markierten Text hochstellen (Superscript)."""
+        if hasattr(self, "scene_plain_editor"):
+            cursor = self.scene_plain_editor.textCursor()
+            fmt = cursor.charFormat()
+            fmt.setVerticalAlignment(QTextCharFormat.AlignSuperScript)
+            cursor.mergeCharFormat(fmt)
+    # Text tiefstellen
+    def set_subscript(self):
+        """Markierten Text tiefstellen (Subscript)."""
+        if hasattr(self, "scene_plain_editor"):
+            cursor = self.scene_plain_editor.textCursor()
+            fmt = cursor.charFormat()
+            fmt.setVerticalAlignment(QTextCharFormat.AlignSubScript)
+            cursor.mergeCharFormat(fmt)
+    # Text linksbündig
+    def set_left_align(self):
+        """Text linksbündig ausrichten."""
+        if hasattr(self, "scene_plain_editor"):
+            self.scene_plain_editor.setAlignment(Qt.AlignLeft)
+    # Text zentriert
+    def set_center_align(self):
+        """Text zentriert ausrichten."""
+        if hasattr(self, "scene_plain_editor"):
+            self.scene_plain_editor.setAlignment(Qt.AlignCenter)
+    # Text rechtsbündig
+    def set_right_align(self):
+        """Text rechtsbündig ausrichten."""
+        if hasattr(self, "scene_plain_editor"):
+            self.scene_plain_editor.setAlignment(Qt.AlignRight)
+    # Text Blocksatz
+    def set_justify_align(self):
+        """Text im Blocksatz ausrichten."""
+        if hasattr(self, "scene_plain_editor"):
+            self.scene_plain_editor.setAlignment(Qt.AlignJustify)
+    # Text undo
+    def set_undone(self):
+        """Rückgängig machen im Editor."""
+        if hasattr(self, "scene_plain_editor"):
+            self.scene_plain_editor.undo()
+    # Text redo
+    def set_redone(self):
+        """Wiederherstellen im Editor."""
+        if hasattr(self, "scene_plain_editor"):
+            self.scene_plain_editor.redo()
+    # Text fett 
     def set_bold(self):
         cursor = self.scene_plain_editor.textCursor()
         fmt = cursor.charFormat()
         fmt.setFontWeight(QFont.Bold if fmt.fontWeight() != QFont.Bold else QFont.Normal)
         cursor.setCharFormat(fmt)
-
+    # Text kursiv
     def set_italic(self):
         cursor = self.scene_plain_editor.textCursor()
         fmt = cursor.charFormat()
         fmt.setFontItalic(not fmt.fontItalic())
         cursor.setCharFormat(fmt)
-
+    # Text unterstrichen
     def set_underline(self):
         cursor = self.scene_plain_editor.textCursor()
         fmt = cursor.charFormat()
         fmt.setFontUnderline(not fmt.fontUnderline())
         cursor.setCharFormat(fmt)
-
+    # Text Bullet-List
     def insert_bullet_list(self):
         cursor = self.scene_plain_editor.textCursor()
         cursor.beginEditBlock()
@@ -1035,7 +1106,7 @@ class StartWindow(QMainWindow):
         else:
             cursor.insertList(QTextListFormat.ListDisc)
         cursor.endEditBlock()
-
+    # Text Numbered-List
     def insert_number_list(self):
         cursor = self.scene_plain_editor.textCursor()
         cursor.beginEditBlock()
@@ -1044,27 +1115,41 @@ class StartWindow(QMainWindow):
         else:
             cursor.insertList(QTextListFormat.ListDecimal)
         cursor.endEditBlock()
-
+    # Schriftart ändern
+    def set_font_style(self):
+        # Beispiel: Setze Schriftart auf Arial
+        cursor = self.scene_plain_editor.textCursor()
+        fmt = cursor.charFormat()
+        fmt.setFontFamily("Arial")
+        cursor.setCharFormat(fmt)
+    # Schriftgröße ändern
     def set_font_size(self):
         # Beispiel: Setze Schriftgröße auf 16
         cursor = self.scene_plain_editor.textCursor()
         fmt = cursor.charFormat()
         fmt.setFontPointSize(16)
         cursor.setCharFormat(fmt)
-
+    # Textfarbe ändern
     def set_text_color(self):
         # Beispiel: Setze Textfarbe auf Blau
         cursor = self.scene_plain_editor.textCursor()
         fmt = cursor.charFormat()
         fmt.setForeground(Qt.blue)
         cursor.setCharFormat(fmt)
-
+    # Text hervorheben
+    def set_highlight_color(self):
+        # Beispiel: Setze Hintergrundfarbe auf Gelb
+        cursor = self.scene_plain_editor.textCursor()
+        fmt = cursor.charFormat()
+        fmt.setBackground(Qt.yellow)
+        cursor.setCharFormat(fmt)
+    # Text ausschneiden
     def cut_text(self):
         self.scene_plain_editor.cut()
-
+    # Text kopieren
     def copy_text(self):
         self.scene_plain_editor.copy()
-
+    # Text einfügen
     def paste_text(self):
         self.scene_plain_editor.paste()
 
@@ -1894,6 +1979,23 @@ class StartWindow(QMainWindow):
             self.chapter_list_widget.addItem(f"{chapter_id}: {chapter_title}")
         panel_layout.addWidget(self.chapter_list_widget)        
 
+        # Eingabefelder für Kapitel
+        chapter_fields = [
+            ("chapter_id", "Kapitel-ID"),
+            ("chapter_title", "Kapitel-Titel"),
+            ("chapter_premise", "Kapitel-Prämisse"),
+            ("chapter_summary", "Kapitel-Zusammenfassung"),
+            ("chapter_notes", "Kapitel-Notizen"),
+        ]
+        self.chapter_form_widgets = {}
+        chapter_form = QFormLayout()  # Lokales QFormLayout-Objekt
+        for field_name, label_text in chapter_fields:
+            label = QLabel(self.get_translation(label_text, label_text), panel_widget)
+            line_edit = QLineEdit(panel_widget)
+            chapter_form.addRow(label, line_edit)
+            self.chapter_form_widgets[field_name] = line_edit
+        panel_layout.addLayout(chapter_form)
+
         # Button-Konfiguration: (Key, Hint-Key)
         button_keys = [
             ("botn_ed_01", "botn_ed_01_hint"),
@@ -1921,7 +2023,6 @@ class StartWindow(QMainWindow):
         panel_layout.addWidget(btn_back, alignment=Qt.AlignBottom)
         self.botn_ed_05 = btn_back
 
-        # Handler für Zurück-Button: Panels zurücksetzen
         btn_back.clicked.connect(lambda: self.show_start_panels())
 
         panel_widget.setObjectName("EditorRightPanel")
