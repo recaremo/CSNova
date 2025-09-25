@@ -669,7 +669,10 @@ class StartWindow(QMainWindow):
     # Dieses left_panel_editor wird im Editor-Modus angezeigt und beinhaltet
     # die Inhalte aus den Tabellen: Charaktere, Orte, Objekte, Kapitel, Szenen
     def create_left_panel_editor(self):
+        from PySide6.QtWidgets import QSizePolicy
+
         panel_widget = QWidget()
+        panel_widget.setMinimumWidth(220)  # Mindestbreite für das Panel
         panel_layout = QVBoxLayout(panel_widget)
         panel_layout.setContentsMargins(10, 10, 10, 10)
         panel_layout.setSpacing(10)
@@ -683,7 +686,9 @@ class StartWindow(QMainWindow):
         tab_widget.tabBar().setStyleSheet("""
             QTabBar::tab {
                 min-height: 180px;
-                max-height: 200x;
+                max-height: 200px;
+                min-width: 12px;
+                max-width: 18px;
             }
         """)
 
@@ -711,25 +716,35 @@ class StartWindow(QMainWindow):
             label_key = field.get("label_key", field_name)
             label_text = self.get_translation(label_key, field_name)
             field_type = field.get("type", "text")
-            width = field.get("width")
+
             # Widget-Auswahl
             if field_type == "text":
                 widget = QLineEdit()
+                widget.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
             elif field_type == "spin":
                 widget = QSpinBox()
                 if "max" in field:
                     widget.setMaximum(field["max"])
+                widget.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
             elif field_type == "date":
                 widget = QDateEdit()
+                widget.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
             elif field_type == "multiselect":
                 widget = QListWidget()
                 widget.setSelectionMode(QListWidget.MultiSelection)
+                widget.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
             elif field_type == "combobox":
                 widget = QComboBox()
+                widget.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
             else:
                 widget = QLineEdit()
-            if width:
-                widget.setFixedWidth(width)
+                widget.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
+
+            if field.get("multiline"):
+                widget = QTextEdit()
+                widget.setMinimumHeight(60)
+                widget.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+
             scenes_layout.addRow(label_text, widget)
             self.scene_form_widgets[field_name] = widget
 
@@ -2021,6 +2036,7 @@ class StartWindow(QMainWindow):
     # Außerdem wird hier der Editor-Modus beendet.
     def create_right_panel_editor(self):
         panel_widget = QWidget()
+        panel_widget.setMinimumWidth(220)  # Mindestbreite setzen
         panel_layout = QVBoxLayout(panel_widget)
         panel_layout.setContentsMargins(20, 20, 20, 20)
         panel_layout.setSpacing(16)
@@ -2035,6 +2051,7 @@ class StartWindow(QMainWindow):
 
         # Kapitel-Liste
         self.chapter_list_widget = QListWidget(panel_widget)
+        self.chapter_list_widget.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         chapters_data = load_json_file(DATA_DIR / "Chapters_scenes.json")
         chapter_ids = list(chapters_data.keys())
         for chapter_id in chapter_ids:
@@ -2042,21 +2059,48 @@ class StartWindow(QMainWindow):
             self.chapter_list_widget.addItem(f"{chapter_id}: {chapter_title}")
         panel_layout.addWidget(self.chapter_list_widget)        
 
-        # Eingabefelder für Kapitel
-        chapter_fields = [
-            ("chapter_id", "Kapitel-ID"),
-            ("chapter_title", "Kapitel-Titel"),
-            ("chapter_premise", "Kapitel-Prämisse"),
-            ("chapter_summary", "Kapitel-Zusammenfassung"),
-            ("chapter_notes", "Kapitel-Notizen"),
-        ]
+        # Kapitel-Formular
+        with open(FORM_FIELDS_FILE, "r", encoding="utf-8") as f:
+            form_fields = json.load(f)
+        chapter_fields = form_fields.get("chapters", [])
+
         self.chapter_form_widgets = {}
-        chapter_form = QFormLayout()  # Lokales QFormLayout-Objekt
-        for field_name, label_text in chapter_fields:
-            label = QLabel(self.get_translation(label_text, label_text), panel_widget)
-            line_edit = QLineEdit(panel_widget)
-            chapter_form.addRow(label, line_edit)
-            self.chapter_form_widgets[field_name] = line_edit
+        chapter_form = QFormLayout()
+        for field in chapter_fields:
+            field_name = field.get("datafield_name")
+            if not field_name:
+                continue
+            label_key = field.get("label_key", field_name)
+            label_text = self.get_translation(label_key, field_name)
+            field_type = field.get("type", "text")
+            width = field.get("width")
+
+            # Widget-Auswahl (korrigiert!)
+            if field_type == "text":
+                if field.get("multiline"):
+                    widget = QTextEdit(panel_widget)
+                    widget.setMinimumHeight(60)
+                else:
+                    widget = QLineEdit(panel_widget)
+            elif field_type == "spin":
+                widget = QSpinBox(panel_widget)
+                widget.setMaximum(field.get("max", 1000000))
+            elif field_type == "date":
+                widget = QDateEdit(panel_widget)
+                widget.setCalendarPopup(True)
+                widget.setDate(datetime.date.today())
+            else:
+                widget = QLineEdit(panel_widget)
+
+            if width:
+                try:
+                    widget.setFixedWidth(width)
+                except Exception:
+                    pass
+
+            chapter_form.addRow(label_text, widget)
+            self.chapter_form_widgets[field_name] = widget
+
         panel_layout.addLayout(chapter_form)
 
         # Button-Konfiguration: (Key, Hint-Key)
@@ -2091,8 +2135,9 @@ class StartWindow(QMainWindow):
         panel_widget.setObjectName("EditorRightPanel")
         self.safe_apply_theme_style(panel_widget, "panel", self.theme)
         self.safe_apply_theme_style(header_label, "label", self.theme)
+
         return panel_widget
-   
+    
     # Dieses right_panel_project wird angezeigt, wenn ein Projekt erstellt oder bearbeitet wird.
     # Es beinhaltet die Navigation zu den verschiedenen Projekt-Einstellungen und beendet den Projekt-Modus.
     def create_right_panel_project(self):

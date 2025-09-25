@@ -2,9 +2,9 @@
 [x] Beim Öffnen eines Projektes wird - wenn keine Cover geladen wurde - nicht der Platzhalter angezeigt. 
 [x] Wenn ein geöffnetes Projekt bearbeitet und gespeichert wird, wird es nicht unter dem bestehenden Namen gespeichert. 
 [x] Ort speichern gibt eine Fehlermeldung im Terminal
-[] Bei Objekten wird immer zuerst ein leeres Objekt geöffnet und nicht das erste bestehende. 
-[] dito bei Orte und Storyline - ein Fehler oder eine Option??
-[] Breite der Spalten im Editor optimieren
+[x] Bei Objekten wird immer zuerst ein leeres Objekt geöffnet und nicht das erste bestehende. 
+[x] dito bei Orte und Storyline - ein Fehler oder eine Option??
+[x] Breite der Spalten im Editor optimieren
 
 
 # 2. Funktionen

@@ -819,18 +819,12 @@
       "readonly": true
     },
     {
-      "name": "ch_header",
-      "label_key": "proj_ch_01",
-      "type": "header",
-      "datafield_name": null
-    },
-    {
       "name": "chapter_title",
       "label_key": "proj_ch_02",
       "type": "text",
       "required": true,
       "max_length": 120,
-      "width": 320,
+      "width": 100,
       "datafield_name": "chapter_title"
     },
     {
@@ -839,7 +833,7 @@
       "type": "text",
       "required": false,
       "max_length": 200,
-      "width": 480,
+      "width": 100,
       "datafield_name": "chapter_premise"
     },
     {
@@ -848,7 +842,7 @@
       "type": "text",
       "required": false,
       "max_length": 300,
-      "width": 480,
+      "width": 100,
       "datafield_name": "chapter_summary",
       "multiline": true
     },
@@ -858,7 +852,7 @@
       "type": "text",
       "required": false,
       "max_length": 500,
-      "width": 480,
+      "width": 100,
       "datafield_name": "chapter_notes",
       "multiline": true
     }
@@ -953,7 +947,7 @@
     {
       "name": "scene_characters_involved",
       "label_key": "proj_cs_10",
-      "type": "multiselect",
+      "type": "combobox",
       "required": false,
       "width": 320,
       "datafield_name": "scene_characters_involved"
@@ -961,7 +955,7 @@
     {
       "name": "scene_objects_involved",
       "label_key": "proj_cs_11",
-      "type": "multiselect",
+      "type": "combobox",
       "required": false,
       "width": 320,
       "datafield_name": "scene_objects_involved"
