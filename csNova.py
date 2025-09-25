@@ -260,18 +260,18 @@ LANGUAGE_DEFAULTS = {
     "botn_st_03_hint": "Hier kannst du Objekte erstellen und verwalten, die in einem oder mehreren Projekten verwendet werden.",
     "botn_st_04": "Orte",
     "botn_st_04_hint": "Hier kannst du Orte erstellen und verwalten, die in einem oder mehreren Projekten verwendet werden.",
-    "botn_st_05": "Editor",
+    "botn_st_05": "Erzählstränge",
     "botn_st_05_hint": "Hier kannst du deine Geschichten schreiben und bearbeiten.",
-    "botn_st_06": "Einstellungen",
-    "botn_st_06_hint": "Hier kannst du die Einstellungen der Software anpassen.",
-    "botn_st_07": "Hilfe",
-    "botn_st_07_hint": "Hier findest du Hilfe und Unterstützung zur Nutzung der Software.",
-    "botn_st_08": "Über",
-    "botn_st_08_hint": "Hier findest du Informationen über die Software.",
-    "botn_st_09": "Beenden",
-    "botn_st_09_hint": "Hier kannst du CSNova beenden.",
-    "botn_st_10": "Storylines",
-    "botn_st_10_hint": "Hier kannst du Erzählstränge erstellen und verwalten, die in einem oder mehreren Projekten verwendet werden.",
+    "botn_st_06": "Editor",
+    "botn_st_06_hint": "Hier kannst du Erzählstränge erstellen und verwalten, die in einem oder mehreren Projekten verwendet werden.",
+    "botn_st_07": "Einstellungen",
+    "botn_st_07_hint": "Hier kannst du die Einstellungen der Software anpassen.",
+    "botn_st_08": "Hilfe",
+    "botn_st_08_hint": "Hier findest du Hilfe und Unterstützung zur Nutzung der Software.",
+    "botn_st_09": "Über",
+    "botn_st_09_hint": "Hier findest du Informationen über die Software.",
+    "botn_st_10": "Beenden",
+    "botn_st_10_hint": "Hier kannst du CSNova beenden.",
     "secureExitTitle": "Möchtest du CSNova wirklich beenden?",
     "secureDeleteTitle": "Möchtest du folgenden Eintrag wirklich löschen?",
     "botn_yes": "Ja",
@@ -355,14 +355,14 @@ LANGUAGE_DEFAULTS = {
     "botn_sl_06": "zurück",
     "botn_sl_06_hint": "Hier kannst du zum Startfenster zurückkehren.",
     "EditorWinHeader": "Texteditor",
-    "botn_ed_01": "Neues Dokument",
-    "botn_ed_01_hint": "Hier kannst du ein neues Dokument erstellen.",
-    "botn_ed_02": "Dokument öffnen",
-    "botn_ed_02_hint": "Hier kannst du ein bestehendes Dokument öffnen.",
-    "botn_ed_03": "Dokument speichern",
-    "botn_ed_03_hint": "Hier kannst du das aktuelle Dokument speichern.",
-    "botn_ed_04": "Dokument speichern unter",
-    "botn_ed_04_hint": "Hier kannst du das aktuelle Dokument unter einem neuen Namen speichern.",
+    "botn_ed_01": "Neues Kapitel",
+    "botn_ed_01_hint": "Hier kannst du ein neues Kapitel erstellen.",
+    "botn_ed_02": "nächstes Kapitel",
+    "botn_ed_02_hint": "Zeigt das nächste Kapitel an.",
+    "botn_ed_03": "vohrheriges Kapitel",
+    "botn_ed_03_hint": "Zeigt das vorherige Kapitel an.",
+    "botn_ed_04": "Kapitel speichern",
+    "botn_ed_04_hint": "Hier kannst du das aktuelle Kapitel speichern.",
     "botn_ed_05": "zurück",
     "botn_ed_05_hint": "Hier kannst du zum Startfenster zurückkehren.",
     "toolbar_ed_01": "Rückgängig",
@@ -418,6 +418,18 @@ LANGUAGE_DEFAULTS = {
     "botn_se_02_hint": "Hier kannst du die Einstellungen auf die Standardeinstellungen zurücksetzen.",
     "botn_se_03": "zurück",
     "botn_se_03_hint": "Hier kannst du zum Startfenster zurückkehren.",
+    "tab_se_01": "Allgemein",
+    "tab_se_01_hint": "Hier kannst du allgemeine Einstellungen der Software vornehmen.",
+    "tab_se_02": "Bücher",
+    "tab_se_02_hint": "Hier kannst du Vorlagen für Bücher bearbeiten.",
+    "tab_se_03": "Drehbücher",
+    "tab_se_03_hint": "Hier kannst du Vorlagen für Drehbücher bearbeiten.",
+    "tab_se_04": "Theater", 
+    "tab_se_04_hint": "Hier kannst du Vorlagen für Theaterstücke bearbeiten.",
+    "tab_se_05": "Spiele",
+    "tab_se_05_hint": "Hier kannst du Vorlagen für Spiele bearbeiten.",
+    "tab_se_06": "Storyboards",
+    "tab_se_06_hint": "Hier kannst du Vorlagen für Storyboards bearbeiten.",
     "comboBox_se_01": "Sprache",
     "comboBox_se_01_hint": "Hier kannst du die Sprache der Software ändern.",
     "comboBox_se_01_item_0": "Deutsch",
@@ -473,7 +485,7 @@ LANGUAGE_DEFAULTS = {
     "botn_ab_07_hint": "Hier kannst du zum Startfenster zurückkehren.",
     "startWinInfoHeader": "Codices Scriptoria Nova <br><br>",
     "startWinInfoText1": "Vielen Dank, dass du dich für <b>CSNova</b> entschieden hast! <br><br>"
-                        "Codices Scriptoria Nova - Bücher die in neuen Schreibwerkstätten - in CSNova entstehen.<br>"
+                        "Codices Scriptoria Nova: Bücher die in neuen Schreibwerkstätten entstehen - in CSNova.<br>"
                         "CSNova ist ein Open-Source-Projekt, das dir helfen soll, deine kreativen Schreibprojekte zu organisieren und zu verwalten. <br>"
                         "Du kannst das Programm deinem Arbeitsstil anpassen. Darüber hinaus hat CSNova eine klare Philosophie: <br>"
                         "'Nicht du musst lernen, wie das Programm funktioniert - das Programm soll <b>verstehen</b>, wie du arbeiten willst.' <br><br>"
@@ -489,6 +501,7 @@ LANGUAGE_DEFAULTS = {
                                 "- <b>Charaktere:</b> Haupt- und Nebencharaktere erstellen und verwalten <br>"
                                 "- <b>Objekte:</b> Objekte erstellen und verwalten <br>"
                                 "- <b>Orte:</b> Orte erstellen und verwalten <br>"
+                                "- <b>Erzählstränge:</b> Erzählstränge erstellen und verwalten <br>"
                                 "- <b>Editor:</b> deine Geschichten schreiben und bearbeiten <br>"
                                 "- <b>Einstellungen:</b> die Einstellungen der Software anpassen <br>"
                                 "- <b>Hilfe:</b> Hilfe und Unterstützung zur Nutzung der Software <br>"
@@ -711,18 +724,18 @@ LANGUAGE_DEFAULTS = {
     "botn_st_03_hint": "Here you can create and manage objects that are used in one or more projects.",
     "botn_st_04": "Places",
     "botn_st_04_hint": "Here you can create and manage places that are used in one or more projects.",
-    "botn_st_05": "Editor",
-    "botn_st_05_hint": "Here you can write and edit your stories.",
-    "botn_st_06": "Settings",
-    "botn_st_06_hint": "Here you can adjust the software settings.",
-    "botn_st_07": "Help",
-    "botn_st_07_hint": "Here you can find help and support for using the software.",
-    "botn_st_08": "About",
-    "botn_st_08_hint": "Here you can find information about the software.",
-    "botn_st_09": "Exit",
-    "botn_st_09_hint": "Here you can exit CSNova.",
-    "botn_st_10": "Storylines",
-    "botn_st_10_hint": "Here you can create and manage storylines that are used in one or more projects.",
+    "botn_st_05": "Storylines",
+    "botn_st_05_hint": "Here you can create and manage storylines that are used in one or more projects.",
+    "botn_st_06": "Editor",
+    "botn_st_06_hint": "Here you can write and edit your stories.",
+    "botn_st_07": "Settings",
+    "botn_st_07_hint": "Here you can adjust the software settings.",
+    "botn_st_08": "Help",
+    "botn_st_08_hint": "Here you can find help and support for using the software.",
+    "botn_st_09": "About",
+    "botn_st_09_hint": "Here you can find information about the software.",
+    "botn_st_10": "Exit",
+    "botn_st_10_hint": "Here you can exit CSNova.",
     "secureExitTitle": "Do you really want to exit CSNova?",
     "secureDeleteTitle": "Do you really want to delete the following entry?",
     "botn_yes": "Yes",
@@ -806,14 +819,14 @@ LANGUAGE_DEFAULTS = {
     "botn_sl_06": "Back",
     "botn_sl_06_hint": "Here you can return to the start window.",
     "EditorWinHeader": "Text Editor",
-    "botn_ed_01": "New Document",
-    "botn_ed_01_hint": "Here you can create a new document.",
-    "botn_ed_02": "Open Document",
-    "botn_ed_02_hint": "Here you can open an existing document.",
-    "botn_ed_03": "Save Document",
-    "botn_ed_03_hint": "Here you can save the current document.",
-    "botn_ed_04": "Save Document As",
-    "botn_ed_04_hint": "Here you can save the current document under a new name.",
+    "botn_ed_01": "New Chapter",
+    "botn_ed_01_hint": "Here you can create a new chapter.",
+    "botn_ed_02": "Next Chapter",
+    "botn_ed_02_hint": "Displays the next chapter.",
+    "botn_ed_03": "Previous Chapter",
+    "botn_ed_03_hint": "Displays the previous chapter.",
+    "botn_ed_04": "Save Chapter",
+    "botn_ed_04_hint": "Here you can save the current chapter.", 
     "botn_ed_05": "Back",
     "botn_ed_05_hint": "Here you can return to the start window.",
     "toolbar_ed_01": "Undo",
@@ -869,6 +882,18 @@ LANGUAGE_DEFAULTS = {
     "botn_se_02_hint": "Here you can reset the settings to the default settings.",
     "botn_se_03": "Back",
     "botn_se_03_hint": "Here you can return to the start window.",
+    "tab_se_01": "General",
+    "tab_se_01_hint": "Here you can make general settings of the software.",
+    "tab_se_02": "Books",
+    "tab_se_02_hint": "Here you can edit templates for books.",
+    "tab_se_03": "Screenplays",
+    "tab_se_03_hint": "Here you can edit templates for screenplays.",
+    "tab_se_04": "Theater", 
+    "tab_se_04_hint": "Here you can edit templates for plays.",
+    "tab_se_05": "Games",
+    "tab_se_05_hint": "Here you can edit templates for games.",
+    "tab_se_06": "Storyboards",
+    "tab_se_06_hint": "Here you can edit templates for storyboards.",
     "comboBox_se_01": "Language",
     "comboBox_se_01_hint": "Here you can change the language of the software.",
     "comboBox_se_01_item_0": "German",
@@ -924,7 +949,7 @@ LANGUAGE_DEFAULTS = {
     "botn_ab_07_hint": "Here you can return to the start window.",
     "startWinInfoHeader": "Codices Scriptoria Nova <br><br>",
     "startWinInfoText1": "Thank you for choosing <b>CSNova</b>! <br><br>"
-                        "Codices Scriptoria Nova - books that are created in new writing workshops - in CSNova.<br>"
+                        "Codices Scriptoria Nova: books that are created in new writing workshops - in CSNova.<br>"
                         "CSNova is an open-source project designed to help you organize and manage your creative writing projects. <br>"
                         "You can customize the program to suit your working style. Furthermore, CSNova has a clear philosophy: <br>"
                         "'You don't have to learn how the program works - the program should <b>understand</b> how you want to work.' <br><br>"
@@ -940,6 +965,7 @@ LANGUAGE_DEFAULTS = {
                                 "- <b>Characters:</b> create and manage main and supporting characters <br>"
                                 "- <b>Objects:</b> create and manage objects <br>"
                                 "- <b>Places:</b> create and manage places <br>"
+                                "- <b>Storylines:</b> create and manage storylines <br>"
                                 "- <b>Editor:</b> write and edit your stories <br>"
                                 "- <b>Settings:</b> adjust the software settings <br>"
                                 "- <b>Help:</b> find help and support for using the software <br>"
@@ -1162,18 +1188,18 @@ LANGUAGE_DEFAULTS = {
     "botn_st_03_hint": "Aquí puedes crear y gestionar objetos que se utilizan en uno o más proyectos.",
     "botn_st_04": "Lugares",
     "botn_st_04_hint": "Aquí puedes crear y gestionar lugares que se utilizan en uno o más proyectos.",
-    "botn_st_05": "Editor",
-    "botn_st_05_hint": "Aquí puedes escribir y editar tus historias.",
-    "botn_st_06": "Ajustes",
-    "botn_st_06_hint": "Aquí puedes ajustar los ajustes del software.",
-    "botn_st_07": "Ayuda",
-    "botn_st_07_hint": "Aquí puedes encontrar ayuda y soporte para el uso del software.",
-    "botn_st_08": "Acerca de",
-    "botn_st_08_hint": "Aquí puedes encontrar información sobre el software.",
-    "botn_st_09": "Salir",
-    "botn_st_09_hint": "Aquí puedes salir de CSNova.",
-    "botn_st_10": "Tramas",
-    "botn_st_10_hint": "Aquí puedes crear y gestionar tramas que se utilizan en uno o más proyectos.",
+    "botn_st_05": "Tramas",
+    "botn_st_05_hint": "Aquí puedes crear y gestionar tramas que se utilizan en uno o más proyectos.",
+    "botn_st_06": "Editor",
+    "botn_st_06_hint": "Aquí puedes escribir y editar tus historias.",
+    "botn_st_07": "Ajustes",
+    "botn_st_07_hint": "Aquí puedes ajustar los ajustes del software.",
+    "botn_st_08": "Ayuda",
+    "botn_st_08_hint": "Aquí puedes encontrar ayuda y soporte para el uso del software.",
+    "botn_st_09": "Acerca de",
+    "botn_st_09_hint": "Aquí puedes encontrar información sobre el software.",
+    "botn_st_10": "Salir",
+    "botn_st_10_hint": "Aquí puedes salir de CSNova.",
     "secureExitTitle": "¿Realmente quieres salir de CSNova?",
     "secureDeleteTitle": "¿Realmente quieres eliminar la siguiente entrada?",
     "botn_yes": "Sí",
@@ -1257,14 +1283,14 @@ LANGUAGE_DEFAULTS = {
     "botn_sl_06": "Atrás",
     "botn_sl_06_hint": "Aquí puedes volver a la ventana de inicio.",
     "EditorWinHeader": "Editor de texto",
-    "botn_ed_01": "Nuevo documento",
-    "botn_ed_01_hint": "Aquí puedes crear un nuevo documento.",
-    "botn_ed_02": "Abrir documento",
-    "botn_ed_02_hint": "Aquí puedes abrir un documento existente.",
-    "botn_ed_03": "Guardar documento",
-    "botn_ed_03_hint": "Aquí puedes guardar el documento actual.",
-    "botn_ed_04": "Guardar documento como",
-    "botn_ed_04_hint": "Aquí puedes guardar el documento actual con un nuevo nombre.",
+    "botn_ed_01": "Nuevo capítulo",
+    "botn_ed_01_hint": "Aquí puedes crear un nuevo capítulo.",
+    "botn_ed_02": "Siguiente capítulo",
+    "botn_ed_02_hint": "Muestra el siguiente capítulo.",
+    "botn_ed_03": "Capítulo anterior",
+    "botn_ed_03_hint": "Muestra el capítulo anterior.",
+    "botn_ed_04": "Guardar capítulo",
+    "botn_ed_04_hint": "Aquí puedes guardar el capítulo actual.",
     "botn_ed_05": "Atrás",
     "botn_ed_05_hint": "Aquí puedes volver a la ventana de inicio.",
     "toolbar_ed_01": "Deshacer",
@@ -1320,6 +1346,18 @@ LANGUAGE_DEFAULTS = {
     "botn_se_02_hint": "Aquí puedes restablecer los ajustes a los ajustes predeterminados.",
     "botn_se_03": "Atrás",
     "botn_se_03_hint": "Aquí puedes volver a la ventana de inicio.",
+    "tab_se_01": "General",
+    "tab_se_01_hint": "Aquí puedes hacer ajustes generales del software.",
+    "tab_se_02": "Libros",
+    "tab_se_02_hint": "Aquí puedes editar plantillas para libros.",
+    "tab_se_03": "Guiones",
+    "tab_se_03_hint": "Aquí puedes editar plantillas para guiones.",
+    "tab_se_04": "Teatro",
+    "tab_se_04_hint": "Aquí puedes editar plantillas para obras de teatro.",
+    "tab_se_05": "Juegos",
+    "tab_se_05_hint": "Aquí puedes editar plantillas para juegos.",
+    "tab_se_06": "Storyboards",
+    "tab_se_06_hint": "Aquí puedes editar plantillas para storyboards.",
     "comboBox_se_01": "Idioma",
     "comboBox_se_01_hint": "Aquí puedes cambiar el idioma del software.",
     "comboBox_se_01_item_0": "Alemán",
@@ -1375,7 +1413,7 @@ LANGUAGE_DEFAULTS = {
     "botn_ab_07_hint": "Aquí puedes volver a la ventana de inicio.",
     "startWinInfoHeader": "Codices Scriptoria Nova <br><br>",
     "startWinInfoText1": "¡Gracias por elegir <b>CSNova</b>! <br><br>"
-                        "Codices Scriptoria Nova - libros que se crean en nuevos talleres de escritura - en CSNova.<br>"
+                        "Codices Scriptoria Nova: libros que se crean en nuevos talleres de escritura - en CSNova.<br>"
                         "CSNova es un proyecto de código abierto diseñado para ayudarte a organizar y gestionar tus proyectos de escritura creativa. <br>"
                         "Puedes personalizar el programa para adaptarlo a tu estilo de trabajo. Además, CSNova tiene una filosofía clara: <br>"
                         "'No tienes que aprender cómo funciona el programa - el programa debería <b>entender</b> cómo quieres trabajar.' <br><br>"
@@ -1391,6 +1429,7 @@ LANGUAGE_DEFAULTS = {
                                 "- <b>Personajes:</b> crea y gestiona personajes principales y secundarios <br>"
                                 "- <b>Objetos:</b> crea y gestiona objetos <br>"
                                 "- <b>Lugares:</b> crea y gestiona lugares <br>"
+                                "- <b>Tramas:</b> crea y gestiona tramas <br>"
                                 "- <b>Editor:</b> escribe y edita tus historias <br>"
                                 "- <b>Ajustes:</b> ajusta los ajustes del software <br>"
                                 "- <b>Ayuda:</b> encuentra ayuda y soporte para el uso del software <br>"
@@ -1613,18 +1652,18 @@ LANGUAGE_DEFAULTS = {
     "botn_st_03_hint": "Ici, vous pouvez créer et gérer des objets qui sont utilisés dans un ou plusieurs projets.",
     "botn_st_04": "Lieux",
     "botn_st_04_hint": "Ici, vous pouvez créer et gérer des lieux qui sont utilisés dans un ou plusieurs projets.",
-    "botn_st_05": "Éditeur",
-    "botn_st_05_hint": "Ici, vous pouvez écrire et éditer vos histoires.",
-    "botn_st_06": "Paramètres",
-    "botn_st_06_hint": "Ici, vous pouvez ajuster les paramètres du logiciel.",
-    "botn_st_07": "Aide",
-    "botn_st_07_hint": "Ici, vous pouvez trouver de l'aide et du support pour l'utilisation du logiciel.",
-    "botn_st_08": "À propos",
-    "botn_st_08_hint": "Ici, vous pouvez trouver des informations sur le logiciel.",
-    "botn_st_09": "Quitter",
-    "botn_st_09_hint": "Ici, vous pouvez quitter CSNova.",
-    "botn_st_10": "Intrigues",
-    "botn_st_10_hint": "Ici, vous pouvez créer et gérer des intrigues qui sont utilisées dans un ou plusieurs projets.",
+    "botn_st_05": "Intrigues",
+    "botn_st_05_hint": "Ici, vous pouvez créer et gérer des intrigues qui sont utilisées dans un ou plusieurs projets.",
+    "botn_st_06": "Éditeur",
+    "botn_st_06_hint": "Ici, vous pouvez écrire et éditer vos histoires.",
+    "botn_st_07": "Paramètres",
+    "botn_st_07_hint": "Ici, vous pouvez ajuster les paramètres du logiciel.",
+    "botn_st_08": "Aide",
+    "botn_st_08_hint": "Ici, vous pouvez trouver de l'aide et du support pour l'utilisation du logiciel.",
+    "botn_st_09": "À propos",
+    "botn_st_09_hint": "Ici, vous pouvez trouver des informations sur le logiciel.",
+    "botn_st_10": "Quitter",
+    "botn_st_10_hint": "Ici, vous pouvez quitter CSNova.",
     "secureExitTitle": "Voulez-vous vraiment quitter CSNova?",
     "secureDeleteTitle": "Voulez-vous vraiment supprimer l'entrée suivante?",
     "botn_yes": "Oui",
@@ -1708,14 +1747,14 @@ LANGUAGE_DEFAULTS = {
     "botn_sl_06": "Retour",
     "botn_sl_06_hint": "Ici, vous pouvez revenir à la fenêtre de démarrage.",
     "EditorWinHeader": "Éditeur de texte",
-    "botn_ed_01": "Nouveau document",
-    "botn_ed_01_hint": "Ici, vous pouvez créer un nouveau document.",
-    "botn_ed_02": "Ouvrir un document",
-    "botn_ed_02_hint": "Ici, vous pouvez ouvrir un document existant.",
-    "botn_ed_03": "Enregistrer le document",
-    "botn_ed_03_hint": "Ici, vous pouvez enregistrer le document actuel.",
-    "botn_ed_04": "Enregistrer le document sous",
-    "botn_ed_04_hint": "Ici, vous pouvez enregistrer le document actuel sous un nouveau nom.",
+    "botn_ed_01": "Créer un nouveau chapitre.",
+    "botn_ed_01_hint": "Ici, vous pouvez créer un nouveau chapitre.",
+    "botn_ed_02": "chapitre suivant",
+    "botn_ed_02_hint": "Ici, vous pouvez passer au chapitre suivant.",
+    "botn_ed_03": "chapitre précédent",
+    "botn_ed_03_hint": "Ici, vous pouvez revenir au chapitre précédent.",
+    "botn_ed_04": "Enregistrer le chapitre",
+    "botn_ed_04_hint": "Ici, vous pouvez enregistrer le chapitre actuel.",
     "botn_ed_05": "Retour",
     "botn_ed_05_hint": "Ici, vous pouvez revenir à la fenêtre de démarrage.",
     "toolbar_ed_01": "Annuler",
@@ -1771,6 +1810,18 @@ LANGUAGE_DEFAULTS = {
     "botn_se_02_hint": "Ici, vous pouvez réinitialiser les paramètres aux paramètres par défaut.",
     "botn_se_03": "Retour",
     "botn_se_03_hint": "Ici, vous pouvez revenir à la fenêtre de démarrage.",
+    "tab_se_01": "Général",
+    "tab_se_01_hint": "Ici, vous pouvez ajuster les paramètres généraux du logiciel.",
+    "tab_se_02": "Livres",
+    "tab_se_02_hint": "Ici, vous pouvez ajuster les paramètres des projets et des livres.",
+    "tab_se_03": "Scénarios",
+    "tab_se_03_hint": "Ici, vous pouvez éditer les modèles pour les scénarios.",
+    "tab_se_04": "Théâtre", 
+    "tab_se_04_hint": "Ici, vous pouvez éditer les modèles pour le théâtre.",
+    "tab_se_05": "Jeux",
+    "tab_se_05_hint": "Ici, vous pouvez éditer les modèles pour les jeux.",
+    "tab_se_06": "Storyboards",
+    "tab_se_06_hint": "Ici, vous pouvez éditer les modèles pour les storyboards.",
     "comboBox_se_01": "Langue",
     "comboBox_se_01_hint": "Ici, vous pouvez changer la langue du logiciel.",
     "comboBox_se_01_item_0": "Allemand",
@@ -1826,7 +1877,7 @@ LANGUAGE_DEFAULTS = {
     "botn_ab_07_hint": "Ici, vous pouvez revenir à la fenêtre de démarrage.",
     "startWinInfoHeader": "Codices Scriptoria Nova <br><br>",
     "startWinInfoText1": "Merci d'avoir choisi <b>CSNova</b>! <br><br>"
-                        "Codices Scriptoria Nova - livres qui sont créés dans de nouveaux ateliers d'écriture - dans CSNova.<br>"
+                        "Codices Scriptoria Nova: livres qui sont créés dans de nouveaux ateliers d'écriture - dans CSNova.<br>"
                         "CSNova est un projet open source conçu pour vous aider à organiser et gérer vos projets d'écriture créative. <br>"
                         "Vous pouvez personnaliser le programme pour l'adapter à votre style de travail. De plus, CSNova a une philosophie claire: <br>"
                         "'Vous n'avez pas à apprendre comment le programme fonctionne - le programme devrait <b>comprendre</b> comment vous voulez travailler.' <br><br>"
@@ -1842,6 +1893,7 @@ LANGUAGE_DEFAULTS = {
                                 "- <b>Personnages:</b> créez et gérez des personnages principaux et secondaires <br>"
                                 "- <b>Objets:</b> créez et gérez des objets <br>"
                                 "- <b>Lieux:</b> créez et gérez des lieux <br>"
+                                "- <b>Intrigues:</b> créez et gérez des intrigues <br>"
                                 "- <b>Éditeur:</b> écrivez et éditez vos histoires <br>"
                                 "- <b>Paramètres:</b> ajustez les paramètres du logiciel <br>"
                                 "- <b>Aide:</b> trouvez de l'aide et du support pour l'utilisation du logiciel <br>"
@@ -5089,7 +5141,7 @@ FORM_FIELDS_DEFAULT = {
         {"name": "project_target_audience", "label_key": "proj_ma_08", "type": "combobox", "required": False, "width": 220, "datafield_name": "project_target_audience", "combo_key": "target_audience"},
         {"name": "project_status_ID", "label_key": "proj_ma_17", "type": "combobox", "required": False, "width": 220, "datafield_name": "project_status_ID", "combo_key": "status"},
 
-        {"name": "project_file", "label_key": "proj_ma_18", "type": "text", "required": False, "max_length": 200, "width": 480, "datafield_name": "project_file", "multiline": True},
+        {"name": "project_file", "label_key": "proj_ma_18", "type": "text", "required": False, "max_length": 200, "width": 480, "datafield_name": "project_file"},
         {"name": "project_notes", "label_key": "proj_ma_19", "type": "text", "required": False, "max_length": 500, "width": 480, "datafield_name": "project_notes", "multiline": True}
     ],
     "characters": [
@@ -5272,7 +5324,7 @@ TABLES_PROJECTS_DEFAULTS = {
     "project_notes": ""
     },
     "project_ID_02": {
-    "project_titel": "",
+    "project_title": "",
     "project_subtitle": "",
     "project_author": "",
     "project_premise": "",
@@ -5424,14 +5476,14 @@ TABLES_LOCATIONS_DEFAULTS = {
 # für jedes Projekt werden daraus eigene Tabellen angelegt
 TABLES_CHAPTERS_SCENES_DEFAULTS = {
     "chapter_ID_01": {
-        "chapter_id": "",
+        "chapter_id": "01",
         "chapter_title": "",
         "chapter_premise": "",
         "chapter_summary": "",
         "chapter_notes": "",
         "scenes": {
             "scene_ID_01": {
-                "scene_id": "",
+                "scene_id": "01",
                 "scene_title": "",
                 "scene_premise": "",
                 "scene_goal": "",
@@ -5736,7 +5788,7 @@ def init_language(settings, os_language):
 def run_gui(settings, translation_file, theme_file):
     app = QApplication(sys.argv)
     try:
-        from gui.start_window import StartWindow
+        from gui.csNova_GUI import StartWindow
     except ImportError as e:
         log_exception("Could not import StartWindow from gui.start_window.", e)
         sys.exit(1)

@@ -1,4 +1,16 @@
 {
+  "object_ID_02": {
+    "ob_title": "Objekt 01",
+    "ob_description": "Das ist nur ein Test"
+  },
+  "object_ID_03": {
+    "ob_title": "Objekt 02",
+    "ob_description": "Das ist auch ein Test"
+  },
+  "object_ID_04": {
+    "ob_title": "Test 1",
+    "ob_description": ""
+  },
   "object_ID_01": {
     "ob_title": "",
     "ob_description": ""

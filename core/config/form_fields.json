@@ -147,8 +147,7 @@
       "required": false,
       "max_length": 200,
       "width": 480,
-      "datafield_name": "project_file",
-      "multiline": true
+      "datafield_name": "project_file"
     },
     {
       "name": "project_notes",

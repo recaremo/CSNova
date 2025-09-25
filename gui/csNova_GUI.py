@@ -368,6 +368,7 @@ class StartWindow(QMainWindow):
             ("botn_st_06", "botn_st_06_hint"),
             ("botn_st_07", "botn_st_07_hint"),
             ("botn_st_08", "botn_st_08_hint"),
+            ("botn_st_09", "botn_st_09_hint"),
         ]
         for i, (key, hint_key) in enumerate(nav_keys, start=1):
             btn_attr = f"botn_st_{i:02d}"
@@ -377,9 +378,9 @@ class StartWindow(QMainWindow):
                 btn.setToolTip(self.get_translation(hint_key, ""))
 
         # Navigationselement 9 (Exit) aktualisieren
-        if hasattr(self, "botn_st_09"):
-            self.botn_st_09.setText(self.get_translation("botn_st_09", "Exit"))
-            self.botn_st_09.setToolTip(self.get_translation("botn_st_09_hint", "Exit CSNova."))
+        if hasattr(self, "botn_st_10"):
+            self.botn_st_09.setText(self.get_translation("botn_st_10", "Exit"))
+            self.botn_st_09.setToolTip(self.get_translation("botn_st_10_hint", "Exit CSNova."))
 
         # Fenster-Titel aktualisieren
         self.setWindowTitle(self.get_translation("WinStartTitle", "CSNova"))
@@ -1084,7 +1085,7 @@ class StartWindow(QMainWindow):
         fmt = cursor.charFormat()
         fmt.setFontWeight(QFont.Bold if fmt.fontWeight() != QFont.Bold else QFont.Normal)
         cursor.setCharFormat(fmt)
-    # Text kursiv
+    # Text kursivscene_id", 
     def set_italic(self):
         cursor = self.scene_plain_editor.textCursor()
         fmt = cursor.charFormat()
@@ -1188,6 +1189,7 @@ class StartWindow(QMainWindow):
 
     # Formular zur Erstellung oder Bearbeitung eines Projekts
     def create_center_panel_project_form(self, project_data=None):
+        import re
         panel_widget = QWidget()
         main_layout = QHBoxLayout(panel_widget)
         main_layout.setContentsMargins(20, 20, 20, 20)
@@ -1201,29 +1203,30 @@ class StartWindow(QMainWindow):
         # Bild-Label (rechts oben)
         self.project_image_label = QLabel(panel_widget)
         self.project_image_label.setFixedSize(400, 600)  # Größe nach Wunsch anpassen
-        #self.project_image_label.setScaledContents(True)
 
         # --- Bild setzen: Cover oder Platzhalter ---
         cover_path = None
-        if project_data and "project_cover_image" in project_data and project_data["project_cover_image"]:
-            cover_path = Path(project_data["project_cover_image"])
-            if not cover_path.exists():
-                cover_path = None
+        placeholder_path = DATA_DIR / "placeholder_cover.png"
+        cover_value = ""
+        if project_data and "project_cover_image" in project_data:
+            cover_value = project_data["project_cover_image"]
+            if cover_value:
+                cover_path = Path(cover_value)
+                if not cover_path.exists():
+                    cover_path = None
+        if (not cover_value or not cover_path) and placeholder_path.exists():
+            cover_path = placeholder_path
 
-            placeholder_path = DATA_DIR / "placeholder_cover.png"
-            if not cover_path and placeholder_path.exists():
-                cover_path = placeholder_path
-
-            if cover_path and cover_path.exists():
-                pixmap = QPixmap(str(cover_path))
-                if not pixmap.isNull():
-                    self.project_image_label.setPixmap(
-                        pixmap.scaled(
-                    self.project_image_label.width(),
-                    self.project_image_label.height(),
-                    Qt.KeepAspectRatio,
-                    Qt.SmoothTransformation
-                )
+        if cover_path and cover_path.exists():
+            pixmap = QPixmap(str(cover_path))
+            if not pixmap.isNull():
+                self.project_image_label.setPixmap(
+                    pixmap.scaled(
+                        self.project_image_label.width(),
+                        self.project_image_label.height(),
+                        Qt.KeepAspectRatio,
+                        Qt.SmoothTransformation
+                    )
                 )
             else:
                 self.project_image_label.clear()
@@ -1236,6 +1239,14 @@ class StartWindow(QMainWindow):
         project_fields = form_fields.get("projects", [])
 
         self.project_form_widgets = {}
+
+        # Für project_file: Dateiname automatisch bestimmen, falls leer
+        def get_auto_data_filename(project_data):
+            title = (project_data.get("project_title") or "").strip()
+            start_date = (project_data.get("project_startdate") or "").strip()
+            safe_title = re.sub(r'[^A-Za-z0-9_\-]', '_', title) or "Unbenannt"
+            date_digits = re.sub(r'\D', '', start_date) or "00000000"
+            return f"Data_{safe_title}_{date_digits}.json"
 
         for field in project_fields:
             field_name = field.get("datafield_name")
@@ -1273,6 +1284,26 @@ class StartWindow(QMainWindow):
                 # Wert beim Laden setzen
                 if project_data and field_name in project_data:
                     widget.setText(project_data[field_name])
+                continue
+
+            # Spezialfall: project_file (readonly, automatisch setzen)
+            if field_name == "project_file":
+                widget = QLineEdit(panel_widget)
+                widget.setReadOnly(True)
+                if width:
+                    try:
+                        widget.setFixedWidth(int(width))
+                    except Exception:
+                        pass
+                value = ""
+                if project_data and field_name in project_data:
+                    value = project_data[field_name]
+                if not value:
+                    # Automatisch passenden Dateinamen eintragen
+                    value = get_auto_data_filename(project_data or {})
+                widget.setText(value)
+                form_layout.addRow(label_text, widget)
+                self.project_form_widgets[field_name] = widget
                 continue
 
             # Standard-Widget-Erstellung
@@ -1353,6 +1384,10 @@ class StartWindow(QMainWindow):
                     except Exception:
                         widget.setDate(datetime.date.today())
 
+            # project_file immer readonly
+            if field_name == "project_file":
+                widget.setReadOnly(True)
+
             form_layout.addRow(label_text, widget)
             self.project_form_widgets[field_name] = widget
 
@@ -1415,9 +1450,39 @@ class StartWindow(QMainWindow):
             elif hasattr(self, "project_image_label"):
                 self.project_image_label.clear()    
     
-    # Dieses center_panel_settings wird angezeigt, wenn die Einstellungen bearbeitet werden sollen.
     def create_center_panel_settings(self):
-        return self.create_center_panel_with_header("pref_lp_header", "Preferences")
+        panel_widget = QWidget()
+        main_layout = QVBoxLayout(panel_widget)
+        main_layout.setContentsMargins(20, 20, 20, 20)
+        main_layout.setSpacing(16)
+        main_layout.setAlignment(Qt.AlignTop)
+
+        tab_widget = QTabWidget(panel_widget)
+        tab_widget.setTabPosition(QTabWidget.North)
+
+        # Tab-Labels und Tooltips aus den Übersetzungen holen
+        for i in range(1, 7):
+            tab_key = f"tab_se_{i:02d}"
+            tab_hint_key = f"tab_se_{i:02d}_hint"
+            tab_label = self.get_translation(tab_key, f"Tab {i}")
+            tab_hint = self.get_translation(tab_hint_key, "")
+
+            tab = QWidget()
+            tab_layout = QVBoxLayout(tab)
+            tab_layout.setAlignment(Qt.AlignTop)
+            # Beispielinhalt: Label mit Tab-Name
+            label = QLabel(tab_label, tab)
+            label.setAlignment(Qt.AlignTop | Qt.AlignLeft)
+            tab_layout.addWidget(label)
+
+            tab_widget.addTab(tab, tab_label)
+            tab_widget.setTabToolTip(i-1, tab_hint)
+
+        main_layout.addWidget(tab_widget)
+        panel_widget.setObjectName("PreferencesPanel")
+        self.safe_apply_theme_style(panel_widget, "panel", self.theme)
+        self.safe_apply_theme_style(tab_widget, "tab", self.theme)
+        return panel_widget
  
     # Dieses center_panel_character wird angezeigt, wenn ein Charakter erstellt oder bearbeitet wird.
     def create_center_panel_character(self, character_data=None):
@@ -1800,7 +1865,6 @@ class StartWindow(QMainWindow):
         self.safe_apply_theme_style(panel_widget, "panel", self.theme)
         return panel_widget  
 
-    
     # Dieses center_panel_help wird angezeigt, wenn die Hilfe geöffnet wird.
     def create_center_panel_help(self):
         return self.create_center_panel_with_header("help_lp_header", "Help")
@@ -1905,18 +1969,17 @@ class StartWindow(QMainWindow):
             self.create_right_panel_about,
         ]
 
-        # Navigationselemente 1-8
+        # Navigationselemente 1-9
         nav_keys = [
             ("botn_st_01", "botn_st_01_hint"),
             ("botn_st_02", "botn_st_02_hint"),
             ("botn_st_03", "botn_st_03_hint"),
             ("botn_st_04", "botn_st_04_hint"),
-            ("botn_st_10", "botn_st_10_hint"),
             ("botn_st_05", "botn_st_05_hint"),
             ("botn_st_06", "botn_st_06_hint"),
             ("botn_st_07", "botn_st_07_hint"),
-            ("botn_st_08", "botn_st_08_hint")
-
+            ("botn_st_08", "botn_st_08_hint"),
+            ("botn_st_09", "botn_st_09_hint"),
         ]
 
         for i, (key, hint_key) in enumerate(nav_keys, start=1):
@@ -1938,8 +2001,8 @@ class StartWindow(QMainWindow):
         panel_layout.addSpacerItem(QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding))
 
         # Navigationselement 9 (unten)
-        btn9_text = self.get_translation("botn_st_09", "Exit")
-        btn9_hint = self.get_translation("botn_st_09_hint", "Exit CSNova.")
+        btn9_text = self.get_translation("botn_st_10", "Exit")
+        btn9_hint = self.get_translation("botn_st_10_hint", "Exit CSNova.")
         btn9 = QPushButton(btn9_text, panel_widget)
         btn9.setToolTip(btn9_hint)
         btn9.clicked.connect(self.show_secure_exit_dialog)
@@ -2610,7 +2673,7 @@ class StartWindow(QMainWindow):
                 project_data[field_name] = ""
 
         # 2. Dateinamen bestimmen
-        title = project_data.get("project_titel", "").strip()
+        title = project_data.get("project_title", "").strip()
         start_date = project_data.get("project_startdate", "").strip()
         # Entferne alle nicht-alphanumerischen Zeichen aus dem Titel (optional, für Dateisystem-Sicherheit)
         safe_title = re.sub(r'[^A-Za-z0-9_\-]', '_', title) or "Unbenannt"
@@ -2623,6 +2686,20 @@ class StartWindow(QMainWindow):
         with open(filepath, "w", encoding="utf-8") as f:
             json.dump(project_data, f, ensure_ascii=False, indent=2)
         log_info(f"Projekt gespeichert: {filepath}")
+
+        # --- NEU: Kapitel-/Szenendaten übernehmen und speichern ---
+        chapters_file = DATA_DIR / "Chapters_scenes.json"
+        if chapters_file.exists():
+            with open(chapters_file, "r", encoding="utf-8") as f:
+                chapters_data = json.load(f)
+            # Name: Project_{safe_title}_{date_digits}_data.json
+            data_filename = f"Data_{safe_title}_{date_digits}.json"
+            data_filepath = DATA_DIR / data_filename
+            with open(data_filepath, "w", encoding="utf-8") as f:
+                json.dump(chapters_data, f, ensure_ascii=False, indent=2)
+            log_info(f"Projekt-Kapitel/Szenen-Daten gespeichert: {data_filepath}")
+        else:
+            log_error(f"Kapitel-/Szenendatei nicht gefunden: {chapters_file}")
 
         # 4. Speichern-Button wieder deaktivieren
         self.botn_fo_03.setEnabled(False)
@@ -3071,7 +3148,21 @@ class StartWindow(QMainWindow):
             log_info(f"Orte-Datei gespeichert: {file_path} ({len(locations)} Einträge)")
         except Exception as e:
             log_exception(f"Fehler beim Speichern der Orte-Datei: {file_path}", e)
-
+    # Lade alle Orte
+    def load_locations(self):
+        file_path = DATA_DIR / "Locations.json"
+        if not file_path.exists():
+            log_info(f"Orte-Datei nicht gefunden: {file_path}")
+            return {}
+        try:
+            with open(file_path, "r", encoding="utf-8") as f:
+                data = json.load(f)
+            log_info(f"Orte-Datei geladen: {file_path} ({len(data)} Einträge)")
+            return data
+        except Exception as e:
+            log_exception(f"Fehler beim Laden der Orte-Datei: {file_path}", e)
+            return {}
+        
     # Lösche den aktuellen Ort
     def on_delete_location_clicked(self):
         if not hasattr(self, "current_location_id") or not self.current_location_id:
