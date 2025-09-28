@@ -1058,5 +1058,175 @@
       "width": 320,
       "datafield_name": "scene_tags"
     }
+  ],
+  "fiction_template": [
+    {
+      "name": "ft_header",
+      "label_key": "books_paper_size",
+      "type": "combobox",
+      "required": true,
+      "width": 80,
+      "datafield_name": "paperSize",
+      "combo_key": "paperSize"
+    },
+    {
+      "name": "ft_font_family",
+      "label_key": "books_font_family",
+      "type": "combobox",
+      "required": true,
+      "width": 60,
+      "datafield_name": "family",
+      "combo_key": "font_family"
+    },
+    {
+      "name": "ft_font_size",
+      "label_key": "books_font_size",
+      "type": "spin",
+      "required": true,
+      "width": 60,
+      "min": 8,
+      "max": 72,
+      "datafield_name": "font_sizePt"
+    },
+    {
+      "name": "ft_line_spacing",
+      "label_key": "books_line_spacing",
+      "type": "spin",
+      "required": true,
+      "width": 60,
+      "min": 1.0,
+      "max": 3.0,
+      "step": 0.1,
+      "datafield_name": "line_spacing"
+    },
+    {
+      "name": "ft_margin_top",
+      "label_key": "books_margin_top",
+      "type": "spin",
+      "required": true,
+      "width": 60,
+      "min": 0.5,
+      "max": 5.0,
+      "step": 0.1,
+      "datafield_name": "margins_top"
+    },
+    {
+      "name": "ft_margin_bottom",
+      "label_key": "books_margin_bottom",
+      "type": "spin",
+      "required": true,
+      "width": 60,
+      "min": 0.5,
+      "max": 5.0,
+      "step": 0.1,
+      "datafield_name": "margins_bottom"
+    },
+    {
+      "name": "ft_margin_left",
+      "label_key": "books_margin_left",
+      "type": "spin",
+      "required": true,
+      "width": 60,
+      "min": 0.5,
+      "max": 5.0,
+      "step": 0.1,
+      "datafield_name": "margins_left"
+    },
+    {
+      "name": "ft_margin_right",
+      "label_key": "books_margin_right",
+      "type": "spin",
+      "required": true,
+      "width": 60,
+      "min": 0.5,
+      "max": 5.0,
+      "step": 0.1,
+      "datafield_name": "margins_right"
+    }
+  ],
+  "nonfiction_template": [
+    {
+      "name": "nft_header",
+      "label_key": "books_paper_size",
+      "type": "combobox",
+      "required": true,
+      "width": 80,
+      "datafield_name": "paperSize",
+      "combo_key": "paperSize"
+    },
+    {
+      "name": "nft_font_family",
+      "label_key": "books_font_family",
+      "type": "combobox",
+      "required": true,
+      "width": 60,
+      "datafield_name": "family",
+      "combo_key": "font_family"
+    },
+    {
+      "name": "nft_font_size",
+      "label_key": "books_font_size",
+      "type": "spin",
+      "required": true,
+      "width": 60,
+      "min": 8,
+      "max": 72,
+      "datafield_name": "font_sizePt"
+    },
+    {
+      "name": "nft_line_spacing",
+      "label_key": "books_line_spacing",
+      "type": "spin",
+      "required": true,
+      "width": 60,
+      "min": 1.0,
+      "max": 3.0,
+      "step": 0.1,
+      "datafield_name": "line_spacing"
+    },
+    {
+      "name": "nft_margin_top",
+      "label_key": "books_margin_top",
+      "type": "spin",
+      "required": true,
+      "width": 60,
+      "min": 0.5,
+      "max": 5.0,
+      "step": 0.1,
+      "datafield_name": "margins_top"
+    },
+    {
+      "name": "nft_margin_bottom",
+      "label_key": "books_margin_bottom",
+      "type": "spin",
+      "required": true,
+      "width": 60,
+      "min": 0.5,
+      "max": 5.0,
+      "step": 0.1,
+      "datafield_name": "margins_bottom"
+    },
+    {
+      "name": "nft_margin_left",
+      "label_key": "books_margin_left",
+      "type": "spin",
+      "required": true,
+      "width": 60,
+      "min": 0.5,
+      "max": 5.0,
+      "step": 0.1,
+      "datafield_name": "margins_left"
+    },
+    {
+      "name": "nft_margin_right",
+      "label_key": "books_margin_right",
+      "type": "spin",
+      "required": true,
+      "width": 60,
+      "min": 0.5,
+      "max": 5.0,
+      "step": 0.1,
+      "datafield_name": "margins_right"
+    }
   ]
 }

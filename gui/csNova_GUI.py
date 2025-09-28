@@ -9,7 +9,8 @@ from PySide6.QtWidgets import (
     QSpacerItem, QSizePolicy,
     QDialog, QHBoxLayout,
     QApplication, QComboBox,
-    QListWidget, QToolBar
+    QListWidget, QToolBar, 
+    QGroupBox, QDoubleSpinBox
 )
 from PySide6.QtCore import Qt, QEvent
 from PySide6.QtGui import QPixmap, QIcon, QAction, QFont, QTextListFormat, QTextCharFormat
@@ -1465,6 +1466,8 @@ class StartWindow(QMainWindow):
             elif hasattr(self, "project_image_label"):
                 self.project_image_label.clear()    
     
+    # Dieses center_panel_settings wird angezeigt, wenn die Einstellungs-
+    # Oberfläche geöffnet wird.
     def create_center_panel_settings(self):
         panel_widget = QWidget()
         main_layout = QVBoxLayout(panel_widget)
@@ -1475,8 +1478,173 @@ class StartWindow(QMainWindow):
         tab_widget = QTabWidget(panel_widget)
         tab_widget.setTabPosition(QTabWidget.North)
 
-        # Tab-Labels und Tooltips aus den Übersetzungen holen
-        for i in range(1, 7):
+        # --- Tab 1: Allgemein (wie gehabt) ---
+        tab_general = QWidget()
+        tab_general_layout = QVBoxLayout(tab_general)
+        tab_general_layout.setAlignment(Qt.AlignTop)
+
+        # Sprache
+        language_label_1 = QLabel(self.get_translation("comboBox_se_01", "Language"), tab_general)
+        language_label_1.setToolTip(self.get_translation("comboBox_se_01_hint", "Select your language."))
+        tab_general_layout.addWidget(language_label_1)
+
+        language_combo_1 = QComboBox(tab_general)
+        language_items_1 = [
+            self.get_translation(f"comboBox_se_01_item_{i}", f"Language {i+1}")
+            for i in range(4)
+        ]
+        language_combo_1.addItems(language_items_1)
+        language_combo_1.setToolTip(self.get_translation("comboBox_se_01_hint", "Select your language."))
+        tab_general_layout.addWidget(language_combo_1)
+
+        language_codes = ["de", "en", "fr", "es"]
+        current_language = self.language
+        try:
+            lang_idx = language_codes.index(current_language)
+        except ValueError:
+            lang_idx = 0
+        language_combo_1.blockSignals(True)
+        language_combo_1.setCurrentIndex(lang_idx)
+        language_combo_1.blockSignals(False)
+        language_combo_1.currentIndexChanged.connect(
+            lambda idx: self.on_settings_language_changed(idx)
+        )
+
+        # Theme
+        theme_label_1 = QLabel(self.get_translation("comboBox_se_02", "Theme"), tab_general)
+        theme_label_1.setToolTip(self.get_translation("comboBox_se_02_hint", "Select the theme."))
+        tab_general_layout.addWidget(theme_label_1)
+
+        theme_combo_1 = QComboBox(tab_general)
+        theme_items_1 = [
+            self.get_translation(f"comboBox_se_02_item_{i}", f"Design {i+1}")
+            for i in range(15)
+        ]
+        theme_combo_1.addItems(theme_items_1)
+        theme_combo_1.setToolTip(self.get_translation("comboBox_se_02_hint", "Select the theme."))
+        tab_general_layout.addWidget(theme_combo_1)
+
+        theme_names = [
+            "Modern_neutral", "Modern_dark", "Modern_light",
+            "OldSchool_neutral", "OldSchool_dark", "OldSchool_light",
+            "Vintage_neutral", "Vintage_dark", "Vintage_light",
+            "Future_neutral", "Future_dark", "Future_light",
+            "Minimal_neutral", "Minimal_dark", "Minimal_light"
+        ]
+        current_theme_name = self.theme.get("theme_name", theme_names[0])
+        try:
+            idx = theme_names.index(current_theme_name)
+        except ValueError:
+            idx = 0
+        theme_combo_1.blockSignals(True)
+        theme_combo_1.setCurrentIndex(idx)
+        theme_combo_1.blockSignals(False)
+        theme_combo_1.currentIndexChanged.connect(
+            lambda idx: self.on_settings_theme_changed(idx)
+        )
+
+        tab_widget.addTab(tab_general, self.get_translation("tab_se_01", "General"))
+
+        # --- Tab 2: Bücher ---
+        tab_books = QWidget()
+        tab_books_layout = QHBoxLayout(tab_books)
+        tab_books_layout.setAlignment(Qt.AlignTop)
+
+        # Felder für das Buchlayout-Formular laden
+        with open(FORM_FIELDS_FILE, "r", encoding="utf-8") as f:
+            form_fields = json.load(f)
+        fiction_fields = form_fields.get("fiction_template", [])
+        nonfiction_fields = form_fields.get("nonfiction_template", [])
+
+        # Region-Auswahl-Items
+        region_keys = ["EU", "USA", "UK"]
+        region_items = [
+            self.get_translation(f"books_combo_item_{i:02d}", f"Region {i}")
+            for i in range(1, 4)
+        ]
+
+        # --- Fiktion-Container ---
+        fiktion_group = QGroupBox(self.get_translation("settings_books_fiction", "Fiktion"), tab_books)
+        fiktion_layout = QVBoxLayout(fiktion_group)
+        fiktion_layout.setAlignment(Qt.AlignTop)
+
+        self.fiktion_region_combo = QComboBox(fiktion_group)
+        self.fiktion_region_combo.addItems(region_items)
+        fiktion_layout.addWidget(self.fiktion_region_combo)
+
+        # Initial: EU
+        fiktion_region = region_keys[0]
+        fiktion_template = self.settings.get(fiktion_region, {}).get("fiction_template", {})
+        fiktion_form, self.romane_format_widgets = self.create_book_format_form(
+            fiktion_group, fiction_fields, fiktion_template
+        )
+        self.fiktion_form_layout = fiktion_form
+        fiktion_layout.addLayout(fiktion_form)
+        fiktion_group.setMinimumWidth(260)
+        tab_books_layout.addWidget(fiktion_group)
+
+        # --- Non-Fiktion-Container ---
+        nonfiktion_group = QGroupBox(self.get_translation("settings_books_nonfiction", "Non-Fiktion"), tab_books)
+        nonfiktion_layout = QVBoxLayout(nonfiktion_group)
+        nonfiktion_layout.setAlignment(Qt.AlignTop)
+
+        self.nonfiktion_region_combo = QComboBox(nonfiktion_group)
+        self.nonfiktion_region_combo.addItems(region_items)
+        nonfiktion_layout.addWidget(self.nonfiktion_region_combo)
+
+        # Initial: EU
+        nonfiktion_region = region_keys[0]
+        nonfiktion_template = self.settings.get(nonfiktion_region, {}).get("nonfiction_template", {})
+        nonfiktion_form, self.sachbuch_format_widgets = self.create_book_format_form(
+            nonfiktion_group, nonfiction_fields, nonfiktion_template
+        )
+        self.nonfiktion_form_layout = nonfiktion_form
+        nonfiktion_layout.addLayout(nonfiktion_form)
+        nonfiktion_group.setMinimumWidth(260)
+        tab_books_layout.addWidget(nonfiktion_group)
+
+        # --- Handler für Region-Wechsel ---
+        def update_fiktion_form(idx):
+            region = region_keys[idx]
+            template = self.settings.get(region, {}).get("fiction_template", {})
+            # Layout leeren
+            while self.fiktion_form_layout.count():
+                item = self.fiktion_form_layout.takeAt(0)
+                if item.widget():
+                    item.widget().deleteLater()
+            # Neu aufbauen
+            new_form, self.romane_format_widgets = self.create_book_format_form(
+                fiktion_group, fiction_fields, template
+            )
+            for i in range(new_form.rowCount()):
+                self.fiktion_form_layout.addRow(
+                    new_form.itemAt(i, QFormLayout.LabelRole).widget(),
+                    new_form.itemAt(i, QFormLayout.FieldRole).widget()
+                )
+
+        def update_nonfiktion_form(idx):
+            region = region_keys[idx]
+            template = self.settings.get(region, {}).get("nonfiction_template", {})
+            while self.nonfiktion_form_layout.count():
+                item = self.nonfiktion_form_layout.takeAt(0)
+                if item.widget():
+                    item.widget().deleteLater()
+            new_form, self.sachbuch_format_widgets = self.create_book_format_form(
+                nonfiktion_group, nonfiction_fields, template
+            )
+            for i in range(new_form.rowCount()):
+                self.nonfiktion_form_layout.addRow(
+                    new_form.itemAt(i, QFormLayout.LabelRole).widget(),
+                    new_form.itemAt(i, QFormLayout.FieldRole).widget()
+                )
+
+        self.fiktion_region_combo.currentIndexChanged.connect(update_fiktion_form)
+        self.nonfiktion_region_combo.currentIndexChanged.connect(update_nonfiktion_form)
+
+        tab_widget.addTab(tab_books, self.get_translation("tab_se_02", "Bücher"))
+
+        # --- Weitere Tabs wie gehabt ---
+        for i in range(3, 7):
             tab_key = f"tab_se_{i:02d}"
             tab_hint_key = f"tab_se_{i:02d}_hint"
             tab_label = self.get_translation(tab_key, f"Tab {i}")
@@ -1485,7 +1653,6 @@ class StartWindow(QMainWindow):
             tab = QWidget()
             tab_layout = QVBoxLayout(tab)
             tab_layout.setAlignment(Qt.AlignTop)
-            # Beispielinhalt: Label mit Tab-Name
             label = QLabel(tab_label, tab)
             label.setAlignment(Qt.AlignTop | Qt.AlignLeft)
             tab_layout.addWidget(label)
@@ -1498,7 +1665,368 @@ class StartWindow(QMainWindow):
         self.safe_apply_theme_style(panel_widget, "panel", self.theme)
         self.safe_apply_theme_style(tab_widget, "tab", self.theme)
         return panel_widget
- 
+
+    # Hilfsfunktion, um verschachtelte Werte aus einem Dictionary zu lesen
+    def get_nested_value(self, settings, path):
+        parts = path.split(".")
+        value = settings
+        for part in parts:
+            if isinstance(value, dict) and part in value:
+                value = value[part]
+            else:
+                return None
+        return value
+
+    # Formular für Buchformat-Einstellungen erstellen
+    def create_book_format_form(self, parent, form_fields, template_settings):
+        form_layout = QFormLayout()
+        widgets = {}
+
+        # Felder, die immer als float behandelt werden sollen (z.B. Zeilenabstand, Ränder)
+        float_fields = {"line_spacing", "margins_top", "margins_bottom", "margins_left", "margins_right", "paragraph_indent"}
+
+        for field in form_fields:
+            field_name = field.get("datafield_name")
+            if not field_name:
+                continue
+            label_key = field.get("label_key", field_name)
+            label_text = self.get_translation(label_key, field_name)
+            field_type = field.get("type", "text")
+            width = field.get("width", 120)
+
+            label = QLabel(label_text, parent)
+            label.setProperty("label_key", label_key)
+
+            # Widget-Auswahl
+            if field_type == "combobox":
+                widget = QComboBox(parent)
+                combo_key = field.get("combo_key")
+                if combo_key and hasattr(self, "combobox_translations"):
+                    combo_dict = self.combobox_translations.get(combo_key, {})
+                    combo_items = list(combo_dict.values())
+                    widget.addItems(combo_items)
+                elif field_name == "paperSize":
+                    widget.addItems(["A4", "US Letter"])
+                elif field_name == "family":
+                    widget.addItems(["Times New Roman", "Courier New", "Garamond"])
+            elif field_type == "spin":
+                # Float oder Int?
+                is_float = field.get("float", False) or field_name in float_fields
+                if is_float:
+                    widget = QDoubleSpinBox(parent)
+                    widget.setDecimals(int(field.get("decimals", 2)))
+                    widget.setMinimum(float(field.get("min", 0)))
+                    widget.setMaximum(float(field.get("max", 100)))
+                    widget.setSingleStep(float(field.get("step", 0.1)))
+                else:
+                    widget = QSpinBox(parent)
+                    widget.setMinimum(int(field.get("min", 0)))
+                    widget.setMaximum(int(field.get("max", 100)))
+                    widget.setSingleStep(int(field.get("step", 1)))
+            else:
+                widget = QLineEdit(parent)
+
+            widget.setMaximumWidth(int(width))
+
+            # Wert setzen, falls vorhanden
+            value = self.get_nested_value(template_settings, field_name)
+            if value is not None:
+                if isinstance(widget, QSpinBox):
+                    widget.setValue(int(float(value)))
+                elif isinstance(widget, QDoubleSpinBox):
+                    widget.setValue(float(value))
+                elif isinstance(widget, QComboBox):
+                    idx = widget.findText(str(value))
+                    if idx >= 0:
+                        widget.setCurrentIndex(idx)
+                else:
+                    widget.setText(str(value))
+
+            form_layout.addRow(label, widget)
+            widgets[field_name] = widget
+
+        return form_layout, widgets
+    
+    # Sprache ändern in den Einstellungen
+    def on_settings_language_changed(self, index):
+        # Hole den Sprachcode aus den Items oder einer Mapping-Liste
+        language_codes = ["de", "en", "fr", "es"]  # Beispiel, passe ggf. an
+        new_language = language_codes[index]  
+        self.settings_change_language(new_language)
+    
+    # Sprache ändern in den Einstellungen
+    def settings_change_language(self, new_language):
+        # Übersetzungen laden und anwenden
+        translation_data = LANGUAGE_DEFAULTS.get(new_language, {})
+        translation_path = TRANSLATIONS_DIR / f"translation_{new_language}.json"
+        try:
+            with open(translation_path, "w", encoding="utf-8") as f:
+                json.dump(translation_data, f, ensure_ascii=False, indent=2)
+            log_info(f"Neue Übersetzungsdatei gespeichert: {translation_path}")
+        except Exception as e:
+            log_exception(f"Fehler beim Speichern der Übersetzungsdatei: {translation_path}", e)
+            return
+
+        combobox_translation_data = LANGUAGE_DATA_COMBOBOX_DEFAULTS.get(new_language, {})
+        combobox_translation_path = TRANSLATIONS_DIR / f"translation_data_combobox_{new_language}.json"
+        try:
+            with open(combobox_translation_path, "w", encoding="utf-8") as f:
+                json.dump(combobox_translation_data, f, ensure_ascii=False, indent=2)
+            log_info(f"Neue ComboBox-Übersetzungsdatei gespeichert: {combobox_translation_path}")
+        except Exception as e:
+            log_exception(f"Fehler beim Speichern der ComboBox-Übersetzungsdatei: {combobox_translation_path}", e)
+            return
+
+        self.translations = translation_data
+        self.combobox_translations = combobox_translation_data
+        self.language = new_language
+
+        # Panels gezielt neu erstellen (Settings-Panel bleibt aktiv!)
+        self.update_center_panel_settings_texts()
+        self.update_right_panel_settings_texts()
+
+    # Aktualisiere die Texte im Center-Panel der Einstellungen
+    def update_center_panel_settings_texts(self):
+        splitter = self.centralWidget()
+        if not isinstance(splitter, QSplitter):
+            return
+        center_panel = splitter.widget(1)
+        if not center_panel:
+            return
+
+        tab_widget = center_panel.findChild(QTabWidget)
+        if not tab_widget:
+            return
+
+        # --- Tab 1: Allgemein ---
+        tab_general = tab_widget.widget(0)
+        if tab_general:
+            labels = tab_general.findChildren(QLabel)
+            combos = tab_general.findChildren(QComboBox)
+            # Sprache
+            if len(labels) > 0:
+                labels[0].setText(self.get_translation("comboBox_se_01", "Language"))
+                labels[0].setToolTip(self.get_translation("comboBox_se_01_hint", "Select your language."))
+            if len(combos) > 0:
+                language_items = [
+                    self.get_translation(f"comboBox_se_01_item_{i}", f"Language {i+1}")
+                    for i in range(combos[0].count())
+                ]
+                for i, item in enumerate(language_items):
+                    combos[0].setItemText(i, item)
+                combos[0].setToolTip(self.get_translation("comboBox_se_01_hint", "Select your language."))
+            # Theme
+            if len(labels) > 1:
+                labels[1].setText(self.get_translation("comboBox_se_02", "Theme"))
+                labels[1].setToolTip(self.get_translation("comboBox_se_02_hint", "Select the theme."))
+            if len(combos) > 1:
+                theme_items = [
+                    self.get_translation(f"comboBox_se_02_item_{i}", f"Design {i+1}")
+                    for i in range(combos[1].count())
+                ]
+                for i, item in enumerate(theme_items):
+                    combos[1].setItemText(i, item)
+                combos[1].setToolTip(self.get_translation("comboBox_se_02_hint", "Select the theme."))
+
+        # --- Tab 2: Bücher ---
+        tab_books = tab_widget.widget(1)
+        if tab_books:
+            group_boxes = tab_books.findChildren(QGroupBox)
+            if len(group_boxes) >= 2:
+                # Region-ComboBoxen aktualisieren
+                region_items = [
+                    self.get_translation(f"books_combo_item_{i:02d}", f"Region {i}")
+                    for i in range(1, 4)
+                ]
+                # Fiktion
+                fiktion_combo = group_boxes[0].findChild(QComboBox)
+                if fiktion_combo:
+                    for i, item in enumerate(region_items):
+                        fiktion_combo.setItemText(i, item)
+                # Non-Fiktion
+                nonfiktion_combo = group_boxes[1].findChild(QComboBox)
+                if nonfiktion_combo:
+                    for i, item in enumerate(region_items):
+                        nonfiktion_combo.setItemText(i, item)
+
+                # Formular für Fiktion neu aufbauen
+                fiktion_combo = group_boxes[0].findChild(QComboBox)
+                if fiktion_combo:
+                    region_idx = fiktion_combo.currentIndex()
+                    region_keys = ["EU", "USA", "UK"]
+                    region = region_keys[region_idx]
+                    with open(FORM_FIELDS_FILE, "r", encoding="utf-8") as f:
+                        form_fields = json.load(f)
+                    fiction_fields = form_fields.get("fiction_template", [])
+                    template = self.settings.get(region, {}).get("fiction_template", {})
+                    # Layout leeren
+                    while self.fiktion_form_layout.count():
+                        item = self.fiktion_form_layout.takeAt(0)
+                        if item.widget():
+                            item.widget().deleteLater()
+                    # Neu aufbauen
+                    new_form, self.romane_format_widgets = self.create_book_format_form(
+                        group_boxes[0], fiction_fields, template
+                    )
+                    for i in range(new_form.rowCount()):
+                        self.fiktion_form_layout.addRow(
+                            new_form.itemAt(i, QFormLayout.LabelRole).widget(),
+                            new_form.itemAt(i, QFormLayout.FieldRole).widget()
+                        )
+
+                # Formular für Non-Fiktion neu aufbauen
+                nonfiktion_combo = group_boxes[1].findChild(QComboBox)
+                if nonfiktion_combo:
+                    region_idx = nonfiktion_combo.currentIndex()
+                    region_keys = ["EU", "USA", "UK"]
+                    region = region_keys[region_idx]
+                    with open(FORM_FIELDS_FILE, "r", encoding="utf-8") as f:
+                        form_fields = json.load(f)
+                    nonfiction_fields = form_fields.get("nonfiction_template", [])
+                    template = self.settings.get(region, {}).get("nonfiction_template", {})
+                    while self.nonfiktion_form_layout.count():
+                        item = self.nonfiktion_form_layout.takeAt(0)
+                        if item.widget():
+                            item.widget().deleteLater()
+                    new_form, self.sachbuch_format_widgets = self.create_book_format_form(
+                        group_boxes[1], nonfiction_fields, template
+                    )
+                    for i in range(new_form.rowCount()):
+                        self.nonfiktion_form_layout.addRow(
+                            new_form.itemAt(i, QFormLayout.LabelRole).widget(),
+                            new_form.itemAt(i, QFormLayout.FieldRole).widget()
+                        )
+
+                # QGroupBox-Titel aktualisieren
+                group_boxes[0].setTitle(self.get_translation("settings_books_fiction", "Fiktion"))
+                group_boxes[1].setTitle(self.get_translation("settings_books_nonfiction", "Non-Fiktion"))
+
+                # --- Labels der Eingabefelder aktualisieren ---
+                for group in group_boxes:
+                    # Das QFormLayout finden
+                    form_layout = None
+                    for child in group.children():
+                        if isinstance(child, QFormLayout):
+                            form_layout = child
+                            break
+                        # Falls das Layout nicht direkt Kind ist (sondern im Layout):
+                        if hasattr(group, "layout") and isinstance(group.layout(), QVBoxLayout):
+                            for i in range(group.layout().count()):
+                                item = group.layout().itemAt(i)
+                                if isinstance(item, QFormLayout):
+                                    form_layout = item
+                                    break
+                    if not form_layout:
+                        # Versuche, das Layout direkt zu bekommen
+                        form_layout = group.layout().itemAt(0).layout() if group.layout().count() > 0 else None
+                    if form_layout:
+                        for row in range(form_layout.rowCount()):
+                            label_widget = form_layout.itemAt(row, QFormLayout.LabelRole)
+                            field_widget = form_layout.itemAt(row, QFormLayout.FieldRole)
+                            if label_widget and field_widget:
+                                widget = field_widget.widget()
+                                # Hole das Feld aus form_fields.json anhand der Reihenfolge
+                                # (Alternativ: Mapping field_name -> row speichern)
+                                # Hier: Hole das label_key aus dem Widget-Objekt, falls du es gespeichert hast
+                                # Oder: Nutze die Reihenfolge der Felder
+                                # Beispiel für Reihenfolge:
+                                if row < len(self.romane_format_widgets):
+                                    field_name = list(self.romane_format_widgets.keys())[row]
+                                    # Hole label_key aus form_fields.json
+                                    with open(FORM_FIELDS_FILE, "r", encoding="utf-8") as f:
+                                        form_fields = json.load(f)
+                                    book_fields = form_fields.get("book_format_settings", [])
+                                    for field in book_fields:
+                                        if field.get("datafield_name") == field_name:
+                                            label_key = field.get("label_key", field_name)
+                                            label_text = self.get_translation(label_key, field_name)
+                                            label_widget.widget().setText(label_text)
+                                            break
+
+        # --- Tab-Titel und Tooltips ---
+        for i in range(tab_widget.count()):
+            tab_key = f"tab_se_{i+1:02d}"
+            tab_label = self.get_translation(tab_key, f"Tab {i+1}")
+            tab_widget.setTabText(i, tab_label)
+            tab_hint_key = f"tab_se_{i+1:02d}_hint"
+            tab_hint = self.get_translation(tab_hint_key, "")
+            tab_widget.setTabToolTip(i, tab_hint)
+
+    # Aktualisiere die Texte im Right-Panel der Einstellungen
+    def update_right_panel_settings_texts(self):
+        splitter = self.centralWidget()
+        if not isinstance(splitter, QSplitter):
+            return
+        right_panel = splitter.widget(2)
+        if not right_panel:
+            return
+
+        # Suche alle Buttons im Right-Panel
+        buttons = right_panel.findChildren(QPushButton)
+        # Die Reihenfolge entspricht der Reihenfolge in create_right_panel_settings
+        button_keys = [
+            ("botn_se_01", "botn_se_01_hint"),
+            ("botn_se_02", "botn_se_02_hint"),
+            ("botn_se_03", "botn_se_03_hint"),  # Back
+        ]
+        for i, (key, hint_key) in enumerate(button_keys):
+            if i < len(buttons):
+                btn = buttons[i]
+                btn.setText(self.get_translation(key, key))
+                btn.setToolTip(self.get_translation(hint_key, ""))
+
+        # Header aktualisieren
+        header_label = right_panel.findChild(QLabel, "FormHeaderLabel")
+        if header_label:
+            header_label.setText(self.get_translation("SettingsWinHeader", "Settings"))
+
+    def on_settings_theme_changed(self, index):
+        # Hole den Theme-Namen aus den Items oder einer Mapping-Liste
+        theme_names = ["Modern_neutral", "Modern_dark", "Modern_light", 
+                       "OldSchool_neutral", "OldSchool_dark", "OldSchool_light", 
+                       "Vintage_neutral", "Vintage_dark", "Vintage_light", 
+                       "Future_neutral", "Future_dark", "Future_light",
+                       "Minimal_neutral", "Minimal_dark", "Minimal_light"]  # Beispiel, passe ggf. an
+        new_theme_name = theme_names[index]  
+        self.settings_change_theme(new_theme_name)   
+
+    def settings_change_theme(self, new_theme_name):
+        theme_names = ["Modern_neutral", "Modern_dark", "Modern_light", 
+                       "OldSchool_neutral", "OldSchool_dark", "OldSchool_light", 
+                       "Vintage_neutral", "Vintage_dark", "Vintage_light", 
+                       "Future_neutral", "Future_dark", "Future_light",
+                       "Minimal_neutral", "Minimal_dark", "Minimal_light"]  # Beispiel, passe ggf. an
+        if hasattr(self, "theme_combo"):
+            try:
+                index = theme_names.index(new_theme_name)
+                self.theme_combo_1.blockSignals(True)
+                self.theme_combo_1.setCurrentIndex(index)
+                self.theme_combo_1.blockSignals(False)
+            except ValueError:
+                self.theme_combo_1.blockSignals(True)
+                self.theme_combo_1.setCurrentIndex(0)
+                self.theme_combo_1.blockSignals(False)
+
+        # Neue Theme-Datei laden und speichern
+        theme_data = THEMES_STYLES_DEFAULTS.get(new_theme_name, {})
+        theme_path = THEME_FILES.get(new_theme_name)
+        if not theme_path:
+            theme_path = GUI_DIR / "styles" / f"theme_{new_theme_name}.json"
+        try:
+            with open(theme_path, "w", encoding="utf-8") as f:
+                json.dump(theme_data, f, ensure_ascii=False, indent=2)
+            log_info(f"Neue Theme-Datei gespeichert: {theme_path}")
+        except Exception as e:
+            log_exception(f"Fehler beim Speichern der Theme-Datei: {theme_path}", e)
+            return
+
+        # Theme temporär anwenden
+        self.theme = theme_data
+        self.theme["theme_name"] = new_theme_name  # Füge den Theme-Namen hinzu
+
+        # Globales Stylesheet anwenden
+        apply_global_stylesheet(QApplication.instance(), self.base_style_path, self.theme)
+    
     # Dieses center_panel_character wird angezeigt, wenn ein Charakter erstellt oder bearbeitet wird.
     def create_center_panel_character(self, character_data=None):
         panel_widget = QWidget()
