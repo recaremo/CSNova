@@ -179,5 +179,51 @@
     "draft": "Draft",
     "review": "In Review",
     "other": "Other status"
+  },
+  "region": {
+    "region_01": "EU",
+    "region_02": "USA/Canada",
+    "region_03": "UK",
+    "region_04": "Custom Settings"
+  },
+  "paperSize": {
+    "A4": "A4 (210 x 297 mm)",
+    "Letter": "Letter (8.5 x 11 inches)",
+    "Legal": "Legal (8.5 x 14 inches)"
+  },
+  "font_family": {
+    "font_01": "Arial",
+    "font_02": "Geramond",
+    "font_03": "Times New Roman",
+    "font_04": "Courier New"
+  },
+  "font_styles": {
+    "normal": "Normal",
+    "bold": "Bold",
+    "italic": "Italic",
+    "uppercase": "Uppercase"
+  },
+  "textAlignment": {
+    "left": "Left-aligned",
+    "center": "Centered",
+    "right": "Right-aligned"
+  },
+  "page_numbering_position": {
+    "top_right": "Top Right",
+    "top_center": "Top Center",
+    "top_left": "Top Left",
+    "bottom_left": "Bottom Left",
+    "bottom_center": "Bottom Center",
+    "bottom_right": "Bottom Right"
+  },
+  "page_numbering_format": {
+    "numeric": "Numeric (1, 2, 3, ...)",
+    "roman": "Roman (I, II, III, ...)",
+    "alphabetic": "Alphabetic (A, B, C, ...)"
+  },
+  "footnotes_positions": {
+    "bottom_of_page": "Bottom of Page",
+    "end_of_chapter": "End of Chapter",
+    "end_of_book": "End of Book"
   }
 }

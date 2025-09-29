@@ -179,5 +179,51 @@
     "draft": "Entwurf",
     "review": "In Überprüfung",
     "other": "Anderer Status"
+  },
+  "region": {
+    "region_01": "EU",
+    "region_02": "USA/Kanade",
+    "region_03": "UK",
+    "region_04": "Eigene Einstellungen"
+  },
+  "paperSize": {
+    "A4": "A4 (210 x 297 mm)",
+    "Letter": "Letter (8.5 x 11 inches)",
+    "Legal": "Legal (8.5 x 14 inches)"
+  },
+  "font_family": {
+    "font_01": "Arial",
+    "font_02": "Geramond",
+    "font_03": "Times New Roman",
+    "font_04": "Courier New"
+  },
+  "font_styles": {
+    "normal": "Normal",
+    "bold": "Fett",
+    "italic": "Kursiv",
+    "uppercase": "Großbuchstaben"
+  },
+  "textAlignment": {
+    "left": "Linksbündig",
+    "center": "Zentriert",
+    "right": "Rechtsbündig"
+  },
+  "page_numbering_position": {
+    "top_left": "Oben links",
+    "top_center": "Oben zentriert",
+    "top_right": "Oben rechts",
+    "bottom_left": "Unten links",
+    "bottom_center": "Unten zentriert",
+    "bottom_right": "Unten rechts"
+  },
+  "page_numbering_format": {
+    "numeric": "Numerisch (1, 2, 3, ...)",
+    "roman": "Römisch (I, II, III, ...)",
+    "alphabetic": "Alphabetisch (A, B, C, ...)"
+  },
+  "footnotes_positions": {
+    "bottom_of_page": "Unten auf der Seite",
+    "end_of_chapter": "Am Ende des Kapitels",
+    "end_of_book": "Am Ende des Buches"
   }
 }

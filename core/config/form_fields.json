@@ -1083,7 +1083,7 @@
       "type": "combobox",
       "required": true,
       "width": 30,
-      "datafield_name": "family",
+      "datafield_name": "font_family",
       "combo_key": "font_family"
     },
     {
@@ -1293,7 +1293,7 @@
       "type": "combobox",
       "required": true,
       "width": 30,
-      "datafield_name": "family",
+      "datafield_name": "font_family",
       "combo_key": "font_family"
     },
     {

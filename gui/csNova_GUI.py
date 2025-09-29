@@ -1688,8 +1688,8 @@ class StartWindow(QMainWindow):
             row_layout.setSpacing(8)
 
             label = QLabel(label_text, parent)
-            label.setMinimumWidth(220)
-            label.setMaximumWidth(220)
+            label.setMinimumWidth(250)
+            label.setMaximumWidth(290)
             label.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
 
             if field_type == "combobox":
@@ -1697,12 +1697,28 @@ class StartWindow(QMainWindow):
                 combo_key = field.get("combo_key")
                 if combo_key and hasattr(self, "combobox_translations"):
                     combo_dict = self.combobox_translations.get(combo_key, {})
-                    combo_items = list(combo_dict.values())
-                    widget.addItems(combo_items)
-                elif field_name == "paperSize":
-                    widget.addItems(["A4", "US Letter"])
-                elif field_name == "family":
-                    widget.addItems(["Times New Roman", "Courier New", "Garamond"])
+                    widget.clear()
+                    for key, value in combo_dict.items():
+                        widget.addItem(value, key)
+                elif field_name == "family" or field_name == "font_family":
+                    combo_dict = self.combobox_translations.get("font_family", {})
+                    widget.clear()
+                    for key, value in combo_dict.items():
+                        widget.addItem(value, key)
+                widget.setMinimumWidth(width)
+                widget.setMaximumWidth(80)
+                widget.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
+
+                # Wert aus user_settings.json (template_settings) setzen
+                value = self.get_nested_value(template_settings, field_name)
+                if value is not None:
+                    idx = widget.findData(str(value))
+                    if idx >= 0:
+                        widget.setCurrentIndex(idx)
+                    else:
+                        widget.addItem(str(value), str(value))
+                        widget.setCurrentIndex(widget.count() - 1)
+
             elif field_type == "spin":
                 is_float = field.get("float", False)
                 if is_float:
@@ -1719,7 +1735,8 @@ class StartWindow(QMainWindow):
             else:
                 widget = QLineEdit(parent)
 
-            widget.setFixedWidth(width)
+            widget.setMinimumWidth(width)
+            widget.setMaximumWidth(60)
             widget.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
 
             value = self.get_nested_value(template_settings, field_name)
@@ -1734,10 +1751,10 @@ class StartWindow(QMainWindow):
                         widget.setCurrentIndex(idx)
                 else:
                     widget.setText(str(value))
-
+           
             unit_label = QLabel(display_unit, parent)
-            unit_label.setMinimumWidth(40)
-            unit_label.setMaximumWidth(60)
+            unit_label.setMinimumWidth(20)
+            unit_label.setMaximumWidth(30)
             unit_label.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
 
             row_layout.addWidget(label)

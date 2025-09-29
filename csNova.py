@@ -57,7 +57,7 @@ DEFAULT_SETTINGS = {
   "fiction_template": {
     "type": "Roman",
     "paperSize": "A4",
-    "font_family": "Times New Roman",
+    "font_family": "font_03",
     "font_sizePt": 12,
     "line_spacing": 1.5,
     "margins_top": 2.5,
@@ -75,7 +75,7 @@ DEFAULT_SETTINGS = {
     "headers_level_02_style": "bold",
     "headers_level_02_sizePt": 12,
     "headers_level_02_alignment": "left",
-    "pagination_position": "bottom-right",
+    "pagination_position": "bottom_right",
     "pagination_format": "numeric",
     "normPage_enabled": True,
     "normPage_charactersPerLine": 60,
@@ -84,7 +84,7 @@ DEFAULT_SETTINGS = {
   "nonfiction_template": {
     "type": "Sachbuch",
     "paperSize": "A4",
-    "font_family": "Times New Roman",
+    "font_family": "font_03",
     "font_sizePt": 12,
     "line_spacing": 1.5,
     "margins_top": 2.5,
@@ -105,14 +105,14 @@ DEFAULT_SETTINGS = {
     "headers_level_03_style": "italic",
     "headers_level_03_sizePt": 12,
     "headers_level_03_alignment": "left",
-    "pagination_position": "bottom-center",
+    "pagination_position": "bottom_center",
     "pagination_format": "numeric",
     "footnotes_enabled": True,
     "footnotes_fontSizePt": 10,
-    "footnotes_position": "bottom-of-page",
-    "footnotes_numbering": "automatic",
+    "footnotes_position": "bottom_of_page",
+    "footnotes_numbering": "numeric",
     "references_style": "Harvard",
-    "references_position": "end-of-document",
+    "references_position": "end_of_book",
     "appendix_enabled": True,
     "appendix_label": "Anhang",
     "appendix_numbering": "A, B, C" 
@@ -121,8 +121,8 @@ DEFAULT_SETTINGS = {
 "USA": {
   "fiction_template": {
     "type": "Manuscript",
-    "paperSize": "US Letter",
-    "font_family": "Courier New",
+    "paperSize": "Letter",
+    "font_family": "font_04",
     "font_sizePt": 12,
     "line_spacing": 2.0,
     "margins_top": 1.0,
@@ -140,16 +140,16 @@ DEFAULT_SETTINGS = {
     "headers_level_02_style": "bold",
     "headers_level_02_sizePt": 12,
     "headers_level_02_alignment": "left",
-    "pagination_position": "top-right",
-    "pagination_format": "Name / Title / Page",
+    "pagination_position": "top_right",
+    "pagination_format": "numeric",
     "normPage_enabled": True,
     "normPage_charactersPerLine": 60,
     "normPage_linesPerPage": 30
     },
   "nonfiction_template": {
     "type": "Nonfiction",
-    "paperSize": "US Letter",
-    "font_family": "Times New Roman",
+    "paperSize": "Letter",
+    "font_family": "font_03",
     "font_sizePt": 12,
     "line_spacing": 1.5,
     "margins_top": 1.0,
@@ -170,14 +170,14 @@ DEFAULT_SETTINGS = {
     "headers_level_03_style": "italic",
     "headers_level_03_sizePt": 12,
     "headers_level_03_alignment": "left",
-    "pagination_position": "top-right",
-    "pagination_format": "Title / Page",
+    "pagination_position": "top_right",
+    "pagination_format": "numeric",
     "footnotes_enabled": True,
     "footnotes_fontSizePt": 10,
-    "footnotes_position": "bottom-of-page",
-    "footnotes_numbering": "automatic",
+    "footnotes_position": "bottom_of_page",
+    "footnotes_numbering": "numeric",
     "references_style": "APA",
-    "references_position": "end-of-document",
+    "references_position": "end_of_book",
     "appendix_enabled": True,
     "appendix_label": "Appendix",
     "appendix_numbering": "A, B, C" 
@@ -187,7 +187,7 @@ DEFAULT_SETTINGS = {
   "fiction_template": {
     "type": "Fiction",
     "paperSize": "A4",
-    "font_family": "Times New Roman",
+    "font_family": "font_03",
     "font_sizePt": 12,
     "line_spacing": 1.5,
     "margins_top": 2.5,
@@ -205,7 +205,7 @@ DEFAULT_SETTINGS = {
     "headers_level_02_style": "bold",
     "headers_level_02_sizePt": 12,
     "headers_level_02_alignment": "left",
-    "pagination_position": "bottom-right",
+    "pagination_position": "bottom_right",
     "pagination_format": "numeric",
     "normPage_enabled": True,
     "normPage_charactersPerLine": 60,
@@ -214,7 +214,7 @@ DEFAULT_SETTINGS = {
   "nonfiction_template": {
     "type": "Nonfiction",
     "paperSize": "A4",
-    "font_family": "Times New Roman",
+    "font_family": "font_03",
     "font_sizePt": 12,
     "line_spacing": 1.5,
     "margins_top": 2.5,
@@ -235,14 +235,14 @@ DEFAULT_SETTINGS = {
     "headers_level_03_style": "italic",
     "headers_level_03_sizePt": 12,
     "headers_level_03_alignment": "left",
-    "pagination_position": "bottom-right",
+    "pagination_position": "bottom_right",
     "pagination_format": "numeric",
     "footnotes_enabled": True,
     "footnotes_fontSizePt": 10,
-    "footnotes_position": "bottom-of-page",
-    "footnotes_numbering": "automatic",
+    "footnotes_position": "bottom_of_page",
+    "footnotes_numbering": "numeric",
     "references_style": "Oxford",
-    "references_position": "end-of-document",
+    "references_position": "end_of_book",
     "appendix_enabled": True,
     "appendix_label": "Appendix",
     "appendix_numbering": "A, B, C"
@@ -2478,8 +2478,54 @@ LANGUAGE_DATA_COMBOBOX_DEFAULTS = {
         "draft": "Entwurf",
         "review": "In Überprüfung",
         "other": "Anderer Status"
-    }
     },
+    "region": {
+        "region_01": "EU",
+        "region_02": "USA/Kanade",
+        "region_03": "UK",
+        "region_04": "Eigene Einstellungen"
+    },
+    "paperSize": {
+        "A4": "A4 (210 x 297 mm)",
+        "Letter": "Letter (8.5 x 11 inches)",
+        "Legal": "Legal (8.5 x 14 inches)"
+    },
+    "font_family": {
+        "font_01": "Arial",
+        "font_02": "Geramond",
+        "font_03": "Times New Roman",
+        "font_04": "Courier New"
+    },
+    "font_styles": {
+        "normal": "Normal",
+        "bold": "Fett",
+        "italic": "Kursiv",
+        "uppercase": "Großbuchstaben"
+    },
+    "textAlignment": {
+        "left": "Linksbündig",
+        "center": "Zentriert",
+        "right": "Rechtsbündig"
+    },
+    "page_numbering_position": {
+        "top_left": "Oben links",
+        "top_center": "Oben zentriert",
+        "top_right": "Oben rechts",
+        "bottom_left": "Unten links",
+        "bottom_center": "Unten zentriert",
+        "bottom_right": "Unten rechts"
+    },
+    "page_numbering_format": {
+        "numeric": "Numerisch (1, 2, 3, ...)",
+        "roman": "Römisch (I, II, III, ...)",
+        "alphabetic": "Alphabetisch (A, B, C, ...)"
+    },
+    "footnotes_positions": {
+        "bottom_of_page": "Unten auf der Seite",
+        "end_of_chapter": "Am Ende des Kapitels",
+        "end_of_book": "Am Ende des Buches"
+    }
+},
 "en": {
     "gender": {
         "male": "identifies as male",
@@ -2662,8 +2708,55 @@ LANGUAGE_DATA_COMBOBOX_DEFAULTS = {
         "draft": "Draft",
         "review": "In Review",
         "other": "Other status"
-    }
     },
+    "region": {
+        "region_01": "EU",
+        "region_02": "USA/Canada",
+        "region_03": "UK",
+        "region_04": "Custom Settings"
+    },
+    "paperSize": {
+        "A4": "A4 (210 x 297 mm)",
+        "Letter": "Letter (8.5 x 11 inches)",
+        "Legal": "Legal (8.5 x 14 inches)"
+    },
+    "font_family": {
+        "font_01": "Arial",
+        "font_02": "Geramond",
+        "font_03": "Times New Roman",
+        "font_04": "Courier New"
+    },
+    "font_styles": {
+        "normal": "Normal",
+        "bold": "Bold",
+        "italic": "Italic",
+        "uppercase": "Uppercase"
+
+    },
+    "textAlignment": {
+        "left": "Left-aligned",
+        "center": "Centered",
+        "right": "Right-aligned"
+    },
+    "page_numbering_position": {
+        "top_right": "Top Right",
+        "top_center": "Top Center",
+        "top_left": "Top Left",
+        "bottom_left": "Bottom Left",
+        "bottom_center": "Bottom Center",
+        "bottom_right": "Bottom Right"
+    },
+    "page_numbering_format": {
+        "numeric": "Numeric (1, 2, 3, ...)",
+        "roman": "Roman (I, II, III, ...)",
+        "alphabetic": "Alphabetic (A, B, C, ...)"
+    },
+    "footnotes_positions": {
+        "bottom_of_page": "Bottom of Page",
+        "end_of_chapter": "End of Chapter",
+        "end_of_book": "End of Book"
+    }
+},
 "es": {
     "gender": {
         "male": "se identifica como hombre",
@@ -2846,8 +2939,54 @@ LANGUAGE_DATA_COMBOBOX_DEFAULTS = {
         "draft": "Borrador",
         "review": "En revisión",
         "other": "Otro estado"
-    }
     },
+    "region": {
+        "region_01": "UE",
+        "region_02": "EE.UU./Canadá",
+        "region_03": "Reino Unido",
+        "region_04": "Configuración personalizada" 
+    },
+    "paperSize": {
+        "A4": "A4 (210 x 297 mm)",
+        "Letter": "Carta (8.5 x 11 pulgadas)",
+        "Legal": "Legal (8.5 x 14 pulgadas)"
+    },
+    "font_family": {
+        "font_01": "Arial",
+        "font_02": "Geramond",
+        "font_03": "Times New Roman",
+        "font_04": "Courier New"
+    },
+    "font_styles": {
+        "normal": "Normal",
+        "bold": "Negrita",
+        "italic": "Cursiva",
+        "uppercase": "Mayúsculas"
+    },
+    "textAlignment": {
+        "left": "Alineado a la izquierda",
+        "center": "Centrado",
+        "right": "Alineado a la derecha"
+    },
+    "page_numbering_position": {
+        "top_right": "Arriba a la derecha",
+        "top_center": "Arriba centrado",
+        "top_left": "Arriba a la izquierda",
+        "bottom_left": "Abajo a la izquierda",
+        "bottom_center": "Abajo centrado",
+        "bottom_right": "Abajo a la derecha"
+    },
+    "page_numbering_format": {
+        "numeric": "Numérico (1, 2, 3, ...)",
+        "roman": "Romano (I, II, III, ...)",
+        "alphabetic": "Alfabético (A, B, C, ...)"
+    },
+    "footnotes_positions": {
+        "bottom_of_page": "Abajo en la página",
+        "end_of_chapter": "Al final del capítulo",
+        "end_of_book": "Al final del libro"
+    }
+},
 "fr": {
     "gender": {
         "male": "s'identifie comme un homme",
@@ -3030,8 +3169,54 @@ LANGUAGE_DATA_COMBOBOX_DEFAULTS = {
         "draft": "Brouillon",
         "review": "En révision",
         "other": "Autre statut"
-    }   
+    },
+    "region": {
+        "region_01": "UE",
+        "region_02": "USA/Canada",
+        "region_03": "Royaume-Uni",
+        "region_04": "Paramètres personnalisés"
+    },
+    "paperSize": {
+        "A4": "A4 (210 x 297 mm)",
+        "Letter": "Lettre (8.5 x 11 pouces)",
+        "Legal": "Légal (8.5 x 14 pouces)"
+    },
+    "font_family": {
+        "font_01": "Arial",
+        "font_02": "Geramond",
+        "font_03": "Times New Roman",
+        "font_04": "Courier New"
+    },
+    "font_styles": {
+        "normal": "Normal",
+        "bold": "Gras",
+        "italic": "Italique",
+        "uppercase": "Majuscules"   
+    },
+    "textAlignment": {
+        "left": "Aligné à gauche",
+        "center": "Centré",
+        "right": "Aligné à droite"
+    },
+    "page_numbering_position": {
+        "top_right": "En haut à droite",
+        "top_center": "En haut au centre",
+        "top_left": "En haut à gauche",
+        "bottom_left": "En bas à gauche",
+        "bottom_center": "En bas au centre",
+        "bottom_right": "En bas à droite"
+    },
+    "page_numbering_format": {
+        "numeric": "Numérique (1, 2, 3, ...)",
+        "roman": "Romain (I, II, III, ...)",
+        "alphabetic": "Alphabétique (A, B, C, ...)"
+    },
+    "footnotes_positions": {
+        "bottom_of_page": "En bas de la page",
+        "end_of_chapter": "À la fin du chapitre",
+        "end_of_book": "À la fin du livre"
     }
+}    
 }
 
 # --- Default styles and themes (alle Theme die für die GUI verwendet werden können) ---
@@ -5679,7 +5864,7 @@ FORM_FIELDS_DEFAULT = {
     ],
     "fiction_template": [
         {"name": "ft_header", "label_key": "books_paper_size", "type": "combobox", "required": True, "width": 80, "datafield_name": "paperSize", "combo_key": "paperSize"},
-        {"name": "ft_font_family", "label_key": "books_font_family", "type": "combobox", "required": True, "width": 30, "datafield_name": "family", "combo_key": "font_family"},
+        {"name": "ft_font_family", "label_key": "books_font_family", "type": "combobox", "required": True, "width": 30, "datafield_name": "font_family", "combo_key": "font_family"},
         {"name": "ft_font_size", "label_key": "books_font_size", "type": "spin", "required": True, "width": 30, "min": 8, "max": 72, "datafield_name": "font_sizePt", "unit": "pt"},
         {"name": "ft_line_spacing", "label_key": "books_line_spacing", "type": "spin", "required": True, "width": 30,"min": 1.0, "max": 3.0, "step": 0.1, "float": True, "datafield_name": "line_spacing", "unit": "dist."},
         {"name": "ft_margin_top", "label_key": "books_margin_top", "type": "spin", "required": True, "width": 30, "min": 0.5, "max": 5.0, "step": 0.1, "float": True, "datafield_name": "margins_top", "unit": "cm"},
@@ -5701,7 +5886,7 @@ FORM_FIELDS_DEFAULT = {
     ],
     "nonfiction_template": [
         {"name": "nft_header", "label_key": "books_paper_size", "type": "combobox", "required": True, "width": 80, "datafield_name": "paperSize", "combo_key": "paperSize"},
-        {"name": "nft_font_family", "label_key": "books_font_family", "type": "combobox", "required": True, "width": 30, "datafield_name": "family", "combo_key": "font_family"},
+        {"name": "nft_font_family", "label_key": "books_font_family", "type": "combobox", "required": True, "width": 30, "datafield_name": "font_family", "combo_key": "font_family"},
         {"name": "nft_font_size", "label_key": "books_font_size", "type": "spin", "required": True, "width": 30, "min": 8, "max": 72, "datafield_name": "font_sizePt", "unit": "pt"},
         {"name": "nft_line_spacing", "label_key": "books_line_spacing", "type": "spin", "required": True, "width": 30, "min": 1.0, "max": 3.0, "step": 0.1, "float": True, "datafield_name": "line_spacing", "unit": "dist."},
         {"name": "nft_margin_top", "label_key": "books_margin_top", "type": "spin", "required": True, "width": 30, "min": 0.5, "max": 5.0, "step": 0.1, "float": True, "datafield_name": "margins_top", "unit": "cm"},
