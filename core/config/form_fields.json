@@ -204,14 +204,22 @@
     {
       "name": "born",
       "label_key": "char_ma_06",
-      "type": "date",
+      "type": "text",
       "required": false,
       "width": 140,
       "datafield_name": "born"
     },
     {
+      "name": "died",
+      "label_key": "char_ma_07",
+      "type": "text",
+      "required": false,
+      "width": 140,
+      "datafield_name": "died"
+    },
+    {
       "name": "gender_ID",
-      "label_key": "char_ma_10",
+      "label_key": "char_ma_11",
       "type": "combobox",
       "required": false,
       "width": 120,
@@ -220,7 +228,7 @@
     },
     {
       "name": "sex_orientation_ID",
-      "label_key": "char_ma_11",
+      "label_key": "char_ma_12",
       "type": "combobox",
       "required": false,
       "width": 120,
@@ -229,7 +237,7 @@
     },
     {
       "name": "role_ID",
-      "label_key": "char_ma_08",
+      "label_key": "char_ma_09",
       "type": "text",
       "required": false,
       "width": 120,
@@ -237,7 +245,7 @@
     },
     {
       "name": "status_ID",
-      "label_key": "char_ma_09",
+      "label_key": "char_ma_10",
       "type": "combobox",
       "required": false,
       "width": 120,
@@ -262,7 +270,7 @@
     },
     {
       "name": "notes",
-      "label_key": "char_ma_12",
+      "label_key": "char_ma_13",
       "type": "text",
       "required": false,
       "max_length": 500,

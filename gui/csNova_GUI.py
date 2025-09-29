@@ -15,6 +15,7 @@ from PySide6.QtWidgets import (
 from PySide6.QtCore import Qt, QEvent
 from PySide6.QtGui import QPixmap, QIcon, QAction, QFont, QTextListFormat, QTextCharFormat
 import json
+import re
 from pathlib import Path
 import datetime
 from config.dev import GUI_DIR, ASSETS_DIR, DATA_DIR, USER_SETTINGS_FILE, FORM_FIELDS_FILE, BASE_STYLE_FILE, THEME_FILES, TRANSLATIONS_DIR
@@ -2029,6 +2030,8 @@ class StartWindow(QMainWindow):
     
     # Dieses center_panel_character wird angezeigt, wenn ein Charakter erstellt oder bearbeitet wird.
     def create_center_panel_character(self, character_data=None):
+        import datetime
+
         panel_widget = QWidget()
         main_layout = QVBoxLayout(panel_widget)
         main_layout.setContentsMargins(20, 20, 20, 20)
@@ -2039,7 +2042,6 @@ class StartWindow(QMainWindow):
         top_form.setSpacing(8)
         self.character_form_widgets = {}
 
-        # Felder für den oberen Bereich
         upper_fields = ["main_character", "name", "first_name"]
         with open(FORM_FIELDS_FILE, "r", encoding="utf-8") as f:
             form_fields = json.load(f)
@@ -2072,22 +2074,84 @@ class StartWindow(QMainWindow):
         tab_widget = QTabWidget(panel_widget)
         tab_widget.setTabPosition(QTabWidget.North)
 
-        # Tab-Konfiguration: (Tab-Key, Datenfeld(e))
         tab_definitions = [
-            ("char_ma_01", ["nick_name", "born", "role_ID", "group_ID", "char_image", "gender_ID", "sexual_orientation_ID", "status_ID", "notes"]),  # Stammdaten
-            ("char_or_01", ["origin_father", "origin_mother", "origin_siblings", "origin_reference_person", "origin_place_of_birth", "origin_notes"]),  # Herkunft
-            ("char_ed_01", ["education_school", "education_university", "education_vocational_training", "education_self_tought", "education_profession", "education_art_music", "education_sports","education_technology","education_notes"]),  # Ausbildung
-            ("char_am_01", ["appearance_Height", "appearance_Body_type", "appearance_Stature", "appearance_Face_shape", "appearance_Eye_shape", "appearance_Eye_color", "appearance_Hair", "appearance_Hair_color", "appearance_Skin", "appearance_Aura", "appearance_Special_features", "appearance_Notes"]),  # Aussehen Merkmale
-            ("char_ad_01", ["appearance_details_Head", "appearance_details_Neck", "appearance_details_Shoulders", "appearance_details_Arms", "appearance_details_Hands", "appearance_details_Fingers", "appearance_details_Chest", "appearance_details_Hips_Waist", "appearance_details_Buttocks", "appearance_details_Legs", "appearance_details_Feet", "appearance_details_Toes","appearance_details_notes"]),  # Aussehen Details
-            ("char_ps_01", ["personality_Positive_trait", "personality_Negative_trait", "personality_Fears", "personality_Weaknesses", "personality_Strengths", "personality_Talents", "personality_Belief_principle", "personality_Life_goal", "personality_Motivation", "personality_Behavior", "personality_Notes"]),  # Persönlichkeit
-            ("char_pp_01", ["psychlogical_profile_Diagnosis", "psychlogical_profile_Symptoms", "psychlogical_profile_Therapy", "psychlogical_profile_Medication", "psychlogical_profile_Temperament", "psychlogical_profile_Values", "psychlogical_profile_Moral_concepts", "psychlogical_profile_Character_strength", "psychlogical_profile_Character_weakness", "psychlogical_profile_Self_image", "psychlogical_profile_Humor", "psychlogical_profile_Aggressiveness", "psychlogical_profile_Trauma", "psychlogical_profile_Imprint", "psychlogical_profile_Socialization", "psychlogical_profile_Norms", "psychlogical_profile_Taboos", "psychlogical_profile_Notes"]),  # Psychologisches Profil
+            ("char_ma_01", ["nick_name", "born", "died", "role_ID", "group_ID", "char_image", "gender_ID", "sexual_orientation_ID", "status_ID", "notes"]),
+            ("char_or_01", ["origin_father", "origin_mother", "origin_siblings", "origin_reference_person", "origin_place_of_birth", "origin_notes"]),
+            ("char_ed_01", ["education_school", "education_university", "education_vocational_training", "education_self_tought", "education_profession", "education_art_music", "education_sports","education_technology","education_notes"]),
+            ("char_am_01", ["appearance_Height", "appearance_Body_type", "appearance_Stature", "appearance_Face_shape", "appearance_Eye_shape", "appearance_Eye_color", "appearance_Hair", "appearance_Hair_color", "appearance_Skin", "appearance_Aura", "appearance_Special_features", "appearance_Notes"]),
+            ("char_ad_01", ["appearance_details_Head", "appearance_details_Neck", "appearance_details_Shoulders", "appearance_details_Arms", "appearance_details_Hands", "appearance_details_Fingers", "appearance_details_Chest", "appearance_details_Hips_Waist", "appearance_details_Buttocks", "appearance_details_Legs", "appearance_details_Feet", "appearance_details_Toes","appearance_details_notes"]),
+            ("char_ps_01", ["personality_Positive_trait", "personality_Negative_trait", "personality_Fears", "personality_Weaknesses", "personality_Strengths", "personality_Talents", "personality_Belief_principle", "personality_Life_goal", "personality_Motivation", "personality_Behavior", "personality_Notes"]),
+            ("char_pp_01", ["psychlogical_profile_Diagnosis", "psychlogical_profile_Symptoms", "psychlogical_profile_Therapy", "psychlogical_profile_Medication", "psychlogical_profile_Temperament", "psychlogical_profile_Values", "psychlogical_profile_Moral_concepts", "psychlogical_profile_Character_strength", "psychlogical_profile_Character_weakness", "psychlogical_profile_Self_image", "psychlogical_profile_Humor", "psychlogical_profile_Aggressiveness", "psychlogical_profile_Trauma", "psychlogical_profile_Imprint", "psychlogical_profile_Socialization", "psychlogical_profile_Norms", "psychlogical_profile_Taboos", "psychlogical_profile_Notes"]),
         ]
+
+        # Altersberechnung mit Validierung (außerhalb des Feld-Loops, damit sie immer existiert)
+        def update_age(*args):
+            born_widget = self.character_form_widgets.get("born")
+            died_widget = self.character_form_widgets.get("died")
+            age_label = self.character_form_widgets.get("char_age")
+            if not born_widget or not age_label:
+                return
+
+            birthdate = None
+            died_date = None
+
+            # Unterstützte Formate je nach Sprache
+            if self.language == "de":
+                formats = ["%d.%m.%Y", "%Y-%m-%d"]
+            elif self.language == "en":
+                formats = ["%m %d %Y", "%Y-%m-%d"]
+            elif self.language in ("fr", "es"):
+                formats = ["%d/%m/%Y", "%Y-%m-%d"]
+            else:
+                formats = ["%Y-%m-%d"]
+
+            # Geburtsdatum parsen
+            born_text = born_widget.text().strip()
+            for fmt in formats:
+                try:
+                    birthdate = datetime.datetime.strptime(born_text, fmt).date()
+                    break
+                except Exception:
+                    continue
+
+            # Sterbedatum parsen (kann leer sein)
+            died_text = died_widget.text().strip() if died_widget else ""
+            for fmt in formats:
+                try:
+                    died_date = datetime.datetime.strptime(died_text, fmt).date()
+                    break
+                except Exception:
+                    continue
+
+            # Visuelle Validierung
+            if born_text and not birthdate:
+                born_widget.setStyleSheet("background-color: #ffcccc;")
+            else:
+                born_widget.setStyleSheet("")
+            if died_widget:
+                if died_text and not died_date:
+                    died_widget.setStyleSheet("background-color: #ffcccc;")
+                else:
+                    died_widget.setStyleSheet("")
+
+            if not birthdate:
+                age_label.setText("")
+                return
+            if died_text and not died_date:
+                age_label.setText(self.get_translation("char_age_invalid", "Ungültiges Sterbedatum"))
+                return
+
+            if died_date:
+                age = died_date.year - birthdate.year - ((died_date.month, died_date.day) < (birthdate.month, birthdate.day))
+            else:
+                today = datetime.date.today()
+                age = today.year - birthdate.year - ((today.month, today.day) < (birthdate.month, birthdate.day))
+            age_label.setText(str(age))
 
         for tab_key, tab_fields in tab_definitions:
             tab = QWidget()
             tab_layout = QFormLayout(tab)
             tab_layout.setSpacing(8)
-            # Wenn Felder für diesen Tab definiert sind, füge sie ein
             for field in character_fields:
                 field_name = field.get("datafield_name")
                 if not field_name or (tab_fields and field_name not in tab_fields):
@@ -2096,22 +2160,19 @@ class StartWindow(QMainWindow):
                 label_text = self.get_translation(label_key, field_name)
                 field_type = field.get("type", "text")
                 width = field.get("width")
-                # Spezialfall: Geburtsdatum + Alter
-                if field_name == "born":
-                    widget = QDateEdit(panel_widget)
-                    widget.setCalendarPopup(True)
-                    widget.setMinimumDate(datetime.date(10, 1, 1)) 
-                    widget.setMaximumDate(datetime.date(9999, 12, 31))
+
+                # Spezialfall: born/died als QLineEdit mit Validierung
+                if field_name in ("born", "died"):
+                    widget = QLineEdit(panel_widget)
+                    # Setze Platzhalter je nach Sprache
                     if self.language == "de":
-                        widget.setDisplayFormat("dd.MM.yyyy")
+                        widget.setPlaceholderText("TT.MM.JJJJ")
                     elif self.language == "en":
-                        widget.setDisplayFormat("MM dd yyyy")
-                    elif self.language == "fr":
-                        widget.setDisplayFormat("dd/MM/yyyy")
-                    elif self.language == "es":
-                        widget.setDisplayFormat("dd/MM/yyyy")
+                        widget.setPlaceholderText("MM DD YYYY")
+                    elif self.language in ("fr", "es"):
+                        widget.setPlaceholderText("JJ/MM/JJJJ")
                     else:
-                        widget.setDisplayFormat("yyyy-MM-dd")
+                        widget.setPlaceholderText("YYYY-MM-DD")
                     if width:
                         try:
                             widget.setFixedWidth(int(width))
@@ -2120,29 +2181,20 @@ class StartWindow(QMainWindow):
                     tab_layout.addRow(label_text, widget)
                     self.character_form_widgets[field_name] = widget
 
-                    # Alter-Label
-                    age_label = self.get_translation("char_ma_07", "Alter")
-                    age_value_label = QLabel(panel_widget)
-                    age_value_label.setObjectName("CharAgeLabel")
-                    age_value_label.setAlignment(Qt.AlignLeft | Qt.AlignVCenter)
-                    tab_layout.addRow(age_label, age_value_label)
-                    self.character_form_widgets["char_age"] = age_value_label
+                    # Alter-Label (nur einmal anlegen!)
+                    if "char_age" not in self.character_form_widgets:
+                        age_label = self.get_translation("char_ma_08", "Alter")
+                        age_value_label = QLabel(panel_widget)
+                        age_value_label.setObjectName("CharAgeLabel")
+                        age_value_label.setAlignment(Qt.AlignLeft | Qt.AlignVCenter)
+                        tab_layout.addRow(age_label, age_value_label)
+                        self.character_form_widgets["char_age"] = age_value_label
 
-                    def update_age(qdate=None, widget=widget, age_value_label=age_value_label):
-                        if qdate is None:
-                            qdate = widget.date()
-                        try:
-                            birthdate = qdate.toPython()
-                        except AttributeError:
-                            birthdate = qdate
-                        today = datetime.date.today()
-                        if birthdate:
-                            age = today.year - birthdate.year - ((today.month, today.day) < (birthdate.month, birthdate.day))
-                            age_value_label.setText(str(age))
-                        else:
-                            age_value_label.setText("")
-                    widget.dateChanged.connect(update_age)
-                    update_age()
+                    # Signals verbinden (erst nach dem Loop update_age aufrufen!)
+                    if field_name == "born":
+                        widget.textChanged.connect(update_age)
+                    if field_name == "died":
+                        widget.textChanged.connect(update_age)
                     continue
 
                 # Standard-Widget-Erstellung
@@ -2175,6 +2227,14 @@ class StartWindow(QMainWindow):
         main_layout.addWidget(tab_widget)
         panel_widget.setObjectName("CharacterFormPanel")
         self.safe_apply_theme_style(panel_widget, "panel", self.theme)
+
+        # Altersberechnung initial ausführen (nachdem alle Widgets existieren)
+        update_age()
+
+        # Optional: Formular mit Daten befüllen
+        if character_data:
+            self.fill_character_form(character_data)
+
         return panel_widget
    
     # Dieses center_panel_object wird angezeigt, wenn ein Objekt erstellt oder bearbeitet wird.
@@ -3448,26 +3508,39 @@ class StartWindow(QMainWindow):
     def fill_character_form(self, character_data):
         for field_name, widget in self.character_form_widgets.items():
             value = character_data.get(field_name, "")
-            if field_name == "born" and isinstance(widget, QDateEdit):
-                # Versuche verschiedene Formate zu erkennen
-                date_obj = None
-                for fmt in ("%Y-%m-%d", "%d.%m.%Y", "%m %d %Y", "%d/%m/%Y"):
-                    try:
-                        date_obj = datetime.datetime.strptime(value, fmt).date()
-                        break
-                    except Exception:
-                        continue
-                if date_obj:
-                    widget.setDate(date_obj)
+            # --- Spezialfall: born/died als QLineEdit mit Datumsvalidierung ---
+            if field_name in ("born", "died") and isinstance(widget, QLineEdit):
+                widget.setText(str(value) if value else "")
+                # Optional: Validierung und optische Hervorhebung
+                text = widget.text().strip()
+                if text:
+                    # Unterstützte Formate je nach Sprache
+                    if self.language == "de":
+                        formats = ["%d.%m.%Y", "%Y-%m-%d"]
+                    elif self.language == "en":
+                        formats = ["%m %d %Y", "%Y-%m-%d"]
+                    elif self.language in ("fr", "es"):
+                        formats = ["%d/%m/%Y", "%Y-%m-%d"]
+                    else:
+                        formats = ["%Y-%m-%d"]
+                    valid = False
+                    for fmt in formats:
+                        try:
+                            _ = datetime.datetime.strptime(text, fmt).date()
+                            valid = True
+                            break
+                        except Exception:
+                            continue
+                    if not valid:
+                        widget.setStyleSheet("background-color: #ffcccc;")
+                    else:
+                        widget.setStyleSheet("")
                 else:
-                    widget.setDate(datetime.date.today())
-                # Alter-Feld aktualisieren
-                if "char_age" in self.character_form_widgets:
-                    today = datetime.date.today()
-                    age = today.year - widget.date().year() - ((today.month, today.day) < (widget.date().month(), widget.date().day()))
-                    self.character_form_widgets["char_age"].setText(str(age))
-            elif field_name == "char_age" and isinstance(widget, QLineEdit):
-                continue  # Alter wird automatisch berechnet
+                    widget.setStyleSheet("")
+            # --- Alter-Label: wird automatisch berechnet, nicht setzen ---
+            elif field_name == "char_age" and isinstance(widget, QLabel):
+                continue
+            # --- Standardfelder ---
             elif isinstance(widget, QLineEdit):
                 widget.setText(str(value))
             elif isinstance(widget, QTextEdit):
@@ -3485,14 +3558,16 @@ class StartWindow(QMainWindow):
                     try:
                         widget.setDate(datetime.date.fromisoformat(value))
                     except Exception:
-                        widget.setDate(datetime.date.today())
+                        widget.setDate(widget.minimumDate())
                 else:
-                    widget.setDate(datetime.date.today())
+                    widget.setDate(widget.minimumDate())
 
     # Lese die Daten aus dem Charakter-Formular aus
     def get_character_form_data(self):
         data = {}
         for field_name, widget in self.character_form_widgets.items():
+            if field_name in ("born", "died") and isinstance(widget, QLineEdit):
+                data[field_name] = widget.text().strip()
             if isinstance(widget, QLineEdit):
                 data[field_name] = widget.text()
             elif isinstance(widget, QTextEdit):
