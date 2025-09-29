@@ -1479,12 +1479,11 @@ class StartWindow(QMainWindow):
         tab_widget = QTabWidget(panel_widget)
         tab_widget.setTabPosition(QTabWidget.North)
 
-        # --- Tab 1: Allgemein (wie gehabt) ---
+        # --- Tab 1: Allgemein ---
         tab_general = QWidget()
         tab_general_layout = QVBoxLayout(tab_general)
         tab_general_layout.setAlignment(Qt.AlignTop)
 
-        # Sprache
         language_label_1 = QLabel(self.get_translation("comboBox_se_01", "Language"), tab_general)
         language_label_1.setToolTip(self.get_translation("comboBox_se_01_hint", "Select your language."))
         tab_general_layout.addWidget(language_label_1)
@@ -1511,7 +1510,6 @@ class StartWindow(QMainWindow):
             lambda idx: self.on_settings_language_changed(idx)
         )
 
-        # Theme
         theme_label_1 = QLabel(self.get_translation("comboBox_se_02", "Theme"), tab_general)
         theme_label_1.setToolTip(self.get_translation("comboBox_se_02_hint", "Select the theme."))
         tab_general_layout.addWidget(theme_label_1)
@@ -1551,13 +1549,11 @@ class StartWindow(QMainWindow):
         tab_books_layout = QHBoxLayout(tab_books)
         tab_books_layout.setAlignment(Qt.AlignTop)
 
-        # Felder für das Buchlayout-Formular laden
         with open(FORM_FIELDS_FILE, "r", encoding="utf-8") as f:
             form_fields = json.load(f)
         fiction_fields = form_fields.get("fiction_template", [])
         nonfiction_fields = form_fields.get("nonfiction_template", [])
 
-        # Region-Auswahl-Items
         region_keys = ["EU", "USA", "UK"]
         region_items = [
             self.get_translation(f"books_combo_item_{i:02d}", f"Region {i}")
@@ -1573,14 +1569,12 @@ class StartWindow(QMainWindow):
         self.fiktion_region_combo.addItems(region_items)
         fiktion_layout.addWidget(self.fiktion_region_combo)
 
-        # Initial: EU
         fiktion_region = region_keys[0]
         fiktion_template = self.settings.get(fiktion_region, {}).get("fiction_template", {})
-        fiktion_form, self.romane_format_widgets = self.create_book_format_form(
-            fiktion_group, fiction_fields, fiktion_template
+        fiktion_form_widget, self.romane_format_widgets = self.create_book_format_form(
+            fiktion_group, fiction_fields, fiktion_template, region=fiktion_region
         )
-        self.fiktion_form_layout = fiktion_form
-        fiktion_layout.addLayout(fiktion_form)
+        fiktion_layout.addWidget(fiktion_form_widget)
         fiktion_group.setMinimumWidth(260)
         tab_books_layout.addWidget(fiktion_group)
 
@@ -1593,58 +1587,46 @@ class StartWindow(QMainWindow):
         self.nonfiktion_region_combo.addItems(region_items)
         nonfiktion_layout.addWidget(self.nonfiktion_region_combo)
 
-        # Initial: EU
         nonfiktion_region = region_keys[0]
         nonfiktion_template = self.settings.get(nonfiktion_region, {}).get("nonfiction_template", {})
-        nonfiktion_form, self.sachbuch_format_widgets = self.create_book_format_form(
-            nonfiktion_group, nonfiction_fields, nonfiktion_template
+        nonfiktion_form_widget, self.sachbuch_format_widgets = self.create_book_format_form(
+            nonfiktion_group, nonfiction_fields, nonfiktion_template, region=nonfiktion_region
         )
-        self.nonfiktion_form_layout = nonfiktion_form
-        nonfiktion_layout.addLayout(nonfiktion_form)
+        nonfiktion_layout.addWidget(nonfiktion_form_widget)
         nonfiktion_group.setMinimumWidth(260)
         tab_books_layout.addWidget(nonfiktion_group)
 
-        # --- Handler für Region-Wechsel ---
         def update_fiktion_form(idx):
             region = region_keys[idx]
             template = self.settings.get(region, {}).get("fiction_template", {})
-            # Layout leeren
-            while self.fiktion_form_layout.count():
-                item = self.fiktion_form_layout.takeAt(0)
-                if item.widget():
-                    item.widget().deleteLater()
-            # Neu aufbauen
-            new_form, self.romane_format_widgets = self.create_book_format_form(
-                fiktion_group, fiction_fields, template
+            for i in reversed(range(fiktion_layout.count())):
+                widget = fiktion_layout.itemAt(i).widget()
+                if widget and widget != self.fiktion_region_combo:
+                    fiktion_layout.removeWidget(widget)
+                    widget.deleteLater()
+            new_form_widget, self.romane_format_widgets = self.create_book_format_form(
+                fiktion_group, fiction_fields, template, region=region
             )
-            for i in range(new_form.rowCount()):
-                self.fiktion_form_layout.addRow(
-                    new_form.itemAt(i, QFormLayout.LabelRole).widget(),
-                    new_form.itemAt(i, QFormLayout.FieldRole).widget()
-                )
+            fiktion_layout.addWidget(new_form_widget)
 
         def update_nonfiktion_form(idx):
             region = region_keys[idx]
             template = self.settings.get(region, {}).get("nonfiction_template", {})
-            while self.nonfiktion_form_layout.count():
-                item = self.nonfiktion_form_layout.takeAt(0)
-                if item.widget():
-                    item.widget().deleteLater()
-            new_form, self.sachbuch_format_widgets = self.create_book_format_form(
-                nonfiktion_group, nonfiction_fields, template
+            for i in reversed(range(nonfiktion_layout.count())):
+                widget = nonfiktion_layout.itemAt(i).widget()
+                if widget and widget != self.nonfiktion_region_combo:
+                    nonfiktion_layout.removeWidget(widget)
+                    widget.deleteLater()
+            new_form_widget, self.sachbuch_format_widgets = self.create_book_format_form(
+                nonfiktion_group, nonfiction_fields, template, region=region
             )
-            for i in range(new_form.rowCount()):
-                self.nonfiktion_form_layout.addRow(
-                    new_form.itemAt(i, QFormLayout.LabelRole).widget(),
-                    new_form.itemAt(i, QFormLayout.FieldRole).widget()
-                )
+            nonfiktion_layout.addWidget(new_form_widget)
 
         self.fiktion_region_combo.currentIndexChanged.connect(update_fiktion_form)
         self.nonfiktion_region_combo.currentIndexChanged.connect(update_nonfiktion_form)
 
         tab_widget.addTab(tab_books, self.get_translation("tab_se_02", "Bücher"))
 
-        # --- Weitere Tabs wie gehabt ---
         for i in range(3, 7):
             tab_key = f"tab_se_{i:02d}"
             tab_hint_key = f"tab_se_{i:02d}_hint"
@@ -1679,12 +1661,11 @@ class StartWindow(QMainWindow):
         return value
 
     # Formular für Buchformat-Einstellungen erstellen
-    def create_book_format_form(self, parent, form_fields, template_settings):
-        form_layout = QFormLayout()
-        widgets = {}
+    def create_book_format_form(self, parent, form_fields, template_settings, region="EU"):
+        from PySide6.QtWidgets import QSizePolicy
 
-        # Felder, die immer als float behandelt werden sollen (z.B. Zeilenabstand, Ränder)
-        float_fields = {"line_spacing", "margins_top", "margins_bottom", "margins_left", "margins_right", "paragraph_indent"}
+        main_layout = QVBoxLayout()
+        widgets = {}
 
         for field in form_fields:
             field_name = field.get("datafield_name")
@@ -1693,12 +1674,24 @@ class StartWindow(QMainWindow):
             label_key = field.get("label_key", field_name)
             label_text = self.get_translation(label_key, field_name)
             field_type = field.get("type", "text")
-            width = field.get("width", 120)
+            width = int(field.get("width", 60))
+            unit = field.get("unit", "")
+
+            # --- Regionale Umrechnung für US ---
+            display_unit = unit
+            if region == "USA" and unit == "cm":
+                display_unit = "inch"
+
+            row_widget = QWidget(parent)
+            row_layout = QHBoxLayout(row_widget)
+            row_layout.setContentsMargins(0, 0, 0, 0)
+            row_layout.setSpacing(8)
 
             label = QLabel(label_text, parent)
-            label.setProperty("label_key", label_key)
+            label.setMinimumWidth(220)
+            label.setMaximumWidth(220)
+            label.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
 
-            # Widget-Auswahl
             if field_type == "combobox":
                 widget = QComboBox(parent)
                 combo_key = field.get("combo_key")
@@ -1711,8 +1704,7 @@ class StartWindow(QMainWindow):
                 elif field_name == "family":
                     widget.addItems(["Times New Roman", "Courier New", "Garamond"])
             elif field_type == "spin":
-                # Float oder Int?
-                is_float = field.get("float", False) or field_name in float_fields
+                is_float = field.get("float", False)
                 if is_float:
                     widget = QDoubleSpinBox(parent)
                     widget.setDecimals(int(field.get("decimals", 2)))
@@ -1727,9 +1719,9 @@ class StartWindow(QMainWindow):
             else:
                 widget = QLineEdit(parent)
 
-            widget.setMaximumWidth(int(width))
+            widget.setFixedWidth(width)
+            widget.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
 
-            # Wert setzen, falls vorhanden
             value = self.get_nested_value(template_settings, field_name)
             if value is not None:
                 if isinstance(widget, QSpinBox):
@@ -1743,10 +1735,22 @@ class StartWindow(QMainWindow):
                 else:
                     widget.setText(str(value))
 
-            form_layout.addRow(label, widget)
+            unit_label = QLabel(display_unit, parent)
+            unit_label.setMinimumWidth(40)
+            unit_label.setMaximumWidth(60)
+            unit_label.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+
+            row_layout.addWidget(label)
+            row_layout.addWidget(widget)
+            row_layout.addWidget(unit_label)
+            row_layout.addStretch(1)
+
+            main_layout.addWidget(row_widget)
             widgets[field_name] = widget
 
-        return form_layout, widgets
+        container = QWidget(parent)
+        container.setLayout(main_layout)
+        return container, widgets
     
     # Sprache ändern in den Einstellungen
     def on_settings_language_changed(self, index):
@@ -1834,7 +1838,8 @@ class StartWindow(QMainWindow):
         if tab_books:
             group_boxes = tab_books.findChildren(QGroupBox)
             if len(group_boxes) >= 2:
-                # Region-ComboBoxen aktualisieren
+                group_boxes[0].setTitle(self.get_translation("settings_books_fiction", "Fiction"))
+                group_boxes[1].setTitle(self.get_translation("settings_books_nonfiction", "Non-Fiction"))
                 region_items = [
                     self.get_translation(f"books_combo_item_{i:02d}", f"Region {i}")
                     for i in range(1, 4)
@@ -1849,7 +1854,6 @@ class StartWindow(QMainWindow):
                 if nonfiktion_combo:
                     for i, item in enumerate(region_items):
                         nonfiktion_combo.setItemText(i, item)
-
                 # Formular für Fiktion neu aufbauen
                 fiktion_combo = group_boxes[0].findChild(QComboBox)
                 if fiktion_combo:
@@ -1860,21 +1864,16 @@ class StartWindow(QMainWindow):
                         form_fields = json.load(f)
                     fiction_fields = form_fields.get("fiction_template", [])
                     template = self.settings.get(region, {}).get("fiction_template", {})
-                    # Layout leeren
-                    while self.fiktion_form_layout.count():
-                        item = self.fiktion_form_layout.takeAt(0)
-                        if item.widget():
-                            item.widget().deleteLater()
-                    # Neu aufbauen
-                    new_form, self.romane_format_widgets = self.create_book_format_form(
-                        group_boxes[0], fiction_fields, template
+                    fiktion_layout = group_boxes[0].layout()
+                    for i in reversed(range(fiktion_layout.count())):
+                        widget = fiktion_layout.itemAt(i).widget()
+                        if widget and widget != fiktion_combo:
+                            fiktion_layout.removeWidget(widget)
+                            widget.deleteLater()
+                    new_form_widget, self.romane_format_widgets = self.create_book_format_form(
+                        group_boxes[0], fiction_fields, template, region=region
                     )
-                    for i in range(new_form.rowCount()):
-                        self.fiktion_form_layout.addRow(
-                            new_form.itemAt(i, QFormLayout.LabelRole).widget(),
-                            new_form.itemAt(i, QFormLayout.FieldRole).widget()
-                        )
-
+                    fiktion_layout.addWidget(new_form_widget)
                 # Formular für Non-Fiktion neu aufbauen
                 nonfiktion_combo = group_boxes[1].findChild(QComboBox)
                 if nonfiktion_combo:
@@ -1885,66 +1884,18 @@ class StartWindow(QMainWindow):
                         form_fields = json.load(f)
                     nonfiction_fields = form_fields.get("nonfiction_template", [])
                     template = self.settings.get(region, {}).get("nonfiction_template", {})
-                    while self.nonfiktion_form_layout.count():
-                        item = self.nonfiktion_form_layout.takeAt(0)
-                        if item.widget():
-                            item.widget().deleteLater()
-                    new_form, self.sachbuch_format_widgets = self.create_book_format_form(
-                        group_boxes[1], nonfiction_fields, template
+                    nonfiktion_layout = group_boxes[1].layout()
+                    for i in reversed(range(nonfiktion_layout.count())):
+                        widget = nonfiktion_layout.itemAt(i).widget()
+                        if widget and widget != nonfiktion_combo:
+                            nonfiktion_layout.removeWidget(widget)
+                            widget.deleteLater()
+                    new_form_widget, self.sachbuch_format_widgets = self.create_book_format_form(
+                        group_boxes[1], nonfiction_fields, template, region=region
                     )
-                    for i in range(new_form.rowCount()):
-                        self.nonfiktion_form_layout.addRow(
-                            new_form.itemAt(i, QFormLayout.LabelRole).widget(),
-                            new_form.itemAt(i, QFormLayout.FieldRole).widget()
-                        )
+                    nonfiktion_layout.addWidget(new_form_widget)
 
-                # QGroupBox-Titel aktualisieren
-                group_boxes[0].setTitle(self.get_translation("settings_books_fiction", "Fiktion"))
-                group_boxes[1].setTitle(self.get_translation("settings_books_nonfiction", "Non-Fiktion"))
-
-                # --- Labels der Eingabefelder aktualisieren ---
-                for group in group_boxes:
-                    # Das QFormLayout finden
-                    form_layout = None
-                    for child in group.children():
-                        if isinstance(child, QFormLayout):
-                            form_layout = child
-                            break
-                        # Falls das Layout nicht direkt Kind ist (sondern im Layout):
-                        if hasattr(group, "layout") and isinstance(group.layout(), QVBoxLayout):
-                            for i in range(group.layout().count()):
-                                item = group.layout().itemAt(i)
-                                if isinstance(item, QFormLayout):
-                                    form_layout = item
-                                    break
-                    if not form_layout:
-                        # Versuche, das Layout direkt zu bekommen
-                        form_layout = group.layout().itemAt(0).layout() if group.layout().count() > 0 else None
-                    if form_layout:
-                        for row in range(form_layout.rowCount()):
-                            label_widget = form_layout.itemAt(row, QFormLayout.LabelRole)
-                            field_widget = form_layout.itemAt(row, QFormLayout.FieldRole)
-                            if label_widget and field_widget:
-                                widget = field_widget.widget()
-                                # Hole das Feld aus form_fields.json anhand der Reihenfolge
-                                # (Alternativ: Mapping field_name -> row speichern)
-                                # Hier: Hole das label_key aus dem Widget-Objekt, falls du es gespeichert hast
-                                # Oder: Nutze die Reihenfolge der Felder
-                                # Beispiel für Reihenfolge:
-                                if row < len(self.romane_format_widgets):
-                                    field_name = list(self.romane_format_widgets.keys())[row]
-                                    # Hole label_key aus form_fields.json
-                                    with open(FORM_FIELDS_FILE, "r", encoding="utf-8") as f:
-                                        form_fields = json.load(f)
-                                    book_fields = form_fields.get("book_format_settings", [])
-                                    for field in book_fields:
-                                        if field.get("datafield_name") == field_name:
-                                            label_key = field.get("label_key", field_name)
-                                            label_text = self.get_translation(label_key, field_name)
-                                            label_widget.widget().setText(label_text)
-                                            break
-
-        # --- Tab-Titel und Tooltips ---
+        # Tab-Titel und Tooltips
         for i in range(tab_widget.count()):
             tab_key = f"tab_se_{i+1:02d}"
             tab_label = self.get_translation(tab_key, f"Tab {i+1}")

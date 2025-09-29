@@ -1082,7 +1082,7 @@
       "label_key": "books_font_family",
       "type": "combobox",
       "required": true,
-      "width": 60,
+      "width": 30,
       "datafield_name": "family",
       "combo_key": "font_family"
     },
@@ -1091,65 +1091,190 @@
       "label_key": "books_font_size",
       "type": "spin",
       "required": true,
-      "width": 60,
+      "width": 30,
       "min": 8,
       "max": 72,
-      "datafield_name": "font_sizePt"
+      "datafield_name": "font_sizePt",
+      "unit": "pt"
     },
     {
       "name": "ft_line_spacing",
       "label_key": "books_line_spacing",
       "type": "spin",
       "required": true,
-      "width": 60,
+      "width": 30,
       "min": 1.0,
       "max": 3.0,
       "step": 0.1,
-      "datafield_name": "line_spacing"
+      "float": true,
+      "datafield_name": "line_spacing",
+      "unit": "dist."
     },
     {
       "name": "ft_margin_top",
       "label_key": "books_margin_top",
       "type": "spin",
       "required": true,
-      "width": 60,
+      "width": 30,
       "min": 0.5,
       "max": 5.0,
       "step": 0.1,
-      "datafield_name": "margins_top"
+      "float": true,
+      "datafield_name": "margins_top",
+      "unit": "cm"
     },
     {
       "name": "ft_margin_bottom",
       "label_key": "books_margin_bottom",
       "type": "spin",
       "required": true,
-      "width": 60,
+      "width": 30,
       "min": 0.5,
       "max": 5.0,
       "step": 0.1,
-      "datafield_name": "margins_bottom"
+      "float": true,
+      "datafield_name": "margins_bottom",
+      "unit": "cm"
     },
     {
       "name": "ft_margin_left",
       "label_key": "books_margin_left",
       "type": "spin",
       "required": true,
-      "width": 60,
+      "width": 30,
       "min": 0.5,
       "max": 5.0,
       "step": 0.1,
-      "datafield_name": "margins_left"
+      "float": true,
+      "datafield_name": "margins_left",
+      "unit": "cm"
     },
     {
       "name": "ft_margin_right",
       "label_key": "books_margin_right",
       "type": "spin",
       "required": true,
-      "width": 60,
+      "width": 30,
       "min": 0.5,
       "max": 5.0,
       "step": 0.1,
-      "datafield_name": "margins_right"
+      "float": true,
+      "datafield_name": "margins_right",
+      "unit": "cm"
+    },
+    {
+      "name": "ft_textAligment",
+      "label_key": "books_text_alignment",
+      "type": "combobox",
+      "required": true,
+      "width": 80,
+      "datafield_name": "textAlignment",
+      "combo_key": "textAlignment"
+    },
+    {
+      "name": "ft_paragraph_indent",
+      "label_key": "books_paragraph_indentation",
+      "type": "spin",
+      "required": true,
+      "width": 30,
+      "min": 0.0,
+      "max": 5.0,
+      "step": 0.1,
+      "float": true,
+      "datafield_name": "paragraph_indent",
+      "unit": "pt"
+    },
+    {
+      "name": "ft_paragraph_spacing_before",
+      "label_key": "books_paragraph_spacing_before",
+      "type": "spin",
+      "required": true,
+      "width": 30,
+      "min": 0.0,
+      "max": 15.0,
+      "step": 0.1,
+      "float": true,
+      "datafield_name": "paragraph_spacingBeforePt",
+      "unit": "pt"
+    },
+    {
+      "name": "ft_paragraph_spacing_after",
+      "label_key": "books_paragraph_spacing_after",
+      "type": "spin",
+      "required": true,
+      "width": 30,
+      "min": 0.0,
+      "max": 15.0,
+      "step": 0.1,
+      "float": true,
+      "datafield_name": "paragraph_spacingAfterPt",
+      "unit": "pt"
+    },
+    {
+      "name": "ft_paragraph_spacing_between",
+      "label_key": "books_paragraph_spacing_between",
+      "type": "text",
+      "required": true,
+      "width": 30,
+      "datafield_name": "paragraph_useEmptyLineBetween"
+    },
+    {
+      "name": "ft_header_level_01_style",
+      "label_key": "books_header_1_style",
+      "type": "combobox",
+      "required": true,
+      "width": 80,
+      "datafield_name": "headers_level_01_style",
+      "combo_key": "header_style"
+    },
+    {
+      "name": "ft_header_level_01_fontsize",
+      "label_key": "books_header_1_font_size",
+      "type": "spin",
+      "required": true,
+      "width": 30,
+      "min": 8,
+      "max": 72,
+      "datafield_name": "headers_level_01_sizePt",
+      "unit": "pt"
+    },
+    {
+      "name": "ft_header_level_01_alignment",
+      "label_key": "books_header_1_alignment",
+      "type": "combobox",
+      "required": true,
+      "width": 80,
+      "datafield_name": "headers_level_01_alignment",
+      "combo_key": "textAlignment"
+    },
+    {
+      "name": "ft_header_level_02_style",
+      "label_key": "books_header_2_style",
+      "type": "combobox",
+      "required": true,
+      "width": 80,
+      "datafield_name": "headers_level_02_style",
+      "combo_key": "header_style"
+    },
+    {
+      "name": "ft_header_level_02_fontsize",
+      "label_key": "books_header_2_font_size",
+      "type": "spin",
+      "required": true,
+      "width": 30,
+      "min": 8,
+      "max": 72,
+      "datafield_name": "headers_level_02_sizePt",
+      "unit": "pt"
+    },
+    {
+      "name": "ft_header_level_02_alignment",
+      "label_key": "books_header_2_alignment",
+      "type": "combobox",
+      "required": true,
+      "width": 80,
+      "datafield_name": "headers_level_02_alignment",
+      "combo_key": "textAlignment"
     }
   ],
   "nonfiction_template": [
@@ -1167,7 +1292,7 @@
       "label_key": "books_font_family",
       "type": "combobox",
       "required": true,
-      "width": 60,
+      "width": 30,
       "datafield_name": "family",
       "combo_key": "font_family"
     },
@@ -1176,65 +1301,219 @@
       "label_key": "books_font_size",
       "type": "spin",
       "required": true,
-      "width": 60,
+      "width": 30,
       "min": 8,
       "max": 72,
-      "datafield_name": "font_sizePt"
+      "datafield_name": "font_sizePt",
+      "unit": "pt"
     },
     {
       "name": "nft_line_spacing",
       "label_key": "books_line_spacing",
       "type": "spin",
       "required": true,
-      "width": 60,
+      "width": 30,
       "min": 1.0,
       "max": 3.0,
       "step": 0.1,
-      "datafield_name": "line_spacing"
+      "float": true,
+      "datafield_name": "line_spacing",
+      "unit": "dist."
     },
     {
       "name": "nft_margin_top",
       "label_key": "books_margin_top",
       "type": "spin",
       "required": true,
-      "width": 60,
+      "width": 30,
       "min": 0.5,
       "max": 5.0,
       "step": 0.1,
-      "datafield_name": "margins_top"
+      "float": true,
+      "datafield_name": "margins_top",
+      "unit": "cm"
     },
     {
       "name": "nft_margin_bottom",
       "label_key": "books_margin_bottom",
       "type": "spin",
       "required": true,
-      "width": 60,
+      "width": 30,
       "min": 0.5,
       "max": 5.0,
       "step": 0.1,
-      "datafield_name": "margins_bottom"
+      "float": true,
+      "datafield_name": "margins_bottom",
+      "unit": "cm"
     },
     {
       "name": "nft_margin_left",
       "label_key": "books_margin_left",
       "type": "spin",
       "required": true,
-      "width": 60,
+      "width": 30,
       "min": 0.5,
       "max": 5.0,
       "step": 0.1,
-      "datafield_name": "margins_left"
+      "float": true,
+      "datafield_name": "margins_left",
+      "unit": "cm"
     },
     {
       "name": "nft_margin_right",
       "label_key": "books_margin_right",
       "type": "spin",
       "required": true,
-      "width": 60,
+      "width": 30,
       "min": 0.5,
       "max": 5.0,
       "step": 0.1,
-      "datafield_name": "margins_right"
+      "float": true,
+      "datafield_name": "margins_right",
+      "unit": "cm"
+    },
+    {
+      "name": "nft_textAligment",
+      "label_key": "books_text_alignment",
+      "type": "combobox",
+      "required": true,
+      "width": 80,
+      "datafield_name": "textAlignment",
+      "combo_key": "textAlignment"
+    },
+    {
+      "name": "nft_paragraph_indent",
+      "label_key": "books_paragraph_indentation",
+      "type": "spin",
+      "required": true,
+      "width": 30,
+      "min": 0.0,
+      "max": 5.0,
+      "step": 0.1,
+      "float": true,
+      "datafield_name": "paragraph_indent",
+      "unit": "pt"
+    },
+    {
+      "name": "nft_paragraph_spacing_before",
+      "label_key": "books_paragraph_spacing_before",
+      "type": "spin",
+      "required": true,
+      "width": 30,
+      "min": 0.0,
+      "max": 15.0,
+      "step": 0.1,
+      "float": true,
+      "datafield_name": "paragraph_spacingBeforePt",
+      "unit": "pt"
+    },
+    {
+      "name": "nft_paragraph_spacing_after",
+      "label_key": "books_paragraph_spacing_after",
+      "type": "spin",
+      "required": true,
+      "width": 30,
+      "min": 0.0,
+      "max": 15.0,
+      "step": 0.1,
+      "float": true,
+      "datafield_name": "paragraph_spacingAfterPt",
+      "unit": "pt"
+    },
+    {
+      "name": "nft_paragraph_spacing_between",
+      "label_key": "books_paragraph_spacing_between",
+      "type": "text",
+      "required": true,
+      "width": 30,
+      "datafield_name": "paragraph_useEmptyLineBetween"
+    },
+    {
+      "name": "nft_header_level_01_style",
+      "label_key": "books_header_1_style",
+      "type": "combobox",
+      "required": true,
+      "width": 80,
+      "datafield_name": "headers_level_01_style",
+      "combo_key": "header_style"
+    },
+    {
+      "name": "nft_header_level_01_fontsize",
+      "label_key": "books_header_1_font_size",
+      "type": "spin",
+      "required": true,
+      "width": 30,
+      "min": 8,
+      "max": 72,
+      "datafield_name": "headers_level_01_sizePt",
+      "unit": "pt"
+    },
+    {
+      "name": "nft_header_level_01_alignment",
+      "label_key": "books_header_1_alignment",
+      "type": "combobox",
+      "required": true,
+      "width": 80,
+      "datafield_name": "headers_level_01_alignment",
+      "combo_key": "textAlignment"
+    },
+    {
+      "name": "nft_header_level_02_style",
+      "label_key": "books_header_2_style",
+      "type": "combobox",
+      "required": true,
+      "width": 80,
+      "datafield_name": "headers_level_02_style",
+      "combo_key": "header_style"
+    },
+    {
+      "name": "nft_header_level_02_fontsize",
+      "label_key": "books_header_2_font_size",
+      "type": "spin",
+      "required": true,
+      "width": 30,
+      "min": 8,
+      "max": 72,
+      "datafield_name": "headers_level_02_sizePt",
+      "unit": "pt"
+    },
+    {
+      "name": "nft_header_level_02_alignment",
+      "label_key": "books_header_2_alignment",
+      "type": "combobox",
+      "required": true,
+      "width": 80,
+      "datafield_name": "headers_level_02_alignment",
+      "combo_key": "textAlignment"
+    },
+    {
+      "name": "nft_header_level_03_style",
+      "label_key": "books_header_3_style",
+      "type": "combobox",
+      "required": true,
+      "width": 80,
+      "datafield_name": "headers_level_03_style",
+      "combo_key": "header_style"
+    },
+    {
+      "name": "nft_header_level_03_fontsize",
+      "label_key": "books_header_3_font_size",
+      "type": "spin",
+      "required": true,
+      "width": 30,
+      "min": 8,
+      "max": 72,
+      "datafield_name": "headers_level_03_sizePt",
+      "unit": "pt"
+    },
+    {
+      "name": "nft_header_level_03_alignment",
+      "label_key": "books_header_3_alignment",
+      "type": "combobox",
+      "required": true,
+      "width": 80,
+      "datafield_name": "headers_level_03_alignment",
+      "combo_key": "textAlignment"
     }
   ]
 }
