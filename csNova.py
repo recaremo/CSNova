@@ -46,8 +46,11 @@ DEFAULT_SETTINGS = {
   "language": "de",
   "file_path_lang": "/home/frank/Dokumente/CSNova/core/translations/translation_de.json",
   "file_path_combo": "/home/frank/Dokumente/CSNova/core/translations/translation_data_combobox_de.json",
-  "first_start": False
-},
+  "first_start": False,
+  "last_project_opened": "",
+  "last_file_opened": "",
+  "last_fiction_region_used": "",
+  "last_nonfiction_region_used": "",},
 "help": {
   "show_help_panel": True,
   "show_button_hints": True,
@@ -6091,14 +6094,14 @@ TABLES_LOCATIONS_DEFAULTS = {
 # für jedes Projekt werden daraus eigene Tabellen angelegt
 TABLES_CHAPTERS_SCENES_DEFAULTS = {
     "chapter_ID_01": {
-        "chapter_id": "01",
+        "chapter_id": "",
         "chapter_title": "",
         "chapter_premise": "",
         "chapter_summary": "",
         "chapter_notes": "",
         "scenes": {
             "scene_ID_01": {
-                "scene_id": "01",
+                "scene_id": "",
                 "scene_title": "",
                 "scene_premise": "",
                 "scene_goal": "",

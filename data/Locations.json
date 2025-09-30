@@ -1,6 +1,10 @@
 {
   "location_ID_01": {
-    "lo_title": "",
+    "lo_title": "Lokation 02",
+    "lo_description": ""
+  },
+  "location_ID_02": {
+    "lo_title": "Lokation 01",
     "lo_description": ""
   }
 }

@@ -1,9 +1,17 @@
 {
   "storyline_ID_01": {
-    "st_title": "",
-    "st_premise": "",
+    "st_title": "Storyline 02",
+    "st_premise": "Prämisse 02",
     "st_description": "",
-    "st_transformation": "",
+    "status_IDst_transformation": "",
+    "st_timeline": "",
+    "st_notes": ""
+  },
+  "storyline_ID_02": {
+    "st_title": "Storyline 01",
+    "st_premise": "Das ist die Prämise 01",
+    "st_description": "",
+    "status_IDst_transformation": "",
     "st_timeline": "",
     "st_notes": ""
   }

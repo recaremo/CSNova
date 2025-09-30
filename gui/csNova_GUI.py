@@ -16,6 +16,7 @@ from PySide6.QtCore import Qt, QEvent
 from PySide6.QtGui import QPixmap, QIcon, QAction, QFont, QTextListFormat, QTextCharFormat
 import json
 import re
+import os
 from pathlib import Path
 import datetime
 from config.dev import GUI_DIR, ASSETS_DIR, DATA_DIR, USER_SETTINGS_FILE, FORM_FIELDS_FILE, BASE_STYLE_FILE, THEME_FILES, TRANSLATIONS_DIR
@@ -74,9 +75,35 @@ def apply_global_stylesheet(app, base_style_path, theme):
     log_info(f"Globales Stylesheet angewendet aus Theme: {theme.get('theme_name', 'Unbekannt')} und Datei: {base_style_path} ({len(stylesheet_parts)} CSS-Regeln)")
     log_debug(f"Theme-Preview: {theme}")
 
+def format_date_local(date_str, lang="de"):
+    import datetime
+    try:
+        dt = datetime.datetime.strptime(date_str, "%Y-%m-%d")
+    except Exception:
+        return date_str
+    if lang == "de":
+        return dt.strftime("%d.%m.%Y")
+    elif lang == "en":
+        return dt.strftime("%m/%d/%Y")
+    elif lang in ("es", "fr"):
+        return dt.strftime("%d/%m/%Y")
+    else:
+        return date_str
+
 # StartWindow Klasse
 class StartWindow(QMainWindow):
-    
+
+    # ... andere Methoden ...
+    def update_scene_word_count(self):
+        if "scene_word_count" in self.scene_form_widgets:
+            widget = self.scene_form_widgets["scene_word_count"]
+            text = self.scene_plain_editor.toPlainText() if hasattr(self, "scene_plain_editor") else ""
+            word_count = len(text.split())
+            if isinstance(widget, QLabel):
+                widget.setText(str(word_count))
+            elif isinstance(widget, QSpinBox):
+                widget.setValue(word_count)
+
     # Initialisierung der Panels
     def create_left_panel_with_header(self, header_key, default_text):
         panel_widget = QWidget()
@@ -671,7 +698,17 @@ class StartWindow(QMainWindow):
     # Dieses left_panel_editor wird im Editor-Modus angezeigt und beinhaltet
     # die Inhalte aus den Tabellen: Charaktere, Orte, Objekte, Kapitel, Szenen
     def create_left_panel_editor(self):
-        from PySide6.QtWidgets import QSizePolicy
+        # ComboBox mit Data_*.json Dateien
+        # Lade alle Data_*.json Dateien aus dem data-Verzeichnis
+        characters_data = load_json_file(DATA_DIR / "Character_main.json")
+        objects_data = load_json_file(DATA_DIR / "Objects.json")
+        locations_data = load_json_file(DATA_DIR / "Locations.json")
+        storylines_data = load_json_file(DATA_DIR / "Storylines.json")
+        # Speichere die Items für die ComboBoxen
+        character_items = [char.get("name", "") for char in characters_data.values()]
+        object_items = [obj.get("ob_title", "") for obj in objects_data.values()]
+        location_items = [loc.get("lo_title", "") for loc in locations_data.values()]
+        storyline_items = [st.get("st_title", "") for st in storylines_data.values()]
 
         panel_widget = QWidget()
         panel_widget.setMinimumWidth(220)  # Mindestbreite für das Panel
@@ -713,39 +750,45 @@ class StartWindow(QMainWindow):
         self.scene_form_widgets = {}
         for field in scene_fields:
             field_name = field.get("datafield_name")
-            if field_name not in scene_field_names or not field_name:
-                continue
-            label_key = field.get("label_key", field_name)
-            label_text = self.get_translation(label_key, field_name)
+            if not field_name or field_name not in scene_field_names:
+                continue  # Nur Felder aus scene_field_names verwenden!
+            label_text = self.get_translation(field.get("label_key", field_name), field_name)
             field_type = field.get("type", "text")
 
-            # Widget-Auswahl
-            if field_type == "text":
-                widget = QLineEdit()
-                widget.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
-            elif field_type == "spin":
-                widget = QSpinBox()
-                if "max" in field:
-                    widget.setMaximum(field["max"])
-                widget.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
-            elif field_type == "date":
-                widget = QDateEdit()
-                widget.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
-            elif field_type == "multiselect":
-                widget = QListWidget()
-                widget.setSelectionMode(QListWidget.MultiSelection)
-                widget.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-            elif field_type == "combobox":
-                widget = QComboBox()
-                widget.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
-            else:
-                widget = QLineEdit()
-                widget.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
+            if field_name == "scene_word_count":
+                # Immer nur ein Label, kein Eingabefeld!
+                widget = QLabel(scenes_tab)
+                widget.setText("0")
+                scenes_layout.addRow(label_text, widget)
+                self.scene_form_widgets[field_name] = widget
+                continue  # Rest überspringen!
+            label_text = self.get_translation(field.get("label_key", field_name), field_name)
+            field_type = field.get("type", "text")
 
-            if field.get("multiline"):
-                widget = QTextEdit()
-                widget.setMinimumHeight(60)
-                widget.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+            if field_name == "scene_characters_involved":
+                widget = QComboBox(scenes_tab)
+                widget.addItems(character_items)
+                widget.setEditable(True)
+            elif field_name == "scene_objects_involved":
+                widget = QComboBox(scenes_tab)
+                widget.addItems(object_items)
+                widget.setEditable(True)
+            elif field_name == "scene_location_ID":
+                widget = QComboBox(scenes_tab)
+                widget.addItems(location_items)
+                widget.setEditable(True)
+            elif field_name == "scene_storyline_ID":
+                widget = QComboBox(scenes_tab)
+                widget.addItems(storyline_items)
+                widget.setEditable(True)
+            elif field_type == "text":
+                widget = QLineEdit(scenes_tab)
+            elif field_type == "spin":
+                widget = QSpinBox(scenes_tab)
+            elif field_type == "date":
+                widget = QDateEdit(scenes_tab)
+            else:
+                widget = QLineEdit(scenes_tab)
 
             scenes_layout.addRow(label_text, widget)
             self.scene_form_widgets[field_name] = widget
@@ -767,14 +810,15 @@ class StartWindow(QMainWindow):
             tab_label_widget = QLabel(tab_label_text)
             tab_label_widget.setAlignment(Qt.AlignCenter)
             tab_layout.addWidget(tab_label_widget)
-            tab_widget.addTab(tab, tab_label_text)
-
+            tab_widget.addTab(tab, tab_label_text)    
+         
         panel_layout.addWidget(tab_widget)
         self.safe_apply_theme_style(panel_widget, "panel", self.theme)
         self.safe_apply_theme_style(tab_widget, "tab", self.theme)
         log_info("Tab 'Szenen' im linken Editor-Panel mit dynamischen Feldern angezeigt.")
         return panel_widget
     
+        
     # Dieses left_panel_project wird angezeigt, wenn ein Projekt erstellt oder bearbeitet wird.
     def create_left_panel_project(self):
         return self.create_left_panel_with_header("proj_ma_header", "Projects")
@@ -1040,6 +1084,7 @@ class StartWindow(QMainWindow):
 
         # Editorfenster für scene_plain
         self.scene_plain_editor = QTextEdit(panel)
+        self.scene_plain_editor.textChanged.connect(self.update_scene_word_count)
         self.scene_plain_editor.setObjectName("ScenePlainEditor")
         self.scene_plain_editor.setMinimumHeight(400)
         layout.addWidget(self.scene_plain_editor)
@@ -2592,28 +2637,37 @@ class StartWindow(QMainWindow):
     # Außerdem wird hier der Editor-Modus beendet.
     def create_right_panel_editor(self):
         panel_widget = QWidget()
-        panel_widget.setMinimumWidth(220)  # Mindestbreite setzen
+        panel_widget.setMinimumWidth(220)
         panel_layout = QVBoxLayout(panel_widget)
         panel_layout.setContentsMargins(20, 20, 20, 20)
         panel_layout.setSpacing(16)
         panel_layout.setAlignment(Qt.AlignTop)
 
-        # Header
-        header_text = self.get_translation("EditorWinHeader", "Text Editor")
-        header_label = QLabel(header_text, panel_widget)
-        header_label.setObjectName("FormHeaderLabel")
-        header_label.setAlignment(Qt.AlignHCenter | Qt.AlignTop)
-        panel_layout.addWidget(header_label)
+        # Label für die ComboBox
+        data_label = QLabel(self.get_translation("proj_ma_header", "Projekte"), panel_widget)
+        data_label.setAlignment(Qt.AlignLeft)
+        panel_layout.addWidget(data_label)
+
+        # ComboBox mit allen Data_*.json Dateien
+        data_combo = QComboBox(panel_widget)
+        data_files = sorted([
+            f for f in os.listdir(str(DATA_DIR))
+            if f.startswith("Data_") and f.endswith(".json")
+        ])
+        data_combo.addItems(data_files)
+        panel_layout.addWidget(data_combo)
+        self.data_file_combo = data_combo
+
+        # Aktives Item aus user_settings.json setzen
+        last_file_opened = self.settings.get("general", {}).get("last_file_opened", "")
+        if last_file_opened in data_files:
+            idx = data_files.index(last_file_opened)
+            data_combo.setCurrentIndex(idx)
 
         # Kapitel-Liste
         self.chapter_list_widget = QListWidget(panel_widget)
         self.chapter_list_widget.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-        chapters_data = load_json_file(DATA_DIR / "Chapters_scenes.json")
-        chapter_ids = list(chapters_data.keys())
-        for chapter_id in chapter_ids:
-            chapter_title = chapters_data[chapter_id].get("chapter_title", chapter_id)
-            self.chapter_list_widget.addItem(f"{chapter_id}: {chapter_title}")
-        panel_layout.addWidget(self.chapter_list_widget)        
+        panel_layout.addWidget(self.chapter_list_widget)
 
         # Kapitel-Formular
         with open(FORM_FIELDS_FILE, "r", encoding="utf-8") as f:
@@ -2631,7 +2685,6 @@ class StartWindow(QMainWindow):
             field_type = field.get("type", "text")
             width = field.get("width")
 
-            # Widget-Auswahl (korrigiert!)
             if field_type == "text":
                 if field.get("multiline"):
                     widget = QTextEdit(panel_widget)
@@ -2659,13 +2712,14 @@ class StartWindow(QMainWindow):
 
         panel_layout.addLayout(chapter_form)
 
-        # Button-Konfiguration: (Key, Hint-Key)
+        # --- Button-Konfiguration: (Key, Hint-Key) ---
         button_keys = [
-            ("botn_ed_01", "botn_ed_01_hint"),
-            ("botn_ed_02", "botn_ed_02_hint"),
-            ("botn_ed_03", "botn_ed_03_hint"),
-            ("botn_ed_04", "botn_ed_04_hint"),
+            ("botn_ed_01", "botn_ed_01_hint"),  # neues Kapitel 
+            ("botn_ed_02", "botn_ed_02_hint"),  # vor
+            ("botn_ed_03", "botn_ed_03_hint"),  # zurück
+            ("botn_ed_04", "botn_ed_04_hint"),  # Speichern
         ]
+        buttons = []
         for i, (key, hint_key) in enumerate(button_keys, start=1):
             btn_text = self.get_translation(key, key)
             btn_hint = self.get_translation(hint_key, "")
@@ -2673,7 +2727,178 @@ class StartWindow(QMainWindow):
             btn.setToolTip(btn_hint)
             panel_layout.addWidget(btn)
             setattr(self, f"botn_ed_{i:02d}", btn)
-            # Hier kannst du später die Button-Handler ergänzen
+            buttons.append(btn)
+
+        # --- Daten aus gewählter Datei laden ---
+        def load_data_file(idx):
+            if 0 <= idx < len(data_files):
+                filename = data_files[idx]
+                data_path = DATA_DIR / filename
+                if data_path.exists():
+                    data = load_json_file(data_path)
+                    chapters = {k: v for k, v in data.items() if k.startswith("chapter_ID_")}
+                    self.chapter_data = chapters
+                    self.chapter_list_widget.clear()
+                    for chapter_id, chapter in chapters.items():
+                        chapter_title = chapter.get("chapter_title", chapter_id)
+                        self.chapter_list_widget.addItem(f"{chapter_id}: {chapter_title}")
+
+                    # Lade das aktuell ausgewählte Kapitel
+                    def fill_chapter_and_scene():
+                        selected_items = self.chapter_list_widget.selectedItems()
+                        if selected_items:
+                            selected_chapter_id = selected_items[0].text().split(":")[0]
+                        else:
+                            selected_chapter_id = sorted(chapters.keys())[0] if chapters else None
+
+                        if selected_chapter_id:
+                            chapter = chapters[selected_chapter_id]
+                            # Kapitel-Felder laden
+                            for field_name, widget in self.chapter_form_widgets.items():
+                                value = chapter.get(field_name, "")
+                                if isinstance(widget, QLineEdit):
+                                    widget.setText(str(value))
+                                elif isinstance(widget, QTextEdit):
+                                    widget.setPlainText(str(value))
+                                elif isinstance(widget, QComboBox):
+                                    idx = widget.findText(str(value))
+                                    widget.setCurrentIndex(idx if idx >= 0 else 0)
+                                elif isinstance(widget, QSpinBox):
+                                    try:
+                                        widget.setValue(int(value))
+                                    except Exception:
+                                        pass
+                                elif isinstance(widget, QDateEdit):
+                                    try:
+                                        widget.setDate(datetime.date.fromisoformat(value))
+                                    except Exception:
+                                        widget.setDate(datetime.date.today())
+
+                            # Szenen-Felder laden (ALLE Felder!)
+                            scenes = chapter.get("scenes", {})
+                            first_scene_id = sorted(scenes.keys())[0] if scenes else None
+                            scene = scenes.get(first_scene_id, {}) if first_scene_id else {}
+                            lang = self.settings.get("general", {}).get("language", "de")
+                            for field_name, widget in getattr(self, "scene_form_widgets", {}).items():
+                                value = scene.get(field_name, "")
+                                if field_name in ("scene_creation_date", "scene_last_modified"):
+                                    value = format_date_local(value, lang)
+                                if isinstance(widget, QLineEdit):
+                                    widget.setText(str(value))
+                                elif isinstance(widget, QTextEdit):
+                                    widget.setPlainText(str(value))
+                                elif isinstance(widget, QComboBox):
+                                    idx = widget.findText(str(value))
+                                    widget.setCurrentIndex(idx if idx >= 0 else 0)
+                                elif isinstance(widget, QSpinBox):
+                                    try:
+                                        widget.setValue(int(value))
+                                    except Exception:
+                                        pass
+                                elif isinstance(widget, QDateEdit):
+                                    # Setze das Anzeigeformat!
+                                    if lang == "de":
+                                        widget.setDisplayFormat("dd.MM.yyyy")
+                                    elif lang == "en":
+                                        widget.setDisplayFormat("MM dd yyyy")
+                                    elif lang in ("fr", "es"):
+                                        widget.setDisplayFormat("dd/MM/yyyy")
+                                    else:
+                                        widget.setDisplayFormat("yyyy-MM-dd")
+                                    try:
+                                        widget.setDate(datetime.date.fromisoformat(value))
+                                    except Exception:
+                                        widget.setDate(datetime.date.today())
+                                elif isinstance(widget, QListWidget):
+                                    widget.clear()
+                                    if isinstance(value, list):
+                                        for v in value:
+                                            widget.addItem(str(v))
+                                # Editor-Feld für scene_plain
+                                if hasattr(self, "scene_plain_editor") and scene:
+                                    self.scene_plain_editor.setPlainText(str(scene.get("scene_plain", "")))
+                                    self.update_scene_word_count()
+
+                    # Handler für Kapitel-Auswahl
+                    self.chapter_list_widget.itemSelectionChanged.connect(fill_chapter_and_scene)
+                    fill_chapter_and_scene()
+
+                    # last_file_opened in user_settings.json aktualisieren
+                    self.settings.setdefault("general", {})
+                    self.settings["general"]["last_file_opened"] = filename
+                    with open(USER_SETTINGS_FILE, "w", encoding="utf-8") as f:
+                        json.dump(self.settings, f, indent=2, ensure_ascii=False)
+                data_combo.currentIndexChanged.connect(load_data_file)
+        if data_files:
+            load_data_file(data_combo.currentIndex())
+
+        # --- Save-Handler für den Save-Button ---
+        def save_chapter_data():
+            idx = self.data_file_combo.currentIndex()
+            if 0 <= idx < self.data_file_combo.count():
+                filename = self.data_file_combo.itemText(idx)
+                data_path = DATA_DIR / filename
+                # Lade bestehende Daten
+                data = load_json_file(data_path)
+                chapters = {k: v for k, v in data.items() if k.startswith("chapter_ID_")}
+                chapter_ids = sorted(chapters.keys())
+                current_chapter_id = chapter_ids[0] if chapter_ids else "chapter_ID_01"
+                chapter = chapters.get(current_chapter_id, {})
+
+                # Felder aus Kapitel-Form speichern
+                for field_name, widget in self.chapter_form_widgets.items():
+                    if isinstance(widget, QLineEdit):
+                        chapter[field_name] = widget.text()
+                    elif isinstance(widget, QTextEdit):
+                        chapter[field_name] = widget.toPlainText()
+                    elif isinstance(widget, QComboBox):
+                        chapter[field_name] = widget.currentText()
+                    elif isinstance(widget, QSpinBox):
+                        chapter[field_name] = widget.value()
+                    elif isinstance(widget, QDateEdit):
+                        chapter[field_name] = widget.date().toString("yyyy-MM-dd")
+
+                # Szenen speichern (ALLE Felder aus scene_form_widgets + Editor)
+                scenes = chapter.get("scenes", {})
+                scene_ids = sorted(scenes.keys())
+                current_scene_id = scene_ids[0] if scene_ids else "scene_ID_01"
+                scene = scenes.get(current_scene_id, {})
+
+                # Felder aus scene_form_widgets speichern
+                for field_name, widget in getattr(self, "scene_form_widgets", {}).items():
+                    if isinstance(widget, QLineEdit):
+                        scene[field_name] = widget.text()
+                    elif isinstance(widget, QTextEdit):
+                        scene[field_name] = widget.toPlainText()
+                    elif isinstance(widget, QComboBox):
+                        scene[field_name] = widget.currentText()
+                    elif isinstance(widget, QSpinBox):
+                        scene[field_name] = widget.value()
+                    elif isinstance(widget, QDateEdit):
+                        scene[field_name] = widget.date().toString("yyyy-MM-dd")
+                    elif isinstance(widget, QListWidget):
+                        scene[field_name] = [widget.item(i).text() for i in range(widget.count()) if widget.item(i).isSelected()]
+
+                # Editor-Inhalt speichern
+                if hasattr(self, "scene_plain_editor"):
+                    scene["scene_plain"] = self.scene_plain_editor.toPlainText()
+
+                scenes[current_scene_id] = scene
+                chapter["scenes"] = scenes
+                chapters[current_chapter_id] = chapter
+
+                # Schreibe alle Kapitel zurück in die Datei
+                with open(data_path, "w", encoding="utf-8") as f:
+                    json.dump(chapters, f, indent=2, ensure_ascii=False)
+
+                # last_file_opened in user_settings.json aktualisieren
+                self.settings.setdefault("general", {})
+                self.settings["general"]["last_file_opened"] = filename
+                with open(USER_SETTINGS_FILE, "w", encoding="utf-8") as f:
+                    json.dump(self.settings, f, indent=2, ensure_ascii=False)
+
+        # Save-Button ist botn_ed_03
+        self.botn_ed_04.clicked.connect(save_chapter_data)
 
         # Spacer, damit der Zurück-Button unten steht
         panel_layout.addSpacerItem(QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding))
@@ -2685,13 +2910,11 @@ class StartWindow(QMainWindow):
         btn_back.setToolTip(btn_back_hint)
         panel_layout.addWidget(btn_back, alignment=Qt.AlignBottom)
         self.botn_ed_05 = btn_back
-
         btn_back.clicked.connect(lambda: self.show_start_panels())
 
         panel_widget.setObjectName("EditorRightPanel")
         self.safe_apply_theme_style(panel_widget, "panel", self.theme)
-        self.safe_apply_theme_style(header_label, "label", self.theme)
-
+        self.safe_apply_theme_style(data_label, "label", self.theme)
         return panel_widget
     
     # Dieses right_panel_project wird angezeigt, wenn ein Projekt erstellt oder bearbeitet wird.
@@ -2775,24 +2998,26 @@ class StartWindow(QMainWindow):
         header_label.setAlignment(Qt.AlignHCenter | Qt.AlignTop)
         panel_layout.addWidget(header_label)
 
-        # Button-Konfiguration: (Key, Hint-Key)
-        button_keys = [
-            ("botn_se_01", "botn_se_01_hint"),
-            ("botn_se_02", "botn_se_02_hint"),
-        ]
-        for i, (key, hint_key) in enumerate(button_keys, start=1):
-            btn_text = self.get_translation(key, key)
-            btn_hint = self.get_translation(hint_key, "")
-            btn = QPushButton(btn_text, panel_widget)
-            btn.setToolTip(btn_hint)
-            panel_layout.addWidget(btn)
-            setattr(self, f"botn_se_{i:02d}", btn)
-            # Hier kannst du später die Button-Handler ergänzen
+        # --- Save-Button ---
+        btn_save_text = self.get_translation("botn_se_01", "Save")
+        btn_save_hint = self.get_translation("botn_se_01_hint", "Save all settings.")
+        btn_save = QPushButton(btn_save_text, panel_widget)
+        btn_save.setToolTip(btn_save_hint)
+        panel_layout.addWidget(btn_save)
+        self.botn_se_01 = btn_save
+
+        # --- Reset-Button ---
+        btn_reset_text = self.get_translation("botn_se_02", "Reset")
+        btn_reset_hint = self.get_translation("botn_se_02_hint", "Reset settings to default.")
+        btn_reset = QPushButton(btn_reset_text, panel_widget)
+        btn_reset.setToolTip(btn_reset_hint)
+        panel_layout.addWidget(btn_reset)
+        self.botn_se_02 = btn_reset
 
         # Spacer, damit der Zurück-Button unten steht
         panel_layout.addSpacerItem(QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding))
 
-        # Zurück-Button (Button 3)
+        # --- Back-Button ---
         btn_back_text = self.get_translation("botn_se_03", "Back")
         btn_back_hint = self.get_translation("botn_se_03_hint", "Back to main navigation.")
         btn_back = QPushButton(btn_back_text, panel_widget)
@@ -2803,11 +3028,41 @@ class StartWindow(QMainWindow):
         # Handler für Zurück-Button: Panels zurücksetzen
         btn_back.clicked.connect(lambda: self.show_start_panels())
 
+        # --- Save-Handler: Speichere die aktuellen Format-Keys aus Tab 2 ---
+        def save_settings_and_formats():
+            # --- Fiktion ---
+            region_fiction = None
+            if hasattr(self, "fiktion_region_combo"):
+                region_idx = self.fiktion_region_combo.currentIndex()
+                region_keys = ["EU", "USA", "UK"]
+                region_fiction = region_keys[region_idx]
+
+
+            # --- NonFiktion ---
+            region_nonfiction = None
+            if hasattr(self, "nonfiktion_region_combo"):
+                region_idx = self.nonfiktion_region_combo.currentIndex()
+                region_keys = ["EU", "USA", "UK"]
+                region_nonfiction = region_keys[region_idx]
+
+
+            # --- In user_settings.json speichern ---
+            self.settings.setdefault("general", {})
+            self.settings["general"]["last_fiction_region_used"] = region_fiction
+            self.settings["general"]["last_nonfiction_region_used"] = region_nonfiction
+
+            with open(USER_SETTINGS_FILE, "w", encoding="utf-8") as f:
+                json.dump(self.settings, f, indent=2, ensure_ascii=False)
+
+
+        btn_save.clicked.connect(save_settings_and_formats)
+        btn_reset.clicked.connect(self.reset_settings)
+
         panel_widget.setObjectName("SettingsRightPanel")
         self.safe_apply_theme_style(panel_widget, "panel", self.theme)
         self.safe_apply_theme_style(header_label, "label", self.theme)
         return panel_widget
-    
+        
     # Dieses right_panel_character wird angezeigt, wenn ein Charakter erstellt oder bearbeitet wird.
     # Es beinhaltet die Navigation zu den verschiedenen Charakter-Einstellungen und beendet den Charakter-Modus.
     def create_right_panel_character(self):
@@ -3276,12 +3531,19 @@ class StartWindow(QMainWindow):
         # 2. Dateinamen bestimmen
         title = project_data.get("project_title", "").strip()
         start_date = project_data.get("project_startdate", "").strip()
-        # Entferne alle nicht-alphanumerischen Zeichen aus dem Titel (optional, für Dateisystem-Sicherheit)
         safe_title = re.sub(r'[^A-Za-z0-9_\-]', '_', title) or "Unbenannt"
-        # Extrahiere nur die Ziffern aus dem Datum
         date_digits = re.sub(r'\D', '', start_date) or "00000000"
         filename = f"Project_{safe_title}_{date_digits}.json"
         filepath = DATA_DIR / filename
+
+        # 2a. Data-Dateinamen IMMER im Projekt speichern!
+        data_filename = f"Data_{safe_title}_{date_digits}.json"
+        project_data["project_file"] = data_filename
+        # UND im Formular anzeigen, falls Feld vorhanden:
+        if "project_file" in self.project_form_widgets:
+            widget = self.project_form_widgets["project_file"]
+            if isinstance(widget, QLineEdit):
+                widget.setText(data_filename)
 
         # 3. Speichern
         with open(filepath, "w", encoding="utf-8") as f:
@@ -3293,7 +3555,6 @@ class StartWindow(QMainWindow):
         if chapters_file.exists():
             with open(chapters_file, "r", encoding="utf-8") as f:
                 chapters_data = json.load(f)
-            # Name: Project_{safe_title}_{date_digits}_data.json
             data_filename = f"Data_{safe_title}_{date_digits}.json"
             data_filepath = DATA_DIR / data_filename
             with open(data_filepath, "w", encoding="utf-8") as f:
@@ -3400,6 +3661,17 @@ class StartWindow(QMainWindow):
                 widget.valueChanged.connect(self.enable_save_button)
             elif isinstance(widget, QDateEdit):
                 widget.dateChanged.connect(self.enable_save_button)
+
+        # 1. Ermittle den Projektnamen (Dateiname) und Datafilename
+        last_project_opened = filename  # z.B. Project_xyz_date.json
+        last_file_opened = project_data.get("project_file", "")
+
+        # 2. Schreibe in user_settings.json
+        self.settings.setdefault("general", {})
+        self.settings["general"]["last_project_opened"] = last_project_opened
+        self.settings["general"]["last_file_opened"] = last_file_opened
+        with open(USER_SETTINGS_FILE, "w", encoding="utf-8") as f:
+            json.dump(self.settings, f, indent=2, ensure_ascii=False)
 
     # Lösche das ausgewählte Projekt
     def delete_selected_project(self):
