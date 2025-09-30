@@ -698,20 +698,21 @@ class StartWindow(QMainWindow):
     # Dieses left_panel_editor wird im Editor-Modus angezeigt und beinhaltet
     # die Inhalte aus den Tabellen: Charaktere, Orte, Objekte, Kapitel, Szenen
     def create_left_panel_editor(self):
-        # ComboBox mit Data_*.json Dateien
-        # Lade alle Data_*.json Dateien aus dem data-Verzeichnis
+        # Lade die Items für die ComboBoxen aus den jeweiligen JSON-Dateien
         characters_data = load_json_file(DATA_DIR / "Character_main.json")
         objects_data = load_json_file(DATA_DIR / "Objects.json")
         locations_data = load_json_file(DATA_DIR / "Locations.json")
         storylines_data = load_json_file(DATA_DIR / "Storylines.json")
-        # Speichere die Items für die ComboBoxen
         character_items = [char.get("name", "") for char in characters_data.values()]
         object_items = [obj.get("ob_title", "") for obj in objects_data.values()]
         location_items = [loc.get("lo_title", "") for loc in locations_data.values()]
         storyline_items = [st.get("st_title", "") for st in storylines_data.values()]
 
+        # Szene-Status-Items aus ComboBox-Übersetzungsdatei
+        status_items = list(self.combobox_translations.get("status", {}).values())
+
         panel_widget = QWidget()
-        panel_widget.setMinimumWidth(220)  # Mindestbreite für das Panel
+        panel_widget.setMinimumWidth(220)
         panel_layout = QVBoxLayout(panel_widget)
         panel_layout.setContentsMargins(10, 10, 10, 10)
         panel_layout.setSpacing(10)
@@ -751,19 +752,17 @@ class StartWindow(QMainWindow):
         for field in scene_fields:
             field_name = field.get("datafield_name")
             if not field_name or field_name not in scene_field_names:
-                continue  # Nur Felder aus scene_field_names verwenden!
+                continue
             label_text = self.get_translation(field.get("label_key", field_name), field_name)
             field_type = field.get("type", "text")
 
             if field_name == "scene_word_count":
-                # Immer nur ein Label, kein Eingabefeld!
+                # Nur ein Label, kein Eingabefeld!
                 widget = QLabel(scenes_tab)
                 widget.setText("0")
                 scenes_layout.addRow(label_text, widget)
                 self.scene_form_widgets[field_name] = widget
-                continue  # Rest überspringen!
-            label_text = self.get_translation(field.get("label_key", field_name), field_name)
-            field_type = field.get("type", "text")
+                continue
 
             if field_name == "scene_characters_involved":
                 widget = QComboBox(scenes_tab)
@@ -781,6 +780,10 @@ class StartWindow(QMainWindow):
                 widget = QComboBox(scenes_tab)
                 widget.addItems(storyline_items)
                 widget.setEditable(True)
+            elif field_name == "scene_status":
+                widget = QComboBox(scenes_tab)
+                widget.addItems(status_items)
+                widget.setEditable(False)
             elif field_type == "text":
                 widget = QLineEdit(scenes_tab)
             elif field_type == "spin":
@@ -810,8 +813,8 @@ class StartWindow(QMainWindow):
             tab_label_widget = QLabel(tab_label_text)
             tab_label_widget.setAlignment(Qt.AlignCenter)
             tab_layout.addWidget(tab_label_widget)
-            tab_widget.addTab(tab, tab_label_text)    
-         
+            tab_widget.addTab(tab, tab_label_text)
+
         panel_layout.addWidget(tab_widget)
         self.safe_apply_theme_style(panel_widget, "panel", self.theme)
         self.safe_apply_theme_style(tab_widget, "tab", self.theme)
