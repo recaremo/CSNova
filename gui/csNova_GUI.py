@@ -92,7 +92,420 @@ def format_date_local(date_str, lang="de"):
 
 # StartWindow Klasse
 class StartWindow(QMainWindow):
+    # --- Handler-Funktionen ---
+    # Hinzufügen eines neuen Kapitels mit einer leeren Szene
+    def add_new_chapter(self):
+        idx = self.data_file_combo.currentIndex()
+        if 0 <= idx < self.data_file_combo.count():
+            filename = self.data_file_combo.itemText(idx)
+            data_path = DATA_DIR / filename
+            data = load_json_file(data_path)
+            chapters = {k: v for k, v in data.items() if k.startswith("chapter_ID_")}
 
+            # Kapitel-ID automatisch vergeben
+            next_chapter_num = max([int(cid.split("_")[-1]) for cid in chapters.keys()], default=0) + 1
+            new_chapter_id = f"chapter_ID_{next_chapter_num:02d}"
+
+            # Szenen-ID fortlaufend über alle Kapitel vergeben
+            all_scene_ids = []
+            for chapter in chapters.values():
+                if isinstance(chapter, dict) and "scenes" in chapter:
+                    all_scene_ids.extend(chapter["scenes"].keys())
+            next_scene_num = max([int(sid.split("_")[-1]) for sid in all_scene_ids if sid.startswith("scene_ID_")], default=0) + 1
+            first_scene_id = f"scene_ID_{next_scene_num:02d}"
+
+            # Leere Szene initialisieren
+            first_scene = {k: "" for k in getattr(self, "scene_form_widgets", {})}
+            first_scene["scene_id"] = str(next_scene_num)
+            first_scene["scene_creation_date"] = datetime.date.today().strftime("%Y-%m-%d")
+            first_scene["scene_last_modified"] = datetime.date.today().strftime("%Y-%m-%d")
+            first_scene["scene_plain"] = ""
+            first_scene["scene_rich"] = ""
+
+            # Neues Kapitel initialisieren
+            new_chapter = {k: "" for k in self.chapter_form_widgets}
+            new_chapter["chapter_id"] = str(next_chapter_num)
+            new_chapter["chapter_title"] = f"Kapitel {next_chapter_num:02d}"
+            new_chapter["scenes"] = {first_scene_id: first_scene}
+
+            chapters[new_chapter_id] = new_chapter
+            data[new_chapter_id] = new_chapter
+
+            # Speichern
+            with open(data_path, "w", encoding="utf-8") as f:
+                json.dump(data, f, indent=2, ensure_ascii=False)
+
+            # Kapitel-Liste neu laden
+            self.chapter_data = chapters
+            self.chapter_list_widget.clear()
+            for chapter_id, chapter in chapters.items():
+                chapter_title = chapter.get("chapter_title", chapter_id)
+                self.chapter_list_widget.addItem(f"{chapter_id}: {chapter_title}")
+            self.chapter_list_widget.setCurrentRow(self.chapter_list_widget.count() - 1)
+            selected_item = self.chapter_list_widget.item(self.chapter_list_widget.count() - 1)
+            if selected_item:
+                chapter_id = selected_item.text().split(":")[0]
+                self.fill_chapter_form(chapter_id)
+
+    # Navigation zwischen Kapiteln
+    def show_next_chapter(self):
+        current_row = self.chapter_list_widget.currentRow()
+        if current_row < self.chapter_list_widget.count() - 1:
+            self.chapter_list_widget.setCurrentRow(current_row + 1)
+        # Nach dem Setzen der Auswahl das neue Item holen!
+        selected_item = self.chapter_list_widget.item(self.chapter_list_widget.currentRow())
+        if selected_item:
+            chapter_id = selected_item.text().split(":")[0]
+            self.fill_chapter_form(chapter_id)
+            self.current_scene_index = 0
+            self.load_scenes_from_current_chapter()
+            self.fill_scene_form(self.current_scene_index)
+    
+    # Navigation zwischen Kapiteln
+    def show_previous_chapter(self):
+        current_row = self.chapter_list_widget.currentRow()
+        if current_row > 0:
+            self.chapter_list_widget.setCurrentRow(current_row - 1)
+        selected_item = self.chapter_list_widget.item(self.chapter_list_widget.currentRow())
+        if selected_item:
+            chapter_id = selected_item.text().split(":")[0]
+            self.fill_chapter_form(chapter_id)
+            self.current_scene_index = 0
+            self.load_scenes_from_current_chapter()
+            self.fill_scene_form(self.current_scene_index)
+        
+    # Speichern der Daten des aktuell ausgewählten Kapitels
+    def save_current_chapter(self):
+        idx = self.data_file_combo.currentIndex()
+        if 0 <= idx < self.data_file_combo.count():
+            filename = self.data_file_combo.itemText(idx)
+            data_path = DATA_DIR / filename
+            data = load_json_file(data_path)
+            chapters = {k: v for k, v in data.items() if k.startswith("chapter_ID_")}
+            selected_items = self.chapter_list_widget.selectedItems()
+            if selected_items:
+                current_chapter_id = selected_items[0].text().split(":")[0]
+            else:
+                current_chapter_id = sorted(chapters.keys())[0] if chapters else None
+            chapter = chapters.get(current_chapter_id, {})
+            # Nur Kapitel-Felder speichern!
+            for field_name, widget in self.chapter_form_widgets.items():
+                if isinstance(widget, QLineEdit):
+                    chapter[field_name] = widget.text()
+                elif isinstance(widget, QTextEdit):
+                    chapter[field_name] = widget.toPlainText()
+                elif isinstance(widget, QComboBox):
+                    chapter[field_name] = widget.currentText()
+                elif isinstance(widget, QSpinBox):
+                    chapter[field_name] = widget.value()
+                elif isinstance(widget, QDateEdit):
+                    chapter[field_name] = widget.date().toString("yyyy-MM-dd")
+            chapters[current_chapter_id] = chapter
+            data[current_chapter_id] = chapter
+            with open(data_path, "w", encoding="utf-8") as f:
+                json.dump(data, f, indent=2, ensure_ascii=False)
+            # Kapitel-Liste neu aufbauen
+            self.chapter_list_widget.clear()
+            filename = self.data_file_combo.currentText()
+            data_path = DATA_DIR / filename
+            data = load_json_file(data_path)
+            chapters = {k: v for k, v in data.items() if k.startswith("chapter_ID_")}
+            for chapter_id, chapter in chapters.items():
+                chapter_title = chapter.get("chapter_title", chapter_id)
+                self.chapter_list_widget.addItem(f"{chapter_id}: {chapter_title}")
+            # Auswahl auf das aktuelle Kapitel setzen
+            selected_items = self.chapter_list_widget.findItems(f"{current_chapter_id}:", Qt.MatchStartsWith)
+            if selected_items:
+                idx = self.chapter_list_widget.row(selected_items[0])
+                self.chapter_list_widget.setCurrentRow(idx)
+    # Löschen des aktuell ausgewählten Kapitels
+    def delete_current_chapter(self):
+        idx = self.data_file_combo.currentIndex()
+        if 0 <= idx < self.data_file_combo.count():
+            filename = self.data_file_combo.itemText(idx)
+            data_path = DATA_DIR / filename
+            data = load_json_file(data_path)
+            chapters = {k: v for k, v in data.items() if k.startswith("chapter_ID_")}
+            selected_items = self.chapter_list_widget.selectedItems()
+            if selected_items:
+                current_chapter_id = selected_items[0].text().split(":")[0]
+            else:
+                current_chapter_id = sorted(chapters.keys())[0] if chapters else None
+            if current_chapter_id in chapters:
+                self.show_secure_delete_dialog("chapter", current_chapter_id)
+                del data[current_chapter_id]
+                with open(data_path, "w", encoding="utf-8") as f:
+                    json.dump(data, f, indent=2, ensure_ascii=False)
+                # Kapitel-Liste neu laden
+                self.chapter_list_widget.clear()
+                for chapter_id, chapter in data.items():
+                    if chapter_id.startswith("chapter_ID_"):
+                        chapter_title = chapter.get("chapter_title", chapter_id)
+                        self.chapter_list_widget.addItem(f"{chapter_id}: {chapter_title}")
+                # Nach dem Löschen: Wähle das nächste existierende Kapitel und aktualisiere die Felder
+                if self.chapter_list_widget.count() > 0:
+                    self.chapter_list_widget.setCurrentRow(0)
+                    selected_item = self.chapter_list_widget.item(0)
+                    if selected_item:
+                        chapter_id = selected_item.text().split(":")[0]
+                        self.fill_chapter_form(chapter_id)
+                else:
+                    # Keine Kapitel mehr vorhanden: Felder leeren
+                    self.fill_chapter_form(None)
+        # Laden der Szenen des aktuell ausgewählten Kapitels
+    # Füllen des Kapitel-Formulars mit den Daten des ausgewählten Kapitels
+    def fill_chapter_form(self, chapter_id=None):
+    # Lade die Daten des ausgewählten Kapitels und fülle die Felder
+        idx = self.data_file_combo.currentIndex()
+        if 0 <= idx < self.data_file_combo.count():
+            filename = self.data_file_combo.itemText(idx)
+            data_path = DATA_DIR / filename
+            data = load_json_file(data_path)
+            chapters = {k: v for k, v in data.items() if k.startswith("chapter_ID_")}
+            if not chapter_id:
+                selected_items = self.chapter_list_widget.selectedItems()
+                if selected_items:
+                    chapter_id = selected_items[0].text().split(":")[0]
+                else:
+                    chapter_id = sorted(chapters.keys())[0] if chapters else None
+            chapter = chapters.get(chapter_id, {})
+            for field_name, widget in self.chapter_form_widgets.items():
+                value = chapter.get(field_name, "")
+                if isinstance(widget, QLabel):
+                    widget.setText(str(value))
+                elif isinstance(widget, QLineEdit):
+                    widget.setText(str(value))
+                elif isinstance(widget, QTextEdit):
+                    widget.setPlainText(str(value))
+                elif isinstance(widget, QComboBox):
+                    idx = widget.findText(str(value))
+                    widget.setCurrentIndex(idx if idx >= 0 else 0)
+                elif isinstance(widget, QSpinBox):
+                    try:
+                        widget.setValue(int(value))
+                    except Exception:
+                        widget.setValue(0)
+                elif isinstance(widget, QDateEdit):
+                    try:
+                        widget.setDate(datetime.date.fromisoformat(value))
+                    except Exception:
+                        widget.setDate(datetime.date.today())
+    
+    def load_scenes_from_current_chapter(self):
+        filename = self.settings.get("general", {}).get("last_file_opened", "")
+        if not filename:
+            return {}, None, [], {}
+        data_path = DATA_DIR / filename
+        if not data_path.exists():
+            return {}, None, [], {}
+        data = load_json_file(data_path)
+        chapters = {k: v for k, v in data.items() if k.startswith("chapter_ID_")}
+        # Hole das aktuell ausgewählte Kapitel aus right_panel_editor
+        selected_items = self.chapter_list_widget.selectedItems() if hasattr(self, "chapter_list_widget") else []
+        if selected_items:
+            current_chapter_id = selected_items[0].text().split(":")[0]
+        else:
+            current_chapter_id = sorted(chapters.keys())[0] if chapters else None
+        chapter = chapters.get(current_chapter_id, {})
+        scenes = chapter.get("scenes", {})
+        scene_ids = sorted(scenes.keys())
+        return data, current_chapter_id, scene_ids, scenes
+    # Füllen des Szenen-Formulars mit den Daten der ausgewählten Szene
+    def fill_scene_form(self, idx):
+        data, current_chapter_id, scene_ids, scenes = self.load_scenes_from_current_chapter()
+        if not scene_ids or idx < 0 or idx >= len(scene_ids):
+            # Felder leeren
+            for field_name, widget in self.scene_form_widgets.items():
+                if field_name == "scene_id" and isinstance(widget, QLabel):
+                    widget.setText("")
+                elif isinstance(widget, QLabel):
+                    widget.setText("0")
+                elif isinstance(widget, QLineEdit):
+                    widget.setText("")
+                elif isinstance(widget, QTextEdit):
+                    widget.setPlainText("")
+                elif isinstance(widget, QComboBox):
+                    widget.setCurrentIndex(0)
+                elif isinstance(widget, QSpinBox):
+                    widget.setValue(0)
+                elif isinstance(widget, QDateEdit):
+                    widget.setDate(datetime.date.today())
+            if hasattr(self, "scene_plain_editor"):
+                self.scene_plain_editor.clear()
+            return
+
+        scene_id = scene_ids[idx]
+        scene = scenes.get(scene_id, {})
+        lang = self.settings.get("general", {}).get("language", "de")
+        for field_name, widget in self.scene_form_widgets.items():
+            value = scene.get(field_name, "")
+            if field_name == "scene_id" and isinstance(widget, QLabel):
+                # Szene-ID immer anzeigen, falls leer: aus Key extrahieren
+                widget.setText(str(value) if value else str(scene_id.split("_")[-1]))
+            elif field_name in ("scene_creation_date", "scene_last_modified") and isinstance(widget, QDateEdit):
+                try:
+                    widget.setDate(datetime.date.fromisoformat(value))
+                except Exception:
+                    widget.setDate(datetime.date.today())
+            elif field_name in ("scene_creation_date", "scene_last_modified") and isinstance(widget, QLabel):
+                widget.setText(format_date_local(value, lang))
+            elif field_name == "scene_word_count" and isinstance(widget, QLabel):
+                widget.setText(str(scene.get("scene_word_count", "0")))
+            elif isinstance(widget, QLineEdit):
+                widget.setText(str(value))
+            elif isinstance(widget, QTextEdit):
+                widget.setPlainText(str(value))
+            elif isinstance(widget, QComboBox):
+                idx_combo = widget.findText(str(value))
+                widget.setCurrentIndex(idx_combo if idx_combo >= 0 else 0)
+            elif isinstance(widget, QSpinBox):
+                try:
+                    widget.setValue(int(value))
+                except Exception:
+                    widget.setValue(0)
+            elif isinstance(widget, QDateEdit):
+                try:
+                    widget.setDate(datetime.date.fromisoformat(value))
+                except Exception:
+                    widget.setDate(datetime.date.today())
+
+        # Editor-Inhalt laden
+        if hasattr(self, "scene_plain_editor"):
+            rich_text = scene.get("scene_rich", "")
+            if rich_text:
+                self.scene_plain_editor.setHtml(rich_text)
+            else:
+                self.scene_plain_editor.setPlainText(str(scene.get("scene_plain", "")))
+            self.update_scene_word_count()
+    # Speichern der aktuellen Szene
+    def save_scene(self):
+        data, current_chapter_id, scene_ids, scenes = self.load_scenes_from_current_chapter()
+        if not scene_ids or self.current_scene_index < 0 or self.current_scene_index >= len(scene_ids):
+            return
+        scene_id = scene_ids[self.current_scene_index]
+        chapter = data[current_chapter_id]
+        scenes = chapter.get("scenes", {})
+        scene = scenes.get(scene_id, {})
+        # Felder aus Formular speichern
+        for field_name, widget in self.scene_form_widgets.items():
+            if isinstance(widget, QLabel):
+                scene[field_name] = widget.text()
+            elif isinstance(widget, QLineEdit):
+                scene[field_name] = widget.text()
+            elif isinstance(widget, QTextEdit):
+                scene[field_name] = widget.toPlainText()
+            elif isinstance(widget, QComboBox):
+                scene[field_name] = widget.currentText()
+            elif isinstance(widget, QSpinBox):
+                scene[field_name] = widget.value()
+            elif isinstance(widget, QDateEdit):
+                scene[field_name] = widget.date().toString("yyyy-MM-dd")
+        # Editor-Inhalt speichern
+        if hasattr(self, "scene_plain_editor"):
+            scene["scene_plain"] = self.scene_plain_editor.toPlainText()
+            scene["scene_rich"] = self.scene_plain_editor.toHtml()
+        scene["scene_last_modified"] = datetime.date.today().strftime("%Y-%m-%d")
+        scenes[scene_id] = scene
+        chapter["scenes"] = scenes
+        data[current_chapter_id] = chapter
+        with open(DATA_DIR / self.settings["general"]["last_file_opened"], "w", encoding="utf-8") as f:
+            json.dump(data, f, indent=2, ensure_ascii=False)
+    # Hinzufügen einer neuen Szene
+    def add_new_scene(self):
+        data, current_chapter_id, scene_ids, scenes = self.load_scenes_from_current_chapter()
+        # Ermittle die höchste Szenen-ID aus ALLEN Kapiteln
+        all_scene_ids = []
+        for chapter in data.values():
+            if isinstance(chapter, dict) and "scenes" in chapter:
+                all_scene_ids.extend(chapter["scenes"].keys())
+        next_id_num = max([int(sid.split("_")[-1]) for sid in all_scene_ids if sid.startswith("scene_ID_")], default=0) + 1
+        new_scene_id = f"scene_ID_{next_id_num:02d}"
+        new_scene = {k: "" for k in self.scene_form_widgets}
+        new_scene["scene_id"] = str(next_id_num)
+        new_scene["scene_creation_date"] = datetime.date.today().strftime("%Y-%m-%d")
+        new_scene["scene_last_modified"] = datetime.date.today().strftime("%Y-%m-%d")
+        new_scene["scene_plain"] = ""
+        new_scene["scene_rich"] = ""
+        scenes[new_scene_id] = new_scene
+        chapter = data.get(current_chapter_id, {})
+        chapter["scenes"] = scenes
+        data[current_chapter_id] = chapter
+        with open(DATA_DIR / self.settings["general"]["last_file_opened"], "w", encoding="utf-8") as f:
+            json.dump(data, f, indent=2, ensure_ascii=False)
+        self.current_scene_index = len(scenes) - 1
+        self.fill_scene_form(self.current_scene_index)
+    #
+    def delete_scene(self):
+        data, current_chapter_id, scene_ids, scenes = self.load_scenes_from_current_chapter()
+        if not scene_ids or self.current_scene_index < 0 or self.current_scene_index >= len(scene_ids):
+            return
+        scene_id = scene_ids[self.current_scene_index]
+        chapter = data[current_chapter_id]
+        scenes = chapter.get("scenes", {})
+        if scene_id in scenes:
+            del scenes[scene_id]
+            chapter["scenes"] = scenes
+            data[current_chapter_id] = chapter
+            with open(DATA_DIR / self.settings["general"]["last_file_opened"], "w", encoding="utf-8") as f:
+                json.dump(data, f, indent=2, ensure_ascii=False)
+            self.current_scene_index = max(0, self.current_scene_index - 1)
+            self.fill_scene_form(self.current_scene_index)
+    # Navigation zwischen Szenen
+    def next_scene(self):
+        data, current_chapter_id, scene_ids, scenes = self.load_scenes_from_current_chapter()
+        if not scene_ids:
+            return
+        if self.current_scene_index < len(scene_ids) - 1:
+            self.current_scene_index += 1
+            self.fill_scene_form(self.current_scene_index)
+    # Navigation zwischen Szenen
+    def previous_scene(self):
+        data, current_chapter_id, scene_ids, scenes = self.load_scenes_from_current_chapter()
+        if not scene_ids:
+            return
+        if self.current_scene_index > 0:
+            self.current_scene_index -= 1
+            self.fill_scene_form(self.current_scene_index)
+    # Tab-Wechsel im linken Panel (Objekte, Orte, Erzählstränge)
+    def on_left_panel_tab_changed(self, index, tab_widget=None):
+        sender = self.sender()
+        if sender is None and tab_widget is not None:
+            sender = tab_widget
+        if sender is None:
+            return
+        tab_name = sender.tabText(index)
+        if tab_name == self.get_translation("proj_ob_header", "Objekte"):
+            objects = self.load_objects()
+            if objects:
+                first_id = sorted(objects.keys())[0]
+                self.current_object_id = first_id
+                self.fill_object_form_left(objects[first_id])
+            else:
+                self.current_object_id = None
+                empty_data = {k: "" for k in self.object_form_widgets_left}
+                self.fill_object_form_left(empty_data)
+        if tab_name == self.get_translation("proj_lo_header", "Orte"):
+            locations = self.load_locations()
+            if locations:
+                first_id = sorted(locations.keys())[0]
+                self.current_location_id = first_id
+                self.fill_location_form_left(locations[first_id])
+            else:
+                self.current_location_id = None
+                empty_data = {k: "" for k in self.location_form_widgets_left}
+                self.fill_location_form_left(empty_data)
+        if tab_name == self.get_translation("proj_st_header", "Erzählstränge"):
+            storylines = self.load_storylines()
+            if storylines:
+                first_id = sorted(storylines.keys())[0]
+                self.current_storyline_id = first_id
+                self.fill_storyline_form_left(storylines[first_id])  # <-- Korrekt!
+            else:
+                self.current_storyline_id = None
+                empty_data = {k: "" for k in self.storyline_form_widgets_left}
+                self.fill_storyline_form_left(empty_data)
+            
+    
     # ... andere Methoden ...
     def update_scene_word_count(self):
         if "scene_word_count" in self.scene_form_widgets:
@@ -104,6 +517,7 @@ class StartWindow(QMainWindow):
             elif isinstance(widget, QSpinBox):
                 widget.setValue(word_count)
 
+    
     # Initialisierung der Panels
     def create_left_panel_with_header(self, header_key, default_text):
         panel_widget = QWidget()
@@ -707,8 +1121,6 @@ class StartWindow(QMainWindow):
         object_items = [obj.get("ob_title", "") for obj in objects_data.values()]
         location_items = [loc.get("lo_title", "") for loc in locations_data.values()]
         storyline_items = [st.get("st_title", "") for st in storylines_data.values()]
-
-        # Szene-Status-Items aus ComboBox-Übersetzungsdatei
         status_items = list(self.combobox_translations.get("status", {}).values())
 
         panel_widget = QWidget()
@@ -756,8 +1168,15 @@ class StartWindow(QMainWindow):
             label_text = self.get_translation(field.get("label_key", field_name), field_name)
             field_type = field.get("type", "text")
 
+            # Szenen-ID nur als Label, nicht editierbar!
+            if field_name == "scene_id":
+                widget = QLabel(scenes_tab)
+                widget.setText("")
+                scenes_layout.addRow(label_text, widget)
+                self.scene_form_widgets[field_name] = widget
+                continue
+
             if field_name == "scene_word_count":
-                # Nur ein Label, kein Eingabefeld!
                 widget = QLabel(scenes_tab)
                 widget.setText("0")
                 scenes_layout.addRow(label_text, widget)
@@ -796,14 +1215,169 @@ class StartWindow(QMainWindow):
             scenes_layout.addRow(label_text, widget)
             self.scene_form_widgets[field_name] = widget
 
+        # --- Szenen-Buttonleiste ---
+        # Szenen-Buttonleiste ganz oben im Szenen-Tab
+        button_layout = QHBoxLayout()
+        button_layout.setSpacing(12)
+        scene_buttons = [
+            ("proj_btn_add_scene", "proj_btn_add_scene_hint", "btn_scene_new"),
+            ("proj_btn_prev_scene", "proj_btn_prev_scene_hint", "btn_scene_prev"),
+            ("proj_btn_next_scene", "proj_btn_next_scene_hint", "btn_scene_next"),
+            ("proj_btn_delete_scene", "proj_btn_delete_scene_hint", "btn_scene_delete"),
+            ("proj_btn_save_scene", "proj_btn_save_scene_hint", "btn_scene_save"),
+        ]
+        for key, hint_key, attr_name in scene_buttons:
+            btn_text = self.get_translation(key, key)
+            btn_hint = self.get_translation(hint_key, "")
+            btn = QPushButton(btn_text, scenes_tab)
+            btn.setToolTip(btn_hint)
+            button_layout.addWidget(btn)
+            setattr(self, attr_name, btn)
+        # Buttonleiste als erste Zeile im Szenen-Formular
+        scenes_layout.insertRow(0, button_layout)
+
         tab_widget.addTab(scenes_tab, self.get_translation("proj_cs_header", "Szenen"))
 
+        # --- Objekte-Tab ---
+        objects_tab = QWidget()
+        objects_layout = QVBoxLayout(objects_tab)
+        objects_layout.setSpacing(8)
+        #header_label = QLabel(self.get_translation("proj_ob_header", "Objekte"), objects_tab)
+        #header_label.setAlignment(Qt.AlignHCenter | Qt.AlignTop)
+        #objects_layout.addWidget(header_label)  # Header ganz oben
+
+        obj_button_layout = QHBoxLayout()
+        obj_buttons = [
+            ("botn_ob_01", "botn_ob_01_hint", "btn_object_new"),
+            ("botn_ob_02a", "botn_ob_02a_hint", "btn_object_next"),
+            ("botn_ob_02b", "botn_ob_02b_hint", "btn_object_prev"),
+            ("botn_ob_03", "botn_ob_03_hint", "btn_object_save"),
+            ("botn_ob_04", "botn_ob_04_hint", "btn_object_delete"),
+        ]
+        for key, hint_key, attr_name in obj_buttons:
+            btn = QPushButton(self.get_translation(key), objects_tab)
+            btn.setToolTip(self.get_translation(hint_key))
+            setattr(self, attr_name, btn)
+            obj_button_layout.addWidget(btn)
+        objects_layout.addLayout(obj_button_layout)
+
+        # Felder aus form_fields.json
+        object_fields = form_fields.get("objects", [])
+        obj_form = QFormLayout()
+        self.object_form_widgets_left = {}
+       
+        for field in object_fields:
+            field_name = field.get("datafield_name")
+            if not field_name:
+                continue
+            label = QLabel(self.get_translation(field["label_key"]), objects_tab)
+            if field.get("multiline"):
+                widget = QTextEdit(objects_tab)
+                widget.setMinimumHeight(60)
+            elif field["type"] == "text":
+                widget = QLineEdit(objects_tab)
+                widget.setMaxLength(field.get("max_length", 120))
+            elif field["type"] == "header":
+                widget = QLabel(self.get_translation(field["label_key"]), objects_tab)
+            else:
+                widget = QLineEdit(objects_tab)
+            # label = QLabel(self.get_translation(field["label_key"]), objects_tab)
+            self.object_form_widgets_left[field_name] = widget
+            obj_form.addRow(label, widget)
+        objects_layout.addLayout(obj_form)
+        tab_widget.addTab(objects_tab, self.get_translation("proj_ob_header", "Objekte"))
+
+        # --- Orte-Tab ---
+        locations_tab = QWidget()
+        locations_layout = QVBoxLayout(locations_tab)
+        locations_layout.setSpacing(8)
+
+        loc_button_layout = QHBoxLayout()
+        loc_buttons = [
+            ("botn_lo_01", "botn_lo_01_hint", "btn_location_new"),
+            ("botn_lo_02a", "botn_lo_02a_hint", "btn_location_next"),
+            ("botn_lo_02b", "botn_lo_02b_hint", "btn_location_prev"),
+            ("botn_lo_03", "botn_lo_03_hint", "btn_location_save"),
+            ("botn_lo_04", "botn_lo_04_hint", "btn_location_delete"),
+        ]
+        for key, hint_key, attr_name in loc_buttons:
+            btn = QPushButton(self.get_translation(key), locations_tab)
+            btn.setToolTip(self.get_translation(hint_key))
+            setattr(self, attr_name, btn)
+            loc_button_layout.addWidget(btn)
+        locations_layout.addLayout(loc_button_layout)
+
+        location_fields = form_fields.get("locations", [])
+        loc_form = QFormLayout()
+        self.location_form_widgets_left = {}
+
+        for field in location_fields:
+            field_name = field.get("datafield_name")
+            if not field_name:
+                continue
+            label = QLabel(self.get_translation(field["label_key"]), locations_tab)
+            if field.get("multiline"):
+                widget = QTextEdit(locations_tab)
+                widget.setMinimumHeight(60)
+            elif field["type"] == "text":
+                widget = QLineEdit(locations_tab)
+                widget.setMaxLength(field.get("max_length", 120))
+            elif field["type"] == "header":
+                widget = QLabel(self.get_translation(field["label_key"]), locations_tab)
+            else:
+                widget = QLineEdit(locations_tab)
+            self.location_form_widgets_left[field_name] = widget
+            loc_form.addRow(label, widget)
+        locations_layout.addLayout(loc_form)
+        tab_widget.addTab(locations_tab, self.get_translation("proj_lo_header", "Orte"))
+
+        # --- Storyline-Tab ---
+        storylines_tab = QWidget()
+        storylines_layout = QVBoxLayout(storylines_tab)
+        storylines_layout.setSpacing(8)
+
+        sl_button_layout = QHBoxLayout()
+        sl_buttons = [
+            ("botn_sl_01", "botn_sl_01_hint", "btn_storyline_new"),
+            ("botn_sl_02", "botn_sl_02_hint", "btn_storyline_next"),
+            ("botn_sl_03", "botn_sl_03_hint", "btn_storyline_prev"),
+            ("botn_sl_04", "botn_sl_04_hint", "btn_storyline_save"),
+            ("botn_sl_05", "botn_sl_05_hint", "btn_storyline_delete"),
+        ]
+        for key, hint_key, attr_name in sl_buttons:
+            btn = QPushButton(self.get_translation(key), storylines_tab)
+            btn.setToolTip(self.get_translation(hint_key))
+            setattr(self, attr_name, btn)
+            sl_button_layout.addWidget(btn)
+        storylines_layout.addLayout(sl_button_layout)
+
+        storyline_fields = form_fields.get("storylines", [])
+        sl_form = QFormLayout()
+        self.storyline_form_widgets_left = {}
+
+        for field in storyline_fields:
+            field_name = field.get("datafield_name")
+            if not field_name:
+                continue
+            label = QLabel(self.get_translation(field["label_key"]), storylines_tab)
+            if field.get("multiline"):
+                widget = QTextEdit(storylines_tab)
+                widget.setMinimumHeight(60)
+            elif field["type"] == "text":
+                widget = QLineEdit(storylines_tab)
+                widget.setMaxLength(field.get("max_length", 120))
+            elif field["type"] == "header":
+                widget = QLabel(self.get_translation(field["label_key"]), storylines_tab)
+            else:
+                widget = QLineEdit(storylines_tab)
+            self.storyline_form_widgets_left[field_name] = widget
+            sl_form.addRow(label, widget)
+        storylines_layout.addLayout(sl_form)
+        tab_widget.addTab(storylines_tab, self.get_translation("proj_st_header", "Erzählstränge"))        
+        
         # Weitere Tabs als Platzhalter
         tab_definitions = [
-            ("storylines", "proj_st_header"),
-            ("characters", "char_ma_header"),
-            ("objects", "proj_ob_header"),
-            ("locations", "proj_lo_header"),
+            ("characters", "char_ma_header")
         ]
         for tab_key, label_key in tab_definitions:
             tab = QWidget()
@@ -818,10 +1392,45 @@ class StartWindow(QMainWindow):
         panel_layout.addWidget(tab_widget)
         self.safe_apply_theme_style(panel_widget, "panel", self.theme)
         self.safe_apply_theme_style(tab_widget, "tab", self.theme)
-        log_info("Tab 'Szenen' im linken Editor-Panel mit dynamischen Feldern angezeigt.")
+        log_info("Tab 'Szenen' im linken Editor-Panel mit dynamischen Feldern und Szenen-Buttons angezeigt.")
+
+        # --- Szenen-Logik: Szenenverwaltung ---
+        self.current_scene_index = 0
+        self.scenes_data = []
+
+        # Button-Handler verbinden
+        # Szenen-Buttons
+        self.btn_scene_new.clicked.connect(lambda: self.add_new_scene())
+        self.btn_scene_delete.clicked.connect(lambda: self.delete_scene())
+        self.btn_scene_next.clicked.connect(lambda: self.next_scene())
+        self.btn_scene_prev.clicked.connect(lambda: self.previous_scene())
+        self.btn_scene_save.clicked.connect(lambda: self.save_scene())
+        # Objekt-Buttons
+        self.btn_object_new.clicked.connect(lambda: self.editor_left_panel_objects_new())
+        self.btn_object_delete.clicked.connect(lambda: self.editor_left_panel_objects_delete())
+        self.btn_object_next.clicked.connect(lambda: self.editor_left_panel_objects_next())
+        self.btn_object_prev.clicked.connect(lambda: self.editor_left_panel_objects_previous())
+        self.btn_object_save.clicked.connect(lambda: self.editor_left_panel_objects_save())
+        # Orts-Buttons
+        self.btn_location_new.clicked.connect(lambda: self.editor_left_panel_locations_new())
+        self.btn_location_delete.clicked.connect(lambda: self.editor_left_panel_locations_delete())
+        self.btn_location_next.clicked.connect(lambda: self.editor_left_panel_locations_next())
+        self.btn_location_prev.clicked.connect(lambda: self.editor_left_panel_locations_previous())
+        self.btn_location_save.clicked.connect(lambda: self.editor_left_panel_locations_save())
+        # Erzählstrang-Buttons
+        self.btn_storyline_new.clicked.connect(lambda: self.editor_left_panel_storylines_new())
+        self.btn_storyline_delete.clicked.connect(lambda: self.editor_left_panel_storylines_delete())
+        self.btn_storyline_next.clicked.connect(lambda: self.editor_left_panel_storylines_next())
+        self.btn_storyline_prev.clicked.connect(lambda: self.editor_left_panel_storylines_previous())
+        self.btn_storyline_save.clicked.connect(lambda: self.editor_left_panel_storylines_save())
+
+        # Initiales Laden
+        # self.fill_scene_form(self.current_scene_index)
+        # self.load_scenes_from_current_chapter()
+        tab_widget.currentChanged.connect(self.on_left_panel_tab_changed)
+        self.on_left_panel_tab_changed(tab_widget.currentIndex())
         return panel_widget
-    
-        
+           
     # Dieses left_panel_project wird angezeigt, wenn ein Projekt erstellt oder bearbeitet wird.
     def create_left_panel_project(self):
         return self.create_left_panel_with_header("proj_ma_header", "Projects")
@@ -2640,7 +3249,6 @@ class StartWindow(QMainWindow):
     # Außerdem wird hier der Editor-Modus beendet.
     def create_right_panel_editor(self):
         panel_widget = QWidget()
-        panel_widget.setMinimumWidth(220)
         panel_layout = QVBoxLayout(panel_widget)
         panel_layout.setContentsMargins(20, 20, 20, 20)
         panel_layout.setSpacing(16)
@@ -2672,6 +3280,17 @@ class StartWindow(QMainWindow):
         self.chapter_list_widget.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         panel_layout.addWidget(self.chapter_list_widget)
 
+        # Kapitel-Liste initial füllen und erstes Kapitel anzeigen
+        filename = self.data_file_combo.currentText()
+        data_path = DATA_DIR / filename
+        data = load_json_file(data_path)
+        chapters = {k: v for k, v in data.items() if k.startswith("chapter_ID_")}
+
+        self.chapter_list_widget.clear()
+        for chapter_id, chapter in chapters.items():
+            chapter_title = chapter.get("chapter_title", chapter_id)
+            self.chapter_list_widget.addItem(f"{chapter_id}: {chapter_title}")
+
         # Kapitel-Formular
         with open(FORM_FIELDS_FILE, "r", encoding="utf-8") as f:
             form_fields = json.load(f)
@@ -2687,6 +3306,14 @@ class StartWindow(QMainWindow):
             label_text = self.get_translation(label_key, field_name)
             field_type = field.get("type", "text")
             width = field.get("width")
+
+            # Kapitel-ID nur als Label, nicht editierbar!
+            if field_name == "chapter_id":
+                widget = QLabel(panel_widget)
+                widget.setText("")
+                chapter_form.addRow(label_text, widget)
+                self.chapter_form_widgets[field_name] = widget
+                continue
 
             if field_type == "text":
                 if field.get("multiline"):
@@ -2718,11 +3345,11 @@ class StartWindow(QMainWindow):
         # --- Button-Konfiguration: (Key, Hint-Key) ---
         button_keys = [
             ("botn_ed_01", "botn_ed_01_hint"),  # neues Kapitel 
-            ("botn_ed_02", "botn_ed_02_hint"),  # vor
-            ("botn_ed_03", "botn_ed_03_hint"),  # zurück
-            ("botn_ed_04", "botn_ed_04_hint"),  # Speichern
+            ("botn_ed_02", "botn_ed_02_hint"),  # voriges Kapitel
+            ("botn_ed_03", "botn_ed_03_hint"),  # nächstes Kapitel
+            ("botn_ed_04", "botn_ed_04_hint"),  # Kapitel speichern
+            ("botn_ed_05", "botn_ed_05_hint"),  # Kapitel löschen
         ]
-        buttons = []
         for i, (key, hint_key) in enumerate(button_keys, start=1):
             btn_text = self.get_translation(key, key)
             btn_hint = self.get_translation(hint_key, "")
@@ -2730,189 +3357,44 @@ class StartWindow(QMainWindow):
             btn.setToolTip(btn_hint)
             panel_layout.addWidget(btn)
             setattr(self, f"botn_ed_{i:02d}", btn)
-            buttons.append(btn)
 
-        # --- Daten aus gewählter Datei laden ---
-        def load_data_file(idx):
-            if 0 <= idx < len(data_files):
-                filename = data_files[idx]
-                data_path = DATA_DIR / filename
-                if data_path.exists():
-                    data = load_json_file(data_path)
-                    chapters = {k: v for k, v in data.items() if k.startswith("chapter_ID_")}
-                    self.chapter_data = chapters
-                    self.chapter_list_widget.clear()
-                    for chapter_id, chapter in chapters.items():
-                        chapter_title = chapter.get("chapter_title", chapter_id)
-                        self.chapter_list_widget.addItem(f"{chapter_id}: {chapter_title}")
+        # Button-Handler verbinden
+        self.botn_ed_01.clicked.connect(self.add_new_chapter)
+        self.botn_ed_02.clicked.connect(self.show_previous_chapter)
+        self.botn_ed_03.clicked.connect(self.show_next_chapter)
+        self.botn_ed_04.clicked.connect(self.save_current_chapter)
+        self.botn_ed_05.clicked.connect(self.delete_current_chapter)
 
-                    # Lade das aktuell ausgewählte Kapitel
-                    def fill_chapter_and_scene():
-                        selected_items = self.chapter_list_widget.selectedItems()
-                        if selected_items:
-                            selected_chapter_id = selected_items[0].text().split(":")[0]
-                        else:
-                            selected_chapter_id = sorted(chapters.keys())[0] if chapters else None
+        # Kapitel-Auswahl-Handler: Felder aktualisieren
+        def on_chapter_selected():
+            selected_items = self.chapter_list_widget.selectedItems()
+            if selected_items:
+                chapter_id = selected_items[0].text().split(":")[0]
+                self.fill_chapter_form(chapter_id)
+                self.current_scene_index = 0
+                self.load_scenes_from_current_chapter()
+                self.fill_scene_form(self.current_scene_index)
+        self.chapter_list_widget.itemSelectionChanged.connect(on_chapter_selected)
 
-                        if selected_chapter_id:
-                            chapter = chapters[selected_chapter_id]
-                            # Kapitel-Felder laden
-                            for field_name, widget in self.chapter_form_widgets.items():
-                                value = chapter.get(field_name, "")
-                                if isinstance(widget, QLineEdit):
-                                    widget.setText(str(value))
-                                elif isinstance(widget, QTextEdit):
-                                    widget.setPlainText(str(value))
-                                elif isinstance(widget, QComboBox):
-                                    idx = widget.findText(str(value))
-                                    widget.setCurrentIndex(idx if idx >= 0 else 0)
-                                elif isinstance(widget, QSpinBox):
-                                    try:
-                                        widget.setValue(int(value))
-                                    except Exception:
-                                        pass
-                                elif isinstance(widget, QDateEdit):
-                                    try:
-                                        widget.setDate(datetime.date.fromisoformat(value))
-                                    except Exception:
-                                        widget.setDate(datetime.date.today())
 
-                            # Szenen-Felder laden (ALLE Felder!)
-                            scenes = chapter.get("scenes", {})
-                            first_scene_id = sorted(scenes.keys())[0] if scenes else None
-                            scene = scenes.get(first_scene_id, {}) if first_scene_id else {}
-                            lang = self.settings.get("general", {}).get("language", "de")
-                            for field_name, widget in getattr(self, "scene_form_widgets", {}).items():
-                                value = scene.get(field_name, "")
-                                if field_name in ("scene_creation_date", "scene_last_modified"):
-                                    value = format_date_local(value, lang)
-                                if isinstance(widget, QLineEdit):
-                                    widget.setText(str(value))
-                                elif isinstance(widget, QTextEdit):
-                                    widget.setPlainText(str(value))
-                                elif isinstance(widget, QComboBox):
-                                    idx = widget.findText(str(value))
-                                    widget.setCurrentIndex(idx if idx >= 0 else 0)
-                                elif isinstance(widget, QSpinBox):
-                                    try:
-                                        widget.setValue(int(value))
-                                    except Exception:
-                                        pass
-                                elif isinstance(widget, QDateEdit):
-                                    # Setze das Anzeigeformat!
-                                    if lang == "de":
-                                        widget.setDisplayFormat("dd.MM.yyyy")
-                                    elif lang == "en":
-                                        widget.setDisplayFormat("MM dd yyyy")
-                                    elif lang in ("fr", "es"):
-                                        widget.setDisplayFormat("dd/MM/yyyy")
-                                    else:
-                                        widget.setDisplayFormat("yyyy-MM-dd")
-                                    try:
-                                        widget.setDate(datetime.date.fromisoformat(value))
-                                    except Exception:
-                                        widget.setDate(datetime.date.today())
-                                elif isinstance(widget, QListWidget):
-                                    widget.clear()
-                                    if isinstance(value, list):
-                                        for v in value:
-                                            widget.addItem(str(v))
-                                # Editor-Feld für scene_plain
-                                if hasattr(self, "scene_plain_editor") and scene:
-                                    self.scene_plain_editor.setPlainText(str(scene.get("scene_plain", "")))
-                                    self.update_scene_word_count()
-
-                    # Handler für Kapitel-Auswahl
-                    self.chapter_list_widget.itemSelectionChanged.connect(fill_chapter_and_scene)
-                    fill_chapter_and_scene()
-
-                    # last_file_opened in user_settings.json aktualisieren
-                    self.settings.setdefault("general", {})
-                    self.settings["general"]["last_file_opened"] = filename
-                    with open(USER_SETTINGS_FILE, "w", encoding="utf-8") as f:
-                        json.dump(self.settings, f, indent=2, ensure_ascii=False)
-                data_combo.currentIndexChanged.connect(load_data_file)
-        if data_files:
-            load_data_file(data_combo.currentIndex())
-
-        # --- Save-Handler für den Save-Button ---
-        def save_chapter_data():
-            idx = self.data_file_combo.currentIndex()
-            if 0 <= idx < self.data_file_combo.count():
-                filename = self.data_file_combo.itemText(idx)
-                data_path = DATA_DIR / filename
-                # Lade bestehende Daten
-                data = load_json_file(data_path)
-                chapters = {k: v for k, v in data.items() if k.startswith("chapter_ID_")}
-                chapter_ids = sorted(chapters.keys())
-                current_chapter_id = chapter_ids[0] if chapter_ids else "chapter_ID_01"
-                chapter = chapters.get(current_chapter_id, {})
-
-                # Felder aus Kapitel-Form speichern
-                for field_name, widget in self.chapter_form_widgets.items():
-                    if isinstance(widget, QLineEdit):
-                        chapter[field_name] = widget.text()
-                    elif isinstance(widget, QTextEdit):
-                        chapter[field_name] = widget.toPlainText()
-                    elif isinstance(widget, QComboBox):
-                        chapter[field_name] = widget.currentText()
-                    elif isinstance(widget, QSpinBox):
-                        chapter[field_name] = widget.value()
-                    elif isinstance(widget, QDateEdit):
-                        chapter[field_name] = widget.date().toString("yyyy-MM-dd")
-
-                # Szenen speichern (ALLE Felder aus scene_form_widgets + Editor)
-                scenes = chapter.get("scenes", {})
-                scene_ids = sorted(scenes.keys())
-                current_scene_id = scene_ids[0] if scene_ids else "scene_ID_01"
-                scene = scenes.get(current_scene_id, {})
-
-                # Felder aus scene_form_widgets speichern
-                for field_name, widget in getattr(self, "scene_form_widgets", {}).items():
-                    if isinstance(widget, QLineEdit):
-                        scene[field_name] = widget.text()
-                    elif isinstance(widget, QTextEdit):
-                        scene[field_name] = widget.toPlainText()
-                    elif isinstance(widget, QComboBox):
-                        scene[field_name] = widget.currentText()
-                    elif isinstance(widget, QSpinBox):
-                        scene[field_name] = widget.value()
-                    elif isinstance(widget, QDateEdit):
-                        scene[field_name] = widget.date().toString("yyyy-MM-dd")
-                    elif isinstance(widget, QListWidget):
-                        scene[field_name] = [widget.item(i).text() for i in range(widget.count()) if widget.item(i).isSelected()]
-
-                # Editor-Inhalt speichern
-                if hasattr(self, "scene_plain_editor"):
-                    scene["scene_plain"] = self.scene_plain_editor.toPlainText()
-
-                scenes[current_scene_id] = scene
-                chapter["scenes"] = scenes
-                chapters[current_chapter_id] = chapter
-
-                # Schreibe alle Kapitel zurück in die Datei
-                with open(data_path, "w", encoding="utf-8") as f:
-                    json.dump(chapters, f, indent=2, ensure_ascii=False)
-
-                # last_file_opened in user_settings.json aktualisieren
-                self.settings.setdefault("general", {})
-                self.settings["general"]["last_file_opened"] = filename
-                with open(USER_SETTINGS_FILE, "w", encoding="utf-8") as f:
-                    json.dump(self.settings, f, indent=2, ensure_ascii=False)
-
-        # Save-Button ist botn_ed_03
-        self.botn_ed_04.clicked.connect(save_chapter_data)
+        # Auswahl auf das erste Kapitel setzen und Felder füllen
+        if self.chapter_list_widget.count() > 0:
+            self.chapter_list_widget.setCurrentRow(0)
+            selected_item = self.chapter_list_widget.item(0)
+            if selected_item:
+                chapter_id = selected_item.text().split(":")[0]
+                self.fill_chapter_form(chapter_id)
 
         # Spacer, damit der Zurück-Button unten steht
         panel_layout.addSpacerItem(QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding))
 
         # Zurück-Button
-        btn_back_text = self.get_translation("botn_ed_05", "Back")
-        btn_back_hint = self.get_translation("botn_ed_05_hint", "Back to main navigation.")
+        btn_back_text = self.get_translation("botn_ed_06", "Back")
+        btn_back_hint = self.get_translation("botn_ed_06_hint", "Back to main navigation.")
         btn_back = QPushButton(btn_back_text, panel_widget)
         btn_back.setToolTip(btn_back_hint)
         panel_layout.addWidget(btn_back, alignment=Qt.AlignBottom)
-        self.botn_ed_05 = btn_back
+        self.botn_ed_06 = btn_back
         btn_back.clicked.connect(lambda: self.show_start_panels())
 
         panel_widget.setObjectName("EditorRightPanel")
@@ -3409,7 +3891,7 @@ class StartWindow(QMainWindow):
     # ..............................................................
 
     # Sichere Abfrage zum Löschen von Projekten, Charakteren, Objekten, Orten, Storylines
-    def show_secure_delete_dialog(self, delete_type, delete_data=None):
+    def show_secure_delete_dialog(self, delete_type, delete_data=None, panel="center"):
         """
         Zentrale Sicherheitsabfrage zum Löschen von Projekten, Charakteren, Objekten, Orten, Storylines.
         delete_type: "project", "character", "object", "location", "storyline"
@@ -3466,11 +3948,20 @@ class StartWindow(QMainWindow):
             elif delete_type == "character":
                 self._delete_character(delete_data)
             elif delete_type == "object":
-                self._delete_object(delete_data)
+                if panel == "left":
+                    self._delete_object_left(delete_data)
+                else:
+                    self._delete_object(delete_data)
             elif delete_type == "location":
-                self._delete_location(delete_data)
+                if panel == "left":
+                    self._delete_location_left(delete_data)
+                else:
+                    self._delete_location(delete_data)
             elif delete_type == "storyline":
-                self._delete_storyline(delete_data)
+                if panel == "left":
+                    self._delete_storyline_left(delete_data)
+                else:
+                    self._delete_storyline(delete_data)
             # ...weitere Typen...
 
         btn_yes.clicked.connect(on_yes)
@@ -3488,6 +3979,328 @@ class StartWindow(QMainWindow):
             chapter_title = chapters_data[chapter_id].get("chapter_title", chapter_id)
             chapter_list.addItem(f"{chapter_id}: {chapter_title}")
         return chapter_list
+    
+    # ..............................................................
+    # Editor Left_Panel Tab Funktionen
+    # ..............................................................
+    def fill_object_form_left(self, object_data):
+        """Füllt die Felder im Objects-Tab des Left Panels mit den Daten eines Objekts."""
+        for field_name, widget in self.object_form_widgets_left.items():
+            value = object_data.get(field_name, "")
+            if isinstance(widget, QLineEdit):
+                widget.setText(str(value))
+            elif isinstance(widget, QTextEdit):
+                widget.setPlainText(str(value))
+
+    def get_object_form_left_data(self):
+        """Liest die Daten aus den Feldern im Objects-Tab des Left Panels aus."""
+        data = {}
+        for field_name, widget in self.object_form_widgets_left.items():
+            if isinstance(widget, QLineEdit):
+                data[field_name] = widget.text()
+            elif isinstance(widget, QTextEdit):
+                data[field_name] = widget.toPlainText()
+        return data
+
+    def editor_left_panel_objects_new(self):
+        """Erstellt ein leeres Formular für ein neues Objekt im Left Panel."""
+        empty_data = {k: "" for k in self.object_form_widgets_left}
+        self.current_object_id = None
+        self.fill_object_form_left(empty_data)
+
+    def editor_left_panel_objects_delete(self):
+        """Löscht das aktuell angezeigte Objekt im Left Panel."""
+        objects = self.load_objects()
+        object_id = self.current_object_id
+        if object_id and object_id in objects:
+            self.show_secure_delete_dialog("object", object_id, panel="left")
+            # Das eigentliche Löschen erfolgt in _delete_object
+            # Nach dem Löschen: nächstes oder leeres Objekt anzeigen
+            objects = self.load_objects()
+            if objects:
+                first_id = sorted(objects.keys())[0]
+                self.current_object_id = first_id
+                self.fill_object_form_left(objects[first_id])
+            else:
+                self.current_object_id = None
+                empty_data = {k: "" for k in self.object_form_widgets_left}
+                self.fill_object_form_left(empty_data)
+
+    def _delete_object(self, object_id):
+        """Löscht ein Objekt basierend auf der ID."""
+        object = self.load_object()
+        if not object or not object_id:
+            log_error(f"Kein Objekt zum Löschen gefunden (ID: {object_id})")
+            return
+        if object_id in object:
+            del object[object_id]
+            self.save_object(object)
+            log_info(f"Objekt gelöscht: {object_id}")
+            # Nach dem Löschen: nächsten oder leeren Datensatz anzeigen
+            if object:
+                first_id = sorted(object.keys())[0]
+                self.current_object_id = first_id
+                self.fill_object_form_left(object[first_id])
+            else:
+                self.current_objects_id = None
+                empty_data = {k: "" for k in self.object_form_widgets_left}
+                self.fill_object_form_left(empty_data)
+    
+    def on_delete_object_clicked(self):
+        if not self.current_object_id:
+            return
+        self.show_secure_delete_dialog("object", self.current_object_id, panel="left")
+
+    def editor_left_panel_objects_previous(self):
+        """Navigiert zum vorherigen Objekt im Left Panel."""
+        objects = self.load_objects()
+        if not objects:
+            return
+        ids = sorted(objects.keys())
+        if self.current_object_id in ids:
+            idx = ids.index(self.current_object_id)
+            new_idx = (idx - 1) % len(ids)
+        else:
+            new_idx = 0
+        self.current_object_id = ids[new_idx]
+        self.fill_object_form_left(objects[self.current_object_id])
+
+    def editor_left_panel_objects_next(self):
+        """Navigiert zum nächsten Objekt im Left Panel."""
+        objects = self.load_objects()
+        if not objects:
+            return
+        ids = sorted(objects.keys())
+        if self.current_object_id in ids:
+            idx = ids.index(self.current_object_id)
+            new_idx = (idx + 1) % len(ids)
+        else:
+            new_idx = 0
+        self.current_object_id = ids[new_idx]
+        self.fill_object_form_left(objects[self.current_object_id])
+
+    def editor_left_panel_objects_save(self):
+        """Speichert das aktuell angezeigte Objekt im Left Panel."""
+        objects = self.load_objects()
+        data = self.get_object_form_left_data()
+        if self.current_object_id and self.current_object_id in objects:
+            # Bestehendes Objekt aktualisieren
+            objects[self.current_object_id] = data
+        else:
+            # Neues Objekt anlegen
+            existing_ids = [int(k.split("_")[-1]) for k in objects.keys() if k.startswith("object_ID_")]
+            next_id = max(existing_ids, default=0) + 1
+            new_id = f"object_ID_{next_id:02d}"
+            objects[new_id] = data
+            self.current_object_id = new_id
+        self.save_objects(objects)
+        self.fill_object_form_left(objects[self.current_object_id])
+
+    def fill_location_form_left(self, location_data):
+        for field_name, widget in self.location_form_widgets_left.items():
+            value = location_data.get(field_name, "")
+            if isinstance(widget, QLineEdit):
+                widget.setText(str(value))
+            elif isinstance(widget, QTextEdit):
+                widget.setPlainText(str(value))
+    
+    def get_location_form_left_data(self):
+        data = {}
+        for field_name, widget in self.location_form_widgets_left.items():
+            if isinstance(widget, QLineEdit):
+                data[field_name] = widget.text()
+            elif isinstance(widget, QTextEdit):
+                data[field_name] = widget.toPlainText()
+        return data
+
+    def editor_left_panel_locations_new(self):
+        empty_data = {k: "" for k in self.location_form_widgets_left}
+        self.current_location_id = None
+        self.fill_location_form_left(empty_data)
+
+    def editor_left_panel_locations_delete(self):
+        locations = self.load_locations()
+        location_id = self.current_location_id
+        if location_id and location_id in locations:
+            self.show_secure_delete_dialog("location", location_id, panel="left")
+            locations = self.load_locations()
+            if locations:
+                first_id = sorted(locations.keys())[0]
+                self.current_location_id = first_id
+                self.fill_location_form_left(locations[first_id])
+            else:
+                self.current_location_id = None
+                empty_data = {k: "" for k in self.location_form_widgets_left}
+                self.fill_location_form_left(empty_data)
+    
+    def _delete_location_left(self, location_id):
+        """Löscht ein Location basierend auf der ID."""
+        location = self.load_locations()
+        if not location or not location:
+            log_error(f"Kein Location zum Löschen gefunden (ID: {location_id})")
+            return
+        if location_id in location:
+            del location[location_id]
+            self.save_locations(location)
+            log_info(f"Objekt gelöscht: {location_id}")
+            # Nach dem Löschen: nächsten oder leeren Datensatz anzeigen
+            if location:
+                first_id = sorted(location.keys())[0]
+                self.current_location_id = first_id
+                self.fill_location_form_left(location[first_id])
+            else:
+                self.current_location_id = None
+                empty_data = {k: "" for k in self.location_form_widgets_left}
+                self.fill_location_form_left(empty_data)
+
+    def on_delete_location_clicked(self):
+        if not self.current_location_id:
+            return
+        self.show_secure_delete_dialog("location", self.current_location_id, panel="left")
+
+    def editor_left_panel_locations_previous(self):
+        locations = self.load_locations()
+        if not locations:
+            return
+        ids = sorted(locations.keys())
+        if self.current_location_id in ids:
+            idx = ids.index(self.current_location_id)
+            new_idx = (idx - 1) % len(ids)
+        else:
+            new_idx = 0
+        self.current_location_id = ids[new_idx]
+        self.fill_location_form_left(locations[self.current_location_id])
+
+    def editor_left_panel_locations_next(self):
+        locations = self.load_locations()
+        if not locations:
+            return
+        ids = sorted(locations.keys())
+        if self.current_location_id in ids:
+            idx = ids.index(self.current_location_id)
+            new_idx = (idx + 1) % len(ids)
+        else:
+            new_idx = 0
+        self.current_location_id = ids[new_idx]
+        self.fill_location_form_left(locations[self.current_location_id])
+
+    def editor_left_panel_locations_save(self):
+        locations = self.load_locations()
+        data = self.get_location_form_left_data()
+        if self.current_location_id and self.current_location_id in locations:
+            locations[self.current_location_id] = data
+        else:
+            existing_ids = [int(k.split("_")[-1]) for k in locations.keys() if k.startswith("location_ID_")]
+            next_id = max(existing_ids, default=0) + 1
+            new_id = f"location_ID_{next_id:02d}"
+            locations[new_id] = data
+            self.current_location_id = new_id
+        self.save_locations(locations)
+        self.fill_location_form_left(locations[self.current_location_id])
+   
+    def get_storyline_form_left_data(self):
+        data = {}
+        for field_name, widget in self.storyline_form_widgets_left.items():
+            if isinstance(widget, QLineEdit):
+                data[field_name] = widget.text()
+            elif isinstance(widget, QTextEdit):
+                data[field_name] = widget.toPlainText()
+        return data
+    
+    def fill_storyline_form_left(self, storyline_data):
+        for field_name, widget in self.storyline_form_widgets_left.items():
+            value = storyline_data.get(field_name, "")
+            if isinstance(widget, QLineEdit):
+                widget.setText(str(value))
+            elif isinstance(widget, QTextEdit):
+                widget.setPlainText(str(value))
+
+    def editor_left_panel_storylines_new(self):
+        empty_data = {k: "" for k in self.storyline_form_widgets_left}
+        self.current_storyline_id = None
+        self.fill_storyline_form_left(empty_data)
+
+    def editor_left_panel_storylines_delete(self):
+        """Löscht die aktuell angezeigte Storyline im Left Panel."""
+        storylines = self.load_storylines()
+        storyline_id = self.current_storyline_id
+        if storyline_id and storyline_id in storylines:
+            # Sicherheitsabfrage mit Panel-Kontext "left"
+            self.show_secure_delete_dialog("storyline", storyline_id, panel="left")
+            # Nach dem Löschen: Storylines neu laden und Formular aktualisieren
+            storylines = self.load_storylines()
+            if storylines:
+                first_id = sorted(storylines.keys())[0]
+                self.current_storyline_id = first_id
+                self.fill_storyline_form_left(storylines[first_id])
+            else:
+                self.current_storyline_id = None
+                empty_data = {k: "" for k in self.storyline_form_widgets_left}
+                self.fill_storyline_form_left(empty_data)
+
+    def on_delete_storyline_left_clicked(self):
+        if not self.current_storyline_id:
+            return
+        self.show_secure_delete_dialog("storyline", self.current_storyline_id, panel="left")
+
+    def _delete_storyline_left(self, storyline_id):
+        storylines = self.load_storylines()
+        if not storylines or not storyline_id:
+            log_error(f"Keine Storyline zum Löschen gefunden (ID: {storyline_id})")
+            return
+        if storyline_id in storylines:
+            del storylines[storyline_id]
+            self.save_storylines(storylines)
+            log_info(f"Storyline gelöscht: {storyline_id}")
+            # Nach dem Löschen: nächsten oder leeren Datensatz anzeigen
+            if storylines:
+                first_id = sorted(storylines.keys())[0]
+                self.current_storyline_id = first_id
+                self.fill_storyline_form_left(storylines[first_id])
+            else:
+                self.current_storyline_id = None
+                empty_data = {k: "" for k in self.storyline_form_widgets_left}
+                self.fill_storyline_form_left(empty_data)
+
+    def editor_left_panel_storylines_previous(self):
+        storylines = self.load_storylines()
+        if not storylines:
+            return
+        ids = sorted(storylines.keys())
+        if self.current_storyline_id in ids:
+            idx = ids.index(self.current_storyline_id)
+            new_idx = (idx - 1) % len(ids)
+        else:
+            new_idx = 0
+        self.current_storyline_id = ids[new_idx]
+        self.fill_storyline_form_left(storylines[self.current_storyline_id])
+    
+    def editor_left_panel_storylines_next(self):
+        storylines = self.load_storylines()
+        if not storylines:
+            return
+        ids = sorted(storylines.keys())
+        if self.current_storyline_id in ids:
+            idx = ids.index(self.current_storyline_id)
+            new_idx = (idx + 1) % len(ids)
+        else:
+            new_idx = 0
+        self.current_storyline_id = ids[new_idx]
+        self.fill_storyline_form_left(storylines[self.current_storyline_id])
+
+    def editor_left_panel_storylines_save(self):
+        storylines = self.load_storylines()
+        data = self.get_storyline_form_left_data()
+        if self.current_storyline_id and self.current_storyline_id in storylines:
+            storylines[self.current_storyline_id] = data
+        else:
+            existing_ids = [int(k.split("_")[-1]) for k in storylines.keys() if k.startswith("storyline_ID_")]
+            next_id = max(existing_ids, default=0) + 1
+            new_id = f"storyline_ID_{next_id:02d}"
+            storylines[new_id] = data
+            self.current_storyline_id = new_id
+        self.save_storylines(storylines)
+        self.fill_storyline_form_left(storylines[self.current_storyline_id])
     
     # ..............................................................
     # PROJEKT FUNKTIONEN
