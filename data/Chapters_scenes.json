@@ -1,13 +1,13 @@
 {
   "chapter_ID_01": {
-    "chapter_id": "",
+    "chapter_id": "1",
     "chapter_title": "",
     "chapter_premise": "",
     "chapter_summary": "",
     "chapter_notes": "",
     "scenes": {
       "scene_ID_01": {
-        "scene_id": "",
+        "scene_id": "1",
         "scene_title": "",
         "scene_premise": "",
         "scene_goal": "",

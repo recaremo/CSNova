@@ -27,7 +27,6 @@ from csNova import LANGUAGE_DEFAULTS, THEMES_STYLES_DEFAULTS, LANGUAGE_DATA_COMB
 # Hilfsfunktion für Listen-Logging
 def log_list(title, items):
     log_info(f"{title}:\n" + "\n".join(f"  - {item}" for item in items))
-
 # Funktion zum Laden von JSON-Dateien
 def load_json_file(path):
     try:
@@ -43,7 +42,6 @@ def load_json_file(path):
     except Exception as e:
         log_exception(f"Error loading JSON file: {path}", e)
         return {}
-
 # Funktion zum Anwenden des globalen Stylesheets auf die QApplication    
 def apply_global_stylesheet(app, base_style_path, theme):
     with open(base_style_path, "r", encoding="utf-8") as f:
@@ -74,7 +72,7 @@ def apply_global_stylesheet(app, base_style_path, theme):
     app.setStyleSheet(full_stylesheet)
     log_info(f"Globales Stylesheet angewendet aus Theme: {theme.get('theme_name', 'Unbekannt')} und Datei: {base_style_path} ({len(stylesheet_parts)} CSS-Regeln)")
     log_debug(f"Theme-Preview: {theme}")
-
+# Hilfsfunktion zum sicheren Anwenden von Theme-Stilen auf Widgets
 def format_date_local(date_str, lang="de"):
     import datetime
     try:
@@ -92,439 +90,9 @@ def format_date_local(date_str, lang="de"):
 
 # StartWindow Klasse
 class StartWindow(QMainWindow):
-    #
-    def get_window_key_by_panel_index(self, panel_index):
-        keys = [
-            "start_window", "project_window", "characters_window", "objects_window",
-            "locations_window", "storylines_window", "editor_window",
-            "preference_window", "help_window", "about_window"
-        ]
-        return keys[panel_index] if panel_index < len(keys) else "start_window"
-    # --- Handler-Funktionen ---
-    # Hinzufügen eines neuen Kapitels mit einer leeren Szene
-    def add_new_chapter(self):
-        idx = self.data_file_combo.currentIndex()
-        if 0 <= idx < self.data_file_combo.count():
-            filename = self.data_file_combo.itemText(idx)
-            data_path = DATA_DIR / filename
-            data = load_json_file(data_path)
-            chapters = {k: v for k, v in data.items() if k.startswith("chapter_ID_")}
 
-            # Kapitel-ID automatisch vergeben
-            next_chapter_num = max([int(cid.split("_")[-1]) for cid in chapters.keys()], default=0) + 1
-            new_chapter_id = f"chapter_ID_{next_chapter_num:02d}"
-
-            # Szenen-ID fortlaufend über alle Kapitel vergeben
-            all_scene_ids = []
-            for chapter in chapters.values():
-                if isinstance(chapter, dict) and "scenes" in chapter:
-                    all_scene_ids.extend(chapter["scenes"].keys())
-            next_scene_num = max([int(sid.split("_")[-1]) for sid in all_scene_ids if sid.startswith("scene_ID_")], default=0) + 1
-            first_scene_id = f"scene_ID_{next_scene_num:02d}"
-
-            # Leere Szene initialisieren
-            first_scene = {k: "" for k in getattr(self, "scene_form_widgets", {})}
-            first_scene["scene_id"] = str(next_scene_num)
-            first_scene["scene_creation_date"] = datetime.date.today().strftime("%Y-%m-%d")
-            first_scene["scene_last_modified"] = datetime.date.today().strftime("%Y-%m-%d")
-            first_scene["scene_plain"] = ""
-            first_scene["scene_rich"] = ""
-
-            # Neues Kapitel initialisieren
-            new_chapter = {k: "" for k in self.chapter_form_widgets}
-            new_chapter["chapter_id"] = str(next_chapter_num)
-            new_chapter["chapter_title"] = f"Kapitel {next_chapter_num:02d}"
-            new_chapter["scenes"] = {first_scene_id: first_scene}
-
-            chapters[new_chapter_id] = new_chapter
-            data[new_chapter_id] = new_chapter
-
-            # Speichern
-            with open(data_path, "w", encoding="utf-8") as f:
-                json.dump(data, f, indent=2, ensure_ascii=False)
-
-            # Kapitel-Liste neu laden
-            self.chapter_data = chapters
-            self.chapter_list_widget.clear()
-            for chapter_id, chapter in chapters.items():
-                chapter_title = chapter.get("chapter_title", chapter_id)
-                self.chapter_list_widget.addItem(f"{chapter_id}: {chapter_title}")
-            self.chapter_list_widget.setCurrentRow(self.chapter_list_widget.count() - 1)
-            selected_item = self.chapter_list_widget.item(self.chapter_list_widget.count() - 1)
-            if selected_item:
-                chapter_id = selected_item.text().split(":")[0]
-                self.fill_chapter_form(chapter_id)
-
-    # Navigation zwischen Kapiteln
-    def show_next_chapter(self):
-        current_row = self.chapter_list_widget.currentRow()
-        if current_row < self.chapter_list_widget.count() - 1:
-            self.chapter_list_widget.setCurrentRow(current_row + 1)
-        # Nach dem Setzen der Auswahl das neue Item holen!
-        selected_item = self.chapter_list_widget.item(self.chapter_list_widget.currentRow())
-        if selected_item:
-            chapter_id = selected_item.text().split(":")[0]
-            self.fill_chapter_form(chapter_id)
-            self.current_scene_index = 0
-            self.load_scenes_from_current_chapter()
-            self.fill_scene_form(self.current_scene_index)
-    
-    # Navigation zwischen Kapiteln
-    def show_previous_chapter(self):
-        current_row = self.chapter_list_widget.currentRow()
-        if current_row > 0:
-            self.chapter_list_widget.setCurrentRow(current_row - 1)
-        selected_item = self.chapter_list_widget.item(self.chapter_list_widget.currentRow())
-        if selected_item:
-            chapter_id = selected_item.text().split(":")[0]
-            self.fill_chapter_form(chapter_id)
-            self.current_scene_index = 0
-            self.load_scenes_from_current_chapter()
-            self.fill_scene_form(self.current_scene_index)
-        
-    # Speichern der Daten des aktuell ausgewählten Kapitels
-    def save_current_chapter(self):
-        idx = self.data_file_combo.currentIndex()
-        if 0 <= idx < self.data_file_combo.count():
-            filename = self.data_file_combo.itemText(idx)
-            data_path = DATA_DIR / filename
-            data = load_json_file(data_path)
-            chapters = {k: v for k, v in data.items() if k.startswith("chapter_ID_")}
-            selected_items = self.chapter_list_widget.selectedItems()
-            if selected_items:
-                current_chapter_id = selected_items[0].text().split(":")[0]
-            else:
-                current_chapter_id = sorted(chapters.keys())[0] if chapters else None
-            chapter = chapters.get(current_chapter_id, {})
-            # Nur Kapitel-Felder speichern!
-            for field_name, widget in self.chapter_form_widgets.items():
-                if isinstance(widget, QLineEdit):
-                    chapter[field_name] = widget.text()
-                elif isinstance(widget, QTextEdit):
-                    chapter[field_name] = widget.toPlainText()
-                elif isinstance(widget, QComboBox):
-                    chapter[field_name] = widget.currentText()
-                elif isinstance(widget, QSpinBox):
-                    chapter[field_name] = widget.value()
-                elif isinstance(widget, QDateEdit):
-                    chapter[field_name] = widget.date().toString("yyyy-MM-dd")
-            chapters[current_chapter_id] = chapter
-            data[current_chapter_id] = chapter
-            with open(data_path, "w", encoding="utf-8") as f:
-                json.dump(data, f, indent=2, ensure_ascii=False)
-            # Kapitel-Liste neu aufbauen
-            self.chapter_list_widget.clear()
-            filename = self.data_file_combo.currentText()
-            data_path = DATA_DIR / filename
-            data = load_json_file(data_path)
-            chapters = {k: v for k, v in data.items() if k.startswith("chapter_ID_")}
-            for chapter_id, chapter in chapters.items():
-                chapter_title = chapter.get("chapter_title", chapter_id)
-                self.chapter_list_widget.addItem(f"{chapter_id}: {chapter_title}")
-            # Auswahl auf das aktuelle Kapitel setzen
-            selected_items = self.chapter_list_widget.findItems(f"{current_chapter_id}:", Qt.MatchStartsWith)
-            if selected_items:
-                idx = self.chapter_list_widget.row(selected_items[0])
-                self.chapter_list_widget.setCurrentRow(idx)
-    # Löschen des aktuell ausgewählten Kapitels
-    def delete_current_chapter(self):
-        idx = self.data_file_combo.currentIndex()
-        if 0 <= idx < self.data_file_combo.count():
-            filename = self.data_file_combo.itemText(idx)
-            data_path = DATA_DIR / filename
-            data = load_json_file(data_path)
-            chapters = {k: v for k, v in data.items() if k.startswith("chapter_ID_")}
-            selected_items = self.chapter_list_widget.selectedItems()
-            if selected_items:
-                current_chapter_id = selected_items[0].text().split(":")[0]
-            else:
-                current_chapter_id = sorted(chapters.keys())[0] if chapters else None
-            if current_chapter_id in chapters:
-                self.show_secure_delete_dialog("chapter", current_chapter_id)
-                del data[current_chapter_id]
-                with open(data_path, "w", encoding="utf-8") as f:
-                    json.dump(data, f, indent=2, ensure_ascii=False)
-                # Kapitel-Liste neu laden
-                self.chapter_list_widget.clear()
-                for chapter_id, chapter in data.items():
-                    if chapter_id.startswith("chapter_ID_"):
-                        chapter_title = chapter.get("chapter_title", chapter_id)
-                        self.chapter_list_widget.addItem(f"{chapter_id}: {chapter_title}")
-                # Nach dem Löschen: Wähle das nächste existierende Kapitel und aktualisiere die Felder
-                if self.chapter_list_widget.count() > 0:
-                    self.chapter_list_widget.setCurrentRow(0)
-                    selected_item = self.chapter_list_widget.item(0)
-                    if selected_item:
-                        chapter_id = selected_item.text().split(":")[0]
-                        self.fill_chapter_form(chapter_id)
-                else:
-                    # Keine Kapitel mehr vorhanden: Felder leeren
-                    self.fill_chapter_form(None)
-        # Laden der Szenen des aktuell ausgewählten Kapitels
-    # Füllen des Kapitel-Formulars mit den Daten des ausgewählten Kapitels
-    def fill_chapter_form(self, chapter_id=None):
-    # Lade die Daten des ausgewählten Kapitels und fülle die Felder
-        idx = self.data_file_combo.currentIndex()
-        if 0 <= idx < self.data_file_combo.count():
-            filename = self.data_file_combo.itemText(idx)
-            data_path = DATA_DIR / filename
-            data = load_json_file(data_path)
-            chapters = {k: v for k, v in data.items() if k.startswith("chapter_ID_")}
-            if not chapter_id:
-                selected_items = self.chapter_list_widget.selectedItems()
-                if selected_items:
-                    chapter_id = selected_items[0].text().split(":")[0]
-                else:
-                    chapter_id = sorted(chapters.keys())[0] if chapters else None
-            chapter = chapters.get(chapter_id, {})
-            for field_name, widget in self.chapter_form_widgets.items():
-                value = chapter.get(field_name, "")
-                if isinstance(widget, QLabel):
-                    widget.setText(str(value))
-                elif isinstance(widget, QLineEdit):
-                    widget.setText(str(value))
-                elif isinstance(widget, QTextEdit):
-                    widget.setPlainText(str(value))
-                elif isinstance(widget, QComboBox):
-                    idx = widget.findText(str(value))
-                    widget.setCurrentIndex(idx if idx >= 0 else 0)
-                elif isinstance(widget, QSpinBox):
-                    try:
-                        widget.setValue(int(value))
-                    except Exception:
-                        widget.setValue(0)
-                elif isinstance(widget, QDateEdit):
-                    try:
-                        widget.setDate(datetime.date.fromisoformat(value))
-                    except Exception:
-                        widget.setDate(datetime.date.today())
-    
-    def load_scenes_from_current_chapter(self):
-        filename = self.settings.get("general", {}).get("last_file_opened", "")
-        if not filename:
-            return {}, None, [], {}
-        data_path = DATA_DIR / filename
-        if not data_path.exists():
-            return {}, None, [], {}
-        data = load_json_file(data_path)
-        chapters = {k: v for k, v in data.items() if k.startswith("chapter_ID_")}
-        # Hole das aktuell ausgewählte Kapitel aus right_panel_editor
-        selected_items = self.chapter_list_widget.selectedItems() if hasattr(self, "chapter_list_widget") else []
-        if selected_items:
-            current_chapter_id = selected_items[0].text().split(":")[0]
-        else:
-            current_chapter_id = sorted(chapters.keys())[0] if chapters else None
-        chapter = chapters.get(current_chapter_id, {})
-        scenes = chapter.get("scenes", {})
-        scene_ids = sorted(scenes.keys())
-        return data, current_chapter_id, scene_ids, scenes
-    # Füllen des Szenen-Formulars mit den Daten der ausgewählten Szene
-    def fill_scene_form(self, idx):
-        data, current_chapter_id, scene_ids, scenes = self.load_scenes_from_current_chapter()
-        if not scene_ids or idx < 0 or idx >= len(scene_ids):
-            # Felder leeren
-            for field_name, widget in self.scene_form_widgets.items():
-                if field_name == "scene_id" and isinstance(widget, QLabel):
-                    widget.setText("")
-                elif isinstance(widget, QLabel):
-                    widget.setText("0")
-                elif isinstance(widget, QLineEdit):
-                    widget.setText("")
-                elif isinstance(widget, QTextEdit):
-                    widget.setPlainText("")
-                elif isinstance(widget, QComboBox):
-                    widget.setCurrentIndex(0)
-                elif isinstance(widget, QSpinBox):
-                    widget.setValue(0)
-                elif isinstance(widget, QDateEdit):
-                    widget.setDate(datetime.date.today())
-            if hasattr(self, "scene_plain_editor"):
-                self.scene_plain_editor.clear()
-            return
-
-        scene_id = scene_ids[idx]
-        scene = scenes.get(scene_id, {})
-        lang = self.settings.get("general", {}).get("language", "de")
-        for field_name, widget in self.scene_form_widgets.items():
-            value = scene.get(field_name, "")
-            if field_name == "scene_id" and isinstance(widget, QLabel):
-                # Szene-ID immer anzeigen, falls leer: aus Key extrahieren
-                widget.setText(str(value) if value else str(scene_id.split("_")[-1]))
-            elif field_name in ("scene_creation_date", "scene_last_modified") and isinstance(widget, QDateEdit):
-                try:
-                    widget.setDate(datetime.date.fromisoformat(value))
-                except Exception:
-                    widget.setDate(datetime.date.today())
-            elif field_name in ("scene_creation_date", "scene_last_modified") and isinstance(widget, QLabel):
-                widget.setText(format_date_local(value, lang))
-            elif field_name == "scene_word_count" and isinstance(widget, QLabel):
-                widget.setText(str(scene.get("scene_word_count", "0")))
-            elif isinstance(widget, QLineEdit):
-                widget.setText(str(value))
-            elif isinstance(widget, QTextEdit):
-                widget.setPlainText(str(value))
-            elif isinstance(widget, QComboBox):
-                idx_combo = widget.findText(str(value))
-                widget.setCurrentIndex(idx_combo if idx_combo >= 0 else 0)
-            elif isinstance(widget, QSpinBox):
-                try:
-                    widget.setValue(int(value))
-                except Exception:
-                    widget.setValue(0)
-            elif isinstance(widget, QDateEdit):
-                try:
-                    widget.setDate(datetime.date.fromisoformat(value))
-                except Exception:
-                    widget.setDate(datetime.date.today())
-
-        # Editor-Inhalt laden
-        if hasattr(self, "scene_plain_editor"):
-            rich_text = scene.get("scene_rich", "")
-            if rich_text:
-                self.scene_plain_editor.setHtml(rich_text)
-            else:
-                self.scene_plain_editor.setPlainText(str(scene.get("scene_plain", "")))
-            self.update_scene_word_count()
-    # Speichern der aktuellen Szene
-    def save_scene(self):
-        data, current_chapter_id, scene_ids, scenes = self.load_scenes_from_current_chapter()
-        if not scene_ids or self.current_scene_index < 0 or self.current_scene_index >= len(scene_ids):
-            return
-        scene_id = scene_ids[self.current_scene_index]
-        chapter = data[current_chapter_id]
-        scenes = chapter.get("scenes", {})
-        scene = scenes.get(scene_id, {})
-        # Felder aus Formular speichern
-        for field_name, widget in self.scene_form_widgets.items():
-            if isinstance(widget, QLabel):
-                scene[field_name] = widget.text()
-            elif isinstance(widget, QLineEdit):
-                scene[field_name] = widget.text()
-            elif isinstance(widget, QTextEdit):
-                scene[field_name] = widget.toPlainText()
-            elif isinstance(widget, QComboBox):
-                scene[field_name] = widget.currentText()
-            elif isinstance(widget, QSpinBox):
-                scene[field_name] = widget.value()
-            elif isinstance(widget, QDateEdit):
-                scene[field_name] = widget.date().toString("yyyy-MM-dd")
-        # Editor-Inhalt speichern
-        if hasattr(self, "scene_plain_editor"):
-            scene["scene_plain"] = self.scene_plain_editor.toPlainText()
-            scene["scene_rich"] = self.scene_plain_editor.toHtml()
-        scene["scene_last_modified"] = datetime.date.today().strftime("%Y-%m-%d")
-        scenes[scene_id] = scene
-        chapter["scenes"] = scenes
-        data[current_chapter_id] = chapter
-        with open(DATA_DIR / self.settings["general"]["last_file_opened"], "w", encoding="utf-8") as f:
-            json.dump(data, f, indent=2, ensure_ascii=False)
-    # Hinzufügen einer neuen Szene
-    def add_new_scene(self):
-        data, current_chapter_id, scene_ids, scenes = self.load_scenes_from_current_chapter()
-        # Ermittle die höchste Szenen-ID aus ALLEN Kapiteln
-        all_scene_ids = []
-        for chapter in data.values():
-            if isinstance(chapter, dict) and "scenes" in chapter:
-                all_scene_ids.extend(chapter["scenes"].keys())
-        next_id_num = max([int(sid.split("_")[-1]) for sid in all_scene_ids if sid.startswith("scene_ID_")], default=0) + 1
-        new_scene_id = f"scene_ID_{next_id_num:02d}"
-        new_scene = {k: "" for k in self.scene_form_widgets}
-        new_scene["scene_id"] = str(next_id_num)
-        new_scene["scene_creation_date"] = datetime.date.today().strftime("%Y-%m-%d")
-        new_scene["scene_last_modified"] = datetime.date.today().strftime("%Y-%m-%d")
-        new_scene["scene_plain"] = ""
-        new_scene["scene_rich"] = ""
-        scenes[new_scene_id] = new_scene
-        chapter = data.get(current_chapter_id, {})
-        chapter["scenes"] = scenes
-        data[current_chapter_id] = chapter
-        with open(DATA_DIR / self.settings["general"]["last_file_opened"], "w", encoding="utf-8") as f:
-            json.dump(data, f, indent=2, ensure_ascii=False)
-        self.current_scene_index = len(scenes) - 1
-        self.fill_scene_form(self.current_scene_index)
-    #
-    def delete_scene(self):
-        data, current_chapter_id, scene_ids, scenes = self.load_scenes_from_current_chapter()
-        if not scene_ids or self.current_scene_index < 0 or self.current_scene_index >= len(scene_ids):
-            return
-        scene_id = scene_ids[self.current_scene_index]
-        chapter = data[current_chapter_id]
-        scenes = chapter.get("scenes", {})
-        if scene_id in scenes:
-            del scenes[scene_id]
-            chapter["scenes"] = scenes
-            data[current_chapter_id] = chapter
-            with open(DATA_DIR / self.settings["general"]["last_file_opened"], "w", encoding="utf-8") as f:
-                json.dump(data, f, indent=2, ensure_ascii=False)
-            self.current_scene_index = max(0, self.current_scene_index - 1)
-            self.fill_scene_form(self.current_scene_index)
-    # Navigation zwischen Szenen
-    def next_scene(self):
-        data, current_chapter_id, scene_ids, scenes = self.load_scenes_from_current_chapter()
-        if not scene_ids:
-            return
-        if self.current_scene_index < len(scene_ids) - 1:
-            self.current_scene_index += 1
-            self.fill_scene_form(self.current_scene_index)
-    # Navigation zwischen Szenen
-    def previous_scene(self):
-        data, current_chapter_id, scene_ids, scenes = self.load_scenes_from_current_chapter()
-        if not scene_ids:
-            return
-        if self.current_scene_index > 0:
-            self.current_scene_index -= 1
-            self.fill_scene_form(self.current_scene_index)
-    # Tab-Wechsel im linken Panel (Objekte, Orte, Erzählstränge)
-    def on_left_panel_tab_changed(self, index, tab_widget=None):
-        sender = self.sender()
-        if sender is None and tab_widget is not None:
-            sender = tab_widget
-        if sender is None:
-            return
-        tab_name = sender.tabText(index)
-        if tab_name == self.get_translation("proj_ob_header", "Objekte"):
-            objects = self.load_objects()
-            if objects:
-                first_id = sorted(objects.keys())[0]
-                self.current_object_id = first_id
-                self.fill_object_form_left(objects[first_id])
-            else:
-                self.current_object_id = None
-                empty_data = {k: "" for k in self.object_form_widgets_left}
-                self.fill_object_form_left(empty_data)
-        if tab_name == self.get_translation("proj_lo_header", "Orte"):
-            locations = self.load_locations()
-            if locations:
-                first_id = sorted(locations.keys())[0]
-                self.current_location_id = first_id
-                self.fill_location_form_left(locations[first_id])
-            else:
-                self.current_location_id = None
-                empty_data = {k: "" for k in self.location_form_widgets_left}
-                self.fill_location_form_left(empty_data)
-        if tab_name == self.get_translation("proj_st_header", "Erzählstränge"):
-            storylines = self.load_storylines()
-            if storylines:
-                first_id = sorted(storylines.keys())[0]
-                self.current_storyline_id = first_id
-                self.fill_storyline_form_left(storylines[first_id])  # <-- Korrekt!
-            else:
-                self.current_storyline_id = None
-                empty_data = {k: "" for k in self.storyline_form_widgets_left}
-                self.fill_storyline_form_left(empty_data)
-                
-    # ... andere Methoden ...
-    def update_scene_word_count(self):
-        if "scene_word_count" in self.scene_form_widgets:
-            widget = self.scene_form_widgets["scene_word_count"]
-            text = self.scene_plain_editor.toPlainText() if hasattr(self, "scene_plain_editor") else ""
-            word_count = len(text.split())
-            if isinstance(widget, QLabel):
-                widget.setText(str(word_count))
-            elif isinstance(widget, QSpinBox):
-                widget.setValue(word_count)
-    
-    # Initialisierung der Panels
+# Initialisierung der Panels
+    # Left Panels mit Header
     def create_left_panel_with_header(self, header_key, default_text):
         panel_widget = QWidget()
         panel_layout = QVBoxLayout(panel_widget)
@@ -542,7 +110,6 @@ class StartWindow(QMainWindow):
         self.safe_apply_theme_style(header_label, "label", self.theme)
         log_info(f"Left panel with header '{header_key}' erstellt (Default: '{default_text}')")
         return panel_widget
-
     # Anzeige des jeweils ausgewählten left_panels über die Buttons in right_panel_start
     def show_left_panel(self, panel_index, left_panel_functions):
         self.current_panel_index = panel_index
@@ -561,7 +128,7 @@ class StartWindow(QMainWindow):
             window_key = self.get_window_key_by_panel_index(self.current_panel_index)
             splitter_sizes = self.settings.get(window_key, {}).get("splitter_sizes", [300, 600, 300])
             splitter.setSizes(splitter_sizes)
-
+            self.connect_splitter_signal()
     # Anzeige des jeweils ausgewählten center_panels über die Buttons in right_panel_start
     def create_center_panel_with_header(self, header_key, default_text):
         panel_widget = QWidget()
@@ -580,7 +147,6 @@ class StartWindow(QMainWindow):
         self.safe_apply_theme_style(header_label, "label", self.theme)
         log_info(f"Center panel with header '{header_key}' erstellt (Default: '{default_text}')")
         return panel_widget
-    
     # Anzeige des jeweils ausgewählten center_panels über die Buttons in right_panel_start
     def show_center_panel(self, panel_index, center_panel_functions):
         self.current_panel_index = panel_index
@@ -598,7 +164,7 @@ class StartWindow(QMainWindow):
             window_key = self.get_window_key_by_panel_index(panel_index)
             splitter_sizes = self.settings.get(window_key, {}).get("splitter_sizes", [300, 600, 300])
             splitter.setSizes(splitter_sizes)
-    
+            self.connect_splitter_signal()
     # Right Panels mit den jeweiligen Buttons
     def create_right_panel_character(self):
         panel_widget = QWidget()
@@ -636,7 +202,6 @@ class StartWindow(QMainWindow):
         self.safe_apply_theme_style(panel_widget, "panel", self.theme)
         self.safe_apply_theme_style(header_label, "label", self.theme)
         return panel_widget
-    
     # Anzeige des jeweils ausgewählten right_panels über die Buttons in right_panel_start
     def show_right_panel(self, panel_index, right_panel_functions):
         self.current_panel_index = panel_index
@@ -655,6 +220,7 @@ class StartWindow(QMainWindow):
             window_key = self.get_window_key_by_panel_index(self.current_panel_index)
             splitter_sizes = self.settings.get(window_key, {}).get("splitter_sizes", [300, 600, 300])
             splitter.setSizes(splitter_sizes)
+            self.connect_splitter_signal()
     
     # Change Event
     def changeEvent(self, event):
@@ -675,7 +241,6 @@ class StartWindow(QMainWindow):
                     json.dump(self.settings, f, indent=2, ensure_ascii=False)
                 log_info(f"Fensterstatus geändert: Maximized={start_window['is_maximized']}, Größe={self.width()}x{self.height()}")
         super().changeEvent(event)
-    
     # Sicherheitsabfrage beim Beenden des Programms
     @log_call
     def show_secure_exit_dialog(self):    
@@ -712,7 +277,6 @@ class StartWindow(QMainWindow):
         btn_no.clicked.connect(dialog.reject)
 
         dialog.exec()
-   
     # Fenstergröße wurde verändert
     def resizeEvent(self, event):
         super().resizeEvent(event)
@@ -723,14 +287,13 @@ class StartWindow(QMainWindow):
             with open(USER_SETTINGS_FILE, "w", encoding="utf-8") as f:
                 json.dump(self.settings, f, indent=2, ensure_ascii=False)
             log_info(f"Fenstergröße geändert: {self.width()}x{self.height()}")
-
+    
     # Funktion zum sicheren Abrufen von Übersetzungen
     def on_language_changed(self, index):
         # Hole den Sprachcode aus den Items oder einer Mapping-Liste
         language_codes = ["de", "en", "fr", "es"]  # Beispiel, passe ggf. an
         new_language = language_codes[index]  
         self.change_language(new_language)
-
     # Update Texte in Center_panel_start
     def update_center_panel_start_texts(self):
         # Header aktualisieren
@@ -805,7 +368,6 @@ class StartWindow(QMainWindow):
 
         # Fenster-Titel aktualisieren
         self.setWindowTitle(self.get_translation("WinStartTitle", "CSNova"))
-
     # Update Texte in Right_panel_start
     def update_right_panel_start_texts(self):
         # Header aktualisieren
@@ -838,7 +400,6 @@ class StartWindow(QMainWindow):
 
         # Fenster-Titel aktualisieren
         self.setWindowTitle(self.get_translation("WinStartTitle", "CSNova"))
-   
     # Funktion wenn über language_combo die Sprache geändert wird
     def change_language(self, new_language):
         language_codes = ["de", "en", "fr", "es"]
@@ -888,7 +449,7 @@ class StartWindow(QMainWindow):
             self.btn_save.setEnabled(True)
         if hasattr(self, "btn_reset"):
             self.btn_reset.setEnabled(True)
-
+    
     # Funktion, wenn das Theme in der theme_combo geändert wird
     def on_theme_changed(self, index):
         # Hole den Theme-Namen aus den Items oder einer Mapping-Liste
@@ -899,7 +460,6 @@ class StartWindow(QMainWindow):
                        "Minimal_neutral", "Minimal_dark", "Minimal_light"]  # Beispiel, passe ggf. an
         new_theme_name = theme_names[index]  
         self.change_theme(new_theme_name)   
-
     # Mapping liste wie in on_theme_changed 
     def change_theme(self, new_theme_name):
         theme_names = ["Modern_neutral", "Modern_dark", "Modern_light", 
@@ -946,7 +506,6 @@ class StartWindow(QMainWindow):
             self.btn_save.setEnabled(True)
         if hasattr(self, "btn_reset"):
             self.btn_reset.setEnabled(True)
-    
     # Sichere Anwendung des Theme-Stils mit Fehlerbehandlung
     def safe_apply_theme_style(self, widget, style_type, theme):
         try:
@@ -954,7 +513,7 @@ class StartWindow(QMainWindow):
                 self.apply_theme_style(widget, style_type, theme)
         except Exception as e:
             log_exception(f"Fehler beim Anwenden des Theme-Stils auf {widget.objectName()}", e)
-
+    
     # Einstellungen speichern
     def save_settings(self):
         try:
@@ -1026,9 +585,12 @@ class StartWindow(QMainWindow):
         except Exception as e:
             log_exception("Fehler beim Speichern der Einstellungen", e)
     
-    # PANELS FUNKTIONEN - LEFT_PANEL
-    # .............................................................. 
-    # Dieses left_panel_start wird beim Systemstart angezeigt und beinhaltet das Programmlogo
+# PANELS FUNKTIONEN - LEFT_PANEL
+# .............................................................. 
+
+    # Dieses left_panel_start wird im Start-Modus angezeigt und beinhaltet das Logo
+    # (Buchcover) von CSNova, den Programmnamen
+    # sowie die Versionsnummer 
     # und grundelegende Informationen: (c), Version, Autor, Lizenz und evtl. weitere Hinweise.
     def create_left_panel_start(self, splitter_sizes):
         panel_widget = QWidget()
@@ -1069,7 +631,7 @@ class StartWindow(QMainWindow):
 
         panel_widget.setObjectName("PicturePanel")
         self.safe_apply_theme_style(panel_widget, "panel", {**self.theme, "background": self.theme.get("nav_bg", self.theme.get("background"))})
-        copyright_label = QLabel("v 0.0.9 <br>(c) 2025 - CSNova - Frank Reiser", panel_widget)
+        copyright_label = QLabel("v 0.1.255 <br>(c) 2025 - CSNova - Frank Reiser", panel_widget)
         copyright_label.setAlignment(Qt.AlignBottom | Qt.AlignHCenter)
         panel_layout.addWidget(copyright_label, alignment=Qt.AlignBottom)
 
@@ -1090,7 +652,6 @@ class StartWindow(QMainWindow):
             else:
                 log_error("Fehler: Pixmap ist null, Bild konnte nicht geladen werden.")
         return panel_widget, update_image_on_splitter_move
-    
     # Dieses left_panel_editor wird im Editor-Modus angezeigt und beinhaltet
     # die Inhalte aus den Tabellen: Charaktere, Orte, Objekte, Kapitel, Szenen
     def create_left_panel_editor(self):
@@ -1205,8 +766,8 @@ class StartWindow(QMainWindow):
             ("proj_btn_add_scene", "proj_btn_add_scene_hint", "btn_scene_new"),
             ("proj_btn_prev_scene", "proj_btn_prev_scene_hint", "btn_scene_prev"),
             ("proj_btn_next_scene", "proj_btn_next_scene_hint", "btn_scene_next"),
+            ("proj_btn_save_scene", "proj_btn_save_scene_hint", "btn_scene_save"),            
             ("proj_btn_delete_scene", "proj_btn_delete_scene_hint", "btn_scene_delete"),
-            ("proj_btn_save_scene", "proj_btn_save_scene_hint", "btn_scene_save"),
         ]
         for key, hint_key, attr_name in scene_buttons:
             btn_text = self.get_translation(key, key)
@@ -1231,8 +792,8 @@ class StartWindow(QMainWindow):
         obj_button_layout = QHBoxLayout()
         obj_buttons = [
             ("botn_ob_01", "botn_ob_01_hint", "btn_object_new"),
-            ("botn_ob_02a", "botn_ob_02a_hint", "btn_object_next"),
             ("botn_ob_02b", "botn_ob_02b_hint", "btn_object_prev"),
+            ("botn_ob_02a", "botn_ob_02a_hint", "btn_object_next"),
             ("botn_ob_03", "botn_ob_03_hint", "btn_object_save"),
             ("botn_ob_04", "botn_ob_04_hint", "btn_object_delete"),
         ]
@@ -1277,8 +838,8 @@ class StartWindow(QMainWindow):
         loc_button_layout = QHBoxLayout()
         loc_buttons = [
             ("botn_lo_01", "botn_lo_01_hint", "btn_location_new"),
-            ("botn_lo_02a", "botn_lo_02a_hint", "btn_location_next"),
             ("botn_lo_02b", "botn_lo_02b_hint", "btn_location_prev"),
+            ("botn_lo_02a", "botn_lo_02a_hint", "btn_location_next"),
             ("botn_lo_03", "botn_lo_03_hint", "btn_location_save"),
             ("botn_lo_04", "botn_lo_04_hint", "btn_location_delete"),
         ]
@@ -1321,8 +882,8 @@ class StartWindow(QMainWindow):
         sl_button_layout = QHBoxLayout()
         sl_buttons = [
             ("botn_sl_01", "botn_sl_01_hint", "btn_storyline_new"),
-            ("botn_sl_02", "botn_sl_02_hint", "btn_storyline_next"),
             ("botn_sl_03", "botn_sl_03_hint", "btn_storyline_prev"),
+            ("botn_sl_02", "botn_sl_02_hint", "btn_storyline_next"),
             ("botn_sl_04", "botn_sl_04_hint", "btn_storyline_save"),
             ("botn_sl_05", "botn_sl_05_hint", "btn_storyline_delete"),
         ]
@@ -1412,31 +973,24 @@ class StartWindow(QMainWindow):
         tab_widget.currentChanged.connect(self.on_left_panel_tab_changed)
         self.on_left_panel_tab_changed(tab_widget.currentIndex())
         return panel_widget
-           
     # Dieses left_panel_project wird angezeigt, wenn ein Projekt erstellt oder bearbeitet wird.
     def create_left_panel_project(self):
         return self.create_left_panel_with_header("proj_ma_header", "Projects")
-    
     # Dieses left_panel_settings wird angezeigt, wenn die Einstellungen geöffnet werden.
     def create_left_panel_settings(self):
         return self.create_left_panel_with_header("se_ma_header", "Settings")
-        
     # Dieses left_panel_character wird angezeigt, wenn ein Charakter erstellt oder bearbeitet wird.
     def create_left_panel_character(self):
         return self.create_left_panel_with_header("char_ma_header", "Characteres")
-
     # Dieses left_panel_location wird angezeigt, wenn ein Ort erstellt oder bearbeitet wird.
     def create_left_panel_location(self):
         return self.create_left_panel_with_header("proj_lo_header", "Locations")
-    
     # Dieses left_panel_object wird angezeigt, wenn ein Objekt erstellt oder bearbeitet wird.
     def create_left_panel_object(self):
         return self.create_left_panel_with_header("proj_ob_header", "Objects")
-
     # Diese left_panel_storylines wird angezeigt, wenn eine Storyline erstellt oder bearbeitet wird.
     def create_left_panel_storylines(self):
         return self.create_left_panel_with_header("proj_st_header", "Storylines")
-    
     # Dieses left_panel_help wird angezeigt, wenn die Hilfe geöffnet wird.
     # Es wird vorerst das gleiche Panel wie left_panel_start verwendet.
     def create_left_panel_help(self):
@@ -1444,7 +998,6 @@ class StartWindow(QMainWindow):
         splitter_sizes = self.settings.get(window_key, {}).get("splitter_sizes", [300, 600, 300])
         panel_widget, _ = self.create_left_panel_start(splitter_sizes)
         return panel_widget
-    
     # Dieses left_panel_about wird angezeigt, wenn "Über" geöffnet wird.
     # Es wird vorerst das gleiche Panel wie left_panel_start verwendet.
     def create_left_panel_about(self):
@@ -1453,9 +1006,9 @@ class StartWindow(QMainWindow):
         panel_widget, _ = self.create_left_panel_start(splitter_sizes)
         return panel_widget
     
-    # ..............................................................
-    # PANELS FUNKTIONEN - CENTER_PANEL
-    # ..............................................................
+# ..............................................................
+# PANELS FUNKTIONEN - CENTER_PANEL
+# ..............................................................
     # Dieses center_panel_start wird beim Systemstart angezeigt und beinhaltet
     # grundlegende Informationen und Anpassungsmöglichkeiten für die Einstellungen: Sprache und Theme
     def create_center_panel_start(self):
@@ -1575,7 +1128,6 @@ class StartWindow(QMainWindow):
             self.info_label = info_label
 
         return panel_widget
-   
     # Dieses center_panel_editor wird im Editor-Modus angezeigt und beinhaltet
     # die Textverarbeitung für die Szenen usw.
     def create_center_panel_editor(self):
@@ -1640,8 +1192,9 @@ class StartWindow(QMainWindow):
         self.safe_apply_theme_style(toolbar1, "toolbar", self.theme)
 
         return panel
-
+    
     # Methoden für die Toolbar-Buttons:
+    #------------------------------------------------------
     # Text hochstellen
     def set_superscript(self):
         """Markierten Text hochstellen (Superscript)."""
@@ -1795,8 +1348,2295 @@ class StartWindow(QMainWindow):
         self.project_list_widget.itemSelectionChanged.connect(self.update_project_buttons_state)
 
         return panel_widget
+    # Dieses center_panel_settings wird angezeigt, wenn die Einstellungs-
+    # Oberfläche geöffnet wird.
+    def create_center_panel_settings(self):
+        panel_widget = QWidget()
+        main_layout = QVBoxLayout(panel_widget)
+        main_layout.setContentsMargins(20, 20, 20, 20)
+        main_layout.setSpacing(16)
+        main_layout.setAlignment(Qt.AlignTop)
 
+        tab_widget = QTabWidget(panel_widget)
+        tab_widget.setTabPosition(QTabWidget.North)
+
+        # --- Tab 1: Allgemein ---
+        tab_general = QWidget()
+        tab_general_layout = QVBoxLayout(tab_general)
+        tab_general_layout.setAlignment(Qt.AlignTop)
+
+        language_label_1 = QLabel(self.get_translation("comboBox_se_01", "Language"), tab_general)
+        language_label_1.setToolTip(self.get_translation("comboBox_se_01_hint", "Select your language."))
+        tab_general_layout.addWidget(language_label_1)
+
+        self.language_combo_1 = QComboBox(tab_general)
+        language_items_1 = [
+            self.get_translation(f"comboBox_se_01_item_{i}", f"Language {i+1}")
+            for i in range(4)
+        ]
+        self.language_combo_1.addItems(language_items_1)
+        self.language_combo_1.setToolTip(self.get_translation("comboBox_se_01_hint", "Select your language."))
+        tab_general_layout.addWidget(self.language_combo_1)
+
+        language_codes = ["de", "en", "fr", "es"]
+        current_language = self.language
+        try:
+            lang_idx = language_codes.index(current_language)
+        except ValueError:
+            lang_idx = 0
+        self.language_combo_1.blockSignals(True)
+        self.language_combo_1.setCurrentIndex(lang_idx)
+        self.language_combo_1.blockSignals(False)
+        self.language_combo_1.currentIndexChanged.connect(
+            lambda idx: self.on_settings_language_changed(idx)
+        )
+
+        theme_label_1 = QLabel(self.get_translation("comboBox_se_02", "Theme"), tab_general)
+        theme_label_1.setToolTip(self.get_translation("comboBox_se_02_hint", "Select the theme."))
+        tab_general_layout.addWidget(theme_label_1)
+
+        self.theme_combo_1 = QComboBox(tab_general)
+        theme_items_1 = [
+            self.get_translation(f"comboBox_se_02_item_{i}", f"Design {i+1}")
+            for i in range(15)
+        ]
+        self.theme_combo_1.addItems(theme_items_1)
+        self.theme_combo_1.setToolTip(self.get_translation("comboBox_se_02_hint", "Select the theme."))
+        tab_general_layout.addWidget(self.theme_combo_1)
+
+        theme_names = [
+            "Modern_neutral", "Modern_dark", "Modern_light",
+            "OldSchool_neutral", "OldSchool_dark", "OldSchool_light",
+            "Vintage_neutral", "Vintage_dark", "Vintage_light",
+            "Future_neutral", "Future_dark", "Future_light",
+            "Minimal_neutral", "Minimal_dark", "Minimal_light"
+        ]
+        current_theme_name = self.theme.get("theme_name", theme_names[0])
+        try:
+            idx = theme_names.index(current_theme_name)
+        except ValueError:
+            idx = 0
+        self.theme_combo_1.blockSignals(True)
+        self.theme_combo_1.setCurrentIndex(idx)
+        self.theme_combo_1.blockSignals(False)
+        self.theme_combo_1.currentIndexChanged.connect(
+            lambda idx: self.on_settings_theme_changed(idx)
+        )
+
+        tab_widget.addTab(tab_general, self.get_translation("tab_se_01", "General"))
+
+        # --- Tab 2: Bücher ---
+        tab_books = QWidget()
+        tab_books_layout = QHBoxLayout(tab_books)  # <--- Änderung!
+        tab_books_layout.setAlignment(Qt.AlignTop)
+
+        region_keys = ["EU", "USA", "UK"]
+        with open(FORM_FIELDS_FILE, "r", encoding="utf-8") as f:
+            form_fields = json.load(f)
+        fiction_fields = form_fields.get("fiction_template", [])
+        nonfiction_fields = form_fields.get("nonfiction_template", [])
+
+        # --- Fiktion-Container ---
+        fiktion_group = QGroupBox(self.get_translation("settings_books_fiction", "Fiktion"), tab_books)
+        fiktion_layout = QVBoxLayout(fiktion_group)
+        fiktion_layout.setAlignment(Qt.AlignTop)
+
+        self.fiktion_region_combo = QComboBox(fiktion_group)
+        self.fiktion_region_combo.addItems(region_keys)
+        fiktion_layout.addWidget(self.fiktion_region_combo)
+
+        region_fiction = self.settings.get("general", {}).get("last_fiction_region_used", "EU")
+        self.fiktion_region_combo.setCurrentIndex(region_keys.index(region_fiction) if region_fiction in region_keys else 0)
+
+        fiktion_region = region_fiction
+        fiktion_template = self.settings.get(fiktion_region, {}).get("fiction_template", {})
+        fiktion_form_widget, self.romane_format_widgets = self.create_book_format_form(
+            fiktion_group, fiction_fields, fiktion_template, region=fiktion_region
+        )
+        fiktion_layout.addWidget(fiktion_form_widget)
+        fiktion_group.setMinimumWidth(260)
+        tab_books_layout.addWidget(fiktion_group)
+
+        # --- Non-Fiktion-Container ---
+        nonfiktion_group = QGroupBox(self.get_translation("settings_books_nonfiction", "Non-Fiktion"), tab_books)
+        nonfiktion_layout = QVBoxLayout(nonfiktion_group)
+        nonfiktion_layout.setAlignment(Qt.AlignTop)
+
+        self.nonfiktion_region_combo = QComboBox(nonfiktion_group)
+        self.nonfiktion_region_combo.addItems(region_keys)
+        nonfiktion_layout.addWidget(self.nonfiktion_region_combo)
+
+        region_nonfiction = self.settings.get("general", {}).get("last_nonfiction_region_used", "EU")
+        self.nonfiktion_region_combo.setCurrentIndex(region_keys.index(region_nonfiction) if region_nonfiction in region_keys else 0)
+
+        nonfiktion_region = region_nonfiction
+        nonfiktion_template = self.settings.get(nonfiktion_region, {}).get("nonfiction_template", {})
+        nonfiktion_form_widget, self.sachbuch_format_widgets = self.create_book_format_form(
+            nonfiktion_group, nonfiction_fields, nonfiktion_template, region=nonfiktion_region
+        )
+        nonfiktion_layout.addWidget(nonfiktion_form_widget)
+        nonfiktion_group.setMinimumWidth(260)
+        tab_books_layout.addWidget(nonfiktion_group)
+
+        def update_fiktion_form(idx):
+            region = region_keys[idx]
+            template = self.settings.get(region, {}).get("fiction_template", {})
+            for i in reversed(range(fiktion_layout.count())):
+                widget = fiktion_layout.itemAt(i).widget()
+                if widget and widget != self.fiktion_region_combo:
+                    fiktion_layout.removeWidget(widget)
+                    widget.deleteLater()
+            new_form_widget, self.romane_format_widgets = self.create_book_format_form(
+                fiktion_group, fiction_fields, template, region=region
+            )
+            fiktion_layout.addWidget(new_form_widget)
+
+        def update_nonfiktion_form(idx):
+            region = region_keys[idx]
+            template = self.settings.get(region, {}).get("nonfiction_template", {})
+            for i in reversed(range(nonfiktion_layout.count())):
+                widget = nonfiktion_layout.itemAt(i).widget()
+                if widget and widget != self.nonfiktion_region_combo:
+                    nonfiktion_layout.removeWidget(widget)
+                    widget.deleteLater()
+            new_form_widget, self.sachbuch_format_widgets = self.create_book_format_form(
+                nonfiktion_group, nonfiction_fields, template, region=region
+            )
+            nonfiktion_layout.addWidget(new_form_widget)
+
+        self.fiktion_region_combo.currentIndexChanged.connect(update_fiktion_form)
+        self.nonfiktion_region_combo.currentIndexChanged.connect(update_nonfiktion_form)
+
+        tab_widget.addTab(tab_books, self.get_translation("tab_se_02", "Bücher"))
+
+        for i in range(3, 7):
+            tab_key = f"tab_se_{i:02d}"
+            tab_hint_key = f"tab_se_{i:02d}_hint"
+            tab_label = self.get_translation(tab_key, f"Tab {i}")
+            tab_hint = self.get_translation(tab_hint_key, "")
+
+            tab = QWidget()
+            tab_layout = QVBoxLayout(tab)
+            tab_layout.setAlignment(Qt.AlignTop)
+            label = QLabel(tab_label, tab)
+            label.setAlignment(Qt.AlignTop | Qt.AlignLeft)
+            tab_layout.addWidget(label)
+
+            tab_widget.addTab(tab, tab_label)
+            tab_widget.setTabToolTip(i-1, tab_hint)
+
+        main_layout.addWidget(tab_widget)
+        panel_widget.setObjectName("PreferencesPanel")
+        self.safe_apply_theme_style(panel_widget, "panel", self.theme)
+        self.safe_apply_theme_style(tab_widget, "tab", self.theme)
+        return panel_widget
+    # Dieses center_panel_character wird angezeigt, wenn ein Charakter erstellt oder bearbeitet wird.
+    def create_center_panel_character(self, character_data=None):
+        panel_widget = QWidget()
+        main_layout = QVBoxLayout(panel_widget)
+        main_layout.setContentsMargins(20, 20, 20, 20)
+        main_layout.setSpacing(12)
+
+        # --- OBERER BEREICH: Hauptcharakter, Name, Vorname ---
+        top_form = QFormLayout()
+        top_form.setSpacing(8)
+        self.character_form_widgets = {}
+
+        upper_fields = ["main_character", "name", "first_name"]
+        with open(FORM_FIELDS_FILE, "r", encoding="utf-8") as f:
+            form_fields = json.load(f)
+        character_fields = form_fields.get("characters", [])
+
+        for field in character_fields:
+            field_name = field.get("datafield_name")
+            if field_name not in upper_fields:
+                continue
+            label_key = field.get("label_key", field_name)
+            label_text = self.get_translation(label_key, field_name)
+            field_type = field.get("type", "text")
+            width = field.get("width")
+            # Widget-Auswahl
+            if field_type == "checkbox":
+                widget = QCheckBox(panel_widget)
+            else:
+                widget = QLineEdit(panel_widget)
+            if width:
+                try:
+                    widget.setFixedWidth(int(width))
+                except Exception:
+                    pass
+            top_form.addRow(label_text, widget)
+            self.character_form_widgets[field_name] = widget
+
+        main_layout.addLayout(top_form)
+
+        # --- TAB-BEREICH ---
+        tab_widget = QTabWidget(panel_widget)
+        tab_widget.setTabPosition(QTabWidget.North)
+
+        tab_definitions = [
+            ("char_ma_01", ["nick_name", "born", "died", "role_ID", "group_ID", "char_image", "gender_ID", "sexual_orientation_ID", "status_ID", "notes"]),
+            ("char_or_01", ["origin_father", "origin_mother", "origin_siblings", "origin_reference_person", "origin_place_of_birth", "origin_notes"]),
+            ("char_ed_01", ["education_school", "education_university", "education_vocational_training", "education_self_tought", "education_profession", "education_art_music", "education_sports","education_technology","education_notes"]),
+            ("char_am_01", ["appearance_Height", "appearance_Body_type", "appearance_Stature", "appearance_Face_shape", "appearance_Eye_shape", "appearance_Eye_color", "appearance_Hair", "appearance_Hair_color", "appearance_Skin", "appearance_Aura", "appearance_Special_features", "appearance_Notes"]),
+            ("char_ad_01", ["appearance_details_Head", "appearance_details_Neck", "appearance_details_Shoulders", "appearance_details_Arms", "appearance_details_Hands", "appearance_details_Fingers", "appearance_details_Chest", "appearance_details_Hips_Waist", "appearance_details_Buttocks", "appearance_details_Legs", "appearance_details_Feet", "appearance_details_Toes","appearance_details_notes"]),
+            ("char_ps_01", ["personality_Positive_trait", "personality_Negative_trait", "personality_Fears", "personality_Weaknesses", "personality_Strengths", "personality_Talents", "personality_Belief_principle", "personality_Life_goal", "personality_Motivation", "personality_Behavior", "personality_Notes"]),
+            ("char_pp_01", ["psychlogical_profile_Diagnosis", "psychlogical_profile_Symptoms", "psychlogical_profile_Therapy", "psychlogical_profile_Medication", "psychlogical_profile_Temperament", "psychlogical_profile_Values", "psychlogical_profile_Moral_concepts", "psychlogical_profile_Character_strength", "psychlogical_profile_Character_weakness", "psychlogical_profile_Self_image", "psychlogical_profile_Humor", "psychlogical_profile_Aggressiveness", "psychlogical_profile_Trauma", "psychlogical_profile_Imprint", "psychlogical_profile_Socialization", "psychlogical_profile_Norms", "psychlogical_profile_Taboos", "psychlogical_profile_Notes"]),
+        ]
+
+        # Altersberechnung mit Validierung (außerhalb des Feld-Loops, damit sie immer existiert)
+        def update_age(*args):
+            born_widget = self.character_form_widgets.get("born")
+            died_widget = self.character_form_widgets.get("died")
+            age_label = self.character_form_widgets.get("char_age")
+            if not born_widget or not age_label:
+                return
+
+            birthdate = None
+            died_date = None
+
+            # Unterstützte Formate je nach Sprache
+            if self.language == "de":
+                formats = ["%d.%m.%Y", "%Y-%m-%d"]
+            elif self.language == "en":
+                formats = ["%m %d %Y", "%Y-%m-%d"]
+            elif self.language in ("fr", "es"):
+                formats = ["%d/%m/%Y", "%Y-%m-%d"]
+            else:
+                formats = ["%Y-%m-%d"]
+
+            # Geburtsdatum parsen
+            born_text = born_widget.text().strip()
+            for fmt in formats:
+                try:
+                    birthdate = datetime.datetime.strptime(born_text, fmt).date()
+                    break
+                except Exception:
+                    continue
+
+            # Sterbedatum parsen (kann leer sein)
+            died_text = died_widget.text().strip() if died_widget else ""
+            for fmt in formats:
+                try:
+                    died_date = datetime.datetime.strptime(died_text, fmt).date()
+                    break
+                except Exception:
+                    continue
+
+            # Visuelle Validierung
+            if born_text and not birthdate:
+                born_widget.setStyleSheet("background-color: #ffcccc;")
+            else:
+                born_widget.setStyleSheet("")
+            if died_widget:
+                if died_text and not died_date:
+                    died_widget.setStyleSheet("background-color: #ffcccc;")
+                else:
+                    died_widget.setStyleSheet("")
+
+            if not birthdate:
+                age_label.setText("")
+                return
+            if died_text and not died_date:
+                age_label.setText(self.get_translation("char_age_invalid", "Ungültiges Sterbedatum"))
+                return
+
+            if died_date:
+                age = died_date.year - birthdate.year - ((died_date.month, died_date.day) < (birthdate.month, birthdate.day))
+            else:
+                today = datetime.date.today()
+                age = today.year - birthdate.year - ((today.month, today.day) < (birthdate.month, birthdate.day))
+            age_label.setText(str(age))
+
+        for tab_key, tab_fields in tab_definitions:
+            tab = QWidget()
+            tab_layout = QFormLayout(tab)
+            tab_layout.setSpacing(8)
+            for field in character_fields:
+                field_name = field.get("datafield_name")
+                if not field_name or (tab_fields and field_name not in tab_fields):
+                    continue
+                label_key = field.get("label_key", field_name)
+                label_text = self.get_translation(label_key, field_name)
+                field_type = field.get("type", "text")
+                width = field.get("width")
+
+                # Spezialfall: born/died als QLineEdit mit Validierung
+                if field_name in ("born", "died"):
+                    widget = QLineEdit(panel_widget)
+                    # Setze Platzhalter je nach Sprache
+                    if self.language == "de":
+                        widget.setPlaceholderText("TT.MM.JJJJ")
+                    elif self.language == "en":
+                        widget.setPlaceholderText("MM DD YYYY")
+                    elif self.language in ("fr", "es"):
+                        widget.setPlaceholderText("JJ/MM/JJJJ")
+                    else:
+                        widget.setPlaceholderText("YYYY-MM-DD")
+                    if width:
+                        try:
+                            widget.setFixedWidth(int(width))
+                        except Exception:
+                            pass
+                    tab_layout.addRow(label_text, widget)
+                    self.character_form_widgets[field_name] = widget
+
+                    # Alter-Label (nur einmal anlegen!)
+                    if "char_age" not in self.character_form_widgets:
+                        age_label = self.get_translation("char_ma_08", "Alter")
+                        age_value_label = QLabel(panel_widget)
+                        age_value_label.setObjectName("CharAgeLabel")
+                        age_value_label.setAlignment(Qt.AlignLeft | Qt.AlignVCenter)
+                        tab_layout.addRow(age_label, age_value_label)
+                        self.character_form_widgets["char_age"] = age_value_label
+
+                    # Signals verbinden (erst nach dem Loop update_age aufrufen!)
+                    if field_name == "born":
+                        widget.textChanged.connect(update_age)
+                    if field_name == "died":
+                        widget.textChanged.connect(update_age)
+                    continue
+
+                # Standard-Widget-Erstellung
+                if field_type == "checkbox":
+                    widget = QCheckBox(panel_widget)
+                elif field_type == "combobox":
+                    widget = QComboBox(panel_widget)
+                    combo_key = field.get("combo_key")
+                    if combo_key and self.combobox_translations:
+                        items = list(self.combobox_translations.get(combo_key, {}).values())
+                        widget.addItems(items)
+                elif field_type == "date":
+                    widget = QDateEdit(panel_widget)
+                    widget.setCalendarPopup(True)
+                elif field.get("multiline"):
+                    widget = QTextEdit(panel_widget)
+                    widget.setMinimumHeight(60)
+                else:
+                    widget = QLineEdit(panel_widget)
+                if width:
+                    try:
+                        widget.setFixedWidth(int(width))
+                    except Exception:
+                        pass
+                tab_layout.addRow(label_text, widget)
+                self.character_form_widgets[field_name] = widget
+
+            tab_widget.addTab(tab, self.get_translation(tab_key, tab_key))
+
+        main_layout.addWidget(tab_widget)
+        panel_widget.setObjectName("CharacterFormPanel")
+        self.safe_apply_theme_style(panel_widget, "panel", self.theme)
+
+        # Optional: Formular mit Daten befüllen
+        if character_data is None:
+            characters = self.load_characters()
+            if characters:
+                first_id = sorted(characters.keys())[0]
+                character_data = characters[first_id]
+                self.current_character_id = first_id
+            else:
+                character_data = None
+                self.current_character_id = None
+
+        # Altersberechnung initial ausführen (nachdem alle Widgets existieren)
+        update_age()
+
+        # Optional: Formular mit Daten befüllen
+        if character_data:
+            self.fill_character_form(character_data)
+
+        return panel_widget
+    # Dieses center_panel_object wird angezeigt, wenn ein Objekt erstellt oder bearbeitet wird.
+    def create_center_panel_object(self, object_data=None):
+        panel_widget = QWidget()
+        main_layout = QVBoxLayout(panel_widget)
+        main_layout.setContentsMargins(20, 20, 20, 20)
+        main_layout.setSpacing(12)
+
+        # Formular-Layout
+        form_layout = QFormLayout()
+        form_layout.setSpacing(8)
+        self.object_form_widgets = {}
+
+        if object_data is None:
+            objects = self.load_objects()
+            if objects:
+                first_id = sorted(objects.keys())[0]
+                object_data = objects[first_id]
+                self.current_object_id = first_id
+            else:
+                object_data = {k: "" for k in self.object_form_widgets}
+                self.current_object_id = None
+
+        # Felder laden
+        with open(FORM_FIELDS_FILE, "r", encoding="utf-8") as f:
+            form_fields = json.load(f)
+        object_fields = form_fields.get("objects", [])
+
+        for field in object_fields:
+            field_name = field.get("datafield_name")
+            if not field_name:
+                continue
+            label_key = field.get("label_key", field_name)
+            label_text = self.get_translation(label_key, field_name)
+            field_type = field.get("type", "text")
+            width = field.get("width")
+
+            # Widget-Auswahl
+            if field_type == "checkbox":
+                widget = QCheckBox(panel_widget)
+            elif field_type == "combobox":
+                widget = QComboBox(panel_widget)
+                combo_key = field.get("combo_key")
+                if combo_key and self.combobox_translations:
+                    items = list(self.combobox_translations.get(combo_key, {}).values())
+                    widget.addItems(items)
+            elif field_type == "date":
+                widget = QDateEdit(panel_widget)
+                widget.setCalendarPopup(True)
+                widget.setDate(datetime.date.today())
+            elif field.get("multiline"):
+                widget = QTextEdit(panel_widget)
+                widget.setMinimumHeight(60)
+            else:
+                widget = QLineEdit(panel_widget)
+            if width:
+                try:
+                    widget.setFixedWidth(int(width))
+                except Exception:
+                    pass
+
+            # Wert beim Laden setzen
+            if object_data and field_name in object_data:
+                value = object_data[field_name]
+                if isinstance(widget, QLineEdit):
+                    widget.setText(str(value))
+                elif isinstance(widget, QTextEdit):
+                    widget.setPlainText(str(value))
+                elif isinstance(widget, QComboBox):
+                    idx = widget.findText(str(value))
+                    if idx >= 0:
+                        widget.setCurrentIndex(idx)
+                elif isinstance(widget, QCheckBox):
+                    widget.setChecked(bool(value))
+                elif isinstance(widget, QDateEdit):
+                    try:
+                        widget.setDate(datetime.date.fromisoformat(value))
+                    except Exception:
+                        widget.setDate(datetime.date.today())
+
+            form_layout.addRow(label_text, widget)
+            self.object_form_widgets[field_name] = widget
+
+        main_layout.addLayout(form_layout)
+        panel_widget.setObjectName("ObjectFormPanel")
+        self.safe_apply_theme_style(panel_widget, "panel", self.theme)
+        return panel_widget
+    # Dieses center_panel_location wird angezeigt, wenn ein Ort erstellt oder bearbeitet wird.
+    def create_center_panel_location(self, location_data=None):
+        panel_widget = QWidget()
+        main_layout = QVBoxLayout(panel_widget)
+        main_layout.setContentsMargins(20, 20, 20, 20)
+        main_layout.setSpacing(12)
+
+        # Formular-Layout
+        form_layout = QFormLayout()
+        form_layout.setSpacing(8)
+        self.location_form_widgets = {}
+
+        if location_data is None:
+            locations = self.load_locations()
+            if locations:
+                first_id = sorted(locations.keys())[0]
+                location_data = locations[first_id]
+                self.current_location_id = first_id
+            else:
+                location_data = {k: "" for k in self.location_form_widgets}
+                self.current_location_id = None    
+
+        # Felder laden
+        with open(FORM_FIELDS_FILE, "r", encoding="utf-8") as f:
+            form_fields = json.load(f)
+        location_fields = form_fields.get("locations", [])
+
+        for field in location_fields:
+            field_name = field.get("datafield_name")
+            if not field_name:
+                continue
+            label_key = field.get("label_key", field_name)
+            label_text = self.get_translation(label_key, field_name)
+            field_type = field.get("type", "text")
+            width = field.get("width")
+
+            # Widget-Auswahl
+            if field_type == "checkbox":
+                widget = QCheckBox(panel_widget)
+            elif field_type == "combobox":
+                widget = QComboBox(panel_widget)
+                combo_key = field.get("combo_key")
+                if combo_key and self.combobox_translations:
+                    items = list(self.combobox_translations.get(combo_key, {}).values())
+                    widget.addItems(items)
+            elif field_type == "date":
+                widget = QDateEdit(panel_widget)
+                widget.setCalendarPopup(True)
+                widget.setDate(datetime.date.today())
+            elif field.get("multiline"):
+                widget = QTextEdit(panel_widget)
+                widget.setMinimumHeight(60)
+            else:
+                widget = QLineEdit(panel_widget)
+            if width:
+                try:
+                    widget.setFixedWidth(int(width))
+                except Exception:
+                    pass
+
+            # Wert beim Laden setzen
+            if location_data and field_name in location_data:
+                value = location_data[field_name]
+                if isinstance(widget, QLineEdit):
+                    widget.setText(str(value))
+                elif isinstance(widget, QTextEdit):
+                    widget.setPlainText(str(value))
+                elif isinstance(widget, QComboBox):
+                    idx = widget.findText(str(value))
+                    if idx >= 0:
+                        widget.setCurrentIndex(idx)
+                elif isinstance(widget, QCheckBox):
+                    widget.setChecked(bool(value))
+                elif isinstance(widget, QDateEdit):
+                    try:
+                        widget.setDate(datetime.date.fromisoformat(value))
+                    except Exception:
+                        widget.setDate(datetime.date.today())
+
+            form_layout.addRow(label_text, widget)
+            self.location_form_widgets[field_name] = widget
+
+        main_layout.addLayout(form_layout)
+        panel_widget.setObjectName("LocationFormPanel")
+        self.safe_apply_theme_style(panel_widget, "panel", self.theme)
+        return panel_widget
+    # Dieses center_panel_storylines wird angezeigt, wenn die Storylines bearbeitet werden sollen.
+    def create_center_panel_storylines(self, storyline_data=None):
+        panel_widget = QWidget()
+        main_layout = QVBoxLayout(panel_widget)
+        main_layout.setContentsMargins(20, 20, 20, 20)
+        main_layout.setSpacing(16)
+        
+        # Formular-Layout
+        form_layout = QFormLayout()
+        form_layout.setSpacing(8)
+        self.storyline_form_widgets = {}
+
+        if storyline_data is None:
+            storylines = self.load_storylines()
+            if storylines:
+                first_id = sorted(storylines.keys())[0]
+                storyline_data = storylines[first_id]
+                self.current_storyline_id = first_id
+            else:
+                storyline_data = {k: "" for k in self.storyline_form_widgets}
+                self.current_storyline_id = None
+
+        # Felder laden
+        with open(FORM_FIELDS_FILE, "r", encoding="utf-8") as f:
+            form_fields = json.load(f)
+        storyline_fields = form_fields.get("storylines", [])
+
+        for field in storyline_fields:
+            field_name = field.get("datafield_name")
+            if not field_name:
+                continue
+            label_key = field.get("label_key", field_name)
+            label_text = self.get_translation(label_key, field_name)
+            field_type = field.get("type", "text")
+            width = field.get("width")
+
+            # Widget-Auswahl
+            if field_type == "checkbox":
+                widget = QCheckBox(panel_widget)
+            elif field_type == "combobox":
+                widget = QComboBox(panel_widget)
+                combo_key = field.get("combo_key")
+                if combo_key and self.combobox_translations:
+                    items = list(self.combobox_translations.get(combo_key, {}).values())
+                    widget.addItems(items)
+            elif field_type == "date":
+                widget = QDateEdit(panel_widget)
+                widget.setCalendarPopup(True)
+                widget.setDate(datetime.date.today())
+            elif field.get("multiline"):
+                widget = QTextEdit(panel_widget)
+                widget.setMinimumHeight(60)
+            else:
+                widget = QLineEdit(panel_widget)
+            if width:
+                try:
+                    widget.setFixedWidth(int(width))
+                except Exception:
+                    pass
+
+            # Wert beim Laden setzen
+            if storyline_data and field_name in storyline_data:
+                value = storyline_data[field_name]
+                if isinstance(widget, QLineEdit):
+                    widget.setText(str(value))
+                elif isinstance(widget, QTextEdit):
+                    widget.setPlainText(str(value))
+                elif isinstance(widget, QComboBox):
+                    idx = widget.findText(str(value))
+                    if idx >= 0:
+                        widget.setCurrentIndex(idx)
+                elif isinstance(widget, QCheckBox):
+                    widget.setChecked(bool(value))
+                elif isinstance(widget, QDateEdit):
+                    try:
+                        widget.setDate(datetime.date.fromisoformat(value))
+                    except Exception:
+                        widget.setDate(datetime.date.today())
+
+            form_layout.addRow(label_text, widget)
+            self.storyline_form_widgets[field_name] = widget  
+
+        main_layout.addLayout(form_layout)
+        panel_widget.setObjectName("StorylineFormPanel")
+        self.safe_apply_theme_style(panel_widget, "panel", self.theme)
+        return panel_widget  
+    # Dieses center_panel_help wird angezeigt, wenn die Hilfe geöffnet wird.
+    def create_center_panel_help(self):
+        return self.create_center_panel_with_header("help_lp_header", "Help")
+    # Dieses center_panel_about wird angezeigt, wenn "Über" geöffnet wird.
+    def create_center_panel_about(self):
+        return self.create_center_panel_with_header("abou_lp_header", "About")
+    
+#..............................................................
+# PANELS FUNKTIONEN - RIGHT_PANEL
+# ..............................................................
+
+    # Dieses right_panel_start wird beim Systemstart angezeigt und beinhaltet
+    # die Navigation zum Aufruf von: Editor, Projekt, Einstellungen, Hilfe, Über
+    def create_right_panel_start(self):
+        panel_widget = QWidget()
+        panel_layout = QVBoxLayout(panel_widget)
+        panel_layout.setContentsMargins(20, 20, 20, 20)
+        panel_layout.setSpacing(16)
+        panel_layout.setAlignment(Qt.AlignTop)
+
+        # Header
+        header_text = self.get_translation("startWinHeader", "Project Overview <br>")
+        header_label = QLabel(header_text, panel_widget)
+        header_label.setObjectName("FormHeaderLabel")
+        header_label.setAlignment(Qt.AlignHCenter | Qt.AlignTop)
+        panel_layout.addWidget(header_label)
+
+        # Mapping: Button-Index zu left_panel-Funktion
+        self.left_panel_functions = [
+            self.create_left_panel_start,
+            self.create_left_panel_project,
+            self.create_left_panel_character,
+            self.create_left_panel_object,
+            self.create_left_panel_location,
+            self.create_left_panel_storylines,
+            self.create_left_panel_editor,
+            self.create_left_panel_settings,
+            self.create_left_panel_help,
+            self.create_left_panel_about,
+        ]
+        # Mapping: Button-Index zu center_panel-Funktion
+        self.center_panel_functions = [
+            self.create_center_panel_start,
+            self.create_center_panel_project,
+            self.create_center_panel_character,
+            self.create_center_panel_object,
+            self.create_center_panel_location,
+            self.create_center_panel_storylines,
+            self.create_center_panel_editor,
+            self.create_center_panel_settings,
+            self.create_center_panel_help,
+            self.create_center_panel_about,
+        ]
+
+        self.right_panel_functions = [
+            self.create_right_panel_start,
+            self.create_right_panel_project,
+            self.create_right_panel_character,
+            self.create_right_panel_object,
+            self.create_right_panel_location,
+            self.create_right_panel_storylines,
+            self.create_right_panel_editor,
+            self.create_right_panel_settings,
+            self.create_right_panel_help,
+            self.create_right_panel_about,
+        ]
+
+        # Navigationselemente 1-9
+        nav_keys = [
+            ("botn_st_01", "botn_st_01_hint"),
+            ("botn_st_02", "botn_st_02_hint"),
+            ("botn_st_03", "botn_st_03_hint"),
+            ("botn_st_04", "botn_st_04_hint"),
+            ("botn_st_05", "botn_st_05_hint"),
+            ("botn_st_06", "botn_st_06_hint"),
+            ("botn_st_07", "botn_st_07_hint"),
+            ("botn_st_08", "botn_st_08_hint"),
+            ("botn_st_09", "botn_st_09_hint"),
+        ]
+
+        for i, (key, hint_key) in enumerate(nav_keys, start=1):
+            btn_text = self.get_translation(key, key)
+            btn_hint = self.get_translation(hint_key, "")
+            btn = QPushButton(btn_text, panel_widget)
+            btn.setToolTip(btn_hint)
+            panel_layout.addWidget(btn)
+            setattr(self, f"botn_st_{i:02d}", btn)
+            # Button-Handler verbinden
+            btn.clicked.connect(
+                lambda checked, idx=i: (
+                self.show_left_panel(idx, self.left_panel_functions),
+                self.show_center_panel(idx, self.center_panel_functions),
+                self.show_right_panel(idx, self.right_panel_functions)
+            ))
+
+        # Spacer, damit Button 9 unten ist
+        panel_layout.addSpacerItem(QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding))
+
+        # Navigationselement 9 (unten)
+        btn9_text = self.get_translation("botn_st_10", "Exit")
+        btn9_hint = self.get_translation("botn_st_10_hint", "Exit CSNova.")
+        btn9 = QPushButton(btn9_text, panel_widget)
+        btn9.setToolTip(btn9_hint)
+        btn9.clicked.connect(self.show_secure_exit_dialog)
+        panel_layout.addWidget(btn9, alignment=Qt.AlignBottom)
+        self.botn_st_09 = btn9
+
+        panel_widget.setObjectName("NavigationPanelStart")
+        self.safe_apply_theme_style(panel_widget, "panel", {**self.theme, "background": self.theme.get("nav_bg", self.theme.get("background"))})
+
+        self.right_panel_header_label = header_label
+
+        return panel_widget
+    # Dieses right_panel_editor wird im Editor-Modus angezeigt und beinhaltet
+    # die Navigation, ob in left_panel die Charaktere, Orte, Objekte, Kapitel oder Szenen angezeigt werden sollen.
+    # Außerdem wird hier der Editor-Modus beendet.
+    def create_right_panel_editor(self):
+        panel_widget = QWidget()
+        panel_layout = QVBoxLayout(panel_widget)
+        panel_layout.setContentsMargins(20, 20, 20, 20)
+        panel_layout.setSpacing(16)
+        panel_layout.setAlignment(Qt.AlignTop)
+
+        # Label für die ComboBox
+        data_label = QLabel(self.get_translation("proj_ma_header", "Projekte"), panel_widget)
+        data_label.setAlignment(Qt.AlignLeft)
+        panel_layout.addWidget(data_label)
+
+        # ComboBox mit allen Data_*.json Dateien
+        data_combo = QComboBox(panel_widget)
+        data_files = sorted([
+            f for f in os.listdir(str(DATA_DIR))
+            if f.startswith("Data_") and f.endswith(".json")
+        ])
+        data_combo.addItems(data_files)
+        panel_layout.addWidget(data_combo)
+        self.data_file_combo = data_combo
+
+        # Aktives Item aus user_settings.json setzen
+        last_file_opened = self.settings.get("general", {}).get("last_file_opened", "")
+        if last_file_opened in data_files:
+            idx = data_files.index(last_file_opened)
+            data_combo.setCurrentIndex(idx)
+
+        # Kapitel-Liste
+        self.chapter_list_widget = QListWidget(panel_widget)
+        self.chapter_list_widget.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        panel_layout.addWidget(self.chapter_list_widget)
+
+        # Kapitel-Liste initial füllen und erstes Kapitel anzeigen
+        filename = self.data_file_combo.currentText()
+        data_path = DATA_DIR / filename
+        data = load_json_file(data_path)
+        chapters = {k: v for k, v in data.items() if k.startswith("chapter_ID_")}
+
+        self.chapter_list_widget.clear()
+        for chapter_id, chapter in chapters.items():
+            chapter_title = chapter.get("chapter_title", chapter_id)
+            self.chapter_list_widget.addItem(f"{chapter_id}: {chapter_title}")
+
+        # Kapitel-Formular
+        with open(FORM_FIELDS_FILE, "r", encoding="utf-8") as f:
+            form_fields = json.load(f)
+        chapter_fields = form_fields.get("chapters", [])
+
+        self.chapter_form_widgets = {}
+        chapter_form = QFormLayout()
+        for field in chapter_fields:
+            field_name = field.get("datafield_name")
+            if not field_name:
+                continue
+            label_key = field.get("label_key", field_name)
+            label_text = self.get_translation(label_key, field_name)
+            field_type = field.get("type", "text")
+            width = field.get("width")
+
+            # Kapitel-ID nur als Label, nicht editierbar!
+            if field_name == "chapter_id":
+                widget = QLabel(panel_widget)
+                widget.setText("")
+                chapter_form.addRow(label_text, widget)
+                self.chapter_form_widgets[field_name] = widget
+                continue
+
+            if field_type == "text":
+                if field.get("multiline"):
+                    widget = QTextEdit(panel_widget)
+                    widget.setMinimumHeight(60)
+                else:
+                    widget = QLineEdit(panel_widget)
+            elif field_type == "spin":
+                widget = QSpinBox(panel_widget)
+                widget.setMaximum(field.get("max", 1000000))
+            elif field_type == "date":
+                widget = QDateEdit(panel_widget)
+                widget.setCalendarPopup(True)
+                widget.setDate(datetime.date.today())
+            else:
+                widget = QLineEdit(panel_widget)
+
+            if width:
+                try:
+                    widget.setFixedWidth(width)
+                except Exception:
+                    pass
+
+            chapter_form.addRow(label_text, widget)
+            self.chapter_form_widgets[field_name] = widget
+
+        panel_layout.addLayout(chapter_form)
+
+        # --- Button-Konfiguration: (Key, Hint-Key) ---
+        button_keys = [
+            ("botn_ed_01", "botn_ed_01_hint"),  # neues Kapitel 
+            ("botn_ed_02", "botn_ed_02_hint"),  # voriges Kapitel
+            ("botn_ed_03", "botn_ed_03_hint"),  # nächstes Kapitel
+            ("botn_ed_04", "botn_ed_04_hint"),  # Kapitel speichern
+            ("botn_ed_05", "botn_ed_05_hint"),  # Kapitel löschen
+        ]
+        for i, (key, hint_key) in enumerate(button_keys, start=1):
+            btn_text = self.get_translation(key, key)
+            btn_hint = self.get_translation(hint_key, "")
+            btn = QPushButton(btn_text, panel_widget)
+            btn.setToolTip(btn_hint)
+            panel_layout.addWidget(btn)
+            setattr(self, f"botn_ed_{i:02d}", btn)
+
+        # Button-Handler verbinden
+        self.botn_ed_01.clicked.connect(self.add_new_chapter)
+        self.botn_ed_02.clicked.connect(self.show_previous_chapter)
+        self.botn_ed_03.clicked.connect(self.show_next_chapter)
+        self.botn_ed_04.clicked.connect(self.save_current_chapter)
+        self.botn_ed_05.clicked.connect(self.delete_current_chapter)
+
+        # Kapitel-Auswahl-Handler: Felder aktualisieren
+        def on_chapter_selected():
+            selected_items = self.chapter_list_widget.selectedItems()
+            if selected_items:
+                chapter_id = selected_items[0].text().split(":")[0]
+                self.fill_chapter_form(chapter_id)
+                self.current_scene_index = 0
+                self.load_scenes_from_current_chapter()
+                self.fill_scene_form(self.current_scene_index)
+        self.chapter_list_widget.itemSelectionChanged.connect(on_chapter_selected)
+
+
+        # Auswahl auf das erste Kapitel setzen und Felder füllen
+        if self.chapter_list_widget.count() > 0:
+            self.chapter_list_widget.setCurrentRow(0)
+            selected_item = self.chapter_list_widget.item(0)
+            if selected_item:
+                chapter_id = selected_item.text().split(":")[0]
+                self.fill_chapter_form(chapter_id)
+
+        # Spacer, damit der Zurück-Button unten steht
+        panel_layout.addSpacerItem(QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding))
+
+        # Zurück-Button
+        btn_back_text = self.get_translation("botn_ed_06", "Back")
+        btn_back_hint = self.get_translation("botn_ed_06_hint", "Back to main navigation.")
+        btn_back = QPushButton(btn_back_text, panel_widget)
+        btn_back.setToolTip(btn_back_hint)
+        panel_layout.addWidget(btn_back, alignment=Qt.AlignBottom)
+        self.botn_ed_06 = btn_back
+        btn_back.clicked.connect(lambda: self.show_start_panels())
+
+        panel_widget.setObjectName("EditorRightPanel")
+        self.safe_apply_theme_style(panel_widget, "panel", self.theme)
+        self.safe_apply_theme_style(data_label, "label", self.theme)
+        return panel_widget
+    # Dieses right_panel_project wird angezeigt, wenn ein Projekt erstellt oder bearbeitet wird.
+    # Es beinhaltet die Navigation zu den verschiedenen Projekt-Einstellungen und beendet den Projekt-Modus.
+    def create_right_panel_project(self):
+        panel_widget = QWidget()
+        panel_layout = QVBoxLayout(panel_widget)
+        panel_layout.setContentsMargins(20, 20, 20, 20)
+        panel_layout.setSpacing(16)
+        panel_layout.setAlignment(Qt.AlignTop)
+
+        # Header
+        header_text = self.get_translation("ProjectWinHeader", "Project Management")
+        header_label = QLabel(header_text, panel_widget)
+        header_label.setObjectName("FormHeaderLabel")
+        header_label.setAlignment(Qt.AlignHCenter | Qt.AlignTop)
+        panel_layout.addWidget(header_label)
+
+        # Button-Konfiguration: (Key, Hint-Key)
+        button_keys = [
+            ("botn_fo_01", "botn_fo_01_hint"),  # Neues Projekt
+            ("botn_fo_02", "botn_fo_02_hint"),  # Projekt laden
+            ("botn_fo_03", "botn_fo_03_hint"),  # Projekt speichern
+            ("botn_fo_04", "botn_fo_04_hint"),  # Projekt löschen
+        ]
+        for i, (key, hint_key) in enumerate(button_keys, start=1):
+            btn_text = self.get_translation(key, key)
+            btn_hint = self.get_translation(hint_key, "")
+            btn = QPushButton(btn_text, panel_widget)
+            btn.setToolTip(btn_hint)
+            panel_layout.addWidget(btn)
+            setattr(self, f"botn_fo_{i:02d}", btn)
+
+        # Buttons initial deaktivieren (außer "Neues Projekt")
+        self.botn_fo_02.setEnabled(False)
+        self.botn_fo_03.setEnabled(False)
+        self.botn_fo_04.setEnabled(False)
+
+        # Button-Handler verbinden
+        self.botn_fo_01.clicked.connect(self.show_project_form_new)
+        self.botn_fo_02.clicked.connect(self.show_project_form_load)
+        self.botn_fo_03.clicked.connect(self.on_create_project_clicked)
+        self.botn_fo_04.clicked.connect(self.delete_selected_project)
+
+        # Spacer, damit der Zurück-Button unten steht
+        panel_layout.addSpacerItem(QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding))
+
+        # Zurück-Button
+        btn_back_text = self.get_translation("botn_fo_05", "Back")
+        btn_back_hint = self.get_translation("botn_fo_05_hint", "Back to main navigation.")
+        btn_back = QPushButton(btn_back_text, panel_widget)
+        btn_back.setToolTip(btn_back_hint)
+        panel_layout.addWidget(btn_back, alignment=Qt.AlignBottom)
+        self.botn_fo_05 = btn_back
+        btn_back.clicked.connect(lambda: self.show_start_panels())
+
+        panel_widget.setObjectName("ProjectRightPanel")
+        self.safe_apply_theme_style(panel_widget, "panel", self.theme)
+        self.safe_apply_theme_style(header_label, "label", self.theme)
+
+        # --- Projektliste-Selection-Handler verbinden ---
+        if hasattr(self, "project_list_widget"):
+            #self.project_list_widget.itemSelectionChanged.connect(self.update_project_buttons_state)
+            self.update_project_buttons_state()  # Initialer Zustand
+
+        return panel_widget
+    # Dieses right_panel_settings wird angezeigt, wenn die Einstellungen bearbeitet werden sollen.
+    # Es beinhaltet die Navigation zu den verschiedenen Einstellungs-Kategorien und beendet den Einstellungs-Modus.
+    def create_right_panel_settings(self):
+        panel_widget = QWidget()
+        panel_layout = QVBoxLayout(panel_widget)
+        panel_layout.setContentsMargins(20, 20, 20, 20)
+        panel_layout.setSpacing(16)
+        panel_layout.setAlignment(Qt.AlignTop)
+
+        # Header
+        header_text = self.get_translation("SettingsWinHeader", "Settings")
+        header_label = QLabel(header_text, panel_widget)
+        header_label.setObjectName("FormHeaderLabel")
+        header_label.setAlignment(Qt.AlignHCenter | Qt.AlignTop)
+        panel_layout.addWidget(header_label)
+
+        # --- Save-Button ---
+        btn_save_text = self.get_translation("botn_se_01", "Save")
+        btn_save_hint = self.get_translation("botn_se_01_hint", "Save all settings.")
+        btn_save = QPushButton(btn_save_text, panel_widget)
+        btn_save.setToolTip(btn_save_hint)
+        panel_layout.addWidget(btn_save)
+        self.botn_se_01 = btn_save
+
+        # Spacer, damit der Zurück-Button unten steht
+        panel_layout.addSpacerItem(QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding))
+
+        # --- Back-Button ---
+        btn_back_text = self.get_translation("botn_se_03", "Back")
+        btn_back_hint = self.get_translation("botn_se_03_hint", "Back to main navigation.")
+        btn_back = QPushButton(btn_back_text, panel_widget)
+        btn_back.setToolTip(btn_back_hint)
+        panel_layout.addWidget(btn_back, alignment=Qt.AlignBottom)
+        self.botn_se_03 = btn_back
+
+        # Handler für Zurück-Button: Panels zurücksetzen
+        btn_back.clicked.connect(lambda: self.show_start_panels())
+
+        # Handler für Save-Button: Einstellungen speichern
+        btn_save.clicked.connect(self.save_settings_and_formats)
+
+        panel_widget.setObjectName("SettingsRightPanel")
+        self.safe_apply_theme_style(panel_widget, "panel", self.theme)
+        self.safe_apply_theme_style(header_label, "label", self.theme)
+        return panel_widget
+    # Dieses right_panel_character wird angezeigt, wenn ein Charakter erstellt oder bearbeitet wird.
+    # Es beinhaltet die Navigation zu den verschiedenen Charakter-Einstellungen und beendet den Charakter-Modus.
+    def create_right_panel_character(self):
+        panel_widget = QWidget()
+        panel_layout = QVBoxLayout(panel_widget)
+        panel_layout.setContentsMargins(20, 20, 20, 20)
+        panel_layout.setSpacing(16)
+        panel_layout.setAlignment(Qt.AlignTop)
+
+        header_text = self.get_translation("CharacterWinHeader", "Character Management")
+        header_label = QLabel(header_text, panel_widget)
+        header_label.setObjectName("FormHeaderLabel")
+        header_label.setAlignment(Qt.AlignHCenter | Qt.AlignTop)
+        panel_layout.addWidget(header_label)
+
+        button_keys = [
+            ("botn_ch_01", "botn_ch_01_hint"),  # Neuer Charakter
+            ("botn_ch_02a", "botn_ch_02a_hint"),  # Charakter vorheriger
+            ("botn_ch_02b", "botn_ch_02b_hint"),  # Charakter nächster
+            ("botn_ch_03", "botn_ch_03_hint"),  # Charakter speichern
+            ("botn_ch_04", "botn_ch_04_hint"),  # Charakter löschen
+            ("botn_ch_06", "botn_ch_06_hint"),  # Charakter Bild laden
+        ]
+        for idx, (key, hint_key) in enumerate(button_keys):
+                btn_text = self.get_translation(key, key)
+                btn_hint = self.get_translation(hint_key, "")
+                btn = QPushButton(btn_text, panel_widget)
+                btn.setToolTip(btn_hint)
+                panel_layout.addWidget(btn)
+                setattr(self, key, btn)
+                # Nach botn_ch_06 einen größeren Abstand einfügen
+                if key == "botn_ch_06":
+                    spacer = QWidget()
+                    spacer.setFixedHeight(36)
+                    panel_layout.addWidget(spacer)
+
+        # Spacer
+        panel_layout.addSpacerItem(QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding))
+
+        # Zurück-Button
+        btn_back_text = self.get_translation("botn_ch_05", "Back")
+        btn_back_hint = self.get_translation("botn_ch_05_hint", "Back to main navigation.")
+        btn_back = QPushButton(btn_back_text, panel_widget)
+        btn_back.setToolTip(btn_back_hint)
+        panel_layout.addWidget(btn_back, alignment=Qt.AlignBottom)
+        self.botn_ch_05 = btn_back
+        btn_back.clicked.connect(self.show_start_panels)
+
+        # Button-Handler
+        self.botn_ch_01.clicked.connect(self.on_new_character_clicked)
+        self.botn_ch_02a.clicked.connect(self.on_previous_character_clicked)
+        self.botn_ch_02b.clicked.connect(self.on_next_character_clicked)
+        self.botn_ch_03.clicked.connect(self.on_save_character_clicked)
+        self.botn_ch_04.clicked.connect(self.on_delete_character_clicked)
+
+        panel_widget.setObjectName("CharacterRightPanel")
+        self.safe_apply_theme_style(panel_widget, "panel", self.theme)
+        self.safe_apply_theme_style(header_label, "label", self.theme)
+        return panel_widget
+    # Dieses right_panel_location wird angezeigt, wenn ein Ort erstellt oder bearbeitet wird.
+    # Es beinhaltet die Navigation zu den verschiedenen Ort-Einstellungen und beendet den Ort-Modus.
+    def create_right_panel_location(self):
+        panel_widget = QWidget()
+        panel_layout = QVBoxLayout(panel_widget)
+        panel_layout.setContentsMargins(20, 20, 20, 20)
+        panel_layout.setSpacing(16)
+        panel_layout.setAlignment(Qt.AlignTop)
+
+        # Header
+        header_text = self.get_translation("LocationWinHeader", "Location Management")
+        header_label = QLabel(header_text, panel_widget)
+        header_label.setObjectName("FormHeaderLabel")
+        header_label.setAlignment(Qt.AlignHCenter | Qt.AlignTop)
+        panel_layout.addWidget(header_label)
+
+        # Button-Konfiguration: (Key, Hint-Key)
+        button_keys = [
+            ("botn_lo_01", "botn_lo_01_hint"),
+            ("botn_lo_02a", "botn_lo_02a_hint"),
+            ("botn_lo_02b", "botn_lo_02b_hint"),
+            ("botn_lo_03", "botn_lo_03_hint"),
+            ("botn_lo_04", "botn_lo_04_hint"),
+        ]
+        for i, (key, hint_key) in enumerate(button_keys, start=1):
+            btn_text = self.get_translation(key, key)
+            btn_hint = self.get_translation(hint_key, "")
+            btn = QPushButton(btn_text, panel_widget)
+            btn.setToolTip(btn_hint)
+            panel_layout.addWidget(btn)
+            setattr(self, key, btn)
+
+        # Button-Handler verbinden
+        self.botn_lo_01.clicked.connect(self.on_new_location_clicked)
+        self.botn_lo_02a.clicked.connect(self.on_previous_location_clicked)
+        self.botn_lo_02b.clicked.connect(self.on_next_location_clicked)
+        self.botn_lo_03.clicked.connect(self.on_save_location_clicked)
+        self.botn_lo_04.clicked.connect(self.on_delete_location_clicked)
+
+
+        # Spacer, damit der Zurück-Button unten steht
+        panel_layout.addSpacerItem(QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding))
+
+        # Zurück-Button
+        btn_back_text = self.get_translation("botn_lo_05", "Back")
+        btn_back_hint = self.get_translation("botn_lo_05_hint", "Back to main navigation.")
+        btn_back = QPushButton(btn_back_text, panel_widget)
+        btn_back.setToolTip(btn_back_hint)
+        panel_layout.addWidget(btn_back, alignment=Qt.AlignBottom)
+        self.botn_lo_05 = btn_back
+
+        # Handler für Zurück-Button: Panels zurücksetzen
+        btn_back.clicked.connect(lambda: self.show_start_panels())
+
+        panel_widget.setObjectName("LocationRightPanel")
+        self.safe_apply_theme_style(panel_widget, "panel", self.theme)
+        self.safe_apply_theme_style(header_label, "label", self.theme)
+        return panel_widget
+    # Dieses right_panel_object wird angezeigt, wenn ein Objekt erstellt oder bearbeitet wird.
+    # Es beinhaltet die Navigation zu den verschiedenen Objekt-Einstellungen und beendet den Objekt-Modus.
+    def create_right_panel_object(self):
+        panel_widget = QWidget()
+        panel_layout = QVBoxLayout(panel_widget)
+        panel_layout.setContentsMargins(20, 20, 20, 20)
+        panel_layout.setSpacing(16)
+        panel_layout.setAlignment(Qt.AlignTop)
+
+        # Header
+        header_text = self.get_translation("ObjectWinHeader", "Object Management")
+        header_label = QLabel(header_text, panel_widget)
+        header_label.setObjectName("FormHeaderLabel")
+        header_label.setAlignment(Qt.AlignHCenter | Qt.AlignTop)
+        panel_layout.addWidget(header_label)
+
+        # Button-Konfiguration: (Key, Hint-Key)
+        button_keys = [
+            ("botn_ob_01", "botn_ob_01_hint"),  # Neu
+            ("botn_ob_02a", "botn_ob_02a_hint"),  # Vorheriges
+            ("botn_ob_02b", "botn_ob_02b_hint"),  # Nächstes
+            ("botn_ob_03", "botn_ob_03_hint"),  # Speichern
+            ("botn_ob_04", "botn_ob_04_hint"),  # Löschen
+        ]
+        for i, (key, hint_key) in enumerate(button_keys, start=1):
+            btn_text = self.get_translation(key, key)
+            btn_hint = self.get_translation(hint_key, "")
+            btn = QPushButton(btn_text, panel_widget)
+            btn.setToolTip(btn_hint)
+            panel_layout.addWidget(btn)
+            setattr(self, key, btn)
+
+        # Button-Handler verbinden
+        self.botn_ob_01.clicked.connect(self.on_new_object_clicked)
+        self.botn_ob_02a.clicked.connect(self.on_previous_object_clicked)
+        self.botn_ob_02b.clicked.connect(self.on_next_object_clicked)
+        self.botn_ob_03.clicked.connect(self.on_save_object_clicked)
+        self.botn_ob_04.clicked.connect(self.on_delete_object_clicked)
+
+        # Spacer, damit der Zurück-Button unten steht
+        panel_layout.addSpacerItem(QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding))
+
+        # Zurück-Button
+        btn_back_text = self.get_translation("botn_ob_05", "Back")
+        btn_back_hint = self.get_translation("botn_ob_05_hint", "Back to main navigation.")
+        btn_back = QPushButton(btn_back_text, panel_widget)
+        btn_back.setToolTip(btn_back_hint)
+        panel_layout.addWidget(btn_back, alignment=Qt.AlignBottom)
+        self.botn_ob_05 = btn_back
+
+        # Handler für Zurück-Button: Panels zurücksetzen
+        btn_back.clicked.connect(lambda: self.show_start_panels())
+
+        panel_widget.setObjectName("ObjectRightPanel")
+        self.safe_apply_theme_style(panel_widget, "panel", self.theme)
+        self.safe_apply_theme_style(header_label, "label", self.theme)
+        return panel_widget
+    # Dieses right_panel_storylines wird angezeigt, wenn die Storylines bearbeitet werden sollen.
+    def create_right_panel_storylines(self):
+        panel_widget = QWidget()
+        panel_layout = QVBoxLayout(panel_widget)
+        panel_layout.setContentsMargins(20, 20, 20, 20)
+        panel_layout.setSpacing(16)
+        panel_layout.setAlignment(Qt.AlignTop)
+
+        # Header
+        header_text = self.get_translation("StorylinesWinHeader", "Storylines")
+        header_label = QLabel(header_text, panel_widget)
+        header_label.setObjectName("FormHeaderLabel")
+        header_label.setAlignment(Qt.AlignHCenter | Qt.AlignTop)
+        panel_layout.addWidget(header_label)
+
+        # Button-Konfiguration: (Key, Hint-Key)
+        button_keys = [
+            ("botn_sl_01", "botn_sl_01_hint"),
+            ("botn_sl_02", "botn_sl_02_hint"),
+            ("botn_sl_03", "botn_sl_03_hint"),
+            ("botn_sl_04", "botn_sl_04_hint"),
+            ("botn_sl_05", "botn_sl_05_hint")
+        ]
+
+        for i, (key, hint_key) in enumerate(button_keys, start=1):
+            btn_text = self.get_translation(key, key)
+            btn_hint = self.get_translation(hint_key, "")
+            btn = QPushButton(btn_text, panel_widget)
+            btn.setToolTip(btn_hint)
+            panel_layout.addWidget(btn)
+            setattr(self, f"botn_sl_{i:02d}", btn)
+
+        # Button-Handler verbinden (NACH der Schleife!)
+        self.botn_sl_01.clicked.connect(self.on_new_storyline_clicked)
+        self.botn_sl_02.clicked.connect(self.on_previous_storyline_clicked)
+        self.botn_sl_03.clicked.connect(self.on_next_storyline_clicked)
+        self.botn_sl_04.clicked.connect(self.on_save_storyline_clicked)
+        self.botn_sl_05.clicked.connect(self.on_delete_storyline_clicked)
+        
+        # Handler für Zurück-Button: Panels zurücksetzen
+        panel_layout.addSpacerItem(QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding))
+
+        # Zurück-Button
+        btn_back_text = self.get_translation("botn_sl_06", "Back")
+        btn_back_hint = self.get_translation("botn_sl_06_hint", "Back to main navigation.")
+        btn_back = QPushButton(btn_back_text, panel_widget)
+        btn_back.setToolTip(btn_back_hint)
+        panel_layout.addWidget(btn_back, alignment=Qt.AlignBottom)
+        self.botn_st_09 = btn_back
+
+        # Handler für Zurück-Button: Panels zurücksetzen
+        btn_back.clicked.connect(lambda: self.show_start_panels())
+
+        panel_widget.setObjectName("StorylinesRightPanel")
+        self.safe_apply_theme_style(panel_widget, "panel", self.theme)
+        self.safe_apply_theme_style(header_label, "label", self.theme)
+
+        return panel_widget 
+    # Dieses right_panel_help wird angezeigt, wenn die Hilfe geöffnet wird.
+    def create_right_panel_help(self):
+        panel_widget = QWidget()
+        panel_layout = QVBoxLayout(panel_widget)
+        panel_layout.setContentsMargins(20, 20, 20, 20)
+        panel_layout.setSpacing(16)
+        panel_layout.setAlignment(Qt.AlignTop)
+
+        # Header
+        header_text = self.get_translation("HelpWinHeader", "Help")
+        header_label = QLabel(header_text, panel_widget)
+        header_label.setObjectName("FormHeaderLabel")
+        header_label.setAlignment(Qt.AlignHCenter | Qt.AlignTop)
+        panel_layout.addWidget(header_label)
+
+        # Button-Konfiguration: (Key, Hint-Key)
+        button_keys = [
+            ("botn_he_01", "botn_he_01_hint"),
+            ("botn_he_02", "botn_he_02_hint"),
+            ("botn_he_03", "botn_he_03_hint"),
+            ("botn_he_04", "botn_he_04_hint"),
+        ]
+        for i, (key, hint_key) in enumerate(button_keys, start=1):
+            btn_text = self.get_translation(key, key)
+            btn_hint = self.get_translation(hint_key, "")
+            btn = QPushButton(btn_text, panel_widget)
+            btn.setToolTip(btn_hint)
+            panel_layout.addWidget(btn)
+            setattr(self, f"botn_he_{i:02d}", btn)
+            # Hier kannst du später die Button-Handler ergänzen
+
+        # Spacer, damit der Zurück-Button unten steht
+        panel_layout.addSpacerItem(QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding))
+
+        # Zurück-Button
+        btn_back_text = self.get_translation("botn_he_05", "Back")
+        btn_back_hint = self.get_translation("botn_he_05_hint", "Back to main navigation.")
+        btn_back = QPushButton(btn_back_text, panel_widget)
+        btn_back.setToolTip(btn_back_hint)
+        panel_layout.addWidget(btn_back, alignment=Qt.AlignBottom)
+        self.botn_he_05 = btn_back
+
+        # Handler für Zurück-Button: Panels zurücksetzen
+        btn_back.clicked.connect(lambda: self.show_start_panels())
+
+        panel_widget.setObjectName("HelpRightPanel")
+        self.safe_apply_theme_style(panel_widget, "panel", self.theme)
+        self.safe_apply_theme_style(header_label, "label", self.theme)
+        return panel_widget
+    # Dieses right_panel_about wird angezeigt, wenn "Über" geöffnet wird.
+    def create_right_panel_about(self):
+        panel_widget = QWidget()
+        panel_layout = QVBoxLayout(panel_widget)
+        panel_layout.setContentsMargins(20, 20, 20, 20)
+        panel_layout.setSpacing(16)
+        panel_layout.setAlignment(Qt.AlignTop)
+
+        # Header
+        header_text = self.get_translation("AboutWinHeader", "About")
+        header_label = QLabel(header_text, panel_widget)
+        header_label.setObjectName("FormHeaderLabel")
+        header_label.setAlignment(Qt.AlignHCenter | Qt.AlignTop)
+        panel_layout.addWidget(header_label)
+
+        # Button-Konfiguration: (Key, Hint-Key)
+        button_keys = [
+            ("botn_ab_01", "botn_ab_01_hint"),
+            ("botn_ab_02", "botn_ab_02_hint"),
+            ("botn_ab_03", "botn_ab_03_hint"),
+            ("botn_ab_04", "botn_ab_04_hint"),
+            ("botn_ab_05", "botn_ab_05_hint"),
+            ("botn_ab_06", "botn_ab_06_hint"),
+        ]
+        for i, (key, hint_key) in enumerate(button_keys, start=1):
+            btn_text = self.get_translation(key, key)
+            btn_hint = self.get_translation(hint_key, "")
+            btn = QPushButton(btn_text, panel_widget)
+            btn.setToolTip(btn_hint)
+            panel_layout.addWidget(btn)
+            setattr(self, f"botn_ab_{i:02d}", btn)
+            # Hier kannst du später die Button-Handler ergänzen
+
+        # Spacer, damit der Zurück-Button unten steht
+        panel_layout.addSpacerItem(QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding))
+
+        # Zurück-Button (Button 7)
+        btn_back_text = self.get_translation("botn_ab_07", "Back")
+        btn_back_hint = self.get_translation("botn_ab_07_hint", "Back to main navigation.")
+        btn_back = QPushButton(btn_back_text, panel_widget)
+        btn_back.setToolTip(btn_back_hint)
+        panel_layout.addWidget(btn_back, alignment=Qt.AlignBottom)
+        self.botn_ab_07 = btn_back
+
+        # Handler für Zurück-Button: Panels zurücksetzen
+        btn_back.clicked.connect(lambda: self.show_start_panels())
+
+        panel_widget.setObjectName("AboutRightPanel")
+        self.safe_apply_theme_style(panel_widget, "panel", self.theme)
+        self.safe_apply_theme_style(header_label, "label", self.theme)
+        return panel_widget
+    
+# ..............................................................
+# Zentrale Funktionen
+# ..............................................................
+
+    # Setzt alle drei Panels auf die Startansicht zurück
+    def show_start_panels(self):
+        self.current_panel_index = 0
+        splitter = self.centralWidget()
+        if isinstance(splitter, QSplitter):
+            # Left Panel zurücksetzen
+            window_key = self.get_window_key_by_panel_index(self.current_panel_index)
+            splitter_sizes = self.settings.get(window_key, {}).get("splitter_sizes", [300, 600, 300])
+            new_left_panel, update_left_panel_image = self.create_left_panel_start(splitter_sizes)
+            old_left_panel = splitter.widget(0)
+            splitter.insertWidget(0, new_left_panel)
+            splitter.setStretchFactor(0, 1)
+            if old_left_panel is not None:
+                old_left_panel.setParent(None)
+            self.left_panel_widget = new_left_panel
+            self.safe_apply_theme_style(new_left_panel, "panel", self.theme)
+
+            # Center Panel zurücksetzen
+            new_center_panel = self.create_center_panel_start()
+            old_center_panel = splitter.widget(1)
+            splitter.insertWidget(1, new_center_panel)
+            splitter.setStretchFactor(1, 1)
+            if old_center_panel is not None:
+                old_center_panel.setParent(None)
+            self.center_panel_widget = new_center_panel
+            self.safe_apply_theme_style(new_center_panel, "panel", self.theme)
+
+            # Right Panel zurücksetzen
+            new_right_panel = self.create_right_panel_start()
+            old_right_panel = splitter.widget(2)
+            splitter.insertWidget(2, new_right_panel)
+            splitter.setStretchFactor(2, 1)
+            if old_right_panel is not None:
+                old_right_panel.setParent(None)
+            self.right_panel_widget = new_right_panel
+            self.safe_apply_theme_style(new_right_panel, "panel", self.theme)
+
+            # Splitter-Größen wiederherstellen
+            splitter.setSizes(splitter_sizes)
+            log_info("Alle Panels wurden auf die Startansicht zurückgesetzt.")    
+    # Aktualisiert die Wortanzahl im Szenen-Editor.
+    def update_scene_word_count(self):
+        if "scene_word_count" in self.scene_form_widgets:
+            widget = self.scene_form_widgets["scene_word_count"]
+            text = self.scene_plain_editor.toPlainText() if hasattr(self, "scene_plain_editor") else ""
+            word_count = len(text.split())
+            if isinstance(widget, QLabel):
+                widget.setText(str(word_count))
+            elif isinstance(widget, QSpinBox):
+                widget.setValue(word_count)
+    # Hilfsfunktion zur Zuordnung von Panel-Index zu Settings-Key
+    def get_window_key_by_panel_index(self, panel_index):
+        keys = [
+            "start_window", "project_window", "characters_window", "objects_window",
+            "locations_window", "storylines_window", "editor_window",
+            "preference_window", "help_window", "about_window"
+        ]
+        return keys[panel_index] if panel_index < len(keys) else "start_window"
+    # Sichere Abfrage zum Löschen von Projekten, Charakteren, Objekten, Orten, Storylines
+    def show_secure_delete_dialog(self, delete_type, delete_data=None, panel="center"):
+        """
+        Zentrale Sicherheitsabfrage zum Löschen von Projekten, Charakteren, Objekten, Orten, Storylines.
+        delete_type: "project", "character", "object", "location", "storyline"
+        delete_data: z.B. Dateiname, ID, etc.
+        """
+        dialog = QDialog(self)
+        dialog.setWindowTitle(self.get_translation("WinStartTitle", "CSNova"))
+        layout = QVBoxLayout(dialog)
+        layout.setContentsMargins(24, 24, 24, 24)
+        layout.setSpacing(16)
+
+        # Übersetzungen holen
+        title = self.get_translation("secureDeleteTitle", "Do you really want to delete the following entry?")
+        type_label = {
+            "project": self.get_translation("proj_ma_header", "Project"),
+            "character": self.get_translation("char_ma_header", "Character"),
+            "object": self.get_translation("proj_ob_header", "Object"),
+            "location": self.get_translation("proj_lo_header", "Location"),
+            "storyline": self.get_translation("proj_st_header", "Storyline"),
+        }.get(delete_type, delete_type.capitalize())
+        yes = self.get_translation("botn_yes", "Yes")
+        no = self.get_translation("botn_no", "No")
+
+        # Detailtext (z.B. Name)
+        detail = str(delete_data) if delete_data else ""
+
+        # Sicherheitsabfrage-Text
+        label = QLabel(f"{title}<br><br><b>{type_label}:</b> {detail}", dialog)
+        label.setAlignment(Qt.AlignCenter)
+        label.setTextFormat(Qt.RichText)
+        if self.apply_theme_style and self.theme:
+            self.apply_theme_style(label, "label", self.theme)
+        layout.addWidget(label)
+
+        # Buttons
+        btn_layout = QHBoxLayout()
+        btn_yes = QPushButton(yes, dialog)
+        btn_no = QPushButton(no, dialog)
+        if self.apply_theme_style and self.theme:
+            self.apply_theme_style(btn_yes, "button", self.theme)
+            self.apply_theme_style(btn_no, "button", self.theme)
+        btn_layout.addWidget(btn_yes)
+        btn_layout.addWidget(btn_no)
+        layout.addLayout(btn_layout)
+
+        if self.apply_theme_style and self.theme:
+            self.apply_theme_style(dialog, "panel", self.theme)
+
+        # Button-Logik
+        def on_yes():
+            dialog.accept()
+            if delete_type == "project":
+                self._delete_project(delete_data)
+            elif delete_type == "character":
+                self._delete_character(delete_data)
+            elif delete_type == "object":
+                if panel == "left":
+                    self._delete_object_left(delete_data)
+                else:
+                    self._delete_object(delete_data)
+            elif delete_type == "location":
+                if panel == "left":
+                    self._delete_location_left(delete_data)
+                else:
+                    self._delete_location(delete_data)
+            elif delete_type == "storyline":
+                if panel == "left":
+                    self._delete_storyline_left(delete_data)
+                else:
+                    self._delete_storyline(delete_data)
+            # ...weitere Typen...
+
+        btn_yes.clicked.connect(on_yes)
+        btn_no.clicked.connect(dialog.reject)
+
+        dialog.exec()
+    # Speichert die Einstellungen aus dem Settings-Panel in user_settings.json.
+    def save_settings_and_formats(self):
+        # --- Sprache ---
+        language_codes = ["de", "en", "fr", "es"]
+        if not hasattr(self, "language_combo_1"):
+            log_error("language_combo_1 existiert nicht! Einstellungen können nicht gespeichert werden.")
+            return
+        lang_index = self.language_combo_1.currentIndex()
+        language = language_codes[lang_index]
+
+        # --- Theme ---
+        theme_names = [
+            "Modern_neutral", "Modern_dark", "Modern_light",
+            "OldSchool_neutral", "OldSchool_dark", "OldSchool_light",
+            "Vintage_neutral", "Vintage_dark", "Vintage_light",
+            "Future_neutral", "Future_dark", "Future_light",
+            "Minimal_neutral", "Minimal_dark", "Minimal_light"
+        ]
+        if not hasattr(self, "theme_combo_1"):
+            log_error("theme_combo_1 existiert nicht! Einstellungen können nicht gespeichert werden.")
+            return
+        theme_index = self.theme_combo_1.currentIndex()
+        theme_name = theme_names[theme_index]
+
+        # --- Regionen ---
+        region_keys = ["EU", "USA", "UK"]
+        if not hasattr(self, "fiktion_region_combo") or not hasattr(self, "nonfiktion_region_combo"):
+            log_error("Region-ComboBoxen existieren nicht! Einstellungen können nicht gespeichert werden.")
+            return
+        region_fiction = region_keys[self.fiktion_region_combo.currentIndex()]
+        region_nonfiction = region_keys[self.nonfiktion_region_combo.currentIndex()]
+
+        # --- In user_settings.json speichern ---
+        self.settings.setdefault("general", {})
+        self.settings["general"]["language"] = language
+        self.settings.setdefault("gui", {})
+        self.settings["gui"]["style_theme"] = theme_name
+
+        self.settings.setdefault("general", {})
+        self.settings["general"]["last_fiction_region_used"] = region_fiction
+        self.settings["general"]["last_nonfiction_region_used"] = region_nonfiction
+
+        # self.settings["general"]["first_start"] = False
+        
+        with open(USER_SETTINGS_FILE, "w", encoding="utf-8") as f:
+            json.dump(self.settings, f, indent=2, ensure_ascii=False)
+    # Hilfefunktion zum Verbinden des splitterMoved-Signals
+    def connect_splitter_signal(self):
+        splitter = self.centralWidget()
+        if isinstance(splitter, QSplitter):
+            splitter.splitterMoved.disconnect()  # Vorherige Verbindung entfernen, falls vorhanden
+            def on_splitter_moved(pos, index):
+                window_key = self.get_window_key_by_panel_index(self.current_panel_index)
+                sizes = splitter.sizes()
+                self.settings.setdefault(window_key, {})
+                self.settings[window_key]["splitter_sizes"] = sizes
+                with open(USER_SETTINGS_FILE, "w", encoding="utf-8") as f:
+                    json.dump(self.settings, f, indent=2, ensure_ascii=False)
+            splitter.splitterMoved.connect(on_splitter_moved)
+    
+# ..............................................................
+# EDITOR Left_Panel Tab Funktionen
+# ..............................................................
+    # Objekt-Funktionen im Left Panel im Editor
+    def fill_object_form_left(self, object_data):
+        """Füllt die Felder im Objects-Tab des Left Panels mit den Daten eines Objekts."""
+        for field_name, widget in self.object_form_widgets_left.items():
+            value = object_data.get(field_name, "")
+            if isinstance(widget, QLineEdit):
+                widget.setText(str(value))
+            elif isinstance(widget, QTextEdit):
+                widget.setPlainText(str(value))
+    # Liest die Daten aus den Feldern im Objects-Tab des Left Panels aus.
+    def get_object_form_left_data(self):
+        """Liest die Daten aus den Feldern im Objects-Tab des Left Panels aus."""
+        data = {}
+        for field_name, widget in self.object_form_widgets_left.items():
+            if isinstance(widget, QLineEdit):
+                data[field_name] = widget.text()
+            elif isinstance(widget, QTextEdit):
+                data[field_name] = widget.toPlainText()
+        return data
+    # Erstellt ein leeres Formular für ein neues Objekt im Left Panel.
+    def editor_left_panel_objects_new(self):
+        """Erstellt ein leeres Formular für ein neues Objekt im Left Panel."""
+        empty_data = {k: "" for k in self.object_form_widgets_left}
+        self.current_object_id = None
+        self.fill_object_form_left(empty_data)
+    # Löscht das aktuell angezeigte Objekt im Left Panel.
+    def editor_left_panel_objects_delete(self):
+        """Löscht das aktuell angezeigte Objekt im Left Panel."""
+        objects = self.load_objects()
+        object_id = self.current_object_id
+        if object_id and object_id in objects:
+            self.show_secure_delete_dialog("object", object_id, panel="left")
+            # Das eigentliche Löschen erfolgt in _delete_object
+            # Nach dem Löschen: nächstes oder leeres Objekt anzeigen
+            objects = self.load_objects()
+            if objects:
+                first_id = sorted(objects.keys())[0]
+                self.current_object_id = first_id
+                self.fill_object_form_left(objects[first_id])
+            else:
+                self.current_object_id = None
+                empty_data = {k: "" for k in self.object_form_widgets_left}
+                self.fill_object_form_left(empty_data)
+    # zeigt das nächste Objekt im Left Panel an.
+    def editor_left_panel_objects_previous(self):
+        """Navigiert zum vorherigen Objekt im Left Panel."""
+        objects = self.load_objects()
+        if not objects:
+            return
+        ids = sorted(objects.keys())
+        if self.current_object_id in ids:
+            idx = ids.index(self.current_object_id)
+            new_idx = (idx - 1) % len(ids)
+        else:
+            new_idx = 0
+        self.current_object_id = ids[new_idx]
+        self.fill_object_form_left(objects[self.current_object_id])
+    # zeigt das vorherige Objekt im Left Panel an.
+    def editor_left_panel_objects_next(self):
+        """Navigiert zum nächsten Objekt im Left Panel."""
+        objects = self.load_objects()
+        if not objects:
+            return
+        ids = sorted(objects.keys())
+        if self.current_object_id in ids:
+            idx = ids.index(self.current_object_id)
+            new_idx = (idx + 1) % len(ids)
+        else:
+            new_idx = 0
+        self.current_object_id = ids[new_idx]
+        self.fill_object_form_left(objects[self.current_object_id])
+    # Speichert das aktuell angezeigte Objekt im Left Panel.
+    def editor_left_panel_objects_save(self):
+        """Speichert das aktuell angezeigte Objekt im Left Panel."""
+        objects = self.load_objects()
+        data = self.get_object_form_left_data()
+        if self.current_object_id and self.current_object_id in objects:
+            # Bestehendes Objekt aktualisieren
+            objects[self.current_object_id] = data
+        else:
+            # Neues Objekt anlegen
+            existing_ids = [int(k.split("_")[-1]) for k in objects.keys() if k.startswith("object_ID_")]
+            next_id = max(existing_ids, default=0) + 1
+            new_id = f"object_ID_{next_id:02d}"
+            objects[new_id] = data
+            self.current_object_id = new_id
+        self.save_objects(objects)
+        self.fill_object_form_left(objects[self.current_object_id])
+
+    # Ort-Funktionen im Left Panel im Editor
+    def fill_location_form_left(self, location_data):
+        for field_name, widget in self.location_form_widgets_left.items():
+            value = location_data.get(field_name, "")
+            if isinstance(widget, QLineEdit):
+                widget.setText(str(value))
+            elif isinstance(widget, QTextEdit):
+                widget.setPlainText(str(value))
+    # Liest die Daten aus den Feldern im Locations-Tab des Left Panels aus.    
+    def get_location_form_left_data(self):
+        data = {}
+        for field_name, widget in self.location_form_widgets_left.items():
+            if isinstance(widget, QLineEdit):
+                data[field_name] = widget.text()
+            elif isinstance(widget, QTextEdit):
+                data[field_name] = widget.toPlainText()
+        return data
+    # Erstellt ein leeres Formular für einen neuen Ort im Left Panel.
+    def editor_left_panel_locations_new(self):
+        empty_data = {k: "" for k in self.location_form_widgets_left}
+        self.current_location_id = None
+        self.fill_location_form_left(empty_data)
+    # Löscht das aktuell angezeigte Location im Left Panel.
+    def editor_left_panel_locations_delete(self):
+        locations = self.load_locations()
+        location_id = self.current_location_id
+        if location_id and location_id in locations:
+            self.show_secure_delete_dialog("location", location_id, panel="left")
+            locations = self.load_locations()
+            if locations:
+                first_id = sorted(locations.keys())[0]
+                self.current_location_id = first_id
+                self.fill_location_form_left(locations[first_id])
+            else:
+                self.current_location_id = None
+                empty_data = {k: "" for k in self.location_form_widgets_left}
+                self.fill_location_form_left(empty_data)
+    # Löscht ein Location basierend auf der ID im Left Panel.
+    def _delete_location_left(self, location_id):
+        """Löscht ein Location basierend auf der ID."""
+        location = self.load_locations()
+        if not location or not location:
+            log_error(f"Kein Location zum Löschen gefunden (ID: {location_id})")
+            return
+        if location_id in location:
+            del location[location_id]
+            self.save_locations(location)
+            log_info(f"Objekt gelöscht: {location_id}")
+            # Nach dem Löschen: nächsten oder leeren Datensatz anzeigen
+            if location:
+                first_id = sorted(location.keys())[0]
+                self.current_location_id = first_id
+                self.fill_location_form_left(location[first_id])
+            else:
+                self.current_location_id = None
+                empty_data = {k: "" for k in self.location_form_widgets_left}
+                self.fill_location_form_left(empty_data)
+    # Handler für den "Löschen"-Button im Left Panel
+    def on_delete_location_clicked(self):
+        if not self.current_location_id:
+            return
+        self.show_secure_delete_dialog("location", self.current_location_id, panel="left")
+    # Navigiert zum vorherigen Location im Left Panel.
+    def editor_left_panel_locations_previous(self):
+        locations = self.load_locations()
+        if not locations:
+            return
+        ids = sorted(locations.keys())
+        if self.current_location_id in ids:
+            idx = ids.index(self.current_location_id)
+            new_idx = (idx - 1) % len(ids)
+        else:
+            new_idx = 0
+        self.current_location_id = ids[new_idx]
+        self.fill_location_form_left(locations[self.current_location_id])
+    # Navigiert zum nächsten Location im Left Panel.
+    def editor_left_panel_locations_next(self):
+        locations = self.load_locations()
+        if not locations:
+            return
+        ids = sorted(locations.keys())
+        if self.current_location_id in ids:
+            idx = ids.index(self.current_location_id)
+            new_idx = (idx + 1) % len(ids)
+        else:
+            new_idx = 0
+        self.current_location_id = ids[new_idx]
+        self.fill_location_form_left(locations[self.current_location_id])
+    # Speichert das aktuell angezeigte Location im Left Panel.
+    def editor_left_panel_locations_save(self):
+        locations = self.load_locations()
+        data = self.get_location_form_left_data()
+        if self.current_location_id and self.current_location_id in locations:
+            locations[self.current_location_id] = data
+        else:
+            existing_ids = [int(k.split("_")[-1]) for k in locations.keys() if k.startswith("location_ID_")]
+            next_id = max(existing_ids, default=0) + 1
+            new_id = f"location_ID_{next_id:02d}"
+            locations[new_id] = data
+            self.current_location_id = new_id
+        self.save_locations(locations)
+        self.fill_location_form_left(locations[self.current_location_id])
+
+   # Storyline-Funktionen im Left Panel vom Editor
+    def get_storyline_form_left_data(self):
+        data = {}
+        for field_name, widget in self.storyline_form_widgets_left.items():
+            if isinstance(widget, QLineEdit):
+                data[field_name] = widget.text()
+            elif isinstance(widget, QTextEdit):
+                data[field_name] = widget.toPlainText()
+        return data
+    # Füllt die Felder im Storylines-Tab des Left Panels mit den Daten einer Storyline.    
+    def fill_storyline_form_left(self, storyline_data):
+        for field_name, widget in self.storyline_form_widgets_left.items():
+            value = storyline_data.get(field_name, "")
+            if isinstance(widget, QLineEdit):
+                widget.setText(str(value))
+            elif isinstance(widget, QTextEdit):
+                widget.setPlainText(str(value))
+    # Erstellt ein leeres Formular für eine neue Storyline im Left Panel.
+    def editor_left_panel_storylines_new(self):
+        empty_data = {k: "" for k in self.storyline_form_widgets_left}
+        self.current_storyline_id = None
+        self.fill_storyline_form_left(empty_data)
+    # Löscht die aktuell angezeigte Storyline im Left Panel.
+    def editor_left_panel_storylines_delete(self):
+        """Löscht die aktuell angezeigte Storyline im Left Panel."""
+        storylines = self.load_storylines()
+        storyline_id = self.current_storyline_id
+        if storyline_id and storyline_id in storylines:
+            # Sicherheitsabfrage mit Panel-Kontext "left"
+            self.show_secure_delete_dialog("storyline", storyline_id, panel="left")
+            # Nach dem Löschen: Storylines neu laden und Formular aktualisieren
+            storylines = self.load_storylines()
+            if storylines:
+                first_id = sorted(storylines.keys())[0]
+                self.current_storyline_id = first_id
+                self.fill_storyline_form_left(storylines[first_id])
+            else:
+                self.current_storyline_id = None
+                empty_data = {k: "" for k in self.storyline_form_widgets_left}
+                self.fill_storyline_form_left(empty_data)
+    # Handler für den "Löschen"-Button im Left Panel
+    def on_delete_storyline_left_clicked(self):
+        if not self.current_storyline_id:
+            return
+        self.show_secure_delete_dialog("storyline", self.current_storyline_id, panel="left")
+    # Löscht eine Storyline basierend auf der ID im Left Panel.
+    def _delete_storyline_left(self, storyline_id):
+        storylines = self.load_storylines()
+        if not storylines or not storyline_id:
+            log_error(f"Keine Storyline zum Löschen gefunden (ID: {storyline_id})")
+            return
+        if storyline_id in storylines:
+            del storylines[storyline_id]
+            self.save_storylines(storylines)
+            log_info(f"Storyline gelöscht: {storyline_id}")
+            # Nach dem Löschen: nächsten oder leeren Datensatz anzeigen
+            if storylines:
+                first_id = sorted(storylines.keys())[0]
+                self.current_storyline_id = first_id
+                self.fill_storyline_form_left(storylines[first_id])
+            else:
+                self.current_storyline_id = None
+                empty_data = {k: "" for k in self.storyline_form_widgets_left}
+                self.fill_storyline_form_left(empty_data)
+    # zeigt die vorherige Storyline im Left Panel an.
+    def editor_left_panel_storylines_previous(self):
+        storylines = self.load_storylines()
+        if not storylines:
+            return
+        ids = sorted(storylines.keys())
+        if self.current_storyline_id in ids:
+            idx = ids.index(self.current_storyline_id)
+            new_idx = (idx - 1) % len(ids)
+        else:
+            new_idx = 0
+        self.current_storyline_id = ids[new_idx]
+        self.fill_storyline_form_left(storylines[self.current_storyline_id])
+    # zeigt die nächste Storyline im Left Panel an.
+    def editor_left_panel_storylines_next(self):
+        storylines = self.load_storylines()
+        if not storylines:
+            return
+        ids = sorted(storylines.keys())
+        if self.current_storyline_id in ids:
+            idx = ids.index(self.current_storyline_id)
+            new_idx = (idx + 1) % len(ids)
+        else:
+            new_idx = 0
+        self.current_storyline_id = ids[new_idx]
+        self.fill_storyline_form_left(storylines[self.current_storyline_id])
+    # Speichert die aktuell angezeigte Storyline im Left Panel.
+    def editor_left_panel_storylines_save(self):
+        storylines = self.load_storylines()
+        data = self.get_storyline_form_left_data()
+        if self.current_storyline_id and self.current_storyline_id in storylines:
+            storylines[self.current_storyline_id] = data
+        else:
+            existing_ids = [int(k.split("_")[-1]) for k in storylines.keys() if k.startswith("storyline_ID_")]
+            next_id = max(existing_ids, default=0) + 1
+            new_id = f"storyline_ID_{next_id:02d}"
+            storylines[new_id] = data
+            self.current_storyline_id = new_id
+        self.save_storylines(storylines)
+        self.fill_storyline_form_left(storylines[self.current_storyline_id])
+
+# ..............................................................
+# EDITOR FUNKTIONEN
+# ..............................................................
+
+    # Hinzufügen eines neuen Kapitels mit einer leeren Szene
+    def add_new_chapter(self):
+        idx = self.data_file_combo.currentIndex()
+        if 0 <= idx < self.data_file_combo.count():
+            filename = self.data_file_combo.itemText(idx)
+            data_path = DATA_DIR / filename
+            data = load_json_file(data_path)
+            chapters = {k: v for k, v in data.items() if k.startswith("chapter_ID_")}
+
+            # Kapitel-ID automatisch vergeben
+            next_chapter_num = max([int(cid.split("_")[-1]) for cid in chapters.keys()], default=0) + 1
+            new_chapter_id = f"chapter_ID_{next_chapter_num:02d}"
+
+            # Szenen-ID fortlaufend über alle Kapitel vergeben
+            all_scene_ids = []
+            for chapter in chapters.values():
+                if isinstance(chapter, dict) and "scenes" in chapter:
+                    all_scene_ids.extend(chapter["scenes"].keys())
+            next_scene_num = max([int(sid.split("_")[-1]) for sid in all_scene_ids if sid.startswith("scene_ID_")], default=0) + 1
+            first_scene_id = f"scene_ID_{next_scene_num:02d}"
+
+            # Leere Szene initialisieren
+            first_scene = {k: "" for k in getattr(self, "scene_form_widgets", {})}
+            first_scene["scene_id"] = str(next_scene_num)
+            first_scene["scene_creation_date"] = datetime.date.today().strftime("%Y-%m-%d")
+            first_scene["scene_last_modified"] = datetime.date.today().strftime("%Y-%m-%d")
+            first_scene["scene_plain"] = ""
+            first_scene["scene_rich"] = ""
+
+            # Neues Kapitel initialisieren
+            new_chapter = {k: "" for k in self.chapter_form_widgets}
+            new_chapter["chapter_id"] = str(next_chapter_num)
+            new_chapter["chapter_title"] = f"Kapitel {next_chapter_num:02d}"
+            new_chapter["scenes"] = {first_scene_id: first_scene}
+
+            chapters[new_chapter_id] = new_chapter
+            data[new_chapter_id] = new_chapter
+
+            # Speichern
+            with open(data_path, "w", encoding="utf-8") as f:
+                json.dump(data, f, indent=2, ensure_ascii=False)
+
+            # Kapitel-Liste neu laden
+            self.chapter_data = chapters
+            self.chapter_list_widget.clear()
+            for chapter_id, chapter in chapters.items():
+                chapter_title = chapter.get("chapter_title", chapter_id)
+                self.chapter_list_widget.addItem(f"{chapter_id}: {chapter_title}")
+            self.chapter_list_widget.setCurrentRow(self.chapter_list_widget.count() - 1)
+            selected_item = self.chapter_list_widget.item(self.chapter_list_widget.count() - 1)
+            if selected_item:
+                chapter_id = selected_item.text().split(":")[0]
+                self.fill_chapter_form(chapter_id)
+    # Navigation zwischen Kapiteln
+    def show_next_chapter(self):
+        current_row = self.chapter_list_widget.currentRow()
+        if current_row < self.chapter_list_widget.count() - 1:
+            self.chapter_list_widget.setCurrentRow(current_row + 1)
+        # Nach dem Setzen der Auswahl das neue Item holen!
+        selected_item = self.chapter_list_widget.item(self.chapter_list_widget.currentRow())
+        if selected_item:
+            chapter_id = selected_item.text().split(":")[0]
+            self.fill_chapter_form(chapter_id)
+            self.current_scene_index = 0
+            self.load_scenes_from_current_chapter()
+            self.fill_scene_form(self.current_scene_index)
+        # Navigation zwischen Kapiteln
+    def show_previous_chapter(self):
+        current_row = self.chapter_list_widget.currentRow()
+        if current_row > 0:
+            self.chapter_list_widget.setCurrentRow(current_row - 1)
+        selected_item = self.chapter_list_widget.item(self.chapter_list_widget.currentRow())
+        if selected_item:
+            chapter_id = selected_item.text().split(":")[0]
+            self.fill_chapter_form(chapter_id)
+            self.current_scene_index = 0
+            self.load_scenes_from_current_chapter()
+            self.fill_scene_form(self.current_scene_index)
+    # Speichern der Daten des aktuell ausgewählten Kapitels
+    def save_current_chapter(self):
+        idx = self.data_file_combo.currentIndex()
+        if 0 <= idx < self.data_file_combo.count():
+            filename = self.data_file_combo.itemText(idx)
+            data_path = DATA_DIR / filename
+            data = load_json_file(data_path)
+            chapters = {k: v for k, v in data.items() if k.startswith("chapter_ID_")}
+            selected_items = self.chapter_list_widget.selectedItems()
+            if selected_items:
+                current_chapter_id = selected_items[0].text().split(":")[0]
+            else:
+                current_chapter_id = sorted(chapters.keys())[0] if chapters else None
+            chapter = chapters.get(current_chapter_id, {})
+            # Nur Kapitel-Felder speichern!
+            for field_name, widget in self.chapter_form_widgets.items():
+                if isinstance(widget, QLineEdit):
+                    chapter[field_name] = widget.text()
+                elif isinstance(widget, QTextEdit):
+                    chapter[field_name] = widget.toPlainText()
+                elif isinstance(widget, QComboBox):
+                    chapter[field_name] = widget.currentText()
+                elif isinstance(widget, QSpinBox):
+                    chapter[field_name] = widget.value()
+                elif isinstance(widget, QDateEdit):
+                    chapter[field_name] = widget.date().toString("yyyy-MM-dd")
+            chapters[current_chapter_id] = chapter
+            data[current_chapter_id] = chapter
+            with open(data_path, "w", encoding="utf-8") as f:
+                json.dump(data, f, indent=2, ensure_ascii=False)
+            # Kapitel-Liste neu aufbauen
+            self.chapter_list_widget.clear()
+            filename = self.data_file_combo.currentText()
+            data_path = DATA_DIR / filename
+            data = load_json_file(data_path)
+            chapters = {k: v for k, v in data.items() if k.startswith("chapter_ID_")}
+            for chapter_id, chapter in chapters.items():
+                chapter_title = chapter.get("chapter_title", chapter_id)
+                self.chapter_list_widget.addItem(f"{chapter_id}: {chapter_title}")
+            # Auswahl auf das aktuelle Kapitel setzen
+            selected_items = self.chapter_list_widget.findItems(f"{current_chapter_id}:", Qt.MatchStartsWith)
+            if selected_items:
+                idx = self.chapter_list_widget.row(selected_items[0])
+                self.chapter_list_widget.setCurrentRow(idx)
+    # Löschen des aktuell ausgewählten Kapitels
+    def delete_current_chapter(self):
+        idx = self.data_file_combo.currentIndex()
+        if 0 <= idx < self.data_file_combo.count():
+            filename = self.data_file_combo.itemText(idx)
+            data_path = DATA_DIR / filename
+            data = load_json_file(data_path)
+            chapters = {k: v for k, v in data.items() if k.startswith("chapter_ID_")}
+            selected_items = self.chapter_list_widget.selectedItems()
+            if selected_items:
+                current_chapter_id = selected_items[0].text().split(":")[0]
+            else:
+                current_chapter_id = sorted(chapters.keys())[0] if chapters else None
+            if current_chapter_id in chapters:
+                self.show_secure_delete_dialog("chapter", current_chapter_id)
+                del data[current_chapter_id]
+                with open(data_path, "w", encoding="utf-8") as f:
+                    json.dump(data, f, indent=2, ensure_ascii=False)
+                # Kapitel-Liste neu laden
+                self.chapter_list_widget.clear()
+                for chapter_id, chapter in data.items():
+                    if chapter_id.startswith("chapter_ID_"):
+                        chapter_title = chapter.get("chapter_title", chapter_id)
+                        self.chapter_list_widget.addItem(f"{chapter_id}: {chapter_title}")
+                # Nach dem Löschen: Wähle das nächste existierende Kapitel und aktualisiere die Felder
+                if self.chapter_list_widget.count() > 0:
+                    self.chapter_list_widget.setCurrentRow(0)
+                    selected_item = self.chapter_list_widget.item(0)
+                    if selected_item:
+                        chapter_id = selected_item.text().split(":")[0]
+                        self.fill_chapter_form(chapter_id)
+                else:
+                    # Keine Kapitel mehr vorhanden: Felder leeren
+                    self.fill_chapter_form(None)
+        # Laden der Szenen des aktuell ausgewählten Kapitels
+    # Füllen des Kapitel-Formulars mit den Daten des ausgewählten Kapitels
+    def fill_chapter_form(self, chapter_id=None):
+    # Lade die Daten des ausgewählten Kapitels und fülle die Felder
+        idx = self.data_file_combo.currentIndex()
+        if 0 <= idx < self.data_file_combo.count():
+            filename = self.data_file_combo.itemText(idx)
+            data_path = DATA_DIR / filename
+            data = load_json_file(data_path)
+            chapters = {k: v for k, v in data.items() if k.startswith("chapter_ID_")}
+            if not chapter_id:
+                selected_items = self.chapter_list_widget.selectedItems()
+                if selected_items:
+                    chapter_id = selected_items[0].text().split(":")[0]
+                else:
+                    chapter_id = sorted(chapters.keys())[0] if chapters else None
+            chapter = chapters.get(chapter_id, {})
+            for field_name, widget in self.chapter_form_widgets.items():
+                value = chapter.get(field_name, "")
+                if isinstance(widget, QLabel):
+                    widget.setText(str(value))
+                elif isinstance(widget, QLineEdit):
+                    widget.setText(str(value))
+                elif isinstance(widget, QTextEdit):
+                    widget.setPlainText(str(value))
+                elif isinstance(widget, QComboBox):
+                    idx = widget.findText(str(value))
+                    widget.setCurrentIndex(idx if idx >= 0 else 0)
+                elif isinstance(widget, QSpinBox):
+                    try:
+                        widget.setValue(int(value))
+                    except Exception:
+                        widget.setValue(0)
+                elif isinstance(widget, QDateEdit):
+                    try:
+                        widget.setDate(datetime.date.fromisoformat(value))
+                    except Exception:
+                        widget.setDate(datetime.date.today())
+    # Laden der Szenen des aktuell ausgewählten Kapitels
+    def load_scenes_from_current_chapter(self):
+        filename = self.settings.get("general", {}).get("last_file_opened", "")
+        if not filename:
+            return {}, None, [], {}
+        data_path = DATA_DIR / filename
+        if not data_path.exists():
+            return {}, None, [], {}
+        data = load_json_file(data_path)
+        chapters = {k: v for k, v in data.items() if k.startswith("chapter_ID_")}
+        # Hole das aktuell ausgewählte Kapitel aus right_panel_editor
+        selected_items = self.chapter_list_widget.selectedItems() if hasattr(self, "chapter_list_widget") else []
+        if selected_items:
+            current_chapter_id = selected_items[0].text().split(":")[0]
+        else:
+            current_chapter_id = sorted(chapters.keys())[0] if chapters else None
+        chapter = chapters.get(current_chapter_id, {})
+        scenes = chapter.get("scenes", {})
+        scene_ids = sorted(scenes.keys())
+        return data, current_chapter_id, scene_ids, scenes
+    # Füllen des Szenen-Formulars mit den Daten der ausgewählten Szene
+    def fill_scene_form(self, idx):
+        data, current_chapter_id, scene_ids, scenes = self.load_scenes_from_current_chapter()
+        if not scene_ids or idx < 0 or idx >= len(scene_ids):
+            # Felder leeren
+            for field_name, widget in self.scene_form_widgets.items():
+                if field_name == "scene_id" and isinstance(widget, QLabel):
+                    widget.setText("")
+                elif isinstance(widget, QLabel):
+                    widget.setText("0")
+                elif isinstance(widget, QLineEdit):
+                    widget.setText("")
+                elif isinstance(widget, QTextEdit):
+                    widget.setPlainText("")
+                elif isinstance(widget, QComboBox):
+                    widget.setCurrentIndex(0)
+                elif isinstance(widget, QSpinBox):
+                    widget.setValue(0)
+                elif isinstance(widget, QDateEdit):
+                    widget.setDate(datetime.date.today())
+            if hasattr(self, "scene_plain_editor"):
+                self.scene_plain_editor.clear()
+            return
+
+        scene_id = scene_ids[idx]
+        scene = scenes.get(scene_id, {})
+        lang = self.settings.get("general", {}).get("language", "de")
+        for field_name, widget in self.scene_form_widgets.items():
+            value = scene.get(field_name, "")
+            if field_name == "scene_id" and isinstance(widget, QLabel):
+                # Szene-ID immer anzeigen, falls leer: aus Key extrahieren
+                widget.setText(str(value) if value else str(scene_id.split("_")[-1]))
+            elif field_name in ("scene_creation_date", "scene_last_modified") and isinstance(widget, QDateEdit):
+                try:
+                    widget.setDate(datetime.date.fromisoformat(value))
+                except Exception:
+                    widget.setDate(datetime.date.today())
+            elif field_name in ("scene_creation_date", "scene_last_modified") and isinstance(widget, QLabel):
+                widget.setText(format_date_local(value, lang))
+            elif field_name == "scene_word_count" and isinstance(widget, QLabel):
+                widget.setText(str(scene.get("scene_word_count", "0")))
+            elif isinstance(widget, QLineEdit):
+                widget.setText(str(value))
+            elif isinstance(widget, QTextEdit):
+                widget.setPlainText(str(value))
+            elif isinstance(widget, QComboBox):
+                idx_combo = widget.findText(str(value))
+                widget.setCurrentIndex(idx_combo if idx_combo >= 0 else 0)
+            elif isinstance(widget, QSpinBox):
+                try:
+                    widget.setValue(int(value))
+                except Exception:
+                    widget.setValue(0)
+            elif isinstance(widget, QDateEdit):
+                try:
+                    widget.setDate(datetime.date.fromisoformat(value))
+                except Exception:
+                    widget.setDate(datetime.date.today())
+
+        # Editor-Inhalt laden
+        if hasattr(self, "scene_plain_editor"):
+            rich_text = scene.get("scene_rich", "")
+            if rich_text:
+                self.scene_plain_editor.setHtml(rich_text)
+            else:
+                self.scene_plain_editor.setPlainText(str(scene.get("scene_plain", "")))
+            self.update_scene_word_count()
+    # Speichern der aktuellen Szene
+    def save_scene(self):
+        data, current_chapter_id, scene_ids, scenes = self.load_scenes_from_current_chapter()
+        if not scene_ids or self.current_scene_index < 0 or self.current_scene_index >= len(scene_ids):
+            return
+        scene_id = scene_ids[self.current_scene_index]
+        chapter = data[current_chapter_id]
+        scenes = chapter.get("scenes", {})
+        scene = scenes.get(scene_id, {})
+        # Felder aus Formular speichern
+        for field_name, widget in self.scene_form_widgets.items():
+            if isinstance(widget, QLabel):
+                scene[field_name] = widget.text()
+            elif isinstance(widget, QLineEdit):
+                scene[field_name] = widget.text()
+            elif isinstance(widget, QTextEdit):
+                scene[field_name] = widget.toPlainText()
+            elif isinstance(widget, QComboBox):
+                scene[field_name] = widget.currentText()
+            elif isinstance(widget, QSpinBox):
+                scene[field_name] = widget.value()
+            elif isinstance(widget, QDateEdit):
+                scene[field_name] = widget.date().toString("yyyy-MM-dd")
+        # Editor-Inhalt speichern
+        if hasattr(self, "scene_plain_editor"):
+            scene["scene_plain"] = self.scene_plain_editor.toPlainText()
+            scene["scene_rich"] = self.scene_plain_editor.toHtml()
+        scene["scene_last_modified"] = datetime.date.today().strftime("%Y-%m-%d")
+        scenes[scene_id] = scene
+        chapter["scenes"] = scenes
+        data[current_chapter_id] = chapter
+        with open(DATA_DIR / self.settings["general"]["last_file_opened"], "w", encoding="utf-8") as f:
+            json.dump(data, f, indent=2, ensure_ascii=False)
+    # Hinzufügen einer neuen Szene
+    def add_new_scene(self):
+        data, current_chapter_id, scene_ids, scenes = self.load_scenes_from_current_chapter()
+        # Ermittle die höchste Szenen-ID aus ALLEN Kapiteln
+        all_scene_ids = []
+        for chapter in data.values():
+            if isinstance(chapter, dict) and "scenes" in chapter:
+                all_scene_ids.extend(chapter["scenes"].keys())
+        next_id_num = max([int(sid.split("_")[-1]) for sid in all_scene_ids if sid.startswith("scene_ID_")], default=0) + 1
+        new_scene_id = f"scene_ID_{next_id_num:02d}"
+        new_scene = {k: "" for k in self.scene_form_widgets}
+        new_scene["scene_id"] = str(next_id_num)
+        new_scene["scene_creation_date"] = datetime.date.today().strftime("%Y-%m-%d")
+        new_scene["scene_last_modified"] = datetime.date.today().strftime("%Y-%m-%d")
+        new_scene["scene_plain"] = ""
+        new_scene["scene_rich"] = ""
+        scenes[new_scene_id] = new_scene
+        chapter = data.get(current_chapter_id, {})
+        chapter["scenes"] = scenes
+        data[current_chapter_id] = chapter
+        with open(DATA_DIR / self.settings["general"]["last_file_opened"], "w", encoding="utf-8") as f:
+            json.dump(data, f, indent=2, ensure_ascii=False)
+        self.current_scene_index = len(scenes) - 1
+        self.fill_scene_form(self.current_scene_index)
+    # Löschen der aktuellen Szene
+    def delete_scene(self):
+        data, current_chapter_id, scene_ids, scenes = self.load_scenes_from_current_chapter()
+        if not scene_ids or self.current_scene_index < 0 or self.current_scene_index >= len(scene_ids):
+            return
+        scene_id = scene_ids[self.current_scene_index]
+        chapter = data[current_chapter_id]
+        scenes = chapter.get("scenes", {})
+        if scene_id in scenes:
+            del scenes[scene_id]
+            chapter["scenes"] = scenes
+            data[current_chapter_id] = chapter
+            with open(DATA_DIR / self.settings["general"]["last_file_opened"], "w", encoding="utf-8") as f:
+                json.dump(data, f, indent=2, ensure_ascii=False)
+            self.current_scene_index = max(0, self.current_scene_index - 1)
+            self.fill_scene_form(self.current_scene_index)
+    # Navigation zwischen Szenen
+    def next_scene(self):
+        data, current_chapter_id, scene_ids, scenes = self.load_scenes_from_current_chapter()
+        if not scene_ids:
+            return
+        if self.current_scene_index < len(scene_ids) - 1:
+            self.current_scene_index += 1
+            self.fill_scene_form(self.current_scene_index)
+    # Navigation zwischen Szenen
+    def previous_scene(self):
+        data, current_chapter_id, scene_ids, scenes = self.load_scenes_from_current_chapter()
+        if not scene_ids:
+            return
+        if self.current_scene_index > 0:
+            self.current_scene_index -= 1
+            self.fill_scene_form(self.current_scene_index)
+    # Tab-Wechsel im linken Panel (Objekte, Orte, Erzählstränge)
+    # Wird aufgerufen, wenn der Tab gewechselt wird
+    def on_left_panel_tab_changed(self, index, tab_widget=None):
+        sender = self.sender()
+        if sender is None and tab_widget is not None:
+            sender = tab_widget
+        if sender is None:
+            return
+        tab_name = sender.tabText(index)
+        if tab_name == self.get_translation("proj_ob_header", "Objekte"):
+            objects = self.load_objects()
+            if objects:
+                first_id = sorted(objects.keys())[0]
+                self.current_object_id = first_id
+                self.fill_object_form_left(objects[first_id])
+            else:
+                self.current_object_id = None
+                empty_data = {k: "" for k in self.object_form_widgets_left}
+                self.fill_object_form_left(empty_data)
+        if tab_name == self.get_translation("proj_lo_header", "Orte"):
+            locations = self.load_locations()
+            if locations:
+                first_id = sorted(locations.keys())[0]
+                self.current_location_id = first_id
+                self.fill_location_form_left(locations[first_id])
+            else:
+                self.current_location_id = None
+                empty_data = {k: "" for k in self.location_form_widgets_left}
+                self.fill_location_form_left(empty_data)
+        if tab_name == self.get_translation("proj_st_header", "Erzählstränge"):
+            storylines = self.load_storylines()
+            if storylines:
+                first_id = sorted(storylines.keys())[0]
+                self.current_storyline_id = first_id
+                self.fill_storyline_form_left(storylines[first_id])  # <-- Korrekt!
+            else:
+                self.current_storyline_id = None
+                empty_data = {k: "" for k in self.storyline_form_widgets_left}
+                self.fill_storyline_form_left(empty_data)
+
+# ..............................................................
+# PROJEKT FUNKTIONEN
+# ..............................................................
+    
     # Formular zur Erstellung oder Bearbeitung eines Projekts
+    # project_data: dict mit den Werten des Projekts (bei Bearbeitung), None bei Neuerstellung
     def create_center_panel_project_form(self, project_data=None):
         import re
         panel_widget = QWidget()
@@ -2006,8 +3846,7 @@ class StartWindow(QMainWindow):
 
         panel_widget.setObjectName("ProjectFormPanel")
         self.safe_apply_theme_style(panel_widget, "panel", self.theme)
-        return panel_widget
-    
+        return panel_widget     
     # Bild für project_cover_image laden
     def load_image_for_field(self, widget):
         file_path, _ = QFileDialog.getOpenFileName(
@@ -2057,192 +3896,778 @@ class StartWindow(QMainWindow):
                     )
                 )
             elif hasattr(self, "project_image_label"):
-                self.project_image_label.clear()    
+                self.project_image_label.clear()   
+    # Aktualisiere den Zustand der Projekt-Buttons basierend auf der Auswahl
+    def update_project_buttons_state(self):
+        # Stelle sicher, dass die Buttons existieren
+        if not (hasattr(self, "botn_fo_02")
+            and hasattr(self, "botn_fo_03") 
+            and hasattr(self, "botn_fo_04")):
+            return
+
+        # Prüfe, ob Projekte vorhanden und eines ausgewählt ist
+        has_projects = self.project_list_widget.count() > 0
+        selected = self.project_list_widget.selectedItems()
+        enable = bool(selected) and has_projects
+
+        self.botn_fo_02.setEnabled(enable)  # Projekt laden
+        self.botn_fo_03.setEnabled(False)   # Speichern bleibt deaktiviert bis Änderung
+        self.botn_fo_04.setEnabled(enable)  # Projekt löschen 
+    # Lege ein neues Projekt an
+    def on_create_project_clicked(self):
+        import datetime
+        import re
+
+        # 1. Daten auslesen
+        project_data = {}
+        for field_name, widget in self.project_form_widgets.items():
+            if isinstance(widget, QLineEdit):
+                project_data[field_name] = widget.text()
+            elif isinstance(widget, QTextEdit):
+                project_data[field_name] = widget.toPlainText()
+            elif isinstance(widget, QComboBox):
+                project_data[field_name] = widget.currentText()
+            elif isinstance(widget, QSpinBox):
+                project_data[field_name] = widget.value()
+            elif isinstance(widget, QDateEdit):
+                project_data[field_name] = widget.date().toString(widget.displayFormat())
+            else:
+                project_data[field_name] = ""
+
+        # 2. Dateinamen bestimmen
+        title = project_data.get("project_title", "").strip()
+        start_date = project_data.get("project_startdate", "").strip()
+        safe_title = re.sub(r'[^A-Za-z0-9_\-]', '_', title) or "Unbenannt"
+        date_digits = re.sub(r'\D', '', start_date) or "00000000"
+        filename = f"Project_{safe_title}_{date_digits}.json"
+        filepath = DATA_DIR / filename
+
+        # 2a. Data-Dateinamen IMMER im Projekt speichern!
+        data_filename = f"Data_{safe_title}_{date_digits}.json"
+        project_data["project_file"] = data_filename
+        # UND im Formular anzeigen, falls Feld vorhanden:
+        if "project_file" in self.project_form_widgets:
+            widget = self.project_form_widgets["project_file"]
+            if isinstance(widget, QLineEdit):
+                widget.setText(data_filename)
+
+        # 3. Speichern
+        with open(filepath, "w", encoding="utf-8") as f:
+            json.dump(project_data, f, ensure_ascii=False, indent=2)
+        log_info(f"Projekt gespeichert: {filepath}")
+
+        # --- NEU: Kapitel-/Szenendaten übernehmen und speichern ---
+        chapters_file = DATA_DIR / "Chapters_scenes.json"
+        if chapters_file.exists():
+            with open(chapters_file, "r", encoding="utf-8") as f:
+                chapters_data = json.load(f)
+            data_filename = f"Data_{safe_title}_{date_digits}.json"
+            data_filepath = DATA_DIR / data_filename
+            with open(data_filepath, "w", encoding="utf-8") as f:
+                json.dump(chapters_data, f, ensure_ascii=False, indent=2)
+            log_info(f"Projekt-Kapitel/Szenen-Daten gespeichert: {data_filepath}")
+        else:
+            log_error(f"Kapitel-/Szenendatei nicht gefunden: {chapters_file}")
+
+        # 4. Speichern-Button wieder deaktivieren
+        self.botn_fo_03.setEnabled(False)
+        self.show_center_panel(1, self.center_panel_functions)
+    # Lade ein bestehendes Projekt
+    def show_project_form_new(self):
+        splitter = self.centralWidget()
+        if isinstance(splitter, QSplitter):
+            # Speichere aktuelle Splitter-Größen
+            splitter_sizes = splitter.sizes()
+            new_center_panel = self.create_center_panel_project_form()
+            old_center_panel = splitter.widget(1)
+            splitter.insertWidget(1, new_center_panel)
+            splitter.setStretchFactor(1, 1)
+            if old_center_panel is not None:
+                old_center_panel.setParent(None)
+            self.center_panel_widget = new_center_panel
+            self.safe_apply_theme_style(new_center_panel, "panel", self.theme)
+            # Setze die Splitter-Größen zurück
+            splitter.setSizes(splitter_sizes)
+        # Nur Speichern-Button aktivieren, andere deaktivieren
+        self.botn_fo_03.setEnabled(True)
+        self.botn_fo_02.setEnabled(False)
+        self.botn_fo_04.setEnabled(False)
+        # Beobachte Änderungen im Formular, um Speichern-Button zu aktivieren
+        for widget in self.project_form_widgets.values():
+            if isinstance(widget, QLineEdit):
+                widget.textChanged.connect(self.enable_save_button)
+            elif isinstance(widget, QTextEdit):
+                widget.textChanged.connect(self.enable_save_button)
+            elif isinstance(widget, QComboBox):
+                widget.currentIndexChanged.connect(self.enable_save_button)
+            elif isinstance(widget, QSpinBox):
+                widget.valueChanged.connect(self.enable_save_button)
+            elif isinstance(widget, QDateEdit):
+                widget.dateChanged.connect(self.enable_save_button)
+    # Aktiviere den Speichern-Button, wenn Änderungen im Formular vorgenommen werden
+    def enable_save_button(self):
+        self.botn_fo_03.setEnabled(True)
+    # Aktualisiere die Projektliste
+    def update_project_list(self):
+        # Zeigt alle Dateien aus dem DATA_DIR im ListView an (Dateiname, nicht Titel aus Datei).
+        if hasattr(self, "project_list_widget"):
+            self.project_list_widget.clear()
+            # Zeige ALLE Dateien im data-Verzeichnis an
+            for file in sorted(DATA_DIR.glob("Project_*.json")):
+                if file.is_file():
+                    self.project_list_widget.addItem(file.name)
+    # Lade ein bestehendes Projekt        
+    def show_project_form_load(self):
+        selected_items = self.project_list_widget.selectedItems()
+        if not selected_items:
+            return
+        filename = selected_items[0].text()
+        file = DATA_DIR / filename
+        if not file.exists():
+            return
+        try:
+            with open(file, "r", encoding="utf-8") as f:
+                project_data = json.load(f)
+        except Exception as e:
+            log_exception(f"Fehler beim Laden des Projekts: {file}", e)
+            return
+
+        splitter = self.centralWidget()
+        if isinstance(splitter, QSplitter):
+            # Speichere aktuelle Splitter-Größen
+            splitter_sizes = splitter.sizes()
+            new_center_panel = self.create_center_panel_project_form(project_data)
+            old_center_panel = splitter.widget(1)
+            splitter.insertWidget(1, new_center_panel)
+            splitter.setStretchFactor(1, 1)
+            if old_center_panel is not None:
+                old_center_panel.setParent(None)
+            self.center_panel_widget = new_center_panel
+            self.safe_apply_theme_style(new_center_panel, "panel", self.theme)
+            # Setze die Splitter-Größen zurück
+            splitter.setSizes(splitter_sizes)
+
+        # Speichern-Button deaktivieren, bis etwas geändert wird
+        self.botn_fo_03.setEnabled(False)
+        self.botn_fo_04.setEnabled(False)
+        self.botn_fo_02.setEnabled(False)
+        # Beobachte Änderungen im Formular
+        for widget in self.project_form_widgets.values():
+            if isinstance(widget, QLineEdit):
+                widget.textChanged.connect(self.enable_save_button)
+            elif isinstance(widget, QTextEdit):
+                widget.textChanged.connect(self.enable_save_button)
+            elif isinstance(widget, QComboBox):
+                widget.currentIndexChanged.connect(self.enable_save_button)
+            elif isinstance(widget, QSpinBox):
+                widget.valueChanged.connect(self.enable_save_button)
+            elif isinstance(widget, QDateEdit):
+                widget.dateChanged.connect(self.enable_save_button)
+
+        # 1. Ermittle den Projektnamen (Dateiname) und Datafilename
+        last_project_opened = filename  # z.B. Project_xyz_date.json
+        last_file_opened = project_data.get("project_file", "")
+
+        # 2. Schreibe in user_settings.json
+        self.settings.setdefault("general", {})
+        self.settings["general"]["last_project_opened"] = last_project_opened
+        self.settings["general"]["last_file_opened"] = last_file_opened
+        with open(USER_SETTINGS_FILE, "w", encoding="utf-8") as f:
+            json.dump(self.settings, f, indent=2, ensure_ascii=False)
+    # Lösche das ausgewählte Projekt
+    def delete_selected_project(self):
+        selected_items = self.project_list_widget.selectedItems()
+        if not selected_items:
+            return
+        filename = selected_items[0].text()
+        self.show_secure_delete_dialog("project", filename)
+    # Interne Löschfunktion
+    def _delete_project(self, filename):
+        file = DATA_DIR / filename
+        try:
+            if file.exists():
+                file.unlink()
+                log_info(f"Projekt gelöscht: {file}")
+        except Exception as e:
+            log_exception(f"Fehler beim Löschen der Datei: {file}", e)
+        self.show_center_panel(0, self.center_panel_functions)
+        self.update_project_buttons_state()
+
+# ..............................................................
+# CHARAKTER FUNKTIONEN
+# ..............................................................
+
+    # Lege einen neuen Charakter an
+    def load_characters(self):
+        file_path = DATA_DIR / "Character_main.json"
+        if not file_path.exists():
+            log_info(f"Charakterdatei nicht gefunden: {file_path}")
+            return {}
+        try:
+            with open(file_path, "r", encoding="utf-8") as f:
+                data = json.load(f)
+            log_info(f"Charakterdatei geladen: {file_path} ({len(data)} Einträge)")
+            return data
+        except Exception as e:
+            log_exception(f"Fehler beim Laden der Charakterdatei: {file_path}", e)
+            return {}
+    # Speichere alle Charaktere
+    def save_characters(self, characters):
+        file_path = DATA_DIR / "Character_main.json"
+        try:
+            with open(file_path, "w", encoding="utf-8") as f:
+                json.dump(characters, f, indent=2, ensure_ascii=False)
+            log_info(f"Charakterdatei gespeichert: {file_path} ({len(characters)} Einträge)")
+        except Exception as e:
+            log_exception(f"Fehler beim Speichern der Charakterdatei: {file_path}", e)
+    # Lösche den aktuellen Charakter
+    def on_delete_character_clicked(self):
+        if not self.current_character_id:
+            return
+        self.show_secure_delete_dialog("character", self.current_character_id)
+    # Interne Löschfunktion    
+    def _delete_character(self, character_id):
+        characters = self.load_characters()
+        if not characters or not character_id:
+            log_error(f"Kein Charakter zum Löschen gefunden (ID: {character_id})")
+            return
+        if character_id in characters:
+            del characters[character_id]
+            self.save_characters(characters)
+            log_info(f"Charakter gelöscht: {character_id}")
+            # Nach dem Löschen: nächsten Charakter anzeigen, oder leeres Formular
+            if characters:
+                first_id = sorted(characters.keys())[0]
+                self.current_character_id = first_id
+                self.fill_character_form(characters[first_id])
+            else:
+                self.current_character_id = None
+                empty_data = {k: "" for k in self.character_form_widgets}
+                self.fill_character_form(empty_data)
+    # Fülle das Charakter-Formular mit den Daten eines Charakters
+    def fill_character_form(self, character_data):
+        for field_name, widget in self.character_form_widgets.items():
+            value = character_data.get(field_name, "")
+            # --- Spezialfall: born/died als QLineEdit mit Datumsvalidierung ---
+            if field_name in ("born", "died") and isinstance(widget, QLineEdit):
+                widget.setText(str(value) if value else "")
+                # Optional: Validierung und optische Hervorhebung
+                text = widget.text().strip()
+                if text:
+                    # Unterstützte Formate je nach Sprache
+                    if self.language == "de":
+                        formats = ["%d.%m.%Y", "%Y-%m-%d"]
+                    elif self.language == "en":
+                        formats = ["%m %d %Y", "%Y-%m-%d"]
+                    elif self.language in ("fr", "es"):
+                        formats = ["%d/%m/%Y", "%Y-%m-%d"]
+                    else:
+                        formats = ["%Y-%m-%d"]
+                    valid = False
+                    for fmt in formats:
+                        try:
+                            _ = datetime.datetime.strptime(text, fmt).date()
+                            valid = True
+                            break
+                        except Exception:
+                            continue
+                    if not valid:
+                        widget.setStyleSheet("background-color: #ffcccc;")
+                    else:
+                        widget.setStyleSheet("")
+                else:
+                    widget.setStyleSheet("")
+            # --- Alter-Label: wird automatisch berechnet, nicht setzen ---
+            elif field_name == "char_age" and isinstance(widget, QLabel):
+                continue
+            # --- Standardfelder ---
+            elif isinstance(widget, QLineEdit):
+                widget.setText(str(value))
+            elif isinstance(widget, QTextEdit):
+                widget.setPlainText(str(value))
+            elif isinstance(widget, QComboBox):
+                idx = widget.findText(str(value))
+                if idx >= 0:
+                    widget.setCurrentIndex(idx)
+                else:
+                    widget.setCurrentIndex(0)
+            elif isinstance(widget, QCheckBox):
+                widget.setChecked(bool(value))
+            elif isinstance(widget, QDateEdit):
+                if value:
+                    try:
+                        widget.setDate(datetime.date.fromisoformat(value))
+                    except Exception:
+                        widget.setDate(widget.minimumDate())
+                else:
+                    widget.setDate(widget.minimumDate())
+    # Lese die Daten aus dem Charakter-Formular aus
+    def get_character_form_data(self):
+        data = {}
+        for field_name, widget in self.character_form_widgets.items():
+            if field_name in ("born", "died") and isinstance(widget, QLineEdit):
+                data[field_name] = widget.text().strip()
+            if isinstance(widget, QLineEdit):
+                data[field_name] = widget.text()
+            elif isinstance(widget, QTextEdit):
+                data[field_name] = widget.toPlainText()
+            elif isinstance(widget, QComboBox):
+                data[field_name] = widget.currentText()
+            elif isinstance(widget, QCheckBox):
+                data[field_name] = widget.isChecked()
+            elif isinstance(widget, QDateEdit):
+                data[field_name] = widget.date().toString("yyyy-MM-dd")
+        return data
+    # Handler für "Neuer Charakter" Button
+    def on_new_character_clicked(self):
+        # Leeres Formular anzeigen, keine ID setzen
+        empty_data = {k: "" for k in self.character_form_widgets}
+        self.current_character_id = None
+        self.fill_character_form(empty_data)
+    # Handler für "Charakter speichern" Button
+    def on_save_character_clicked(self):
+        characters = self.load_characters()
+        data = self.get_character_form_data()
+        if self.current_character_id and self.current_character_id in characters:
+            # Bestehenden Charakter aktualisieren
+            characters[self.current_character_id] = data
+        else:
+            # Neuen Charakter anlegen
+            existing_ids = [int(k.split("_")[-1]) for k in characters.keys() if k.startswith("character_ID_")]
+            next_id = max(existing_ids, default=0) + 1
+            new_id = f"character_ID_{next_id:02d}"
+            characters[new_id] = data
+            self.current_character_id = new_id
+        self.save_characters(characters)    
+    # Handler für "Vorheriger Charakter" Button
+    def on_previous_character_clicked(self):
+        characters = self.load_characters()
+        if not characters:
+            return
+        ids = sorted(characters.keys())
+        if self.current_character_id in ids:
+            idx = ids.index(self.current_character_id)
+            new_idx = (idx - 1) % len(ids)
+        else:
+            new_idx = 0
+        self.current_character_id = ids[new_idx]
+        self.fill_character_form(characters[self.current_character_id])
+    # Handler für "Nächster Charakter" Button
+    def on_next_character_clicked(self):
+        characters = self.load_characters()
+        if not characters:
+            return
+        ids = sorted(characters.keys())
+        if self.current_character_id in ids:
+            idx = ids.index(self.current_character_id)
+            new_idx = (idx + 1) % len(ids)
+        else:
+            new_idx = 0
+        self.current_character_id = ids[new_idx]
+        self.fill_character_form(characters[self.current_character_id])    
     
-    # Dieses center_panel_settings wird angezeigt, wenn die Einstellungs-
-    # Oberfläche geöffnet wird.
-    def create_center_panel_settings(self):
-        panel_widget = QWidget()
-        main_layout = QVBoxLayout(panel_widget)
-        main_layout.setContentsMargins(20, 20, 20, 20)
-        main_layout.setSpacing(16)
-        main_layout.setAlignment(Qt.AlignTop)
-
-        tab_widget = QTabWidget(panel_widget)
-        tab_widget.setTabPosition(QTabWidget.North)
-
-        # --- Tab 1: Allgemein ---
-        tab_general = QWidget()
-        tab_general_layout = QVBoxLayout(tab_general)
-        tab_general_layout.setAlignment(Qt.AlignTop)
-
-        language_label_1 = QLabel(self.get_translation("comboBox_se_01", "Language"), tab_general)
-        language_label_1.setToolTip(self.get_translation("comboBox_se_01_hint", "Select your language."))
-        tab_general_layout.addWidget(language_label_1)
-
-        self.language_combo_1 = QComboBox(tab_general)
-        language_items_1 = [
-            self.get_translation(f"comboBox_se_01_item_{i}", f"Language {i+1}")
-            for i in range(4)
-        ]
-        self.language_combo_1.addItems(language_items_1)
-        self.language_combo_1.setToolTip(self.get_translation("comboBox_se_01_hint", "Select your language."))
-        tab_general_layout.addWidget(self.language_combo_1)
-
-        language_codes = ["de", "en", "fr", "es"]
-        current_language = self.language
+# ..............................................................
+# OBJEKT FUNKTIONEN
+# ..............................................................
+    
+    # Lege ein neues Objekt an
+    def load_objects(self):
+        file_path = DATA_DIR / "Objects.json"
+        if not file_path.exists():
+            log_info(f"Objektdatei nicht gefunden: {file_path}")
+            return {}
         try:
-            lang_idx = language_codes.index(current_language)
-        except ValueError:
-            lang_idx = 0
-        self.language_combo_1.blockSignals(True)
-        self.language_combo_1.setCurrentIndex(lang_idx)
-        self.language_combo_1.blockSignals(False)
-        self.language_combo_1.currentIndexChanged.connect(
-            lambda idx: self.on_settings_language_changed(idx)
-        )
-
-        theme_label_1 = QLabel(self.get_translation("comboBox_se_02", "Theme"), tab_general)
-        theme_label_1.setToolTip(self.get_translation("comboBox_se_02_hint", "Select the theme."))
-        tab_general_layout.addWidget(theme_label_1)
-
-        self.theme_combo_1 = QComboBox(tab_general)
-        theme_items_1 = [
-            self.get_translation(f"comboBox_se_02_item_{i}", f"Design {i+1}")
-            for i in range(15)
-        ]
-        self.theme_combo_1.addItems(theme_items_1)
-        self.theme_combo_1.setToolTip(self.get_translation("comboBox_se_02_hint", "Select the theme."))
-        tab_general_layout.addWidget(self.theme_combo_1)
-
-        theme_names = [
-            "Modern_neutral", "Modern_dark", "Modern_light",
-            "OldSchool_neutral", "OldSchool_dark", "OldSchool_light",
-            "Vintage_neutral", "Vintage_dark", "Vintage_light",
-            "Future_neutral", "Future_dark", "Future_light",
-            "Minimal_neutral", "Minimal_dark", "Minimal_light"
-        ]
-        current_theme_name = self.theme.get("theme_name", theme_names[0])
+            with open(file_path, "r", encoding="utf-8") as f:
+                data = json.load(f)
+            log_info(f"Objektdatei geladen: {file_path} ({len(data)} Einträge)")
+            return data
+        except Exception as e:
+            log_exception(f"Fehler beim Laden der Objektdatei: {file_path}", e)
+            return {}
+    # Speichere alle Objekte
+    def save_objects(self, objects):
+        file_path = DATA_DIR / "Objects.json"
         try:
-            idx = theme_names.index(current_theme_name)
-        except ValueError:
-            idx = 0
-        self.theme_combo_1.blockSignals(True)
-        self.theme_combo_1.setCurrentIndex(idx)
-        self.theme_combo_1.blockSignals(False)
-        self.theme_combo_1.currentIndexChanged.connect(
-            lambda idx: self.on_settings_theme_changed(idx)
-        )
+            with open(file_path, "w", encoding="utf-8") as f:
+                json.dump(objects, f, indent=2, ensure_ascii=False)
+            log_info(f"Objektdatei gespeichert: {file_path} ({len(objects)} Einträge)")
+        except Exception as e:
+            log_exception(f"Fehler beim Speichern der Objektdatei: {file_path}", e)
+    # Lösche das aktuelle Objekt
+    def on_delete_object_clicked(self):
+        if not hasattr(self, "current_object_id") or not self.current_object_id:
+            return
+        self.show_secure_delete_dialog("object", self.current_object_id)
+    # Interne Löschfunktion
+    def _delete_object(self, object_id):
+        objects = self.load_objects()
+        if not objects or not object_id:
+            log_error(f"Kein Objekt zum Löschen gefunden (ID: {object_id})")
+            return
+        if object_id in objects:
+            del objects[object_id]
+            self.save_objects(objects)
+            log_info(f"Objekt gelöscht: {object_id}")
+            # Nach dem Löschen: nächsten oder leeren Datensatz anzeigen
+            if objects:
+                first_id = sorted(objects.keys())[0]
+                self.current_object_id = first_id
+                self.fill_object_form(objects[first_id])
+            else:
+                self.current_object_id = None
+                empty_data = {k: "" for k in self.object_form_widgets}
+                self.fill_object_form(empty_data)
+    # Fülle das Objekt-Formular mit den Daten eines Objekts
+    def fill_object_form(self, object_data):
+        for field_name, widget in self.object_form_widgets.items():
+            value = object_data.get(field_name, "")
+            if isinstance(widget, QLineEdit):
+                widget.setText(str(value))
+            elif isinstance(widget, QTextEdit):
+                widget.setPlainText(str(value))
+            elif isinstance(widget, QComboBox):
+                idx = widget.findText(str(value))
+                if idx >= 0:
+                    widget.setCurrentIndex(idx)
+                else:
+                    widget.setCurrentIndex(0)
+            elif isinstance(widget, QCheckBox):
+                widget.setChecked(bool(value))
+            elif isinstance(widget, QDateEdit):
+                if value:
+                    try:
+                        widget.setDate(datetime.date.fromisoformat(value))
+                    except Exception:
+                        widget.setDate(datetime.date.today())
+                else:
+                    widget.setDate(datetime.date.today())
+    # Handler für "Neues Objekt" Button
+    def on_new_object_clicked(self):
+        empty_data = {k: "" for k in self.object_form_widgets}
+        self.current_object_id = None
+        self.fill_object_form(empty_data)
+    # Handler für "Objekt speichern" Button
+    def on_save_object_clicked(self):
+        objects = self.load_objects()
+        data = {}
+        for field_name, widget in self.object_form_widgets.items():
+            if isinstance(widget, QLineEdit):
+                data[field_name] = widget.text()
+            elif isinstance(widget, QTextEdit):
+                data[field_name] = widget.toPlainText()
+            elif isinstance(widget, QComboBox):
+                data[field_name] = widget.currentText()
+            elif isinstance(widget, QCheckBox):
+                data[field_name] = widget.isChecked()
+            elif isinstance(widget, QDateEdit):
+                data[field_name] = widget.date().toString("yyyy-MM-dd")
+        if self.current_object_id and self.current_object_id in objects:
+            # Bestehendes Objekt aktualisieren
+            objects[self.current_object_id] = data
+        else:
+            # Neues Objekt anlegen
+            existing_ids = [int(k.split("_")[-1]) for k in objects.keys() if k.startswith("object_ID_")]
+            next_id = max(existing_ids, default=0) + 1
+            new_id = f"object_ID_{next_id:02d}"
+            objects[new_id] = data
+            self.current_object_id = new_id
+        self.save_objects(objects)
+    # Handler für "Vorheriges Objekt" Button
+    def on_previous_object_clicked(self):
+        objects = self.load_objects()
+        if not objects:
+            return
+        ids = sorted(objects.keys())
+        if self.current_object_id in ids:
+            idx = ids.index(self.current_object_id)
+            new_idx = (idx - 1) % len(ids)
+        else:
+            new_idx = 0
+        self.current_object_id = ids[new_idx]
+        self.fill_object_form(objects[self.current_object_id])
+    # Handler für "Nächstes Objekt" Button
+    def on_next_object_clicked(self):
+        objects = self.load_objects()
+        if not objects:
+            return
+        ids = sorted(objects.keys())
+        if self.current_object_id in ids:
+            idx = ids.index(self.current_object_id)
+            new_idx = (idx + 1) % len(ids)
+        else:
+            new_idx = 0
+        self.current_object_id = ids[new_idx]
+        self.fill_object_form(objects[self.current_object_id])   
 
-        tab_widget.addTab(tab_general, self.get_translation("tab_se_01", "General"))
+# ..............................................................
+# ORT FUNKTIONEN
+# ..............................................................
 
-        # --- Tab 2: Bücher ---
-        tab_books = QWidget()
-        tab_books_layout = QHBoxLayout(tab_books)  # <--- Änderung!
-        tab_books_layout.setAlignment(Qt.AlignTop)
+    # Speichere alle Orte
+    def save_locations(self, locations):
+        file_path = DATA_DIR / "Locations.json"
+        try:
+            with open(file_path, "w", encoding="utf-8") as f:
+                json.dump(locations, f, indent=2, ensure_ascii=False)
+            log_info(f"Orte-Datei gespeichert: {file_path} ({len(locations)} Einträge)")
+        except Exception as e:
+            log_exception(f"Fehler beim Speichern der Orte-Datei: {file_path}", e)
+    # Lade alle Orte
+    def load_locations(self):
+        file_path = DATA_DIR / "Locations.json"
+        if not file_path.exists():
+            log_info(f"Orte-Datei nicht gefunden: {file_path}")
+            return {}
+        try:
+            with open(file_path, "r", encoding="utf-8") as f:
+                data = json.load(f)
+            log_info(f"Orte-Datei geladen: {file_path} ({len(data)} Einträge)")
+            return data
+        except Exception as e:
+            log_exception(f"Fehler beim Laden der Orte-Datei: {file_path}", e)
+            return {}
+    # Lösche den aktuellen Ort
+    def on_delete_location_clicked(self):
+        if not hasattr(self, "current_location_id") or not self.current_location_id:
+            return
+        self.show_secure_delete_dialog("location", self.current_location_id)
+    # Interne Löschfunktion
+    def _delete_location(self, location_id):
+        locations = self.load_locations()
+        if not locations or not location_id:
+            log_error(f"Kein Ort zum Löschen gefunden (ID: {location_id})")
+            return
+        if location_id in locations:
+            del locations[location_id]
+            self.save_locations(locations)
+            log_info(f"Ort gelöscht: {location_id}")
+            # Nach dem Löschen: nächsten oder leeren Datensatz anzeigen
+            if locations:
+                first_id = sorted(locations.keys())[0]
+                self.current_location_id = first_id
+                self.fill_location_form(locations[first_id])
+            else:
+                self.current_location_id = None
+                empty_data = {k: "" for k in self.location_form_widgets}
+                self.fill_location_form(empty_data)
+    # Fülle das Ort-Formular mit den Daten eines Ortes
+    def fill_location_form(self, location_data):
+        for field_name, widget in self.location_form_widgets.items():
+            value = location_data.get(field_name, "")
+            if isinstance(widget, QLineEdit):
+                widget.setText(str(value))
+            elif isinstance(widget, QTextEdit):
+                widget.setPlainText(str(value))
+            elif isinstance(widget, QComboBox):
+                idx = widget.findText(str(value))
+                if idx >= 0:
+                    widget.setCurrentIndex(idx)
+                else:
+                    widget.setCurrentIndex(0)
+            elif isinstance(widget, QCheckBox):
+                widget.setChecked(bool(value))
+            elif isinstance(widget, QDateEdit):
+                if value:
+                    try:
+                        widget.setDate(datetime.date.fromisoformat(value))
+                    except Exception:
+                        widget.setDate(datetime.date.today())
+                else:
+                    widget.setDate(datetime.date.today())
+    # Handler für "Neuer Ort" Button
+    def on_new_location_clicked(self):
+        empty_data = {k: "" for k in self.location_form_widgets}
+        self.current_location_id = None
+        self.fill_location_form(empty_data)
+    # Handler für "Ort speichern" Button
+    def on_save_location_clicked(self):
+        locations = self.load_locations()
+        data = {}
+        for field_name, widget in self.location_form_widgets.items():
+            if isinstance(widget, QLineEdit):
+                data[field_name] = widget.text()
+            elif isinstance(widget, QTextEdit):
+                data[field_name] = widget.toPlainText()
+            elif isinstance(widget, QComboBox):
+                data[field_name] = widget.currentText()
+            elif isinstance(widget, QCheckBox):
+                data[field_name] = widget.isChecked()
+            elif isinstance(widget, QDateEdit):
+                data[field_name] = widget.date().toString("yyyy-MM-dd")
+        if self.current_location_id and self.current_location_id in locations:
+            # Bestehenden Ort aktualisieren
+            locations[self.current_location_id] = data
+        else:
+            # Neuen Ort anlegen
+            existing_ids = [int(k.split("_")[-1]) for k in locations.keys() if k.startswith("location_ID_")]
+            next_id = max(existing_ids, default=0) + 1
+            new_id = f"location_ID_{next_id:02d}"
+            locations[new_id] = data
+            self.current_location_id = new_id
+        self.save_locations(locations)
+    # Handler für "Vorheriger Ort" Button
+    def on_previous_location_clicked(self):
+        locations = self.load_locations()
+        if not locations:
+            return
+        ids = sorted(locations.keys())
+        if self.current_location_id in ids:
+            idx = ids.index(self.current_location_id)
+            new_idx = (idx - 1) % len(ids)
+        else:
+            new_idx = 0
+        self.current_location_id = ids[new_idx]
+        self.fill_location_form(locations[self.current_location_id])
+    # Handler für "Nächster Ort" Button
+    def on_next_location_clicked(self):
+        locations = self.load_locations()
+        if not locations:
+            return
+        ids = sorted(locations.keys())
+        if self.current_location_id in ids:
+            idx = ids.index(self.current_location_id)
+            new_idx = (idx + 1) % len(ids)
+        else:
+            new_idx = 0
+        self.current_location_id = ids[new_idx]
+        self.fill_location_form(locations[self.current_location_id])   
 
-        region_keys = ["EU", "USA", "UK"]
-        with open(FORM_FIELDS_FILE, "r", encoding="utf-8") as f:
-            form_fields = json.load(f)
-        fiction_fields = form_fields.get("fiction_template", [])
-        nonfiction_fields = form_fields.get("nonfiction_template", [])
+# ..............................................................
+# STORYLINE FUNKTIONEN
+# ..............................................................
 
-        # --- Fiktion-Container ---
-        fiktion_group = QGroupBox(self.get_translation("settings_books_fiction", "Fiktion"), tab_books)
-        fiktion_layout = QVBoxLayout(fiktion_group)
-        fiktion_layout.setAlignment(Qt.AlignTop)
+    # Lege eine neue Storyline an
+    def load_storylines(self):
+        file_path = DATA_DIR / "Storylines.json"
+        if not file_path.exists():
+            log_info(f"Storyline-Datei nicht gefunden: {file_path}")
+            return {}
+        try:
+            with open(file_path, "r", encoding="utf-8") as f:
+                data = json.load(f)
+            log_info(f"Storyline-Datei geladen: {file_path} ({len(data)} Einträge)")
+            return data
+        except Exception as e:
+            log_exception(f"Fehler beim Laden der Storyline-Datei: {file_path}", e)
+            return {}
+    # Speichere alle Storylines
+    def save_storylines(self, storylines):
+        file_path = DATA_DIR / "Storylines.json"
+        try:
+            with open(file_path, "w", encoding="utf-8") as f:
+                json.dump(storylines, f, indent=2, ensure_ascii=False)
+            log_info(f"Storyline-Datei gespeichert: {file_path} ({len(storylines)} Einträge)")
+        except Exception as e:
+            log_exception(f"Fehler beim Speichern der Storyline-Datei: {file_path}", e)
+    # Lösche die aktuelle Storyline
+    def on_delete_storyline_clicked(self):
+        if not hasattr(self, "current_storyline_id") or not self.current_storyline_id:
+            return
+        self.show_secure_delete_dialog("storyline", self.current_storyline_id)
+    # Interne Löschfunktion
+    def _delete_storyline(self, storyline_id):
+        storylines = self.load_storylines()
+        if not storylines or not storyline_id:
+            log_error(f"Keine Storyline zum Löschen gefunden (ID: {storyline_id})")
+            return
+        if storyline_id in storylines:
+            del storylines[storyline_id]
+            self.save_storylines(storylines)
+            log_info(f"Storyline gelöscht: {storyline_id}")
+            # Nach dem Löschen: nächsten oder leeren Datensatz anzeigen
+            if storylines:
+                first_id = sorted(storylines.keys())[0]
+                self.current_storyline_id = first_id
+                self.fill_storyline_form(storylines[first_id])
+            else:
+                self.current_storyline_id = None
+                empty_data = {k: "" for k in self.storyline_form_widgets}
+                self.fill_storyline_form(empty_data)
+    # Fülle das Storyline-Formular mit den Daten einer Storyline
+    def fill_storyline_form(self, storyline_data):
+        for field_name, widget in self.storyline_form_widgets.items():
+            value = storyline_data.get(field_name, "")
+            if isinstance(widget, QLineEdit):
+                widget.setText(str(value))
+            elif isinstance(widget, QTextEdit):
+                widget.setPlainText(str(value))
+            elif isinstance(widget, QComboBox):
+                idx = widget.findText(str(value))
+                if idx >= 0:
+                    widget.setCurrentIndex(idx)
+                else:
+                    widget.setCurrentIndex(0)
+            elif isinstance(widget, QCheckBox):
+                widget.setChecked(bool(value))
+            elif isinstance(widget, QDateEdit):
+                if value:
+                    try:
+                        widget.setDate(datetime.date.fromisoformat(value))
+                    except Exception:
+                        widget.setDate(datetime.date.today())
+                else:
+                    widget.setDate(datetime.date.today())
+    # Handler für "Neue Storyline" Button
+    def on_new_storyline_clicked(self):
+        empty_data = {k: "" for k in self.storyline_form_widgets}
+        self.current_storyline_id = None
+        self.fill_storyline_form(empty_data)
+    # Handler für "Storyline speichern" Button
+    def on_save_storyline_clicked(self):
+        storylines = self.load_storylines()
+        data = {}
+        for field_name, widget in self.storyline_form_widgets.items():
+            if isinstance(widget, QLineEdit):
+                data[field_name] = widget.text()
+            elif isinstance(widget, QTextEdit):
+                data[field_name] = widget.toPlainText()
+            elif isinstance(widget, QComboBox):
+                data[field_name] = widget.currentText()
+            elif isinstance(widget, QCheckBox):
+                data[field_name] = widget.isChecked()
+            elif isinstance(widget, QDateEdit):
+                data[field_name] = widget.date().toString("yyyy-MM-dd")
+        if self.current_storyline_id and self.current_storyline_id in storylines:
+            # Bestehende Storyline aktualisieren
+            storylines[self.current_storyline_id] = data
+        else:
+            # Neue Storyline anlegen
+            existing_ids = [int(k.split("_")[-1]) for k in storylines.keys() if k.startswith("storyline_ID_")]
+            next_id = max(existing_ids, default=0) + 1
+            new_id = f"storyline_ID_{next_id:02d}"
+            storylines[new_id] = data
+            self.current_storyline_id = new_id
+        self.save_storylines(storylines)
+    # Handler für "Vorherige Storyline" Button
+    def on_previous_storyline_clicked(self):
+        storylines = self.load_storylines()
+        if not storylines:
+            return
+        ids = sorted(storylines.keys())
+        if self.current_storyline_id in ids:
+            idx = ids.index(self.current_storyline_id)
+            new_idx = (idx - 1) % len(ids)
+        else:
+            new_idx = 0
+        self.current_storyline_id = ids[new_idx]
+        self.fill_storyline_form(storylines[self.current_storyline_id])
+    # Handler für "Nächste Storyline" Button
+    def on_next_storyline_clicked(self):
+        storylines = self.load_storylines()
+        if not storylines:
+            return
+        ids = sorted(storylines.keys())
+        if self.current_storyline_id in ids:
+            idx = ids.index(self.current_storyline_id)
+            new_idx = (idx + 1) % len(ids)
+        else:
+            new_idx = 0
+        self.current_storyline_id = ids[new_idx]
+        self.fill_storyline_form(storylines[self.current_storyline_id])
 
-        self.fiktion_region_combo = QComboBox(fiktion_group)
-        self.fiktion_region_combo.addItems(region_keys)
-        fiktion_layout.addWidget(self.fiktion_region_combo)
-
-        region_fiction = self.settings.get("general", {}).get("last_fiction_region_used", "EU")
-        self.fiktion_region_combo.setCurrentIndex(region_keys.index(region_fiction) if region_fiction in region_keys else 0)
-
-        fiktion_region = region_fiction
-        fiktion_template = self.settings.get(fiktion_region, {}).get("fiction_template", {})
-        fiktion_form_widget, self.romane_format_widgets = self.create_book_format_form(
-            fiktion_group, fiction_fields, fiktion_template, region=fiktion_region
-        )
-        fiktion_layout.addWidget(fiktion_form_widget)
-        fiktion_group.setMinimumWidth(260)
-        tab_books_layout.addWidget(fiktion_group)
-
-        # --- Non-Fiktion-Container ---
-        nonfiktion_group = QGroupBox(self.get_translation("settings_books_nonfiction", "Non-Fiktion"), tab_books)
-        nonfiktion_layout = QVBoxLayout(nonfiktion_group)
-        nonfiktion_layout.setAlignment(Qt.AlignTop)
-
-        self.nonfiktion_region_combo = QComboBox(nonfiktion_group)
-        self.nonfiktion_region_combo.addItems(region_keys)
-        nonfiktion_layout.addWidget(self.nonfiktion_region_combo)
-
-        region_nonfiction = self.settings.get("general", {}).get("last_nonfiction_region_used", "EU")
-        self.nonfiktion_region_combo.setCurrentIndex(region_keys.index(region_nonfiction) if region_nonfiction in region_keys else 0)
-
-        nonfiktion_region = region_nonfiction
-        nonfiktion_template = self.settings.get(nonfiktion_region, {}).get("nonfiction_template", {})
-        nonfiktion_form_widget, self.sachbuch_format_widgets = self.create_book_format_form(
-            nonfiktion_group, nonfiction_fields, nonfiktion_template, region=nonfiktion_region
-        )
-        nonfiktion_layout.addWidget(nonfiktion_form_widget)
-        nonfiktion_group.setMinimumWidth(260)
-        tab_books_layout.addWidget(nonfiktion_group)
-
-        def update_fiktion_form(idx):
-            region = region_keys[idx]
-            template = self.settings.get(region, {}).get("fiction_template", {})
-            for i in reversed(range(fiktion_layout.count())):
-                widget = fiktion_layout.itemAt(i).widget()
-                if widget and widget != self.fiktion_region_combo:
-                    fiktion_layout.removeWidget(widget)
-                    widget.deleteLater()
-            new_form_widget, self.romane_format_widgets = self.create_book_format_form(
-                fiktion_group, fiction_fields, template, region=region
-            )
-            fiktion_layout.addWidget(new_form_widget)
-
-        def update_nonfiktion_form(idx):
-            region = region_keys[idx]
-            template = self.settings.get(region, {}).get("nonfiction_template", {})
-            for i in reversed(range(nonfiktion_layout.count())):
-                widget = nonfiktion_layout.itemAt(i).widget()
-                if widget and widget != self.nonfiktion_region_combo:
-                    nonfiktion_layout.removeWidget(widget)
-                    widget.deleteLater()
-            new_form_widget, self.sachbuch_format_widgets = self.create_book_format_form(
-                nonfiktion_group, nonfiction_fields, template, region=region
-            )
-            nonfiktion_layout.addWidget(new_form_widget)
-
-        self.fiktion_region_combo.currentIndexChanged.connect(update_fiktion_form)
-        self.nonfiktion_region_combo.currentIndexChanged.connect(update_nonfiktion_form)
-
-        tab_widget.addTab(tab_books, self.get_translation("tab_se_02", "Bücher"))
-
-        for i in range(3, 7):
-            tab_key = f"tab_se_{i:02d}"
-            tab_hint_key = f"tab_se_{i:02d}_hint"
-            tab_label = self.get_translation(tab_key, f"Tab {i}")
-            tab_hint = self.get_translation(tab_hint_key, "")
-
-            tab = QWidget()
-            tab_layout = QVBoxLayout(tab)
-            tab_layout.setAlignment(Qt.AlignTop)
-            label = QLabel(tab_label, tab)
-            label.setAlignment(Qt.AlignTop | Qt.AlignLeft)
-            tab_layout.addWidget(label)
-
-            tab_widget.addTab(tab, tab_label)
-            tab_widget.setTabToolTip(i-1, tab_hint)
-
-        main_layout.addWidget(tab_widget)
-        panel_widget.setObjectName("PreferencesPanel")
-        self.safe_apply_theme_style(panel_widget, "panel", self.theme)
-        self.safe_apply_theme_style(tab_widget, "tab", self.theme)
-        return panel_widget
-
-    # Hilfsfunktion, um verschachtelte Werte aus einem Dictionary zu lesen
+# ..............................................................
+# SETTINGS FUNKTIONEN
+# ..............................................................
     def get_nested_value(self, settings, path):
         parts = path.split(".")
         value = settings
@@ -2252,7 +4677,6 @@ class StartWindow(QMainWindow):
             else:
                 return None
         return value
-
     # Formular für Buchformat-Einstellungen erstellen
     def create_book_format_form(self, parent, form_fields, template_settings, region="EU"):
         from PySide6.QtWidgets import QSizePolicy
@@ -2361,14 +4785,12 @@ class StartWindow(QMainWindow):
         container = QWidget(parent)
         container.setLayout(main_layout)
         return container, widgets
-    
     # Sprache ändern in den Einstellungen
     def on_settings_language_changed(self, index):
         # Hole den Sprachcode aus den Items oder einer Mapping-Liste
         language_codes = ["de", "en", "fr", "es"]  # Beispiel, passe ggf. an
         new_language = language_codes[index]  
         self.settings_change_language(new_language)
-    
     # Sprache ändern in den Einstellungen
     def settings_change_language(self, new_language):
         # Übersetzungen laden und anwenden
@@ -2399,7 +4821,6 @@ class StartWindow(QMainWindow):
         # Panels gezielt neu erstellen (Settings-Panel bleibt aktiv!)
         self.update_center_panel_settings_texts()
         self.update_right_panel_settings_texts()
-
     # Aktualisiere die Texte im Center-Panel der Einstellungen
     def update_center_panel_settings_texts(self):
         splitter = self.centralWidget()
@@ -2513,7 +4934,6 @@ class StartWindow(QMainWindow):
             tab_hint_key = f"tab_se_{i+1:02d}_hint"
             tab_hint = self.get_translation(tab_hint_key, "")
             tab_widget.setTabToolTip(i, tab_hint)
-
     # Aktualisiere die Texte im Right-Panel der Einstellungen
     def update_right_panel_settings_texts(self):
         splitter = self.centralWidget()
@@ -2540,7 +4960,7 @@ class StartWindow(QMainWindow):
         header_label = right_panel.findChild(QLabel, "FormHeaderLabel")
         if header_label:
             header_label.setText(self.get_translation("SettingsWinHeader", "Settings"))
-
+    # Theme ändern in den Einstellungen
     def on_settings_theme_changed(self, index):
         # Hole den Theme-Namen aus den Items oder einer Mapping-Liste
         theme_names = ["Modern_neutral", "Modern_dark", "Modern_light", 
@@ -2550,7 +4970,7 @@ class StartWindow(QMainWindow):
                        "Minimal_neutral", "Minimal_dark", "Minimal_light"]  # Beispiel, passe ggf. an
         new_theme_name = theme_names[index]  
         self.settings_change_theme(new_theme_name)   
-
+    # Theme ändern allgemein
     def settings_change_theme(self, new_theme_name):
         theme_names = ["Modern_neutral", "Modern_dark", "Modern_light", 
                        "OldSchool_neutral", "OldSchool_dark", "OldSchool_light", 
@@ -2587,2521 +5007,9 @@ class StartWindow(QMainWindow):
 
         # Globales Stylesheet anwenden
         apply_global_stylesheet(QApplication.instance(), self.base_style_path, self.theme)
-    
-    # Dieses center_panel_character wird angezeigt, wenn ein Charakter erstellt oder bearbeitet wird.
-    def create_center_panel_character(self, character_data=None):
-        import datetime
 
-        panel_widget = QWidget()
-        main_layout = QVBoxLayout(panel_widget)
-        main_layout.setContentsMargins(20, 20, 20, 20)
-        main_layout.setSpacing(12)
-
-        # --- OBERER BEREICH: Hauptcharakter, Name, Vorname ---
-        top_form = QFormLayout()
-        top_form.setSpacing(8)
-        self.character_form_widgets = {}
-
-        upper_fields = ["main_character", "name", "first_name"]
-        with open(FORM_FIELDS_FILE, "r", encoding="utf-8") as f:
-            form_fields = json.load(f)
-        character_fields = form_fields.get("characters", [])
-
-        for field in character_fields:
-            field_name = field.get("datafield_name")
-            if field_name not in upper_fields:
-                continue
-            label_key = field.get("label_key", field_name)
-            label_text = self.get_translation(label_key, field_name)
-            field_type = field.get("type", "text")
-            width = field.get("width")
-            # Widget-Auswahl
-            if field_type == "checkbox":
-                widget = QCheckBox(panel_widget)
-            else:
-                widget = QLineEdit(panel_widget)
-            if width:
-                try:
-                    widget.setFixedWidth(int(width))
-                except Exception:
-                    pass
-            top_form.addRow(label_text, widget)
-            self.character_form_widgets[field_name] = widget
-
-        main_layout.addLayout(top_form)
-
-        # --- TAB-BEREICH ---
-        tab_widget = QTabWidget(panel_widget)
-        tab_widget.setTabPosition(QTabWidget.North)
-
-        tab_definitions = [
-            ("char_ma_01", ["nick_name", "born", "died", "role_ID", "group_ID", "char_image", "gender_ID", "sexual_orientation_ID", "status_ID", "notes"]),
-            ("char_or_01", ["origin_father", "origin_mother", "origin_siblings", "origin_reference_person", "origin_place_of_birth", "origin_notes"]),
-            ("char_ed_01", ["education_school", "education_university", "education_vocational_training", "education_self_tought", "education_profession", "education_art_music", "education_sports","education_technology","education_notes"]),
-            ("char_am_01", ["appearance_Height", "appearance_Body_type", "appearance_Stature", "appearance_Face_shape", "appearance_Eye_shape", "appearance_Eye_color", "appearance_Hair", "appearance_Hair_color", "appearance_Skin", "appearance_Aura", "appearance_Special_features", "appearance_Notes"]),
-            ("char_ad_01", ["appearance_details_Head", "appearance_details_Neck", "appearance_details_Shoulders", "appearance_details_Arms", "appearance_details_Hands", "appearance_details_Fingers", "appearance_details_Chest", "appearance_details_Hips_Waist", "appearance_details_Buttocks", "appearance_details_Legs", "appearance_details_Feet", "appearance_details_Toes","appearance_details_notes"]),
-            ("char_ps_01", ["personality_Positive_trait", "personality_Negative_trait", "personality_Fears", "personality_Weaknesses", "personality_Strengths", "personality_Talents", "personality_Belief_principle", "personality_Life_goal", "personality_Motivation", "personality_Behavior", "personality_Notes"]),
-            ("char_pp_01", ["psychlogical_profile_Diagnosis", "psychlogical_profile_Symptoms", "psychlogical_profile_Therapy", "psychlogical_profile_Medication", "psychlogical_profile_Temperament", "psychlogical_profile_Values", "psychlogical_profile_Moral_concepts", "psychlogical_profile_Character_strength", "psychlogical_profile_Character_weakness", "psychlogical_profile_Self_image", "psychlogical_profile_Humor", "psychlogical_profile_Aggressiveness", "psychlogical_profile_Trauma", "psychlogical_profile_Imprint", "psychlogical_profile_Socialization", "psychlogical_profile_Norms", "psychlogical_profile_Taboos", "psychlogical_profile_Notes"]),
-        ]
-
-        # Altersberechnung mit Validierung (außerhalb des Feld-Loops, damit sie immer existiert)
-        def update_age(*args):
-            born_widget = self.character_form_widgets.get("born")
-            died_widget = self.character_form_widgets.get("died")
-            age_label = self.character_form_widgets.get("char_age")
-            if not born_widget or not age_label:
-                return
-
-            birthdate = None
-            died_date = None
-
-            # Unterstützte Formate je nach Sprache
-            if self.language == "de":
-                formats = ["%d.%m.%Y", "%Y-%m-%d"]
-            elif self.language == "en":
-                formats = ["%m %d %Y", "%Y-%m-%d"]
-            elif self.language in ("fr", "es"):
-                formats = ["%d/%m/%Y", "%Y-%m-%d"]
-            else:
-                formats = ["%Y-%m-%d"]
-
-            # Geburtsdatum parsen
-            born_text = born_widget.text().strip()
-            for fmt in formats:
-                try:
-                    birthdate = datetime.datetime.strptime(born_text, fmt).date()
-                    break
-                except Exception:
-                    continue
-
-            # Sterbedatum parsen (kann leer sein)
-            died_text = died_widget.text().strip() if died_widget else ""
-            for fmt in formats:
-                try:
-                    died_date = datetime.datetime.strptime(died_text, fmt).date()
-                    break
-                except Exception:
-                    continue
-
-            # Visuelle Validierung
-            if born_text and not birthdate:
-                born_widget.setStyleSheet("background-color: #ffcccc;")
-            else:
-                born_widget.setStyleSheet("")
-            if died_widget:
-                if died_text and not died_date:
-                    died_widget.setStyleSheet("background-color: #ffcccc;")
-                else:
-                    died_widget.setStyleSheet("")
-
-            if not birthdate:
-                age_label.setText("")
-                return
-            if died_text and not died_date:
-                age_label.setText(self.get_translation("char_age_invalid", "Ungültiges Sterbedatum"))
-                return
-
-            if died_date:
-                age = died_date.year - birthdate.year - ((died_date.month, died_date.day) < (birthdate.month, birthdate.day))
-            else:
-                today = datetime.date.today()
-                age = today.year - birthdate.year - ((today.month, today.day) < (birthdate.month, birthdate.day))
-            age_label.setText(str(age))
-
-        for tab_key, tab_fields in tab_definitions:
-            tab = QWidget()
-            tab_layout = QFormLayout(tab)
-            tab_layout.setSpacing(8)
-            for field in character_fields:
-                field_name = field.get("datafield_name")
-                if not field_name or (tab_fields and field_name not in tab_fields):
-                    continue
-                label_key = field.get("label_key", field_name)
-                label_text = self.get_translation(label_key, field_name)
-                field_type = field.get("type", "text")
-                width = field.get("width")
-
-                # Spezialfall: born/died als QLineEdit mit Validierung
-                if field_name in ("born", "died"):
-                    widget = QLineEdit(panel_widget)
-                    # Setze Platzhalter je nach Sprache
-                    if self.language == "de":
-                        widget.setPlaceholderText("TT.MM.JJJJ")
-                    elif self.language == "en":
-                        widget.setPlaceholderText("MM DD YYYY")
-                    elif self.language in ("fr", "es"):
-                        widget.setPlaceholderText("JJ/MM/JJJJ")
-                    else:
-                        widget.setPlaceholderText("YYYY-MM-DD")
-                    if width:
-                        try:
-                            widget.setFixedWidth(int(width))
-                        except Exception:
-                            pass
-                    tab_layout.addRow(label_text, widget)
-                    self.character_form_widgets[field_name] = widget
-
-                    # Alter-Label (nur einmal anlegen!)
-                    if "char_age" not in self.character_form_widgets:
-                        age_label = self.get_translation("char_ma_08", "Alter")
-                        age_value_label = QLabel(panel_widget)
-                        age_value_label.setObjectName("CharAgeLabel")
-                        age_value_label.setAlignment(Qt.AlignLeft | Qt.AlignVCenter)
-                        tab_layout.addRow(age_label, age_value_label)
-                        self.character_form_widgets["char_age"] = age_value_label
-
-                    # Signals verbinden (erst nach dem Loop update_age aufrufen!)
-                    if field_name == "born":
-                        widget.textChanged.connect(update_age)
-                    if field_name == "died":
-                        widget.textChanged.connect(update_age)
-                    continue
-
-                # Standard-Widget-Erstellung
-                if field_type == "checkbox":
-                    widget = QCheckBox(panel_widget)
-                elif field_type == "combobox":
-                    widget = QComboBox(panel_widget)
-                    combo_key = field.get("combo_key")
-                    if combo_key and self.combobox_translations:
-                        items = list(self.combobox_translations.get(combo_key, {}).values())
-                        widget.addItems(items)
-                elif field_type == "date":
-                    widget = QDateEdit(panel_widget)
-                    widget.setCalendarPopup(True)
-                elif field.get("multiline"):
-                    widget = QTextEdit(panel_widget)
-                    widget.setMinimumHeight(60)
-                else:
-                    widget = QLineEdit(panel_widget)
-                if width:
-                    try:
-                        widget.setFixedWidth(int(width))
-                    except Exception:
-                        pass
-                tab_layout.addRow(label_text, widget)
-                self.character_form_widgets[field_name] = widget
-
-            tab_widget.addTab(tab, self.get_translation(tab_key, tab_key))
-
-        main_layout.addWidget(tab_widget)
-        panel_widget.setObjectName("CharacterFormPanel")
-        self.safe_apply_theme_style(panel_widget, "panel", self.theme)
-
-        # Altersberechnung initial ausführen (nachdem alle Widgets existieren)
-        update_age()
-
-        # Optional: Formular mit Daten befüllen
-        if character_data:
-            self.fill_character_form(character_data)
-
-        return panel_widget
-   
-    # Dieses center_panel_object wird angezeigt, wenn ein Objekt erstellt oder bearbeitet wird.
-    def create_center_panel_object(self, object_data=None):
-        panel_widget = QWidget()
-        main_layout = QVBoxLayout(panel_widget)
-        main_layout.setContentsMargins(20, 20, 20, 20)
-        main_layout.setSpacing(12)
-
-        # Formular-Layout
-        form_layout = QFormLayout()
-        form_layout.setSpacing(8)
-        self.object_form_widgets = {}
-
-        if object_data is None:
-            objects = self.load_objects()
-            if objects:
-                first_id = sorted(objects.keys())[0]
-                object_data = objects[first_id]
-                self.current_object_id = first_id
-            else:
-                object_data = {k: "" for k in self.object_form_widgets}
-                self.current_object_id = None
-
-        # Felder laden
-        with open(FORM_FIELDS_FILE, "r", encoding="utf-8") as f:
-            form_fields = json.load(f)
-        object_fields = form_fields.get("objects", [])
-
-        for field in object_fields:
-            field_name = field.get("datafield_name")
-            if not field_name:
-                continue
-            label_key = field.get("label_key", field_name)
-            label_text = self.get_translation(label_key, field_name)
-            field_type = field.get("type", "text")
-            width = field.get("width")
-
-            # Widget-Auswahl
-            if field_type == "checkbox":
-                widget = QCheckBox(panel_widget)
-            elif field_type == "combobox":
-                widget = QComboBox(panel_widget)
-                combo_key = field.get("combo_key")
-                if combo_key and self.combobox_translations:
-                    items = list(self.combobox_translations.get(combo_key, {}).values())
-                    widget.addItems(items)
-            elif field_type == "date":
-                widget = QDateEdit(panel_widget)
-                widget.setCalendarPopup(True)
-                widget.setDate(datetime.date.today())
-            elif field.get("multiline"):
-                widget = QTextEdit(panel_widget)
-                widget.setMinimumHeight(60)
-            else:
-                widget = QLineEdit(panel_widget)
-            if width:
-                try:
-                    widget.setFixedWidth(int(width))
-                except Exception:
-                    pass
-
-            # Wert beim Laden setzen
-            if object_data and field_name in object_data:
-                value = object_data[field_name]
-                if isinstance(widget, QLineEdit):
-                    widget.setText(str(value))
-                elif isinstance(widget, QTextEdit):
-                    widget.setPlainText(str(value))
-                elif isinstance(widget, QComboBox):
-                    idx = widget.findText(str(value))
-                    if idx >= 0:
-                        widget.setCurrentIndex(idx)
-                elif isinstance(widget, QCheckBox):
-                    widget.setChecked(bool(value))
-                elif isinstance(widget, QDateEdit):
-                    try:
-                        widget.setDate(datetime.date.fromisoformat(value))
-                    except Exception:
-                        widget.setDate(datetime.date.today())
-
-            form_layout.addRow(label_text, widget)
-            self.object_form_widgets[field_name] = widget
-
-        main_layout.addLayout(form_layout)
-        panel_widget.setObjectName("ObjectFormPanel")
-        self.safe_apply_theme_style(panel_widget, "panel", self.theme)
-        return panel_widget
-
-    # Dieses center_panel_location wird angezeigt, wenn ein Ort erstellt oder bearbeitet wird.
-    def create_center_panel_location(self, location_data=None):
-        panel_widget = QWidget()
-        main_layout = QVBoxLayout(panel_widget)
-        main_layout.setContentsMargins(20, 20, 20, 20)
-        main_layout.setSpacing(12)
-
-        # Formular-Layout
-        form_layout = QFormLayout()
-        form_layout.setSpacing(8)
-        self.location_form_widgets = {}
-
-        if location_data is None:
-            locations = self.load_locations()
-            if locations:
-                first_id = sorted(locations.keys())[0]
-                location_data = locations[first_id]
-                self.current_location_id = first_id
-            else:
-                location_data = {k: "" for k in self.location_form_widgets}
-                self.current_location_id = None    
-
-        # Felder laden
-        with open(FORM_FIELDS_FILE, "r", encoding="utf-8") as f:
-            form_fields = json.load(f)
-        location_fields = form_fields.get("locations", [])
-
-        for field in location_fields:
-            field_name = field.get("datafield_name")
-            if not field_name:
-                continue
-            label_key = field.get("label_key", field_name)
-            label_text = self.get_translation(label_key, field_name)
-            field_type = field.get("type", "text")
-            width = field.get("width")
-
-            # Widget-Auswahl
-            if field_type == "checkbox":
-                widget = QCheckBox(panel_widget)
-            elif field_type == "combobox":
-                widget = QComboBox(panel_widget)
-                combo_key = field.get("combo_key")
-                if combo_key and self.combobox_translations:
-                    items = list(self.combobox_translations.get(combo_key, {}).values())
-                    widget.addItems(items)
-            elif field_type == "date":
-                widget = QDateEdit(panel_widget)
-                widget.setCalendarPopup(True)
-                widget.setDate(datetime.date.today())
-            elif field.get("multiline"):
-                widget = QTextEdit(panel_widget)
-                widget.setMinimumHeight(60)
-            else:
-                widget = QLineEdit(panel_widget)
-            if width:
-                try:
-                    widget.setFixedWidth(int(width))
-                except Exception:
-                    pass
-
-            # Wert beim Laden setzen
-            if location_data and field_name in location_data:
-                value = location_data[field_name]
-                if isinstance(widget, QLineEdit):
-                    widget.setText(str(value))
-                elif isinstance(widget, QTextEdit):
-                    widget.setPlainText(str(value))
-                elif isinstance(widget, QComboBox):
-                    idx = widget.findText(str(value))
-                    if idx >= 0:
-                        widget.setCurrentIndex(idx)
-                elif isinstance(widget, QCheckBox):
-                    widget.setChecked(bool(value))
-                elif isinstance(widget, QDateEdit):
-                    try:
-                        widget.setDate(datetime.date.fromisoformat(value))
-                    except Exception:
-                        widget.setDate(datetime.date.today())
-
-            form_layout.addRow(label_text, widget)
-            self.location_form_widgets[field_name] = widget
-
-        main_layout.addLayout(form_layout)
-        panel_widget.setObjectName("LocationFormPanel")
-        self.safe_apply_theme_style(panel_widget, "panel", self.theme)
-        return panel_widget
-
-    # Dieses center_panel_storylines wird angezeigt, wenn die Storylines bearbeitet werden sollen.
-    def create_center_panel_storylines(self, storyline_data=None):
-        panel_widget = QWidget()
-        main_layout = QVBoxLayout(panel_widget)
-        main_layout.setContentsMargins(20, 20, 20, 20)
-        main_layout.setSpacing(16)
-        
-        # Formular-Layout
-        form_layout = QFormLayout()
-        form_layout.setSpacing(8)
-        self.storyline_form_widgets = {}
-
-        if storyline_data is None:
-            storylines = self.load_storylines()
-            if storylines:
-                first_id = sorted(storylines.keys())[0]
-                storyline_data = storylines[first_id]
-                self.current_storyline_id = first_id
-            else:
-                storyline_data = {k: "" for k in self.storyline_form_widgets}
-                self.current_storyline_id = None
-
-        # Felder laden
-        with open(FORM_FIELDS_FILE, "r", encoding="utf-8") as f:
-            form_fields = json.load(f)
-        storyline_fields = form_fields.get("storylines", [])
-
-        for field in storyline_fields:
-            field_name = field.get("datafield_name")
-            if not field_name:
-                continue
-            label_key = field.get("label_key", field_name)
-            label_text = self.get_translation(label_key, field_name)
-            field_type = field.get("type", "text")
-            width = field.get("width")
-
-            # Widget-Auswahl
-            if field_type == "checkbox":
-                widget = QCheckBox(panel_widget)
-            elif field_type == "combobox":
-                widget = QComboBox(panel_widget)
-                combo_key = field.get("combo_key")
-                if combo_key and self.combobox_translations:
-                    items = list(self.combobox_translations.get(combo_key, {}).values())
-                    widget.addItems(items)
-            elif field_type == "date":
-                widget = QDateEdit(panel_widget)
-                widget.setCalendarPopup(True)
-                widget.setDate(datetime.date.today())
-            elif field.get("multiline"):
-                widget = QTextEdit(panel_widget)
-                widget.setMinimumHeight(60)
-            else:
-                widget = QLineEdit(panel_widget)
-            if width:
-                try:
-                    widget.setFixedWidth(int(width))
-                except Exception:
-                    pass
-
-            # Wert beim Laden setzen
-            if storyline_data and field_name in storyline_data:
-                value = storyline_data[field_name]
-                if isinstance(widget, QLineEdit):
-                    widget.setText(str(value))
-                elif isinstance(widget, QTextEdit):
-                    widget.setPlainText(str(value))
-                elif isinstance(widget, QComboBox):
-                    idx = widget.findText(str(value))
-                    if idx >= 0:
-                        widget.setCurrentIndex(idx)
-                elif isinstance(widget, QCheckBox):
-                    widget.setChecked(bool(value))
-                elif isinstance(widget, QDateEdit):
-                    try:
-                        widget.setDate(datetime.date.fromisoformat(value))
-                    except Exception:
-                        widget.setDate(datetime.date.today())
-
-            form_layout.addRow(label_text, widget)
-            self.storyline_form_widgets[field_name] = widget  
-
-        main_layout.addLayout(form_layout)
-        panel_widget.setObjectName("StorylineFormPanel")
-        self.safe_apply_theme_style(panel_widget, "panel", self.theme)
-        return panel_widget  
-
-    # Dieses center_panel_help wird angezeigt, wenn die Hilfe geöffnet wird.
-    def create_center_panel_help(self):
-        return self.create_center_panel_with_header("help_lp_header", "Help")
-    
-    # Dieses center_panel_about wird angezeigt, wenn "Über" geöffnet wird.
-    def create_center_panel_about(self):
-        return self.create_center_panel_with_header("abou_lp_header", "About")
-    
-    # ..............................................................
-    # PANELS FUNKTIONEN - RIGHT_PANEL
-    # ..............................................................
-    # Dieses right_panel_start wird beim Systemstart angezeigt und beinhaltet
-    # die Navigation zum Aufruf von: Editor, Projekt, Einstellungen, Hilfe, Über
-    def show_start_panels(self):
-        self.current_panel_index = 0
-        splitter = self.centralWidget()
-        if isinstance(splitter, QSplitter):
-            # Left Panel zurücksetzen
-            window_key = self.get_window_key_by_panel_index(self.current_panel_index)
-            splitter_sizes = self.settings.get(window_key, {}).get("splitter_sizes", [300, 600, 300])
-            new_left_panel, update_left_panel_image = self.create_left_panel_start(splitter_sizes)
-            old_left_panel = splitter.widget(0)
-            splitter.insertWidget(0, new_left_panel)
-            splitter.setStretchFactor(0, 1)
-            if old_left_panel is not None:
-                old_left_panel.setParent(None)
-            self.left_panel_widget = new_left_panel
-            self.safe_apply_theme_style(new_left_panel, "panel", self.theme)
-
-            # Center Panel zurücksetzen
-            new_center_panel = self.create_center_panel_start()
-            old_center_panel = splitter.widget(1)
-            splitter.insertWidget(1, new_center_panel)
-            splitter.setStretchFactor(1, 1)
-            if old_center_panel is not None:
-                old_center_panel.setParent(None)
-            self.center_panel_widget = new_center_panel
-            self.safe_apply_theme_style(new_center_panel, "panel", self.theme)
-
-            # Right Panel zurücksetzen
-            new_right_panel = self.create_right_panel_start()
-            old_right_panel = splitter.widget(2)
-            splitter.insertWidget(2, new_right_panel)
-            splitter.setStretchFactor(2, 1)
-            if old_right_panel is not None:
-                old_right_panel.setParent(None)
-            self.right_panel_widget = new_right_panel
-            self.safe_apply_theme_style(new_right_panel, "panel", self.theme)
-
-            # Splitter-Größen wiederherstellen
-            splitter.setSizes(splitter_sizes)
-            log_info("Alle Panels wurden auf die Startansicht zurückgesetzt.")
-
-    # Dieses right_panel_start wird beim Systemstart angezeigt und beinhaltet
-    # die Navigation zum Aufruf von: Editor, Projekt, Einstellungen, Hilfe, Über
-    def create_right_panel_start(self):
-        panel_widget = QWidget()
-        panel_layout = QVBoxLayout(panel_widget)
-        panel_layout.setContentsMargins(20, 20, 20, 20)
-        panel_layout.setSpacing(16)
-        panel_layout.setAlignment(Qt.AlignTop)
-
-        # Header
-        header_text = self.get_translation("startWinHeader", "Project Overview <br>")
-        header_label = QLabel(header_text, panel_widget)
-        header_label.setObjectName("FormHeaderLabel")
-        header_label.setAlignment(Qt.AlignHCenter | Qt.AlignTop)
-        panel_layout.addWidget(header_label)
-
-        # Mapping: Button-Index zu left_panel-Funktion
-        self.left_panel_functions = [
-            self.create_left_panel_start,
-            self.create_left_panel_project,
-            self.create_left_panel_character,
-            self.create_left_panel_object,
-            self.create_left_panel_location,
-            self.create_left_panel_storylines,
-            self.create_left_panel_editor,
-            self.create_left_panel_settings,
-            self.create_left_panel_help,
-            self.create_left_panel_about,
-        ]
-        # Mapping: Button-Index zu center_panel-Funktion
-        self.center_panel_functions = [
-            self.create_center_panel_start,
-            self.create_center_panel_project,
-            self.create_center_panel_character,
-            self.create_center_panel_object,
-            self.create_center_panel_location,
-            self.create_center_panel_storylines,
-            self.create_center_panel_editor,
-            self.create_center_panel_settings,
-            self.create_center_panel_help,
-            self.create_center_panel_about,
-        ]
-
-        self.right_panel_functions = [
-            self.create_right_panel_start,
-            self.create_right_panel_project,
-            self.create_right_panel_character,
-            self.create_right_panel_object,
-            self.create_right_panel_location,
-            self.create_right_panel_storylines,
-            self.create_right_panel_editor,
-            self.create_right_panel_settings,
-            self.create_right_panel_help,
-            self.create_right_panel_about,
-        ]
-
-        # Navigationselemente 1-9
-        nav_keys = [
-            ("botn_st_01", "botn_st_01_hint"),
-            ("botn_st_02", "botn_st_02_hint"),
-            ("botn_st_03", "botn_st_03_hint"),
-            ("botn_st_04", "botn_st_04_hint"),
-            ("botn_st_05", "botn_st_05_hint"),
-            ("botn_st_06", "botn_st_06_hint"),
-            ("botn_st_07", "botn_st_07_hint"),
-            ("botn_st_08", "botn_st_08_hint"),
-            ("botn_st_09", "botn_st_09_hint"),
-        ]
-
-        for i, (key, hint_key) in enumerate(nav_keys, start=1):
-            btn_text = self.get_translation(key, key)
-            btn_hint = self.get_translation(hint_key, "")
-            btn = QPushButton(btn_text, panel_widget)
-            btn.setToolTip(btn_hint)
-            panel_layout.addWidget(btn)
-            setattr(self, f"botn_st_{i:02d}", btn)
-            # Button-Handler verbinden
-            btn.clicked.connect(
-                lambda checked, idx=i: (
-                self.show_left_panel(idx, self.left_panel_functions),
-                self.show_center_panel(idx, self.center_panel_functions),
-                self.show_right_panel(idx, self.right_panel_functions)
-            ))
-
-        # Spacer, damit Button 9 unten ist
-        panel_layout.addSpacerItem(QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding))
-
-        # Navigationselement 9 (unten)
-        btn9_text = self.get_translation("botn_st_10", "Exit")
-        btn9_hint = self.get_translation("botn_st_10_hint", "Exit CSNova.")
-        btn9 = QPushButton(btn9_text, panel_widget)
-        btn9.setToolTip(btn9_hint)
-        btn9.clicked.connect(self.show_secure_exit_dialog)
-        panel_layout.addWidget(btn9, alignment=Qt.AlignBottom)
-        self.botn_st_09 = btn9
-
-        panel_widget.setObjectName("NavigationPanelStart")
-        self.safe_apply_theme_style(panel_widget, "panel", {**self.theme, "background": self.theme.get("nav_bg", self.theme.get("background"))})
-
-        self.right_panel_header_label = header_label
-
-        return panel_widget
- 
-    # Dieses right_panel_editor wird im Editor-Modus angezeigt und beinhaltet
-    # die Navigation, ob in left_panel die Charaktere, Orte, Objekte, Kapitel oder Szenen angezeigt werden sollen.
-    # Außerdem wird hier der Editor-Modus beendet.
-    def create_right_panel_editor(self):
-        panel_widget = QWidget()
-        panel_layout = QVBoxLayout(panel_widget)
-        panel_layout.setContentsMargins(20, 20, 20, 20)
-        panel_layout.setSpacing(16)
-        panel_layout.setAlignment(Qt.AlignTop)
-
-        # Label für die ComboBox
-        data_label = QLabel(self.get_translation("proj_ma_header", "Projekte"), panel_widget)
-        data_label.setAlignment(Qt.AlignLeft)
-        panel_layout.addWidget(data_label)
-
-        # ComboBox mit allen Data_*.json Dateien
-        data_combo = QComboBox(panel_widget)
-        data_files = sorted([
-            f for f in os.listdir(str(DATA_DIR))
-            if f.startswith("Data_") and f.endswith(".json")
-        ])
-        data_combo.addItems(data_files)
-        panel_layout.addWidget(data_combo)
-        self.data_file_combo = data_combo
-
-        # Aktives Item aus user_settings.json setzen
-        last_file_opened = self.settings.get("general", {}).get("last_file_opened", "")
-        if last_file_opened in data_files:
-            idx = data_files.index(last_file_opened)
-            data_combo.setCurrentIndex(idx)
-
-        # Kapitel-Liste
-        self.chapter_list_widget = QListWidget(panel_widget)
-        self.chapter_list_widget.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-        panel_layout.addWidget(self.chapter_list_widget)
-
-        # Kapitel-Liste initial füllen und erstes Kapitel anzeigen
-        filename = self.data_file_combo.currentText()
-        data_path = DATA_DIR / filename
-        data = load_json_file(data_path)
-        chapters = {k: v for k, v in data.items() if k.startswith("chapter_ID_")}
-
-        self.chapter_list_widget.clear()
-        for chapter_id, chapter in chapters.items():
-            chapter_title = chapter.get("chapter_title", chapter_id)
-            self.chapter_list_widget.addItem(f"{chapter_id}: {chapter_title}")
-
-        # Kapitel-Formular
-        with open(FORM_FIELDS_FILE, "r", encoding="utf-8") as f:
-            form_fields = json.load(f)
-        chapter_fields = form_fields.get("chapters", [])
-
-        self.chapter_form_widgets = {}
-        chapter_form = QFormLayout()
-        for field in chapter_fields:
-            field_name = field.get("datafield_name")
-            if not field_name:
-                continue
-            label_key = field.get("label_key", field_name)
-            label_text = self.get_translation(label_key, field_name)
-            field_type = field.get("type", "text")
-            width = field.get("width")
-
-            # Kapitel-ID nur als Label, nicht editierbar!
-            if field_name == "chapter_id":
-                widget = QLabel(panel_widget)
-                widget.setText("")
-                chapter_form.addRow(label_text, widget)
-                self.chapter_form_widgets[field_name] = widget
-                continue
-
-            if field_type == "text":
-                if field.get("multiline"):
-                    widget = QTextEdit(panel_widget)
-                    widget.setMinimumHeight(60)
-                else:
-                    widget = QLineEdit(panel_widget)
-            elif field_type == "spin":
-                widget = QSpinBox(panel_widget)
-                widget.setMaximum(field.get("max", 1000000))
-            elif field_type == "date":
-                widget = QDateEdit(panel_widget)
-                widget.setCalendarPopup(True)
-                widget.setDate(datetime.date.today())
-            else:
-                widget = QLineEdit(panel_widget)
-
-            if width:
-                try:
-                    widget.setFixedWidth(width)
-                except Exception:
-                    pass
-
-            chapter_form.addRow(label_text, widget)
-            self.chapter_form_widgets[field_name] = widget
-
-        panel_layout.addLayout(chapter_form)
-
-        # --- Button-Konfiguration: (Key, Hint-Key) ---
-        button_keys = [
-            ("botn_ed_01", "botn_ed_01_hint"),  # neues Kapitel 
-            ("botn_ed_02", "botn_ed_02_hint"),  # voriges Kapitel
-            ("botn_ed_03", "botn_ed_03_hint"),  # nächstes Kapitel
-            ("botn_ed_04", "botn_ed_04_hint"),  # Kapitel speichern
-            ("botn_ed_05", "botn_ed_05_hint"),  # Kapitel löschen
-        ]
-        for i, (key, hint_key) in enumerate(button_keys, start=1):
-            btn_text = self.get_translation(key, key)
-            btn_hint = self.get_translation(hint_key, "")
-            btn = QPushButton(btn_text, panel_widget)
-            btn.setToolTip(btn_hint)
-            panel_layout.addWidget(btn)
-            setattr(self, f"botn_ed_{i:02d}", btn)
-
-        # Button-Handler verbinden
-        self.botn_ed_01.clicked.connect(self.add_new_chapter)
-        self.botn_ed_02.clicked.connect(self.show_previous_chapter)
-        self.botn_ed_03.clicked.connect(self.show_next_chapter)
-        self.botn_ed_04.clicked.connect(self.save_current_chapter)
-        self.botn_ed_05.clicked.connect(self.delete_current_chapter)
-
-        # Kapitel-Auswahl-Handler: Felder aktualisieren
-        def on_chapter_selected():
-            selected_items = self.chapter_list_widget.selectedItems()
-            if selected_items:
-                chapter_id = selected_items[0].text().split(":")[0]
-                self.fill_chapter_form(chapter_id)
-                self.current_scene_index = 0
-                self.load_scenes_from_current_chapter()
-                self.fill_scene_form(self.current_scene_index)
-        self.chapter_list_widget.itemSelectionChanged.connect(on_chapter_selected)
-
-
-        # Auswahl auf das erste Kapitel setzen und Felder füllen
-        if self.chapter_list_widget.count() > 0:
-            self.chapter_list_widget.setCurrentRow(0)
-            selected_item = self.chapter_list_widget.item(0)
-            if selected_item:
-                chapter_id = selected_item.text().split(":")[0]
-                self.fill_chapter_form(chapter_id)
-
-        # Spacer, damit der Zurück-Button unten steht
-        panel_layout.addSpacerItem(QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding))
-
-        # Zurück-Button
-        btn_back_text = self.get_translation("botn_ed_06", "Back")
-        btn_back_hint = self.get_translation("botn_ed_06_hint", "Back to main navigation.")
-        btn_back = QPushButton(btn_back_text, panel_widget)
-        btn_back.setToolTip(btn_back_hint)
-        panel_layout.addWidget(btn_back, alignment=Qt.AlignBottom)
-        self.botn_ed_06 = btn_back
-        btn_back.clicked.connect(lambda: self.show_start_panels())
-
-        panel_widget.setObjectName("EditorRightPanel")
-        self.safe_apply_theme_style(panel_widget, "panel", self.theme)
-        self.safe_apply_theme_style(data_label, "label", self.theme)
-        return panel_widget
-    
-    # Dieses right_panel_project wird angezeigt, wenn ein Projekt erstellt oder bearbeitet wird.
-    # Es beinhaltet die Navigation zu den verschiedenen Projekt-Einstellungen und beendet den Projekt-Modus.
-    def create_right_panel_project(self):
-        panel_widget = QWidget()
-        panel_layout = QVBoxLayout(panel_widget)
-        panel_layout.setContentsMargins(20, 20, 20, 20)
-        panel_layout.setSpacing(16)
-        panel_layout.setAlignment(Qt.AlignTop)
-
-        # Header
-        header_text = self.get_translation("ProjectWinHeader", "Project Management")
-        header_label = QLabel(header_text, panel_widget)
-        header_label.setObjectName("FormHeaderLabel")
-        header_label.setAlignment(Qt.AlignHCenter | Qt.AlignTop)
-        panel_layout.addWidget(header_label)
-
-        # Button-Konfiguration: (Key, Hint-Key)
-        button_keys = [
-            ("botn_fo_01", "botn_fo_01_hint"),  # Neues Projekt
-            ("botn_fo_02", "botn_fo_02_hint"),  # Projekt laden
-            ("botn_fo_03", "botn_fo_03_hint"),  # Projekt speichern
-            ("botn_fo_04", "botn_fo_04_hint"),  # Projekt löschen
-        ]
-        for i, (key, hint_key) in enumerate(button_keys, start=1):
-            btn_text = self.get_translation(key, key)
-            btn_hint = self.get_translation(hint_key, "")
-            btn = QPushButton(btn_text, panel_widget)
-            btn.setToolTip(btn_hint)
-            panel_layout.addWidget(btn)
-            setattr(self, f"botn_fo_{i:02d}", btn)
-
-        # Buttons initial deaktivieren (außer "Neues Projekt")
-        self.botn_fo_02.setEnabled(False)
-        self.botn_fo_03.setEnabled(False)
-        self.botn_fo_04.setEnabled(False)
-
-        # Button-Handler verbinden
-        self.botn_fo_01.clicked.connect(self.show_project_form_new)
-        self.botn_fo_02.clicked.connect(self.show_project_form_load)
-        self.botn_fo_03.clicked.connect(self.on_create_project_clicked)
-        self.botn_fo_04.clicked.connect(self.delete_selected_project)
-
-        # Spacer, damit der Zurück-Button unten steht
-        panel_layout.addSpacerItem(QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding))
-
-        # Zurück-Button
-        btn_back_text = self.get_translation("botn_fo_05", "Back")
-        btn_back_hint = self.get_translation("botn_fo_05_hint", "Back to main navigation.")
-        btn_back = QPushButton(btn_back_text, panel_widget)
-        btn_back.setToolTip(btn_back_hint)
-        panel_layout.addWidget(btn_back, alignment=Qt.AlignBottom)
-        self.botn_fo_05 = btn_back
-        btn_back.clicked.connect(lambda: self.show_start_panels())
-
-        panel_widget.setObjectName("ProjectRightPanel")
-        self.safe_apply_theme_style(panel_widget, "panel", self.theme)
-        self.safe_apply_theme_style(header_label, "label", self.theme)
-
-        # --- Projektliste-Selection-Handler verbinden ---
-        if hasattr(self, "project_list_widget"):
-            #self.project_list_widget.itemSelectionChanged.connect(self.update_project_buttons_state)
-            self.update_project_buttons_state()  # Initialer Zustand
-
-        return panel_widget
-    
-    # Dieses right_panel_settings wird angezeigt, wenn die Einstellungen bearbeitet werden sollen.
-    # Es beinhaltet die Navigation zu den verschiedenen Einstellungs-Kategorien und beendet den Einstellungs-Modus.
-    def create_right_panel_settings(self):
-        panel_widget = QWidget()
-        panel_layout = QVBoxLayout(panel_widget)
-        panel_layout.setContentsMargins(20, 20, 20, 20)
-        panel_layout.setSpacing(16)
-        panel_layout.setAlignment(Qt.AlignTop)
-
-        # Header
-        header_text = self.get_translation("SettingsWinHeader", "Settings")
-        header_label = QLabel(header_text, panel_widget)
-        header_label.setObjectName("FormHeaderLabel")
-        header_label.setAlignment(Qt.AlignHCenter | Qt.AlignTop)
-        panel_layout.addWidget(header_label)
-
-        # --- Save-Button ---
-        btn_save_text = self.get_translation("botn_se_01", "Save")
-        btn_save_hint = self.get_translation("botn_se_01_hint", "Save all settings.")
-        btn_save = QPushButton(btn_save_text, panel_widget)
-        btn_save.setToolTip(btn_save_hint)
-        panel_layout.addWidget(btn_save)
-        self.botn_se_01 = btn_save
-
-        # Spacer, damit der Zurück-Button unten steht
-        panel_layout.addSpacerItem(QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding))
-
-        # --- Back-Button ---
-        btn_back_text = self.get_translation("botn_se_03", "Back")
-        btn_back_hint = self.get_translation("botn_se_03_hint", "Back to main navigation.")
-        btn_back = QPushButton(btn_back_text, panel_widget)
-        btn_back.setToolTip(btn_back_hint)
-        panel_layout.addWidget(btn_back, alignment=Qt.AlignBottom)
-        self.botn_se_03 = btn_back
-
-        # Handler für Zurück-Button: Panels zurücksetzen
-        btn_back.clicked.connect(lambda: self.show_start_panels())
-
-        # Handler für Save-Button: Einstellungen speichern
-        btn_save.clicked.connect(self.save_settings_and_formats)
-
-        panel_widget.setObjectName("SettingsRightPanel")
-        self.safe_apply_theme_style(panel_widget, "panel", self.theme)
-        self.safe_apply_theme_style(header_label, "label", self.theme)
-        return panel_widget
-        
-    # Dieses right_panel_character wird angezeigt, wenn ein Charakter erstellt oder bearbeitet wird.
-    # Es beinhaltet die Navigation zu den verschiedenen Charakter-Einstellungen und beendet den Charakter-Modus.
-    def create_right_panel_character(self):
-        panel_widget = QWidget()
-        panel_layout = QVBoxLayout(panel_widget)
-        panel_layout.setContentsMargins(20, 20, 20, 20)
-        panel_layout.setSpacing(16)
-        panel_layout.setAlignment(Qt.AlignTop)
-
-        header_text = self.get_translation("CharacterWinHeader", "Character Management")
-        header_label = QLabel(header_text, panel_widget)
-        header_label.setObjectName("FormHeaderLabel")
-        header_label.setAlignment(Qt.AlignHCenter | Qt.AlignTop)
-        panel_layout.addWidget(header_label)
-
-        button_keys = [
-            ("botn_ch_01", "botn_ch_01_hint"),  # Neuer Charakter
-            ("botn_ch_02a", "botn_ch_02a_hint"),  # Charakter vorheriger
-            ("botn_ch_02b", "botn_ch_02b_hint"),  # Charakter nächster
-            ("botn_ch_03", "botn_ch_03_hint"),  # Charakter speichern
-            ("botn_ch_04", "botn_ch_04_hint"),  # Charakter löschen
-            ("botn_ch_06", "botn_ch_06_hint"),  # Charakter Bild laden
-        ]
-        for idx, (key, hint_key) in enumerate(button_keys):
-                btn_text = self.get_translation(key, key)
-                btn_hint = self.get_translation(hint_key, "")
-                btn = QPushButton(btn_text, panel_widget)
-                btn.setToolTip(btn_hint)
-                panel_layout.addWidget(btn)
-                setattr(self, key, btn)
-                # Nach botn_ch_06 einen größeren Abstand einfügen
-                if key == "botn_ch_06":
-                    spacer = QWidget()
-                    spacer.setFixedHeight(36)
-                    panel_layout.addWidget(spacer)
-
-        # Spacer
-        panel_layout.addSpacerItem(QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding))
-
-        # Zurück-Button
-        btn_back_text = self.get_translation("botn_ch_05", "Back")
-        btn_back_hint = self.get_translation("botn_ch_05_hint", "Back to main navigation.")
-        btn_back = QPushButton(btn_back_text, panel_widget)
-        btn_back.setToolTip(btn_back_hint)
-        panel_layout.addWidget(btn_back, alignment=Qt.AlignBottom)
-        self.botn_ch_05 = btn_back
-        btn_back.clicked.connect(self.show_start_panels)
-
-        # Button-Handler
-        self.botn_ch_01.clicked.connect(self.on_new_character_clicked)
-        self.botn_ch_02a.clicked.connect(self.on_previous_character_clicked)
-        self.botn_ch_02b.clicked.connect(self.on_next_character_clicked)
-        self.botn_ch_03.clicked.connect(self.on_save_character_clicked)
-        self.botn_ch_04.clicked.connect(self.on_delete_character_clicked)
-
-        panel_widget.setObjectName("CharacterRightPanel")
-        self.safe_apply_theme_style(panel_widget, "panel", self.theme)
-        self.safe_apply_theme_style(header_label, "label", self.theme)
-        return panel_widget
-
-    # Dieses right_panel_location wird angezeigt, wenn ein Ort erstellt oder bearbeitet wird.
-    # Es beinhaltet die Navigation zu den verschiedenen Ort-Einstellungen und beendet den Ort-Modus.
-    def create_right_panel_location(self):
-        panel_widget = QWidget()
-        panel_layout = QVBoxLayout(panel_widget)
-        panel_layout.setContentsMargins(20, 20, 20, 20)
-        panel_layout.setSpacing(16)
-        panel_layout.setAlignment(Qt.AlignTop)
-
-        # Header
-        header_text = self.get_translation("LocationWinHeader", "Location Management")
-        header_label = QLabel(header_text, panel_widget)
-        header_label.setObjectName("FormHeaderLabel")
-        header_label.setAlignment(Qt.AlignHCenter | Qt.AlignTop)
-        panel_layout.addWidget(header_label)
-
-        # Button-Konfiguration: (Key, Hint-Key)
-        button_keys = [
-            ("botn_lo_01", "botn_lo_01_hint"),
-            ("botn_lo_02a", "botn_lo_02a_hint"),
-            ("botn_lo_02b", "botn_lo_02b_hint"),
-            ("botn_lo_03", "botn_lo_03_hint"),
-            ("botn_lo_04", "botn_lo_04_hint"),
-        ]
-        for i, (key, hint_key) in enumerate(button_keys, start=1):
-            btn_text = self.get_translation(key, key)
-            btn_hint = self.get_translation(hint_key, "")
-            btn = QPushButton(btn_text, panel_widget)
-            btn.setToolTip(btn_hint)
-            panel_layout.addWidget(btn)
-            setattr(self, key, btn)
-
-        # Button-Handler verbinden
-        self.botn_lo_01.clicked.connect(self.on_new_location_clicked)
-        self.botn_lo_02a.clicked.connect(self.on_previous_location_clicked)
-        self.botn_lo_02b.clicked.connect(self.on_next_location_clicked)
-        self.botn_lo_03.clicked.connect(self.on_save_location_clicked)
-        self.botn_lo_04.clicked.connect(self.on_delete_location_clicked)
-
-
-        # Spacer, damit der Zurück-Button unten steht
-        panel_layout.addSpacerItem(QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding))
-
-        # Zurück-Button
-        btn_back_text = self.get_translation("botn_lo_05", "Back")
-        btn_back_hint = self.get_translation("botn_lo_05_hint", "Back to main navigation.")
-        btn_back = QPushButton(btn_back_text, panel_widget)
-        btn_back.setToolTip(btn_back_hint)
-        panel_layout.addWidget(btn_back, alignment=Qt.AlignBottom)
-        self.botn_lo_05 = btn_back
-
-        # Handler für Zurück-Button: Panels zurücksetzen
-        btn_back.clicked.connect(lambda: self.show_start_panels())
-
-        panel_widget.setObjectName("LocationRightPanel")
-        self.safe_apply_theme_style(panel_widget, "panel", self.theme)
-        self.safe_apply_theme_style(header_label, "label", self.theme)
-        return panel_widget
-    
-    # Dieses right_panel_object wird angezeigt, wenn ein Objekt erstellt oder bearbeitet wird.
-    # Es beinhaltet die Navigation zu den verschiedenen Objekt-Einstellungen und beendet den Objekt-Modus.
-    def create_right_panel_object(self):
-        panel_widget = QWidget()
-        panel_layout = QVBoxLayout(panel_widget)
-        panel_layout.setContentsMargins(20, 20, 20, 20)
-        panel_layout.setSpacing(16)
-        panel_layout.setAlignment(Qt.AlignTop)
-
-        # Header
-        header_text = self.get_translation("ObjectWinHeader", "Object Management")
-        header_label = QLabel(header_text, panel_widget)
-        header_label.setObjectName("FormHeaderLabel")
-        header_label.setAlignment(Qt.AlignHCenter | Qt.AlignTop)
-        panel_layout.addWidget(header_label)
-
-        # Button-Konfiguration: (Key, Hint-Key)
-        button_keys = [
-            ("botn_ob_01", "botn_ob_01_hint"),  # Neu
-            ("botn_ob_02a", "botn_ob_02a_hint"),  # Vorheriges
-            ("botn_ob_02b", "botn_ob_02b_hint"),  # Nächstes
-            ("botn_ob_03", "botn_ob_03_hint"),  # Speichern
-            ("botn_ob_04", "botn_ob_04_hint"),  # Löschen
-        ]
-        for i, (key, hint_key) in enumerate(button_keys, start=1):
-            btn_text = self.get_translation(key, key)
-            btn_hint = self.get_translation(hint_key, "")
-            btn = QPushButton(btn_text, panel_widget)
-            btn.setToolTip(btn_hint)
-            panel_layout.addWidget(btn)
-            setattr(self, key, btn)
-
-        # Button-Handler verbinden
-        self.botn_ob_01.clicked.connect(self.on_new_object_clicked)
-        self.botn_ob_02a.clicked.connect(self.on_previous_object_clicked)
-        self.botn_ob_02b.clicked.connect(self.on_next_object_clicked)
-        self.botn_ob_03.clicked.connect(self.on_save_object_clicked)
-        self.botn_ob_04.clicked.connect(self.on_delete_object_clicked)
-
-        # Spacer, damit der Zurück-Button unten steht
-        panel_layout.addSpacerItem(QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding))
-
-        # Zurück-Button
-        btn_back_text = self.get_translation("botn_ob_05", "Back")
-        btn_back_hint = self.get_translation("botn_ob_05_hint", "Back to main navigation.")
-        btn_back = QPushButton(btn_back_text, panel_widget)
-        btn_back.setToolTip(btn_back_hint)
-        panel_layout.addWidget(btn_back, alignment=Qt.AlignBottom)
-        self.botn_ob_05 = btn_back
-
-        # Handler für Zurück-Button: Panels zurücksetzen
-        btn_back.clicked.connect(lambda: self.show_start_panels())
-
-        panel_widget.setObjectName("ObjectRightPanel")
-        self.safe_apply_theme_style(panel_widget, "panel", self.theme)
-        self.safe_apply_theme_style(header_label, "label", self.theme)
-        return panel_widget
-
-    # Dieses right_panel_storylines wird angezeigt, wenn die Storylines bearbeitet werden sollen.
-    def create_right_panel_storylines(self):
-        panel_widget = QWidget()
-        panel_layout = QVBoxLayout(panel_widget)
-        panel_layout.setContentsMargins(20, 20, 20, 20)
-        panel_layout.setSpacing(16)
-        panel_layout.setAlignment(Qt.AlignTop)
-
-        # Header
-        header_text = self.get_translation("StorylinesWinHeader", "Storylines")
-        header_label = QLabel(header_text, panel_widget)
-        header_label.setObjectName("FormHeaderLabel")
-        header_label.setAlignment(Qt.AlignHCenter | Qt.AlignTop)
-        panel_layout.addWidget(header_label)
-
-        # Button-Konfiguration: (Key, Hint-Key)
-        button_keys = [
-            ("botn_sl_01", "botn_sl_01_hint"),
-            ("botn_sl_02", "botn_sl_02_hint"),
-            ("botn_sl_03", "botn_sl_03_hint"),
-            ("botn_sl_04", "botn_sl_04_hint"),
-            ("botn_sl_05", "botn_sl_05_hint")
-        ]
-
-        for i, (key, hint_key) in enumerate(button_keys, start=1):
-            btn_text = self.get_translation(key, key)
-            btn_hint = self.get_translation(hint_key, "")
-            btn = QPushButton(btn_text, panel_widget)
-            btn.setToolTip(btn_hint)
-            panel_layout.addWidget(btn)
-            setattr(self, f"botn_sl_{i:02d}", btn)
-
-        # Button-Handler verbinden (NACH der Schleife!)
-        self.botn_sl_01.clicked.connect(self.on_new_storyline_clicked)
-        self.botn_sl_02.clicked.connect(self.on_previous_storyline_clicked)
-        self.botn_sl_03.clicked.connect(self.on_next_storyline_clicked)
-        self.botn_sl_04.clicked.connect(self.on_save_storyline_clicked)
-        self.botn_sl_05.clicked.connect(self.on_delete_storyline_clicked)
-        
-        # Handler für Zurück-Button: Panels zurücksetzen
-        panel_layout.addSpacerItem(QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding))
-
-        # Zurück-Button
-        btn_back_text = self.get_translation("botn_sl_06", "Back")
-        btn_back_hint = self.get_translation("botn_sl_06_hint", "Back to main navigation.")
-        btn_back = QPushButton(btn_back_text, panel_widget)
-        btn_back.setToolTip(btn_back_hint)
-        panel_layout.addWidget(btn_back, alignment=Qt.AlignBottom)
-        self.botn_st_09 = btn_back
-
-        # Handler für Zurück-Button: Panels zurücksetzen
-        btn_back.clicked.connect(lambda: self.show_start_panels())
-
-        panel_widget.setObjectName("StorylinesRightPanel")
-        self.safe_apply_theme_style(panel_widget, "panel", self.theme)
-        self.safe_apply_theme_style(header_label, "label", self.theme)
-
-        return panel_widget 
-    
-    # Dieses right_panel_help wird angezeigt, wenn die Hilfe geöffnet wird.
-    def create_right_panel_help(self):
-        panel_widget = QWidget()
-        panel_layout = QVBoxLayout(panel_widget)
-        panel_layout.setContentsMargins(20, 20, 20, 20)
-        panel_layout.setSpacing(16)
-        panel_layout.setAlignment(Qt.AlignTop)
-
-        # Header
-        header_text = self.get_translation("HelpWinHeader", "Help")
-        header_label = QLabel(header_text, panel_widget)
-        header_label.setObjectName("FormHeaderLabel")
-        header_label.setAlignment(Qt.AlignHCenter | Qt.AlignTop)
-        panel_layout.addWidget(header_label)
-
-        # Button-Konfiguration: (Key, Hint-Key)
-        button_keys = [
-            ("botn_he_01", "botn_he_01_hint"),
-            ("botn_he_02", "botn_he_02_hint"),
-            ("botn_he_03", "botn_he_03_hint"),
-            ("botn_he_04", "botn_he_04_hint"),
-        ]
-        for i, (key, hint_key) in enumerate(button_keys, start=1):
-            btn_text = self.get_translation(key, key)
-            btn_hint = self.get_translation(hint_key, "")
-            btn = QPushButton(btn_text, panel_widget)
-            btn.setToolTip(btn_hint)
-            panel_layout.addWidget(btn)
-            setattr(self, f"botn_he_{i:02d}", btn)
-            # Hier kannst du später die Button-Handler ergänzen
-
-        # Spacer, damit der Zurück-Button unten steht
-        panel_layout.addSpacerItem(QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding))
-
-        # Zurück-Button
-        btn_back_text = self.get_translation("botn_he_05", "Back")
-        btn_back_hint = self.get_translation("botn_he_05_hint", "Back to main navigation.")
-        btn_back = QPushButton(btn_back_text, panel_widget)
-        btn_back.setToolTip(btn_back_hint)
-        panel_layout.addWidget(btn_back, alignment=Qt.AlignBottom)
-        self.botn_he_05 = btn_back
-
-        # Handler für Zurück-Button: Panels zurücksetzen
-        btn_back.clicked.connect(lambda: self.show_start_panels())
-
-        panel_widget.setObjectName("HelpRightPanel")
-        self.safe_apply_theme_style(panel_widget, "panel", self.theme)
-        self.safe_apply_theme_style(header_label, "label", self.theme)
-        return panel_widget
-    
-    # Dieses right_panel_about wird angezeigt, wenn "Über" geöffnet wird.
-    def create_right_panel_about(self):
-        panel_widget = QWidget()
-        panel_layout = QVBoxLayout(panel_widget)
-        panel_layout.setContentsMargins(20, 20, 20, 20)
-        panel_layout.setSpacing(16)
-        panel_layout.setAlignment(Qt.AlignTop)
-
-        # Header
-        header_text = self.get_translation("AboutWinHeader", "About")
-        header_label = QLabel(header_text, panel_widget)
-        header_label.setObjectName("FormHeaderLabel")
-        header_label.setAlignment(Qt.AlignHCenter | Qt.AlignTop)
-        panel_layout.addWidget(header_label)
-
-        # Button-Konfiguration: (Key, Hint-Key)
-        button_keys = [
-            ("botn_ab_01", "botn_ab_01_hint"),
-            ("botn_ab_02", "botn_ab_02_hint"),
-            ("botn_ab_03", "botn_ab_03_hint"),
-            ("botn_ab_04", "botn_ab_04_hint"),
-            ("botn_ab_05", "botn_ab_05_hint"),
-            ("botn_ab_06", "botn_ab_06_hint"),
-        ]
-        for i, (key, hint_key) in enumerate(button_keys, start=1):
-            btn_text = self.get_translation(key, key)
-            btn_hint = self.get_translation(hint_key, "")
-            btn = QPushButton(btn_text, panel_widget)
-            btn.setToolTip(btn_hint)
-            panel_layout.addWidget(btn)
-            setattr(self, f"botn_ab_{i:02d}", btn)
-            # Hier kannst du später die Button-Handler ergänzen
-
-        # Spacer, damit der Zurück-Button unten steht
-        panel_layout.addSpacerItem(QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding))
-
-        # Zurück-Button (Button 7)
-        btn_back_text = self.get_translation("botn_ab_07", "Back")
-        btn_back_hint = self.get_translation("botn_ab_07_hint", "Back to main navigation.")
-        btn_back = QPushButton(btn_back_text, panel_widget)
-        btn_back.setToolTip(btn_back_hint)
-        panel_layout.addWidget(btn_back, alignment=Qt.AlignBottom)
-        self.botn_ab_07 = btn_back
-
-        # Handler für Zurück-Button: Panels zurücksetzen
-        btn_back.clicked.connect(lambda: self.show_start_panels())
-
-        panel_widget.setObjectName("AboutRightPanel")
-        self.safe_apply_theme_style(panel_widget, "panel", self.theme)
-        self.safe_apply_theme_style(header_label, "label", self.theme)
-        return panel_widget
-    
-    # ..............................................................
-    # Zentrale Funktionen
-    # ..............................................................
-
-    # Sichere Abfrage zum Löschen von Projekten, Charakteren, Objekten, Orten, Storylines
-    def show_secure_delete_dialog(self, delete_type, delete_data=None, panel="center"):
-        """
-        Zentrale Sicherheitsabfrage zum Löschen von Projekten, Charakteren, Objekten, Orten, Storylines.
-        delete_type: "project", "character", "object", "location", "storyline"
-        delete_data: z.B. Dateiname, ID, etc.
-        """
-        dialog = QDialog(self)
-        dialog.setWindowTitle(self.get_translation("WinStartTitle", "CSNova"))
-        layout = QVBoxLayout(dialog)
-        layout.setContentsMargins(24, 24, 24, 24)
-        layout.setSpacing(16)
-
-        # Übersetzungen holen
-        title = self.get_translation("secureDeleteTitle", "Do you really want to delete the following entry?")
-        type_label = {
-            "project": self.get_translation("proj_ma_header", "Project"),
-            "character": self.get_translation("char_ma_header", "Character"),
-            "object": self.get_translation("proj_ob_header", "Object"),
-            "location": self.get_translation("proj_lo_header", "Location"),
-            "storyline": self.get_translation("proj_st_header", "Storyline"),
-        }.get(delete_type, delete_type.capitalize())
-        yes = self.get_translation("botn_yes", "Yes")
-        no = self.get_translation("botn_no", "No")
-
-        # Detailtext (z.B. Name)
-        detail = str(delete_data) if delete_data else ""
-
-        # Sicherheitsabfrage-Text
-        label = QLabel(f"{title}<br><br><b>{type_label}:</b> {detail}", dialog)
-        label.setAlignment(Qt.AlignCenter)
-        label.setTextFormat(Qt.RichText)
-        if self.apply_theme_style and self.theme:
-            self.apply_theme_style(label, "label", self.theme)
-        layout.addWidget(label)
-
-        # Buttons
-        btn_layout = QHBoxLayout()
-        btn_yes = QPushButton(yes, dialog)
-        btn_no = QPushButton(no, dialog)
-        if self.apply_theme_style and self.theme:
-            self.apply_theme_style(btn_yes, "button", self.theme)
-            self.apply_theme_style(btn_no, "button", self.theme)
-        btn_layout.addWidget(btn_yes)
-        btn_layout.addWidget(btn_no)
-        layout.addLayout(btn_layout)
-
-        if self.apply_theme_style and self.theme:
-            self.apply_theme_style(dialog, "panel", self.theme)
-
-        # Button-Logik
-        def on_yes():
-            dialog.accept()
-            if delete_type == "project":
-                self._delete_project(delete_data)
-            elif delete_type == "character":
-                self._delete_character(delete_data)
-            elif delete_type == "object":
-                if panel == "left":
-                    self._delete_object_left(delete_data)
-                else:
-                    self._delete_object(delete_data)
-            elif delete_type == "location":
-                if panel == "left":
-                    self._delete_location_left(delete_data)
-                else:
-                    self._delete_location(delete_data)
-            elif delete_type == "storyline":
-                if panel == "left":
-                    self._delete_storyline_left(delete_data)
-                else:
-                    self._delete_storyline(delete_data)
-            # ...weitere Typen...
-
-        btn_yes.clicked.connect(on_yes)
-        btn_no.clicked.connect(dialog.reject)
-
-        dialog.exec()
-    
-    # Erzeugt und befüllt die Projekt-Liste aus dem DATA_DIR.
-    def create_chapter_list_widget(self):
-        # Erzeugt und befüllt die Kapitel-Liste aus Chapters_scenes.json.
-        chapter_list = QListWidget()
-        chapters_data = load_json_file(DATA_DIR / "Chapters_scenes.json")
-        chapter_ids = list(chapters_data.keys())
-        for chapter_id in chapter_ids:
-            chapter_title = chapters_data[chapter_id].get("chapter_title", chapter_id)
-            chapter_list.addItem(f"{chapter_id}: {chapter_title}")
-        return chapter_list
-    
-    # Speichert die Einstellungen aus dem Settings-Panel in user_settings.json.
-    def save_settings_and_formats(self):
-        # --- Sprache ---
-        language_codes = ["de", "en", "fr", "es"]
-        if not hasattr(self, "language_combo_1"):
-            log_error("language_combo_1 existiert nicht! Einstellungen können nicht gespeichert werden.")
-            return
-        lang_index = self.language_combo_1.currentIndex()
-        language = language_codes[lang_index]
-
-        # --- Theme ---
-        theme_names = [
-            "Modern_neutral", "Modern_dark", "Modern_light",
-            "OldSchool_neutral", "OldSchool_dark", "OldSchool_light",
-            "Vintage_neutral", "Vintage_dark", "Vintage_light",
-            "Future_neutral", "Future_dark", "Future_light",
-            "Minimal_neutral", "Minimal_dark", "Minimal_light"
-        ]
-        if not hasattr(self, "theme_combo_1"):
-            log_error("theme_combo_1 existiert nicht! Einstellungen können nicht gespeichert werden.")
-            return
-        theme_index = self.theme_combo_1.currentIndex()
-        theme_name = theme_names[theme_index]
-
-        # --- Regionen ---
-        region_keys = ["EU", "USA", "UK"]
-        if not hasattr(self, "fiktion_region_combo") or not hasattr(self, "nonfiktion_region_combo"):
-            log_error("Region-ComboBoxen existieren nicht! Einstellungen können nicht gespeichert werden.")
-            return
-        region_fiction = region_keys[self.fiktion_region_combo.currentIndex()]
-        region_nonfiction = region_keys[self.nonfiktion_region_combo.currentIndex()]
-
-        # --- In user_settings.json speichern ---
-        self.settings.setdefault("general", {})
-        self.settings["general"]["language"] = language
-        self.settings.setdefault("gui", {})
-        self.settings["gui"]["style_theme"] = theme_name
-
-        self.settings.setdefault("general", {})
-        self.settings["general"]["last_fiction_region_used"] = region_fiction
-        self.settings["general"]["last_nonfiction_region_used"] = region_nonfiction
-
-        # self.settings["general"]["first_start"] = False
-        
-        with open(USER_SETTINGS_FILE, "w", encoding="utf-8") as f:
-            json.dump(self.settings, f, indent=2, ensure_ascii=False)
-                    
-    # ..............................................................
-    # Editor Left_Panel Tab Funktionen
-    # ..............................................................
-    def fill_object_form_left(self, object_data):
-        """Füllt die Felder im Objects-Tab des Left Panels mit den Daten eines Objekts."""
-        for field_name, widget in self.object_form_widgets_left.items():
-            value = object_data.get(field_name, "")
-            if isinstance(widget, QLineEdit):
-                widget.setText(str(value))
-            elif isinstance(widget, QTextEdit):
-                widget.setPlainText(str(value))
-
-    def get_object_form_left_data(self):
-        """Liest die Daten aus den Feldern im Objects-Tab des Left Panels aus."""
-        data = {}
-        for field_name, widget in self.object_form_widgets_left.items():
-            if isinstance(widget, QLineEdit):
-                data[field_name] = widget.text()
-            elif isinstance(widget, QTextEdit):
-                data[field_name] = widget.toPlainText()
-        return data
-
-    def editor_left_panel_objects_new(self):
-        """Erstellt ein leeres Formular für ein neues Objekt im Left Panel."""
-        empty_data = {k: "" for k in self.object_form_widgets_left}
-        self.current_object_id = None
-        self.fill_object_form_left(empty_data)
-
-    def editor_left_panel_objects_delete(self):
-        """Löscht das aktuell angezeigte Objekt im Left Panel."""
-        objects = self.load_objects()
-        object_id = self.current_object_id
-        if object_id and object_id in objects:
-            self.show_secure_delete_dialog("object", object_id, panel="left")
-            # Das eigentliche Löschen erfolgt in _delete_object
-            # Nach dem Löschen: nächstes oder leeres Objekt anzeigen
-            objects = self.load_objects()
-            if objects:
-                first_id = sorted(objects.keys())[0]
-                self.current_object_id = first_id
-                self.fill_object_form_left(objects[first_id])
-            else:
-                self.current_object_id = None
-                empty_data = {k: "" for k in self.object_form_widgets_left}
-                self.fill_object_form_left(empty_data)
-
-    def _delete_object(self, object_id):
-        """Löscht ein Objekt basierend auf der ID."""
-        object = self.load_object()
-        if not object or not object_id:
-            log_error(f"Kein Objekt zum Löschen gefunden (ID: {object_id})")
-            return
-        if object_id in object:
-            del object[object_id]
-            self.save_object(object)
-            log_info(f"Objekt gelöscht: {object_id}")
-            # Nach dem Löschen: nächsten oder leeren Datensatz anzeigen
-            if object:
-                first_id = sorted(object.keys())[0]
-                self.current_object_id = first_id
-                self.fill_object_form_left(object[first_id])
-            else:
-                self.current_objects_id = None
-                empty_data = {k: "" for k in self.object_form_widgets_left}
-                self.fill_object_form_left(empty_data)
-    
-    def on_delete_object_clicked(self):
-        if not self.current_object_id:
-            return
-        self.show_secure_delete_dialog("object", self.current_object_id, panel="left")
-
-    def editor_left_panel_objects_previous(self):
-        """Navigiert zum vorherigen Objekt im Left Panel."""
-        objects = self.load_objects()
-        if not objects:
-            return
-        ids = sorted(objects.keys())
-        if self.current_object_id in ids:
-            idx = ids.index(self.current_object_id)
-            new_idx = (idx - 1) % len(ids)
-        else:
-            new_idx = 0
-        self.current_object_id = ids[new_idx]
-        self.fill_object_form_left(objects[self.current_object_id])
-
-    def editor_left_panel_objects_next(self):
-        """Navigiert zum nächsten Objekt im Left Panel."""
-        objects = self.load_objects()
-        if not objects:
-            return
-        ids = sorted(objects.keys())
-        if self.current_object_id in ids:
-            idx = ids.index(self.current_object_id)
-            new_idx = (idx + 1) % len(ids)
-        else:
-            new_idx = 0
-        self.current_object_id = ids[new_idx]
-        self.fill_object_form_left(objects[self.current_object_id])
-
-    def editor_left_panel_objects_save(self):
-        """Speichert das aktuell angezeigte Objekt im Left Panel."""
-        objects = self.load_objects()
-        data = self.get_object_form_left_data()
-        if self.current_object_id and self.current_object_id in objects:
-            # Bestehendes Objekt aktualisieren
-            objects[self.current_object_id] = data
-        else:
-            # Neues Objekt anlegen
-            existing_ids = [int(k.split("_")[-1]) for k in objects.keys() if k.startswith("object_ID_")]
-            next_id = max(existing_ids, default=0) + 1
-            new_id = f"object_ID_{next_id:02d}"
-            objects[new_id] = data
-            self.current_object_id = new_id
-        self.save_objects(objects)
-        self.fill_object_form_left(objects[self.current_object_id])
-
-    def fill_location_form_left(self, location_data):
-        for field_name, widget in self.location_form_widgets_left.items():
-            value = location_data.get(field_name, "")
-            if isinstance(widget, QLineEdit):
-                widget.setText(str(value))
-            elif isinstance(widget, QTextEdit):
-                widget.setPlainText(str(value))
-    
-    def get_location_form_left_data(self):
-        data = {}
-        for field_name, widget in self.location_form_widgets_left.items():
-            if isinstance(widget, QLineEdit):
-                data[field_name] = widget.text()
-            elif isinstance(widget, QTextEdit):
-                data[field_name] = widget.toPlainText()
-        return data
-
-    def editor_left_panel_locations_new(self):
-        empty_data = {k: "" for k in self.location_form_widgets_left}
-        self.current_location_id = None
-        self.fill_location_form_left(empty_data)
-
-    def editor_left_panel_locations_delete(self):
-        locations = self.load_locations()
-        location_id = self.current_location_id
-        if location_id and location_id in locations:
-            self.show_secure_delete_dialog("location", location_id, panel="left")
-            locations = self.load_locations()
-            if locations:
-                first_id = sorted(locations.keys())[0]
-                self.current_location_id = first_id
-                self.fill_location_form_left(locations[first_id])
-            else:
-                self.current_location_id = None
-                empty_data = {k: "" for k in self.location_form_widgets_left}
-                self.fill_location_form_left(empty_data)
-    
-    def _delete_location_left(self, location_id):
-        """Löscht ein Location basierend auf der ID."""
-        location = self.load_locations()
-        if not location or not location:
-            log_error(f"Kein Location zum Löschen gefunden (ID: {location_id})")
-            return
-        if location_id in location:
-            del location[location_id]
-            self.save_locations(location)
-            log_info(f"Objekt gelöscht: {location_id}")
-            # Nach dem Löschen: nächsten oder leeren Datensatz anzeigen
-            if location:
-                first_id = sorted(location.keys())[0]
-                self.current_location_id = first_id
-                self.fill_location_form_left(location[first_id])
-            else:
-                self.current_location_id = None
-                empty_data = {k: "" for k in self.location_form_widgets_left}
-                self.fill_location_form_left(empty_data)
-
-    def on_delete_location_clicked(self):
-        if not self.current_location_id:
-            return
-        self.show_secure_delete_dialog("location", self.current_location_id, panel="left")
-
-    def editor_left_panel_locations_previous(self):
-        locations = self.load_locations()
-        if not locations:
-            return
-        ids = sorted(locations.keys())
-        if self.current_location_id in ids:
-            idx = ids.index(self.current_location_id)
-            new_idx = (idx - 1) % len(ids)
-        else:
-            new_idx = 0
-        self.current_location_id = ids[new_idx]
-        self.fill_location_form_left(locations[self.current_location_id])
-
-    def editor_left_panel_locations_next(self):
-        locations = self.load_locations()
-        if not locations:
-            return
-        ids = sorted(locations.keys())
-        if self.current_location_id in ids:
-            idx = ids.index(self.current_location_id)
-            new_idx = (idx + 1) % len(ids)
-        else:
-            new_idx = 0
-        self.current_location_id = ids[new_idx]
-        self.fill_location_form_left(locations[self.current_location_id])
-
-    def editor_left_panel_locations_save(self):
-        locations = self.load_locations()
-        data = self.get_location_form_left_data()
-        if self.current_location_id and self.current_location_id in locations:
-            locations[self.current_location_id] = data
-        else:
-            existing_ids = [int(k.split("_")[-1]) for k in locations.keys() if k.startswith("location_ID_")]
-            next_id = max(existing_ids, default=0) + 1
-            new_id = f"location_ID_{next_id:02d}"
-            locations[new_id] = data
-            self.current_location_id = new_id
-        self.save_locations(locations)
-        self.fill_location_form_left(locations[self.current_location_id])
-   
-    def get_storyline_form_left_data(self):
-        data = {}
-        for field_name, widget in self.storyline_form_widgets_left.items():
-            if isinstance(widget, QLineEdit):
-                data[field_name] = widget.text()
-            elif isinstance(widget, QTextEdit):
-                data[field_name] = widget.toPlainText()
-        return data
-    
-    def fill_storyline_form_left(self, storyline_data):
-        for field_name, widget in self.storyline_form_widgets_left.items():
-            value = storyline_data.get(field_name, "")
-            if isinstance(widget, QLineEdit):
-                widget.setText(str(value))
-            elif isinstance(widget, QTextEdit):
-                widget.setPlainText(str(value))
-
-    def editor_left_panel_storylines_new(self):
-        empty_data = {k: "" for k in self.storyline_form_widgets_left}
-        self.current_storyline_id = None
-        self.fill_storyline_form_left(empty_data)
-
-    def editor_left_panel_storylines_delete(self):
-        """Löscht die aktuell angezeigte Storyline im Left Panel."""
-        storylines = self.load_storylines()
-        storyline_id = self.current_storyline_id
-        if storyline_id and storyline_id in storylines:
-            # Sicherheitsabfrage mit Panel-Kontext "left"
-            self.show_secure_delete_dialog("storyline", storyline_id, panel="left")
-            # Nach dem Löschen: Storylines neu laden und Formular aktualisieren
-            storylines = self.load_storylines()
-            if storylines:
-                first_id = sorted(storylines.keys())[0]
-                self.current_storyline_id = first_id
-                self.fill_storyline_form_left(storylines[first_id])
-            else:
-                self.current_storyline_id = None
-                empty_data = {k: "" for k in self.storyline_form_widgets_left}
-                self.fill_storyline_form_left(empty_data)
-
-    def on_delete_storyline_left_clicked(self):
-        if not self.current_storyline_id:
-            return
-        self.show_secure_delete_dialog("storyline", self.current_storyline_id, panel="left")
-
-    def _delete_storyline_left(self, storyline_id):
-        storylines = self.load_storylines()
-        if not storylines or not storyline_id:
-            log_error(f"Keine Storyline zum Löschen gefunden (ID: {storyline_id})")
-            return
-        if storyline_id in storylines:
-            del storylines[storyline_id]
-            self.save_storylines(storylines)
-            log_info(f"Storyline gelöscht: {storyline_id}")
-            # Nach dem Löschen: nächsten oder leeren Datensatz anzeigen
-            if storylines:
-                first_id = sorted(storylines.keys())[0]
-                self.current_storyline_id = first_id
-                self.fill_storyline_form_left(storylines[first_id])
-            else:
-                self.current_storyline_id = None
-                empty_data = {k: "" for k in self.storyline_form_widgets_left}
-                self.fill_storyline_form_left(empty_data)
-
-    def editor_left_panel_storylines_previous(self):
-        storylines = self.load_storylines()
-        if not storylines:
-            return
-        ids = sorted(storylines.keys())
-        if self.current_storyline_id in ids:
-            idx = ids.index(self.current_storyline_id)
-            new_idx = (idx - 1) % len(ids)
-        else:
-            new_idx = 0
-        self.current_storyline_id = ids[new_idx]
-        self.fill_storyline_form_left(storylines[self.current_storyline_id])
-    
-    def editor_left_panel_storylines_next(self):
-        storylines = self.load_storylines()
-        if not storylines:
-            return
-        ids = sorted(storylines.keys())
-        if self.current_storyline_id in ids:
-            idx = ids.index(self.current_storyline_id)
-            new_idx = (idx + 1) % len(ids)
-        else:
-            new_idx = 0
-        self.current_storyline_id = ids[new_idx]
-        self.fill_storyline_form_left(storylines[self.current_storyline_id])
-
-    def editor_left_panel_storylines_save(self):
-        storylines = self.load_storylines()
-        data = self.get_storyline_form_left_data()
-        if self.current_storyline_id and self.current_storyline_id in storylines:
-            storylines[self.current_storyline_id] = data
-        else:
-            existing_ids = [int(k.split("_")[-1]) for k in storylines.keys() if k.startswith("storyline_ID_")]
-            next_id = max(existing_ids, default=0) + 1
-            new_id = f"storyline_ID_{next_id:02d}"
-            storylines[new_id] = data
-            self.current_storyline_id = new_id
-        self.save_storylines(storylines)
-        self.fill_storyline_form_left(storylines[self.current_storyline_id])
-    
-    # ..............................................................
-    # PROJEKT FUNKTIONEN
-    # ..............................................................
-    
-    # Aktualisiere den Zustand der Projekt-Buttons basierend auf der Auswahl
-    def update_project_buttons_state(self):
-        # Stelle sicher, dass die Buttons existieren
-        if not (hasattr(self, "botn_fo_02")
-            and hasattr(self, "botn_fo_03") 
-            and hasattr(self, "botn_fo_04")):
-            return
-
-        # Prüfe, ob Projekte vorhanden und eines ausgewählt ist
-        has_projects = self.project_list_widget.count() > 0
-        selected = self.project_list_widget.selectedItems()
-        enable = bool(selected) and has_projects
-
-        self.botn_fo_02.setEnabled(enable)  # Projekt laden
-        self.botn_fo_03.setEnabled(False)   # Speichern bleibt deaktiviert bis Änderung
-        self.botn_fo_04.setEnabled(enable)  # Projekt löschen 
-
-    # Lege ein neues Projekt an
-    def on_create_project_clicked(self):
-        import datetime
-        import re
-
-        # 1. Daten auslesen
-        project_data = {}
-        for field_name, widget in self.project_form_widgets.items():
-            if isinstance(widget, QLineEdit):
-                project_data[field_name] = widget.text()
-            elif isinstance(widget, QTextEdit):
-                project_data[field_name] = widget.toPlainText()
-            elif isinstance(widget, QComboBox):
-                project_data[field_name] = widget.currentText()
-            elif isinstance(widget, QSpinBox):
-                project_data[field_name] = widget.value()
-            elif isinstance(widget, QDateEdit):
-                project_data[field_name] = widget.date().toString(widget.displayFormat())
-            else:
-                project_data[field_name] = ""
-
-        # 2. Dateinamen bestimmen
-        title = project_data.get("project_title", "").strip()
-        start_date = project_data.get("project_startdate", "").strip()
-        safe_title = re.sub(r'[^A-Za-z0-9_\-]', '_', title) or "Unbenannt"
-        date_digits = re.sub(r'\D', '', start_date) or "00000000"
-        filename = f"Project_{safe_title}_{date_digits}.json"
-        filepath = DATA_DIR / filename
-
-        # 2a. Data-Dateinamen IMMER im Projekt speichern!
-        data_filename = f"Data_{safe_title}_{date_digits}.json"
-        project_data["project_file"] = data_filename
-        # UND im Formular anzeigen, falls Feld vorhanden:
-        if "project_file" in self.project_form_widgets:
-            widget = self.project_form_widgets["project_file"]
-            if isinstance(widget, QLineEdit):
-                widget.setText(data_filename)
-
-        # 3. Speichern
-        with open(filepath, "w", encoding="utf-8") as f:
-            json.dump(project_data, f, ensure_ascii=False, indent=2)
-        log_info(f"Projekt gespeichert: {filepath}")
-
-        # --- NEU: Kapitel-/Szenendaten übernehmen und speichern ---
-        chapters_file = DATA_DIR / "Chapters_scenes.json"
-        if chapters_file.exists():
-            with open(chapters_file, "r", encoding="utf-8") as f:
-                chapters_data = json.load(f)
-            data_filename = f"Data_{safe_title}_{date_digits}.json"
-            data_filepath = DATA_DIR / data_filename
-            with open(data_filepath, "w", encoding="utf-8") as f:
-                json.dump(chapters_data, f, ensure_ascii=False, indent=2)
-            log_info(f"Projekt-Kapitel/Szenen-Daten gespeichert: {data_filepath}")
-        else:
-            log_error(f"Kapitel-/Szenendatei nicht gefunden: {chapters_file}")
-
-        # 4. Speichern-Button wieder deaktivieren
-        self.botn_fo_03.setEnabled(False)
-        self.show_center_panel(0, self.center_panel_functions)
-
-    # Lade ein bestehendes Projekt
-    def show_project_form_new(self):
-        splitter = self.centralWidget()
-        if isinstance(splitter, QSplitter):
-            # Speichere aktuelle Splitter-Größen
-            splitter_sizes = splitter.sizes()
-            new_center_panel = self.create_center_panel_project_form()
-            old_center_panel = splitter.widget(1)
-            splitter.insertWidget(1, new_center_panel)
-            splitter.setStretchFactor(1, 1)
-            if old_center_panel is not None:
-                old_center_panel.setParent(None)
-            self.center_panel_widget = new_center_panel
-            self.safe_apply_theme_style(new_center_panel, "panel", self.theme)
-            # Setze die Splitter-Größen zurück
-            splitter.setSizes(splitter_sizes)
-        # Nur Speichern-Button aktivieren, andere deaktivieren
-        self.botn_fo_03.setEnabled(True)
-        self.botn_fo_02.setEnabled(False)
-        self.botn_fo_04.setEnabled(False)
-        # Beobachte Änderungen im Formular, um Speichern-Button zu aktivieren
-        for widget in self.project_form_widgets.values():
-            if isinstance(widget, QLineEdit):
-                widget.textChanged.connect(self.enable_save_button)
-            elif isinstance(widget, QTextEdit):
-                widget.textChanged.connect(self.enable_save_button)
-            elif isinstance(widget, QComboBox):
-                widget.currentIndexChanged.connect(self.enable_save_button)
-            elif isinstance(widget, QSpinBox):
-                widget.valueChanged.connect(self.enable_save_button)
-            elif isinstance(widget, QDateEdit):
-                widget.dateChanged.connect(self.enable_save_button)
-
-    # Aktiviere den Speichern-Button, wenn Änderungen im Formular vorgenommen werden
-    def enable_save_button(self):
-        self.botn_fo_03.setEnabled(True)
-
-    # Aktualisiere die Projektliste
-    def update_project_list(self):
-        # Zeigt alle Dateien aus dem DATA_DIR im ListView an (Dateiname, nicht Titel aus Datei).
-        if hasattr(self, "project_list_widget"):
-            self.project_list_widget.clear()
-            # Zeige ALLE Dateien im data-Verzeichnis an
-            for file in sorted(DATA_DIR.glob("Project_*.json")):
-                if file.is_file():
-                    self.project_list_widget.addItem(file.name)
-    
-    # Lade ein bestehendes Projekt        
-    def show_project_form_load(self):
-        selected_items = self.project_list_widget.selectedItems()
-        if not selected_items:
-            return
-        filename = selected_items[0].text()
-        file = DATA_DIR / filename
-        if not file.exists():
-            return
-        try:
-            with open(file, "r", encoding="utf-8") as f:
-                project_data = json.load(f)
-        except Exception as e:
-            log_exception(f"Fehler beim Laden des Projekts: {file}", e)
-            return
-
-        splitter = self.centralWidget()
-        if isinstance(splitter, QSplitter):
-            # Speichere aktuelle Splitter-Größen
-            splitter_sizes = splitter.sizes()
-            new_center_panel = self.create_center_panel_project_form(project_data)
-            old_center_panel = splitter.widget(1)
-            splitter.insertWidget(1, new_center_panel)
-            splitter.setStretchFactor(1, 1)
-            if old_center_panel is not None:
-                old_center_panel.setParent(None)
-            self.center_panel_widget = new_center_panel
-            self.safe_apply_theme_style(new_center_panel, "panel", self.theme)
-            # Setze die Splitter-Größen zurück
-            splitter.setSizes(splitter_sizes)
-
-        # Speichern-Button deaktivieren, bis etwas geändert wird
-        self.botn_fo_03.setEnabled(False)
-        self.botn_fo_04.setEnabled(False)
-        self.botn_fo_02.setEnabled(False)
-        # Beobachte Änderungen im Formular
-        for widget in self.project_form_widgets.values():
-            if isinstance(widget, QLineEdit):
-                widget.textChanged.connect(self.enable_save_button)
-            elif isinstance(widget, QTextEdit):
-                widget.textChanged.connect(self.enable_save_button)
-            elif isinstance(widget, QComboBox):
-                widget.currentIndexChanged.connect(self.enable_save_button)
-            elif isinstance(widget, QSpinBox):
-                widget.valueChanged.connect(self.enable_save_button)
-            elif isinstance(widget, QDateEdit):
-                widget.dateChanged.connect(self.enable_save_button)
-
-        # 1. Ermittle den Projektnamen (Dateiname) und Datafilename
-        last_project_opened = filename  # z.B. Project_xyz_date.json
-        last_file_opened = project_data.get("project_file", "")
-
-        # 2. Schreibe in user_settings.json
-        self.settings.setdefault("general", {})
-        self.settings["general"]["last_project_opened"] = last_project_opened
-        self.settings["general"]["last_file_opened"] = last_file_opened
-        with open(USER_SETTINGS_FILE, "w", encoding="utf-8") as f:
-            json.dump(self.settings, f, indent=2, ensure_ascii=False)
-
-    # Lösche das ausgewählte Projekt
-    def delete_selected_project(self):
-        selected_items = self.project_list_widget.selectedItems()
-        if not selected_items:
-            return
-        filename = selected_items[0].text()
-        self.show_secure_delete_dialog("project", filename)
-    # Interne Löschfunktion
-    def _delete_project(self, filename):
-        file = DATA_DIR / filename
-        try:
-            if file.exists():
-                file.unlink()
-                log_info(f"Projekt gelöscht: {file}")
-        except Exception as e:
-            log_exception(f"Fehler beim Löschen der Datei: {file}", e)
-        self.show_center_panel(0, self.center_panel_functions)
-        self.update_project_buttons_state()
-
-    # ..............................................................
-    # Charakter FUNKTIONEN
-    # ..............................................................
-
-    # Lege einen neuen Charakter an
-    def load_characters(self):
-        file_path = DATA_DIR / "Character_main.json"
-        if not file_path.exists():
-            log_info(f"Charakterdatei nicht gefunden: {file_path}")
-            return {}
-        try:
-            with open(file_path, "r", encoding="utf-8") as f:
-                data = json.load(f)
-            log_info(f"Charakterdatei geladen: {file_path} ({len(data)} Einträge)")
-            return data
-        except Exception as e:
-            log_exception(f"Fehler beim Laden der Charakterdatei: {file_path}", e)
-            return {}
-    # Speichere alle Charaktere
-    def save_characters(self, characters):
-        file_path = DATA_DIR / "Character_main.json"
-        try:
-            with open(file_path, "w", encoding="utf-8") as f:
-                json.dump(characters, f, indent=2, ensure_ascii=False)
-            log_info(f"Charakterdatei gespeichert: {file_path} ({len(characters)} Einträge)")
-        except Exception as e:
-            log_exception(f"Fehler beim Speichern der Charakterdatei: {file_path}", e)
-    # Lösche den aktuellen Charakter
-    def on_delete_character_clicked(self):
-        if not self.current_character_id:
-            return
-        self.show_secure_delete_dialog("character", self.current_character_id)
-    # Interne Löschfunktion    
-    def _delete_character(self, character_id):
-        characters = self.load_characters()
-        if not characters or not character_id:
-            log_error(f"Kein Charakter zum Löschen gefunden (ID: {character_id})")
-            return
-        if character_id in characters:
-            del characters[character_id]
-            self.save_characters(characters)
-            log_info(f"Charakter gelöscht: {character_id}")
-            # Nach dem Löschen: nächsten Charakter anzeigen, oder leeres Formular
-            if characters:
-                first_id = sorted(characters.keys())[0]
-                self.current_character_id = first_id
-                self.fill_character_form(characters[first_id])
-            else:
-                self.current_character_id = None
-                empty_data = {k: "" for k in self.character_form_widgets}
-                self.fill_character_form(empty_data)
-
-    # Fülle das Charakter-Formular mit den Daten eines Charakters
-    def fill_character_form(self, character_data):
-        for field_name, widget in self.character_form_widgets.items():
-            value = character_data.get(field_name, "")
-            # --- Spezialfall: born/died als QLineEdit mit Datumsvalidierung ---
-            if field_name in ("born", "died") and isinstance(widget, QLineEdit):
-                widget.setText(str(value) if value else "")
-                # Optional: Validierung und optische Hervorhebung
-                text = widget.text().strip()
-                if text:
-                    # Unterstützte Formate je nach Sprache
-                    if self.language == "de":
-                        formats = ["%d.%m.%Y", "%Y-%m-%d"]
-                    elif self.language == "en":
-                        formats = ["%m %d %Y", "%Y-%m-%d"]
-                    elif self.language in ("fr", "es"):
-                        formats = ["%d/%m/%Y", "%Y-%m-%d"]
-                    else:
-                        formats = ["%Y-%m-%d"]
-                    valid = False
-                    for fmt in formats:
-                        try:
-                            _ = datetime.datetime.strptime(text, fmt).date()
-                            valid = True
-                            break
-                        except Exception:
-                            continue
-                    if not valid:
-                        widget.setStyleSheet("background-color: #ffcccc;")
-                    else:
-                        widget.setStyleSheet("")
-                else:
-                    widget.setStyleSheet("")
-            # --- Alter-Label: wird automatisch berechnet, nicht setzen ---
-            elif field_name == "char_age" and isinstance(widget, QLabel):
-                continue
-            # --- Standardfelder ---
-            elif isinstance(widget, QLineEdit):
-                widget.setText(str(value))
-            elif isinstance(widget, QTextEdit):
-                widget.setPlainText(str(value))
-            elif isinstance(widget, QComboBox):
-                idx = widget.findText(str(value))
-                if idx >= 0:
-                    widget.setCurrentIndex(idx)
-                else:
-                    widget.setCurrentIndex(0)
-            elif isinstance(widget, QCheckBox):
-                widget.setChecked(bool(value))
-            elif isinstance(widget, QDateEdit):
-                if value:
-                    try:
-                        widget.setDate(datetime.date.fromisoformat(value))
-                    except Exception:
-                        widget.setDate(widget.minimumDate())
-                else:
-                    widget.setDate(widget.minimumDate())
-
-    # Lese die Daten aus dem Charakter-Formular aus
-    def get_character_form_data(self):
-        data = {}
-        for field_name, widget in self.character_form_widgets.items():
-            if field_name in ("born", "died") and isinstance(widget, QLineEdit):
-                data[field_name] = widget.text().strip()
-            if isinstance(widget, QLineEdit):
-                data[field_name] = widget.text()
-            elif isinstance(widget, QTextEdit):
-                data[field_name] = widget.toPlainText()
-            elif isinstance(widget, QComboBox):
-                data[field_name] = widget.currentText()
-            elif isinstance(widget, QCheckBox):
-                data[field_name] = widget.isChecked()
-            elif isinstance(widget, QDateEdit):
-                data[field_name] = widget.date().toString("yyyy-MM-dd")
-        return data
-
-    # Handler für "Neuer Charakter" Button
-    def on_new_character_clicked(self):
-        # Leeres Formular anzeigen, keine ID setzen
-        empty_data = {k: "" for k in self.character_form_widgets}
-        self.current_character_id = None
-        self.fill_character_form(empty_data)
-
-    # Handler für "Charakter speichern" Button
-    def on_save_character_clicked(self):
-        characters = self.load_characters()
-        data = self.get_character_form_data()
-        if self.current_character_id and self.current_character_id in characters:
-            # Bestehenden Charakter aktualisieren
-            characters[self.current_character_id] = data
-        else:
-            # Neuen Charakter anlegen
-            existing_ids = [int(k.split("_")[-1]) for k in characters.keys() if k.startswith("character_ID_")]
-            next_id = max(existing_ids, default=0) + 1
-            new_id = f"character_ID_{next_id:02d}"
-            characters[new_id] = data
-            self.current_character_id = new_id
-        self.save_characters(characters)    
-
-    # Handler für "Vorheriger Charakter" Button
-    def on_previous_character_clicked(self):
-        characters = self.load_characters()
-        if not characters:
-            return
-        ids = sorted(characters.keys())
-        if self.current_character_id in ids:
-            idx = ids.index(self.current_character_id)
-            new_idx = (idx - 1) % len(ids)
-        else:
-            new_idx = 0
-        self.current_character_id = ids[new_idx]
-        self.fill_character_form(characters[self.current_character_id])
-    
-    # Handler für "Nächster Charakter" Button
-    def on_next_character_clicked(self):
-        characters = self.load_characters()
-        if not characters:
-            return
-        ids = sorted(characters.keys())
-        if self.current_character_id in ids:
-            idx = ids.index(self.current_character_id)
-            new_idx = (idx + 1) % len(ids)
-        else:
-            new_idx = 0
-        self.current_character_id = ids[new_idx]
-        self.fill_character_form(characters[self.current_character_id])    
-    
-    # ..............................................................
-    # Objekt FUNKTIONEN
-    # ..............................................................
-    
-    # Lege ein neues Objekt an
-    def load_objects(self):
-        file_path = DATA_DIR / "Objects.json"
-        if not file_path.exists():
-            log_info(f"Objektdatei nicht gefunden: {file_path}")
-            return {}
-        try:
-            with open(file_path, "r", encoding="utf-8") as f:
-                data = json.load(f)
-            log_info(f"Objektdatei geladen: {file_path} ({len(data)} Einträge)")
-            return data
-        except Exception as e:
-            log_exception(f"Fehler beim Laden der Objektdatei: {file_path}", e)
-            return {}
-    
-    # Speichere alle Objekte
-    def save_objects(self, objects):
-        file_path = DATA_DIR / "Objects.json"
-        try:
-            with open(file_path, "w", encoding="utf-8") as f:
-                json.dump(objects, f, indent=2, ensure_ascii=False)
-            log_info(f"Objektdatei gespeichert: {file_path} ({len(objects)} Einträge)")
-        except Exception as e:
-            log_exception(f"Fehler beim Speichern der Objektdatei: {file_path}", e)
-
-    # Lösche das aktuelle Objekt
-    def on_delete_object_clicked(self):
-        if not hasattr(self, "current_object_id") or not self.current_object_id:
-            return
-        self.show_secure_delete_dialog("object", self.current_object_id)
-
-    # Interne Löschfunktion
-    def _delete_object(self, object_id):
-        objects = self.load_objects()
-        if not objects or not object_id:
-            log_error(f"Kein Objekt zum Löschen gefunden (ID: {object_id})")
-            return
-        if object_id in objects:
-            del objects[object_id]
-            self.save_objects(objects)
-            log_info(f"Objekt gelöscht: {object_id}")
-            # Nach dem Löschen: nächsten oder leeren Datensatz anzeigen
-            if objects:
-                first_id = sorted(objects.keys())[0]
-                self.current_object_id = first_id
-                self.fill_object_form(objects[first_id])
-            else:
-                self.current_object_id = None
-                empty_data = {k: "" for k in self.object_form_widgets}
-                self.fill_object_form(empty_data)
-
-    # Fülle das Objekt-Formular mit den Daten eines Objekts
-    def fill_object_form(self, object_data):
-        for field_name, widget in self.object_form_widgets.items():
-            value = object_data.get(field_name, "")
-            if isinstance(widget, QLineEdit):
-                widget.setText(str(value))
-            elif isinstance(widget, QTextEdit):
-                widget.setPlainText(str(value))
-            elif isinstance(widget, QComboBox):
-                idx = widget.findText(str(value))
-                if idx >= 0:
-                    widget.setCurrentIndex(idx)
-                else:
-                    widget.setCurrentIndex(0)
-            elif isinstance(widget, QCheckBox):
-                widget.setChecked(bool(value))
-            elif isinstance(widget, QDateEdit):
-                if value:
-                    try:
-                        widget.setDate(datetime.date.fromisoformat(value))
-                    except Exception:
-                        widget.setDate(datetime.date.today())
-                else:
-                    widget.setDate(datetime.date.today())
-
-    # Handler für "Neues Objekt" Button
-    def on_new_object_clicked(self):
-        empty_data = {k: "" for k in self.object_form_widgets}
-        self.current_object_id = None
-        self.fill_object_form(empty_data)
-
-    # Handler für "Objekt speichern" Button
-    def on_save_object_clicked(self):
-        objects = self.load_objects()
-        data = {}
-        for field_name, widget in self.object_form_widgets.items():
-            if isinstance(widget, QLineEdit):
-                data[field_name] = widget.text()
-            elif isinstance(widget, QTextEdit):
-                data[field_name] = widget.toPlainText()
-            elif isinstance(widget, QComboBox):
-                data[field_name] = widget.currentText()
-            elif isinstance(widget, QCheckBox):
-                data[field_name] = widget.isChecked()
-            elif isinstance(widget, QDateEdit):
-                data[field_name] = widget.date().toString("yyyy-MM-dd")
-        if self.current_object_id and self.current_object_id in objects:
-            # Bestehendes Objekt aktualisieren
-            objects[self.current_object_id] = data
-        else:
-            # Neues Objekt anlegen
-            existing_ids = [int(k.split("_")[-1]) for k in objects.keys() if k.startswith("object_ID_")]
-            next_id = max(existing_ids, default=0) + 1
-            new_id = f"object_ID_{next_id:02d}"
-            objects[new_id] = data
-            self.current_object_id = new_id
-        self.save_objects(objects)
-
-    # Handler für "Vorheriges Objekt" Button
-    def on_previous_object_clicked(self):
-        objects = self.load_objects()
-        if not objects:
-            return
-        ids = sorted(objects.keys())
-        if self.current_object_id in ids:
-            idx = ids.index(self.current_object_id)
-            new_idx = (idx - 1) % len(ids)
-        else:
-            new_idx = 0
-        self.current_object_id = ids[new_idx]
-        self.fill_object_form(objects[self.current_object_id])
-
-    # Handler für "Nächstes Objekt" Button
-    def on_next_object_clicked(self):
-        objects = self.load_objects()
-        if not objects:
-            return
-        ids = sorted(objects.keys())
-        if self.current_object_id in ids:
-            idx = ids.index(self.current_object_id)
-            new_idx = (idx + 1) % len(ids)
-        else:
-            new_idx = 0
-        self.current_object_id = ids[new_idx]
-        self.fill_object_form(objects[self.current_object_id])   
-
-    # ..............................................................
-    # Ort FUNKTIONEN
-    # ..............................................................
-
-    # Lege einen neuen Ort an
-    def _delete_object(self, object_id):
-        objects = self.load_objects()
-        if not objects or not object_id:
-            log_error(f"Kein Objekt zum Löschen gefunden (ID: {object_id})")
-            return
-        if object_id in objects:
-            del objects[object_id]
-            self.save_objects(objects)
-            log_info(f"Objekt gelöscht: {object_id}")
-    
-    # Speichere alle Orte
-    def save_locations(self, locations):
-        file_path = DATA_DIR / "Locations.json"
-        try:
-            with open(file_path, "w", encoding="utf-8") as f:
-                json.dump(locations, f, indent=2, ensure_ascii=False)
-            log_info(f"Orte-Datei gespeichert: {file_path} ({len(locations)} Einträge)")
-        except Exception as e:
-            log_exception(f"Fehler beim Speichern der Orte-Datei: {file_path}", e)
-    # Lade alle Orte
-    def load_locations(self):
-        file_path = DATA_DIR / "Locations.json"
-        if not file_path.exists():
-            log_info(f"Orte-Datei nicht gefunden: {file_path}")
-            return {}
-        try:
-            with open(file_path, "r", encoding="utf-8") as f:
-                data = json.load(f)
-            log_info(f"Orte-Datei geladen: {file_path} ({len(data)} Einträge)")
-            return data
-        except Exception as e:
-            log_exception(f"Fehler beim Laden der Orte-Datei: {file_path}", e)
-            return {}
-        
-    # Lösche den aktuellen Ort
-    def on_delete_location_clicked(self):
-        if not hasattr(self, "current_location_id") or not self.current_location_id:
-            return
-        self.show_secure_delete_dialog("location", self.current_location_id)
-    # Interne Löschfunktion
-    def _delete_location(self, location_id):
-        locations = self.load_locations()
-        if not locations or not location_id:
-            log_error(f"Kein Ort zum Löschen gefunden (ID: {location_id})")
-            return
-        if location_id in locations:
-            del locations[location_id]
-            self.save_locations(locations)
-            log_info(f"Ort gelöscht: {location_id}")
-            # Nach dem Löschen: nächsten oder leeren Datensatz anzeigen
-            if locations:
-                first_id = sorted(locations.keys())[0]
-                self.current_location_id = first_id
-                self.fill_location_form(locations[first_id])
-            else:
-                self.current_location_id = None
-                empty_data = {k: "" for k in self.location_form_widgets}
-                self.fill_location_form(empty_data)
-    
-    # Fülle das Ort-Formular mit den Daten eines Ortes
-    def fill_location_form(self, location_data):
-        for field_name, widget in self.location_form_widgets.items():
-            value = location_data.get(field_name, "")
-            if isinstance(widget, QLineEdit):
-                widget.setText(str(value))
-            elif isinstance(widget, QTextEdit):
-                widget.setPlainText(str(value))
-            elif isinstance(widget, QComboBox):
-                idx = widget.findText(str(value))
-                if idx >= 0:
-                    widget.setCurrentIndex(idx)
-                else:
-                    widget.setCurrentIndex(0)
-            elif isinstance(widget, QCheckBox):
-                widget.setChecked(bool(value))
-            elif isinstance(widget, QDateEdit):
-                if value:
-                    try:
-                        widget.setDate(datetime.date.fromisoformat(value))
-                    except Exception:
-                        widget.setDate(datetime.date.today())
-                else:
-                    widget.setDate(datetime.date.today())
-
-    # Handler für "Neuer Ort" Button
-    def on_new_location_clicked(self):
-        empty_data = {k: "" for k in self.location_form_widgets}
-        self.current_location_id = None
-        self.fill_location_form(empty_data)
-
-    # Handler für "Ort speichern" Button
-    def on_save_location_clicked(self):
-        locations = self.load_locations()
-        data = {}
-        for field_name, widget in self.location_form_widgets.items():
-            if isinstance(widget, QLineEdit):
-                data[field_name] = widget.text()
-            elif isinstance(widget, QTextEdit):
-                data[field_name] = widget.toPlainText()
-            elif isinstance(widget, QComboBox):
-                data[field_name] = widget.currentText()
-            elif isinstance(widget, QCheckBox):
-                data[field_name] = widget.isChecked()
-            elif isinstance(widget, QDateEdit):
-                data[field_name] = widget.date().toString("yyyy-MM-dd")
-        if self.current_location_id and self.current_location_id in locations:
-            # Bestehenden Ort aktualisieren
-            locations[self.current_location_id] = data
-        else:
-            # Neuen Ort anlegen
-            existing_ids = [int(k.split("_")[-1]) for k in locations.keys() if k.startswith("location_ID_")]
-            next_id = max(existing_ids, default=0) + 1
-            new_id = f"location_ID_{next_id:02d}"
-            locations[new_id] = data
-            self.current_location_id = new_id
-        self.save_locations(locations)
-
-    # Handler für "Vorheriger Ort" Button
-    def on_previous_location_clicked(self):
-        locations = self.load_locations()
-        if not locations:
-            return
-        ids = sorted(locations.keys())
-        if self.current_location_id in ids:
-            idx = ids.index(self.current_location_id)
-            new_idx = (idx - 1) % len(ids)
-        else:
-            new_idx = 0
-        self.current_location_id = ids[new_idx]
-        self.fill_location_form(locations[self.current_location_id])
-
-    # Handler für "Nächster Ort" Button
-    def on_next_location_clicked(self):
-        locations = self.load_locations()
-        if not locations:
-            return
-        ids = sorted(locations.keys())
-        if self.current_location_id in ids:
-            idx = ids.index(self.current_location_id)
-            new_idx = (idx + 1) % len(ids)
-        else:
-            new_idx = 0
-        self.current_location_id = ids[new_idx]
-        self.fill_location_form(locations[self.current_location_id])   
-
-    # ..............................................................
-    # Storyline FUNKTIONEN
-    # ..............................................................
-
-    # Lege eine neue Storyline an
-    def load_storylines(self):
-        file_path = DATA_DIR / "Storylines.json"
-        if not file_path.exists():
-            log_info(f"Storyline-Datei nicht gefunden: {file_path}")
-            return {}
-        try:
-            with open(file_path, "r", encoding="utf-8") as f:
-                data = json.load(f)
-            log_info(f"Storyline-Datei geladen: {file_path} ({len(data)} Einträge)")
-            return data
-        except Exception as e:
-            log_exception(f"Fehler beim Laden der Storyline-Datei: {file_path}", e)
-            return {}
-    
-    # Speichere alle Storylines
-    def save_storylines(self, storylines):
-        file_path = DATA_DIR / "Storylines.json"
-        try:
-            with open(file_path, "w", encoding="utf-8") as f:
-                json.dump(storylines, f, indent=2, ensure_ascii=False)
-            log_info(f"Storyline-Datei gespeichert: {file_path} ({len(storylines)} Einträge)")
-        except Exception as e:
-            log_exception(f"Fehler beim Speichern der Storyline-Datei: {file_path}", e)
-    
-    # Lösche die aktuelle Storyline
-    def on_delete_storyline_clicked(self):
-        if not hasattr(self, "current_storyline_id") or not self.current_storyline_id:
-            return
-        self.show_secure_delete_dialog("storyline", self.current_storyline_id)
-    # Interne Löschfunktion
-    def _delete_storyline(self, storyline_id):
-        storylines = self.load_storylines()
-        if not storylines or not storyline_id:
-            log_error(f"Keine Storyline zum Löschen gefunden (ID: {storyline_id})")
-            return
-        if storyline_id in storylines:
-            del storylines[storyline_id]
-            self.save_storylines(storylines)
-            log_info(f"Storyline gelöscht: {storyline_id}")
-            # Nach dem Löschen: nächsten oder leeren Datensatz anzeigen
-            if storylines:
-                first_id = sorted(storylines.keys())[0]
-                self.current_storyline_id = first_id
-                self.fill_storyline_form(storylines[first_id])
-            else:
-                self.current_storyline_id = None
-                empty_data = {k: "" for k in self.storyline_form_widgets}
-                self.fill_storyline_form(empty_data)
-        
-    # Fülle das Storyline-Formular mit den Daten einer Storyline
-    def fill_storyline_form(self, storyline_data):
-        for field_name, widget in self.storyline_form_widgets.items():
-            value = storyline_data.get(field_name, "")
-            if isinstance(widget, QLineEdit):
-                widget.setText(str(value))
-            elif isinstance(widget, QTextEdit):
-                widget.setPlainText(str(value))
-            elif isinstance(widget, QComboBox):
-                idx = widget.findText(str(value))
-                if idx >= 0:
-                    widget.setCurrentIndex(idx)
-                else:
-                    widget.setCurrentIndex(0)
-            elif isinstance(widget, QCheckBox):
-                widget.setChecked(bool(value))
-            elif isinstance(widget, QDateEdit):
-                if value:
-                    try:
-                        widget.setDate(datetime.date.fromisoformat(value))
-                    except Exception:
-                        widget.setDate(datetime.date.today())
-                else:
-                    widget.setDate(datetime.date.today())
-
-    # Handler für "Neue Storyline" Button
-    def on_new_storyline_clicked(self):
-        empty_data = {k: "" for k in self.storyline_form_widgets}
-        self.current_storyline_id = None
-        self.fill_storyline_form(empty_data)
-    
-    # Handler für "Storyline speichern" Button
-    def on_save_storyline_clicked(self):
-        storylines = self.load_storylines()
-        data = {}
-        for field_name, widget in self.storyline_form_widgets.items():
-            if isinstance(widget, QLineEdit):
-                data[field_name] = widget.text()
-            elif isinstance(widget, QTextEdit):
-                data[field_name] = widget.toPlainText()
-            elif isinstance(widget, QComboBox):
-                data[field_name] = widget.currentText()
-            elif isinstance(widget, QCheckBox):
-                data[field_name] = widget.isChecked()
-            elif isinstance(widget, QDateEdit):
-                data[field_name] = widget.date().toString("yyyy-MM-dd")
-        if self.current_storyline_id and self.current_storyline_id in storylines:
-            # Bestehende Storyline aktualisieren
-            storylines[self.current_storyline_id] = data
-        else:
-            # Neue Storyline anlegen
-            existing_ids = [int(k.split("_")[-1]) for k in storylines.keys() if k.startswith("storyline_ID_")]
-            next_id = max(existing_ids, default=0) + 1
-            new_id = f"storyline_ID_{next_id:02d}"
-            storylines[new_id] = data
-            self.current_storyline_id = new_id
-        self.save_storylines(storylines)
-    
-    # Handler für "Vorherige Storyline" Button
-    def on_previous_storyline_clicked(self):
-        storylines = self.load_storylines()
-        if not storylines:
-            return
-        ids = sorted(storylines.keys())
-        if self.current_storyline_id in ids:
-            idx = ids.index(self.current_storyline_id)
-            new_idx = (idx - 1) % len(ids)
-        else:
-            new_idx = 0
-        self.current_storyline_id = ids[new_idx]
-        self.fill_storyline_form(storylines[self.current_storyline_id])
-
-    # Handler für "Nächste Storyline" Button
-    def on_next_storyline_clicked(self):
-        storylines = self.load_storylines()
-        if not storylines:
-            return
-        ids = sorted(storylines.keys())
-        if self.current_storyline_id in ids:
-            idx = ids.index(self.current_storyline_id)
-            new_idx = (idx + 1) % len(ids)
-        else:
-            new_idx = 0
-        self.current_storyline_id = ids[new_idx]
-        self.fill_storyline_form(storylines[self.current_storyline_id])
-
-    # --------------------------------------------------------------
-    # --------------------------------------------------------------
+# --------------------------------------------------------------
+# --------------------------------------------------------------
     @log_call
     def init_ui(self):
         self.setWindowTitle(self.get_translation("WinStartTitle", "CSNova"))

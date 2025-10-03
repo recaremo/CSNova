@@ -10,26 +10,26 @@
 # 2. Funktionen
 
 ## 2.1 Editor
-[] Beim Öffnen des Editors - Bezug zum Projekt: Entweder ein Projekt erstellen oder ein bestehendes öffnen.
+[x] Beim Öffnen des Editors - Bezug zum Projekt: Entweder ein Projekt erstellen oder ein bestehendes öffnen.
 [] Liste Charaktere anzeigen
-[] Liste Objekte anzeigen
-[] Liste Erzählstränge anzeigen
-[] Liste Orte anzeigen
+[x] Liste Objekte anzeigen
+[x] Liste Erzählstränge anzeigen
+[x] Liste Orte anzeigen
 [] Liste Quellen
 [] Recherche und Ideen
 []
 
-[] Neue Szene, nächste Szene, vorherige Szene, Szene speichern
+[x] Neue Szene, nächste Szene, vorherige Szene, Szene speichern
 [] nächster Charakter, vorheriger Charkter, Änderungen speichern, neuer Charakter
-[] nächstes Objekt, vorheriges Objekt, Änderungen speichern, neues Objekt
-[] nächster Ort, vorheriger Ort, Änderungen speichern, neuer Ort
-[] nächste Storyline, vorherige Storyline, Änderungen speichern, neue Storyline
+[x] nächstes Objekt, vorheriges Objekt, Änderungen speichern, neues Objekt
+[x] nächster Ort, vorheriger Ort, Änderungen speichern, neuer Ort
+[x] nächste Storyline, vorherige Storyline, Änderungen speichern, neue Storyline
 [] 
 
 ## 2.2 Einstellungen
-[] Hauptfenster
-[] Programm - Layout und Style
-[] Vorlagen Roman
+[x] Hauptfenster
+[x] Programm - Layout und Style
+[x] Vorlagen Roman
 [] Vorlagen Drehbuch
 [] Vorlagen Theaterstück
 [] Vorlagen Game

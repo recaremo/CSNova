@@ -19,7 +19,7 @@ DEFAULT_SETTINGS = {
   "scale_factor": 1.0,
   "screen_resolution_changed": True
 },
-"preferences_window": {
+"start_window": {
   "width": 1920,
   "height": 1080,
   "is_maximized": False,
@@ -29,7 +29,17 @@ DEFAULT_SETTINGS = {
     220
   ]
 },
-"start_window": {
+"project_window": {
+  "width": 1920,
+  "height": 1080,
+  "is_maximized": False,
+  "splitter_sizes": [
+    600,
+    1100,
+    220
+  ]
+},
+"characters_window": {
   "width": 1920,
   "height": 1080,
   "is_maximized": False,
@@ -59,16 +69,6 @@ DEFAULT_SETTINGS = {
     220
   ]
 },
-"characters_window": {
-  "width": 1920,
-  "height": 1080,
-  "is_maximized": False,
-  "splitter_sizes": [
-    600,
-    1100,
-    220
-  ]
-},
 "storylines_window": {
   "width": 1920,
   "height": 1080,
@@ -79,7 +79,7 @@ DEFAULT_SETTINGS = {
     220
   ]
 },
-"project_window": {
+"editor_window": {
   "width": 1920,
   "height": 1080,
   "is_maximized": False,
@@ -89,7 +89,7 @@ DEFAULT_SETTINGS = {
     220
   ]
 },
-"editor_window": {
+"preference_window": {
   "width": 1920,
   "height": 1080,
   "is_maximized": False,
@@ -117,16 +117,6 @@ DEFAULT_SETTINGS = {
     600,
     1100,
     220
-  ]
-},
-"panels": {
-  "left_panel": {},
-  "center_panel": {},
-  "right_panel": {},
-  "splitter_sizes": [
-    704,
-    1349,
-    499
   ]
 },
 "gui": {
@@ -592,9 +582,9 @@ LANGUAGE_DEFAULTS = {
     "CharacterWinHeader": "Charakterverwaltung",
     "botn_ch_01": "Neu",
     "botn_ch_01_hint": "Hier kannst du einen neuen Charakter erstellen.",
-    "botn_ch_02a": "Nächster",
+    "botn_ch_02a": "Vor",
     "botn_ch_02a_hint": "Hier kannst du zum nächsten Charakter wechseln.",
-    "botn_ch_02b": "Vorheriger",
+    "botn_ch_02b": "Zurück",
     "botn_ch_02b_hint": "Hier kannst du zum vorherigen Charakter wechseln.",
     "botn_ch_03": "Speichern",
     "botn_ch_03_hint": "Hier kannst du den aktuellen Charakter speichern.",
@@ -619,9 +609,9 @@ LANGUAGE_DEFAULTS = {
     "ObjectWinHeader": "Objektverwaltung",
     "botn_ob_01": "Neu",
     "botn_ob_01_hint": "Hier kannst du ein neues Objekt erstellen.",
-    "botn_ob_02a": "Nächstes",
+    "botn_ob_02a": "Vor",
     "botn_ob_02a_hint": "Hier kannst du zum nächsten Objekt wechseln.",
-    "botn_ob_02b": "Vorheriges",
+    "botn_ob_02b": "Zurück",
     "botn_ob_02b_hint": "Hier kannst du zum vorherigen Objekt wechseln.",
     "botn_ob_03": "Speichern",
     "botn_ob_03_hint": "Hier kannst du das aktuelle Objekt speichern.",
@@ -632,9 +622,9 @@ LANGUAGE_DEFAULTS = {
     "LocationWinHeader": "Ortsverwaltung",
     "botn_lo_01": "Neu",
     "botn_lo_01_hint": "Hier kannst du einen neuen Ort erstellen.",
-    "botn_lo_02a": "Nächster",
+    "botn_lo_02a": "Vor",
     "botn_lo_02a_hint": "Hier kannst du zum nächsten Ort wechseln.",
-    "botn_lo_02b": "Vorheriger",
+    "botn_lo_02b": "Zurück",
     "botn_lo_02b_hint": "Hier kannst du zum vorherigen Ort wechseln.",
     "botn_lo_03": "Speichern",
     "botn_lo_03_hint": "Hier kannst du den aktuellen Ort speichern.",
@@ -645,9 +635,9 @@ LANGUAGE_DEFAULTS = {
     "StorylineWinHeader": "Erzählstrangverwaltung",
     "botn_sl_01": "Neu",
     "botn_sl_01_hint": "Hier kannst du einen neuen Erzählstrang erstellen.",
-    "botn_sl_02": "Nächster",
+    "botn_sl_02": "Vor",
     "botn_sl_02_hint": "Hier kannst du zum nächsten Erzählstrang wechseln.",
-    "botn_sl_03": "Vorheriger",
+    "botn_sl_03": "Zurück",
     "botn_sl_03_hint": "Hier kannst du zum vorherigen Erzählstrang wechseln.",
     "botn_sl_04": "Speichern",
     "botn_sl_04_hint": "Hier kannst du den aktuellen Erzählstrang speichern.",
@@ -6234,14 +6224,14 @@ TABLES_LOCATIONS_DEFAULTS = {
 # für jedes Projekt werden daraus eigene Tabellen angelegt
 TABLES_CHAPTERS_SCENES_DEFAULTS = {
     "chapter_ID_01": {
-        "chapter_id": "",
+        "chapter_id": "1",
         "chapter_title": "",
         "chapter_premise": "",
         "chapter_summary": "",
         "chapter_notes": "",
         "scenes": {
             "scene_ID_01": {
-                "scene_id": "",
+                "scene_id": "1",
                 "scene_title": "",
                 "scene_premise": "",
                 "scene_goal": "",
