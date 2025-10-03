@@ -20,13 +20,104 @@ DEFAULT_SETTINGS = {
   "screen_resolution_changed": True
 },
 "preferences_window": {
-  "width": 500,
-  "height": 320
+  "width": 1920,
+  "height": 1080,
+  "is_maximized": False,
+  "splitter_sizes": [
+    600,
+    1100,
+    220
+  ]
 },
 "start_window": {
-  "width": 1123,
-  "height": 1096,
-  "is_maximized": True
+  "width": 1920,
+  "height": 1080,
+  "is_maximized": False,
+  "splitter_sizes": [
+    600,
+    1100,
+    220
+  ]
+},
+"objects_window": {
+  "width": 1920,
+  "height": 1080,
+  "is_maximized": False,
+  "splitter_sizes": [
+    600,
+    1100,
+    220
+  ]
+},
+"locations_window": {
+  "width": 1920,
+  "height": 1080,
+  "is_maximized": False,
+  "splitter_sizes": [
+    600,
+    1100,
+    220
+  ]
+},
+"characters_window": {
+  "width": 1920,
+  "height": 1080,
+  "is_maximized": False,
+  "splitter_sizes": [
+    600,
+    1100,
+    220
+  ]
+},
+"storylines_window": {
+  "width": 1920,
+  "height": 1080,
+  "is_maximized": False,
+  "splitter_sizes": [
+    600,
+    1100,
+    220
+  ]
+},
+"project_window": {
+  "width": 1920,
+  "height": 1080,
+  "is_maximized": False,
+  "splitter_sizes": [
+    600,
+    1100,
+    220
+  ]
+},
+"editor_window": {
+  "width": 1920,
+  "height": 1080,
+  "is_maximized": False,
+  "splitter_sizes": [
+    600,
+    1100,
+    220
+  ]
+},
+"help_window": {
+  "width": 1920,
+  "height": 1080,
+  "is_maximized": False,
+  "splitter_sizes": [
+    600,
+    1100,
+    220
+  ]
+},
+"about_window": {
+  "width": 1920,
+  "height": 1080,
+  "is_maximized": False,
+  "splitter_sizes": [
+    600,
+    1100,
+    220
+  ]
 },
 "panels": {
   "left_panel": {},
@@ -39,14 +130,11 @@ DEFAULT_SETTINGS = {
   ]
 },
 "gui": {
-  "style_theme": "Modern_neutral",
-  "file_path_gui": "/home/frank/Dokumente/CSNova/gui/styles/Modern_neutral.json"
+  "style_theme": "Modern_neutral"
 },
 "general": {
   "language": "de",
-  "file_path_lang": "/home/frank/Dokumente/CSNova/core/translations/translation_de.json",
-  "file_path_combo": "/home/frank/Dokumente/CSNova/core/translations/translation_data_combobox_de.json",
-  "first_start": False,
+  "first_start": True,
   "last_project_opened": "",
   "last_file_opened": "",
   "last_fiction_region_used": "",
@@ -706,7 +794,8 @@ LANGUAGE_DEFAULTS = {
                         "'Nicht du musst lernen, wie das Programm funktioniert - das Programm soll <b>verstehen</b>, wie du arbeiten willst.' <br><br>"
                         "Bevor du loslegst, kannst du einige Grundeinstellungen vornehmen: <br><br>"
                         "- Wähle deine bevorzugte Sprache aus. <br>"
-                        "- Wähle ein Design aus, das CSNova verwenden soll. <br>",
+                        "- Wähle ein Design aus, das CSNova verwenden soll. <br>"
+                        "- Klicke anschließend auf <b>Speichern</b>, um die Einstellungen zu übernehmen. <br><br>",
     "startWinInfoText2":    "Du kannst diese und weitere Einstellungen auch später in den Einstellungen ändern. <br><br>"
                             "Wenn du die Einstellungen vorgenommen hast - und damit zufrieden bist - klicke auf <b>Speichern</b> <br>"
                             "Mit einem Klick auf <b>Zurücksetzen</b> kannst du die Standardeinstellungen wiederherstellen. <br>"
@@ -1228,7 +1317,8 @@ LANGUAGE_DEFAULTS = {
                         "'You don't have to learn how the program works - the program should <b>understand</b> how you want to work.' <br><br>"
                         "Before you get started, you can make some basic settings: <br><br>"
                         "- Choose your preferred language. <br>"
-                        "- Choose a theme for CSNova to use. <br>",
+                        "- Choose a theme for CSNova to use. <br>"
+                        "- After that, click on <b>Save</b> to apply the settings. <br><br>",
     "startWinInfoText2":    "You can also change these and other settings later in the settings. <br><br>"
                             "Once you've made your selections - and are satisfied - click <b>Save</b> <br>"
                             "You can restore the default settings by clicking <b>Reset</b>. <br>"
@@ -1750,7 +1840,8 @@ LANGUAGE_DEFAULTS = {
                         "'No tienes que aprender cómo funciona el programa - el programa debería <b>entender</b> cómo quieres trabajar.' <br><br>"
                         "Antes de empezar, puedes hacer algunos ajustes básicos: <br><br>"
                         "- Elige tu idioma preferido. <br>"
-                        "- Elige un tema para que lo use CSNova. <br>",
+                        "- Elige un tema para que lo use CSNova. <br>"
+                        "- Luego haga clic en <b>Guardar</b> para aplicar la configuración.<br><br>",
     "startWinInfoText2":    "También puedes cambiar estos y otros ajustes más adelante en los ajustes. <br><br>"
                             "Una vez que hayas hecho tus selecciones - y estés satisfecho - haz clic en <b>Guardar</b> <br>"
                             "Puedes restaurar los ajustes predeterminados haciendo clic en <b>Restablecer</b>. <br>"
@@ -2272,7 +2363,8 @@ LANGUAGE_DEFAULTS = {
                         "'Vous n'avez pas à apprendre comment le programme fonctionne - le programme devrait <b>comprendre</b> comment vous voulez travailler.' <br><br>"
                         "Avant de commencer, vous pouvez faire quelques réglages de base: <br><br>"
                         "- Choisissez votre langue préférée. <br>"
-                        "- Choisissez un thème à utiliser par CSNova. <br>",
+                        "- Choisissez un thème à utiliser par CSNova. <br>"
+                        "- Cliquez ensuite sur <b>Enregistrer</b> pour appliquer les paramètres. <br><br>",
     "startWinInfoText2":    "Vous pouvez également modifier ces paramètres et d'autres plus tard dans les paramètres. <br><br>"
                             "Une fois que vous avez fait vos sélections - et que vous êtes satisfait - cliquez sur <b>Enregistrer</b> <br>"
                             "Vous pouvez restaurer les paramètres par défaut en cliquant sur <b>Réinitialiser</b>. <br>"
@@ -6434,7 +6526,7 @@ def init_theme(settings):
         settings.setdefault("gui", {})
         settings["gui"]["style_theme"] = DEFAULT_SETTINGS["gui"]["style_theme"]
     style_theme = settings["gui"]["style_theme"]
-    settings["gui"]["file_path_gui"] = get_theme_path(style_theme)
+    #settings["gui"]["file_path_gui"] = get_theme_path(style_theme)
     return style_theme
 
 # Initialisierung der Sprache
@@ -6445,7 +6537,7 @@ def init_language(settings, os_language):
         log_error(f"Language '{language}' not found in LANGUAGE_DEFAULTS. Falling back to 'en'.")
         language = "en"
     settings["general"]["language"] = language
-    settings["general"]["file_path_lang"] = get_translation_path(language)
+    #settings["general"]["file_path_lang"] = get_translation_path(language)
     log_info(f"Using language: {language}")
     return language
 

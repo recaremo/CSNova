@@ -92,6 +92,14 @@ def format_date_local(date_str, lang="de"):
 
 # StartWindow Klasse
 class StartWindow(QMainWindow):
+    #
+    def get_window_key_by_panel_index(self, panel_index):
+        keys = [
+            "start_window", "project_window", "characters_window", "objects_window",
+            "locations_window", "storylines_window", "editor_window",
+            "preference_window", "help_window", "about_window"
+        ]
+        return keys[panel_index] if panel_index < len(keys) else "start_window"
     # --- Handler-Funktionen ---
     # Hinzufügen eines neuen Kapitels mit einer leeren Szene
     def add_new_chapter(self):
@@ -504,8 +512,7 @@ class StartWindow(QMainWindow):
                 self.current_storyline_id = None
                 empty_data = {k: "" for k in self.storyline_form_widgets_left}
                 self.fill_storyline_form_left(empty_data)
-            
-    
+                
     # ... andere Methoden ...
     def update_scene_word_count(self):
         if "scene_word_count" in self.scene_form_widgets:
@@ -516,7 +523,6 @@ class StartWindow(QMainWindow):
                 widget.setText(str(word_count))
             elif isinstance(widget, QSpinBox):
                 widget.setValue(word_count)
-
     
     # Initialisierung der Panels
     def create_left_panel_with_header(self, header_key, default_text):
@@ -539,6 +545,7 @@ class StartWindow(QMainWindow):
 
     # Anzeige des jeweils ausgewählten left_panels über die Buttons in right_panel_start
     def show_left_panel(self, panel_index, left_panel_functions):
+        self.current_panel_index = panel_index
         splitter = self.centralWidget()
         if isinstance(splitter, QSplitter):
             new_left_panel = left_panel_functions[panel_index]()
@@ -551,7 +558,8 @@ class StartWindow(QMainWindow):
             self.safe_apply_theme_style(new_left_panel, "panel", self.theme)
             log_info(f"Left panel {panel_index} ({left_panel_functions[panel_index].__name__}) wurde angezeigt. Splitter-Größen: {splitter.sizes()}")
             # Splitter-Größen wiederherstellen
-            splitter_sizes = self.panel_settings.get("splitter_sizes", [300, 600, 300])
+            window_key = self.get_window_key_by_panel_index(self.current_panel_index)
+            splitter_sizes = self.settings.get(window_key, {}).get("splitter_sizes", [300, 600, 300])
             splitter.setSizes(splitter_sizes)
 
     # Anzeige des jeweils ausgewählten center_panels über die Buttons in right_panel_start
@@ -575,6 +583,7 @@ class StartWindow(QMainWindow):
     
     # Anzeige des jeweils ausgewählten center_panels über die Buttons in right_panel_start
     def show_center_panel(self, panel_index, center_panel_functions):
+        self.current_panel_index = panel_index
         splitter = self.centralWidget()
         if isinstance(splitter, QSplitter):
             new_center_panel = center_panel_functions[panel_index]()
@@ -585,9 +594,9 @@ class StartWindow(QMainWindow):
                 old_center_panel.setParent(None)
             self.center_panel_widget = new_center_panel
             self.safe_apply_theme_style(new_center_panel, "panel", self.theme)
-            log_info(f"center panel {panel_index} ({center_panel_functions[panel_index].__name__}) wurde angezeigt. Splitter-Größen: {splitter.sizes()}")
-            # Splitter-Größen wiederherstellen
-            splitter_sizes = self.panel_settings.get("splitter_sizes", [300, 600, 300])
+            # Splitter-Größen aus dem passenden Bereich setzen:
+            window_key = self.get_window_key_by_panel_index(panel_index)
+            splitter_sizes = self.settings.get(window_key, {}).get("splitter_sizes", [300, 600, 300])
             splitter.setSizes(splitter_sizes)
     
     # Right Panels mit den jeweiligen Buttons
@@ -630,6 +639,7 @@ class StartWindow(QMainWindow):
     
     # Anzeige des jeweils ausgewählten right_panels über die Buttons in right_panel_start
     def show_right_panel(self, panel_index, right_panel_functions):
+        self.current_panel_index = panel_index
         splitter = self.centralWidget()
         if isinstance(splitter, QSplitter):
             new_right_panel = right_panel_functions[panel_index]()
@@ -642,7 +652,8 @@ class StartWindow(QMainWindow):
             self.safe_apply_theme_style(new_right_panel, "panel", self.theme)
             log_info(f"right panel {panel_index} ({right_panel_functions[panel_index].__name__}) wurde angezeigt. Splitter-Größen: {splitter.sizes()}")
             # Splitter-Größen wiederherstellen
-            splitter_sizes = self.panel_settings.get("splitter_sizes", [300, 600, 300])
+            window_key = self.get_window_key_by_panel_index(self.current_panel_index)
+            splitter_sizes = self.settings.get(window_key, {}).get("splitter_sizes", [300, 600, 300])
             splitter.setSizes(splitter_sizes)
     
     # Change Event
@@ -947,102 +958,73 @@ class StartWindow(QMainWindow):
     # Einstellungen speichern
     def save_settings(self):
         try:
-            # Prüfe, ob die Einstellungen für Sprache und Theme gespeichert werden sollen
-            first_start = self.settings.get("general", {}).get("first_start", True)
-            if first_start:
-                # 1. Sprache aus language_combo
-                language_codes = ["de", "en", "fr", "es"]
-                if hasattr(self, "language_combo"):
-                    lang_index = self.language_combo.currentIndex()
-                    language = language_codes[lang_index]
-                    self.settings["general"]["language"] = language
-                    # KEINE Pfade mehr speichern!
+            # Fallback: Panel-Index auf 0 setzen, falls nicht vorhanden
+            if not hasattr(self, "current_panel_index"):
+                self.current_panel_index = 0
+            # --- Allgemeine Einstellungen ---
+            # Sprache
+            language_codes = ["de", "en", "fr", "es"]
+            if hasattr(self, "language_combo_1"):
+                lang_index = self.language_combo_1.currentIndex()
+                language = language_codes[lang_index]
+                self.settings.setdefault("general", {})
+                self.settings["general"]["language"] = language
 
-                # 2. Theme aus theme_combo
-                theme_names = [
-                    "Modern_neutral", "Modern_dark", "Modern_light",
-                    "OldSchool_neutral", "OldSchool_dark", "OldSchool_light",
-                    "Vintage_neutral", "Vintage_dark", "Vintage_light",
-                    "Future_neutral", "Future_dark", "Future_light",
-                    "Minimal_neutral", "Minimal_dark", "Minimal_light"
-                ]
-                if hasattr(self, "theme_combo"):
-                    theme_index = self.theme_combo.currentIndex()
-                    theme_name = theme_names[theme_index]
-                    self.settings["gui"]["style_theme"] = theme_name
-                    # KEINE Pfade mehr speichern!
+            # Theme
+            theme_names = [
+                "Modern_neutral", "Modern_dark", "Modern_light",
+                "OldSchool_neutral", "OldSchool_dark", "OldSchool_light",
+                "Vintage_neutral", "Vintage_dark", "Vintage_light",
+                "Future_neutral", "Future_dark", "Future_light",
+                "Minimal_neutral", "Minimal_dark", "Minimal_light"
+            ]
+            if hasattr(self, "theme_combo_1"):
+                theme_index = self.theme_combo_1.currentIndex()
+                theme_name = theme_names[theme_index]
+                self.settings.setdefault("gui", {})
+                self.settings["gui"]["style_theme"] = theme_name
 
-            # Fensterstatus und Größe speichern
-            start_window = self.settings.setdefault("start_window", {})
-            start_window["is_maximized"] = self.isMaximized()
+            # --- Regionen ---
+            region_keys = ["EU", "USA", "UK"]
+            if hasattr(self, "fiktion_region_combo"):
+                region_fiction = region_keys[self.fiktion_region_combo.currentIndex()]
+                self.settings["general"]["last_fiction_region_used"] = region_fiction
+            if hasattr(self, "nonfiktion_region_combo"):
+                region_nonfiction = region_keys[self.nonfiktion_region_combo.currentIndex()]
+                self.settings["general"]["last_nonfiction_region_used"] = region_nonfiction
+
+            # --- Fensterstatus und Größe ---
+            window_key = self.get_window_key_by_panel_index(self.current_panel_index)
+            window_settings = self.settings.setdefault(window_key, {})
+            window_settings["is_maximized"] = self.isMaximized()
             if not self.isMaximized():
-                start_window["width"] = self.width()
-                start_window["height"] = self.height()
+                window_settings["width"] = self.width()
+                window_settings["height"] = self.height()
 
-            # Splitter-Größen
-            panels = self.settings.setdefault("panels", {})
+            # --- Splitter-Größen ---
             splitter = self.centralWidget()
             if isinstance(splitter, QSplitter):
-                panels["splitter_sizes"] = splitter.sizes()
+                window_settings["splitter_sizes"] = splitter.sizes()
 
-            # Speichern in user_settings.json (immer über USER_SETTINGS_FILE!)
+            # --- first_start ---
+            self.settings.setdefault("general", {})
+            self.settings["general"]["first_start"] = False
+
+            # --- Speichern und neu laden ---
             with open(USER_SETTINGS_FILE, "w", encoding="utf-8") as f:
                 json.dump(self.settings, f, indent=2, ensure_ascii=False)
+            with open(USER_SETTINGS_FILE, "r", encoding="utf-8") as f:
+                self.settings = json.load(f)
+
+            # --- Panel neu aufbauen ---
+            self.show_center_panel(self.current_panel_index, self.center_panel_functions)
+
             log_info("Einstellungen erfolgreich gespeichert.")
             if hasattr(self, "btn_save"):
                 self.btn_save.setEnabled(False)
+
         except Exception as e:
             log_exception("Fehler beim Speichern der Einstellungen", e)
-
-    # Einstellungen zurücksetzen
-    def reset_settings(self):
-        try:
-            # Lade die gespeicherten Einstellungen neu
-            with open(USER_SETTINGS_FILE, "r", encoding="utf-8") as f:
-                saved_settings = json.load(f)
-
-            # 1. Sprache zurücksetzen
-            language = saved_settings["general"]["language"]
-            self.change_language(language)
-
-            # 2. Theme zurücksetzen
-            theme_name = saved_settings["gui"]["style_theme"]
-            self.change_theme(theme_name)
-
-            log_info("Sprache und Theme wurden auf die gespeicherten Werte zurückgesetzt.")
-            self.btn_reset.setEnabled(False)
-            self.btn_save.setEnabled(False)
-        except Exception as e:
-            log_exception("Fehler beim Zurücksetzen der Einstellungen", e)
-
-    # Wechsel zum nächsten Schritt
-    def go_to_next_step(self):
-        try:
-            self.settings["general"]["first_start"] = False
-            with open(USER_SETTINGS_FILE, "w", encoding="utf-8") as f:
-                json.dump(self.settings, f, indent=2, ensure_ascii=False)
-            log_info('"first_start" wurde auf False gesetzt und Einstellungen gespeichert.')
-
-            splitter = self.centralWidget()
-            if isinstance(splitter, QSplitter):
-                new_center_panel = self.create_center_panel_start()
-                old_center_panel = splitter.widget(1)
-                splitter.insertWidget(1, new_center_panel)
-                splitter.setStretchFactor(1, 1)
-                if old_center_panel is not None:
-                    old_center_panel.setParent(None)
-                self.center_panel_widget = new_center_panel
-
-                # Splitter-Größen aus den Settings setzen und Speichern unterdrücken
-                splitter_sizes = self.panel_settings.get("splitter_sizes", [300, 600, 300])
-                splitter.setSizes(splitter_sizes)
-            else:
-                self.center_panel_widget = self.create_center_panel_start()
-                self.setCentralWidget(self.center_panel_widget)
-
-            log_info("Center-Panel wurde nach Next-Step aktualisiert und korrekt angezeigt.")
-        except Exception as e:
-            log_exception("Fehler beim Wechsel zum nächsten Schritt", e)
     
     # PANELS FUNKTIONEN - LEFT_PANEL
     # .............................................................. 
@@ -1437,9 +1419,7 @@ class StartWindow(QMainWindow):
     
     # Dieses left_panel_settings wird angezeigt, wenn die Einstellungen geöffnet werden.
     def create_left_panel_settings(self):
-        splitter_sizes = self.panel_settings.get("splitter_sizes", [300, 600, 300])
-        panel_widget, _ = self.create_left_panel_start(splitter_sizes)
-        return panel_widget
+        return self.create_left_panel_with_header("se_ma_header", "Settings")
         
     # Dieses left_panel_character wird angezeigt, wenn ein Charakter erstellt oder bearbeitet wird.
     def create_left_panel_character(self):
@@ -1460,14 +1440,16 @@ class StartWindow(QMainWindow):
     # Dieses left_panel_help wird angezeigt, wenn die Hilfe geöffnet wird.
     # Es wird vorerst das gleiche Panel wie left_panel_start verwendet.
     def create_left_panel_help(self):
-        splitter_sizes = self.panel_settings.get("splitter_sizes", [300, 600, 300])
+        window_key = self.get_window_key_by_panel_index(self.current_panel_index)
+        splitter_sizes = self.settings.get(window_key, {}).get("splitter_sizes", [300, 600, 300])
         panel_widget, _ = self.create_left_panel_start(splitter_sizes)
         return panel_widget
     
     # Dieses left_panel_about wird angezeigt, wenn "Über" geöffnet wird.
     # Es wird vorerst das gleiche Panel wie left_panel_start verwendet.
     def create_left_panel_about(self):
-        splitter_sizes = self.panel_settings.get("splitter_sizes", [300, 600, 300])
+        window_key = self.get_window_key_by_panel_index(self.current_panel_index)
+        splitter_sizes = self.settings.get(window_key, {}).get("splitter_sizes", [300, 600, 300])
         panel_widget, _ = self.create_left_panel_start(splitter_sizes)
         return panel_widget
     
@@ -1477,7 +1459,7 @@ class StartWindow(QMainWindow):
     # Dieses center_panel_start wird beim Systemstart angezeigt und beinhaltet
     # grundlegende Informationen und Anpassungsmöglichkeiten für die Einstellungen: Sprache und Theme
     def create_center_panel_start(self):
-        first_start = self.general_settings.get("first_start", True)
+        first_start = self.settings.get("general", {}).get("first_start", True)
         panel_widget = QWidget()
         panel_layout = QVBoxLayout(panel_widget)
         panel_layout.setContentsMargins(20, 20, 20, 20)
@@ -1493,13 +1475,10 @@ class StartWindow(QMainWindow):
         self.header_label = header_label
 
         if first_start:
-            # Info-Text 1
+            # Info-Text
             info_text1 = self.get_translation(
                 "startWinInfoText1",
                 "Thank you for choosing <b>CSNova</b>! <br><br>"
-                "CSNova is an open-source project designed to help you organize and manage your creative writing projects. <br>"
-                "You can customize the program to fit your workflow. Additionally, CSNova has a clear philosophy: <br>"
-                "'You don't have to learn how the program works - the program should <b>understand</b> how you want to work.' <br><br>"
                 "Before you get started, you can make some basic settings: <br><br>"
                 "- Choose your preferred language. <br>"
                 "- Choose a theme for CSNova to use. <br><br>"
@@ -1527,7 +1506,7 @@ class StartWindow(QMainWindow):
             panel_layout.addWidget(language_combo)
             self.language_combo = language_combo
             language_codes = ["de", "en", "fr", "es"]
-            current_language = self.language  # z.B. "en"
+            current_language = self.language
             try:
                 lang_idx = language_codes.index(current_language)
             except ValueError:
@@ -1553,7 +1532,6 @@ class StartWindow(QMainWindow):
             panel_layout.addWidget(theme_combo)
             self.theme_combo = theme_combo
 
-            # Mapping-Liste für Theme-Namen
             theme_names = [
                 "Modern_neutral", "Modern_dark", "Modern_light",
                 "OldSchool_neutral", "OldSchool_dark", "OldSchool_light",
@@ -1561,8 +1539,6 @@ class StartWindow(QMainWindow):
                 "Future_neutral", "Future_dark", "Future_light",
                 "Minimal_neutral", "Minimal_dark", "Minimal_light"
             ]
-
-            # Setze den aktuellen Theme-Index in der ComboBox
             current_theme_name = self.theme.get("theme_name", theme_names[0])
             try:
                 idx = theme_names.index(current_theme_name)
@@ -1573,55 +1549,14 @@ class StartWindow(QMainWindow):
             self.theme_combo.blockSignals(False)
             self.theme_combo.currentIndexChanged.connect(self.on_theme_changed)
 
-            # Info-Text 2
-            info_text2 = self.get_translation(
-                "startWinInfoText2",
-                "You can also change these and other settings later in the settings. <br><br>"
-                "Once you've made your selections - and are satisfied - click <b>Save</b><br><br>"
-                "You can restore the default settings by clicking <b>Reset</b>. <br>"
-                "Or simply click <b>Next</b> to continue. <br><br>"
-            )
-            info_label2 = QLabel(info_text2, panel_widget)
-            info_label2.setWordWrap(True)
-            info_label2.setAlignment(Qt.AlignTop | Qt.AlignLeft)
-            info_label2.setTextFormat(Qt.RichText)
-            panel_layout.addWidget(info_label2)
-            self.info_label2 = info_label2
+            # Save-Button
+            btn_save = QPushButton(self.get_translation("btn_save", "Save"), panel_widget)
+            btn_save.setToolTip(self.get_translation("btn_save_hint", "Save your settings."))
+            panel_layout.addWidget(btn_save)
+            self.btn_save = btn_save
 
-            # Spacer, damit die Buttons weiter unten sind
-            panel_layout.addSpacerItem(QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding))
-
-            # Button-Bereich unten
-            button_layout = QHBoxLayout()
-            button_layout.setSpacing(16)
-
-            # Speichern-Button
-            btn_save_text = self.get_translation("btn_save", "Save")
-            btn_save_hint = self.get_translation("btn_save_hint", "Here you can save the current settings.")
-            self.btn_save = QPushButton(btn_save_text, panel_widget)
-            self.btn_save.setToolTip(btn_save_hint)
-            self.btn_save.clicked.connect(self.save_settings)
-            self.btn_save.setEnabled(False)
-            button_layout.addWidget(self.btn_save)
-
-            # Standardeinstellungen-Button
-            btn_reset_text = self.get_translation("btn_reset", "Reset")
-            btn_reset_hint = self.get_translation("btn_reset_hint", "Here you can reset the settings to the default settings.")
-            self.btn_reset = QPushButton(btn_reset_text, panel_widget)
-            self.btn_reset.setToolTip(btn_reset_hint)
-            self.btn_reset.clicked.connect(self.reset_settings)
-            self.btn_reset.setEnabled(False)
-            button_layout.addWidget(self.btn_reset)
-
-            # Weiter-Button
-            btn_continue_text = self.get_translation("btn_next", "Next")
-            btn_continue_hint = self.get_translation("btn_next_hint", "Here you can proceed to the next step.")
-            self.btn_continue = QPushButton(btn_continue_text, panel_widget)
-            self.btn_continue.setToolTip(btn_continue_hint)
-            self.btn_continue.clicked.connect(self.go_to_next_step)
-            button_layout.addWidget(self.btn_continue)
-
-            panel_layout.addLayout(button_layout)
+            # Button-Handler verbinden
+            btn_save.clicked.connect(self.save_settings)
 
             panel_widget.setObjectName("WelcomePanel")
             self.safe_apply_theme_style(panel_widget, "panel", {**self.theme, "background": self.theme.get("nav_bg", self.theme.get("background"))})
@@ -2145,14 +2080,14 @@ class StartWindow(QMainWindow):
         language_label_1.setToolTip(self.get_translation("comboBox_se_01_hint", "Select your language."))
         tab_general_layout.addWidget(language_label_1)
 
-        language_combo_1 = QComboBox(tab_general)
+        self.language_combo_1 = QComboBox(tab_general)
         language_items_1 = [
             self.get_translation(f"comboBox_se_01_item_{i}", f"Language {i+1}")
             for i in range(4)
         ]
-        language_combo_1.addItems(language_items_1)
-        language_combo_1.setToolTip(self.get_translation("comboBox_se_01_hint", "Select your language."))
-        tab_general_layout.addWidget(language_combo_1)
+        self.language_combo_1.addItems(language_items_1)
+        self.language_combo_1.setToolTip(self.get_translation("comboBox_se_01_hint", "Select your language."))
+        tab_general_layout.addWidget(self.language_combo_1)
 
         language_codes = ["de", "en", "fr", "es"]
         current_language = self.language
@@ -2160,10 +2095,10 @@ class StartWindow(QMainWindow):
             lang_idx = language_codes.index(current_language)
         except ValueError:
             lang_idx = 0
-        language_combo_1.blockSignals(True)
-        language_combo_1.setCurrentIndex(lang_idx)
-        language_combo_1.blockSignals(False)
-        language_combo_1.currentIndexChanged.connect(
+        self.language_combo_1.blockSignals(True)
+        self.language_combo_1.setCurrentIndex(lang_idx)
+        self.language_combo_1.blockSignals(False)
+        self.language_combo_1.currentIndexChanged.connect(
             lambda idx: self.on_settings_language_changed(idx)
         )
 
@@ -2171,14 +2106,14 @@ class StartWindow(QMainWindow):
         theme_label_1.setToolTip(self.get_translation("comboBox_se_02_hint", "Select the theme."))
         tab_general_layout.addWidget(theme_label_1)
 
-        theme_combo_1 = QComboBox(tab_general)
+        self.theme_combo_1 = QComboBox(tab_general)
         theme_items_1 = [
             self.get_translation(f"comboBox_se_02_item_{i}", f"Design {i+1}")
             for i in range(15)
         ]
-        theme_combo_1.addItems(theme_items_1)
-        theme_combo_1.setToolTip(self.get_translation("comboBox_se_02_hint", "Select the theme."))
-        tab_general_layout.addWidget(theme_combo_1)
+        self.theme_combo_1.addItems(theme_items_1)
+        self.theme_combo_1.setToolTip(self.get_translation("comboBox_se_02_hint", "Select the theme."))
+        tab_general_layout.addWidget(self.theme_combo_1)
 
         theme_names = [
             "Modern_neutral", "Modern_dark", "Modern_light",
@@ -2192,10 +2127,10 @@ class StartWindow(QMainWindow):
             idx = theme_names.index(current_theme_name)
         except ValueError:
             idx = 0
-        theme_combo_1.blockSignals(True)
-        theme_combo_1.setCurrentIndex(idx)
-        theme_combo_1.blockSignals(False)
-        theme_combo_1.currentIndexChanged.connect(
+        self.theme_combo_1.blockSignals(True)
+        self.theme_combo_1.setCurrentIndex(idx)
+        self.theme_combo_1.blockSignals(False)
+        self.theme_combo_1.currentIndexChanged.connect(
             lambda idx: self.on_settings_theme_changed(idx)
         )
 
@@ -2203,19 +2138,14 @@ class StartWindow(QMainWindow):
 
         # --- Tab 2: Bücher ---
         tab_books = QWidget()
-        tab_books_layout = QHBoxLayout(tab_books)
+        tab_books_layout = QHBoxLayout(tab_books)  # <--- Änderung!
         tab_books_layout.setAlignment(Qt.AlignTop)
 
+        region_keys = ["EU", "USA", "UK"]
         with open(FORM_FIELDS_FILE, "r", encoding="utf-8") as f:
             form_fields = json.load(f)
         fiction_fields = form_fields.get("fiction_template", [])
         nonfiction_fields = form_fields.get("nonfiction_template", [])
-
-        region_keys = ["EU", "USA", "UK"]
-        region_items = [
-            self.get_translation(f"books_combo_item_{i:02d}", f"Region {i}")
-            for i in range(1, 4)
-        ]
 
         # --- Fiktion-Container ---
         fiktion_group = QGroupBox(self.get_translation("settings_books_fiction", "Fiktion"), tab_books)
@@ -2223,10 +2153,13 @@ class StartWindow(QMainWindow):
         fiktion_layout.setAlignment(Qt.AlignTop)
 
         self.fiktion_region_combo = QComboBox(fiktion_group)
-        self.fiktion_region_combo.addItems(region_items)
+        self.fiktion_region_combo.addItems(region_keys)
         fiktion_layout.addWidget(self.fiktion_region_combo)
 
-        fiktion_region = region_keys[0]
+        region_fiction = self.settings.get("general", {}).get("last_fiction_region_used", "EU")
+        self.fiktion_region_combo.setCurrentIndex(region_keys.index(region_fiction) if region_fiction in region_keys else 0)
+
+        fiktion_region = region_fiction
         fiktion_template = self.settings.get(fiktion_region, {}).get("fiction_template", {})
         fiktion_form_widget, self.romane_format_widgets = self.create_book_format_form(
             fiktion_group, fiction_fields, fiktion_template, region=fiktion_region
@@ -2241,10 +2174,13 @@ class StartWindow(QMainWindow):
         nonfiktion_layout.setAlignment(Qt.AlignTop)
 
         self.nonfiktion_region_combo = QComboBox(nonfiktion_group)
-        self.nonfiktion_region_combo.addItems(region_items)
+        self.nonfiktion_region_combo.addItems(region_keys)
         nonfiktion_layout.addWidget(self.nonfiktion_region_combo)
 
-        nonfiktion_region = region_keys[0]
+        region_nonfiction = self.settings.get("general", {}).get("last_nonfiction_region_used", "EU")
+        self.nonfiktion_region_combo.setCurrentIndex(region_keys.index(region_nonfiction) if region_nonfiction in region_keys else 0)
+
+        nonfiktion_region = region_nonfiction
         nonfiktion_template = self.settings.get(nonfiktion_region, {}).get("nonfiction_template", {})
         nonfiktion_form_widget, self.sachbuch_format_widgets = self.create_book_format_form(
             nonfiktion_group, nonfiction_fields, nonfiktion_template, region=nonfiktion_region
@@ -2514,19 +2450,19 @@ class StartWindow(QMainWindow):
             if len(group_boxes) >= 2:
                 group_boxes[0].setTitle(self.get_translation("settings_books_fiction", "Fiction"))
                 group_boxes[1].setTitle(self.get_translation("settings_books_nonfiction", "Non-Fiction"))
-                region_items = [
+                region_keys = [
                     self.get_translation(f"books_combo_item_{i:02d}", f"Region {i}")
                     for i in range(1, 4)
                 ]
                 # Fiktion
                 fiktion_combo = group_boxes[0].findChild(QComboBox)
                 if fiktion_combo:
-                    for i, item in enumerate(region_items):
+                    for i, item in enumerate(region_keys):
                         fiktion_combo.setItemText(i, item)
                 # Non-Fiktion
                 nonfiktion_combo = group_boxes[1].findChild(QComboBox)
                 if nonfiktion_combo:
-                    for i, item in enumerate(region_items):
+                    for i, item in enumerate(region_keys):
                         nonfiktion_combo.setItemText(i, item)
                 # Formular für Fiktion neu aufbauen
                 fiktion_combo = group_boxes[0].findChild(QComboBox)
@@ -2592,7 +2528,6 @@ class StartWindow(QMainWindow):
         # Die Reihenfolge entspricht der Reihenfolge in create_right_panel_settings
         button_keys = [
             ("botn_se_01", "botn_se_01_hint"),
-            ("botn_se_02", "botn_se_02_hint"),
             ("botn_se_03", "botn_se_03_hint"),  # Back
         ]
         for i, (key, hint_key) in enumerate(button_keys):
@@ -2874,6 +2809,16 @@ class StartWindow(QMainWindow):
         form_layout.setSpacing(8)
         self.object_form_widgets = {}
 
+        if object_data is None:
+            objects = self.load_objects()
+            if objects:
+                first_id = sorted(objects.keys())[0]
+                object_data = objects[first_id]
+                self.current_object_id = first_id
+            else:
+                object_data = {k: "" for k in self.object_form_widgets}
+                self.current_object_id = None
+
         # Felder laden
         with open(FORM_FIELDS_FILE, "r", encoding="utf-8") as f:
             form_fields = json.load(f)
@@ -2951,6 +2896,16 @@ class StartWindow(QMainWindow):
         form_layout.setSpacing(8)
         self.location_form_widgets = {}
 
+        if location_data is None:
+            locations = self.load_locations()
+            if locations:
+                first_id = sorted(locations.keys())[0]
+                location_data = locations[first_id]
+                self.current_location_id = first_id
+            else:
+                location_data = {k: "" for k in self.location_form_widgets}
+                self.current_location_id = None    
+
         # Felder laden
         with open(FORM_FIELDS_FILE, "r", encoding="utf-8") as f:
             form_fields = json.load(f)
@@ -3027,6 +2982,16 @@ class StartWindow(QMainWindow):
         form_layout = QFormLayout()
         form_layout.setSpacing(8)
         self.storyline_form_widgets = {}
+
+        if storyline_data is None:
+            storylines = self.load_storylines()
+            if storylines:
+                first_id = sorted(storylines.keys())[0]
+                storyline_data = storylines[first_id]
+                self.current_storyline_id = first_id
+            else:
+                storyline_data = {k: "" for k in self.storyline_form_widgets}
+                self.current_storyline_id = None
 
         # Felder laden
         with open(FORM_FIELDS_FILE, "r", encoding="utf-8") as f:
@@ -3107,10 +3072,12 @@ class StartWindow(QMainWindow):
     # Dieses right_panel_start wird beim Systemstart angezeigt und beinhaltet
     # die Navigation zum Aufruf von: Editor, Projekt, Einstellungen, Hilfe, Über
     def show_start_panels(self):
+        self.current_panel_index = 0
         splitter = self.centralWidget()
         if isinstance(splitter, QSplitter):
             # Left Panel zurücksetzen
-            splitter_sizes = self.panel_settings.get("splitter_sizes", [300, 600, 300])
+            window_key = self.get_window_key_by_panel_index(self.current_panel_index)
+            splitter_sizes = self.settings.get(window_key, {}).get("splitter_sizes", [300, 600, 300])
             new_left_panel, update_left_panel_image = self.create_left_panel_start(splitter_sizes)
             old_left_panel = splitter.widget(0)
             splitter.insertWidget(0, new_left_panel)
@@ -3162,6 +3129,7 @@ class StartWindow(QMainWindow):
 
         # Mapping: Button-Index zu left_panel-Funktion
         self.left_panel_functions = [
+            self.create_left_panel_start,
             self.create_left_panel_project,
             self.create_left_panel_character,
             self.create_left_panel_object,
@@ -3174,6 +3142,7 @@ class StartWindow(QMainWindow):
         ]
         # Mapping: Button-Index zu center_panel-Funktion
         self.center_panel_functions = [
+            self.create_center_panel_start,
             self.create_center_panel_project,
             self.create_center_panel_character,
             self.create_center_panel_object,
@@ -3186,6 +3155,7 @@ class StartWindow(QMainWindow):
         ]
 
         self.right_panel_functions = [
+            self.create_right_panel_start,
             self.create_right_panel_project,
             self.create_right_panel_character,
             self.create_right_panel_object,
@@ -3219,7 +3189,7 @@ class StartWindow(QMainWindow):
             setattr(self, f"botn_st_{i:02d}", btn)
             # Button-Handler verbinden
             btn.clicked.connect(
-                lambda checked, idx=i-1: (
+                lambda checked, idx=i: (
                 self.show_left_panel(idx, self.left_panel_functions),
                 self.show_center_panel(idx, self.center_panel_functions),
                 self.show_right_panel(idx, self.right_panel_functions)
@@ -3491,14 +3461,6 @@ class StartWindow(QMainWindow):
         panel_layout.addWidget(btn_save)
         self.botn_se_01 = btn_save
 
-        # --- Reset-Button ---
-        btn_reset_text = self.get_translation("botn_se_02", "Reset")
-        btn_reset_hint = self.get_translation("botn_se_02_hint", "Reset settings to default.")
-        btn_reset = QPushButton(btn_reset_text, panel_widget)
-        btn_reset.setToolTip(btn_reset_hint)
-        panel_layout.addWidget(btn_reset)
-        self.botn_se_02 = btn_reset
-
         # Spacer, damit der Zurück-Button unten steht
         panel_layout.addSpacerItem(QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding))
 
@@ -3513,35 +3475,8 @@ class StartWindow(QMainWindow):
         # Handler für Zurück-Button: Panels zurücksetzen
         btn_back.clicked.connect(lambda: self.show_start_panels())
 
-        # --- Save-Handler: Speichere die aktuellen Format-Keys aus Tab 2 ---
-        def save_settings_and_formats():
-            # --- Fiktion ---
-            region_fiction = None
-            if hasattr(self, "fiktion_region_combo"):
-                region_idx = self.fiktion_region_combo.currentIndex()
-                region_keys = ["EU", "USA", "UK"]
-                region_fiction = region_keys[region_idx]
-
-
-            # --- NonFiktion ---
-            region_nonfiction = None
-            if hasattr(self, "nonfiktion_region_combo"):
-                region_idx = self.nonfiktion_region_combo.currentIndex()
-                region_keys = ["EU", "USA", "UK"]
-                region_nonfiction = region_keys[region_idx]
-
-
-            # --- In user_settings.json speichern ---
-            self.settings.setdefault("general", {})
-            self.settings["general"]["last_fiction_region_used"] = region_fiction
-            self.settings["general"]["last_nonfiction_region_used"] = region_nonfiction
-
-            with open(USER_SETTINGS_FILE, "w", encoding="utf-8") as f:
-                json.dump(self.settings, f, indent=2, ensure_ascii=False)
-
-
-        btn_save.clicked.connect(save_settings_and_formats)
-        btn_reset.clicked.connect(self.reset_settings)
+        # Handler für Save-Button: Einstellungen speichern
+        btn_save.clicked.connect(self.save_settings_and_formats)
 
         panel_widget.setObjectName("SettingsRightPanel")
         self.safe_apply_theme_style(panel_widget, "panel", self.theme)
@@ -3980,6 +3915,53 @@ class StartWindow(QMainWindow):
             chapter_list.addItem(f"{chapter_id}: {chapter_title}")
         return chapter_list
     
+    # Speichert die Einstellungen aus dem Settings-Panel in user_settings.json.
+    def save_settings_and_formats(self):
+        # --- Sprache ---
+        language_codes = ["de", "en", "fr", "es"]
+        if not hasattr(self, "language_combo_1"):
+            log_error("language_combo_1 existiert nicht! Einstellungen können nicht gespeichert werden.")
+            return
+        lang_index = self.language_combo_1.currentIndex()
+        language = language_codes[lang_index]
+
+        # --- Theme ---
+        theme_names = [
+            "Modern_neutral", "Modern_dark", "Modern_light",
+            "OldSchool_neutral", "OldSchool_dark", "OldSchool_light",
+            "Vintage_neutral", "Vintage_dark", "Vintage_light",
+            "Future_neutral", "Future_dark", "Future_light",
+            "Minimal_neutral", "Minimal_dark", "Minimal_light"
+        ]
+        if not hasattr(self, "theme_combo_1"):
+            log_error("theme_combo_1 existiert nicht! Einstellungen können nicht gespeichert werden.")
+            return
+        theme_index = self.theme_combo_1.currentIndex()
+        theme_name = theme_names[theme_index]
+
+        # --- Regionen ---
+        region_keys = ["EU", "USA", "UK"]
+        if not hasattr(self, "fiktion_region_combo") or not hasattr(self, "nonfiktion_region_combo"):
+            log_error("Region-ComboBoxen existieren nicht! Einstellungen können nicht gespeichert werden.")
+            return
+        region_fiction = region_keys[self.fiktion_region_combo.currentIndex()]
+        region_nonfiction = region_keys[self.nonfiktion_region_combo.currentIndex()]
+
+        # --- In user_settings.json speichern ---
+        self.settings.setdefault("general", {})
+        self.settings["general"]["language"] = language
+        self.settings.setdefault("gui", {})
+        self.settings["gui"]["style_theme"] = theme_name
+
+        self.settings.setdefault("general", {})
+        self.settings["general"]["last_fiction_region_used"] = region_fiction
+        self.settings["general"]["last_nonfiction_region_used"] = region_nonfiction
+
+        # self.settings["general"]["first_start"] = False
+        
+        with open(USER_SETTINGS_FILE, "w", encoding="utf-8") as f:
+            json.dump(self.settings, f, indent=2, ensure_ascii=False)
+                    
     # ..............................................................
     # Editor Left_Panel Tab Funktionen
     # ..............................................................
@@ -5123,23 +5105,21 @@ class StartWindow(QMainWindow):
     @log_call
     def init_ui(self):
         self.setWindowTitle(self.get_translation("WinStartTitle", "CSNova"))
-        window_width = self.window_settings.get("width", 1200)
-        window_height = self.window_settings.get("height", 800)
-        is_maximized = self.window_settings.get("is_maximized", False)
+        window_key = self.get_window_key_by_panel_index(getattr(self, "current_panel_index", 0))
+        window_settings = self.settings.get(window_key, {})
+        window_width = window_settings.get("width", 1200)
+        window_height = window_settings.get("height", 800)
+        is_maximized = window_settings.get("is_maximized", False)
 
         if is_maximized:
             self.showMaximized()
-            log_info("Fenster wird maximiert geöffnet.")
         else:
             self.resize(window_width, window_height)
-            self.setMinimumSize(800, 600)
-            log_info(f"Fenstergröße aus Settings: {[window_width, window_height]}")
 
-        splitter_sizes = self.panel_settings.get("splitter_sizes", [300, 600, 300])
-        log_info(f"Splitter-Größen aus Settings: {splitter_sizes}")
+        splitter_sizes = window_settings.get("splitter_sizes", [300, 600, 300])
 
-        # Erzeuge die Panels
-        left_panel, update_left_panel_image = self.create_left_panel_start(splitter_sizes)
+        # Panels erzeugen
+        left_panel, _ = self.create_left_panel_start(splitter_sizes)
         center_panel = self.create_center_panel_start()
         right_panel = self.create_right_panel_start()
 
@@ -5152,18 +5132,18 @@ class StartWindow(QMainWindow):
         splitter.addWidget(center_panel)
         splitter.addWidget(right_panel)
 
+        splitter.setSizes(splitter_sizes)  # Splitter-Größen direkt setzen!
+
         def on_splitter_moved(pos, index):
-            update_left_panel_image(pos, index)
-            log_info("Splitter bewegt, speichere neue Größen.")
-            self.save_settings()
+            sizes = splitter.sizes()
+            self.settings.setdefault(window_key, {})
+            self.settings[window_key]["splitter_sizes"] = sizes
+            with open(USER_SETTINGS_FILE, "w", encoding="utf-8") as f:
+                json.dump(self.settings, f, indent=2, ensure_ascii=False)
+
         splitter.splitterMoved.connect(on_splitter_moved)
 
-        self.setCentralWidget(splitter)
-        splitter.setSizes(splitter_sizes)
-
-        self.safe_apply_theme_style(left_panel, "panel", self.theme)
-        self.safe_apply_theme_style(center_panel, "panel", self.theme)
-        self.safe_apply_theme_style(right_panel, "panel", self.theme)
+        self.setCentralWidget(splitter)  # Splitter als zentrales Widget setzen!
 
         log_info("UI erfolgreich initialisiert.")
 
@@ -5186,8 +5166,14 @@ class StartWindow(QMainWindow):
         # 1. Lade Einstellungen
         self.gui_settings = settings.get("gui", {})
         self.general_settings = settings.get("general", {})
-        self.window_settings = settings.get("start_window", {})
-        self.panel_settings = settings.get("panels", {})
+        self.start_window_settings = settings.get("start_window", {})
+        self.project_window_settings = settings.get("project_window", {})
+        self.object_window_settings = settings.get("object_window", {})
+        self.character_window_settings = settings.get("character_window", {})
+        self.location_window_settings = settings.get("location_window", {})
+        self.storyline_window_settings = settings.get("storyline_window", {})
+        self.help_window_settings = settings.get("help_window", {})
+        self.about_window_settings = settings.get("about_window", {})
         self.language = self.general_settings.get("language", "de")
 
         # 2. Lade Theme und Base-Style
@@ -5195,6 +5181,7 @@ class StartWindow(QMainWindow):
         if self.theme:
             # Theme-Name ergänzen (Dateiname ohne Pfad und Endung)
             theme_name = Path(self.theme_file).stem
+            theme_name = self.settings.get("gui", {}).get("style_theme", theme_name[0])
             self.theme["theme_name"] = theme_name
             log_info(f"Theme file geladen: {self.theme_file}")
             log_list("Theme keys", self.theme.keys())

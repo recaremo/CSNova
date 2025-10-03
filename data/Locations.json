@@ -10,5 +10,9 @@
   "location_ID_04": {
     "lo_title": "Ort 03",
     "lo_description": ""
+  },
+  "location_ID_01": {
+    "lo_title": "",
+    "lo_description": ""
   }
 }
