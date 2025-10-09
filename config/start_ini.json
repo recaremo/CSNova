@@ -1,0 +1,106 @@
+{
+  "first_start": false,
+  "last_project": "",
+  "language": "de",
+  "theme": "Modern_neutral",
+  "help_ui": {
+    "win_maximized": false,
+    "win_width": 1920,
+    "win_height": 1080,
+    "win_splitter": [
+      576,
+      833,
+      439
+    ]
+  },
+  "start_ui": {
+    "win_maximized": false,
+    "win_width": 1920,
+    "win_height": 1080,
+    "win_splitter": [
+      571,
+      868,
+      387
+    ]
+  },
+  "main_ui": {
+    "win_maximized": false,
+    "win_width": 1920,
+    "win_height": 1080,
+    "win_splitter": [
+      588,
+      866,
+      372
+    ]
+  },
+  "editor_ui": {
+    "win_maximized": false,
+    "win_width": 1920,
+    "win_height": 1080,
+    "win_splitter": [
+      535,
+      899,
+      478
+    ]
+  },
+  "preferences_ui": {
+    "win_maximized": false,
+    "win_width": 1920,
+    "win_height": 1080,
+    "win_splitter": [
+      521,
+      929,
+      398
+    ]
+  },
+  "projects_ui": {
+    "win_maximized": false,
+    "win_width": 1920,
+    "win_height": 1080,
+    "win_splitter": [
+      600,
+      766,
+      482
+    ]
+  },
+  "objects_ui": {
+    "win_maximized": false,
+    "win_width": 1920,
+    "win_height": 1080,
+    "win_splitter": [
+      553,
+      779,
+      516
+    ]
+  },
+  "locations_ui": {
+    "win_maximized": false,
+    "win_width": 1920,
+    "win_height": 1080,
+    "win_splitter": [
+      580,
+      747,
+      521
+    ]
+  },
+  "storylines_ui": {
+    "win_maximized": false,
+    "win_width": 1920,
+    "win_height": 1080,
+    "win_splitter": [
+      520,
+      804,
+      524
+    ]
+  },
+  "characters_ui": {
+    "win_maximized": false,
+    "win_width": 1920,
+    "win_height": 1080,
+    "win_splitter": [
+      469,
+      929,
+      450
+    ]
+  }
+}

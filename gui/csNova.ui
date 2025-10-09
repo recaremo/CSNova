@@ -1,0 +1,1815 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>csNova</class>
+ <widget class="QWidget" name="csNova">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1920</width>
+    <height>1080</height>
+   </rect>
+  </property>
+  <property name="font">
+   <font>
+    <family>Lato</family>
+    <pointsize>16</pointsize>
+    <bold>false</bold>
+    <stylestrategy>PreferAntialias</stylestrategy>
+    <kerning>true</kerning>
+   </font>
+  </property>
+  <property name="windowTitle">
+   <string>Codices Scriptoria Nova (csNova)</string>
+  </property>
+  <layout class="QHBoxLayout" name="horizontalLayout">
+   <item>
+    <widget class="QSplitter" name="mainSplitter">
+     <property name="font">
+      <font>
+       <family>Lato</family>
+       <pointsize>12</pointsize>
+       <bold>true</bold>
+       <stylestrategy>PreferAntialias</stylestrategy>
+       <kerning>true</kerning>
+      </font>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::Shape::NoFrame</enum>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Orientation::Horizontal</enum>
+     </property>
+     <property name="handleWidth">
+      <number>36</number>
+     </property>
+     <widget class="QWidget" name="widgetLeft" native="true">
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
+        <widget class="QFrame" name="frame_2">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::Shape::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Shadow::Raised</enum>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_3">
+          <item>
+           <spacer name="horizontalSpacer_5">
+            <property name="orientation">
+             <enum>Qt::Orientation::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>400</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string>(c)2025 - csNova</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="widgetCenter" native="true">
+      <layout class="QVBoxLayout" name="verticalLayout_4">
+       <item>
+        <widget class="QLabel" name="welcomeTxt">
+         <property name="font">
+          <font>
+           <family>Lato</family>
+           <pointsize>20</pointsize>
+           <bold>true</bold>
+           <stylestrategy>PreferAntialias</stylestrategy>
+           <kerning>true</kerning>
+          </font>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::Shape::StyledPanel</enum>
+         </property>
+         <property name="text">
+          <string>CSNova</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignmentFlag::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QFrame" name="frame">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::Shape::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Shadow::Raised</enum>
+         </property>
+         <layout class="QFormLayout" name="formLayout">
+          <item row="0" column="0" colspan="2">
+           <widget class="QLabel" name="labelStatistic">
+            <property name="font">
+             <font>
+              <family>Lato</family>
+              <pointsize>14</pointsize>
+              <bold>true</bold>
+              <stylestrategy>PreferAntialias</stylestrategy>
+              <kerning>true</kerning>
+             </font>
+            </property>
+            <property name="text">
+             <string>Statistik csNova</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignmentFlag::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="labelProjects">
+            <property name="text">
+             <string>Projekte</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLabel" name="labelCountProjects">
+            <property name="font">
+             <font>
+              <family>Lato</family>
+              <pointsize>12</pointsize>
+              <bold>false</bold>
+              <stylestrategy>PreferAntialias</stylestrategy>
+              <kerning>true</kerning>
+             </font>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::Shape::StyledPanel</enum>
+            </property>
+            <property name="text">
+             <string>0</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignmentFlag::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="labelCharacters">
+            <property name="text">
+             <string>Charaktere</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QLabel" name="labelCountCharacters">
+            <property name="font">
+             <font>
+              <family>Lato</family>
+              <pointsize>12</pointsize>
+              <bold>false</bold>
+              <stylestrategy>PreferAntialias</stylestrategy>
+              <kerning>true</kerning>
+             </font>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::Shape::StyledPanel</enum>
+            </property>
+            <property name="text">
+             <string>0</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignmentFlag::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="labelObjects">
+            <property name="text">
+             <string>Objekte</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="QLabel" name="labelCountObjects">
+            <property name="font">
+             <font>
+              <family>Lato</family>
+              <pointsize>12</pointsize>
+              <bold>false</bold>
+              <stylestrategy>PreferAntialias</stylestrategy>
+              <kerning>true</kerning>
+             </font>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::Shape::StyledPanel</enum>
+            </property>
+            <property name="text">
+             <string>0</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignmentFlag::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0">
+           <widget class="QLabel" name="labelLocations">
+            <property name="text">
+             <string>Handlungsorte</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="1">
+           <widget class="QLabel" name="labelCountLocations">
+            <property name="font">
+             <font>
+              <family>Lato</family>
+              <pointsize>12</pointsize>
+              <bold>false</bold>
+              <stylestrategy>PreferAntialias</stylestrategy>
+              <kerning>true</kerning>
+             </font>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::Shape::StyledPanel</enum>
+            </property>
+            <property name="text">
+             <string>0</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignmentFlag::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="0">
+           <widget class="QLabel" name="labelStorylines">
+            <property name="text">
+             <string>Handlungsstränge</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="1">
+           <widget class="QLabel" name="labelCountStorylines">
+            <property name="font">
+             <font>
+              <family>Lato</family>
+              <pointsize>12</pointsize>
+              <bold>false</bold>
+              <stylestrategy>PreferAntialias</stylestrategy>
+              <kerning>true</kerning>
+             </font>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::Shape::StyledPanel</enum>
+            </property>
+            <property name="text">
+             <string>0</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignmentFlag::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_4">
+         <property name="orientation">
+          <enum>Qt::Orientation::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="Line" name="line">
+         <property name="lineWidth">
+          <number>3</number>
+         </property>
+         <property name="midLineWidth">
+          <number>1</number>
+         </property>
+         <property name="orientation">
+          <enum>Qt::Orientation::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_3">
+         <property name="orientation">
+          <enum>Qt::Orientation::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QFrame" name="frame_3">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>1</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::Shape::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Shadow::Raised</enum>
+         </property>
+         <layout class="QGridLayout" name="gridLayout">
+          <item row="5" column="4">
+           <widget class="QLabel" name="labelCountStorylines_4">
+            <property name="font">
+             <font>
+              <family>Lato</family>
+              <pointsize>12</pointsize>
+              <bold>false</bold>
+              <stylestrategy>PreferAntialias</stylestrategy>
+              <kerning>true</kerning>
+             </font>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::Shape::StyledPanel</enum>
+            </property>
+            <property name="text">
+             <string>0</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignmentFlag::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="5">
+           <widget class="QLabel" name="labelCountScenes_5">
+            <property name="font">
+             <font>
+              <family>Lato</family>
+              <pointsize>12</pointsize>
+              <bold>false</bold>
+              <stylestrategy>PreferAntialias</stylestrategy>
+              <kerning>true</kerning>
+             </font>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::Shape::StyledPanel</enum>
+            </property>
+            <property name="text">
+             <string>0</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignmentFlag::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="0">
+           <widget class="QLabel" name="labelChaptersProject">
+            <property name="text">
+             <string>Kapitel</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="3">
+           <widget class="QLabel" name="labelCountStorylines_3">
+            <property name="font">
+             <font>
+              <family>Lato</family>
+              <pointsize>12</pointsize>
+              <bold>false</bold>
+              <stylestrategy>PreferAntialias</stylestrategy>
+              <kerning>true</kerning>
+             </font>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::Shape::StyledPanel</enum>
+            </property>
+            <property name="text">
+             <string>0</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignmentFlag::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="2">
+           <widget class="QLabel" name="labelCountChapters_2">
+            <property name="font">
+             <font>
+              <family>Lato</family>
+              <pointsize>12</pointsize>
+              <bold>false</bold>
+              <stylestrategy>PreferAntialias</stylestrategy>
+              <kerning>true</kerning>
+             </font>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::Shape::StyledPanel</enum>
+            </property>
+            <property name="text">
+             <string>0</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignmentFlag::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="5">
+           <widget class="QLabel" name="labelCountObjects_5">
+            <property name="font">
+             <font>
+              <family>Lato</family>
+              <pointsize>12</pointsize>
+              <bold>false</bold>
+              <stylestrategy>PreferAntialias</stylestrategy>
+              <kerning>true</kerning>
+             </font>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::Shape::StyledPanel</enum>
+            </property>
+            <property name="text">
+             <string>0</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignmentFlag::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="labelObjectProject">
+            <property name="text">
+             <string>Objekte</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="3">
+           <widget class="QLabel" name="labelCountLocation_3">
+            <property name="font">
+             <font>
+              <family>Lato</family>
+              <pointsize>12</pointsize>
+              <bold>false</bold>
+              <stylestrategy>PreferAntialias</stylestrategy>
+              <kerning>true</kerning>
+             </font>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::Shape::StyledPanel</enum>
+            </property>
+            <property name="text">
+             <string>0</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignmentFlag::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="6">
+           <widget class="QLabel" name="labelCountObjects_6">
+            <property name="font">
+             <font>
+              <family>Lato</family>
+              <pointsize>12</pointsize>
+              <bold>false</bold>
+              <stylestrategy>PreferAntialias</stylestrategy>
+              <kerning>true</kerning>
+             </font>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::Shape::StyledPanel</enum>
+            </property>
+            <property name="text">
+             <string>0</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignmentFlag::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="6">
+           <widget class="QLabel" name="labelCountChapters_6">
+            <property name="font">
+             <font>
+              <family>Lato</family>
+              <pointsize>12</pointsize>
+              <bold>false</bold>
+              <stylestrategy>PreferAntialias</stylestrategy>
+              <kerning>true</kerning>
+             </font>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::Shape::StyledPanel</enum>
+            </property>
+            <property name="text">
+             <string>0</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignmentFlag::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0" colspan="7">
+           <widget class="QLabel" name="labelActuellProject">
+            <property name="font">
+             <font>
+              <family>Lato</family>
+              <pointsize>14</pointsize>
+              <bold>false</bold>
+              <stylestrategy>PreferAntialias</stylestrategy>
+              <kerning>true</kerning>
+             </font>
+            </property>
+            <property name="text">
+             <string>Projekt</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignmentFlag::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="labelCharacterProject">
+            <property name="text">
+             <string>Charaktere</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="5">
+           <widget class="QLabel" name="labelCountLocation_5">
+            <property name="font">
+             <font>
+              <family>Lato</family>
+              <pointsize>12</pointsize>
+              <bold>false</bold>
+              <stylestrategy>PreferAntialias</stylestrategy>
+              <kerning>true</kerning>
+             </font>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::Shape::StyledPanel</enum>
+            </property>
+            <property name="text">
+             <string>0</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignmentFlag::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="10" column="0" colspan="4">
+           <widget class="QFrame" name="frame_4">
+            <property name="frameShape">
+             <enum>QFrame::Shape::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Shadow::Raised</enum>
+            </property>
+            <layout class="QFormLayout" name="formLayout_2">
+             <item row="0" column="0">
+              <widget class="QLabel" name="labelProjectStart">
+               <property name="text">
+                <string>Projektbeginn:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <widget class="QLabel" name="labelCountScenes_7">
+               <property name="font">
+                <font>
+                 <family>Lato</family>
+                 <pointsize>12</pointsize>
+                 <bold>false</bold>
+                 <stylestrategy>PreferAntialias</stylestrategy>
+                 <kerning>true</kerning>
+                </font>
+               </property>
+               <property name="frameShape">
+                <enum>QFrame::Shape::StyledPanel</enum>
+               </property>
+               <property name="text">
+                <string>01.01.2025</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignmentFlag::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0">
+              <widget class="QLabel" name="labelProjectEnd">
+               <property name="text">
+                <string>Projektende:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <widget class="QLabel" name="labelCountScenes_8">
+               <property name="font">
+                <font>
+                 <family>Lato</family>
+                 <pointsize>12</pointsize>
+                 <bold>false</bold>
+                 <stylestrategy>PreferAntialias</stylestrategy>
+                 <kerning>true</kerning>
+                </font>
+               </property>
+               <property name="frameShape">
+                <enum>QFrame::Shape::StyledPanel</enum>
+               </property>
+               <property name="text">
+                <string>01.01.2025</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignmentFlag::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="0">
+              <widget class="QLabel" name="labelProjectDuration">
+               <property name="text">
+                <string>Projektdauer/Tage:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="1">
+              <widget class="QLabel" name="labelCountScenes_9">
+               <property name="font">
+                <font>
+                 <family>Lato</family>
+                 <pointsize>12</pointsize>
+                 <bold>false</bold>
+                 <stylestrategy>PreferAntialias</stylestrategy>
+                 <kerning>true</kerning>
+                </font>
+               </property>
+               <property name="frameShape">
+                <enum>QFrame::Shape::StyledPanel</enum>
+               </property>
+               <property name="text">
+                <string>0</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignmentFlag::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="0">
+              <widget class="QLabel" name="labelProjectRestDays">
+               <property name="text">
+                <string>Projektdauer/Rest:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="1">
+              <widget class="QLabel" name="labelCountScenes_10">
+               <property name="font">
+                <font>
+                 <family>Lato</family>
+                 <pointsize>12</pointsize>
+                 <bold>false</bold>
+                 <stylestrategy>PreferAntialias</stylestrategy>
+                 <kerning>true</kerning>
+                </font>
+               </property>
+               <property name="frameShape">
+                <enum>QFrame::Shape::StyledPanel</enum>
+               </property>
+               <property name="text">
+                <string>0</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignmentFlag::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="0">
+              <widget class="QLabel" name="labelProjectWordsPlanned">
+               <property name="text">
+                <string>Worte, geplant:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="1">
+              <widget class="QLabel" name="labelCountScenes_11">
+               <property name="font">
+                <font>
+                 <family>Lato</family>
+                 <pointsize>12</pointsize>
+                 <bold>false</bold>
+                 <stylestrategy>PreferAntialias</stylestrategy>
+                 <kerning>true</kerning>
+                </font>
+               </property>
+               <property name="frameShape">
+                <enum>QFrame::Shape::StyledPanel</enum>
+               </property>
+               <property name="text">
+                <string>0</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignmentFlag::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="5" column="0">
+              <widget class="QLabel" name="labelProjectWordsWritten">
+               <property name="text">
+                <string>Worte, geschrieben:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="5" column="1">
+              <widget class="QLabel" name="labelCountScenes_12">
+               <property name="font">
+                <font>
+                 <family>Lato</family>
+                 <pointsize>12</pointsize>
+                 <bold>false</bold>
+                 <stylestrategy>PreferAntialias</stylestrategy>
+                 <kerning>true</kerning>
+                </font>
+               </property>
+               <property name="frameShape">
+                <enum>QFrame::Shape::StyledPanel</enum>
+               </property>
+               <property name="text">
+                <string>0</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignmentFlag::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="6" column="0">
+              <widget class="QLabel" name="labelProjectWordsRest">
+               <property name="text">
+                <string>Worte, verbleibend:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="6" column="1">
+              <widget class="QLabel" name="labelCountScenes_13">
+               <property name="font">
+                <font>
+                 <family>Lato</family>
+                 <pointsize>12</pointsize>
+                 <bold>false</bold>
+                 <stylestrategy>PreferAntialias</stylestrategy>
+                 <kerning>true</kerning>
+                </font>
+               </property>
+               <property name="frameShape">
+                <enum>QFrame::Shape::StyledPanel</enum>
+               </property>
+               <property name="text">
+                <string>0</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignmentFlag::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item row="2" column="5">
+           <widget class="QLabel" name="labelCountCharacters_5">
+            <property name="font">
+             <font>
+              <family>Lato</family>
+              <pointsize>12</pointsize>
+              <bold>false</bold>
+              <stylestrategy>PreferAntialias</stylestrategy>
+              <kerning>true</kerning>
+             </font>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::Shape::StyledPanel</enum>
+            </property>
+            <property name="text">
+             <string>0</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignmentFlag::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="3">
+           <widget class="QLabel" name="labelCountScenes_3">
+            <property name="font">
+             <font>
+              <family>Lato</family>
+              <pointsize>12</pointsize>
+              <bold>false</bold>
+              <stylestrategy>PreferAntialias</stylestrategy>
+              <kerning>true</kerning>
+             </font>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::Shape::StyledPanel</enum>
+            </property>
+            <property name="text">
+             <string>0</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignmentFlag::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="3">
+           <widget class="QLabel" name="labelCountObjects_3">
+            <property name="font">
+             <font>
+              <family>Lato</family>
+              <pointsize>12</pointsize>
+              <bold>false</bold>
+              <stylestrategy>PreferAntialias</stylestrategy>
+              <kerning>true</kerning>
+             </font>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::Shape::StyledPanel</enum>
+            </property>
+            <property name="text">
+             <string>0</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignmentFlag::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="4">
+           <widget class="QLabel" name="labelCountCharacters_4">
+            <property name="font">
+             <font>
+              <family>Lato</family>
+              <pointsize>12</pointsize>
+              <bold>false</bold>
+              <stylestrategy>PreferAntialias</stylestrategy>
+              <kerning>true</kerning>
+             </font>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::Shape::StyledPanel</enum>
+            </property>
+            <property name="text">
+             <string>0</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignmentFlag::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0">
+           <widget class="QLabel" name="labelLocationsProject">
+            <property name="text">
+             <string>Handlungsorte</string>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="3">
+           <widget class="QLabel" name="labelCountChapters_3">
+            <property name="font">
+             <font>
+              <family>Lato</family>
+              <pointsize>12</pointsize>
+              <bold>false</bold>
+              <stylestrategy>PreferAntialias</stylestrategy>
+              <kerning>true</kerning>
+             </font>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::Shape::StyledPanel</enum>
+            </property>
+            <property name="text">
+             <string>0</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignmentFlag::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="1">
+           <widget class="QLabel" name="labelCountChapters_1">
+            <property name="font">
+             <font>
+              <family>Lato</family>
+              <pointsize>12</pointsize>
+              <bold>false</bold>
+              <stylestrategy>PreferAntialias</stylestrategy>
+              <kerning>true</kerning>
+             </font>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::Shape::StyledPanel</enum>
+            </property>
+            <property name="text">
+             <string>0</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignmentFlag::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="4">
+           <widget class="QLabel" name="labelCountChapters_4">
+            <property name="font">
+             <font>
+              <family>Lato</family>
+              <pointsize>12</pointsize>
+              <bold>false</bold>
+              <stylestrategy>PreferAntialias</stylestrategy>
+              <kerning>true</kerning>
+             </font>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::Shape::StyledPanel</enum>
+            </property>
+            <property name="text">
+             <string>0</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignmentFlag::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="6">
+           <widget class="QLabel" name="labelCountScenes_6">
+            <property name="font">
+             <font>
+              <family>Lato</family>
+              <pointsize>12</pointsize>
+              <bold>false</bold>
+              <stylestrategy>PreferAntialias</stylestrategy>
+              <kerning>true</kerning>
+             </font>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::Shape::StyledPanel</enum>
+            </property>
+            <property name="text">
+             <string>0</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignmentFlag::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="2">
+           <widget class="QLabel" name="labelCountObjects_2">
+            <property name="font">
+             <font>
+              <family>Lato</family>
+              <pointsize>12</pointsize>
+              <bold>false</bold>
+              <stylestrategy>PreferAntialias</stylestrategy>
+              <kerning>true</kerning>
+             </font>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::Shape::StyledPanel</enum>
+            </property>
+            <property name="text">
+             <string>0</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignmentFlag::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="4">
+           <widget class="QLabel" name="labelCountLocation_4">
+            <property name="font">
+             <font>
+              <family>Lato</family>
+              <pointsize>12</pointsize>
+              <bold>false</bold>
+              <stylestrategy>PreferAntialias</stylestrategy>
+              <kerning>true</kerning>
+             </font>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::Shape::StyledPanel</enum>
+            </property>
+            <property name="text">
+             <string>0</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignmentFlag::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="2">
+           <widget class="QLabel" name="labelCountStorylines_2">
+            <property name="font">
+             <font>
+              <family>Lato</family>
+              <pointsize>12</pointsize>
+              <bold>false</bold>
+              <stylestrategy>PreferAntialias</stylestrategy>
+              <kerning>true</kerning>
+             </font>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::Shape::StyledPanel</enum>
+            </property>
+            <property name="text">
+             <string>0</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignmentFlag::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="2">
+           <widget class="QLabel" name="labelCountScenes_2">
+            <property name="font">
+             <font>
+              <family>Lato</family>
+              <pointsize>12</pointsize>
+              <bold>false</bold>
+              <stylestrategy>PreferAntialias</stylestrategy>
+              <kerning>true</kerning>
+             </font>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::Shape::StyledPanel</enum>
+            </property>
+            <property name="text">
+             <string>0</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignmentFlag::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="1">
+           <widget class="QLabel" name="labelCountLocation_1">
+            <property name="font">
+             <font>
+              <family>Lato</family>
+              <pointsize>12</pointsize>
+              <bold>false</bold>
+              <stylestrategy>PreferAntialias</stylestrategy>
+              <kerning>true</kerning>
+             </font>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::Shape::StyledPanel</enum>
+            </property>
+            <property name="text">
+             <string>0</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignmentFlag::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="6">
+           <widget class="QLabel" name="labelCountCharacters_6">
+            <property name="font">
+             <font>
+              <family>Lato</family>
+              <pointsize>12</pointsize>
+              <bold>false</bold>
+              <stylestrategy>PreferAntialias</stylestrategy>
+              <kerning>true</kerning>
+             </font>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::Shape::StyledPanel</enum>
+            </property>
+            <property name="text">
+             <string>0</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignmentFlag::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="6">
+           <widget class="QLabel" name="labelCountStorylines_6">
+            <property name="font">
+             <font>
+              <family>Lato</family>
+              <pointsize>12</pointsize>
+              <bold>false</bold>
+              <stylestrategy>PreferAntialias</stylestrategy>
+              <kerning>true</kerning>
+             </font>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::Shape::StyledPanel</enum>
+            </property>
+            <property name="text">
+             <string>0</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignmentFlag::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="2">
+           <widget class="QLabel" name="labelCountCharacters_2">
+            <property name="font">
+             <font>
+              <family>Lato</family>
+              <pointsize>12</pointsize>
+              <bold>false</bold>
+              <stylestrategy>PreferAntialias</stylestrategy>
+              <kerning>true</kerning>
+             </font>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::Shape::StyledPanel</enum>
+            </property>
+            <property name="text">
+             <string>0</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignmentFlag::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QLabel" name="labelCountCharacters_1">
+            <property name="font">
+             <font>
+              <family>Lato</family>
+              <pointsize>12</pointsize>
+              <bold>false</bold>
+              <stylestrategy>PreferAntialias</stylestrategy>
+              <kerning>true</kerning>
+             </font>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::Shape::StyledPanel</enum>
+            </property>
+            <property name="text">
+             <string>0</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignmentFlag::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="5">
+           <widget class="QLabel" name="labelCountChapters_5">
+            <property name="font">
+             <font>
+              <family>Lato</family>
+              <pointsize>12</pointsize>
+              <bold>false</bold>
+              <stylestrategy>PreferAntialias</stylestrategy>
+              <kerning>true</kerning>
+             </font>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::Shape::StyledPanel</enum>
+            </property>
+            <property name="text">
+             <string>0</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignmentFlag::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="1">
+           <widget class="QLabel" name="labelCountScenes_1">
+            <property name="font">
+             <font>
+              <family>Lato</family>
+              <pointsize>12</pointsize>
+              <bold>false</bold>
+              <stylestrategy>PreferAntialias</stylestrategy>
+              <kerning>true</kerning>
+             </font>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::Shape::StyledPanel</enum>
+            </property>
+            <property name="text">
+             <string>0</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignmentFlag::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="6">
+           <widget class="QLabel" name="labelCountLocation_6">
+            <property name="font">
+             <font>
+              <family>Lato</family>
+              <pointsize>12</pointsize>
+              <bold>false</bold>
+              <stylestrategy>PreferAntialias</stylestrategy>
+              <kerning>true</kerning>
+             </font>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::Shape::StyledPanel</enum>
+            </property>
+            <property name="text">
+             <string>0</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignmentFlag::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="2">
+           <widget class="QLabel" name="labelCountLocation_2">
+            <property name="font">
+             <font>
+              <family>Lato</family>
+              <pointsize>12</pointsize>
+              <bold>false</bold>
+              <stylestrategy>PreferAntialias</stylestrategy>
+              <kerning>true</kerning>
+             </font>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::Shape::StyledPanel</enum>
+            </property>
+            <property name="text">
+             <string>0</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignmentFlag::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="8" column="0" colspan="3">
+           <spacer name="horizontalSpacer_6">
+            <property name="orientation">
+             <enum>Qt::Orientation::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>100</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="3" column="4">
+           <widget class="QLabel" name="labelCountObjects_4">
+            <property name="font">
+             <font>
+              <family>Lato</family>
+              <pointsize>12</pointsize>
+              <bold>false</bold>
+              <stylestrategy>PreferAntialias</stylestrategy>
+              <kerning>true</kerning>
+             </font>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::Shape::StyledPanel</enum>
+            </property>
+            <property name="text">
+             <string>0</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignmentFlag::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="QLabel" name="labelCountObjects_1">
+            <property name="font">
+             <font>
+              <family>Lato</family>
+              <pointsize>12</pointsize>
+              <bold>false</bold>
+              <stylestrategy>PreferAntialias</stylestrategy>
+              <kerning>true</kerning>
+             </font>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::Shape::StyledPanel</enum>
+            </property>
+            <property name="text">
+             <string>0</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignmentFlag::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="0">
+           <widget class="QLabel" name="labelStorylinesProject">
+            <property name="text">
+             <string>Handlungsstränge</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="1">
+           <widget class="QLabel" name="labelCountStorylines_1">
+            <property name="font">
+             <font>
+              <family>Lato</family>
+              <pointsize>12</pointsize>
+              <bold>false</bold>
+              <stylestrategy>PreferAntialias</stylestrategy>
+              <kerning>true</kerning>
+             </font>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::Shape::StyledPanel</enum>
+            </property>
+            <property name="text">
+             <string>0</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignmentFlag::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="0">
+           <widget class="QLabel" name="labelScenesProject">
+            <property name="text">
+             <string>Szenen</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="3">
+           <widget class="QLabel" name="labelCountCharacters_3">
+            <property name="font">
+             <font>
+              <family>Lato</family>
+              <pointsize>12</pointsize>
+              <bold>false</bold>
+              <stylestrategy>PreferAntialias</stylestrategy>
+              <kerning>true</kerning>
+             </font>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::Shape::StyledPanel</enum>
+            </property>
+            <property name="text">
+             <string>0</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignmentFlag::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="5">
+           <widget class="QLabel" name="labelCountStorylines_5">
+            <property name="font">
+             <font>
+              <family>Lato</family>
+              <pointsize>12</pointsize>
+              <bold>false</bold>
+              <stylestrategy>PreferAntialias</stylestrategy>
+              <kerning>true</kerning>
+             </font>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::Shape::StyledPanel</enum>
+            </property>
+            <property name="text">
+             <string>0</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignmentFlag::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="4">
+           <widget class="QLabel" name="labelCountScenes_4">
+            <property name="font">
+             <font>
+              <family>Lato</family>
+              <pointsize>12</pointsize>
+              <bold>false</bold>
+              <stylestrategy>PreferAntialias</stylestrategy>
+              <kerning>true</kerning>
+             </font>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::Shape::StyledPanel</enum>
+            </property>
+            <property name="text">
+             <string>0</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignmentFlag::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0" colspan="7">
+           <widget class="QLabel" name="labelStatistic_2">
+            <property name="font">
+             <font>
+              <family>Lato</family>
+              <pointsize>14</pointsize>
+              <bold>true</bold>
+              <stylestrategy>PreferAntialias</stylestrategy>
+              <kerning>true</kerning>
+             </font>
+            </property>
+            <property name="text">
+             <string>Statistik aktuelles Projekt:</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignmentFlag::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="widgetRight" native="true">
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
+        <widget class="QPushButton" name="projectBtn">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="cursor">
+          <cursorShape>PointingHandCursor</cursorShape>
+         </property>
+         <property name="toolTip">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Erstellen, bearbeiten und verwalten von Projekten&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+         <property name="autoFillBackground">
+          <bool>false</bool>
+         </property>
+         <property name="text">
+          <string>Projekte</string>
+         </property>
+         <property name="icon">
+          <iconset theme="video-x-generic"/>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>32</width>
+           <height>32</height>
+          </size>
+         </property>
+         <property name="default">
+          <bool>true</bool>
+         </property>
+         <property name="flat">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="characterBtn">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="cursor">
+          <cursorShape>PointingHandCursor</cursorShape>
+         </property>
+         <property name="toolTip">
+          <string>Erstellen, bearbeiten und verwalten von Charakteren</string>
+         </property>
+         <property name="text">
+          <string>Charaktere</string>
+         </property>
+         <property name="icon">
+          <iconset theme="face-cool"/>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>32</width>
+           <height>32</height>
+          </size>
+         </property>
+         <property name="autoDefault">
+          <bool>false</bool>
+         </property>
+         <property name="default">
+          <bool>true</bool>
+         </property>
+         <property name="flat">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="objectBtn">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="cursor">
+          <cursorShape>PointingHandCursor</cursorShape>
+         </property>
+         <property name="toolTip">
+          <string>Erstellen, bearbeiten und verwalten von Objekten</string>
+         </property>
+         <property name="text">
+          <string>Objekte</string>
+         </property>
+         <property name="icon">
+          <iconset theme="applications-accessories"/>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>32</width>
+           <height>32</height>
+          </size>
+         </property>
+         <property name="default">
+          <bool>true</bool>
+         </property>
+         <property name="flat">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="locationBtn">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="cursor">
+          <cursorShape>PointingHandCursor</cursorShape>
+         </property>
+         <property name="toolTip">
+          <string>Erstellen, bearbeiten und verwalten von Orten</string>
+         </property>
+         <property name="text">
+          <string>Handlungsorte</string>
+         </property>
+         <property name="icon">
+          <iconset theme="emblem-photos"/>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>32</width>
+           <height>32</height>
+          </size>
+         </property>
+         <property name="default">
+          <bool>true</bool>
+         </property>
+         <property name="flat">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="storylineBtn">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="cursor">
+          <cursorShape>PointingHandCursor</cursorShape>
+         </property>
+         <property name="toolTip">
+          <string>Erstellen, bearbeiten und verwalten von Storylines</string>
+         </property>
+         <property name="text">
+          <string>Handlungsstränge</string>
+         </property>
+         <property name="icon">
+          <iconset theme="emblem-documents"/>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>32</width>
+           <height>32</height>
+          </size>
+         </property>
+         <property name="default">
+          <bool>true</bool>
+         </property>
+         <property name="flat">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="editorBtn">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="cursor">
+          <cursorShape>PointingHandCursor</cursorShape>
+         </property>
+         <property name="toolTip">
+          <string>Erstellen, bearbeiten und verwalten von Kapiteln und Szenen</string>
+         </property>
+         <property name="text">
+          <string>Editor</string>
+         </property>
+         <property name="icon">
+          <iconset theme="accessories-text-editor"/>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>32</width>
+           <height>32</height>
+          </size>
+         </property>
+         <property name="default">
+          <bool>true</bool>
+         </property>
+         <property name="flat">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="preferencesBtn">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="cursor">
+          <cursorShape>PointingHandCursor</cursorShape>
+         </property>
+         <property name="toolTip">
+          <string>Einstellungen anpassen: Sprache, Design, Vorlagen uvm.</string>
+         </property>
+         <property name="text">
+          <string>Einstellungen</string>
+         </property>
+         <property name="icon">
+          <iconset theme="applications-utilities"/>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>32</width>
+           <height>32</height>
+          </size>
+         </property>
+         <property name="default">
+          <bool>true</bool>
+         </property>
+         <property name="flat">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="helpBtn">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="cursor">
+          <cursorShape>PointingHandCursor</cursorShape>
+         </property>
+         <property name="toolTip">
+          <string>Tutorials, Hilfen, Tipps, Kontakt und allgemeine Information zu csNova</string>
+         </property>
+         <property name="text">
+          <string>Hilfen + Tipps</string>
+         </property>
+         <property name="icon">
+          <iconset theme="dialog-question"/>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>32</width>
+           <height>32</height>
+          </size>
+         </property>
+         <property name="default">
+          <bool>true</bool>
+         </property>
+         <property name="flat">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer">
+         <property name="orientation">
+          <enum>Qt::Orientation::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>100</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QPushButton" name="exitBnt">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="cursor">
+          <cursorShape>PointingHandCursor</cursorShape>
+         </property>
+         <property name="toolTip">
+          <string>Das Programm csNova beenden</string>
+         </property>
+         <property name="text">
+          <string>csNova beenden</string>
+         </property>
+         <property name="icon">
+          <iconset theme="application-exit"/>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>32</width>
+           <height>32</height>
+          </size>
+         </property>
+         <property name="default">
+          <bool>true</bool>
+         </property>
+         <property name="flat">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

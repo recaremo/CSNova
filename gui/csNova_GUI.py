@@ -660,10 +660,14 @@ class StartWindow(QMainWindow):
         objects_data = load_json_file(DATA_DIR / "Objects.json")
         locations_data = load_json_file(DATA_DIR / "Locations.json")
         storylines_data = load_json_file(DATA_DIR / "Storylines.json")
+        references_data = load_json_file(DATA_DIR / "References" / "Data_references.json")
+        ideas_data = load_json_file(DATA_DIR / "Ideas" / "Data_ideas.json")
         character_items = [char.get("name", "") for char in characters_data.values()]
         object_items = [obj.get("ob_title", "") for obj in objects_data.values()]
         location_items = [loc.get("lo_title", "") for loc in locations_data.values()]
         storyline_items = [st.get("st_title", "") for st in storylines_data.values()]
+        references_items = [ref.get("ref_title", "") for ref in references_data.values()]
+        ideas_items = [idea.get("idea_title", "") for idea in ideas_data.values()]
         status_items = list(self.combobox_translations.get("status", {}).values())
 
         panel_widget = QWidget()
@@ -680,8 +684,8 @@ class StartWindow(QMainWindow):
         tab_widget.setElideMode(Qt.ElideRight)
         tab_widget.tabBar().setStyleSheet("""
             QTabBar::tab {
-                min-height: 180px;
-                max-height: 200px;
+                min-height: 130px;
+                max-height: 170px;
                 min-width: 12px;
                 max-width: 18px;
             }
@@ -781,14 +785,28 @@ class StartWindow(QMainWindow):
 
         tab_widget.addTab(scenes_tab, self.get_translation("proj_cs_header", "Szenen"))
 
+        # Charakter-Tab
+        tab_definitions = [
+            ("characters", "char_ma_header")
+        ]
+        for tab_key, label_key in tab_definitions:
+            tab = QWidget()
+            tab_layout = QVBoxLayout(tab)
+            tab_layout.setAlignment(Qt.AlignTop)
+            tab_label_text = self.get_translation(label_key, tab_key.capitalize())
+            tab_label_widget = QLabel(tab_label_text)
+            tab_label_widget.setAlignment(Qt.AlignCenter)
+            tab_layout.addWidget(tab_label_widget)
+            tab_widget.addTab(tab, tab_label_text)
+
+        
         # --- Objekte-Tab ---
         objects_tab = QWidget()
         objects_layout = QVBoxLayout(objects_tab)
         objects_layout.setSpacing(8)
         #header_label = QLabel(self.get_translation("proj_ob_header", "Objekte"), objects_tab)
         #header_label.setAlignment(Qt.AlignHCenter | Qt.AlignTop)
-        #objects_layout.addWidget(header_label)  # Header ganz oben
-
+        #objects_layout.addWidget(header_label)  # Header ganz ob
         obj_button_layout = QHBoxLayout()
         obj_buttons = [
             ("botn_ob_01", "botn_ob_01_hint", "btn_object_new"),
@@ -918,20 +936,82 @@ class StartWindow(QMainWindow):
         storylines_layout.addLayout(sl_form)
         tab_widget.addTab(storylines_tab, self.get_translation("proj_st_header", "Erzählstränge"))        
         
-        # Weitere Tabs als Platzhalter
-        tab_definitions = [
-            ("characters", "char_ma_header")
-        ]
-        for tab_key, label_key in tab_definitions:
-            tab = QWidget()
-            tab_layout = QVBoxLayout(tab)
-            tab_layout.setAlignment(Qt.AlignTop)
-            tab_label_text = self.get_translation(label_key, tab_key.capitalize())
-            tab_label_widget = QLabel(tab_label_text)
-            tab_label_widget.setAlignment(Qt.AlignCenter)
-            tab_layout.addWidget(tab_label_widget)
-            tab_widget.addTab(tab, tab_label_text)
+        # Referenzen-Tab
+        references_tab = QWidget()
+        references_layout = QVBoxLayout(references_tab)
+        references_layout.setSpacing(8)
 
+        references_button_layout = QHBoxLayout()
+        references_buttons = [
+            ("btn_add_reference", "btn_add_reference_hint", "btn_reference_new"),
+            ("btn_prev_reference", "btn_prev_reference_hint", "btn_reference_prev"),
+            ("btn_next_reference", "btn_next_reference_hint", "btn_reference_next"),
+            ("btn_save_reference", "btn_save_reference_hint", "btn_reference_save"),
+            ("btn_delete_reference", "btn_delete_reference_hint", "btn_reference_delete"),
+        ]
+         
+        for key, hint_key, attr_name in references_buttons:
+            btn = QPushButton(self.get_translation(key), references_tab)
+            btn.setToolTip(self.get_translation(hint_key))
+            setattr(self, attr_name, btn)
+            references_button_layout.addWidget(btn)
+        references_layout.addLayout(references_button_layout)
+
+        reference_fields = form_fields.get("reference_template", [])
+        references_form = QFormLayout()
+        self.reference_form_widgets_left = {}
+
+        for field in reference_fields:
+            field_name = field.get("datafield_name")
+            if not field_name:
+                continue
+            label = QLabel(self.get_translation(field["label_key"]), references_tab)
+            if field.get("multiline"):
+                widget = QTextEdit(references_tab)
+                widget.setMinimumHeight(60)
+            elif field["type"] == "text":
+                widget = QLineEdit(references_tab)
+                widget.setMaxLength(field.get("max_length", 120))
+            elif field["type"] == "header":
+                widget = QLabel(self.get_translation(field["label_key"]), references_tab)
+            else:
+                widget = QLineEdit(references_tab)
+            self.reference_form_widgets_left[field_name] = widget
+            references_form.addRow(label, widget)  # <-- Zeile zum FormLayout hinzufügen
+
+        references_layout.addLayout(references_form)
+
+        tab_widget.addTab(references_tab, self.get_translation("editor_left_tab_references", "References"))
+        
+        # Ideen-Tab
+        ideas_tab = QWidget()
+        ideas_layout = QVBoxLayout(ideas_tab)
+        ideas_layout.setSpacing(8)
+
+        ideas_fields = form_fields.get("ideas", [])
+        ideas_form = QFormLayout()
+        self.ideas_form_widgets_left = {}
+
+        for field in ideas_fields:
+            field_name = field.get("datafield_name")
+            if not field_name:
+                continue
+            label = QLabel(self.get_translation(field["label_key"]), ideas_tab)
+            if field.get("multiline"):
+                widget = QTextEdit(ideas_tab)
+                widget.setMinimumHeight(60)
+            elif field["type"] == "text":
+                widget = QLineEdit(ideas_tab)
+                widget.setMaxLength(field.get("max_length", 120))
+            elif field["type"] == "header":
+                widget = QLabel(self.get_translation(field["label_key"]), ideas_tab)
+            else:
+                widget = QLineEdit(ideas_tab)
+            self.ideas_form_widgets_left[field_name] = widget
+            ideas_layout.addWidget(label)
+            ideas_layout.addWidget(widget)
+        
+        tab_widget.addTab(ideas_tab, self.get_translation("editor_left_tab_ideas", "Ideas"))
         panel_layout.addWidget(tab_widget)
         self.safe_apply_theme_style(panel_widget, "panel", self.theme)
         self.safe_apply_theme_style(tab_widget, "tab", self.theme)
@@ -966,6 +1046,12 @@ class StartWindow(QMainWindow):
         self.btn_storyline_next.clicked.connect(lambda: self.editor_left_panel_storylines_next())
         self.btn_storyline_prev.clicked.connect(lambda: self.editor_left_panel_storylines_previous())
         self.btn_storyline_save.clicked.connect(lambda: self.editor_left_panel_storylines_save())
+        # Referenzen-Buttons
+        self.btn_reference_new.clicked.connect(lambda: self.editor_left_panel_references_new())
+        self.btn_reference_delete.clicked.connect(lambda: self.editor_left_panel_references_delete())
+        self.btn_reference_next.clicked.connect(lambda: self.editor_left_panel_references_next())
+        self.btn_reference_prev.clicked.connect(lambda: self.editor_left_panel_references_previous())
+        self.btn_reference_save.clicked.connect(lambda: self.editor_left_panel_references_save())
 
         # Initiales Laden
         # self.fill_scene_form(self.current_scene_index)
@@ -973,6 +1059,51 @@ class StartWindow(QMainWindow):
         tab_widget.currentChanged.connect(self.on_left_panel_tab_changed)
         self.on_left_panel_tab_changed(tab_widget.currentIndex())
         return panel_widget
+    # Lade die Referenzen aus der JSON-Datei
+    def load_references(self):
+        file_path = DATA_DIR / "References" / "Data_references.json"
+        if not file_path.exists():
+            log_info(f"Referenzdatei nicht gefunden: {file_path}")
+            return {}
+        try:
+            with open(file_path, "r", encoding="utf-8") as f:
+                data = json.load(f)
+            log_info(f"Referenzdatei geladen: {file_path} ({len(data)} Einträge)")
+            return data
+        except Exception as e:
+            log_exception(f"Fehler beim Laden der Referenzdatei: {file_path}", e)
+            return {}
+    # Fülle das Referenzformular mit den Daten eines bestimmten Eintrags
+    def fill_reference_form_left(self, reference_data):
+        for field_name, widget in self.reference_form_widgets_left.items():
+            value = reference_data.get(field_name, "")
+            if isinstance(widget, QLineEdit):
+                widget.setText(str(value))
+            elif isinstance(widget, QTextEdit):
+                widget.setPlainText(str(value)) 
+    # Lade die Ideen aus der JSON-Datei
+    def load_ideas(self):
+        file_path = DATA_DIR / "Ideas" / "Ideas.json"
+        if not file_path.exists():
+            log_info(f"Ideendatei nicht gefunden: {file_path}")
+            return {}
+        try:
+            with open(file_path, "r", encoding="utf-8") as f:
+                data = json.load(f)
+            log_info(f"Ideendatei geladen: {file_path} ({len(data)} Einträge)")
+            return data
+        except Exception as e:
+            log_exception(f"Fehler beim Laden der Ideendatei: {file_path}", e)
+            return {}   
+    # Fülle das Ideenformular mit den Daten eines bestimmten Eintrags
+    def fill_ideas_form_left(self, idea_data):
+        for field_name, widget in self.ideas_form_widgets_left.items():
+            value = idea_data.get(field_name, "")
+            if isinstance(widget, QLineEdit):
+                widget.setText(str(value))
+            elif isinstance(widget, QTextEdit):
+                widget.setPlainText(str(value))
+            
     # Dieses left_panel_project wird angezeigt, wenn ein Projekt erstellt oder bearbeitet wird.
     def create_left_panel_project(self):
         return self.create_left_panel_with_header("proj_ma_header", "Projects")
@@ -3217,6 +3348,109 @@ class StartWindow(QMainWindow):
         self.save_storylines(storylines)
         self.fill_storyline_form_left(storylines[self.current_storyline_id])
 
+    #Referenz-Funktionen im Left Panel im Editor
+    def fill_reference_form_left(self, reference_data):
+        for field_name, widget in self.reference_form_widgets_left.items():
+            value = reference_data.get(field_name, "")
+            if isinstance(widget, QLineEdit):
+                widget.setText(str(value))
+            elif isinstance(widget, QTextEdit):
+                widget.setPlainText(str(value))
+    # Liest die Daten aus den Feldern im References-Tab des Left Panels aus.    
+    def get_reference_form_left_data(self):
+        data = {}
+        for field_name, widget in self.reference_form_widgets_left.items():
+            if isinstance(widget, QLineEdit):
+                data[field_name] = widget.text()
+            elif isinstance(widget, QTextEdit):
+                data[field_name] = widget.toPlainText()
+        return data
+    # Erstellt ein leeres Formular für eine neue Referenz im Left Panel.
+    def editor_left_panel_references_new(self):
+        empty_data = {k: "" for k in self.reference_form_widgets_left}
+        self.current_reference_id = None
+        self.fill_reference_form_left(empty_data)
+    # Löscht die aktuell angezeigte Referenz im Left Panel.
+    def editor_left_panel_references_delete(self):
+        references = self.load_references()
+        reference_id = self.current_reference_id
+        if reference_id and reference_id in references:
+            self.show_secure_delete_dialog("reference", reference_id, panel="left")
+            references = self.load_references()
+            if references:
+                first_id = sorted(references.keys())[0]
+                self.current_reference_id = first_id
+                self.fill_reference_form_left(references[first_id])
+            else:
+                self.current_reference_id = None
+                empty_data = {k: "" for k in self.reference_form_widgets_left}
+                self.fill_reference_form_left(empty_data)
+    # Handler für den "Löschen"-Button im Left Panel
+    def on_delete_reference_left_clicked(self):
+        if not self.current_reference_id:
+            return
+        self.show_secure_delete_dialog("reference", self.current_reference_id, panel="left")
+    # Löscht eine Referenz basierend auf der ID im Left Panel.
+    def _delete_reference_left(self, reference_id):
+        references = self.load_references()
+        if not references or not reference_id:
+            log_error(f"Keine Referenz zum Löschen gefunden (ID: {reference_id})")
+            return
+        if reference_id in references:
+            del references[reference_id]
+            self.save_references(references)
+            log_info(f"Referenz gelöscht: {reference_id}")
+            # Nach dem Löschen: nächsten oder leeren Datensatz anzeigen
+            if references:
+                first_id = sorted(references.keys())[0]
+                self.current_reference_id = first_id
+                self.fill_reference_form_left(references[first_id])
+            else:
+                self.current_reference_id = None
+                empty_data = {k: "" for k in self.reference_form_widgets_left}
+                self.fill_reference_form_left(empty_data)
+    # zeigt die vorherige Referenz im Left Panel an.
+    def editor_left_panel_references_previous(self):
+        references = self.load_references()
+        if not references:
+            return
+        ids = sorted(references.keys())
+        if self.current_reference_id in ids:
+            idx = ids.index(self.current_reference_id)
+            new_idx = (idx - 1) % len(ids)
+        else:
+            new_idx = 0
+        self.current_reference_id = ids[new_idx]
+        self.fill_reference_form_left(references[self.current_reference_id])
+    # zeigt die nächste Referenz im Left Panel an.
+    def editor_left_panel_references_next(self):
+        references = self.load_references()
+        if not references:
+            return
+        ids = sorted(references.keys())
+        if self.current_reference_id in ids:
+            idx = ids.index(self.current_reference_id)
+            new_idx = (idx + 1) % len(ids)
+        else:
+            new_idx = 0
+        self.current_reference_id = ids[new_idx]
+        self.fill_reference_form_left(references[self.current_reference_id])
+    # Speichert die aktuell angezeigte Referenz im Left Panel.
+    def editor_left_panel_references_save(self):
+        references = self.load_references()
+        data = self.get_reference_form_left_data()
+        if self.current_reference_id and self.current_reference_id in references:
+            references[self.current_reference_id] = data
+        else:
+            existing_ids = [int(k.split("_")[-1]) for k in references.keys() if k.startswith("reference_ID_")]
+            next_id = max(existing_ids, default=0) + 1
+            new_id = f"reference_ID_{next_id:02d}"
+            references[new_id] = data
+            self.current_reference_id = new_id
+        self.save_references(references)
+        self.fill_reference_form_left(references[self.current_reference_id])
+
+
 # ..............................................................
 # EDITOR FUNKTIONEN
 # ..............................................................
@@ -3600,7 +3834,7 @@ class StartWindow(QMainWindow):
         if sender is None:
             return
         tab_name = sender.tabText(index)
-        if tab_name == self.get_translation("proj_ob_header", "Objekte"):
+        if tab_name == self.get_translation("proj_ob_header", "Objects"):
             objects = self.load_objects()
             if objects:
                 first_id = sorted(objects.keys())[0]
@@ -3610,7 +3844,7 @@ class StartWindow(QMainWindow):
                 self.current_object_id = None
                 empty_data = {k: "" for k in self.object_form_widgets_left}
                 self.fill_object_form_left(empty_data)
-        if tab_name == self.get_translation("proj_lo_header", "Orte"):
+        if tab_name == self.get_translation("proj_lo_header", "Locations"):
             locations = self.load_locations()
             if locations:
                 first_id = sorted(locations.keys())[0]
@@ -3620,16 +3854,36 @@ class StartWindow(QMainWindow):
                 self.current_location_id = None
                 empty_data = {k: "" for k in self.location_form_widgets_left}
                 self.fill_location_form_left(empty_data)
-        if tab_name == self.get_translation("proj_st_header", "Erzählstränge"):
+        if tab_name == self.get_translation("proj_st_header", "Storylines"):
             storylines = self.load_storylines()
             if storylines:
                 first_id = sorted(storylines.keys())[0]
                 self.current_storyline_id = first_id
-                self.fill_storyline_form_left(storylines[first_id])  # <-- Korrekt!
+                self.fill_storyline_form_left(storylines[first_id])
             else:
                 self.current_storyline_id = None
                 empty_data = {k: "" for k in self.storyline_form_widgets_left}
                 self.fill_storyline_form_left(empty_data)
+        if tab_name == self.get_translation("editor_left_tab_references", "References"):            
+            references = self.load_references()
+            if references:
+                first_id = sorted(references.keys())[0]
+                self.current_reference_id = first_id
+                self.fill_reference_form_left(references[first_id])
+            else:
+                self.current_reference_id = None
+                empty_data = {k: "" for k in self.reference_form_widgets_left}
+                self.fill_reference_form_left(empty_data)
+        if tab_name == self.get_translation("editor_left_tab_ideas", "Ideas"): 
+            ideas = self.load_ideas()
+            if ideas:
+                first_id = sorted(ideas.keys())[0]
+                self.current_idea_id = first_id
+                self.fill_ideas_form_left(ideas[first_id])
+            else:
+                self.current_idea_id = None
+                empty_data = {k: "" for k in self.ideas_form_widgets_left}
+                self.fill_ideas_form_left(empty_data) 
 
 # ..............................................................
 # PROJEKT FUNKTIONEN

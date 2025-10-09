@@ -1,0 +1,3873 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>csNova</class>
+ <widget class="QWidget" name="csNova">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1920</width>
+    <height>1080</height>
+   </rect>
+  </property>
+  <property name="font">
+   <font>
+    <family>Lato</family>
+    <pointsize>16</pointsize>
+    <bold>false</bold>
+    <stylestrategy>PreferAntialias</stylestrategy>
+    <kerning>true</kerning>
+   </font>
+  </property>
+  <property name="windowTitle">
+   <string>csNova - Charaktere</string>
+  </property>
+  <widget class="QSplitter" name="mainSplitter">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>0</y>
+     <width>1920</width>
+     <height>1080</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Lato</family>
+     <pointsize>12</pointsize>
+     <bold>true</bold>
+     <stylestrategy>PreferAntialias</stylestrategy>
+     <kerning>true</kerning>
+    </font>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::Shape::NoFrame</enum>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Orientation::Horizontal</enum>
+   </property>
+   <property name="handleWidth">
+    <number>36</number>
+   </property>
+   <widget class="QWidget" name="widgetLeft" native="true">
+    <property name="maximumSize">
+     <size>
+      <width>500</width>
+      <height>16777215</height>
+     </size>
+    </property>
+    <widget class="QLabel" name="copyRight">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>1040</y>
+       <width>561</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Lato</family>
+       <pointsize>10</pointsize>
+       <bold>false</bold>
+       <stylestrategy>PreferAntialias</stylestrategy>
+       <kerning>true</kerning>
+      </font>
+     </property>
+     <property name="text">
+      <string>(c) Copyright 2025 Frank Reiser - v 0.1.273</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="widgetCenter" native="true">
+    <widget class="QTabWidget" name="tabCharacter">
+     <property name="geometry">
+      <rect>
+       <x>15</x>
+       <y>170</y>
+       <width>870</width>
+       <height>900</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Lato</family>
+       <pointsize>12</pointsize>
+       <bold>false</bold>
+       <stylestrategy>PreferAntialias</stylestrategy>
+       <kerning>true</kerning>
+      </font>
+     </property>
+     <property name="tabShape">
+      <enum>QTabWidget::TabShape::Triangular</enum>
+     </property>
+     <property name="currentIndex">
+      <number>0</number>
+     </property>
+     <property name="elideMode">
+      <enum>Qt::TextElideMode::ElideLeft</enum>
+     </property>
+     <property name="documentMode">
+      <bool>false</bool>
+     </property>
+     <property name="tabsClosable">
+      <bool>false</bool>
+     </property>
+     <property name="movable">
+      <bool>false</bool>
+     </property>
+     <property name="tabBarAutoHide">
+      <bool>false</bool>
+     </property>
+     <widget class="QWidget" name="tab0">
+      <attribute name="title">
+       <string>Charakter</string>
+      </attribute>
+      <widget class="QLabel" name="labelNickName">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>40</y>
+         <width>180</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Lato</family>
+         <pointsize>12</pointsize>
+         <bold>true</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>Spitzname:</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="labelBorn">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>80</y>
+         <width>180</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Lato</family>
+         <pointsize>12</pointsize>
+         <bold>true</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>Geburtsdatum:</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="labelDied">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>120</y>
+         <width>180</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Lato</family>
+         <pointsize>12</pointsize>
+         <bold>true</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>Sterbedatum:</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="labelAge">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>160</y>
+         <width>180</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Lato</family>
+         <pointsize>12</pointsize>
+         <bold>true</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>Alter:</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="labelGender">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>200</y>
+         <width>180</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Lato</family>
+         <pointsize>12</pointsize>
+         <bold>true</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>Gender:</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="labelSexOrientation">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>240</y>
+         <width>180</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Lato</family>
+         <pointsize>12</pointsize>
+         <bold>true</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>sex. Orientierung:</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="labelRole">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>280</y>
+         <width>180</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Lato</family>
+         <pointsize>12</pointsize>
+         <bold>true</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>Rolle:</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="labelGroup">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>320</y>
+         <width>180</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Lato</family>
+         <pointsize>12</pointsize>
+         <bold>true</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>Gruppe:</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="labelCharakterNotes">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>570</y>
+         <width>250</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Lato</family>
+         <pointsize>12</pointsize>
+         <bold>true</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>Anmerkungen/Notizen:</string>
+       </property>
+      </widget>
+      <widget class="QComboBox" name="comboBoxGender">
+       <property name="geometry">
+        <rect>
+         <x>210</x>
+         <y>200</y>
+         <width>250</width>
+         <height>25</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QComboBox" name="comboBoxSexOrientation">
+       <property name="geometry">
+        <rect>
+         <x>210</x>
+         <y>240</y>
+         <width>250</width>
+         <height>25</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QComboBox" name="comboBoxRole">
+       <property name="geometry">
+        <rect>
+         <x>210</x>
+         <y>280</y>
+         <width>250</width>
+         <height>25</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QComboBox" name="comboBoxGroup">
+       <property name="geometry">
+        <rect>
+         <x>210</x>
+         <y>320</y>
+         <width>250</width>
+         <height>25</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLabel" name="labelAgeValue">
+       <property name="geometry">
+        <rect>
+         <x>210</x>
+         <y>160</y>
+         <width>61</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Lato</family>
+         <pointsize>12</pointsize>
+         <bold>false</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::Shape::StyledPanel</enum>
+       </property>
+       <property name="text">
+        <string>0</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignmentFlag::AlignCenter</set>
+       </property>
+      </widget>
+      <widget class="QPlainTextEdit" name="plainTextCharacterNotes">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>600</y>
+         <width>441</width>
+         <height>161</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="lineEditNickName">
+       <property name="geometry">
+        <rect>
+         <x>210</x>
+         <y>40</y>
+         <width>250</width>
+         <height>25</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="lineEditBorn">
+       <property name="geometry">
+        <rect>
+         <x>210</x>
+         <y>80</y>
+         <width>120</width>
+         <height>25</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="lineEditBorn_2">
+       <property name="geometry">
+        <rect>
+         <x>210</x>
+         <y>120</y>
+         <width>120</width>
+         <height>25</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLabel" name="labelCharacterImage_0">
+       <property name="geometry">
+        <rect>
+         <x>520</x>
+         <y>40</y>
+         <width>300</width>
+         <height>300</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="pixmap">
+        <pixmap>../data/characters/character_images/placeholder_character.png</pixmap>
+       </property>
+       <property name="scaledContents">
+        <bool>true</bool>
+       </property>
+      </widget>
+      <widget class="QLabel" name="labelCharacterImage_1">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>520</x>
+         <y>360</y>
+         <width>90</width>
+         <height>90</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="pixmap">
+        <pixmap>../data/characters/character_images/placeholder_character.png</pixmap>
+       </property>
+       <property name="scaledContents">
+        <bool>true</bool>
+       </property>
+      </widget>
+      <widget class="QLabel" name="labelCharacterImage_2">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>625</x>
+         <y>360</y>
+         <width>90</width>
+         <height>90</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="pixmap">
+        <pixmap>../data/characters/character_images/placeholder_character.png</pixmap>
+       </property>
+       <property name="scaledContents">
+        <bool>true</bool>
+       </property>
+      </widget>
+      <widget class="QLabel" name="labelCharacterImage_3">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>730</x>
+         <y>360</y>
+         <width>90</width>
+         <height>90</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="pixmap">
+        <pixmap>../data/characters/character_images/placeholder_character.png</pixmap>
+       </property>
+       <property name="scaledContents">
+        <bool>true</bool>
+       </property>
+      </widget>
+      <widget class="QLabel" name="labelCharacterImage_4">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>520</x>
+         <y>465</y>
+         <width>90</width>
+         <height>90</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="pixmap">
+        <pixmap>../data/characters/character_images/placeholder_character.png</pixmap>
+       </property>
+       <property name="scaledContents">
+        <bool>true</bool>
+       </property>
+      </widget>
+      <widget class="QLabel" name="labelCharacterImage_5">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>625</x>
+         <y>465</y>
+         <width>90</width>
+         <height>90</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="pixmap">
+        <pixmap>../data/characters/character_images/placeholder_character.png</pixmap>
+       </property>
+       <property name="scaledContents">
+        <bool>true</bool>
+       </property>
+      </widget>
+      <widget class="QLabel" name="labelCharacterImage_6">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>730</x>
+         <y>465</y>
+         <width>90</width>
+         <height>90</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="pixmap">
+        <pixmap>../data/characters/character_images/placeholder_character.png</pixmap>
+       </property>
+       <property name="scaledContents">
+        <bool>true</bool>
+       </property>
+      </widget>
+      <widget class="QLabel" name="labelCharacterImage_7">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>520</x>
+         <y>570</y>
+         <width>90</width>
+         <height>90</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="pixmap">
+        <pixmap>../data/characters/character_images/placeholder_character.png</pixmap>
+       </property>
+       <property name="scaledContents">
+        <bool>true</bool>
+       </property>
+      </widget>
+      <widget class="QLabel" name="labelCharacterImage_8">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>625</x>
+         <y>570</y>
+         <width>90</width>
+         <height>90</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="pixmap">
+        <pixmap>../data/characters/character_images/placeholder_character.png</pixmap>
+       </property>
+       <property name="scaledContents">
+        <bool>true</bool>
+       </property>
+      </widget>
+      <widget class="QLabel" name="labelCharacterImage_9">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>730</x>
+         <y>570</y>
+         <width>90</width>
+         <height>90</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="pixmap">
+        <pixmap>../data/characters/character_images/placeholder_character.png</pixmap>
+       </property>
+       <property name="scaledContents">
+        <bool>true</bool>
+       </property>
+      </widget>
+      <widget class="QLabel" name="labelCharacterImage_10">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>520</x>
+         <y>675</y>
+         <width>90</width>
+         <height>90</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="pixmap">
+        <pixmap>../data/characters/character_images/placeholder_character.png</pixmap>
+       </property>
+       <property name="scaledContents">
+        <bool>true</bool>
+       </property>
+      </widget>
+      <widget class="QLabel" name="labelCharacterImage_11">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>625</x>
+         <y>675</y>
+         <width>90</width>
+         <height>90</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="pixmap">
+        <pixmap>../data/characters/character_images/placeholder_character.png</pixmap>
+       </property>
+       <property name="scaledContents">
+        <bool>true</bool>
+       </property>
+      </widget>
+      <widget class="QLabel" name="labelCharacterImage_12">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>730</x>
+         <y>675</y>
+         <width>90</width>
+         <height>90</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="pixmap">
+        <pixmap>../data/characters/character_images/placeholder_character.png</pixmap>
+       </property>
+       <property name="scaledContents">
+        <bool>true</bool>
+       </property>
+      </widget>
+      <widget class="QLabel" name="labelCharakterDevelopment">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>360</y>
+         <width>250</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Lato</family>
+         <pointsize>12</pointsize>
+         <bold>true</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>Entwicklung:</string>
+       </property>
+      </widget>
+      <widget class="QPlainTextEdit" name="plainTextCharakterDevelopment">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>390</y>
+         <width>441</width>
+         <height>161</height>
+        </rect>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="tab2">
+      <attribute name="title">
+       <string>Herkunft</string>
+      </attribute>
+      <widget class="QLineEdit" name="lineEditMother">
+       <property name="geometry">
+        <rect>
+         <x>210</x>
+         <y>40</y>
+         <width>250</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Lato</family>
+         <pointsize>12</pointsize>
+         <bold>false</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
+         <kerning>true</kerning>
+        </font>
+       </property>
+      </widget>
+      <widget class="QLabel" name="labelMother">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>40</y>
+         <width>180</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Lato</family>
+         <pointsize>12</pointsize>
+         <bold>true</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>Mutter:</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="lineEditFather">
+       <property name="geometry">
+        <rect>
+         <x>210</x>
+         <y>90</y>
+         <width>250</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Lato</family>
+         <pointsize>12</pointsize>
+         <bold>false</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
+         <kerning>true</kerning>
+        </font>
+       </property>
+      </widget>
+      <widget class="QLabel" name="labelFather">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>90</y>
+         <width>180</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Lato</family>
+         <pointsize>12</pointsize>
+         <bold>true</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>Vater:</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="labelReferencePerson">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>140</y>
+         <width>180</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Lato</family>
+         <pointsize>12</pointsize>
+         <bold>true</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>Bezugsperson:</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="lineEditReferencePerson">
+       <property name="geometry">
+        <rect>
+         <x>210</x>
+         <y>140</y>
+         <width>250</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Lato</family>
+         <pointsize>12</pointsize>
+         <bold>false</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
+         <kerning>true</kerning>
+        </font>
+       </property>
+      </widget>
+      <widget class="QLabel" name="labelSiblings">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>190</y>
+         <width>180</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Lato</family>
+         <pointsize>12</pointsize>
+         <bold>true</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>Geschwister:</string>
+       </property>
+      </widget>
+      <widget class="QTextEdit" name="textEditSiblings">
+       <property name="geometry">
+        <rect>
+         <x>210</x>
+         <y>190</y>
+         <width>251</width>
+         <height>70</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Lato</family>
+         <pointsize>12</pointsize>
+         <bold>false</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
+         <kerning>true</kerning>
+        </font>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="lineEditPlaceOfBirth">
+       <property name="geometry">
+        <rect>
+         <x>210</x>
+         <y>290</y>
+         <width>250</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Lato</family>
+         <pointsize>12</pointsize>
+         <bold>false</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
+         <kerning>true</kerning>
+        </font>
+       </property>
+      </widget>
+      <widget class="QLabel" name="labelPlaceOfBirth">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>290</y>
+         <width>180</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Lato</family>
+         <pointsize>12</pointsize>
+         <bold>true</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>Geburtsort:</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="lineEditCountry">
+       <property name="geometry">
+        <rect>
+         <x>210</x>
+         <y>340</y>
+         <width>250</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Lato</family>
+         <pointsize>12</pointsize>
+         <bold>false</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
+         <kerning>true</kerning>
+        </font>
+       </property>
+      </widget>
+      <widget class="QLabel" name="labelCountry">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>340</y>
+         <width>180</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Lato</family>
+         <pointsize>12</pointsize>
+         <bold>true</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>Land:</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="labelEthnicity">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>390</y>
+         <width>180</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Lato</family>
+         <pointsize>12</pointsize>
+         <bold>true</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>Ethnie:</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="lineEditEthnicity">
+       <property name="geometry">
+        <rect>
+         <x>210</x>
+         <y>390</y>
+         <width>250</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Lato</family>
+         <pointsize>12</pointsize>
+         <bold>false</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
+         <kerning>true</kerning>
+        </font>
+       </property>
+      </widget>
+      <widget class="QTextEdit" name="textEditAncestryNotes">
+       <property name="geometry">
+        <rect>
+         <x>210</x>
+         <y>440</y>
+         <width>350</width>
+         <height>60</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLabel" name="labelAncestryNotes">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>440</y>
+         <width>180</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Lato</family>
+         <pointsize>12</pointsize>
+         <bold>true</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>Anmerkungen/Notizen:</string>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="tab1">
+      <attribute name="title">
+       <string>Ausbildung</string>
+      </attribute>
+      <widget class="QLabel" name="labelSchool">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>40</y>
+         <width>180</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Lato</family>
+         <pointsize>12</pointsize>
+         <bold>true</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>Schule:</string>
+       </property>
+      </widget>
+      <widget class="QTextEdit" name="textEditSchool">
+       <property name="geometry">
+        <rect>
+         <x>210</x>
+         <y>40</y>
+         <width>350</width>
+         <height>60</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLabel" name="labelUniversity">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>120</y>
+         <width>180</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Lato</family>
+         <pointsize>12</pointsize>
+         <bold>true</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>Universität:</string>
+       </property>
+      </widget>
+      <widget class="QTextEdit" name="textEditUniversity">
+       <property name="geometry">
+        <rect>
+         <x>210</x>
+         <y>120</y>
+         <width>350</width>
+         <height>60</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLabel" name="labelVocationalTraining">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>200</y>
+         <width>180</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Lato</family>
+         <pointsize>12</pointsize>
+         <bold>true</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>Berufsausbildung:</string>
+       </property>
+      </widget>
+      <widget class="QTextEdit" name="textEditVocationalTraining">
+       <property name="geometry">
+        <rect>
+         <x>210</x>
+         <y>200</y>
+         <width>350</width>
+         <height>60</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QTextEdit" name="textEditProfession">
+       <property name="geometry">
+        <rect>
+         <x>210</x>
+         <y>280</y>
+         <width>350</width>
+         <height>60</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLabel" name="labelProfession">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>280</y>
+         <width>180</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Lato</family>
+         <pointsize>12</pointsize>
+         <bold>true</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>Beruf:</string>
+       </property>
+      </widget>
+      <widget class="QTextEdit" name="textEditArtMusic">
+       <property name="geometry">
+        <rect>
+         <x>210</x>
+         <y>360</y>
+         <width>350</width>
+         <height>60</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLabel" name="labelArtMusic">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>360</y>
+         <width>180</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Lato</family>
+         <pointsize>12</pointsize>
+         <bold>true</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>Kunst/Musik:</string>
+       </property>
+      </widget>
+      <widget class="QTextEdit" name="textEditSport">
+       <property name="geometry">
+        <rect>
+         <x>210</x>
+         <y>450</y>
+         <width>350</width>
+         <height>60</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLabel" name="labelSport">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>450</y>
+         <width>180</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Lato</family>
+         <pointsize>12</pointsize>
+         <bold>true</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>Sport/Bewegung:</string>
+       </property>
+      </widget>
+      <widget class="QTextEdit" name="textEditTechnic">
+       <property name="geometry">
+        <rect>
+         <x>210</x>
+         <y>540</y>
+         <width>350</width>
+         <height>60</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLabel" name="labelTechnic">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>540</y>
+         <width>180</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Lato</family>
+         <pointsize>12</pointsize>
+         <bold>true</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>Technik:</string>
+       </property>
+      </widget>
+      <widget class="QTextEdit" name="textEditAutodidact">
+       <property name="geometry">
+        <rect>
+         <x>210</x>
+         <y>630</y>
+         <width>350</width>
+         <height>60</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLabel" name="labelAutodidact">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>630</y>
+         <width>180</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Lato</family>
+         <pointsize>12</pointsize>
+         <bold>true</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>Autodidaktisch:</string>
+       </property>
+      </widget>
+      <widget class="QTextEdit" name="textEditEducationNotes">
+       <property name="geometry">
+        <rect>
+         <x>210</x>
+         <y>720</y>
+         <width>350</width>
+         <height>60</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLabel" name="labelEducationNotes">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>720</y>
+         <width>180</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Lato</family>
+         <pointsize>12</pointsize>
+         <bold>true</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>Anmerkungen/Notizen:</string>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="tab3">
+      <attribute name="title">
+       <string>Aussehen</string>
+      </attribute>
+      <widget class="QLabel" name="labelSize">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>40</y>
+         <width>150</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Lato</family>
+         <pointsize>12</pointsize>
+         <bold>true</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>Größe:</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="labelBodyType">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>80</y>
+         <width>150</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Lato</family>
+         <pointsize>12</pointsize>
+         <bold>true</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>Körpertyp:</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="labelStature">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>120</y>
+         <width>150</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Lato</family>
+         <pointsize>12</pointsize>
+         <bold>true</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>Statur:</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="labelEyeShape">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>200</y>
+         <width>150</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Lato</family>
+         <pointsize>12</pointsize>
+         <bold>true</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>Augenform:</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="labelEyeColor">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>240</y>
+         <width>150</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Lato</family>
+         <pointsize>12</pointsize>
+         <bold>true</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>Augenfarbe:</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="labelFaceShape">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>160</y>
+         <width>150</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Lato</family>
+         <pointsize>12</pointsize>
+         <bold>true</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>Gesichtsform:</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="labelHairColor">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>320</y>
+         <width>150</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Lato</family>
+         <pointsize>12</pointsize>
+         <bold>true</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>Haarfarbe:</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="labelSkin">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>360</y>
+         <width>150</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Lato</family>
+         <pointsize>12</pointsize>
+         <bold>true</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>Haut:</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="labelSpecialFeatures">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>480</y>
+         <width>150</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Lato</family>
+         <pointsize>12</pointsize>
+         <bold>true</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>Besonderheiten:</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="labelHair">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>280</y>
+         <width>150</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Lato</family>
+         <pointsize>12</pointsize>
+         <bold>true</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>Haare:</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="labelSkinColor">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>400</y>
+         <width>150</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Lato</family>
+         <pointsize>12</pointsize>
+         <bold>true</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>Hautfarbe:</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="labelCharisma">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>440</y>
+         <width>150</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Lato</family>
+         <pointsize>12</pointsize>
+         <bold>true</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>Ausstrahlung:</string>
+       </property>
+      </widget>
+      <widget class="QTextEdit" name="textEditLookNotes">
+       <property name="geometry">
+        <rect>
+         <x>210</x>
+         <y>520</y>
+         <width>350</width>
+         <height>60</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLabel" name="labelLookNotes">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>520</y>
+         <width>180</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Lato</family>
+         <pointsize>12</pointsize>
+         <bold>true</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>Anmerkungen/Notizen:</string>
+       </property>
+      </widget>
+      <widget class="QSpinBox" name="spinBoxSize">
+       <property name="geometry">
+        <rect>
+         <x>210</x>
+         <y>40</y>
+         <width>80</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="maximum">
+        <number>999</number>
+       </property>
+       <property name="value">
+        <number>170</number>
+       </property>
+      </widget>
+      <widget class="QLabel" name="labelSizeCm">
+       <property name="geometry">
+        <rect>
+         <x>300</x>
+         <y>40</y>
+         <width>51</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Lato</family>
+         <pointsize>12</pointsize>
+         <bold>true</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>cm</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="lineEditEyeColor">
+       <property name="geometry">
+        <rect>
+         <x>210</x>
+         <y>240</y>
+         <width>200</width>
+         <height>25</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="lineEditHair">
+       <property name="geometry">
+        <rect>
+         <x>210</x>
+         <y>280</y>
+         <width>200</width>
+         <height>25</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="lineEditHairColor">
+       <property name="geometry">
+        <rect>
+         <x>210</x>
+         <y>320</y>
+         <width>200</width>
+         <height>25</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="lineEditSkin">
+       <property name="geometry">
+        <rect>
+         <x>210</x>
+         <y>360</y>
+         <width>200</width>
+         <height>25</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="lineEditSkinColor">
+       <property name="geometry">
+        <rect>
+         <x>210</x>
+         <y>400</y>
+         <width>200</width>
+         <height>25</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="lineEditCharisma">
+       <property name="geometry">
+        <rect>
+         <x>210</x>
+         <y>440</y>
+         <width>200</width>
+         <height>25</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="lineEditSpecialFeatures">
+       <property name="geometry">
+        <rect>
+         <x>210</x>
+         <y>480</y>
+         <width>200</width>
+         <height>25</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QComboBox" name="comboBoxBodyType">
+       <property name="geometry">
+        <rect>
+         <x>210</x>
+         <y>80</y>
+         <width>200</width>
+         <height>25</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QComboBox" name="comboBoxStature">
+       <property name="geometry">
+        <rect>
+         <x>210</x>
+         <y>120</y>
+         <width>200</width>
+         <height>25</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QComboBox" name="comboBoxFaceShape">
+       <property name="geometry">
+        <rect>
+         <x>210</x>
+         <y>160</y>
+         <width>200</width>
+         <height>25</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QComboBox" name="comboBoxEyeShape">
+       <property name="geometry">
+        <rect>
+         <x>210</x>
+         <y>200</y>
+         <width>200</width>
+         <height>25</height>
+        </rect>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="tab4">
+      <attribute name="title">
+       <string>Aussehen Details</string>
+      </attribute>
+      <widget class="QLabel" name="labelUpperArm">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>160</y>
+         <width>150</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Lato</family>
+         <pointsize>12</pointsize>
+         <bold>true</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>Oberarme:</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="labelEllbow">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>200</y>
+         <width>150</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Lato</family>
+         <pointsize>12</pointsize>
+         <bold>true</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>Ellenbogen:</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="lineShoulders">
+       <property name="geometry">
+        <rect>
+         <x>210</x>
+         <y>120</y>
+         <width>200</width>
+         <height>25</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="lineEditEllbow">
+       <property name="geometry">
+        <rect>
+         <x>210</x>
+         <y>200</y>
+         <width>200</width>
+         <height>25</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="lineEditNeck">
+       <property name="geometry">
+        <rect>
+         <x>210</x>
+         <y>80</y>
+         <width>200</width>
+         <height>25</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLabel" name="labelLowerArm">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>240</y>
+         <width>150</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Lato</family>
+         <pointsize>12</pointsize>
+         <bold>true</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>Unterarme:</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="labelShoulders">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>120</y>
+         <width>150</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Lato</family>
+         <pointsize>12</pointsize>
+         <bold>true</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>Schultern:</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="labelHead">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>40</y>
+         <width>150</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Lato</family>
+         <pointsize>12</pointsize>
+         <bold>true</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>Kopf:</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="lineEditLowerArms">
+       <property name="geometry">
+        <rect>
+         <x>210</x>
+         <y>240</y>
+         <width>200</width>
+         <height>25</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="lineEditHead">
+       <property name="geometry">
+        <rect>
+         <x>210</x>
+         <y>40</y>
+         <width>200</width>
+         <height>25</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLabel" name="labelNeck">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>80</y>
+         <width>150</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Lato</family>
+         <pointsize>12</pointsize>
+         <bold>true</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>Hals/Nacken:</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="lineEditUpperArm">
+       <property name="geometry">
+        <rect>
+         <x>210</x>
+         <y>160</y>
+         <width>200</width>
+         <height>25</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLabel" name="labelFinger">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>360</y>
+         <width>150</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Lato</family>
+         <pointsize>12</pointsize>
+         <bold>true</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>Finger:</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="lineEditBreast">
+       <property name="geometry">
+        <rect>
+         <x>210</x>
+         <y>400</y>
+         <width>200</width>
+         <height>25</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLabel" name="labelButtocks">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>520</y>
+         <width>150</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Lato</family>
+         <pointsize>12</pointsize>
+         <bold>true</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>Gesäß:</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="labelWrist">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>280</y>
+         <width>150</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Lato</family>
+         <pointsize>12</pointsize>
+         <bold>true</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>Handgelenke:</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="lineEditButtocks">
+       <property name="geometry">
+        <rect>
+         <x>210</x>
+         <y>520</y>
+         <width>200</width>
+         <height>25</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLabel" name="labelHips">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>480</y>
+         <width>150</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Lato</family>
+         <pointsize>12</pointsize>
+         <bold>true</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>Hüfte/Taille:</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="lineEditBack">
+       <property name="geometry">
+        <rect>
+         <x>210</x>
+         <y>440</y>
+         <width>200</width>
+         <height>25</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="lineEditWrists">
+       <property name="geometry">
+        <rect>
+         <x>210</x>
+         <y>280</y>
+         <width>200</width>
+         <height>25</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="lineEditHand">
+       <property name="geometry">
+        <rect>
+         <x>210</x>
+         <y>320</y>
+         <width>200</width>
+         <height>25</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="lineEditFinger">
+       <property name="geometry">
+        <rect>
+         <x>210</x>
+         <y>360</y>
+         <width>200</width>
+         <height>25</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLabel" name="labelBack">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>440</y>
+         <width>150</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Lato</family>
+         <pointsize>12</pointsize>
+         <bold>true</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>Rücken:</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="labelHand">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>320</y>
+         <width>150</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Lato</family>
+         <pointsize>12</pointsize>
+         <bold>true</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>Hand:</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="labelBreast">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>400</y>
+         <width>150</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Lato</family>
+         <pointsize>12</pointsize>
+         <bold>true</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>Brust:</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="lineEditHips">
+       <property name="geometry">
+        <rect>
+         <x>210</x>
+         <y>480</y>
+         <width>200</width>
+         <height>25</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLabel" name="labelKnee">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>600</y>
+         <width>150</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Lato</family>
+         <pointsize>12</pointsize>
+         <bold>true</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>Knie:</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="labelUpperLeg">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>560</y>
+         <width>150</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Lato</family>
+         <pointsize>12</pointsize>
+         <bold>true</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>Oberschenkel:</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="labelAnkles">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>680</y>
+         <width>150</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Lato</family>
+         <pointsize>12</pointsize>
+         <bold>true</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>Fußgelenke:</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="lineEditKnee">
+       <property name="geometry">
+        <rect>
+         <x>210</x>
+         <y>600</y>
+         <width>200</width>
+         <height>25</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="lineEditUpperLeg">
+       <property name="geometry">
+        <rect>
+         <x>210</x>
+         <y>560</y>
+         <width>200</width>
+         <height>25</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLabel" name="labelLowerLeg">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>640</y>
+         <width>150</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Lato</family>
+         <pointsize>12</pointsize>
+         <bold>true</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>Unterschenkel:</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="lineEditLowerLeg">
+       <property name="geometry">
+        <rect>
+         <x>210</x>
+         <y>640</y>
+         <width>200</width>
+         <height>25</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="lineEditAnkles">
+       <property name="geometry">
+        <rect>
+         <x>210</x>
+         <y>680</y>
+         <width>200</width>
+         <height>25</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLabel" name="labelFeet">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>720</y>
+         <width>150</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Lato</family>
+         <pointsize>12</pointsize>
+         <bold>true</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>Füße:</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="lineEditFeet">
+       <property name="geometry">
+        <rect>
+         <x>210</x>
+         <y>720</y>
+         <width>200</width>
+         <height>25</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLabel" name="labelToes">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>760</y>
+         <width>150</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Lato</family>
+         <pointsize>12</pointsize>
+         <bold>true</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>Zehen:</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="lineEditToes">
+       <property name="geometry">
+        <rect>
+         <x>210</x>
+         <y>760</y>
+         <width>200</width>
+         <height>25</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QTextEdit" name="textEditLookDetailsNotes">
+       <property name="geometry">
+        <rect>
+         <x>210</x>
+         <y>800</y>
+         <width>350</width>
+         <height>60</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLabel" name="labelLookDetailsNotes">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>800</y>
+         <width>180</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Lato</family>
+         <pointsize>12</pointsize>
+         <bold>true</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>Anmerkungen/Notizen:</string>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="tab5">
+      <attribute name="title">
+       <string>Persönlichkeit</string>
+      </attribute>
+      <widget class="QLabel" name="labelBehavior">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>400</y>
+         <width>150</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Lato</family>
+         <pointsize>12</pointsize>
+         <bold>true</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>Verhalten:</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="lineEditFears">
+       <property name="geometry">
+        <rect>
+         <x>210</x>
+         <y>120</y>
+         <width>350</width>
+         <height>25</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLabel" name="labelTalents">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>240</y>
+         <width>150</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Lato</family>
+         <pointsize>12</pointsize>
+         <bold>true</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>Talente:</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="labelPersonalityNotes">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>440</y>
+         <width>180</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Lato</family>
+         <pointsize>12</pointsize>
+         <bold>true</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>Anmerkungen/Notizen:</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="labelMotivation">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>360</y>
+         <width>150</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Lato</family>
+         <pointsize>12</pointsize>
+         <bold>true</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>Motivation:</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="lineEditLifeGoal">
+       <property name="geometry">
+        <rect>
+         <x>210</x>
+         <y>320</y>
+         <width>350</width>
+         <height>25</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLabel" name="labelPosCharacteristics">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>40</y>
+         <width>150</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Lato</family>
+         <pointsize>12</pointsize>
+         <bold>true</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>positive Eigenschaft:</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="lineEditBehavior">
+       <property name="geometry">
+        <rect>
+         <x>210</x>
+         <y>400</y>
+         <width>350</width>
+         <height>25</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="lineEditTalents">
+       <property name="geometry">
+        <rect>
+         <x>210</x>
+         <y>240</y>
+         <width>350</width>
+         <height>25</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="lineEditMotivation">
+       <property name="geometry">
+        <rect>
+         <x>210</x>
+         <y>360</y>
+         <width>350</width>
+         <height>25</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="lineEditBelief">
+       <property name="geometry">
+        <rect>
+         <x>210</x>
+         <y>280</y>
+         <width>350</width>
+         <height>25</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLabel" name="labelBelief">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>280</y>
+         <width>150</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Lato</family>
+         <pointsize>12</pointsize>
+         <bold>true</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>Glaubensgrundsatz:</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="labelStrength">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>200</y>
+         <width>150</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Lato</family>
+         <pointsize>12</pointsize>
+         <bold>true</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>Stärken:</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="lineEditWeakness">
+       <property name="geometry">
+        <rect>
+         <x>210</x>
+         <y>160</y>
+         <width>350</width>
+         <height>25</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="lineEditPosCharacteristics">
+       <property name="geometry">
+        <rect>
+         <x>210</x>
+         <y>40</y>
+         <width>350</width>
+         <height>25</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="lineEditNegCharacteristics">
+       <property name="geometry">
+        <rect>
+         <x>210</x>
+         <y>80</y>
+         <width>350</width>
+         <height>25</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLabel" name="labelLifeGoal">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>320</y>
+         <width>150</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Lato</family>
+         <pointsize>12</pointsize>
+         <bold>true</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>Lebensziel:</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="labelWeakness">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>160</y>
+         <width>150</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Lato</family>
+         <pointsize>12</pointsize>
+         <bold>true</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>Schwächen:</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="labelNegCharacteristics">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>80</y>
+         <width>150</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Lato</family>
+         <pointsize>12</pointsize>
+         <bold>true</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>negative Eigenschaft:</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="labelFears">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>120</y>
+         <width>150</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Lato</family>
+         <pointsize>12</pointsize>
+         <bold>true</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>Ängste:</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="lineEditStrength">
+       <property name="geometry">
+        <rect>
+         <x>210</x>
+         <y>200</y>
+         <width>350</width>
+         <height>25</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QTextEdit" name="textEditPersonalityNotes">
+       <property name="geometry">
+        <rect>
+         <x>210</x>
+         <y>440</y>
+         <width>350</width>
+         <height>60</height>
+        </rect>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="tab6">
+      <attribute name="title">
+       <string>Psychologisches Profil</string>
+      </attribute>
+      <widget class="QLabel" name="labelStengthOfCharacter">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>360</y>
+         <width>150</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Lato</family>
+         <pointsize>12</pointsize>
+         <bold>true</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>Charakterstärke:</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="labelBeliefs">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>280</y>
+         <width>150</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Lato</family>
+         <pointsize>12</pointsize>
+         <bold>true</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>Glaubensgrundsatz:</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="labelTemperament">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>200</y>
+         <width>150</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Lato</family>
+         <pointsize>12</pointsize>
+         <bold>true</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>Temperament:</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="labelTherapy">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>120</y>
+         <width>150</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Lato</family>
+         <pointsize>12</pointsize>
+         <bold>true</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>Therapie:</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="lineEditWeaknessOfCharacter">
+       <property name="geometry">
+        <rect>
+         <x>210</x>
+         <y>400</y>
+         <width>350</width>
+         <height>25</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="lineEditMedication">
+       <property name="geometry">
+        <rect>
+         <x>210</x>
+         <y>160</y>
+         <width>350</width>
+         <height>25</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="lineEditSymptoms">
+       <property name="geometry">
+        <rect>
+         <x>210</x>
+         <y>80</y>
+         <width>350</width>
+         <height>25</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLabel" name="labelDiagnosis">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>40</y>
+         <width>150</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Lato</family>
+         <pointsize>12</pointsize>
+         <bold>true</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>Diagnose:</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="lineEditMoralValues">
+       <property name="geometry">
+        <rect>
+         <x>210</x>
+         <y>320</y>
+         <width>350</width>
+         <height>25</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLabel" name="labelWeaknessOfCharacter">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>400</y>
+         <width>150</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Lato</family>
+         <pointsize>12</pointsize>
+         <bold>true</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>Charakterschwäche:</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="labelEthicalValues">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>240</y>
+         <width>150</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Lato</family>
+         <pointsize>12</pointsize>
+         <bold>true</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>ethische Werte:</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="labelSymptoms">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>80</y>
+         <width>150</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Lato</family>
+         <pointsize>12</pointsize>
+         <bold>true</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>Symptome:</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="lineEditDiagnosis">
+       <property name="geometry">
+        <rect>
+         <x>210</x>
+         <y>40</y>
+         <width>350</width>
+         <height>25</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="lineEditStrengthsOfCharacter">
+       <property name="geometry">
+        <rect>
+         <x>210</x>
+         <y>360</y>
+         <width>350</width>
+         <height>25</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="lineEditBeliefs">
+       <property name="geometry">
+        <rect>
+         <x>210</x>
+         <y>280</y>
+         <width>350</width>
+         <height>25</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLabel" name="labelMoralValues">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>320</y>
+         <width>150</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Lato</family>
+         <pointsize>12</pointsize>
+         <bold>true</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>Moralvorstellung:</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="labelMedication">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>160</y>
+         <width>150</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Lato</family>
+         <pointsize>12</pointsize>
+         <bold>true</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>Medikamente:</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="lineEditEthicalValues">
+       <property name="geometry">
+        <rect>
+         <x>210</x>
+         <y>240</y>
+         <width>350</width>
+         <height>25</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="lineEditTemperament">
+       <property name="geometry">
+        <rect>
+         <x>210</x>
+         <y>200</y>
+         <width>350</width>
+         <height>25</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="lineEditTherapy">
+       <property name="geometry">
+        <rect>
+         <x>210</x>
+         <y>120</y>
+         <width>350</width>
+         <height>25</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="lineEditTrauma">
+       <property name="geometry">
+        <rect>
+         <x>210</x>
+         <y>560</y>
+         <width>350</width>
+         <height>25</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLabel" name="labelTrauma">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>560</y>
+         <width>150</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Lato</family>
+         <pointsize>12</pointsize>
+         <bold>true</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>Trauma:</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="labelImpression">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>600</y>
+         <width>150</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Lato</family>
+         <pointsize>12</pointsize>
+         <bold>true</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>Prägung:</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="labelAggressiveness">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>520</y>
+         <width>150</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Lato</family>
+         <pointsize>12</pointsize>
+         <bold>true</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>Agressivität:</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="lineEditSelfImage">
+       <property name="geometry">
+        <rect>
+         <x>210</x>
+         <y>440</y>
+         <width>350</width>
+         <height>25</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLabel" name="labelSelfImage">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>440</y>
+         <width>150</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Lato</family>
+         <pointsize>12</pointsize>
+         <bold>true</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>Sebstbild:</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="lineEditAggressivness">
+       <property name="geometry">
+        <rect>
+         <x>210</x>
+         <y>520</y>
+         <width>350</width>
+         <height>25</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="lineEditHumor">
+       <property name="geometry">
+        <rect>
+         <x>210</x>
+         <y>480</y>
+         <width>350</width>
+         <height>25</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="lineEditImpression">
+       <property name="geometry">
+        <rect>
+         <x>210</x>
+         <y>600</y>
+         <width>350</width>
+         <height>25</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="lineEditNorms">
+       <property name="geometry">
+        <rect>
+         <x>210</x>
+         <y>680</y>
+         <width>350</width>
+         <height>25</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLabel" name="labelSocialization">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>640</y>
+         <width>150</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Lato</family>
+         <pointsize>12</pointsize>
+         <bold>true</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>Sozialisation:</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="labelHumor">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>480</y>
+         <width>150</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Lato</family>
+         <pointsize>12</pointsize>
+         <bold>true</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>Humor:</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="lineEditSocialization">
+       <property name="geometry">
+        <rect>
+         <x>210</x>
+         <y>640</y>
+         <width>350</width>
+         <height>25</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLabel" name="labelNorms">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>680</y>
+         <width>150</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Lato</family>
+         <pointsize>12</pointsize>
+         <bold>true</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>Normen:</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="labelPsychologyNotes">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>760</y>
+         <width>180</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Lato</family>
+         <pointsize>12</pointsize>
+         <bold>true</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>Anmerkungen/Notizen:</string>
+       </property>
+      </widget>
+      <widget class="QTextEdit" name="textEditPsychologyNotes">
+       <property name="geometry">
+        <rect>
+         <x>210</x>
+         <y>760</y>
+         <width>350</width>
+         <height>60</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLabel" name="labelTabus">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>720</y>
+         <width>150</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Lato</family>
+         <pointsize>12</pointsize>
+         <bold>true</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>Tabus:</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="lineEditTabus">
+       <property name="geometry">
+        <rect>
+         <x>210</x>
+         <y>720</y>
+         <width>350</width>
+         <height>25</height>
+        </rect>
+       </property>
+      </widget>
+     </widget>
+    </widget>
+    <widget class="QCheckBox" name="checkBoxMainCharacter">
+     <property name="geometry">
+      <rect>
+       <x>60</x>
+       <y>20</y>
+       <width>200</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Lato</family>
+       <pointsize>12</pointsize>
+       <bold>false</bold>
+       <stylestrategy>PreferAntialias</stylestrategy>
+       <kerning>true</kerning>
+      </font>
+     </property>
+     <property name="text">
+      <string>Hauptcharakter</string>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>16</width>
+       <height>16</height>
+      </size>
+     </property>
+     <property name="tristate">
+      <bool>false</bool>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labelName">
+     <property name="geometry">
+      <rect>
+       <x>60</x>
+       <y>60</y>
+       <width>100</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Name:</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labelFirstName">
+     <property name="geometry">
+      <rect>
+       <x>60</x>
+       <y>110</y>
+       <width>100</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Vorname:</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lineEditName">
+     <property name="geometry">
+      <rect>
+       <x>200</x>
+       <y>60</y>
+       <width>250</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Lato</family>
+       <pointsize>12</pointsize>
+       <bold>false</bold>
+       <stylestrategy>PreferAntialias</stylestrategy>
+       <kerning>true</kerning>
+      </font>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lineEditFirstName">
+     <property name="geometry">
+      <rect>
+       <x>200</x>
+       <y>110</y>
+       <width>250</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Lato</family>
+       <pointsize>12</pointsize>
+       <bold>false</bold>
+       <stylestrategy>PreferAntialias</stylestrategy>
+       <kerning>true</kerning>
+      </font>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labelState">
+     <property name="geometry">
+      <rect>
+       <x>520</x>
+       <y>30</y>
+       <width>180</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Lato</family>
+       <pointsize>12</pointsize>
+       <bold>true</bold>
+       <stylestrategy>PreferAntialias</stylestrategy>
+       <kerning>true</kerning>
+      </font>
+     </property>
+     <property name="text">
+      <string>Status:</string>
+     </property>
+    </widget>
+    <widget class="QComboBox" name="comboBox">
+     <property name="geometry">
+      <rect>
+       <x>520</x>
+       <y>60</y>
+       <width>201</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Lato</family>
+       <pointsize>12</pointsize>
+       <bold>false</bold>
+       <stylestrategy>PreferAntialias</stylestrategy>
+       <kerning>true</kerning>
+      </font>
+     </property>
+     <item>
+      <property name="text">
+       <string>Planung</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Entwicklung</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Bearbeitung</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Test</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Fertig</string>
+      </property>
+     </item>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="widgetRight" native="true">
+    <property name="maximumSize">
+     <size>
+      <width>450</width>
+      <height>16777215</height>
+     </size>
+    </property>
+    <widget class="QPushButton" name="exitBnt">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>930</y>
+       <width>380</width>
+       <height>80</height>
+      </rect>
+     </property>
+     <property name="cursor">
+      <cursorShape>PointingHandCursor</cursorShape>
+     </property>
+     <property name="toolTip">
+      <string>Das Startfenster aufrufen</string>
+     </property>
+     <property name="text">
+      <string>Startfenster</string>
+     </property>
+     <property name="icon">
+      <iconset theme="go-home"/>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>32</width>
+       <height>32</height>
+      </size>
+     </property>
+     <property name="default">
+      <bool>true</bool>
+     </property>
+     <property name="flat">
+      <bool>false</bool>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labelProjects">
+     <property name="geometry">
+      <rect>
+       <x>19</x>
+       <y>10</y>
+       <width>401</width>
+       <height>70</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Lato</family>
+       <pointsize>15</pointsize>
+       <bold>true</bold>
+       <stylestrategy>PreferAntialias</stylestrategy>
+       <kerning>true</kerning>
+      </font>
+     </property>
+     <property name="text">
+      <string>Charaktere</string>
+     </property>
+     <property name="scaledContents">
+      <bool>false</bool>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignmentFlag::AlignCenter</set>
+     </property>
+     <property name="margin">
+      <number>1</number>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="newBtn">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>100</y>
+       <width>380</width>
+       <height>80</height>
+      </rect>
+     </property>
+     <property name="cursor">
+      <cursorShape>PointingHandCursor</cursorShape>
+     </property>
+     <property name="toolTip">
+      <string>Einen neuen Datensatz erstellen</string>
+     </property>
+     <property name="text">
+      <string>Neu</string>
+     </property>
+     <property name="icon">
+      <iconset theme="document-new"/>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>32</width>
+       <height>32</height>
+      </size>
+     </property>
+     <property name="default">
+      <bool>true</bool>
+     </property>
+     <property name="flat">
+      <bool>false</bool>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="nextBtn">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>200</y>
+       <width>380</width>
+       <height>80</height>
+      </rect>
+     </property>
+     <property name="cursor">
+      <cursorShape>PointingHandCursor</cursorShape>
+     </property>
+     <property name="toolTip">
+      <string>Einen Datensatz vor</string>
+     </property>
+     <property name="text">
+      <string>Vor</string>
+     </property>
+     <property name="icon">
+      <iconset theme="go-next"/>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>32</width>
+       <height>32</height>
+      </size>
+     </property>
+     <property name="default">
+      <bool>true</bool>
+     </property>
+     <property name="flat">
+      <bool>false</bool>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="previousBtn">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>300</y>
+       <width>380</width>
+       <height>80</height>
+      </rect>
+     </property>
+     <property name="cursor">
+      <cursorShape>PointingHandCursor</cursorShape>
+     </property>
+     <property name="toolTip">
+      <string>Einen Datensatz zurück</string>
+     </property>
+     <property name="text">
+      <string>Zurück</string>
+     </property>
+     <property name="icon">
+      <iconset theme="go-previous"/>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>32</width>
+       <height>32</height>
+      </size>
+     </property>
+     <property name="default">
+      <bool>true</bool>
+     </property>
+     <property name="flat">
+      <bool>false</bool>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="deleteBtn">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>400</y>
+       <width>380</width>
+       <height>80</height>
+      </rect>
+     </property>
+     <property name="cursor">
+      <cursorShape>PointingHandCursor</cursorShape>
+     </property>
+     <property name="toolTip">
+      <string>Den aktuellen Datensatz löschen</string>
+     </property>
+     <property name="text">
+      <string>Löschen</string>
+     </property>
+     <property name="icon">
+      <iconset theme="user-trash"/>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>32</width>
+       <height>32</height>
+      </size>
+     </property>
+     <property name="default">
+      <bool>true</bool>
+     </property>
+     <property name="flat">
+      <bool>false</bool>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="imageBtn">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>500</y>
+       <width>380</width>
+       <height>80</height>
+      </rect>
+     </property>
+     <property name="cursor">
+      <cursorShape>PointingHandCursor</cursorShape>
+     </property>
+     <property name="toolTip">
+      <string>Ein Bild laden</string>
+     </property>
+     <property name="text">
+      <string>Bild Laden</string>
+     </property>
+     <property name="icon">
+      <iconset theme="insert-image"/>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>32</width>
+       <height>32</height>
+      </size>
+     </property>
+     <property name="default">
+      <bool>true</bool>
+     </property>
+     <property name="flat">
+      <bool>false</bool>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="saveBtn">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>600</y>
+       <width>380</width>
+       <height>80</height>
+      </rect>
+     </property>
+     <property name="cursor">
+      <cursorShape>PointingHandCursor</cursorShape>
+     </property>
+     <property name="toolTip">
+      <string>Den aktuellen Datensatz speichern</string>
+     </property>
+     <property name="text">
+      <string>Speichern</string>
+     </property>
+     <property name="icon">
+      <iconset theme="document-save"/>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>32</width>
+       <height>32</height>
+      </size>
+     </property>
+     <property name="default">
+      <bool>true</bool>
+     </property>
+     <property name="flat">
+      <bool>false</bool>
+     </property>
+    </widget>
+   </widget>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

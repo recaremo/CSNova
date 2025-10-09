@@ -1,0 +1,2505 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>csNova</class>
+ <widget class="QWidget" name="csNova">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1920</width>
+    <height>1080</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="font">
+   <font>
+    <family>Lato</family>
+    <pointsize>16</pointsize>
+    <bold>false</bold>
+    <stylestrategy>PreferAntialias</stylestrategy>
+    <kerning>true</kerning>
+   </font>
+  </property>
+  <property name="windowTitle">
+   <string>csNova - Einstellungen</string>
+  </property>
+  <layout class="QHBoxLayout" name="horizontalLayout_2">
+   <item>
+    <widget class="QSplitter" name="mainSplitter">
+     <property name="font">
+      <font>
+       <family>Lato</family>
+       <pointsize>12</pointsize>
+       <bold>true</bold>
+       <stylestrategy>PreferAntialias</stylestrategy>
+       <kerning>true</kerning>
+      </font>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::Shape::NoFrame</enum>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Orientation::Horizontal</enum>
+     </property>
+     <property name="handleWidth">
+      <number>36</number>
+     </property>
+     <widget class="QWidget" name="widgetLeft" native="true">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
+        <widget class="QDockWidget" name="dockWidget">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <widget class="QWidget" name="dockWidgetContents">
+          <layout class="QVBoxLayout" name="verticalLayout_2">
+           <item>
+            <widget class="QTextEdit" name="textEdit">
+             <property name="sizeAdjustPolicy">
+              <enum>QAbstractScrollArea::SizeAdjustPolicy::AdjustToContents</enum>
+             </property>
+             <property name="readOnly">
+              <bool>true</bool>
+             </property>
+             <property name="html">
+              <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+hr { height: 1px; border-width: 0; }
+li.unchecked::marker { content: &quot;\2610&quot;; }
+li.checked::marker { content: &quot;\2612&quot;; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Lato'; font-size:12pt; font-weight:700; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;Sprache und Layout&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:400;&quot;&gt;Die Layouts von csNova orientieren sich an internationalen Standards zur Darstellungen einer GUI (Grafic User Interface - grafische Bedienoberfläche eines Programms): &lt;/span&gt;&lt;span style=&quot; font-weight:400; font-style:italic;&quot;&gt;Modern&lt;/span&gt;&lt;span style=&quot; font-weight:400;&quot;&gt;, &lt;/span&gt;&lt;span style=&quot; font-weight:400; font-style:italic;&quot;&gt;Futuristisch&lt;/span&gt;&lt;span style=&quot; font-weight:400;&quot;&gt; und &lt;/span&gt;&lt;span style=&quot; font-weight:400; font-style:italic;&quot;&gt;Minimalistisch&lt;/span&gt;&lt;span style=&quot; font-weight:400;&quot;&gt;. Unabhängig von solchen Empfehlungen gibt es natürlich auch subjektive Vorlieben: einige mögen es lieber &amp;quot;verspielt&amp;quot;: &lt;/span&gt;&lt;span style=&quot; font-weight:400; font-style:italic;&quot;&gt;Klassik&lt;/span&gt;&lt;span style=&quot; font-weight:400;&quot;&gt;, &lt;/span&gt;&lt;span style=&quot; font-weight:400; font-style:italic;&quot;&gt;Vintage&lt;/span&gt;&lt;span style=&quot; font-weight:400;&quot;&gt; - andere bevorzugen die vertrauten Oberflächen &amp;quot;ältere&amp;quot; Programme und Betriebssysteme: &lt;/span&gt;&lt;span style=&quot; font-weight:400; font-style:italic;&quot;&gt;OldSchool.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;Anzeigen&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:400;&quot;&gt;Du kannst die Tipps und Tricks (also auch diesen Text hier) jederzeit ausblenden. &lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;Buch - Vorlagen&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:400;&quot;&gt;csNova beinhaltet eine - für Autor:innen optimierte - Textverarbeitung. Das heißt, es gibt relative wenig Optionenen um Texte zu formatieren, aber eben genaus das, was wirklich benötig wird. Die meisten Verlag verlangen sowieso, dass ihr eure Texte in einem bestimmten Format abliefert. Diese lassen sich für: &lt;/span&gt;&lt;span style=&quot; font-weight:400; font-style:italic;&quot;&gt;EU&lt;/span&gt;&lt;span style=&quot; font-weight:400;&quot;&gt;, &lt;/span&gt;&lt;span style=&quot; font-weight:400; font-style:italic;&quot;&gt;USA/Kanada&lt;/span&gt;&lt;span style=&quot; font-weight:400;&quot;&gt; und &lt;/span&gt;&lt;span style=&quot; font-weight:400; font-style:italic;&quot;&gt;UK&lt;/span&gt;&lt;span style=&quot; font-weight:400;&quot;&gt; - für fiktive Texte (Romane, etc.) und nicht-fiktive Texte (Sachbücher) - auswählen und voreinstellen. Wenn euer Verlag besondere, abweichende Formate wünscht, dann könnte ihr diese natürlich auch anpassen und erstellen. &lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;eBook - Vorlagen&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:400;&quot;&gt;Neben dem eigenen csNova-eBook Format für den csNova-Reader (unterstützt multimediale, animierte und besondere Formate), könnt ihr eure Bücher als EPUB (fast alle eBook Reader), AZW (Kindle) und PDF exportieren. &lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;Drehbuch - Vorlagen&lt;/span&gt;&lt;span style=&quot; font-weight:400;&quot;&gt;&lt;br /&gt;Die Vorlagen für Drehbücher sind - im Gegensatz zu den Buchvorlagen - klar und eindeutig definiert. Abweichungen sollte man tunlichst unterlassen und sich strikt daran halten. csNova stellt aktuell die Vorlagen für den europäischen und den US-amerikanischen Markt bereit. &lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;Theater - Vorlagen&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:400;&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;Storyboard - Vorlagen&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:400;&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;Game - Design&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:400;&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;Referenzen&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:400;&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;Quellen&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:400;&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;Zitate&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="copyRight">
+         <property name="font">
+          <font>
+           <family>Lato</family>
+           <pointsize>10</pointsize>
+           <bold>false</bold>
+           <stylestrategy>PreferAntialias</stylestrategy>
+           <kerning>true</kerning>
+          </font>
+         </property>
+         <property name="text">
+          <string>(c) Copyright 2025 Frank Reiser - v 0.1.273</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="widgetCenter" native="true">
+      <layout class="QFormLayout" name="formLayout">
+       <item row="0" column="0" colspan="2">
+        <widget class="QToolBox" name="toolBoxPreferences">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="currentIndex">
+          <number>0</number>
+         </property>
+         <widget class="QWidget" name="page_1">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>859</width>
+            <height>704</height>
+           </rect>
+          </property>
+          <attribute name="label">
+           <string>Sprache und Layout</string>
+          </attribute>
+          <layout class="QFormLayout" name="formLayout_4">
+           <item row="0" column="0" colspan="2">
+            <widget class="QGroupBox" name="groupBoxLanguageDesign">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="title">
+              <string>Sprachen und Design</string>
+             </property>
+             <layout class="QFormLayout" name="formLayout_2">
+              <item row="0" column="0">
+               <widget class="QLabel" name="labelLanguages">
+                <property name="font">
+                 <font>
+                  <family>Lato</family>
+                  <pointsize>12</pointsize>
+                  <bold>false</bold>
+                  <stylestrategy>PreferAntialias</stylestrategy>
+                  <kerning>true</kerning>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>Sprachen</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="0">
+               <widget class="QComboBox" name="comboBoxLanguage">
+                <property name="currentIndex">
+                 <number>0</number>
+                </property>
+                <item>
+                 <property name="text">
+                  <string>Deutsch</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Englisch</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Französisch</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Spanisch</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+              <item row="2" column="0">
+               <widget class="QLabel" name="labelTheme">
+                <property name="font">
+                 <font>
+                  <family>Lato</family>
+                  <pointsize>12</pointsize>
+                  <bold>false</bold>
+                  <stylestrategy>PreferAntialias</stylestrategy>
+                  <kerning>true</kerning>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>Design</string>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="0">
+               <widget class="QComboBox" name="comboBoxTheme">
+                <property name="currentIndex">
+                 <number>7</number>
+                </property>
+                <item>
+                 <property name="text">
+                  <string>Antik (hell)</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Antik (neutral)</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Antik (dunkel)</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Oldschool (hell)</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Oldschool (neutral)</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Oldschool (dunkel)</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Modern (hell)</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Modern (neutral)</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Modern (dunkel)</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Vintage (hell)</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Vintage (neutral)</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Vintage (dunkel)</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Futuristisch (hell)</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Futuristisch (neutral)</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Futuristisch (dunkel)</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Minimalistisch (hell)</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Minimalistisch (neutral)</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Minimalistisch (dunkel)</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item row="1" column="0" colspan="2">
+            <widget class="QGroupBox" name="groupBoxViews">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="title">
+              <string>Anzeigen</string>
+             </property>
+             <layout class="QFormLayout" name="formLayout_3">
+              <item row="0" column="0">
+               <widget class="QCheckBox" name="checkBoxHelp">
+                <property name="text">
+                 <string>Tipps &amp;&amp; Tricks anzeigen</string>
+                </property>
+                <property name="checked">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="0">
+               <widget class="QCheckBox" name="checkBox_2">
+                <property name="text">
+                 <string>CheckBox</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="0">
+               <widget class="QCheckBox" name="checkBox_3">
+                <property name="text">
+                 <string>CheckBox</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item row="2" column="0">
+            <spacer name="horizontalSpacer_3">
+             <property name="orientation">
+              <enum>Qt::Orientation::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>600</width>
+               <height>300</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="page_2">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>845</width>
+            <height>707</height>
+           </rect>
+          </property>
+          <attribute name="label">
+           <string>Buch - Vorlagen</string>
+          </attribute>
+          <layout class="QVBoxLayout" name="verticalLayout_9">
+           <item>
+            <widget class="QTabWidget" name="tabWidgetBooks">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="currentIndex">
+              <number>1</number>
+             </property>
+             <property name="usesScrollButtons">
+              <bool>true</bool>
+             </property>
+             <widget class="QWidget" name="tabFiction">
+              <attribute name="title">
+               <string>Fiktion - Romane</string>
+              </attribute>
+              <layout class="QVBoxLayout" name="verticalLayout_8">
+               <item>
+                <widget class="QGroupBox" name="groupBox_2">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="title">
+                  <string>Region &amp; Format</string>
+                 </property>
+                 <layout class="QFormLayout" name="formLayout_5">
+                  <item row="0" column="0">
+                   <widget class="QLabel" name="label_5">
+                    <property name="text">
+                     <string>Region:</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="0" column="1">
+                   <widget class="QComboBox" name="comboBox_3">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <family>Lato</family>
+                      <pointsize>12</pointsize>
+                      <bold>false</bold>
+                      <stylestrategy>PreferAntialias</stylestrategy>
+                      <kerning>true</kerning>
+                     </font>
+                    </property>
+                    <item>
+                     <property name="text">
+                      <string>EU</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>USA/Kanada</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>UK</string>
+                     </property>
+                    </item>
+                   </widget>
+                  </item>
+                  <item row="1" column="0">
+                   <widget class="QLabel" name="labelPaperSize">
+                    <property name="text">
+                     <string>Papierformat:</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="1" column="1">
+                   <widget class="QComboBox" name="comboBoxPaperSize">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <family>Lato</family>
+                      <pointsize>12</pointsize>
+                      <bold>false</bold>
+                      <stylestrategy>PreferAntialias</stylestrategy>
+                      <kerning>true</kerning>
+                     </font>
+                    </property>
+                    <item>
+                     <property name="text">
+                      <string>A4 - 210x297 mm</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>US-Letter 8.5 x 11 inches</string>
+                     </property>
+                    </item>
+                   </widget>
+                  </item>
+                  <item row="2" column="0">
+                   <widget class="QLabel" name="label_7">
+                    <property name="text">
+                     <string>Textausrichtung:</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="2" column="1">
+                   <widget class="QComboBox" name="comboBox">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <family>Lato</family>
+                      <pointsize>12</pointsize>
+                      <bold>false</bold>
+                      <stylestrategy>PreferAntialias</stylestrategy>
+                      <kerning>true</kerning>
+                     </font>
+                    </property>
+                    <item>
+                     <property name="text">
+                      <string>linksbündig</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>rechtsbündig</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>zentriert</string>
+                     </property>
+                    </item>
+                   </widget>
+                  </item>
+                  <item row="3" column="0">
+                   <widget class="QLabel" name="label_2">
+                    <property name="text">
+                     <string>Schriftart:</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="3" column="1">
+                   <widget class="QComboBox" name="comboBoxFontFamily">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <family>Lato</family>
+                      <pointsize>12</pointsize>
+                      <bold>false</bold>
+                      <stylestrategy>PreferAntialias</stylestrategy>
+                      <kerning>true</kerning>
+                     </font>
+                    </property>
+                    <property name="currentIndex">
+                     <number>3</number>
+                    </property>
+                    <item>
+                     <property name="text">
+                      <string>Arial</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>Courier New</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>Geramond</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>Times Roman</string>
+                     </property>
+                    </item>
+                   </widget>
+                  </item>
+                  <item row="4" column="0">
+                   <widget class="QLabel" name="label_3">
+                    <property name="text">
+                     <string>Schriftgröße:</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="4" column="1">
+                   <widget class="QSpinBox" name="spinBox">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <family>Lato</family>
+                      <pointsize>12</pointsize>
+                      <bold>false</bold>
+                      <stylestrategy>PreferAntialias</stylestrategy>
+                      <kerning>true</kerning>
+                     </font>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignmentFlag::AlignCenter</set>
+                    </property>
+                    <property name="suffix">
+                     <string> pt</string>
+                    </property>
+                    <property name="minimum">
+                     <number>8</number>
+                    </property>
+                    <property name="maximum">
+                     <number>24</number>
+                    </property>
+                    <property name="value">
+                     <number>12</number>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="5" column="0">
+                   <widget class="QLabel" name="label_4">
+                    <property name="text">
+                     <string>Zeilenabstand:</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="5" column="1">
+                   <widget class="QDoubleSpinBox" name="doubleSpinBox_5">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <family>Lato</family>
+                      <pointsize>12</pointsize>
+                      <bold>false</bold>
+                      <stylestrategy>PreferAntialias</stylestrategy>
+                      <kerning>true</kerning>
+                     </font>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignmentFlag::AlignCenter</set>
+                    </property>
+                    <property name="decimals">
+                     <number>1</number>
+                    </property>
+                    <property name="singleStep">
+                     <double>0.100000000000000</double>
+                    </property>
+                    <property name="value">
+                     <double>1.500000000000000</double>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </widget>
+               </item>
+               <item>
+                <widget class="QFrame" name="frame">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="frameShape">
+                  <enum>QFrame::Shape::StyledPanel</enum>
+                 </property>
+                 <property name="frameShadow">
+                  <enum>QFrame::Shadow::Raised</enum>
+                 </property>
+                 <layout class="QHBoxLayout" name="horizontalLayout_3">
+                  <item>
+                   <widget class="QGroupBox" name="groupBox">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="title">
+                     <string>Seitenränder:</string>
+                    </property>
+                    <layout class="QFormLayout" name="formLayout_7">
+                     <item row="0" column="0">
+                      <widget class="QLabel" name="label_6">
+                       <property name="text">
+                        <string>oben:</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="0" column="1">
+                      <widget class="QDoubleSpinBox" name="doubleSpinBox">
+                       <property name="sizePolicy">
+                        <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+                         <horstretch>0</horstretch>
+                         <verstretch>0</verstretch>
+                        </sizepolicy>
+                       </property>
+                       <property name="font">
+                        <font>
+                         <family>Lato</family>
+                         <pointsize>12</pointsize>
+                         <bold>false</bold>
+                         <stylestrategy>PreferAntialias</stylestrategy>
+                         <kerning>true</kerning>
+                        </font>
+                       </property>
+                       <property name="alignment">
+                        <set>Qt::AlignmentFlag::AlignCenter</set>
+                       </property>
+                       <property name="suffix">
+                        <string> cm</string>
+                       </property>
+                       <property name="decimals">
+                        <number>1</number>
+                       </property>
+                       <property name="maximum">
+                        <double>10.000000000000000</double>
+                       </property>
+                       <property name="singleStep">
+                        <double>0.100000000000000</double>
+                       </property>
+                       <property name="value">
+                        <double>2.500000000000000</double>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="1" column="0">
+                      <widget class="QLabel" name="label_10">
+                       <property name="text">
+                        <string>unten:</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="1" column="1">
+                      <widget class="QDoubleSpinBox" name="doubleSpinBox_2">
+                       <property name="sizePolicy">
+                        <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+                         <horstretch>0</horstretch>
+                         <verstretch>0</verstretch>
+                        </sizepolicy>
+                       </property>
+                       <property name="font">
+                        <font>
+                         <family>Lato</family>
+                         <pointsize>12</pointsize>
+                         <bold>false</bold>
+                         <stylestrategy>PreferAntialias</stylestrategy>
+                         <kerning>true</kerning>
+                        </font>
+                       </property>
+                       <property name="alignment">
+                        <set>Qt::AlignmentFlag::AlignCenter</set>
+                       </property>
+                       <property name="suffix">
+                        <string> cm</string>
+                       </property>
+                       <property name="decimals">
+                        <number>1</number>
+                       </property>
+                       <property name="maximum">
+                        <double>10.000000000000000</double>
+                       </property>
+                       <property name="singleStep">
+                        <double>0.100000000000000</double>
+                       </property>
+                       <property name="value">
+                        <double>2.500000000000000</double>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="2" column="0">
+                      <widget class="QLabel" name="label_12">
+                       <property name="text">
+                        <string>links:</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="2" column="1">
+                      <widget class="QDoubleSpinBox" name="doubleSpinBox_3">
+                       <property name="sizePolicy">
+                        <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+                         <horstretch>0</horstretch>
+                         <verstretch>0</verstretch>
+                        </sizepolicy>
+                       </property>
+                       <property name="font">
+                        <font>
+                         <family>Lato</family>
+                         <pointsize>12</pointsize>
+                         <bold>false</bold>
+                         <stylestrategy>PreferAntialias</stylestrategy>
+                         <kerning>true</kerning>
+                        </font>
+                       </property>
+                       <property name="alignment">
+                        <set>Qt::AlignmentFlag::AlignCenter</set>
+                       </property>
+                       <property name="suffix">
+                        <string> cm</string>
+                       </property>
+                       <property name="decimals">
+                        <number>1</number>
+                       </property>
+                       <property name="maximum">
+                        <double>10.000000000000000</double>
+                       </property>
+                       <property name="singleStep">
+                        <double>0.100000000000000</double>
+                       </property>
+                       <property name="value">
+                        <double>2.500000000000000</double>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="3" column="0">
+                      <widget class="QLabel" name="label_14">
+                       <property name="text">
+                        <string>rechts:</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="3" column="1">
+                      <widget class="QDoubleSpinBox" name="doubleSpinBox_4">
+                       <property name="sizePolicy">
+                        <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+                         <horstretch>0</horstretch>
+                         <verstretch>0</verstretch>
+                        </sizepolicy>
+                       </property>
+                       <property name="font">
+                        <font>
+                         <family>Lato</family>
+                         <pointsize>12</pointsize>
+                         <bold>false</bold>
+                         <stylestrategy>PreferAntialias</stylestrategy>
+                         <kerning>true</kerning>
+                        </font>
+                       </property>
+                       <property name="alignment">
+                        <set>Qt::AlignmentFlag::AlignCenter</set>
+                       </property>
+                       <property name="suffix">
+                        <string> cm</string>
+                       </property>
+                       <property name="decimals">
+                        <number>1</number>
+                       </property>
+                       <property name="maximum">
+                        <double>10.000000000000000</double>
+                       </property>
+                       <property name="singleStep">
+                        <double>0.100000000000000</double>
+                       </property>
+                       <property name="value">
+                        <double>2.500000000000000</double>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QGroupBox" name="groupBox_3">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="title">
+                     <string>Absatz:</string>
+                    </property>
+                    <layout class="QFormLayout" name="formLayout_8">
+                     <item row="0" column="0">
+                      <widget class="QLabel" name="label_19">
+                       <property name="text">
+                        <string>Einzug:</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="0" column="1">
+                      <widget class="QDoubleSpinBox" name="doubleSpinBox_7">
+                       <property name="font">
+                        <font>
+                         <family>Lato</family>
+                         <pointsize>12</pointsize>
+                         <bold>false</bold>
+                         <stylestrategy>PreferAntialias</stylestrategy>
+                         <kerning>true</kerning>
+                        </font>
+                       </property>
+                       <property name="suffix">
+                        <string> pt</string>
+                       </property>
+                       <property name="decimals">
+                        <number>1</number>
+                       </property>
+                       <property name="maximum">
+                        <double>10.000000000000000</double>
+                       </property>
+                       <property name="singleStep">
+                        <double>0.100000000000000</double>
+                       </property>
+                       <property name="value">
+                        <double>0.500000000000000</double>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="1" column="1">
+                      <widget class="QLabel" name="label_20">
+                       <property name="text">
+                        <string/>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="2" column="0">
+                      <widget class="QLabel" name="label_21">
+                       <property name="text">
+                        <string>vorher:</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="2" column="1">
+                      <widget class="QDoubleSpinBox" name="doubleSpinBox_6">
+                       <property name="font">
+                        <font>
+                         <family>Lato</family>
+                         <pointsize>12</pointsize>
+                         <bold>false</bold>
+                         <stylestrategy>PreferAntialias</stylestrategy>
+                         <kerning>true</kerning>
+                        </font>
+                       </property>
+                       <property name="suffix">
+                        <string> pt</string>
+                       </property>
+                       <property name="decimals">
+                        <number>1</number>
+                       </property>
+                       <property name="maximum">
+                        <double>10.000000000000000</double>
+                       </property>
+                       <property name="singleStep">
+                        <double>0.100000000000000</double>
+                       </property>
+                       <property name="value">
+                        <double>0.000000000000000</double>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="3" column="0">
+                      <widget class="QLabel" name="label_16">
+                       <property name="text">
+                        <string>nacher:</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="3" column="1">
+                      <widget class="QDoubleSpinBox" name="doubleSpinBox_8">
+                       <property name="font">
+                        <font>
+                         <family>Lato</family>
+                         <pointsize>12</pointsize>
+                         <bold>false</bold>
+                         <stylestrategy>PreferAntialias</stylestrategy>
+                         <kerning>true</kerning>
+                        </font>
+                       </property>
+                       <property name="suffix">
+                        <string> pt</string>
+                       </property>
+                       <property name="decimals">
+                        <number>1</number>
+                       </property>
+                       <property name="maximum">
+                        <double>10.000000000000000</double>
+                       </property>
+                       <property name="singleStep">
+                        <double>0.100000000000000</double>
+                       </property>
+                       <property name="value">
+                        <double>0.000000000000000</double>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="4" column="0" colspan="2">
+                      <widget class="QRadioButton" name="radioButton">
+                       <property name="text">
+                        <string>Zwischenzeile</string>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
+                   </widget>
+                  </item>
+                 </layout>
+                </widget>
+               </item>
+               <item>
+                <widget class="QFrame" name="frame_2">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="frameShape">
+                  <enum>QFrame::Shape::StyledPanel</enum>
+                 </property>
+                 <property name="frameShadow">
+                  <enum>QFrame::Shadow::Raised</enum>
+                 </property>
+                 <layout class="QHBoxLayout" name="horizontalLayout_4">
+                  <item>
+                   <widget class="QGroupBox" name="groupBox_5">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="title">
+                     <string>Überschrift 1</string>
+                    </property>
+                    <layout class="QFormLayout" name="formLayout_9">
+                     <item row="0" column="0">
+                      <widget class="QComboBox" name="comboBox_2">
+                       <property name="font">
+                        <font>
+                         <family>Lato</family>
+                         <pointsize>12</pointsize>
+                         <bold>false</bold>
+                         <stylestrategy>PreferAntialias</stylestrategy>
+                         <kerning>true</kerning>
+                        </font>
+                       </property>
+                       <property name="currentIndex">
+                        <number>1</number>
+                       </property>
+                       <item>
+                        <property name="text">
+                         <string>normal</string>
+                        </property>
+                       </item>
+                       <item>
+                        <property name="text">
+                         <string>fett</string>
+                        </property>
+                       </item>
+                       <item>
+                        <property name="text">
+                         <string>kursiv</string>
+                        </property>
+                       </item>
+                      </widget>
+                     </item>
+                     <item row="1" column="0">
+                      <widget class="QSpinBox" name="spinBox_2">
+                       <property name="font">
+                        <font>
+                         <family>Lato</family>
+                         <pointsize>12</pointsize>
+                         <bold>false</bold>
+                         <stylestrategy>PreferAntialias</stylestrategy>
+                         <kerning>true</kerning>
+                        </font>
+                       </property>
+                       <property name="alignment">
+                        <set>Qt::AlignmentFlag::AlignCenter</set>
+                       </property>
+                       <property name="suffix">
+                        <string> pt </string>
+                       </property>
+                       <property name="prefix">
+                        <string/>
+                       </property>
+                       <property name="minimum">
+                        <number>8</number>
+                       </property>
+                       <property name="maximum">
+                        <number>24</number>
+                       </property>
+                       <property name="value">
+                        <number>14</number>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="2" column="0">
+                      <widget class="QComboBox" name="comboBox_4">
+                       <property name="font">
+                        <font>
+                         <family>Lato</family>
+                         <pointsize>12</pointsize>
+                         <bold>false</bold>
+                         <stylestrategy>PreferAntialias</stylestrategy>
+                         <kerning>true</kerning>
+                        </font>
+                       </property>
+                       <property name="currentIndex">
+                        <number>2</number>
+                       </property>
+                       <item>
+                        <property name="text">
+                         <string>linksbündig</string>
+                        </property>
+                       </item>
+                       <item>
+                        <property name="text">
+                         <string>rechtsbündig</string>
+                        </property>
+                       </item>
+                       <item>
+                        <property name="text">
+                         <string>zentriert</string>
+                        </property>
+                       </item>
+                      </widget>
+                     </item>
+                    </layout>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QGroupBox" name="groupBox_6">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="title">
+                     <string>Überschrift 2</string>
+                    </property>
+                    <layout class="QFormLayout" name="formLayout_6">
+                     <item row="0" column="0">
+                      <widget class="QComboBox" name="comboBox_5">
+                       <property name="font">
+                        <font>
+                         <family>Lato</family>
+                         <pointsize>12</pointsize>
+                         <bold>false</bold>
+                         <stylestrategy>PreferAntialias</stylestrategy>
+                         <kerning>true</kerning>
+                        </font>
+                       </property>
+                       <property name="currentIndex">
+                        <number>1</number>
+                       </property>
+                       <item>
+                        <property name="text">
+                         <string>normal</string>
+                        </property>
+                       </item>
+                       <item>
+                        <property name="text">
+                         <string>fett</string>
+                        </property>
+                       </item>
+                       <item>
+                        <property name="text">
+                         <string>kursiv</string>
+                        </property>
+                       </item>
+                      </widget>
+                     </item>
+                     <item row="1" column="0">
+                      <widget class="QSpinBox" name="spinBox_3">
+                       <property name="font">
+                        <font>
+                         <family>Lato</family>
+                         <pointsize>12</pointsize>
+                         <bold>false</bold>
+                         <stylestrategy>PreferAntialias</stylestrategy>
+                         <kerning>true</kerning>
+                        </font>
+                       </property>
+                       <property name="alignment">
+                        <set>Qt::AlignmentFlag::AlignCenter</set>
+                       </property>
+                       <property name="suffix">
+                        <string> pt </string>
+                       </property>
+                       <property name="prefix">
+                        <string/>
+                       </property>
+                       <property name="minimum">
+                        <number>8</number>
+                       </property>
+                       <property name="maximum">
+                        <number>24</number>
+                       </property>
+                       <property name="value">
+                        <number>12</number>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="2" column="0">
+                      <widget class="QComboBox" name="comboBox_6">
+                       <property name="font">
+                        <font>
+                         <family>Lato</family>
+                         <pointsize>12</pointsize>
+                         <bold>false</bold>
+                         <stylestrategy>PreferAntialias</stylestrategy>
+                         <kerning>true</kerning>
+                        </font>
+                       </property>
+                       <item>
+                        <property name="text">
+                         <string>linksbündig</string>
+                        </property>
+                       </item>
+                       <item>
+                        <property name="text">
+                         <string>rechtsbündig</string>
+                        </property>
+                       </item>
+                       <item>
+                        <property name="text">
+                         <string>zentriert</string>
+                        </property>
+                       </item>
+                      </widget>
+                     </item>
+                    </layout>
+                   </widget>
+                  </item>
+                 </layout>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+             <widget class="QWidget" name="tab_2">
+              <attribute name="title">
+               <string>NonFiktion - Sachbücher</string>
+              </attribute>
+              <layout class="QVBoxLayout" name="verticalLayout_7">
+               <item>
+                <widget class="QGroupBox" name="groupBox_4">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="title">
+                  <string>Region &amp; Format</string>
+                 </property>
+                 <layout class="QFormLayout" name="formLayout_10">
+                  <item row="0" column="0">
+                   <widget class="QLabel" name="label_8">
+                    <property name="text">
+                     <string>Region:</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="0" column="1">
+                   <widget class="QComboBox" name="comboBox_7">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <family>Lato</family>
+                      <pointsize>12</pointsize>
+                      <bold>false</bold>
+                      <stylestrategy>PreferAntialias</stylestrategy>
+                      <kerning>true</kerning>
+                     </font>
+                    </property>
+                    <item>
+                     <property name="text">
+                      <string>EU</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>USA/Kanada</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>UK</string>
+                     </property>
+                    </item>
+                   </widget>
+                  </item>
+                  <item row="1" column="0">
+                   <widget class="QLabel" name="labelPaperSize_2">
+                    <property name="text">
+                     <string>Papierformat:</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="1" column="1">
+                   <widget class="QComboBox" name="comboBoxPaperSize_2">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <family>Lato</family>
+                      <pointsize>12</pointsize>
+                      <bold>false</bold>
+                      <stylestrategy>PreferAntialias</stylestrategy>
+                      <kerning>true</kerning>
+                     </font>
+                    </property>
+                    <item>
+                     <property name="text">
+                      <string>A4 - 210x297 mm</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>US-Letter 8.5 x 11 inches</string>
+                     </property>
+                    </item>
+                   </widget>
+                  </item>
+                  <item row="2" column="0">
+                   <widget class="QLabel" name="label_9">
+                    <property name="text">
+                     <string>Textausrichtung:</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="2" column="1">
+                   <widget class="QComboBox" name="comboBox_8">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <family>Lato</family>
+                      <pointsize>12</pointsize>
+                      <bold>false</bold>
+                      <stylestrategy>PreferAntialias</stylestrategy>
+                      <kerning>true</kerning>
+                     </font>
+                    </property>
+                    <item>
+                     <property name="text">
+                      <string>linksbündig</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>rechtsbündig</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>zentriert</string>
+                     </property>
+                    </item>
+                   </widget>
+                  </item>
+                  <item row="3" column="0">
+                   <widget class="QLabel" name="label_11">
+                    <property name="text">
+                     <string>Schriftart:</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="3" column="1">
+                   <widget class="QComboBox" name="comboBoxFontFamily_2">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <family>Lato</family>
+                      <pointsize>12</pointsize>
+                      <bold>false</bold>
+                      <stylestrategy>PreferAntialias</stylestrategy>
+                      <kerning>true</kerning>
+                     </font>
+                    </property>
+                    <property name="currentIndex">
+                     <number>3</number>
+                    </property>
+                    <item>
+                     <property name="text">
+                      <string>Arial</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>Courier New</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>Geramond</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>Times Roman</string>
+                     </property>
+                    </item>
+                   </widget>
+                  </item>
+                  <item row="4" column="0">
+                   <widget class="QLabel" name="label_13">
+                    <property name="text">
+                     <string>Schriftgröße:</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="4" column="1">
+                   <widget class="QSpinBox" name="spinBox_4">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <family>Lato</family>
+                      <pointsize>12</pointsize>
+                      <bold>false</bold>
+                      <stylestrategy>PreferAntialias</stylestrategy>
+                      <kerning>true</kerning>
+                     </font>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignmentFlag::AlignCenter</set>
+                    </property>
+                    <property name="suffix">
+                     <string> pt</string>
+                    </property>
+                    <property name="minimum">
+                     <number>8</number>
+                    </property>
+                    <property name="maximum">
+                     <number>24</number>
+                    </property>
+                    <property name="value">
+                     <number>12</number>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="5" column="0">
+                   <widget class="QLabel" name="label_15">
+                    <property name="text">
+                     <string>Zeilenabstand:</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="5" column="1">
+                   <widget class="QDoubleSpinBox" name="doubleSpinBox_9">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <family>Lato</family>
+                      <pointsize>12</pointsize>
+                      <bold>false</bold>
+                      <stylestrategy>PreferAntialias</stylestrategy>
+                      <kerning>true</kerning>
+                     </font>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignmentFlag::AlignCenter</set>
+                    </property>
+                    <property name="decimals">
+                     <number>1</number>
+                    </property>
+                    <property name="singleStep">
+                     <double>0.100000000000000</double>
+                    </property>
+                    <property name="value">
+                     <double>1.500000000000000</double>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </widget>
+               </item>
+               <item>
+                <widget class="QFrame" name="frame_4">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="frameShape">
+                  <enum>QFrame::Shape::StyledPanel</enum>
+                 </property>
+                 <property name="frameShadow">
+                  <enum>QFrame::Shadow::Raised</enum>
+                 </property>
+                 <layout class="QHBoxLayout" name="horizontalLayout_7">
+                  <item>
+                   <widget class="QGroupBox" name="groupBox_9">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="title">
+                     <string>Seitenränder:</string>
+                    </property>
+                    <layout class="QFormLayout" name="formLayout_13">
+                     <item row="0" column="0">
+                      <widget class="QLabel" name="label_17">
+                       <property name="text">
+                        <string>oben:</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="0" column="1">
+                      <widget class="QDoubleSpinBox" name="doubleSpinBox_10">
+                       <property name="sizePolicy">
+                        <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+                         <horstretch>0</horstretch>
+                         <verstretch>0</verstretch>
+                        </sizepolicy>
+                       </property>
+                       <property name="font">
+                        <font>
+                         <family>Lato</family>
+                         <pointsize>12</pointsize>
+                         <bold>false</bold>
+                         <stylestrategy>PreferAntialias</stylestrategy>
+                         <kerning>true</kerning>
+                        </font>
+                       </property>
+                       <property name="alignment">
+                        <set>Qt::AlignmentFlag::AlignCenter</set>
+                       </property>
+                       <property name="suffix">
+                        <string> cm</string>
+                       </property>
+                       <property name="decimals">
+                        <number>1</number>
+                       </property>
+                       <property name="maximum">
+                        <double>10.000000000000000</double>
+                       </property>
+                       <property name="singleStep">
+                        <double>0.100000000000000</double>
+                       </property>
+                       <property name="value">
+                        <double>2.500000000000000</double>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="1" column="0">
+                      <widget class="QLabel" name="label_18">
+                       <property name="text">
+                        <string>unten:</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="1" column="1">
+                      <widget class="QDoubleSpinBox" name="doubleSpinBox_11">
+                       <property name="sizePolicy">
+                        <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+                         <horstretch>0</horstretch>
+                         <verstretch>0</verstretch>
+                        </sizepolicy>
+                       </property>
+                       <property name="font">
+                        <font>
+                         <family>Lato</family>
+                         <pointsize>12</pointsize>
+                         <bold>false</bold>
+                         <stylestrategy>PreferAntialias</stylestrategy>
+                         <kerning>true</kerning>
+                        </font>
+                       </property>
+                       <property name="alignment">
+                        <set>Qt::AlignmentFlag::AlignCenter</set>
+                       </property>
+                       <property name="suffix">
+                        <string> cm</string>
+                       </property>
+                       <property name="decimals">
+                        <number>1</number>
+                       </property>
+                       <property name="maximum">
+                        <double>10.000000000000000</double>
+                       </property>
+                       <property name="singleStep">
+                        <double>0.100000000000000</double>
+                       </property>
+                       <property name="value">
+                        <double>2.500000000000000</double>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="2" column="0">
+                      <widget class="QLabel" name="label_22">
+                       <property name="text">
+                        <string>links:</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="2" column="1">
+                      <widget class="QDoubleSpinBox" name="doubleSpinBox_12">
+                       <property name="sizePolicy">
+                        <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+                         <horstretch>0</horstretch>
+                         <verstretch>0</verstretch>
+                        </sizepolicy>
+                       </property>
+                       <property name="font">
+                        <font>
+                         <family>Lato</family>
+                         <pointsize>12</pointsize>
+                         <bold>false</bold>
+                         <stylestrategy>PreferAntialias</stylestrategy>
+                         <kerning>true</kerning>
+                        </font>
+                       </property>
+                       <property name="alignment">
+                        <set>Qt::AlignmentFlag::AlignCenter</set>
+                       </property>
+                       <property name="suffix">
+                        <string> cm</string>
+                       </property>
+                       <property name="decimals">
+                        <number>1</number>
+                       </property>
+                       <property name="maximum">
+                        <double>10.000000000000000</double>
+                       </property>
+                       <property name="singleStep">
+                        <double>0.100000000000000</double>
+                       </property>
+                       <property name="value">
+                        <double>2.500000000000000</double>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="3" column="0">
+                      <widget class="QLabel" name="label_23">
+                       <property name="text">
+                        <string>rechts:</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="3" column="1">
+                      <widget class="QDoubleSpinBox" name="doubleSpinBox_13">
+                       <property name="sizePolicy">
+                        <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+                         <horstretch>0</horstretch>
+                         <verstretch>0</verstretch>
+                        </sizepolicy>
+                       </property>
+                       <property name="font">
+                        <font>
+                         <family>Lato</family>
+                         <pointsize>12</pointsize>
+                         <bold>false</bold>
+                         <stylestrategy>PreferAntialias</stylestrategy>
+                         <kerning>true</kerning>
+                        </font>
+                       </property>
+                       <property name="alignment">
+                        <set>Qt::AlignmentFlag::AlignCenter</set>
+                       </property>
+                       <property name="suffix">
+                        <string> cm</string>
+                       </property>
+                       <property name="decimals">
+                        <number>1</number>
+                       </property>
+                       <property name="maximum">
+                        <double>10.000000000000000</double>
+                       </property>
+                       <property name="singleStep">
+                        <double>0.100000000000000</double>
+                       </property>
+                       <property name="value">
+                        <double>2.500000000000000</double>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QGroupBox" name="groupBox_10">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="title">
+                     <string>Absatz:</string>
+                    </property>
+                    <layout class="QFormLayout" name="formLayout_14">
+                     <item row="0" column="0">
+                      <widget class="QLabel" name="label_24">
+                       <property name="text">
+                        <string>Einzug:</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="0" column="1">
+                      <widget class="QDoubleSpinBox" name="doubleSpinBox_14">
+                       <property name="font">
+                        <font>
+                         <family>Lato</family>
+                         <pointsize>12</pointsize>
+                         <bold>false</bold>
+                         <stylestrategy>PreferAntialias</stylestrategy>
+                         <kerning>true</kerning>
+                        </font>
+                       </property>
+                       <property name="suffix">
+                        <string> pt</string>
+                       </property>
+                       <property name="decimals">
+                        <number>1</number>
+                       </property>
+                       <property name="maximum">
+                        <double>10.000000000000000</double>
+                       </property>
+                       <property name="singleStep">
+                        <double>0.100000000000000</double>
+                       </property>
+                       <property name="value">
+                        <double>0.500000000000000</double>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="1" column="1">
+                      <widget class="QLabel" name="label_25">
+                       <property name="text">
+                        <string/>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="2" column="0">
+                      <widget class="QLabel" name="label_26">
+                       <property name="text">
+                        <string>vorher:</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="2" column="1">
+                      <widget class="QDoubleSpinBox" name="doubleSpinBox_15">
+                       <property name="font">
+                        <font>
+                         <family>Lato</family>
+                         <pointsize>12</pointsize>
+                         <bold>false</bold>
+                         <stylestrategy>PreferAntialias</stylestrategy>
+                         <kerning>true</kerning>
+                        </font>
+                       </property>
+                       <property name="suffix">
+                        <string> pt</string>
+                       </property>
+                       <property name="decimals">
+                        <number>1</number>
+                       </property>
+                       <property name="maximum">
+                        <double>10.000000000000000</double>
+                       </property>
+                       <property name="singleStep">
+                        <double>0.100000000000000</double>
+                       </property>
+                       <property name="value">
+                        <double>6.000000000000000</double>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="3" column="0">
+                      <widget class="QLabel" name="label_27">
+                       <property name="text">
+                        <string>nacher:</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="3" column="1">
+                      <widget class="QDoubleSpinBox" name="doubleSpinBox_16">
+                       <property name="font">
+                        <font>
+                         <family>Lato</family>
+                         <pointsize>12</pointsize>
+                         <bold>false</bold>
+                         <stylestrategy>PreferAntialias</stylestrategy>
+                         <kerning>true</kerning>
+                        </font>
+                       </property>
+                       <property name="suffix">
+                        <string> pt</string>
+                       </property>
+                       <property name="decimals">
+                        <number>1</number>
+                       </property>
+                       <property name="maximum">
+                        <double>10.000000000000000</double>
+                       </property>
+                       <property name="singleStep">
+                        <double>0.100000000000000</double>
+                       </property>
+                       <property name="value">
+                        <double>6.000000000000000</double>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="4" column="0" colspan="2">
+                      <widget class="QRadioButton" name="radioButton_2">
+                       <property name="text">
+                        <string>Zwischenzeile</string>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
+                   </widget>
+                  </item>
+                 </layout>
+                </widget>
+               </item>
+               <item>
+                <widget class="QFrame" name="frame_3">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="frameShape">
+                  <enum>QFrame::Shape::StyledPanel</enum>
+                 </property>
+                 <property name="frameShadow">
+                  <enum>QFrame::Shadow::Raised</enum>
+                 </property>
+                 <layout class="QHBoxLayout" name="horizontalLayout_6">
+                  <item>
+                   <widget class="QGroupBox" name="groupBox_7">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="title">
+                     <string>Überschrift 1</string>
+                    </property>
+                    <layout class="QVBoxLayout" name="verticalLayout_4">
+                     <item>
+                      <widget class="QComboBox" name="comboBox_9">
+                       <property name="font">
+                        <font>
+                         <family>Lato</family>
+                         <pointsize>12</pointsize>
+                         <bold>false</bold>
+                         <stylestrategy>PreferAntialias</stylestrategy>
+                         <kerning>true</kerning>
+                        </font>
+                       </property>
+                       <property name="currentIndex">
+                        <number>1</number>
+                       </property>
+                       <item>
+                        <property name="text">
+                         <string>normal</string>
+                        </property>
+                       </item>
+                       <item>
+                        <property name="text">
+                         <string>fett</string>
+                        </property>
+                       </item>
+                       <item>
+                        <property name="text">
+                         <string>kursiv</string>
+                        </property>
+                       </item>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QSpinBox" name="spinBox_5">
+                       <property name="font">
+                        <font>
+                         <family>Lato</family>
+                         <pointsize>12</pointsize>
+                         <bold>false</bold>
+                         <stylestrategy>PreferAntialias</stylestrategy>
+                         <kerning>true</kerning>
+                        </font>
+                       </property>
+                       <property name="alignment">
+                        <set>Qt::AlignmentFlag::AlignCenter</set>
+                       </property>
+                       <property name="suffix">
+                        <string> pt </string>
+                       </property>
+                       <property name="prefix">
+                        <string/>
+                       </property>
+                       <property name="minimum">
+                        <number>8</number>
+                       </property>
+                       <property name="maximum">
+                        <number>24</number>
+                       </property>
+                       <property name="value">
+                        <number>14</number>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QComboBox" name="comboBox_10">
+                       <property name="font">
+                        <font>
+                         <family>Lato</family>
+                         <pointsize>12</pointsize>
+                         <bold>false</bold>
+                         <stylestrategy>PreferAntialias</stylestrategy>
+                         <kerning>true</kerning>
+                        </font>
+                       </property>
+                       <property name="currentIndex">
+                        <number>0</number>
+                       </property>
+                       <item>
+                        <property name="text">
+                         <string>linksbündig</string>
+                        </property>
+                       </item>
+                       <item>
+                        <property name="text">
+                         <string>rechtsbündig</string>
+                        </property>
+                       </item>
+                       <item>
+                        <property name="text">
+                         <string>zentriert</string>
+                        </property>
+                       </item>
+                      </widget>
+                     </item>
+                    </layout>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QGroupBox" name="groupBox_8">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="title">
+                     <string>Überschrift 2</string>
+                    </property>
+                    <layout class="QVBoxLayout" name="verticalLayout_5">
+                     <item>
+                      <widget class="QComboBox" name="comboBox_11">
+                       <property name="font">
+                        <font>
+                         <family>Lato</family>
+                         <pointsize>12</pointsize>
+                         <bold>false</bold>
+                         <stylestrategy>PreferAntialias</stylestrategy>
+                         <kerning>true</kerning>
+                        </font>
+                       </property>
+                       <property name="currentIndex">
+                        <number>1</number>
+                       </property>
+                       <item>
+                        <property name="text">
+                         <string>normal</string>
+                        </property>
+                       </item>
+                       <item>
+                        <property name="text">
+                         <string>fett</string>
+                        </property>
+                       </item>
+                       <item>
+                        <property name="text">
+                         <string>kursiv</string>
+                        </property>
+                       </item>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QSpinBox" name="spinBox_6">
+                       <property name="font">
+                        <font>
+                         <family>Lato</family>
+                         <pointsize>12</pointsize>
+                         <bold>false</bold>
+                         <stylestrategy>PreferAntialias</stylestrategy>
+                         <kerning>true</kerning>
+                        </font>
+                       </property>
+                       <property name="alignment">
+                        <set>Qt::AlignmentFlag::AlignCenter</set>
+                       </property>
+                       <property name="suffix">
+                        <string> pt </string>
+                       </property>
+                       <property name="prefix">
+                        <string/>
+                       </property>
+                       <property name="minimum">
+                        <number>8</number>
+                       </property>
+                       <property name="maximum">
+                        <number>24</number>
+                       </property>
+                       <property name="value">
+                        <number>12</number>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QComboBox" name="comboBox_12">
+                       <property name="font">
+                        <font>
+                         <family>Lato</family>
+                         <pointsize>12</pointsize>
+                         <bold>false</bold>
+                         <stylestrategy>PreferAntialias</stylestrategy>
+                         <kerning>true</kerning>
+                        </font>
+                       </property>
+                       <item>
+                        <property name="text">
+                         <string>linksbündig</string>
+                        </property>
+                       </item>
+                       <item>
+                        <property name="text">
+                         <string>rechtsbündig</string>
+                        </property>
+                       </item>
+                       <item>
+                        <property name="text">
+                         <string>zentriert</string>
+                        </property>
+                       </item>
+                      </widget>
+                     </item>
+                    </layout>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QGroupBox" name="groupBox_11">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="title">
+                     <string>Überschrift 3</string>
+                    </property>
+                    <layout class="QVBoxLayout" name="verticalLayout_6">
+                     <item>
+                      <widget class="QComboBox" name="comboBox_13">
+                       <property name="font">
+                        <font>
+                         <family>Lato</family>
+                         <pointsize>12</pointsize>
+                         <bold>false</bold>
+                         <stylestrategy>PreferAntialias</stylestrategy>
+                         <kerning>true</kerning>
+                        </font>
+                       </property>
+                       <property name="currentIndex">
+                        <number>2</number>
+                       </property>
+                       <item>
+                        <property name="text">
+                         <string>normal</string>
+                        </property>
+                       </item>
+                       <item>
+                        <property name="text">
+                         <string>fett</string>
+                        </property>
+                       </item>
+                       <item>
+                        <property name="text">
+                         <string>kursiv</string>
+                        </property>
+                       </item>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QSpinBox" name="spinBox_7">
+                       <property name="font">
+                        <font>
+                         <family>Lato</family>
+                         <pointsize>12</pointsize>
+                         <bold>false</bold>
+                         <stylestrategy>PreferAntialias</stylestrategy>
+                         <kerning>true</kerning>
+                        </font>
+                       </property>
+                       <property name="alignment">
+                        <set>Qt::AlignmentFlag::AlignCenter</set>
+                       </property>
+                       <property name="suffix">
+                        <string> pt </string>
+                       </property>
+                       <property name="prefix">
+                        <string/>
+                       </property>
+                       <property name="minimum">
+                        <number>8</number>
+                       </property>
+                       <property name="maximum">
+                        <number>24</number>
+                       </property>
+                       <property name="value">
+                        <number>12</number>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QComboBox" name="comboBox_14">
+                       <property name="font">
+                        <font>
+                         <family>Lato</family>
+                         <pointsize>12</pointsize>
+                         <bold>false</bold>
+                         <stylestrategy>PreferAntialias</stylestrategy>
+                         <kerning>true</kerning>
+                        </font>
+                       </property>
+                       <item>
+                        <property name="text">
+                         <string>linksbündig</string>
+                        </property>
+                       </item>
+                       <item>
+                        <property name="text">
+                         <string>rechtsbündig</string>
+                        </property>
+                       </item>
+                       <item>
+                        <property name="text">
+                         <string>zentriert</string>
+                        </property>
+                       </item>
+                      </widget>
+                     </item>
+                    </layout>
+                   </widget>
+                  </item>
+                 </layout>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="page_3">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>859</width>
+            <height>704</height>
+           </rect>
+          </property>
+          <attribute name="label">
+           <string>eBook Vorlagen</string>
+          </attribute>
+         </widget>
+         <widget class="QWidget" name="page_4">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>859</width>
+            <height>704</height>
+           </rect>
+          </property>
+          <attribute name="label">
+           <string>Drehbuch - Vorlagen</string>
+          </attribute>
+          <layout class="QFormLayout" name="formLayout_27"/>
+         </widget>
+         <widget class="QWidget" name="page_5">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>859</width>
+            <height>704</height>
+           </rect>
+          </property>
+          <attribute name="label">
+           <string>Theater - Vorlagen</string>
+          </attribute>
+          <layout class="QFormLayout" name="formLayout_28"/>
+         </widget>
+         <widget class="QWidget" name="page_6">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>859</width>
+            <height>704</height>
+           </rect>
+          </property>
+          <attribute name="label">
+           <string>Storyboard - Vorlagen</string>
+          </attribute>
+          <layout class="QFormLayout" name="formLayout_29"/>
+         </widget>
+         <widget class="QWidget" name="page_7">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>859</width>
+            <height>704</height>
+           </rect>
+          </property>
+          <attribute name="label">
+           <string>Game - Design</string>
+          </attribute>
+          <layout class="QFormLayout" name="formLayout_30"/>
+         </widget>
+         <widget class="QWidget" name="page_8">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>859</width>
+            <height>704</height>
+           </rect>
+          </property>
+          <attribute name="label">
+           <string>Referenzen</string>
+          </attribute>
+          <layout class="QFormLayout" name="formLayout_31"/>
+         </widget>
+         <widget class="QWidget" name="page_9">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>859</width>
+            <height>704</height>
+           </rect>
+          </property>
+          <attribute name="label">
+           <string>Quellen</string>
+          </attribute>
+          <layout class="QFormLayout" name="formLayout_32"/>
+         </widget>
+         <widget class="QWidget" name="page_10">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>859</width>
+            <height>704</height>
+           </rect>
+          </property>
+          <attribute name="label">
+           <string>Zitate</string>
+          </attribute>
+          <layout class="QFormLayout" name="formLayout_33"/>
+         </widget>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="widgetRight" native="true">
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <widget class="QWidget" name="widget" native="true">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_3">
+          <item>
+           <widget class="QLabel" name="labelEinstellungen">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="font">
+             <font>
+              <family>Lato</family>
+              <pointsize>16</pointsize>
+              <bold>true</bold>
+              <stylestrategy>PreferAntialias</stylestrategy>
+              <kerning>true</kerning>
+             </font>
+            </property>
+            <property name="text">
+             <string>Einstellungen</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignmentFlag::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButtonSaveSettings">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="toolTip">
+             <string>Die aktuellen Einstellungen werden gespeichert</string>
+            </property>
+            <property name="text">
+             <string>Speichern</string>
+            </property>
+            <property name="icon">
+             <iconset theme="document-save"/>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>32</width>
+              <height>32</height>
+             </size>
+            </property>
+            <property name="default">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_9">
+            <property name="orientation">
+             <enum>Qt::Orientation::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>100</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_6">
+            <property name="orientation">
+             <enum>Qt::Orientation::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>100</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_8">
+            <property name="orientation">
+             <enum>Qt::Orientation::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>100</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_5">
+            <property name="orientation">
+             <enum>Qt::Orientation::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>100</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_4">
+            <property name="orientation">
+             <enum>Qt::Orientation::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>100</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_2">
+            <property name="orientation">
+             <enum>Qt::Orientation::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>180</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QPushButton" name="exitBntEditor_2">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="cursor">
+             <cursorShape>PointingHandCursor</cursorShape>
+            </property>
+            <property name="toolTip">
+             <string>Das Startfenster aufrufen</string>
+            </property>
+            <property name="text">
+             <string>Startfenster</string>
+            </property>
+            <property name="icon">
+             <iconset theme="go-home"/>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>32</width>
+              <height>32</height>
+             </size>
+            </property>
+            <property name="default">
+             <bool>true</bool>
+            </property>
+            <property name="flat">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
