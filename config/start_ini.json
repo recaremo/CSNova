@@ -28,19 +28,19 @@
     "win_width": 1920,
     "win_height": 1080,
     "win_splitter": [
-      588,
-      866,
-      372
+      589,
+      774,
+      467
     ]
   },
   "editor_ui": {
     "win_maximized": false,
     "win_width": 1920,
-    "win_height": 1080,
+    "win_height": 1081,
     "win_splitter": [
-      535,
-      899,
-      478
+      485,
+      1109,
+      300
     ]
   },
   "preferences_ui": {

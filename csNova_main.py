@@ -134,7 +134,7 @@ def show_main_window():
         cover_label.setScaledContents(True)
 
     # Exit-Button verbinden
-    exit_btn = window.centralWidget().findChild(QWidget, "exitBnt")
+    exit_btn = window.centralWidget().findChild(QWidget, "exitBtncsNovaMain")
     if exit_btn:
         def on_exit_clicked():
             secure_dialog = show_secure_dialog(window)
@@ -142,42 +142,42 @@ def show_main_window():
         exit_btn.clicked.connect(on_exit_clicked)
 
     # Projektfenster verbinden
-    projects_btn = window.centralWidget().findChild(QWidget, "projectBtn")
+    projects_btn = window.centralWidget().findChild(QWidget, "projectBtncsNovaMain")
     if projects_btn:
         projects_btn.clicked.connect(lambda: show_projects_window(window))
 
     # Charakterfenster verbinden
-    characters_btn = window.centralWidget().findChild(QWidget, "characterBtn")
+    characters_btn = window.centralWidget().findChild(QWidget, "characterBtncsNovaMain")
     if characters_btn:
         characters_btn.clicked.connect(lambda: show_characters_window(window))
 
     # Objektfenster verbinden
-    objects_btn = window.centralWidget().findChild(QWidget, "objectBtn")
+    objects_btn = window.centralWidget().findChild(QWidget, "objectBtncsNovaMain")
     if objects_btn:
         objects_btn.clicked.connect(lambda: show_objects_window(window))
 
     # Locationsfenster verbinden
-    locations_btn = window.centralWidget().findChild(QWidget, "locationBtn")
+    locations_btn = window.centralWidget().findChild(QWidget, "locationBtncsNovaMain")
     if locations_btn:
         locations_btn.clicked.connect(lambda: show_locations_window(window))
 
     # Storylinefenster verbinden
-    storylines_btn = window.centralWidget().findChild(QWidget, "storylineBtn")
+    storylines_btn = window.centralWidget().findChild(QWidget, "storylineBtncsNovaMain")
     if storylines_btn:
         storylines_btn.clicked.connect(lambda: show_storylines_window(window))
 
     # Editorfenster verbinden
-    editor_btn = window.centralWidget().findChild(QWidget, "editorBtn")
+    editor_btn = window.centralWidget().findChild(QWidget, "editorBtncsNovaMain")
     if editor_btn:
         editor_btn.clicked.connect(lambda: show_editor_window(window))
 
     # Preferences-Button verbinden
-    preferences_btn = window.centralWidget().findChild(QWidget, "preferencesBtn")
+    preferences_btn = window.centralWidget().findChild(QWidget, "preferencesBtncsNovaMain")
     if preferences_btn:
         preferences_btn.clicked.connect(lambda: show_preferences_window(window))
 
     # Hilfe-Button verbinden
-    help_btn = window.centralWidget().findChild(QWidget, "helpBtn")
+    help_btn = window.centralWidget().findChild(QWidget, "helpBtncsNovaMain")
     if help_btn:
         help_btn.clicked.connect(lambda: show_help_window(window))
 
@@ -262,7 +262,7 @@ def show_storylines_window(parent=None):
 
 # Editorfenster anzeigen
 def show_editor_window(parent=None):
-    window = DynamicWindow("editor_ui", EDITOR_UI_FILE, splitter_name="splitter")
+    window = DynamicWindow("editor_ui", EDITOR_UI_FILE, splitter_name="mainSplitter")
     window.show()
     log_info(...)
     return window

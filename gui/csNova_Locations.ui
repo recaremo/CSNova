@@ -22,657 +22,631 @@
   <property name="windowTitle">
    <string>csNova - Handlungsorte</string>
   </property>
-  <widget class="QSplitter" name="mainSplitter">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>1920</width>
-     <height>1080</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <family>Lato</family>
-     <pointsize>12</pointsize>
-     <bold>true</bold>
-     <stylestrategy>PreferAntialias</stylestrategy>
-     <kerning>true</kerning>
-    </font>
-   </property>
-   <property name="frameShape">
-    <enum>QFrame::Shape::NoFrame</enum>
-   </property>
-   <property name="orientation">
-    <enum>Qt::Orientation::Horizontal</enum>
-   </property>
-   <property name="handleWidth">
-    <number>36</number>
-   </property>
-   <widget class="QWidget" name="widgetLeft" native="true">
-    <widget class="QLabel" name="copyRight">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>1040</y>
-       <width>561</width>
-       <height>31</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <family>Lato</family>
-       <pointsize>10</pointsize>
-       <bold>false</bold>
-       <stylestrategy>PreferAntialias</stylestrategy>
-       <kerning>true</kerning>
-      </font>
-     </property>
-     <property name="text">
-      <string>(c) Copyright 2025 Frank Reiser - v 0.1.273</string>
-     </property>
-    </widget>
-   </widget>
-   <widget class="QWidget" name="widgetCenter" native="true">
-    <widget class="QLabel" name="labelTitle">
-     <property name="geometry">
-      <rect>
-       <x>40</x>
-       <y>30</y>
-       <width>200</width>
-       <height>25</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Titel:</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="labelCreated">
-     <property name="geometry">
-      <rect>
-       <x>40</x>
-       <y>70</y>
-       <width>200</width>
-       <height>25</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>erstellt am:</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="labelDescription">
-     <property name="geometry">
-      <rect>
-       <x>40</x>
-       <y>190</y>
-       <width>200</width>
-       <height>25</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Beschreibung:</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="labelLastEdit">
-     <property name="geometry">
-      <rect>
-       <x>40</x>
-       <y>110</y>
-       <width>200</width>
-       <height>25</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>bearbeitet am:</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="labelStatus">
-     <property name="geometry">
-      <rect>
-       <x>40</x>
-       <y>150</y>
-       <width>200</width>
-       <height>25</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Status:</string>
-     </property>
-    </widget>
-    <widget class="QLineEdit" name="titleObject">
-     <property name="geometry">
-      <rect>
-       <x>250</x>
-       <y>30</y>
-       <width>351</width>
-       <height>22</height>
-      </rect>
+  <layout class="QHBoxLayout" name="horizontalLayout">
+   <item>
+    <widget class="QSplitter" name="mainSplitter">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
      </property>
      <property name="font">
       <font>
        <family>Lato</family>
        <pointsize>12</pointsize>
-       <bold>false</bold>
-       <stylestrategy>PreferAntialias</stylestrategy>
-       <kerning>true</kerning>
-      </font>
-     </property>
-    </widget>
-    <widget class="QLineEdit" name="dateCreated">
-     <property name="geometry">
-      <rect>
-       <x>250</x>
-       <y>70</y>
-       <width>100</width>
-       <height>25</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <family>Lato</family>
-       <pointsize>12</pointsize>
-       <bold>false</bold>
-       <stylestrategy>PreferAntialias</stylestrategy>
-       <kerning>true</kerning>
-      </font>
-     </property>
-     <property name="inputMask">
-      <string>__.__.____</string>
-     </property>
-     <property name="text">
-      <string>__.__.____</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignmentFlag::AlignCenter</set>
-     </property>
-    </widget>
-    <widget class="QLineEdit" name="dateEdited">
-     <property name="geometry">
-      <rect>
-       <x>250</x>
-       <y>110</y>
-       <width>100</width>
-       <height>25</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <family>Lato</family>
-       <pointsize>12</pointsize>
-       <bold>false</bold>
-       <stylestrategy>PreferAntialias</stylestrategy>
-       <kerning>true</kerning>
-      </font>
-     </property>
-     <property name="inputMask">
-      <string>__.__.____</string>
-     </property>
-     <property name="text">
-      <string>__.__.____</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignmentFlag::AlignCenter</set>
-     </property>
-    </widget>
-    <widget class="QToolButton" name="setDateToday01">
-     <property name="geometry">
-      <rect>
-       <x>360</x>
-       <y>70</y>
-       <width>25</width>
-       <height>25</height>
-      </rect>
-     </property>
-     <property name="cursor">
-      <cursorShape>PointingHandCursor</cursorShape>
-     </property>
-     <property name="toolTip">
-      <string>Verwende das aktuelle Datum</string>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="icon">
-      <iconset theme="x-office-calendar"/>
-     </property>
-    </widget>
-    <widget class="QToolButton" name="setDateToday02">
-     <property name="geometry">
-      <rect>
-       <x>360</x>
-       <y>110</y>
-       <width>25</width>
-       <height>25</height>
-      </rect>
-     </property>
-     <property name="cursor">
-      <cursorShape>PointingHandCursor</cursorShape>
-     </property>
-     <property name="toolTip">
-      <string>Verwende das aktuelle Datum</string>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="icon">
-      <iconset theme="x-office-calendar"/>
-     </property>
-    </widget>
-    <widget class="QComboBox" name="comboBox">
-     <property name="geometry">
-      <rect>
-       <x>250</x>
-       <y>150</y>
-       <width>201</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <family>Lato</family>
-       <pointsize>12</pointsize>
-       <bold>false</bold>
-       <stylestrategy>PreferAntialias</stylestrategy>
-       <kerning>true</kerning>
-      </font>
-     </property>
-     <item>
-      <property name="text">
-       <string>Planung</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>Entwicklung</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>Bearbeitung</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>Test</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>Fertig</string>
-      </property>
-     </item>
-    </widget>
-    <widget class="QPlainTextEdit" name="textDescription">
-     <property name="geometry">
-      <rect>
-       <x>250</x>
-       <y>220</y>
-       <width>340</width>
-       <height>220</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <family>Lato</family>
-       <pointsize>12</pointsize>
-       <bold>false</bold>
-       <stylestrategy>PreferAntialias</stylestrategy>
-       <kerning>true</kerning>
-      </font>
-     </property>
-    </widget>
-    <widget class="QToolButton" name="boldBtn">
-     <property name="geometry">
-      <rect>
-       <x>250</x>
-       <y>190</y>
-       <width>24</width>
-       <height>22</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <family>Lato</family>
-       <pointsize>12</pointsize>
-       <bold>false</bold>
-       <stylestrategy>PreferAntialias</stylestrategy>
-       <kerning>true</kerning>
-      </font>
-     </property>
-     <property name="toolTip">
-      <string>Fett</string>
-     </property>
-     <property name="text">
-      <string>...</string>
-     </property>
-     <property name="icon">
-      <iconset theme="format-text-bold"/>
-     </property>
-    </widget>
-    <widget class="QToolButton" name="italicBtn">
-     <property name="geometry">
-      <rect>
-       <x>280</x>
-       <y>190</y>
-       <width>24</width>
-       <height>22</height>
-      </rect>
-     </property>
-     <property name="toolTip">
-      <string>Kursiv</string>
-     </property>
-     <property name="text">
-      <string>...</string>
-     </property>
-     <property name="icon">
-      <iconset theme="format-text-italic"/>
-     </property>
-    </widget>
-    <widget class="QToolButton" name="numberBtn">
-     <property name="geometry">
-      <rect>
-       <x>310</x>
-       <y>190</y>
-       <width>51</width>
-       <height>22</height>
-      </rect>
-     </property>
-     <property name="toolTip">
-      <string>Numerische Liste</string>
-     </property>
-     <property name="text">
-      <string>1.,2.,3.</string>
-     </property>
-    </widget>
-    <widget class="QToolButton" name="bulletBtn">
-     <property name="geometry">
-      <rect>
-       <x>370</x>
-       <y>190</y>
-       <width>51</width>
-       <height>22</height>
-      </rect>
-     </property>
-     <property name="toolTip">
-      <string>Bullet Liste</string>
-     </property>
-     <property name="text">
-      <string>...</string>
-     </property>
-    </widget>
-   </widget>
-   <widget class="QWidget" name="widgetRight" native="true">
-    <widget class="QPushButton" name="exitBnt">
-     <property name="geometry">
-      <rect>
-       <x>70</x>
-       <y>930</y>
-       <width>380</width>
-       <height>80</height>
-      </rect>
-     </property>
-     <property name="cursor">
-      <cursorShape>PointingHandCursor</cursorShape>
-     </property>
-     <property name="toolTip">
-      <string>Rufe das Startfenster auf</string>
-     </property>
-     <property name="text">
-      <string>Startfenster</string>
-     </property>
-     <property name="icon">
-      <iconset theme="go-home"/>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>32</width>
-       <height>32</height>
-      </size>
-     </property>
-     <property name="default">
-      <bool>true</bool>
-     </property>
-     <property name="flat">
-      <bool>false</bool>
-     </property>
-    </widget>
-    <widget class="QLabel" name="labelProjects">
-     <property name="geometry">
-      <rect>
-       <x>0</x>
-       <y>0</y>
-       <width>610</width>
-       <height>70</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <family>Lato</family>
-       <pointsize>15</pointsize>
        <bold>true</bold>
        <stylestrategy>PreferAntialias</stylestrategy>
        <kerning>true</kerning>
       </font>
      </property>
-     <property name="text">
-      <string>Handlungsorte</string>
+     <property name="frameShape">
+      <enum>QFrame::Shape::NoFrame</enum>
      </property>
-     <property name="scaledContents">
-      <bool>false</bool>
+     <property name="orientation">
+      <enum>Qt::Orientation::Horizontal</enum>
      </property>
-     <property name="alignment">
-      <set>Qt::AlignmentFlag::AlignCenter</set>
+     <property name="handleWidth">
+      <number>36</number>
      </property>
-     <property name="margin">
-      <number>1</number>
-     </property>
+     <widget class="QWidget" name="widgetLeftLocations" native="true">
+      <layout class="QVBoxLayout" name="verticalLayout_3">
+       <item>
+        <widget class="QTextEdit" name="textEditHelpLocations">
+         <property name="readOnly">
+          <bool>true</bool>
+         </property>
+         <property name="html">
+          <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+hr { height: 1px; border-width: 0; }
+li.unchecked::marker { content: &quot;\2610&quot;; }
+li.checked::marker { content: &quot;\2612&quot;; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Lato'; font-size:12pt; font-weight:700; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;Hilfe &amp;amp; Tipps - Handlungsorte&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-weight:400;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="copyRightLocations">
+         <property name="font">
+          <font>
+           <family>Lato</family>
+           <pointsize>10</pointsize>
+           <bold>false</bold>
+           <stylestrategy>PreferAntialias</stylestrategy>
+           <kerning>true</kerning>
+          </font>
+         </property>
+         <property name="text">
+          <string>(c) Copyright 2025 Frank Reiser - v 0.1.273</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="widgetCenterLocations" native="true">
+      <layout class="QFormLayout" name="formLayout_2">
+       <item row="0" column="0" colspan="2">
+        <widget class="QFrame" name="frameLocationsMain">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::Shape::NoFrame</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Shadow::Raised</enum>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout">
+          <item>
+           <widget class="QFrame" name="frameLocationsTop">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::Shape::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Shadow::Raised</enum>
+            </property>
+            <layout class="QFormLayout" name="formLayout">
+             <item row="0" column="0">
+              <widget class="QLabel" name="labelTitleLocations">
+               <property name="text">
+                <string>Titel:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <widget class="QLineEdit" name="lineEditLocations">
+               <property name="font">
+                <font>
+                 <family>Lato</family>
+                 <pointsize>12</pointsize>
+                 <bold>false</bold>
+                 <stylestrategy>PreferAntialias</stylestrategy>
+                 <kerning>true</kerning>
+                </font>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0">
+              <widget class="QLabel" name="labelCreatedLocations">
+               <property name="text">
+                <string>erstellt am:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <widget class="QLineEdit" name="dateCreatedLocations">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="font">
+                <font>
+                 <family>Lato</family>
+                 <pointsize>12</pointsize>
+                 <bold>false</bold>
+                 <stylestrategy>PreferAntialias</stylestrategy>
+                 <kerning>true</kerning>
+                </font>
+               </property>
+               <property name="inputMask">
+                <string>__.__.____</string>
+               </property>
+               <property name="text">
+                <string>__.__.____</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignmentFlag::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="0">
+              <widget class="QLabel" name="labelLastEditLocations">
+               <property name="text">
+                <string>bearbeitet am:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="1">
+              <widget class="QLineEdit" name="dateEditedLocations">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="font">
+                <font>
+                 <family>Lato</family>
+                 <pointsize>12</pointsize>
+                 <bold>false</bold>
+                 <stylestrategy>PreferAntialias</stylestrategy>
+                 <kerning>true</kerning>
+                </font>
+               </property>
+               <property name="inputMask">
+                <string>__.__.____</string>
+               </property>
+               <property name="text">
+                <string>__.__.____</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignmentFlag::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="1">
+              <widget class="QToolButton" name="setDateLocationsToday_2">
+               <property name="cursor">
+                <cursorShape>PointingHandCursor</cursorShape>
+               </property>
+               <property name="toolTip">
+                <string>Verwende das aktuelle Datum</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset theme="x-office-calendar"/>
+               </property>
+              </widget>
+             </item>
+             <item row="5" column="0">
+              <widget class="QLabel" name="labelStatusLocations">
+               <property name="text">
+                <string>Status:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="5" column="1">
+              <widget class="QComboBox" name="comboBoxLocationsStatus">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="font">
+                <font>
+                 <family>Lato</family>
+                 <pointsize>12</pointsize>
+                 <bold>false</bold>
+                 <stylestrategy>PreferAntialias</stylestrategy>
+                 <kerning>true</kerning>
+                </font>
+               </property>
+               <item>
+                <property name="text">
+                 <string>Planung</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Entwicklung</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Bearbeitung</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Test</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Fertig</string>
+                </property>
+               </item>
+              </widget>
+             </item>
+             <item row="6" column="0">
+              <widget class="QLabel" name="labelDescriptionLocations">
+               <property name="text">
+                <string>Beschreibung:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="7" column="0" colspan="2">
+              <widget class="QPlainTextEdit" name="textDescriptionLocations">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                 <horstretch>0</horstretch>
+                 <verstretch>1</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="font">
+                <font>
+                 <family>Lato</family>
+                 <pointsize>12</pointsize>
+                 <bold>false</bold>
+                 <stylestrategy>PreferAntialias</stylestrategy>
+                 <kerning>true</kerning>
+                </font>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="1">
+              <widget class="QToolButton" name="setDateLocationsToday_1">
+               <property name="cursor">
+                <cursorShape>PointingHandCursor</cursorShape>
+               </property>
+               <property name="toolTip">
+                <string>Verwende das aktuelle Datum</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset theme="x-office-calendar"/>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <widget class="QFrame" name="frameLocationsBottom">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::Shape::NoFrame</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Shadow::Raised</enum>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_2">
+             <item>
+              <widget class="QLabel" name="labelframeLocationsTopEmpty">
+               <property name="text">
+                <string/>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="widgetRightLocations" native="true">
+      <layout class="QVBoxLayout" name="verticalLayout_4">
+       <item>
+        <widget class="QLabel" name="labelLocations">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="font">
+          <font>
+           <family>Lato</family>
+           <pointsize>15</pointsize>
+           <bold>true</bold>
+           <stylestrategy>PreferAntialias</stylestrategy>
+           <kerning>true</kerning>
+          </font>
+         </property>
+         <property name="text">
+          <string>Handlungsorte</string>
+         </property>
+         <property name="scaledContents">
+          <bool>false</bool>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignmentFlag::AlignCenter</set>
+         </property>
+         <property name="margin">
+          <number>1</number>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="newBtnLocations">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="cursor">
+          <cursorShape>PointingHandCursor</cursorShape>
+         </property>
+         <property name="toolTip">
+          <string>Einen neuen Datensatz erstellen</string>
+         </property>
+         <property name="text">
+          <string>Neu</string>
+         </property>
+         <property name="icon">
+          <iconset theme="document-new"/>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>32</width>
+           <height>32</height>
+          </size>
+         </property>
+         <property name="default">
+          <bool>true</bool>
+         </property>
+         <property name="flat">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="nextBtnLocations">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="cursor">
+          <cursorShape>PointingHandCursor</cursorShape>
+         </property>
+         <property name="toolTip">
+          <string>wähle den nächsten Datensatz</string>
+         </property>
+         <property name="text">
+          <string>Vor</string>
+         </property>
+         <property name="icon">
+          <iconset theme="go-next"/>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>32</width>
+           <height>32</height>
+          </size>
+         </property>
+         <property name="default">
+          <bool>true</bool>
+         </property>
+         <property name="flat">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="previousBtnLocations">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="cursor">
+          <cursorShape>PointingHandCursor</cursorShape>
+         </property>
+         <property name="toolTip">
+          <string>wähle den vorherigen Datensatz</string>
+         </property>
+         <property name="text">
+          <string>Zurück</string>
+         </property>
+         <property name="icon">
+          <iconset theme="go-previous"/>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>32</width>
+           <height>32</height>
+          </size>
+         </property>
+         <property name="default">
+          <bool>true</bool>
+         </property>
+         <property name="flat">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="deleteBtnLocations">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="cursor">
+          <cursorShape>PointingHandCursor</cursorShape>
+         </property>
+         <property name="toolTip">
+          <string>Lösche den aktuellen Datensatz</string>
+         </property>
+         <property name="text">
+          <string>Löschen</string>
+         </property>
+         <property name="icon">
+          <iconset theme="user-trash"/>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>32</width>
+           <height>32</height>
+          </size>
+         </property>
+         <property name="default">
+          <bool>true</bool>
+         </property>
+         <property name="flat">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="imageLoadLocations">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="cursor">
+          <cursorShape>PointingHandCursor</cursorShape>
+         </property>
+         <property name="toolTip">
+          <string>Lade ein Bild für den aktuellen Datensatz</string>
+         </property>
+         <property name="text">
+          <string>Bild laden</string>
+         </property>
+         <property name="icon">
+          <iconset theme="image-x-generic"/>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>32</width>
+           <height>32</height>
+          </size>
+         </property>
+         <property name="default">
+          <bool>true</bool>
+         </property>
+         <property name="flat">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="saveBtn">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="cursor">
+          <cursorShape>PointingHandCursor</cursorShape>
+         </property>
+         <property name="toolTip">
+          <string>Speichere den aktuellen Datensatz</string>
+         </property>
+         <property name="text">
+          <string>Speichern</string>
+         </property>
+         <property name="icon">
+          <iconset theme="document-save"/>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>32</width>
+           <height>32</height>
+          </size>
+         </property>
+         <property name="default">
+          <bool>true</bool>
+         </property>
+         <property name="flat">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="orientation">
+          <enum>Qt::Orientation::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>589</width>
+           <height>180</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QPushButton" name="exitBntLocations">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="cursor">
+          <cursorShape>PointingHandCursor</cursorShape>
+         </property>
+         <property name="toolTip">
+          <string>Rufe das Startfenster auf</string>
+         </property>
+         <property name="text">
+          <string>Startfenster</string>
+         </property>
+         <property name="icon">
+          <iconset theme="go-home"/>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>32</width>
+           <height>32</height>
+          </size>
+         </property>
+         <property name="default">
+          <bool>true</bool>
+         </property>
+         <property name="flat">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
     </widget>
-    <widget class="QPushButton" name="newBtn">
-     <property name="geometry">
-      <rect>
-       <x>70</x>
-       <y>100</y>
-       <width>380</width>
-       <height>80</height>
-      </rect>
-     </property>
-     <property name="cursor">
-      <cursorShape>PointingHandCursor</cursorShape>
-     </property>
-     <property name="toolTip">
-      <string>Einen neuen Datensatz erstellen</string>
-     </property>
-     <property name="text">
-      <string>Neu</string>
-     </property>
-     <property name="icon">
-      <iconset theme="document-new"/>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>32</width>
-       <height>32</height>
-      </size>
-     </property>
-     <property name="default">
-      <bool>true</bool>
-     </property>
-     <property name="flat">
-      <bool>false</bool>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="nextBtn">
-     <property name="geometry">
-      <rect>
-       <x>70</x>
-       <y>200</y>
-       <width>380</width>
-       <height>80</height>
-      </rect>
-     </property>
-     <property name="cursor">
-      <cursorShape>PointingHandCursor</cursorShape>
-     </property>
-     <property name="toolTip">
-      <string>wähle den nächsten Datensatz</string>
-     </property>
-     <property name="text">
-      <string>Vor</string>
-     </property>
-     <property name="icon">
-      <iconset theme="go-next"/>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>32</width>
-       <height>32</height>
-      </size>
-     </property>
-     <property name="default">
-      <bool>true</bool>
-     </property>
-     <property name="flat">
-      <bool>false</bool>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="previousBtn">
-     <property name="geometry">
-      <rect>
-       <x>70</x>
-       <y>300</y>
-       <width>380</width>
-       <height>80</height>
-      </rect>
-     </property>
-     <property name="cursor">
-      <cursorShape>PointingHandCursor</cursorShape>
-     </property>
-     <property name="toolTip">
-      <string>wähle den vorherigen Datensatz</string>
-     </property>
-     <property name="text">
-      <string>Zurück</string>
-     </property>
-     <property name="icon">
-      <iconset theme="go-previous"/>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>32</width>
-       <height>32</height>
-      </size>
-     </property>
-     <property name="default">
-      <bool>true</bool>
-     </property>
-     <property name="flat">
-      <bool>false</bool>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="deleteBtn">
-     <property name="geometry">
-      <rect>
-       <x>70</x>
-       <y>400</y>
-       <width>380</width>
-       <height>80</height>
-      </rect>
-     </property>
-     <property name="cursor">
-      <cursorShape>PointingHandCursor</cursorShape>
-     </property>
-     <property name="toolTip">
-      <string>Lösche den aktuellen Datensatz</string>
-     </property>
-     <property name="text">
-      <string>Löschen</string>
-     </property>
-     <property name="icon">
-      <iconset theme="user-trash"/>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>32</width>
-       <height>32</height>
-      </size>
-     </property>
-     <property name="default">
-      <bool>true</bool>
-     </property>
-     <property name="flat">
-      <bool>false</bool>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="saveBtn">
-     <property name="geometry">
-      <rect>
-       <x>70</x>
-       <y>600</y>
-       <width>380</width>
-       <height>80</height>
-      </rect>
-     </property>
-     <property name="cursor">
-      <cursorShape>PointingHandCursor</cursorShape>
-     </property>
-     <property name="toolTip">
-      <string>Speichere den aktuellen Datensatz</string>
-     </property>
-     <property name="text">
-      <string>Speichern</string>
-     </property>
-     <property name="icon">
-      <iconset theme="document-save"/>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>32</width>
-       <height>32</height>
-      </size>
-     </property>
-     <property name="default">
-      <bool>true</bool>
-     </property>
-     <property name="flat">
-      <bool>false</bool>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="imageLoad">
-     <property name="geometry">
-      <rect>
-       <x>70</x>
-       <y>500</y>
-       <width>380</width>
-       <height>80</height>
-      </rect>
-     </property>
-     <property name="cursor">
-      <cursorShape>PointingHandCursor</cursorShape>
-     </property>
-     <property name="toolTip">
-      <string>Lade ein Bild für den aktuellen Datensatz</string>
-     </property>
-     <property name="text">
-      <string>Bild laden</string>
-     </property>
-     <property name="icon">
-      <iconset theme="image-x-generic"/>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>32</width>
-       <height>32</height>
-      </size>
-     </property>
-     <property name="default">
-      <bool>true</bool>
-     </property>
-     <property name="flat">
-      <bool>false</bool>
-     </property>
-    </widget>
-   </widget>
-  </widget>
+   </item>
+  </layout>
  </widget>
  <resources/>
  <connections/>

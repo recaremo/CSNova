@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1920</width>
+    <width>1897</width>
     <height>1080</height>
    </rect>
   </property>
@@ -30,7 +30,7 @@
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout_6">
    <item>
-    <widget class="QSplitter" name="splitter">
+    <widget class="QSplitter" name="mainSplitter">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
        <horstretch>0</horstretch>
@@ -67,7 +67,7 @@
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_9">
           <item>
-           <widget class="QTabWidget" name="tabViewEditor_2">
+           <widget class="QTabWidget" name="tabViewEditor">
             <property name="font">
              <font>
               <family>Lato</family>
@@ -83,13 +83,13 @@
             <property name="currentIndex">
              <number>0</number>
             </property>
-            <widget class="QWidget" name="tab_11">
+            <widget class="QWidget" name="tabEditorScenes">
              <attribute name="title">
               <string>Szenen</string>
              </attribute>
              <layout class="QFormLayout" name="formLayout_7">
               <item row="0" column="0" colspan="2">
-               <widget class="QFrame" name="toolbarScenes_2">
+               <widget class="QFrame" name="toolbarEditorScenes">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                   <horstretch>0</horstretch>
@@ -104,7 +104,7 @@
                 </property>
                 <layout class="QHBoxLayout" name="horizontalLayout_7">
                  <item>
-                  <widget class="QPushButton" name="newBtnScenes_2">
+                  <widget class="QPushButton" name="newBtnEditorScene">
                    <property name="cursor">
                     <cursorShape>PointingHandCursor</cursorShape>
                    </property>
@@ -132,7 +132,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QPushButton" name="nextBtnScenes_2">
+                  <widget class="QPushButton" name="nextBtnEditorScene">
                    <property name="cursor">
                     <cursorShape>PointingHandCursor</cursorShape>
                    </property>
@@ -160,7 +160,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QPushButton" name="previousBtnScenes_2">
+                  <widget class="QPushButton" name="previousBtnEditorScene">
                    <property name="cursor">
                     <cursorShape>PointingHandCursor</cursorShape>
                    </property>
@@ -188,7 +188,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QPushButton" name="deleteBtnScenes_2">
+                  <widget class="QPushButton" name="deleteBtnEditorScene">
                    <property name="cursor">
                     <cursorShape>PointingHandCursor</cursorShape>
                    </property>
@@ -216,7 +216,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QPushButton" name="saveBtnScenes_2">
+                  <widget class="QPushButton" name="saveBtnEditorScene">
                    <property name="cursor">
                     <cursorShape>PointingHandCursor</cursorShape>
                    </property>
@@ -247,7 +247,7 @@
                </widget>
               </item>
               <item row="1" column="0" colspan="2">
-               <widget class="QLabel" name="labelSceneID_2">
+               <widget class="QLabel" name="labelEditorSceneID">
                 <property name="font">
                  <font>
                   <family>Lato</family>
@@ -269,7 +269,7 @@
                </widget>
               </item>
               <item row="2" column="0">
-               <widget class="QLabel" name="labelSceneTitle_3">
+               <widget class="QLabel" name="labelEditorSceneTitle">
                 <property name="font">
                  <font>
                   <family>Lato</family>
@@ -285,7 +285,7 @@
                </widget>
               </item>
               <item row="3" column="0" colspan="2">
-               <widget class="QLineEdit" name="lineEditSceneTitel_3">
+               <widget class="QLineEdit" name="lineEditorSceneTitel">
                 <property name="font">
                  <font>
                   <family>Lato</family>
@@ -298,7 +298,7 @@
                </widget>
               </item>
               <item row="4" column="0">
-               <widget class="QLabel" name="labelScenePremise_3">
+               <widget class="QLabel" name="labelEditorScenePremise">
                 <property name="font">
                  <font>
                   <family>Lato</family>
@@ -314,7 +314,7 @@
                </widget>
               </item>
               <item row="5" column="0" colspan="2">
-               <widget class="QLineEdit" name="lineEditScenePremise_3">
+               <widget class="QLineEdit" name="lineEditorScenePremise">
                 <property name="font">
                  <font>
                   <family>Lato</family>
@@ -327,7 +327,7 @@
                </widget>
               </item>
               <item row="6" column="0">
-               <widget class="QLabel" name="labelSceneStatus_2">
+               <widget class="QLabel" name="labelEditorSceneStatus">
                 <property name="font">
                  <font>
                   <family>Lato</family>
@@ -343,7 +343,7 @@
                </widget>
               </item>
               <item row="6" column="1">
-               <widget class="QComboBox" name="comboBoxSceneStatus_6">
+               <widget class="QComboBox" name="comboBoxEditorSceneStatus">
                 <property name="font">
                  <font>
                   <family>Lato</family>
@@ -381,7 +381,7 @@
                </widget>
               </item>
               <item row="7" column="0">
-               <widget class="QLabel" name="labelChapterBegin_5">
+               <widget class="QLabel" name="labelEditorSceneBegin">
                 <property name="font">
                  <font>
                   <family>Lato</family>
@@ -397,7 +397,7 @@
                </widget>
               </item>
               <item row="7" column="1">
-               <widget class="QDateEdit" name="dateEditChapterBegin_3">
+               <widget class="QDateEdit" name="dateEditorSceneBegin">
                 <property name="font">
                  <font>
                   <family>Lato</family>
@@ -423,7 +423,7 @@
                </widget>
               </item>
               <item row="8" column="0">
-               <widget class="QLabel" name="labelChapterEdited_4">
+               <widget class="QLabel" name="labelEditorSceneEdited">
                 <property name="font">
                  <font>
                   <family>Lato</family>
@@ -439,7 +439,7 @@
                </widget>
               </item>
               <item row="8" column="1">
-               <widget class="QDateEdit" name="dateEditChapterEdited_3">
+               <widget class="QDateEdit" name="dateEditorSceneEdited">
                 <property name="font">
                  <font>
                   <family>Lato</family>
@@ -465,7 +465,7 @@
                </widget>
               </item>
               <item row="9" column="0">
-               <widget class="QLabel" name="labelChapterBegin_6">
+               <widget class="QLabel" name="labelEditorWordCount">
                 <property name="font">
                  <font>
                   <family>Lato</family>
@@ -481,14 +481,14 @@
                </widget>
               </item>
               <item row="9" column="1">
-               <widget class="QLabel" name="labelChapterBegin_7">
+               <widget class="QLabel" name="labelEditorSceneWordCount">
                 <property name="text">
                  <string>Anzahl Worte:</string>
                 </property>
                </widget>
               </item>
               <item row="10" column="0">
-               <widget class="QLabel" name="labelChapterEdited_5">
+               <widget class="QLabel" name="labelEditorSceneOrder">
                 <property name="font">
                  <font>
                   <family>Lato</family>
@@ -504,7 +504,7 @@
                </widget>
               </item>
               <item row="10" column="1">
-               <widget class="QSpinBox" name="spinBox_2">
+               <widget class="QSpinBox" name="spinBoxEditorSceneOrder">
                 <property name="alignment">
                  <set>Qt::AlignmentFlag::AlignCenter</set>
                 </property>
@@ -517,7 +517,7 @@
                </widget>
               </item>
               <item row="11" column="0">
-               <widget class="QLabel" name="labelSceneGoal_3">
+               <widget class="QLabel" name="labelEditorSceneGoal">
                 <property name="font">
                  <font>
                   <family>Lato</family>
@@ -533,7 +533,7 @@
                </widget>
               </item>
               <item row="12" column="0" colspan="2">
-               <widget class="QLineEdit" name="lineEditSceneGoal_3">
+               <widget class="QLineEdit" name="lineEditorSceneGoal">
                 <property name="font">
                  <font>
                   <family>Lato</family>
@@ -546,7 +546,7 @@
                </widget>
               </item>
               <item row="13" column="0">
-               <widget class="QLabel" name="labelSceneResult_2">
+               <widget class="QLabel" name="labelEditorSceneResult">
                 <property name="font">
                  <font>
                   <family>Lato</family>
@@ -562,7 +562,7 @@
                </widget>
               </item>
               <item row="14" column="0" colspan="2">
-               <widget class="QLineEdit" name="lineEditSceneResult_2">
+               <widget class="QLineEdit" name="lineEditorSceneResult">
                 <property name="font">
                  <font>
                   <family>Lato</family>
@@ -575,7 +575,7 @@
                </widget>
               </item>
               <item row="15" column="0">
-               <widget class="QLabel" name="labelSceneStatus_8">
+               <widget class="QLabel" name="labelEditorSceneStoryline">
                 <property name="font">
                  <font>
                   <family>Lato</family>
@@ -591,7 +591,7 @@
                </widget>
               </item>
               <item row="15" column="1">
-               <widget class="QComboBox" name="comboBoxSceneStatus_10">
+               <widget class="QComboBox" name="comboBoxEditorSceneStoryline">
                 <property name="font">
                  <font>
                   <family>Lato</family>
@@ -604,7 +604,7 @@
                </widget>
               </item>
               <item row="16" column="0">
-               <widget class="QLabel" name="labelSceneStatus_7">
+               <widget class="QLabel" name="labelEditorSceneLocation">
                 <property name="font">
                  <font>
                   <family>Lato</family>
@@ -620,7 +620,7 @@
                </widget>
               </item>
               <item row="16" column="1">
-               <widget class="QComboBox" name="comboBoxSceneStatus_9">
+               <widget class="QComboBox" name="comboBoxEditorSceneLocation">
                 <property name="font">
                  <font>
                   <family>Lato</family>
@@ -633,7 +633,7 @@
                </widget>
               </item>
               <item row="17" column="0">
-               <widget class="QLabel" name="labelSceneCharactere_2">
+               <widget class="QLabel" name="labelEditorSceneCharacter">
                 <property name="font">
                  <font>
                   <family>Lato</family>
@@ -649,7 +649,7 @@
                </widget>
               </item>
               <item row="17" column="1">
-               <widget class="QComboBox" name="comboBoxSceneStatus_7">
+               <widget class="QComboBox" name="comboBoxEditorSceneCharacter">
                 <property name="font">
                  <font>
                   <family>Lato</family>
@@ -662,7 +662,7 @@
                </widget>
               </item>
               <item row="18" column="0">
-               <widget class="QLabel" name="labelSceneStatus_6">
+               <widget class="QLabel" name="labelEditorSceneObjects">
                 <property name="font">
                  <font>
                   <family>Lato</family>
@@ -678,7 +678,7 @@
                </widget>
               </item>
               <item row="18" column="1">
-               <widget class="QComboBox" name="comboBoxSceneStatus_8">
+               <widget class="QComboBox" name="comboBoxEditorSceneObject">
                 <property name="font">
                  <font>
                   <family>Lato</family>
@@ -691,7 +691,7 @@
                </widget>
               </item>
               <item row="19" column="0">
-               <widget class="QLabel" name="labelSceneTitle_4">
+               <widget class="QLabel" name="labelEditorSceneMood">
                 <property name="font">
                  <font>
                   <family>Lato</family>
@@ -707,7 +707,7 @@
                </widget>
               </item>
               <item row="20" column="0" colspan="2">
-               <widget class="QLineEdit" name="lineEditSceneTitel_4">
+               <widget class="QLineEdit" name="lineEditorceneMood">
                 <property name="font">
                  <font>
                   <family>Lato</family>
@@ -720,7 +720,7 @@
                </widget>
               </item>
               <item row="21" column="0">
-               <widget class="QLabel" name="labelScenePremise_4">
+               <widget class="QLabel" name="labelEditorSceneDuration">
                 <property name="font">
                  <font>
                   <family>Lato</family>
@@ -736,7 +736,7 @@
                </widget>
               </item>
               <item row="22" column="0" colspan="2">
-               <widget class="QLineEdit" name="lineEditScenePremise_4">
+               <widget class="QLineEdit" name="lineEditorSceneDuration">
                 <property name="font">
                  <font>
                   <family>Lato</family>
@@ -749,7 +749,7 @@
                </widget>
               </item>
               <item row="23" column="0">
-               <widget class="QLabel" name="labelSceneGoal_4">
+               <widget class="QLabel" name="labelEditorSceneType">
                 <property name="font">
                  <font>
                   <family>Lato</family>
@@ -765,7 +765,7 @@
                </widget>
               </item>
               <item row="24" column="0" colspan="2">
-               <widget class="QLineEdit" name="lineEditSceneGoal_4">
+               <widget class="QLineEdit" name="lineEditorSceneType">
                 <property name="font">
                  <font>
                   <family>Lato</family>
@@ -778,7 +778,7 @@
                </widget>
               </item>
               <item row="25" column="0" colspan="2">
-               <widget class="QLabel" name="labelChapterExcerpt_5">
+               <widget class="QLabel" name="labelEditorSceneTags">
                 <property name="font">
                  <font>
                   <family>Lato</family>
@@ -794,7 +794,7 @@
                </widget>
               </item>
               <item row="26" column="0" colspan="2">
-               <widget class="QTextEdit" name="textEditChapterExcerpt_5">
+               <widget class="QTextEdit" name="textEditorSceneTags">
                 <property name="font">
                  <font>
                   <family>Lato</family>
@@ -807,7 +807,7 @@
                </widget>
               </item>
               <item row="27" column="0" colspan="2">
-               <widget class="QLabel" name="labelChapterExcerpt_4">
+               <widget class="QLabel" name="labelEditorSceneNotes">
                 <property name="font">
                  <font>
                   <family>Lato</family>
@@ -823,7 +823,7 @@
                </widget>
               </item>
               <item row="28" column="0" colspan="2">
-               <widget class="QTextEdit" name="textEditChapterExcerpt_4">
+               <widget class="QTextEdit" name="textEditorSceneNotes">
                 <property name="font">
                  <font>
                   <family>Lato</family>
@@ -837,13 +837,13 @@
               </item>
              </layout>
             </widget>
-            <widget class="QWidget" name="tab_12">
+            <widget class="QWidget" name="tabEditorCharacters">
              <attribute name="title">
               <string>Charaktere</string>
              </attribute>
              <layout class="QFormLayout" name="formLayout_10">
               <item row="1" column="0" colspan="2">
-               <widget class="QToolBox" name="toolBoxCharacter_2">
+               <widget class="QToolBox" name="toolBoxCharacters">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                   <horstretch>0</horstretch>
@@ -857,15 +857,15 @@
                  <number>2</number>
                 </property>
                 <property name="currentIndex">
-                 <number>0</number>
+                 <number>6</number>
                 </property>
-                <widget class="QWidget" name="page_8">
+                <widget class="QWidget" name="pageEditorCharacter">
                  <property name="geometry">
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>399</width>
-                   <height>702</height>
+                   <width>238</width>
+                   <height>477</height>
                   </rect>
                  </property>
                  <attribute name="label">
@@ -873,7 +873,7 @@
                  </attribute>
                  <layout class="QFormLayout" name="formLayout_8">
                   <item row="0" column="0">
-                   <widget class="QLabel" name="labelNickName_2">
+                   <widget class="QLabel" name="labelEditorNickName">
                     <property name="font">
                      <font>
                       <family>Lato</family>
@@ -889,10 +889,10 @@
                    </widget>
                   </item>
                   <item row="0" column="1">
-                   <widget class="QLineEdit" name="lineEditNickName_2"/>
+                   <widget class="QLineEdit" name="lineEditEditorNickName"/>
                   </item>
                   <item row="1" column="0">
-                   <widget class="QLabel" name="labelBorn_2">
+                   <widget class="QLabel" name="labelEditorBorn">
                     <property name="font">
                      <font>
                       <family>Lato</family>
@@ -908,10 +908,10 @@
                    </widget>
                   </item>
                   <item row="1" column="1">
-                   <widget class="QLineEdit" name="lineEditBorn_3"/>
+                   <widget class="QLineEdit" name="lineEditEditorBorn"/>
                   </item>
                   <item row="2" column="0">
-                   <widget class="QLabel" name="labelDied_2">
+                   <widget class="QLabel" name="labelEditorDied">
                     <property name="font">
                      <font>
                       <family>Lato</family>
@@ -927,10 +927,10 @@
                    </widget>
                   </item>
                   <item row="2" column="1">
-                   <widget class="QLineEdit" name="lineEditBorn_4"/>
+                   <widget class="QLineEdit" name="lineEditEditorDied"/>
                   </item>
                   <item row="3" column="0">
-                   <widget class="QLabel" name="labelAge_2">
+                   <widget class="QLabel" name="labelEditorAge">
                     <property name="font">
                      <font>
                       <family>Lato</family>
@@ -946,7 +946,7 @@
                    </widget>
                   </item>
                   <item row="3" column="1">
-                   <widget class="QLabel" name="labelAgeValue_2">
+                   <widget class="QLabel" name="labelEditorAgeValue">
                     <property name="font">
                      <font>
                       <family>Lato</family>
@@ -957,18 +957,18 @@
                      </font>
                     </property>
                     <property name="frameShape">
-                     <enum>QFrame::Shape::StyledPanel</enum>
+                     <enum>QFrame::Shape::NoFrame</enum>
                     </property>
                     <property name="text">
                      <string>0</string>
                     </property>
                     <property name="alignment">
-                     <set>Qt::AlignmentFlag::AlignCenter</set>
+                     <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
                     </property>
                    </widget>
                   </item>
                   <item row="4" column="0">
-                   <widget class="QLabel" name="labelGender_2">
+                   <widget class="QLabel" name="labelEditorGender">
                     <property name="font">
                      <font>
                       <family>Lato</family>
@@ -984,10 +984,10 @@
                    </widget>
                   </item>
                   <item row="4" column="1">
-                   <widget class="QComboBox" name="comboBoxGender_2"/>
+                   <widget class="QComboBox" name="comboBoxEditorGender"/>
                   </item>
                   <item row="5" column="0">
-                   <widget class="QLabel" name="labelSexOrientation_2">
+                   <widget class="QLabel" name="labelEditorSexOrientation">
                     <property name="font">
                      <font>
                       <family>Lato</family>
@@ -1003,10 +1003,10 @@
                    </widget>
                   </item>
                   <item row="5" column="1">
-                   <widget class="QComboBox" name="comboBoxSexOrientation_2"/>
+                   <widget class="QComboBox" name="comboBoxEditorSexOrientation"/>
                   </item>
                   <item row="6" column="0">
-                   <widget class="QLabel" name="labelRole_2">
+                   <widget class="QLabel" name="labelEditorRole">
                     <property name="font">
                      <font>
                       <family>Lato</family>
@@ -1022,10 +1022,10 @@
                    </widget>
                   </item>
                   <item row="6" column="1">
-                   <widget class="QComboBox" name="comboBoxRole_2"/>
+                   <widget class="QComboBox" name="comboBoxEditorRole"/>
                   </item>
                   <item row="7" column="0">
-                   <widget class="QLabel" name="labelGroup_2">
+                   <widget class="QLabel" name="labelEditorGroup">
                     <property name="font">
                      <font>
                       <family>Lato</family>
@@ -1041,10 +1041,10 @@
                    </widget>
                   </item>
                   <item row="7" column="1">
-                   <widget class="QComboBox" name="comboBoxGroup_2"/>
+                   <widget class="QComboBox" name="comboBoxEditorGroup"/>
                   </item>
                   <item row="8" column="0" colspan="2">
-                   <widget class="QLabel" name="labelCharakterDevelopment_2">
+                   <widget class="QLabel" name="labelEditorDevelopment">
                     <property name="font">
                      <font>
                       <family>Lato</family>
@@ -1060,10 +1060,10 @@
                    </widget>
                   </item>
                   <item row="9" column="0" colspan="2">
-                   <widget class="QPlainTextEdit" name="plainTextCharakterDevelopment_2"/>
+                   <widget class="QPlainTextEdit" name="plainTextEditorDevelopment"/>
                   </item>
                   <item row="10" column="0" colspan="2">
-                   <widget class="QLabel" name="labelCharakterNotes_2">
+                   <widget class="QLabel" name="labelEditorCharakterNotes">
                     <property name="font">
                      <font>
                       <family>Lato</family>
@@ -1079,11 +1079,11 @@
                    </widget>
                   </item>
                   <item row="11" column="0" colspan="2">
-                   <widget class="QPlainTextEdit" name="plainTextCharacterNotes_2"/>
+                   <widget class="QPlainTextEdit" name="plainTextEditorNotes"/>
                   </item>
                  </layout>
                 </widget>
-                <widget class="QWidget" name="page_9">
+                <widget class="QWidget" name="pageEditorAncestry">
                  <property name="geometry">
                   <rect>
                    <x>0</x>
@@ -1097,7 +1097,7 @@
                  </attribute>
                  <layout class="QFormLayout" name="formLayout_11">
                   <item row="0" column="0">
-                   <widget class="QLabel" name="labelMother_2">
+                   <widget class="QLabel" name="labelEditorMother">
                     <property name="font">
                      <font>
                       <family>Lato</family>
@@ -1113,7 +1113,7 @@
                    </widget>
                   </item>
                   <item row="0" column="1">
-                   <widget class="QLineEdit" name="lineEditMother_2">
+                   <widget class="QLineEdit" name="lineEditEditorMother">
                     <property name="font">
                      <font>
                       <family>Lato</family>
@@ -1126,7 +1126,7 @@
                    </widget>
                   </item>
                   <item row="1" column="0">
-                   <widget class="QLabel" name="labelFather_2">
+                   <widget class="QLabel" name="labelEditorFather">
                     <property name="font">
                      <font>
                       <family>Lato</family>
@@ -1142,7 +1142,7 @@
                    </widget>
                   </item>
                   <item row="1" column="1">
-                   <widget class="QLineEdit" name="lineEditFather_2">
+                   <widget class="QLineEdit" name="lineEditEditorFather">
                     <property name="font">
                      <font>
                       <family>Lato</family>
@@ -1155,7 +1155,7 @@
                    </widget>
                   </item>
                   <item row="2" column="0">
-                   <widget class="QLabel" name="labelReferencePerson_2">
+                   <widget class="QLabel" name="labelEditorReferencePerson">
                     <property name="font">
                      <font>
                       <family>Lato</family>
@@ -1171,7 +1171,7 @@
                    </widget>
                   </item>
                   <item row="2" column="1">
-                   <widget class="QLineEdit" name="lineEditReferencePerson_2">
+                   <widget class="QLineEdit" name="lineEditEditorReferencePerson">
                     <property name="font">
                      <font>
                       <family>Lato</family>
@@ -1184,7 +1184,7 @@
                    </widget>
                   </item>
                   <item row="3" column="0">
-                   <widget class="QLabel" name="labelSiblings_2">
+                   <widget class="QLabel" name="labelEditorSiblings">
                     <property name="font">
                      <font>
                       <family>Lato</family>
@@ -1200,7 +1200,7 @@
                    </widget>
                   </item>
                   <item row="3" column="1">
-                   <widget class="QTextEdit" name="textEditSiblings_2">
+                   <widget class="QTextEdit" name="textEditEditorSiblings">
                     <property name="font">
                      <font>
                       <family>Lato</family>
@@ -1213,7 +1213,7 @@
                    </widget>
                   </item>
                   <item row="4" column="0">
-                   <widget class="QLabel" name="labelPlaceOfBirth_2">
+                   <widget class="QLabel" name="labelEditorPlaceOfBirth">
                     <property name="font">
                      <font>
                       <family>Lato</family>
@@ -1229,7 +1229,7 @@
                    </widget>
                   </item>
                   <item row="4" column="1">
-                   <widget class="QLineEdit" name="lineEditPlaceOfBirth_2">
+                   <widget class="QLineEdit" name="lineEditEditorPlaceOfBirth">
                     <property name="font">
                      <font>
                       <family>Lato</family>
@@ -1242,7 +1242,7 @@
                    </widget>
                   </item>
                   <item row="5" column="0">
-                   <widget class="QLabel" name="labelCountry_2">
+                   <widget class="QLabel" name="labelEditorCountry">
                     <property name="font">
                      <font>
                       <family>Lato</family>
@@ -1258,7 +1258,7 @@
                    </widget>
                   </item>
                   <item row="5" column="1">
-                   <widget class="QLineEdit" name="lineEditCountry_2">
+                   <widget class="QLineEdit" name="lineEditEditorCountry">
                     <property name="font">
                      <font>
                       <family>Lato</family>
@@ -1271,7 +1271,7 @@
                    </widget>
                   </item>
                   <item row="6" column="0">
-                   <widget class="QLabel" name="labelEthnicity_2">
+                   <widget class="QLabel" name="labelEditorEthnicity">
                     <property name="font">
                      <font>
                       <family>Lato</family>
@@ -1287,7 +1287,7 @@
                    </widget>
                   </item>
                   <item row="6" column="1">
-                   <widget class="QLineEdit" name="lineEditEthnicity_2">
+                   <widget class="QLineEdit" name="lineEditEditorEthnicity">
                     <property name="font">
                      <font>
                       <family>Lato</family>
@@ -1300,7 +1300,7 @@
                    </widget>
                   </item>
                   <item row="7" column="0">
-                   <widget class="QLabel" name="labelAncestryNotes_2">
+                   <widget class="QLabel" name="labelEditorNotes">
                     <property name="font">
                      <font>
                       <family>Lato</family>
@@ -1316,11 +1316,11 @@
                    </widget>
                   </item>
                   <item row="7" column="1">
-                   <widget class="QTextEdit" name="textEditAncestryNotes_2"/>
+                   <widget class="QTextEdit" name="textEditEditorNotes"/>
                   </item>
                  </layout>
                 </widget>
-                <widget class="QWidget" name="page_10">
+                <widget class="QWidget" name="pageEditorEducation">
                  <property name="geometry">
                   <rect>
                    <x>0</x>
@@ -1334,7 +1334,7 @@
                  </attribute>
                  <layout class="QFormLayout" name="formLayout_12">
                   <item row="0" column="0">
-                   <widget class="QLabel" name="labelSchool_2">
+                   <widget class="QLabel" name="labelEditorSchool">
                     <property name="font">
                      <font>
                       <family>Lato</family>
@@ -1350,10 +1350,10 @@
                    </widget>
                   </item>
                   <item row="0" column="1">
-                   <widget class="QTextEdit" name="textEditSchool_2"/>
+                   <widget class="QTextEdit" name="textEditEditorSchool"/>
                   </item>
                   <item row="1" column="0">
-                   <widget class="QLabel" name="labelUniversity_2">
+                   <widget class="QLabel" name="labelEditorUniversity">
                     <property name="font">
                      <font>
                       <family>Lato</family>
@@ -1369,10 +1369,10 @@
                    </widget>
                   </item>
                   <item row="1" column="1">
-                   <widget class="QTextEdit" name="textEditUniversity_2"/>
+                   <widget class="QTextEdit" name="textEditEditorUniversity"/>
                   </item>
                   <item row="2" column="0">
-                   <widget class="QLabel" name="labelVocationalTraining_2">
+                   <widget class="QLabel" name="labelEditorVocationalTraining">
                     <property name="font">
                      <font>
                       <family>Lato</family>
@@ -1388,10 +1388,10 @@
                    </widget>
                   </item>
                   <item row="2" column="1">
-                   <widget class="QTextEdit" name="textEditVocationalTraining_2"/>
+                   <widget class="QTextEdit" name="textEditEditorVocationalTraining"/>
                   </item>
                   <item row="3" column="0">
-                   <widget class="QLabel" name="labelProfession_2">
+                   <widget class="QLabel" name="labelEditorProfession">
                     <property name="font">
                      <font>
                       <family>Lato</family>
@@ -1407,10 +1407,10 @@
                    </widget>
                   </item>
                   <item row="3" column="1">
-                   <widget class="QTextEdit" name="textEditProfession_2"/>
+                   <widget class="QTextEdit" name="textEditEditorProfession"/>
                   </item>
                   <item row="4" column="0">
-                   <widget class="QLabel" name="labelArtMusic_2">
+                   <widget class="QLabel" name="labelEditorArtMusic">
                     <property name="font">
                      <font>
                       <family>Lato</family>
@@ -1426,10 +1426,10 @@
                    </widget>
                   </item>
                   <item row="4" column="1">
-                   <widget class="QTextEdit" name="textEditArtMusic_2"/>
+                   <widget class="QTextEdit" name="textEditEditorArtMusic"/>
                   </item>
                   <item row="5" column="0">
-                   <widget class="QLabel" name="labelSport_2">
+                   <widget class="QLabel" name="labelEditorSport">
                     <property name="font">
                      <font>
                       <family>Lato</family>
@@ -1445,10 +1445,10 @@
                    </widget>
                   </item>
                   <item row="5" column="1">
-                   <widget class="QTextEdit" name="textEditSport_2"/>
+                   <widget class="QTextEdit" name="textEditEditorSport"/>
                   </item>
                   <item row="6" column="0">
-                   <widget class="QLabel" name="labelTechnic_2">
+                   <widget class="QLabel" name="labelEditorTechnic">
                     <property name="font">
                      <font>
                       <family>Lato</family>
@@ -1464,10 +1464,10 @@
                    </widget>
                   </item>
                   <item row="6" column="1">
-                   <widget class="QTextEdit" name="textEditTechnic_2"/>
+                   <widget class="QTextEdit" name="textEditEditorTechnic"/>
                   </item>
                   <item row="7" column="0">
-                   <widget class="QLabel" name="labelAutodidact_2">
+                   <widget class="QLabel" name="labelEditorAutodidact">
                     <property name="font">
                      <font>
                       <family>Lato</family>
@@ -1483,10 +1483,10 @@
                    </widget>
                   </item>
                   <item row="7" column="1">
-                   <widget class="QTextEdit" name="textEditAutodidact_2"/>
+                   <widget class="QTextEdit" name="textEditEditorAutodidact"/>
                   </item>
                   <item row="8" column="0">
-                   <widget class="QLabel" name="labelEducationNotes_2">
+                   <widget class="QLabel" name="labelEditorEducationNotes">
                     <property name="font">
                      <font>
                       <family>Lato</family>
@@ -1502,11 +1502,11 @@
                    </widget>
                   </item>
                   <item row="8" column="1">
-                   <widget class="QTextEdit" name="textEditEducationNotes_2"/>
+                   <widget class="QTextEdit" name="textEditEditorEducationNotes"/>
                   </item>
                  </layout>
                 </widget>
-                <widget class="QWidget" name="page_11">
+                <widget class="QWidget" name="pageEditorLook">
                  <property name="geometry">
                   <rect>
                    <x>0</x>
@@ -1520,7 +1520,7 @@
                  </attribute>
                  <layout class="QFormLayout" name="formLayout_13">
                   <item row="0" column="0">
-                   <widget class="QLabel" name="labelSize_2">
+                   <widget class="QLabel" name="labelEditorSize">
                     <property name="font">
                      <font>
                       <family>Lato</family>
@@ -1536,7 +1536,7 @@
                    </widget>
                   </item>
                   <item row="0" column="1">
-                   <widget class="QSpinBox" name="spinBoxSize_2">
+                   <widget class="QSpinBox" name="spinBoxEditorSize">
                     <property name="maximum">
                      <number>999</number>
                     </property>
@@ -1546,7 +1546,7 @@
                    </widget>
                   </item>
                   <item row="1" column="1">
-                   <widget class="QLabel" name="labelSizeCm_2">
+                   <widget class="QLabel" name="labelEditorSizeCm">
                     <property name="font">
                      <font>
                       <family>Lato</family>
@@ -1562,7 +1562,7 @@
                    </widget>
                   </item>
                   <item row="2" column="0">
-                   <widget class="QLabel" name="labelBodyType_2">
+                   <widget class="QLabel" name="labelEditorBodyType">
                     <property name="font">
                      <font>
                       <family>Lato</family>
@@ -1578,10 +1578,10 @@
                    </widget>
                   </item>
                   <item row="2" column="1">
-                   <widget class="QComboBox" name="comboBoxBodyType_2"/>
+                   <widget class="QComboBox" name="comboBoxEditorBodyType"/>
                   </item>
                   <item row="4" column="0">
-                   <widget class="QLabel" name="labelStature_2">
+                   <widget class="QLabel" name="labelEditorStature">
                     <property name="font">
                      <font>
                       <family>Lato</family>
@@ -1597,10 +1597,10 @@
                    </widget>
                   </item>
                   <item row="4" column="1">
-                   <widget class="QComboBox" name="comboBoxStature_2"/>
+                   <widget class="QComboBox" name="comboBoxEditorStature"/>
                   </item>
                   <item row="6" column="0">
-                   <widget class="QLabel" name="labelFaceShape_2">
+                   <widget class="QLabel" name="labelEditorFaceShape">
                     <property name="font">
                      <font>
                       <family>Lato</family>
@@ -1616,10 +1616,10 @@
                    </widget>
                   </item>
                   <item row="6" column="1">
-                   <widget class="QComboBox" name="comboBoxFaceShape_2"/>
+                   <widget class="QComboBox" name="comboBoxFEditorFaceShape"/>
                   </item>
                   <item row="8" column="0">
-                   <widget class="QLabel" name="labelEyeShape_2">
+                   <widget class="QLabel" name="labelEditorEyeShape">
                     <property name="font">
                      <font>
                       <family>Lato</family>
@@ -1635,10 +1635,10 @@
                    </widget>
                   </item>
                   <item row="8" column="1">
-                   <widget class="QComboBox" name="comboBoxEyeShape_2"/>
+                   <widget class="QComboBox" name="comboBoxEditorEyeShape"/>
                   </item>
                   <item row="10" column="0">
-                   <widget class="QLabel" name="labelEyeColor_2">
+                   <widget class="QLabel" name="labelEditorEyeColor">
                     <property name="font">
                      <font>
                       <family>Lato</family>
@@ -1654,10 +1654,10 @@
                    </widget>
                   </item>
                   <item row="10" column="1">
-                   <widget class="QLineEdit" name="lineEditEyeColor_2"/>
+                   <widget class="QLineEdit" name="lineEditEditorEyeColor"/>
                   </item>
                   <item row="12" column="0">
-                   <widget class="QLabel" name="labelHair_2">
+                   <widget class="QLabel" name="labelEditorHair">
                     <property name="font">
                      <font>
                       <family>Lato</family>
@@ -1673,10 +1673,10 @@
                    </widget>
                   </item>
                   <item row="12" column="1">
-                   <widget class="QLineEdit" name="lineEditHair_2"/>
+                   <widget class="QLineEdit" name="lineEditEditorHair"/>
                   </item>
                   <item row="14" column="0">
-                   <widget class="QLabel" name="labelHairColor_2">
+                   <widget class="QLabel" name="labelEditorHairColor">
                     <property name="font">
                      <font>
                       <family>Lato</family>
@@ -1692,10 +1692,10 @@
                    </widget>
                   </item>
                   <item row="14" column="1">
-                   <widget class="QLineEdit" name="lineEditHairColor_2"/>
+                   <widget class="QLineEdit" name="lineEditEditorHairColor"/>
                   </item>
                   <item row="16" column="0">
-                   <widget class="QLabel" name="labelSkin_2">
+                   <widget class="QLabel" name="labelEditorSkin">
                     <property name="font">
                      <font>
                       <family>Lato</family>
@@ -1711,10 +1711,10 @@
                    </widget>
                   </item>
                   <item row="16" column="1">
-                   <widget class="QLineEdit" name="lineEditSkin_2"/>
+                   <widget class="QLineEdit" name="lineEditEditorSkin"/>
                   </item>
                   <item row="18" column="0">
-                   <widget class="QLabel" name="labelSkinColor_2">
+                   <widget class="QLabel" name="labelEditorSkinColor">
                     <property name="font">
                      <font>
                       <family>Lato</family>
@@ -1730,10 +1730,10 @@
                    </widget>
                   </item>
                   <item row="18" column="1">
-                   <widget class="QLineEdit" name="lineEditSkinColor_2"/>
+                   <widget class="QLineEdit" name="lineEditEditorSkinColor"/>
                   </item>
                   <item row="20" column="0">
-                   <widget class="QLabel" name="labelCharisma_2">
+                   <widget class="QLabel" name="labelEditorCharisma">
                     <property name="font">
                      <font>
                       <family>Lato</family>
@@ -1749,10 +1749,10 @@
                    </widget>
                   </item>
                   <item row="20" column="1">
-                   <widget class="QLineEdit" name="lineEditCharisma_2"/>
+                   <widget class="QLineEdit" name="lineEditEditorCharisma"/>
                   </item>
                   <item row="22" column="0">
-                   <widget class="QLabel" name="labelSpecialFeatures_2">
+                   <widget class="QLabel" name="labelEditorSpecialFeatures">
                     <property name="font">
                      <font>
                       <family>Lato</family>
@@ -1768,10 +1768,10 @@
                    </widget>
                   </item>
                   <item row="22" column="1">
-                   <widget class="QLineEdit" name="lineEditSpecialFeatures_2"/>
+                   <widget class="QLineEdit" name="lineEditEditorSpecialFeatures"/>
                   </item>
                   <item row="24" column="0">
-                   <widget class="QLabel" name="labelLookNotes_2">
+                   <widget class="QLabel" name="labelEditorLookNotes">
                     <property name="font">
                      <font>
                       <family>Lato</family>
@@ -1787,11 +1787,11 @@
                    </widget>
                   </item>
                   <item row="24" column="1">
-                   <widget class="QTextEdit" name="textEditLookNotes_2"/>
+                   <widget class="QTextEdit" name="textEditEditorLookNotes"/>
                   </item>
                  </layout>
                 </widget>
-                <widget class="QWidget" name="page_12">
+                <widget class="QWidget" name="pageEditorLookDetails">
                  <property name="geometry">
                   <rect>
                    <x>0</x>
@@ -1805,7 +1805,7 @@
                  </attribute>
                  <layout class="QFormLayout" name="formLayout_14">
                   <item row="0" column="0">
-                   <widget class="QLabel" name="labelHead_2">
+                   <widget class="QLabel" name="labelEditorHead">
                     <property name="font">
                      <font>
                       <family>Lato</family>
@@ -1821,10 +1821,10 @@
                    </widget>
                   </item>
                   <item row="0" column="1">
-                   <widget class="QLineEdit" name="lineEditHead_2"/>
+                   <widget class="QLineEdit" name="lineEditEditorHead"/>
                   </item>
                   <item row="1" column="0">
-                   <widget class="QLabel" name="labelNeck_2">
+                   <widget class="QLabel" name="labelEditorNeck">
                     <property name="font">
                      <font>
                       <family>Lato</family>
@@ -1840,10 +1840,10 @@
                    </widget>
                   </item>
                   <item row="1" column="1">
-                   <widget class="QLineEdit" name="lineEditNeck_2"/>
+                   <widget class="QLineEdit" name="lineEditEditorNeck"/>
                   </item>
                   <item row="2" column="0">
-                   <widget class="QLabel" name="labelShoulders_2">
+                   <widget class="QLabel" name="labelEditorShoulders">
                     <property name="font">
                      <font>
                       <family>Lato</family>
@@ -1859,10 +1859,10 @@
                    </widget>
                   </item>
                   <item row="2" column="1">
-                   <widget class="QLineEdit" name="lineShoulders_2"/>
+                   <widget class="QLineEdit" name="lineEditorShoulders"/>
                   </item>
                   <item row="3" column="0">
-                   <widget class="QLabel" name="labelUpperArm_2">
+                   <widget class="QLabel" name="labelEditorUpperArm">
                     <property name="font">
                      <font>
                       <family>Lato</family>
@@ -1878,10 +1878,10 @@
                    </widget>
                   </item>
                   <item row="3" column="1">
-                   <widget class="QLineEdit" name="lineEditUpperArm_2"/>
+                   <widget class="QLineEdit" name="lineEditEditorUpperArm"/>
                   </item>
                   <item row="4" column="0">
-                   <widget class="QLabel" name="labelEllbow_2">
+                   <widget class="QLabel" name="labelEditorEllbow">
                     <property name="font">
                      <font>
                       <family>Lato</family>
@@ -1897,10 +1897,10 @@
                    </widget>
                   </item>
                   <item row="4" column="1">
-                   <widget class="QLineEdit" name="lineEditEllbow_2"/>
+                   <widget class="QLineEdit" name="lineEditEditorEllbow"/>
                   </item>
                   <item row="5" column="0">
-                   <widget class="QLabel" name="labelLowerArm_2">
+                   <widget class="QLabel" name="labelEditorLowerArm">
                     <property name="font">
                      <font>
                       <family>Lato</family>
@@ -1916,10 +1916,10 @@
                    </widget>
                   </item>
                   <item row="5" column="1">
-                   <widget class="QLineEdit" name="lineEditLowerArms_2"/>
+                   <widget class="QLineEdit" name="lineEditEditorLowerArms"/>
                   </item>
                   <item row="6" column="0">
-                   <widget class="QLabel" name="labelWrist_2">
+                   <widget class="QLabel" name="labelEditorWrist">
                     <property name="font">
                      <font>
                       <family>Lato</family>
@@ -1935,10 +1935,10 @@
                    </widget>
                   </item>
                   <item row="6" column="1">
-                   <widget class="QLineEdit" name="lineEditWrists_2"/>
+                   <widget class="QLineEdit" name="lineEditEditorWrists"/>
                   </item>
                   <item row="7" column="0">
-                   <widget class="QLabel" name="labelHand_2">
+                   <widget class="QLabel" name="labelEditorHand">
                     <property name="font">
                      <font>
                       <family>Lato</family>
@@ -1954,10 +1954,10 @@
                    </widget>
                   </item>
                   <item row="7" column="1">
-                   <widget class="QLineEdit" name="lineEditHand_2"/>
+                   <widget class="QLineEdit" name="lineEditEditorHand"/>
                   </item>
                   <item row="8" column="0">
-                   <widget class="QLabel" name="labelFinger_2">
+                   <widget class="QLabel" name="labelEditorFinger">
                     <property name="font">
                      <font>
                       <family>Lato</family>
@@ -1973,10 +1973,10 @@
                    </widget>
                   </item>
                   <item row="8" column="1">
-                   <widget class="QLineEdit" name="lineEditFinger_2"/>
+                   <widget class="QLineEdit" name="lineEditEditorFinger"/>
                   </item>
                   <item row="9" column="0">
-                   <widget class="QLabel" name="labelBreast_2">
+                   <widget class="QLabel" name="labelEditorBreast">
                     <property name="font">
                      <font>
                       <family>Lato</family>
@@ -1992,10 +1992,10 @@
                    </widget>
                   </item>
                   <item row="9" column="1">
-                   <widget class="QLineEdit" name="lineEditBreast_2"/>
+                   <widget class="QLineEdit" name="lineEditEditorBreast"/>
                   </item>
                   <item row="10" column="0">
-                   <widget class="QLabel" name="labelBack_2">
+                   <widget class="QLabel" name="labelEditorBack">
                     <property name="font">
                      <font>
                       <family>Lato</family>
@@ -2011,10 +2011,10 @@
                    </widget>
                   </item>
                   <item row="10" column="1">
-                   <widget class="QLineEdit" name="lineEditBack_2"/>
+                   <widget class="QLineEdit" name="lineEditEditorBack"/>
                   </item>
                   <item row="11" column="0">
-                   <widget class="QLabel" name="labelHips_2">
+                   <widget class="QLabel" name="labelEditorHips">
                     <property name="font">
                      <font>
                       <family>Lato</family>
@@ -2030,10 +2030,10 @@
                    </widget>
                   </item>
                   <item row="11" column="1">
-                   <widget class="QLineEdit" name="lineEditHips_2"/>
+                   <widget class="QLineEdit" name="lineEditEditorHips"/>
                   </item>
                   <item row="12" column="0">
-                   <widget class="QLabel" name="labelButtocks_2">
+                   <widget class="QLabel" name="labelEditorButtocks">
                     <property name="font">
                      <font>
                       <family>Lato</family>
@@ -2049,10 +2049,10 @@
                    </widget>
                   </item>
                   <item row="12" column="1">
-                   <widget class="QLineEdit" name="lineEditButtocks_2"/>
+                   <widget class="QLineEdit" name="lineEditEditorButtocks"/>
                   </item>
                   <item row="13" column="0">
-                   <widget class="QLabel" name="labelUpperLeg_2">
+                   <widget class="QLabel" name="labelEditorUpperLeg">
                     <property name="font">
                      <font>
                       <family>Lato</family>
@@ -2068,10 +2068,10 @@
                    </widget>
                   </item>
                   <item row="13" column="1">
-                   <widget class="QLineEdit" name="lineEditUpperLeg_2"/>
+                   <widget class="QLineEdit" name="lineEditEditorUpperLeg"/>
                   </item>
                   <item row="14" column="0">
-                   <widget class="QLabel" name="labelKnee_2">
+                   <widget class="QLabel" name="labelEditorKnee">
                     <property name="font">
                      <font>
                       <family>Lato</family>
@@ -2087,10 +2087,10 @@
                    </widget>
                   </item>
                   <item row="14" column="1">
-                   <widget class="QLineEdit" name="lineEditKnee_2"/>
+                   <widget class="QLineEdit" name="lineEditEditorKnee"/>
                   </item>
                   <item row="15" column="0">
-                   <widget class="QLabel" name="labelLowerLeg_2">
+                   <widget class="QLabel" name="labelEditorLowerLeg">
                     <property name="font">
                      <font>
                       <family>Lato</family>
@@ -2106,10 +2106,10 @@
                    </widget>
                   </item>
                   <item row="15" column="1">
-                   <widget class="QLineEdit" name="lineEditLowerLeg_2"/>
+                   <widget class="QLineEdit" name="lineEditEditorLowerLeg"/>
                   </item>
                   <item row="16" column="0">
-                   <widget class="QLabel" name="labelAnkles_2">
+                   <widget class="QLabel" name="labelEditorAnkles">
                     <property name="font">
                      <font>
                       <family>Lato</family>
@@ -2125,10 +2125,10 @@
                    </widget>
                   </item>
                   <item row="16" column="1">
-                   <widget class="QLineEdit" name="lineEditAnkles_2"/>
+                   <widget class="QLineEdit" name="lineEditEditorAnkles"/>
                   </item>
                   <item row="17" column="0">
-                   <widget class="QLabel" name="labelFeet_2">
+                   <widget class="QLabel" name="labelEditorFeet">
                     <property name="font">
                      <font>
                       <family>Lato</family>
@@ -2144,10 +2144,10 @@
                    </widget>
                   </item>
                   <item row="17" column="1">
-                   <widget class="QLineEdit" name="lineEditFeet_2"/>
+                   <widget class="QLineEdit" name="lineEditEditorFeet"/>
                   </item>
                   <item row="18" column="0">
-                   <widget class="QLabel" name="labelToes_2">
+                   <widget class="QLabel" name="labelEditorToes">
                     <property name="font">
                      <font>
                       <family>Lato</family>
@@ -2163,10 +2163,10 @@
                    </widget>
                   </item>
                   <item row="18" column="1">
-                   <widget class="QLineEdit" name="lineEditToes_2"/>
+                   <widget class="QLineEdit" name="lineEditEditorToes"/>
                   </item>
                   <item row="19" column="0">
-                   <widget class="QLabel" name="labelLookDetailsNotes_2">
+                   <widget class="QLabel" name="labelLookEditorDetailsNotes">
                     <property name="font">
                      <font>
                       <family>Lato</family>
@@ -2182,11 +2182,11 @@
                    </widget>
                   </item>
                   <item row="19" column="1">
-                   <widget class="QTextEdit" name="textEditLookDetailsNotes_2"/>
+                   <widget class="QTextEdit" name="textEditEditorLookDetailsNotes"/>
                   </item>
                  </layout>
                 </widget>
-                <widget class="QWidget" name="page_13">
+                <widget class="QWidget" name="pageEditorPersonality">
                  <property name="geometry">
                   <rect>
                    <x>0</x>
@@ -2200,7 +2200,7 @@
                  </attribute>
                  <layout class="QFormLayout" name="formLayout_15">
                   <item row="0" column="0">
-                   <widget class="QLabel" name="labelPosCharacteristics_2">
+                   <widget class="QLabel" name="labelEditorPosCharacteristics">
                     <property name="font">
                      <font>
                       <family>Lato</family>
@@ -2216,10 +2216,10 @@
                    </widget>
                   </item>
                   <item row="0" column="1">
-                   <widget class="QLineEdit" name="lineEditPosCharacteristics_2"/>
+                   <widget class="QLineEdit" name="lineEditEditorPosCharacteristics"/>
                   </item>
                   <item row="1" column="0">
-                   <widget class="QLabel" name="labelNegCharacteristics_2">
+                   <widget class="QLabel" name="labelEditorNegCharacteristics">
                     <property name="font">
                      <font>
                       <family>Lato</family>
@@ -2235,10 +2235,10 @@
                    </widget>
                   </item>
                   <item row="1" column="1">
-                   <widget class="QLineEdit" name="lineEditNegCharacteristics_2"/>
+                   <widget class="QLineEdit" name="lineEditEditorNegCharacteristics"/>
                   </item>
                   <item row="2" column="0">
-                   <widget class="QLabel" name="labelFears_2">
+                   <widget class="QLabel" name="labelEditorFears">
                     <property name="font">
                      <font>
                       <family>Lato</family>
@@ -2254,10 +2254,10 @@
                    </widget>
                   </item>
                   <item row="2" column="1">
-                   <widget class="QLineEdit" name="lineEditFears_2"/>
+                   <widget class="QLineEdit" name="lineEditEditorFears"/>
                   </item>
                   <item row="3" column="0">
-                   <widget class="QLabel" name="labelWeakness_2">
+                   <widget class="QLabel" name="labelEditorWeakness">
                     <property name="font">
                      <font>
                       <family>Lato</family>
@@ -2273,10 +2273,10 @@
                    </widget>
                   </item>
                   <item row="3" column="1">
-                   <widget class="QLineEdit" name="lineEditWeakness_2"/>
+                   <widget class="QLineEdit" name="lineEditEditorWeakness"/>
                   </item>
                   <item row="4" column="0">
-                   <widget class="QLabel" name="labelStrength_2">
+                   <widget class="QLabel" name="labelEditorStrength">
                     <property name="font">
                      <font>
                       <family>Lato</family>
@@ -2292,10 +2292,10 @@
                    </widget>
                   </item>
                   <item row="4" column="1">
-                   <widget class="QLineEdit" name="lineEditStrength_2"/>
+                   <widget class="QLineEdit" name="lineEditEditorStrength"/>
                   </item>
                   <item row="5" column="0">
-                   <widget class="QLabel" name="labelTalents_2">
+                   <widget class="QLabel" name="labelEditorTalents">
                     <property name="font">
                      <font>
                       <family>Lato</family>
@@ -2311,10 +2311,10 @@
                    </widget>
                   </item>
                   <item row="5" column="1">
-                   <widget class="QLineEdit" name="lineEditTalents_2"/>
+                   <widget class="QLineEdit" name="lineEditEditorTalents"/>
                   </item>
                   <item row="6" column="0">
-                   <widget class="QLabel" name="labelBelief_2">
+                   <widget class="QLabel" name="labelEditorBelief">
                     <property name="font">
                      <font>
                       <family>Lato</family>
@@ -2330,10 +2330,10 @@
                    </widget>
                   </item>
                   <item row="6" column="1">
-                   <widget class="QLineEdit" name="lineEditBelief_2"/>
+                   <widget class="QLineEdit" name="lineEditEditorBelief"/>
                   </item>
                   <item row="7" column="0">
-                   <widget class="QLabel" name="labelLifeGoal_2">
+                   <widget class="QLabel" name="labelEditorLifeGoal">
                     <property name="font">
                      <font>
                       <family>Lato</family>
@@ -2349,10 +2349,10 @@
                    </widget>
                   </item>
                   <item row="7" column="1">
-                   <widget class="QLineEdit" name="lineEditLifeGoal_2"/>
+                   <widget class="QLineEdit" name="lineEditEditorLifeGoal"/>
                   </item>
                   <item row="8" column="0">
-                   <widget class="QLabel" name="labelMotivation_2">
+                   <widget class="QLabel" name="labelEditorMotivation">
                     <property name="font">
                      <font>
                       <family>Lato</family>
@@ -2368,10 +2368,10 @@
                    </widget>
                   </item>
                   <item row="8" column="1">
-                   <widget class="QLineEdit" name="lineEditMotivation_2"/>
+                   <widget class="QLineEdit" name="lineEditEditorMotivation"/>
                   </item>
                   <item row="9" column="0">
-                   <widget class="QLabel" name="labelBehavior_2">
+                   <widget class="QLabel" name="labelEditorBehavior">
                     <property name="font">
                      <font>
                       <family>Lato</family>
@@ -2387,10 +2387,10 @@
                    </widget>
                   </item>
                   <item row="9" column="1">
-                   <widget class="QLineEdit" name="lineEditBehavior_2"/>
+                   <widget class="QLineEdit" name="lineEditEditorBehavior"/>
                   </item>
                   <item row="10" column="0">
-                   <widget class="QLabel" name="labelPersonalityNotes_2">
+                   <widget class="QLabel" name="labelEditorPersonalityNotes">
                     <property name="font">
                      <font>
                       <family>Lato</family>
@@ -2406,11 +2406,11 @@
                    </widget>
                   </item>
                   <item row="10" column="1">
-                   <widget class="QTextEdit" name="textEditPersonalityNotes_2"/>
+                   <widget class="QTextEdit" name="textEditEditorPersonalityNotes"/>
                   </item>
                  </layout>
                 </widget>
-                <widget class="QWidget" name="page_14">
+                <widget class="QWidget" name="pageEditorPsychologicalProfile">
                  <property name="geometry">
                   <rect>
                    <x>0</x>
@@ -2424,7 +2424,7 @@
                  </attribute>
                  <layout class="QFormLayout" name="formLayout_16">
                   <item row="0" column="0">
-                   <widget class="QLabel" name="labelDiagnosis_2">
+                   <widget class="QLabel" name="labelDiagnosis">
                     <property name="font">
                      <font>
                       <family>Lato</family>
@@ -2440,10 +2440,10 @@
                    </widget>
                   </item>
                   <item row="0" column="1">
-                   <widget class="QLineEdit" name="lineEditDiagnosis_2"/>
+                   <widget class="QLineEdit" name="lineEditEditorDiagnosis"/>
                   </item>
                   <item row="1" column="0">
-                   <widget class="QLabel" name="labelSymptoms_2">
+                   <widget class="QLabel" name="labelEditorSymptoms">
                     <property name="font">
                      <font>
                       <family>Lato</family>
@@ -2459,10 +2459,10 @@
                    </widget>
                   </item>
                   <item row="1" column="1">
-                   <widget class="QLineEdit" name="lineEditSymptoms_2"/>
+                   <widget class="QLineEdit" name="lineEditEditorSymptoms"/>
                   </item>
                   <item row="2" column="0">
-                   <widget class="QLabel" name="labelTherapy_2">
+                   <widget class="QLabel" name="labelEditorTherapy">
                     <property name="font">
                      <font>
                       <family>Lato</family>
@@ -2478,10 +2478,10 @@
                    </widget>
                   </item>
                   <item row="2" column="1">
-                   <widget class="QLineEdit" name="lineEditTherapy_2"/>
+                   <widget class="QLineEdit" name="lineEditEditorTherapy"/>
                   </item>
                   <item row="3" column="0">
-                   <widget class="QLabel" name="labelMedication_2">
+                   <widget class="QLabel" name="labelEditorMedication">
                     <property name="font">
                      <font>
                       <family>Lato</family>
@@ -2497,10 +2497,10 @@
                    </widget>
                   </item>
                   <item row="3" column="1">
-                   <widget class="QLineEdit" name="lineEditMedication_2"/>
+                   <widget class="QLineEdit" name="lineEditEditorMedication"/>
                   </item>
                   <item row="4" column="0">
-                   <widget class="QLabel" name="labelTemperament_2">
+                   <widget class="QLabel" name="labelEditorTemperament">
                     <property name="font">
                      <font>
                       <family>Lato</family>
@@ -2516,10 +2516,10 @@
                    </widget>
                   </item>
                   <item row="4" column="1">
-                   <widget class="QLineEdit" name="lineEditTemperament_2"/>
+                   <widget class="QLineEdit" name="lineEditEditorTemperament"/>
                   </item>
                   <item row="5" column="0">
-                   <widget class="QLabel" name="labelEthicalValues_2">
+                   <widget class="QLabel" name="labelEditorEthicalValues">
                     <property name="font">
                      <font>
                       <family>Lato</family>
@@ -2535,10 +2535,10 @@
                    </widget>
                   </item>
                   <item row="5" column="1">
-                   <widget class="QLineEdit" name="lineEditEthicalValues_2"/>
+                   <widget class="QLineEdit" name="lineEditEditorEthicalValues"/>
                   </item>
                   <item row="6" column="0">
-                   <widget class="QLabel" name="labelBeliefs_2">
+                   <widget class="QLabel" name="labelBeliefs">
                     <property name="font">
                      <font>
                       <family>Lato</family>
@@ -2554,10 +2554,10 @@
                    </widget>
                   </item>
                   <item row="6" column="1">
-                   <widget class="QLineEdit" name="lineEditBeliefs_2"/>
+                   <widget class="QLineEdit" name="lineEditEditorBeliefs"/>
                   </item>
                   <item row="7" column="0">
-                   <widget class="QLabel" name="labelMoralValues_2">
+                   <widget class="QLabel" name="labelEditorMoralValues">
                     <property name="font">
                      <font>
                       <family>Lato</family>
@@ -2573,10 +2573,10 @@
                    </widget>
                   </item>
                   <item row="7" column="1">
-                   <widget class="QLineEdit" name="lineEditMoralValues_2"/>
+                   <widget class="QLineEdit" name="lineEditEditorMoralValues"/>
                   </item>
                   <item row="8" column="0">
-                   <widget class="QLabel" name="labelStengthOfCharacter_2">
+                   <widget class="QLabel" name="labelEditorStrengthOfCharacter">
                     <property name="font">
                      <font>
                       <family>Lato</family>
@@ -2592,10 +2592,10 @@
                    </widget>
                   </item>
                   <item row="8" column="1">
-                   <widget class="QLineEdit" name="lineEditStrengthsOfCharacter_2"/>
+                   <widget class="QLineEdit" name="lineEditEditorStrengthsOfCharacter"/>
                   </item>
                   <item row="9" column="0">
-                   <widget class="QLabel" name="labelWeaknessOfCharacter_2">
+                   <widget class="QLabel" name="labelEditorWeaknessOfCharacter">
                     <property name="font">
                      <font>
                       <family>Lato</family>
@@ -2611,10 +2611,10 @@
                    </widget>
                   </item>
                   <item row="9" column="1">
-                   <widget class="QLineEdit" name="lineEditWeaknessOfCharacter_2"/>
+                   <widget class="QLineEdit" name="lineEditEditorWeaknessOfCharacter"/>
                   </item>
                   <item row="10" column="0">
-                   <widget class="QLabel" name="labelSelfImage_2">
+                   <widget class="QLabel" name="labelEditorSelfImage">
                     <property name="font">
                      <font>
                       <family>Lato</family>
@@ -2630,10 +2630,10 @@
                    </widget>
                   </item>
                   <item row="10" column="1">
-                   <widget class="QLineEdit" name="lineEditSelfImage_2"/>
+                   <widget class="QLineEdit" name="lineEditEditorSelfImage"/>
                   </item>
                   <item row="11" column="0">
-                   <widget class="QLabel" name="labelHumor_2">
+                   <widget class="QLabel" name="labelEditorHumor">
                     <property name="font">
                      <font>
                       <family>Lato</family>
@@ -2649,10 +2649,10 @@
                    </widget>
                   </item>
                   <item row="11" column="1">
-                   <widget class="QLineEdit" name="lineEditHumor_2"/>
+                   <widget class="QLineEdit" name="lineEditEditorHumor"/>
                   </item>
                   <item row="12" column="0">
-                   <widget class="QLabel" name="labelAggressiveness_2">
+                   <widget class="QLabel" name="labelEditorAggressiveness">
                     <property name="font">
                      <font>
                       <family>Lato</family>
@@ -2668,10 +2668,10 @@
                    </widget>
                   </item>
                   <item row="12" column="1">
-                   <widget class="QLineEdit" name="lineEditAggressivness_2"/>
+                   <widget class="QLineEdit" name="lineEditEditorAggressivness"/>
                   </item>
                   <item row="13" column="0">
-                   <widget class="QLabel" name="labelTrauma_2">
+                   <widget class="QLabel" name="labelEditorTrauma">
                     <property name="font">
                      <font>
                       <family>Lato</family>
@@ -2687,10 +2687,10 @@
                    </widget>
                   </item>
                   <item row="13" column="1">
-                   <widget class="QLineEdit" name="lineEditTrauma_2"/>
+                   <widget class="QLineEdit" name="lineEditEditorTrauma"/>
                   </item>
                   <item row="14" column="0">
-                   <widget class="QLabel" name="labelImpression_2">
+                   <widget class="QLabel" name="labelEditorImpression">
                     <property name="font">
                      <font>
                       <family>Lato</family>
@@ -2706,10 +2706,10 @@
                    </widget>
                   </item>
                   <item row="14" column="1">
-                   <widget class="QLineEdit" name="lineEditImpression_2"/>
+                   <widget class="QLineEdit" name="lineEditEditorImpression"/>
                   </item>
                   <item row="15" column="0">
-                   <widget class="QLabel" name="labelSocialization_2">
+                   <widget class="QLabel" name="labelEditorSocialization">
                     <property name="font">
                      <font>
                       <family>Lato</family>
@@ -2725,10 +2725,10 @@
                    </widget>
                   </item>
                   <item row="15" column="1">
-                   <widget class="QLineEdit" name="lineEditSocialization_2"/>
+                   <widget class="QLineEdit" name="lineEditEditorSocialization"/>
                   </item>
                   <item row="16" column="0">
-                   <widget class="QLabel" name="labelNorms_2">
+                   <widget class="QLabel" name="labelEditorNorms">
                     <property name="font">
                      <font>
                       <family>Lato</family>
@@ -2744,10 +2744,10 @@
                    </widget>
                   </item>
                   <item row="16" column="1">
-                   <widget class="QLineEdit" name="lineEditNorms_2"/>
+                   <widget class="QLineEdit" name="lineEditEditorNorms"/>
                   </item>
                   <item row="17" column="0">
-                   <widget class="QLabel" name="labelTabus_2">
+                   <widget class="QLabel" name="labelEditorTabus">
                     <property name="font">
                      <font>
                       <family>Lato</family>
@@ -2763,10 +2763,10 @@
                    </widget>
                   </item>
                   <item row="17" column="1">
-                   <widget class="QLineEdit" name="lineEditTabus_2"/>
+                   <widget class="QLineEdit" name="lineEditEditorTabus"/>
                   </item>
                   <item row="18" column="0">
-                   <widget class="QLabel" name="labelPsychologyNotes_2">
+                   <widget class="QLabel" name="labelEditorPsychologyNotes">
                     <property name="font">
                      <font>
                       <family>Lato</family>
@@ -2782,14 +2782,14 @@
                    </widget>
                   </item>
                   <item row="18" column="1">
-                   <widget class="QTextEdit" name="textEditPsychologyNotes_2"/>
+                   <widget class="QTextEdit" name="textEditEditorPsychologyNotes"/>
                   </item>
                  </layout>
                 </widget>
                </widget>
               </item>
               <item row="0" column="0" colspan="2">
-               <widget class="QFrame" name="toolbarCharacters_2">
+               <widget class="QFrame" name="toolbarEditorCharacters">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                   <horstretch>0</horstretch>
@@ -2804,7 +2804,7 @@
                 </property>
                 <layout class="QHBoxLayout" name="horizontalLayout_8">
                  <item>
-                  <widget class="QPushButton" name="newBtnCharacter_2">
+                  <widget class="QPushButton" name="newBtnEditorCharacter">
                    <property name="cursor">
                     <cursorShape>PointingHandCursor</cursorShape>
                    </property>
@@ -2832,7 +2832,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QPushButton" name="nextBtnCharacter_2">
+                  <widget class="QPushButton" name="nextBtnEditorCharacter">
                    <property name="cursor">
                     <cursorShape>PointingHandCursor</cursorShape>
                    </property>
@@ -2860,7 +2860,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QPushButton" name="previousBtnCharacter_2">
+                  <widget class="QPushButton" name="previousBtnEditorCharacter">
                    <property name="cursor">
                     <cursorShape>PointingHandCursor</cursorShape>
                    </property>
@@ -2888,7 +2888,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QPushButton" name="deleteBtnCharacter_2">
+                  <widget class="QPushButton" name="deleteBtnEditorCharacter">
                    <property name="cursor">
                     <cursorShape>PointingHandCursor</cursorShape>
                    </property>
@@ -2916,7 +2916,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QPushButton" name="saveBtnCharacter_2">
+                  <widget class="QPushButton" name="saveBtnEditorCharacter">
                    <property name="cursor">
                     <cursorShape>PointingHandCursor</cursorShape>
                    </property>
@@ -2948,13 +2948,13 @@
               </item>
              </layout>
             </widget>
-            <widget class="QWidget" name="tab_13">
+            <widget class="QWidget" name="tabEditorObjects">
              <attribute name="title">
               <string>Objekte</string>
              </attribute>
              <layout class="QFormLayout" name="formLayout_9">
               <item row="0" column="0" colspan="2">
-               <widget class="QFrame" name="toolbarObjects_2">
+               <widget class="QFrame" name="toolbarEditorObjects">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                   <horstretch>0</horstretch>
@@ -2969,7 +2969,7 @@
                 </property>
                 <layout class="QHBoxLayout" name="horizontalLayout_13">
                  <item>
-                  <widget class="QPushButton" name="newBtnObject_2">
+                  <widget class="QPushButton" name="newBtnEditorObject">
                    <property name="cursor">
                     <cursorShape>PointingHandCursor</cursorShape>
                    </property>
@@ -2997,7 +2997,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QPushButton" name="nextBtnObject_2">
+                  <widget class="QPushButton" name="nextBtnEditorObject">
                    <property name="cursor">
                     <cursorShape>PointingHandCursor</cursorShape>
                    </property>
@@ -3025,7 +3025,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QPushButton" name="previousBtnObject_2">
+                  <widget class="QPushButton" name="previousBtnEditorObject">
                    <property name="cursor">
                     <cursorShape>PointingHandCursor</cursorShape>
                    </property>
@@ -3053,7 +3053,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QPushButton" name="deleteBtnObject_2">
+                  <widget class="QPushButton" name="deleteBtnEditorObject">
                    <property name="cursor">
                     <cursorShape>PointingHandCursor</cursorShape>
                    </property>
@@ -3081,7 +3081,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QPushButton" name="saveBtnObject_2">
+                  <widget class="QPushButton" name="saveBtnEditorObject">
                    <property name="cursor">
                     <cursorShape>PointingHandCursor</cursorShape>
                    </property>
@@ -3112,14 +3112,14 @@
                </widget>
               </item>
               <item row="1" column="0">
-               <widget class="QLabel" name="labelObjectTitle_2">
+               <widget class="QLabel" name="labeEditorlObjectTitle">
                 <property name="text">
                  <string>Titel:</string>
                 </property>
                </widget>
               </item>
               <item row="2" column="0">
-               <widget class="QLineEdit" name="titleObject_2">
+               <widget class="QLineEdit" name="lineEditEditorTitleObject">
                 <property name="font">
                  <font>
                   <family>Lato</family>
@@ -3132,14 +3132,14 @@
                </widget>
               </item>
               <item row="3" column="0">
-               <widget class="QLabel" name="labelObjectCreated_2">
+               <widget class="QLabel" name="labelEditorObjectCreated">
                 <property name="text">
                  <string>erstellt am:</string>
                 </property>
                </widget>
               </item>
               <item row="4" column="0">
-               <widget class="QLineEdit" name="dateObjectCreated_2">
+               <widget class="QLineEdit" name="dateEditorObjectCreated">
                 <property name="font">
                  <font>
                   <family>Lato</family>
@@ -3161,14 +3161,14 @@
                </widget>
               </item>
               <item row="5" column="0">
-               <widget class="QLabel" name="labelObjectLastEdit_2">
+               <widget class="QLabel" name="labelEditorObjectLastEdit">
                 <property name="text">
                  <string>bearbeitet am:</string>
                 </property>
                </widget>
               </item>
               <item row="6" column="0">
-               <widget class="QLineEdit" name="dateEditedObject_2">
+               <widget class="QLineEdit" name="dateEditorEditedObject">
                 <property name="font">
                  <font>
                   <family>Lato</family>
@@ -3190,7 +3190,7 @@
                </widget>
               </item>
               <item row="4" column="1">
-               <widget class="QToolButton" name="setDateTodayObject_3">
+               <widget class="QToolButton" name="setDateEditorTodayObject_1">
                 <property name="cursor">
                  <cursorShape>PointingHandCursor</cursorShape>
                 </property>
@@ -3206,7 +3206,7 @@
                </widget>
               </item>
               <item row="6" column="1">
-               <widget class="QToolButton" name="setDateTodayObject_4">
+               <widget class="QToolButton" name="setDateEditorTodayObject_2">
                 <property name="cursor">
                  <cursorShape>PointingHandCursor</cursorShape>
                 </property>
@@ -3222,14 +3222,14 @@
                </widget>
               </item>
               <item row="7" column="0">
-               <widget class="QLabel" name="labelObjectStatus_2">
+               <widget class="QLabel" name="labelEditorObjectStatus">
                 <property name="text">
                  <string>Status:</string>
                 </property>
                </widget>
               </item>
               <item row="8" column="0">
-               <widget class="QComboBox" name="comboBoxObjectStatus_2">
+               <widget class="QComboBox" name="comboBoxEditorObjectStatus">
                 <property name="font">
                  <font>
                   <family>Lato</family>
@@ -3267,14 +3267,14 @@
                </widget>
               </item>
               <item row="9" column="0">
-               <widget class="QLabel" name="labelObjectDescription_2">
+               <widget class="QLabel" name="labelEditorObjectDescription">
                 <property name="text">
                  <string>Beschreibung:</string>
                 </property>
                </widget>
               </item>
               <item row="10" column="0" colspan="2">
-               <widget class="QPlainTextEdit" name="textDescriptionObject_2">
+               <widget class="QPlainTextEdit" name="textEditorDescriptionObject">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                   <horstretch>0</horstretch>
@@ -3294,13 +3294,13 @@
               </item>
              </layout>
             </widget>
-            <widget class="QWidget" name="tab_14">
+            <widget class="QWidget" name="tabEditorLocations">
              <attribute name="title">
               <string>Orte</string>
              </attribute>
              <layout class="QFormLayout" name="formLayout_17">
               <item row="0" column="0" colspan="2">
-               <widget class="QFrame" name="toolbarLocations_2">
+               <widget class="QFrame" name="toolbarEditorLocations">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                   <horstretch>0</horstretch>
@@ -3315,7 +3315,7 @@
                 </property>
                 <layout class="QHBoxLayout" name="horizontalLayout_14">
                  <item>
-                  <widget class="QPushButton" name="newBtnLocation_2">
+                  <widget class="QPushButton" name="newBtnEditorLocation">
                    <property name="cursor">
                     <cursorShape>PointingHandCursor</cursorShape>
                    </property>
@@ -3343,7 +3343,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QPushButton" name="nextBtnLocation_2">
+                  <widget class="QPushButton" name="nextBtnEditorLocation">
                    <property name="cursor">
                     <cursorShape>PointingHandCursor</cursorShape>
                    </property>
@@ -3371,7 +3371,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QPushButton" name="previousBtnLocation_2">
+                  <widget class="QPushButton" name="previousBtnEditorLocation">
                    <property name="cursor">
                     <cursorShape>PointingHandCursor</cursorShape>
                    </property>
@@ -3399,7 +3399,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QPushButton" name="deleteBtnLocation_2">
+                  <widget class="QPushButton" name="deleteBtnEditorLocation">
                    <property name="cursor">
                     <cursorShape>PointingHandCursor</cursorShape>
                    </property>
@@ -3427,7 +3427,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QPushButton" name="saveBtnLocation_2">
+                  <widget class="QPushButton" name="saveBtnEditorLocation">
                    <property name="cursor">
                     <cursorShape>PointingHandCursor</cursorShape>
                    </property>
@@ -3458,14 +3458,14 @@
                </widget>
               </item>
               <item row="1" column="0">
-               <widget class="QLabel" name="labelLocationTitle_2">
+               <widget class="QLabel" name="labelEditorLocationTitle">
                 <property name="text">
                  <string>Titel:</string>
                 </property>
                </widget>
               </item>
               <item row="2" column="0">
-               <widget class="QLineEdit" name="titleLocation_2">
+               <widget class="QLineEdit" name="LineEditEditorTitleLocation">
                 <property name="font">
                  <font>
                   <family>Lato</family>
@@ -3478,14 +3478,14 @@
                </widget>
               </item>
               <item row="3" column="0">
-               <widget class="QLabel" name="labelLocationCreated_2">
+               <widget class="QLabel" name="labelEditorLocationCreated">
                 <property name="text">
                  <string>erstellt am:</string>
                 </property>
                </widget>
               </item>
               <item row="4" column="0">
-               <widget class="QLineEdit" name="dateLocationCreated_2">
+               <widget class="QLineEdit" name="dateEditorLocationCreated">
                 <property name="font">
                  <font>
                   <family>Lato</family>
@@ -3507,14 +3507,14 @@
                </widget>
               </item>
               <item row="5" column="0">
-               <widget class="QLabel" name="labelLocationLastEdit_2">
+               <widget class="QLabel" name="labelEditorLocationLastEdit">
                 <property name="text">
                  <string>bearbeitet am:</string>
                 </property>
                </widget>
               </item>
               <item row="6" column="0">
-               <widget class="QLineEdit" name="dateLocationObject_2">
+               <widget class="QLineEdit" name="dateEditorLocationEdited">
                 <property name="font">
                  <font>
                   <family>Lato</family>
@@ -3536,7 +3536,7 @@
                </widget>
               </item>
               <item row="4" column="1">
-               <widget class="QToolButton" name="setDateTodayLocation_2">
+               <widget class="QToolButton" name="setDateEditorTodayLocation_1">
                 <property name="cursor">
                  <cursorShape>PointingHandCursor</cursorShape>
                 </property>
@@ -3552,7 +3552,7 @@
                </widget>
               </item>
               <item row="6" column="1">
-               <widget class="QToolButton" name="setDateTodayLocation2_2">
+               <widget class="QToolButton" name="setDateEditorTodayLocation_2">
                 <property name="cursor">
                  <cursorShape>PointingHandCursor</cursorShape>
                 </property>
@@ -3568,14 +3568,14 @@
                </widget>
               </item>
               <item row="7" column="0">
-               <widget class="QLabel" name="labelLocationStatus_2">
+               <widget class="QLabel" name="labelEditorLocationStatus">
                 <property name="text">
                  <string>Status:</string>
                 </property>
                </widget>
               </item>
               <item row="8" column="0">
-               <widget class="QComboBox" name="comboBoxLocationStatus_2">
+               <widget class="QComboBox" name="comboBoxEditorLocationStatus">
                 <property name="font">
                  <font>
                   <family>Lato</family>
@@ -3613,14 +3613,14 @@
                </widget>
               </item>
               <item row="9" column="0">
-               <widget class="QLabel" name="labelLocationDescription_2">
+               <widget class="QLabel" name="labelEditorLocationDescription">
                 <property name="text">
                  <string>Beschreibung:</string>
                 </property>
                </widget>
               </item>
               <item row="10" column="0" colspan="2">
-               <widget class="QPlainTextEdit" name="textDescriptionLocation_2">
+               <widget class="QPlainTextEdit" name="textEditorDescriptionLocation">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                   <horstretch>0</horstretch>
@@ -3640,13 +3640,13 @@
               </item>
              </layout>
             </widget>
-            <widget class="QWidget" name="tab_15">
+            <widget class="QWidget" name="tabEditorStorylines">
              <attribute name="title">
               <string>Handlungsstränge</string>
              </attribute>
              <layout class="QFormLayout" name="formLayout_18">
               <item row="0" column="0" colspan="2">
-               <widget class="QFrame" name="toolbarStorylines_2">
+               <widget class="QFrame" name="toolbarEditorStorylines">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                   <horstretch>0</horstretch>
@@ -3661,7 +3661,7 @@
                 </property>
                 <layout class="QHBoxLayout" name="horizontalLayout_15">
                  <item>
-                  <widget class="QPushButton" name="newBtnStoryline_2">
+                  <widget class="QPushButton" name="newBtnEditorStoryline">
                    <property name="cursor">
                     <cursorShape>PointingHandCursor</cursorShape>
                    </property>
@@ -3689,7 +3689,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QPushButton" name="nextBtnStoryline_2">
+                  <widget class="QPushButton" name="nextBtnEditorStoryline">
                    <property name="cursor">
                     <cursorShape>PointingHandCursor</cursorShape>
                    </property>
@@ -3717,7 +3717,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QPushButton" name="previousBtnStoryline_2">
+                  <widget class="QPushButton" name="previousBtnEditorStoryline">
                    <property name="cursor">
                     <cursorShape>PointingHandCursor</cursorShape>
                    </property>
@@ -3745,7 +3745,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QPushButton" name="deleteBtnStoryline_2">
+                  <widget class="QPushButton" name="deleteBtnEditorStoryline">
                    <property name="cursor">
                     <cursorShape>PointingHandCursor</cursorShape>
                    </property>
@@ -3773,7 +3773,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QPushButton" name="saveBtnStoryline_2">
+                  <widget class="QPushButton" name="saveBtnEditorStoryline">
                    <property name="cursor">
                     <cursorShape>PointingHandCursor</cursorShape>
                    </property>
@@ -3804,14 +3804,14 @@
                </widget>
               </item>
               <item row="1" column="0">
-               <widget class="QLabel" name="labelStorylineTitle_2">
+               <widget class="QLabel" name="labelEditorStorylineTitle">
                 <property name="text">
                  <string>Titel:</string>
                 </property>
                </widget>
               </item>
               <item row="2" column="0">
-               <widget class="QLineEdit" name="titleObject_4">
+               <widget class="QLineEdit" name="lineEditEditorTitleStoryline">
                 <property name="font">
                  <font>
                   <family>Lato</family>
@@ -3824,14 +3824,14 @@
                </widget>
               </item>
               <item row="3" column="0">
-               <widget class="QLabel" name="labelStorylineCreated_2">
+               <widget class="QLabel" name="labelEditorStorylineCreated">
                 <property name="text">
                  <string>erstellt am:</string>
                 </property>
                </widget>
               </item>
               <item row="4" column="0">
-               <widget class="QLineEdit" name="dateStorylineCreated_2">
+               <widget class="QLineEdit" name="dateEditorStorylineCreated">
                 <property name="font">
                  <font>
                   <family>Lato</family>
@@ -3853,7 +3853,7 @@
                </widget>
               </item>
               <item row="4" column="1">
-               <widget class="QToolButton" name="setDateTodayStoryline_3">
+               <widget class="QToolButton" name="setDateEditorTodayStoryline_1">
                 <property name="cursor">
                  <cursorShape>PointingHandCursor</cursorShape>
                 </property>
@@ -3869,14 +3869,14 @@
                </widget>
               </item>
               <item row="5" column="0">
-               <widget class="QLabel" name="labelStorylineLastEdit_2">
+               <widget class="QLabel" name="labelEditorStorylineLastEdit">
                 <property name="text">
                  <string>bearbeitet am:</string>
                 </property>
                </widget>
               </item>
               <item row="6" column="0">
-               <widget class="QLineEdit" name="dateEditedStoryline_2">
+               <widget class="QLineEdit" name="dateEditorEditedStoryline">
                 <property name="font">
                  <font>
                   <family>Lato</family>
@@ -3898,7 +3898,7 @@
                </widget>
               </item>
               <item row="6" column="1">
-               <widget class="QToolButton" name="setDateTodayStoryline_4">
+               <widget class="QToolButton" name="setDateEditorTodayStoryline_2">
                 <property name="cursor">
                  <cursorShape>PointingHandCursor</cursorShape>
                 </property>
@@ -3914,14 +3914,14 @@
                </widget>
               </item>
               <item row="7" column="0">
-               <widget class="QLabel" name="labelStorylineStatus_2">
+               <widget class="QLabel" name="labelEditorStorylineStatus">
                 <property name="text">
                  <string>Status:</string>
                 </property>
                </widget>
               </item>
               <item row="8" column="0">
-               <widget class="QComboBox" name="comboBoxStorylineStatus_2">
+               <widget class="QComboBox" name="comboBoxEditorStorylineStatus">
                 <property name="font">
                  <font>
                   <family>Lato</family>
@@ -3959,14 +3959,14 @@
                </widget>
               </item>
               <item row="9" column="0">
-               <widget class="QLabel" name="labelStorylineDescription_2">
+               <widget class="QLabel" name="labelEditorStorylineDescription">
                 <property name="text">
                  <string>Beschreibung:</string>
                 </property>
                </widget>
               </item>
               <item row="10" column="0" colspan="2">
-               <widget class="QPlainTextEdit" name="textDescriptionStoryline_2">
+               <widget class="QPlainTextEdit" name="textEditorDescriptionStoryline">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                   <horstretch>0</horstretch>
@@ -3986,13 +3986,13 @@
               </item>
              </layout>
             </widget>
-            <widget class="QWidget" name="tab_16">
+            <widget class="QWidget" name="tabEditorReferences">
              <attribute name="title">
               <string>Referenzen</string>
              </attribute>
              <layout class="QFormLayout" name="formLayout_19">
               <item row="0" column="0" colspan="2">
-               <widget class="QFrame" name="toolbarReferences_2">
+               <widget class="QFrame" name="toolbarEditorReferences">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                   <horstretch>0</horstretch>
@@ -4007,7 +4007,7 @@
                 </property>
                 <layout class="QHBoxLayout" name="horizontalLayout_16">
                  <item>
-                  <widget class="QPushButton" name="newBtnReference_2">
+                  <widget class="QPushButton" name="newBtnEditorReference">
                    <property name="cursor">
                     <cursorShape>PointingHandCursor</cursorShape>
                    </property>
@@ -4035,7 +4035,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QPushButton" name="nextBtnReference_2">
+                  <widget class="QPushButton" name="nextBtnEditorReference">
                    <property name="cursor">
                     <cursorShape>PointingHandCursor</cursorShape>
                    </property>
@@ -4063,7 +4063,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QPushButton" name="previousBtnReference_2">
+                  <widget class="QPushButton" name="previousBtnEditorReference">
                    <property name="cursor">
                     <cursorShape>PointingHandCursor</cursorShape>
                    </property>
@@ -4091,7 +4091,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QPushButton" name="deleteBtnReference_2">
+                  <widget class="QPushButton" name="deleteBtnEditorReference">
                    <property name="cursor">
                     <cursorShape>PointingHandCursor</cursorShape>
                    </property>
@@ -4119,7 +4119,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QPushButton" name="saveBtnReference_2">
+                  <widget class="QPushButton" name="saveBtnEditorReference">
                    <property name="cursor">
                     <cursorShape>PointingHandCursor</cursorShape>
                    </property>
@@ -4150,14 +4150,14 @@
                </widget>
               </item>
               <item row="1" column="0">
-               <widget class="QLabel" name="labelReferenceTitle_2">
+               <widget class="QLabel" name="labelEditorReferenceTitle">
                 <property name="text">
                  <string>Titel:</string>
                 </property>
                </widget>
               </item>
               <item row="2" column="0">
-               <widget class="QLineEdit" name="titleReference_2">
+               <widget class="QLineEdit" name="lineEditEditorTitleReference">
                 <property name="font">
                  <font>
                   <family>Lato</family>
@@ -4170,14 +4170,14 @@
                </widget>
               </item>
               <item row="3" column="0">
-               <widget class="QLabel" name="labelReferenceCreated_2">
+               <widget class="QLabel" name="labelEditorReferenceCreated">
                 <property name="text">
                  <string>erstellt am:</string>
                 </property>
                </widget>
               </item>
               <item row="4" column="0">
-               <widget class="QLineEdit" name="dateReferenceCreated_2">
+               <widget class="QLineEdit" name="dateEditorReferenceCreated">
                 <property name="font">
                  <font>
                   <family>Lato</family>
@@ -4199,7 +4199,7 @@
                </widget>
               </item>
               <item row="4" column="1">
-               <widget class="QToolButton" name="setDateTodayReference_3">
+               <widget class="QToolButton" name="setDateEditorTodayReference_1">
                 <property name="cursor">
                  <cursorShape>PointingHandCursor</cursorShape>
                 </property>
@@ -4215,14 +4215,14 @@
                </widget>
               </item>
               <item row="5" column="0">
-               <widget class="QLabel" name="labelReferenceLastEdit_2">
+               <widget class="QLabel" name="labelEditorReferenceLastEdit">
                 <property name="text">
                  <string>bearbeitet am:</string>
                 </property>
                </widget>
               </item>
               <item row="6" column="0">
-               <widget class="QLineEdit" name="dateEditedReference_2">
+               <widget class="QLineEdit" name="dateEditorEditedReference">
                 <property name="font">
                  <font>
                   <family>Lato</family>
@@ -4244,7 +4244,7 @@
                </widget>
               </item>
               <item row="6" column="1">
-               <widget class="QToolButton" name="setDateTodayReference_4">
+               <widget class="QToolButton" name="setDateEditorTodayReference_2">
                 <property name="cursor">
                  <cursorShape>PointingHandCursor</cursorShape>
                 </property>
@@ -4260,14 +4260,14 @@
                </widget>
               </item>
               <item row="7" column="0">
-               <widget class="QLabel" name="labelReferenceStatus_2">
+               <widget class="QLabel" name="labelEditorReferenceStatus">
                 <property name="text">
                  <string>Status:</string>
                 </property>
                </widget>
               </item>
               <item row="8" column="0">
-               <widget class="QComboBox" name="comboBoxReferenceStatus_2">
+               <widget class="QComboBox" name="comboBoxEditorReferenceStatus">
                 <property name="font">
                  <font>
                   <family>Lato</family>
@@ -4305,14 +4305,14 @@
                </widget>
               </item>
               <item row="9" column="0">
-               <widget class="QLabel" name="labelReferenceDescription_2">
+               <widget class="QLabel" name="labelEditorReferenceDescription">
                 <property name="text">
                  <string>Beschreibung:</string>
                 </property>
                </widget>
               </item>
               <item row="10" column="0" colspan="2">
-               <widget class="QPlainTextEdit" name="textDescriptionReference_2">
+               <widget class="QPlainTextEdit" name="textEditorDescriptionReference">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                   <horstretch>0</horstretch>
@@ -4332,13 +4332,13 @@
               </item>
              </layout>
             </widget>
-            <widget class="QWidget" name="tab_17">
+            <widget class="QWidget" name="tabEditorSources">
              <attribute name="title">
               <string>Quellen</string>
              </attribute>
              <layout class="QFormLayout" name="formLayout_25">
               <item row="0" column="0" colspan="2">
-               <widget class="QFrame" name="toolbarReferences_3">
+               <widget class="QFrame" name="toolbarEditorSources">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                   <horstretch>0</horstretch>
@@ -4353,7 +4353,7 @@
                 </property>
                 <layout class="QHBoxLayout" name="horizontalLayout_17">
                  <item>
-                  <widget class="QPushButton" name="newBtnReference_3">
+                  <widget class="QPushButton" name="newBtnEditorSource">
                    <property name="cursor">
                     <cursorShape>PointingHandCursor</cursorShape>
                    </property>
@@ -4381,7 +4381,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QPushButton" name="nextBtnReference_3">
+                  <widget class="QPushButton" name="nextBtnEditorSource">
                    <property name="cursor">
                     <cursorShape>PointingHandCursor</cursorShape>
                    </property>
@@ -4409,7 +4409,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QPushButton" name="previousBtnReference_3">
+                  <widget class="QPushButton" name="previousBtnEditorSource">
                    <property name="cursor">
                     <cursorShape>PointingHandCursor</cursorShape>
                    </property>
@@ -4437,7 +4437,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QPushButton" name="deleteBtnReference_3">
+                  <widget class="QPushButton" name="deleteBtnEditorSource">
                    <property name="cursor">
                     <cursorShape>PointingHandCursor</cursorShape>
                    </property>
@@ -4465,7 +4465,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QPushButton" name="saveBtnReference_3">
+                  <widget class="QPushButton" name="saveBtnEditorSource">
                    <property name="cursor">
                     <cursorShape>PointingHandCursor</cursorShape>
                    </property>
@@ -4496,14 +4496,14 @@
                </widget>
               </item>
               <item row="1" column="0">
-               <widget class="QLabel" name="labelReferenceTitle_3">
+               <widget class="QLabel" name="labelEditorSourceTitle">
                 <property name="text">
                  <string>Titel:</string>
                 </property>
                </widget>
               </item>
               <item row="2" column="0">
-               <widget class="QLineEdit" name="titleReference_3">
+               <widget class="QLineEdit" name="lineEditEditorTitleSource">
                 <property name="font">
                  <font>
                   <family>Lato</family>
@@ -4516,14 +4516,14 @@
                </widget>
               </item>
               <item row="3" column="0">
-               <widget class="QLabel" name="labelReferenceCreated_3">
+               <widget class="QLabel" name="labelEditorSourceCreated">
                 <property name="text">
                  <string>erstellt am:</string>
                 </property>
                </widget>
               </item>
               <item row="4" column="0">
-               <widget class="QLineEdit" name="dateReferenceCreated_3">
+               <widget class="QLineEdit" name="dateEditorSourceCreated">
                 <property name="font">
                  <font>
                   <family>Lato</family>
@@ -4545,7 +4545,7 @@
                </widget>
               </item>
               <item row="4" column="1">
-               <widget class="QToolButton" name="setDateTodayReference_6">
+               <widget class="QToolButton" name="setDateEditorTodaySource_1">
                 <property name="cursor">
                  <cursorShape>PointingHandCursor</cursorShape>
                 </property>
@@ -4561,14 +4561,14 @@
                </widget>
               </item>
               <item row="5" column="0">
-               <widget class="QLabel" name="labelReferenceLastEdit_3">
+               <widget class="QLabel" name="labelEditorSourceLastEdit">
                 <property name="text">
                  <string>bearbeitet am:</string>
                 </property>
                </widget>
               </item>
               <item row="6" column="0">
-               <widget class="QLineEdit" name="dateEditedReference_3">
+               <widget class="QLineEdit" name="dateEditorEditedSource">
                 <property name="font">
                  <font>
                   <family>Lato</family>
@@ -4590,7 +4590,7 @@
                </widget>
               </item>
               <item row="6" column="1">
-               <widget class="QToolButton" name="setDateTodayReference_5">
+               <widget class="QToolButton" name="setDateEditorTodaySource_2">
                 <property name="cursor">
                  <cursorShape>PointingHandCursor</cursorShape>
                 </property>
@@ -4606,14 +4606,14 @@
                </widget>
               </item>
               <item row="7" column="0">
-               <widget class="QLabel" name="labelReferenceStatus_3">
+               <widget class="QLabel" name="labeEditorSourceStatus">
                 <property name="text">
                  <string>Status:</string>
                 </property>
                </widget>
               </item>
               <item row="8" column="0">
-               <widget class="QComboBox" name="comboBoxReferenceStatus_3">
+               <widget class="QComboBox" name="comboBoxEditorSourceStatus">
                 <property name="font">
                  <font>
                   <family>Lato</family>
@@ -4651,14 +4651,14 @@
                </widget>
               </item>
               <item row="9" column="0">
-               <widget class="QLabel" name="labelReferenceDescription_3">
+               <widget class="QLabel" name="labelEditorSourceDescription">
                 <property name="text">
                  <string>Beschreibung:</string>
                 </property>
                </widget>
               </item>
               <item row="10" column="0" colspan="2">
-               <widget class="QPlainTextEdit" name="textDescriptionReference_3">
+               <widget class="QPlainTextEdit" name="textEditorDescriptionSource">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                   <horstretch>0</horstretch>
@@ -4678,13 +4678,13 @@
               </item>
              </layout>
             </widget>
-            <widget class="QWidget" name="tab_18">
+            <widget class="QWidget" name="tabEditorIdeas">
              <attribute name="title">
               <string>Ideen</string>
              </attribute>
              <layout class="QFormLayout" name="formLayout_21">
               <item row="0" column="0" colspan="2">
-               <widget class="QFrame" name="toolbarIdeas_2">
+               <widget class="QFrame" name="toolbarEditorIdeas">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                   <horstretch>0</horstretch>
@@ -4699,7 +4699,7 @@
                 </property>
                 <layout class="QHBoxLayout" name="horizontalLayout_18">
                  <item>
-                  <widget class="QPushButton" name="newBtnIdea_2">
+                  <widget class="QPushButton" name="newBtnEditorIdea">
                    <property name="cursor">
                     <cursorShape>PointingHandCursor</cursorShape>
                    </property>
@@ -4727,7 +4727,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QPushButton" name="nextBtnIdea_2">
+                  <widget class="QPushButton" name="nextBtnEditorIdea">
                    <property name="cursor">
                     <cursorShape>PointingHandCursor</cursorShape>
                    </property>
@@ -4755,7 +4755,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QPushButton" name="previousBtnIdea_2">
+                  <widget class="QPushButton" name="previousBtnEditorIdea">
                    <property name="cursor">
                     <cursorShape>PointingHandCursor</cursorShape>
                    </property>
@@ -4783,7 +4783,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QPushButton" name="deleteBtnIdea_2">
+                  <widget class="QPushButton" name="deleteBtnEditorIdea">
                    <property name="cursor">
                     <cursorShape>PointingHandCursor</cursorShape>
                    </property>
@@ -4811,7 +4811,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QPushButton" name="saveBtnIdea_2">
+                  <widget class="QPushButton" name="saveBtnEditorIdea">
                    <property name="cursor">
                     <cursorShape>PointingHandCursor</cursorShape>
                    </property>
@@ -4842,14 +4842,14 @@
                </widget>
               </item>
               <item row="1" column="0">
-               <widget class="QLabel" name="labelIdeaTitle_2">
+               <widget class="QLabel" name="labeEditorlIdeaTitle">
                 <property name="text">
                  <string>Titel:</string>
                 </property>
                </widget>
               </item>
               <item row="2" column="0">
-               <widget class="QLineEdit" name="titleIdea_2">
+               <widget class="QLineEdit" name="lineEditEditorTtitleIdea">
                 <property name="font">
                  <font>
                   <family>Lato</family>
@@ -4862,14 +4862,14 @@
                </widget>
               </item>
               <item row="3" column="0">
-               <widget class="QLabel" name="labelIdeaCreated_2">
+               <widget class="QLabel" name="labelEditorIdeaCreated">
                 <property name="text">
                  <string>erstellt am:</string>
                 </property>
                </widget>
               </item>
               <item row="4" column="0">
-               <widget class="QLineEdit" name="dateIdeaCreated_2">
+               <widget class="QLineEdit" name="dateEditEditorIdeaCreated">
                 <property name="font">
                  <font>
                   <family>Lato</family>
@@ -4891,7 +4891,7 @@
                </widget>
               </item>
               <item row="4" column="1">
-               <widget class="QToolButton" name="setDateTodayIdea_3">
+               <widget class="QToolButton" name="setDateEditorTodayIdea_1">
                 <property name="cursor">
                  <cursorShape>PointingHandCursor</cursorShape>
                 </property>
@@ -4907,14 +4907,14 @@
                </widget>
               </item>
               <item row="5" column="0">
-               <widget class="QLabel" name="labelIdeaLastEdit_2">
+               <widget class="QLabel" name="labelEditorIdeaLastEdit">
                 <property name="text">
                  <string>bearbeitet am:</string>
                 </property>
                </widget>
               </item>
               <item row="6" column="0">
-               <widget class="QLineEdit" name="dateEditedIdea_2">
+               <widget class="QLineEdit" name="dateEditEditorIdea">
                 <property name="font">
                  <font>
                   <family>Lato</family>
@@ -4936,7 +4936,7 @@
                </widget>
               </item>
               <item row="6" column="1">
-               <widget class="QToolButton" name="setDateTodayIdea_4">
+               <widget class="QToolButton" name="setDateEditorTodayIdea_2">
                 <property name="cursor">
                  <cursorShape>PointingHandCursor</cursorShape>
                 </property>
@@ -4952,14 +4952,14 @@
                </widget>
               </item>
               <item row="7" column="0">
-               <widget class="QLabel" name="labelIdeaStatus_2">
+               <widget class="QLabel" name="labelEditorIdeaStatus">
                 <property name="text">
                  <string>Status:</string>
                 </property>
                </widget>
               </item>
               <item row="8" column="0">
-               <widget class="QComboBox" name="comboBoxIdeaStatus_2">
+               <widget class="QComboBox" name="comboBoxEditorIdeaStatus">
                 <property name="font">
                  <font>
                   <family>Lato</family>
@@ -4997,14 +4997,14 @@
                </widget>
               </item>
               <item row="9" column="0">
-               <widget class="QLabel" name="labelIdeaDescription_2">
+               <widget class="QLabel" name="labelEditorIdeaDescription">
                 <property name="text">
                  <string>Beschreibung:</string>
                 </property>
                </widget>
               </item>
               <item row="10" column="0" colspan="2">
-               <widget class="QPlainTextEdit" name="textDescriptionIdea_2">
+               <widget class="QPlainTextEdit" name="textEditorDescriptionIdea">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                   <horstretch>0</horstretch>
@@ -5024,13 +5024,13 @@
               </item>
              </layout>
             </widget>
-            <widget class="QWidget" name="tab_19">
+            <widget class="QWidget" name="tagEditorGlossar">
              <attribute name="title">
               <string>Glossar</string>
              </attribute>
              <layout class="QFormLayout" name="formLayout_22">
               <item row="0" column="0" colspan="2">
-               <widget class="QToolBox" name="toolBox">
+               <widget class="QToolBox" name="toolBoxABC">
                 <property name="currentIndex">
                  <number>0</number>
                 </property>
@@ -5039,8 +5039,8 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>399</width>
-                   <height>120</height>
+                   <width>98</width>
+                   <height>88</height>
                   </rect>
                  </property>
                  <attribute name="label">
@@ -5057,7 +5057,7 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>94</width>
+                   <width>98</width>
                    <height>88</height>
                   </rect>
                  </property>
@@ -5075,7 +5075,7 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>94</width>
+                   <width>98</width>
                    <height>88</height>
                   </rect>
                  </property>
@@ -5093,7 +5093,7 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>94</width>
+                   <width>98</width>
                    <height>88</height>
                   </rect>
                  </property>
@@ -5111,7 +5111,7 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>94</width>
+                   <width>98</width>
                    <height>88</height>
                   </rect>
                  </property>
@@ -5129,7 +5129,7 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>94</width>
+                   <width>98</width>
                    <height>88</height>
                   </rect>
                  </property>
@@ -5147,7 +5147,7 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>94</width>
+                   <width>98</width>
                    <height>88</height>
                   </rect>
                  </property>
@@ -5165,7 +5165,7 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>94</width>
+                   <width>98</width>
                    <height>88</height>
                   </rect>
                  </property>
@@ -5183,7 +5183,7 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>94</width>
+                   <width>98</width>
                    <height>88</height>
                   </rect>
                  </property>
@@ -5201,7 +5201,7 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>94</width>
+                   <width>98</width>
                    <height>88</height>
                   </rect>
                  </property>
@@ -5219,7 +5219,7 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>94</width>
+                   <width>98</width>
                    <height>88</height>
                   </rect>
                  </property>
@@ -5237,7 +5237,7 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>94</width>
+                   <width>98</width>
                    <height>88</height>
                   </rect>
                  </property>
@@ -5255,7 +5255,7 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>94</width>
+                   <width>98</width>
                    <height>88</height>
                   </rect>
                  </property>
@@ -5273,7 +5273,7 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>94</width>
+                   <width>98</width>
                    <height>88</height>
                   </rect>
                  </property>
@@ -5291,7 +5291,7 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>94</width>
+                   <width>98</width>
                    <height>88</height>
                   </rect>
                  </property>
@@ -5309,7 +5309,7 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>94</width>
+                   <width>98</width>
                    <height>88</height>
                   </rect>
                  </property>
@@ -5327,7 +5327,7 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>94</width>
+                   <width>98</width>
                    <height>88</height>
                   </rect>
                  </property>
@@ -5345,7 +5345,7 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>94</width>
+                   <width>98</width>
                    <height>88</height>
                   </rect>
                  </property>
@@ -5363,7 +5363,7 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>94</width>
+                   <width>98</width>
                    <height>88</height>
                   </rect>
                  </property>
@@ -5381,7 +5381,7 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>94</width>
+                   <width>98</width>
                    <height>88</height>
                   </rect>
                  </property>
@@ -5399,7 +5399,7 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>94</width>
+                   <width>98</width>
                    <height>88</height>
                   </rect>
                  </property>
@@ -5417,7 +5417,7 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>94</width>
+                   <width>98</width>
                    <height>88</height>
                   </rect>
                  </property>
@@ -5435,7 +5435,7 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>94</width>
+                   <width>98</width>
                    <height>88</height>
                   </rect>
                  </property>
@@ -5453,7 +5453,7 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>94</width>
+                   <width>98</width>
                    <height>88</height>
                   </rect>
                  </property>
@@ -5471,7 +5471,7 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>94</width>
+                   <width>98</width>
                    <height>88</height>
                   </rect>
                  </property>
@@ -5489,7 +5489,7 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>94</width>
+                   <width>98</width>
                    <height>88</height>
                   </rect>
                  </property>
@@ -5506,13 +5506,13 @@
               </item>
              </layout>
             </widget>
-            <widget class="QWidget" name="tab_20">
+            <widget class="QWidget" name="tabEditorStructure">
              <attribute name="title">
               <string>Struktur</string>
              </attribute>
              <layout class="QFormLayout" name="formLayout_24">
               <item row="0" column="0" colspan="2">
-               <widget class="QPlainTextEdit" name="plainTextEdit"/>
+               <widget class="QPlainTextEdit" name="plainTextEditorStructure"/>
               </item>
              </layout>
             </widget>
@@ -5574,7 +5574,7 @@
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_8">
              <item>
-              <widget class="QFrame" name="frameInfoProject_3">
+              <widget class="QFrame" name="frameEditorInfos">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                  <horstretch>0</horstretch>
@@ -5589,7 +5589,7 @@
                </property>
                <layout class="QFormLayout" name="formLayout_5">
                 <item row="0" column="0">
-                 <widget class="QLabel" name="labelEditorStoryline_3">
+                 <widget class="QLabel" name="labelEditorStoryline">
                   <property name="font">
                    <font>
                     <family>Lato</family>
@@ -5605,7 +5605,7 @@
                  </widget>
                 </item>
                 <item row="0" column="1">
-                 <widget class="QLabel" name="labelEditorStorylineText_3">
+                 <widget class="QLabel" name="labelEditorStorylineText">
                   <property name="font">
                    <font>
                     <family>Lato</family>
@@ -5621,7 +5621,7 @@
                  </widget>
                 </item>
                 <item row="1" column="0">
-                 <widget class="QLabel" name="labelEditorLocation_3">
+                 <widget class="QLabel" name="labelEditorLocation">
                   <property name="font">
                    <font>
                     <family>Lato</family>
@@ -5637,7 +5637,7 @@
                  </widget>
                 </item>
                 <item row="1" column="1">
-                 <widget class="QLabel" name="labelEditorChapterText_3">
+                 <widget class="QLabel" name="labelEditorLocationText">
                   <property name="font">
                    <font>
                     <family>Lato</family>
@@ -5653,7 +5653,7 @@
                  </widget>
                 </item>
                 <item row="2" column="0">
-                 <widget class="QLabel" name="labelEditorChapter_3">
+                 <widget class="QLabel" name="labelEditorChapter">
                   <property name="font">
                    <font>
                     <family>Lato</family>
@@ -5669,7 +5669,7 @@
                  </widget>
                 </item>
                 <item row="2" column="1">
-                 <widget class="QLabel" name="labelEditorLocationText_3">
+                 <widget class="QLabel" name="labelEditorChapterText">
                   <property name="font">
                    <font>
                     <family>Lato</family>
@@ -5685,7 +5685,7 @@
                  </widget>
                 </item>
                 <item row="3" column="0">
-                 <widget class="QLabel" name="labelEditorScene_3">
+                 <widget class="QLabel" name="labelEditorScene">
                   <property name="font">
                    <font>
                     <family>Lato</family>
@@ -5701,7 +5701,7 @@
                  </widget>
                 </item>
                 <item row="3" column="1">
-                 <widget class="QLabel" name="labelEditorSceneText_3">
+                 <widget class="QLabel" name="labelEditorSceneTex">
                   <property name="font">
                    <font>
                     <family>Lato</family>
@@ -5738,7 +5738,7 @@
                </property>
                <layout class="QHBoxLayout" name="horizontalLayout_10">
                 <item>
-                 <widget class="QPushButton" name="btnEditBold_3">
+                 <widget class="QPushButton" name="btnEditorBold">
                   <property name="font">
                    <font>
                     <family>Lato</family>
@@ -5775,7 +5775,7 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QPushButton" name="btnEditItalic_3">
+                 <widget class="QPushButton" name="btnEditorItalic">
                   <property name="font">
                    <font>
                     <family>Lato</family>
@@ -5812,7 +5812,7 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QPushButton" name="btnEditUnderline_3">
+                 <widget class="QPushButton" name="btnEditorUnderline">
                   <property name="font">
                    <font>
                     <family>Lato</family>
@@ -5849,14 +5849,14 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="Line" name="line_2">
+                 <widget class="Line" name="line_Spacer_1">
                   <property name="orientation">
                    <enum>Qt::Orientation::Vertical</enum>
                   </property>
                  </widget>
                 </item>
                 <item>
-                 <widget class="QPushButton" name="btnEditorLeft_3">
+                 <widget class="QPushButton" name="btnEditorLeft">
                   <property name="font">
                    <font>
                     <family>Lato</family>
@@ -5893,7 +5893,7 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QPushButton" name="btnEditorCenter_3">
+                 <widget class="QPushButton" name="btnEditorCenter">
                   <property name="font">
                    <font>
                     <family>Lato</family>
@@ -5930,7 +5930,7 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QPushButton" name="btnEditorRight_3">
+                 <widget class="QPushButton" name="btnEditorRight">
                   <property name="font">
                    <font>
                     <family>Lato</family>
@@ -5967,7 +5967,7 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QPushButton" name="bntEditorIndentet_3">
+                 <widget class="QPushButton" name="bntEditorIndentet">
                   <property name="font">
                    <font>
                     <family>Lato</family>
@@ -6004,14 +6004,14 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="Line" name="line_3">
+                 <widget class="Line" name="line_Spacer_2">
                   <property name="orientation">
                    <enum>Qt::Orientation::Vertical</enum>
                   </property>
                  </widget>
                 </item>
                 <item>
-                 <widget class="QPushButton" name="btnEditSuperscript_5">
+                 <widget class="QPushButton" name="btnEditorSuperscript">
                   <property name="font">
                    <font>
                     <family>Lato</family>
@@ -6045,7 +6045,7 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QPushButton" name="btnEditSubscript_8">
+                 <widget class="QPushButton" name="btnEditorSubscript">
                   <property name="font">
                    <font>
                     <family>Lato</family>
@@ -6079,7 +6079,7 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QPushButton" name="btnEditSubscript_9">
+                 <widget class="QPushButton" name="btnEditorBulletList">
                   <property name="font">
                    <font>
                     <family>Lato</family>
@@ -6113,7 +6113,7 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QPushButton" name="btnEditSuperscript_6">
+                 <widget class="QPushButton" name="btnEditorNumberList">
                   <property name="font">
                    <font>
                     <family>Lato</family>
@@ -6168,7 +6168,7 @@
                </property>
                <layout class="QHBoxLayout" name="horizontalLayout_12">
                 <item>
-                 <widget class="QPushButton" name="bntEditUndo_4">
+                 <widget class="QPushButton" name="bntEditorUndo">
                   <property name="font">
                    <font>
                     <family>Lato</family>
@@ -6205,7 +6205,7 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QPushButton" name="bntEditRedo_4">
+                 <widget class="QPushButton" name="bntEditorRedo">
                   <property name="font">
                    <font>
                     <family>Lato</family>
@@ -6242,14 +6242,14 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="Line" name="line_4">
+                 <widget class="Line" name="line_Spacer_4">
                   <property name="orientation">
                    <enum>Qt::Orientation::Vertical</enum>
                   </property>
                  </widget>
                 </item>
                 <item>
-                 <widget class="QPushButton" name="btnEditorCut_4">
+                 <widget class="QPushButton" name="btnEditorCut">
                   <property name="font">
                    <font>
                     <family>Lato</family>
@@ -6286,7 +6286,7 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QPushButton" name="btnEditorCopy_4">
+                 <widget class="QPushButton" name="btnEditorCopy">
                   <property name="font">
                    <font>
                     <family>Lato</family>
@@ -6323,7 +6323,7 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QPushButton" name="btnEditorPaste_4">
+                 <widget class="QPushButton" name="btnEditorPaste">
                   <property name="font">
                    <font>
                     <family>Lato</family>
@@ -6360,7 +6360,7 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QPushButton" name="btnEditSubscript_10">
+                 <widget class="QPushButton" name="btnEditorEmpty_1">
                   <property name="font">
                    <font>
                     <family>Lato</family>
@@ -6394,14 +6394,14 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="Line" name="line">
+                 <widget class="Line" name="line_Spacer_3">
                   <property name="orientation">
                    <enum>Qt::Orientation::Vertical</enum>
                   </property>
                  </widget>
                 </item>
                 <item>
-                 <widget class="QPushButton" name="btnEditorImage_4">
+                 <widget class="QPushButton" name="btnEditorImage">
                   <property name="font">
                    <font>
                     <family>Lato</family>
@@ -6438,7 +6438,7 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QPushButton" name="btnEditorGlossar_4">
+                 <widget class="QPushButton" name="btnEditorGlossar">
                   <property name="font">
                    <font>
                     <family>Lato</family>
@@ -6475,7 +6475,7 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QPushButton" name="btnEditorObject_4">
+                 <widget class="QPushButton" name="btnEditorObject">
                   <property name="font">
                    <font>
                     <family>Lato</family>
@@ -6533,7 +6533,7 @@
                </property>
                <layout class="QHBoxLayout" name="horizontalLayout_11">
                 <item>
-                 <widget class="QFontComboBox" name="fontComboBox_3">
+                 <widget class="QFontComboBox" name="fontComboBoxEditor">
                   <property name="sizePolicy">
                    <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                     <horstretch>2</horstretch>
@@ -6555,7 +6555,7 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QSpinBox" name="spinBoxFontSize_3">
+                 <widget class="QSpinBox" name="spinBoxFontSizeEditor">
                   <property name="font">
                    <font>
                     <family>Lato</family>
@@ -6586,7 +6586,7 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QPushButton" name="btnEditSubscript_7">
+                 <widget class="QPushButton" name="btnEditorEmpty_2">
                   <property name="font">
                    <font>
                     <family>Lato</family>
@@ -6626,7 +6626,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QFrame" name="frame_2">
+           <widget class="QFrame" name="frameEditorEdit">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
               <horstretch>0</horstretch>
@@ -6634,14 +6634,14 @@
              </sizepolicy>
             </property>
             <property name="frameShape">
-             <enum>QFrame::Shape::StyledPanel</enum>
+             <enum>QFrame::Shape::NoFrame</enum>
             </property>
             <property name="frameShadow">
              <enum>QFrame::Shadow::Raised</enum>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_9">
              <item>
-              <widget class="QPlainTextEdit" name="plainTextEditorScene_3">
+              <widget class="QPlainTextEdit" name="plainTextEditorScenePlainText">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                  <horstretch>0</horstretch>
@@ -6676,7 +6676,7 @@
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_7">
        <item>
-        <widget class="QFrame" name="frame_3">
+        <widget class="QFrame" name="frameNavigation">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
            <horstretch>0</horstretch>
@@ -6694,7 +6694,7 @@
          </property>
          <layout class="QVBoxLayout" name="verticalLayout">
           <item>
-           <widget class="QWidget" name="widgetRight_2" native="true">
+           <widget class="QWidget" name="widgetNavigation" native="true">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
               <horstretch>0</horstretch>
@@ -6709,7 +6709,7 @@
             </property>
             <layout class="QFormLayout" name="formLayout_6">
              <item row="1" column="0" colspan="2">
-              <widget class="QLabel" name="labelEditorHeader_2">
+              <widget class="QLabel" name="labelEditorHeader">
                <property name="font">
                 <font>
                  <family>Lato</family>
@@ -6728,7 +6728,7 @@
               </widget>
              </item>
              <item row="2" column="0">
-              <widget class="QLabel" name="labelActualProject_2">
+              <widget class="QLabel" name="labelEditorActualProject">
                <property name="font">
                 <font>
                  <family>Lato</family>
@@ -6744,10 +6744,10 @@
               </widget>
              </item>
              <item row="3" column="0" colspan="2">
-              <widget class="QListView" name="listView_2"/>
+              <widget class="QListView" name="listViewEditorChapters"/>
              </item>
              <item row="6" column="0" colspan="2">
-              <widget class="QLabel" name="labelChapterID_2">
+              <widget class="QLabel" name="labelEditorChapterID">
                <property name="font">
                 <font>
                  <family>Lato</family>
@@ -6769,7 +6769,7 @@
               </widget>
              </item>
              <item row="7" column="0">
-              <widget class="QLabel" name="labelChapterTitle_2">
+              <widget class="QLabel" name="labelEditorChapterTitle">
                <property name="font">
                 <font>
                  <family>Lato</family>
@@ -6785,7 +6785,7 @@
               </widget>
              </item>
              <item row="7" column="1">
-              <widget class="QLineEdit" name="lineEditChapterTitle_2">
+              <widget class="QLineEdit" name="lineEditorChapterTitleText">
                <property name="font">
                 <font>
                  <family>Lato</family>
@@ -6798,7 +6798,7 @@
               </widget>
              </item>
              <item row="11" column="0">
-              <widget class="QLabel" name="labelChapterPremise_2">
+              <widget class="QLabel" name="labelEditorChapterPremise">
                <property name="font">
                 <font>
                  <family>Lato</family>
@@ -6814,7 +6814,7 @@
               </widget>
              </item>
              <item row="11" column="1">
-              <widget class="QLineEdit" name="lineEditChapterPremise_2">
+              <widget class="QLineEdit" name="lineEditorChapterPremise">
                <property name="font">
                 <font>
                  <family>Lato</family>
@@ -6827,7 +6827,7 @@
               </widget>
              </item>
              <item row="15" column="0">
-              <widget class="QLabel" name="labelChapterStatus_2">
+              <widget class="QLabel" name="labelEditorChapterStatus">
                <property name="font">
                 <font>
                  <family>Lato</family>
@@ -6843,7 +6843,7 @@
               </widget>
              </item>
              <item row="15" column="1">
-              <widget class="QComboBox" name="comboBoxChapterStatus_2">
+              <widget class="QComboBox" name="comboBoxEditorChapterStatus">
                <property name="font">
                 <font>
                  <family>Lato</family>
@@ -6881,7 +6881,7 @@
               </widget>
              </item>
              <item row="17" column="0">
-              <widget class="QLabel" name="labelChapterBegin_8">
+              <widget class="QLabel" name="labelEditorChapterBegin">
                <property name="font">
                 <font>
                  <family>Lato</family>
@@ -6897,7 +6897,7 @@
               </widget>
              </item>
              <item row="17" column="1">
-              <widget class="QDateEdit" name="dateEditChapterBegin_4">
+              <widget class="QDateEdit" name="dateEditorChapterBegin">
                <property name="font">
                 <font>
                  <family>Lato</family>
@@ -6923,7 +6923,7 @@
               </widget>
              </item>
              <item row="18" column="0">
-              <widget class="QLabel" name="labelChapterEdited_6">
+              <widget class="QLabel" name="labelEditorChapterEdited">
                <property name="font">
                 <font>
                  <family>Lato</family>
@@ -6939,7 +6939,7 @@
               </widget>
              </item>
              <item row="18" column="1">
-              <widget class="QDateEdit" name="dateEditChapterEdited_4">
+              <widget class="QDateEdit" name="dateEditorChapterEdited">
                <property name="font">
                 <font>
                  <family>Lato</family>
@@ -6965,7 +6965,7 @@
               </widget>
              </item>
              <item row="19" column="0" colspan="2">
-              <widget class="QLabel" name="labelChapterExcerpt_6">
+              <widget class="QLabel" name="labelEditorChapterExcerpt">
                <property name="font">
                 <font>
                  <family>Lato</family>
@@ -6981,7 +6981,7 @@
               </widget>
              </item>
              <item row="20" column="0" colspan="2">
-              <widget class="QTextEdit" name="textEditChapterExcerpt_6">
+              <widget class="QTextEdit" name="textEditEditorChapterExcerpt">
                <property name="font">
                 <font>
                  <family>Lato</family>
@@ -6994,7 +6994,7 @@
               </widget>
              </item>
              <item row="23" column="0" colspan="2">
-              <widget class="QLabel" name="labelChapterNotes_2">
+              <widget class="QLabel" name="labelEditorChapterNotes">
                <property name="font">
                 <font>
                  <family>Lato</family>
@@ -7010,7 +7010,7 @@
               </widget>
              </item>
              <item row="24" column="0" colspan="2">
-              <widget class="QTextEdit" name="textEditChapterNotes_2">
+              <widget class="QTextEdit" name="textEditEditorChapterNotes">
                <property name="font">
                 <font>
                  <family>Lato</family>
@@ -7023,7 +7023,7 @@
               </widget>
              </item>
              <item row="26" column="0" colspan="2">
-              <widget class="QPushButton" name="newBtnEditor_2">
+              <widget class="QPushButton" name="newBtnEditorChapter">
                <property name="cursor">
                 <cursorShape>PointingHandCursor</cursorShape>
                </property>
@@ -7051,7 +7051,7 @@
               </widget>
              </item>
              <item row="29" column="0" colspan="2">
-              <widget class="QPushButton" name="previousBtnEditor_2">
+              <widget class="QPushButton" name="previousBtnEditorChapter">
                <property name="cursor">
                 <cursorShape>PointingHandCursor</cursorShape>
                </property>
@@ -7079,7 +7079,7 @@
               </widget>
              </item>
              <item row="30" column="0" colspan="2">
-              <widget class="QPushButton" name="deleteBtnEditor_2">
+              <widget class="QPushButton" name="deleteBtnEditorChapter">
                <property name="cursor">
                 <cursorShape>PointingHandCursor</cursorShape>
                </property>
@@ -7107,7 +7107,7 @@
               </widget>
              </item>
              <item row="31" column="0" colspan="2">
-              <widget class="QPushButton" name="saveBtnEditor_2">
+              <widget class="QPushButton" name="saveBtnEditorChapter">
                <property name="cursor">
                 <cursorShape>PointingHandCursor</cursorShape>
                </property>
@@ -7135,7 +7135,7 @@
               </widget>
              </item>
              <item row="32" column="0" colspan="2">
-              <widget class="QPushButton" name="exitBntEditor_2">
+              <widget class="QPushButton" name="exitBntEditorToStart">
                <property name="cursor">
                 <cursorShape>PointingHandCursor</cursorShape>
                </property>
@@ -7163,7 +7163,7 @@
               </widget>
              </item>
              <item row="27" column="0" colspan="2">
-              <widget class="QPushButton" name="nextBtnEditor_2">
+              <widget class="QPushButton" name="nextBtnEditorChapter">
                <property name="cursor">
                 <cursorShape>PointingHandCursor</cursorShape>
                </property>

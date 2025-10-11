@@ -43,41 +43,29 @@
      <property name="handleWidth">
       <number>36</number>
      </property>
-     <widget class="QWidget" name="widgetLeft" native="true">
+     <widget class="QWidget" name="widgetLeftcsNovaMain" native="true">
       <layout class="QVBoxLayout" name="verticalLayout_2">
        <item>
-        <widget class="QFrame" name="frame_2">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
+        <widget class="QTextEdit" name="textEditHelpcsNovaMain">
+         <property name="readOnly">
+          <bool>true</bool>
          </property>
-         <property name="frameShape">
-          <enum>QFrame::Shape::StyledPanel</enum>
+         <property name="html">
+          <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+hr { height: 1px; border-width: 0; }
+li.unchecked::marker { content: &quot;\2610&quot;; }
+li.checked::marker { content: &quot;\2612&quot;; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Lato'; font-size:12pt; font-weight:700; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;Hilfen &amp;amp; Tipps - csNova&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; text-decoration: underline;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-weight:400;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
          </property>
-         <property name="frameShadow">
-          <enum>QFrame::Shadow::Raised</enum>
-         </property>
-         <layout class="QVBoxLayout" name="verticalLayout_3">
-          <item>
-           <spacer name="horizontalSpacer_5">
-            <property name="orientation">
-             <enum>Qt::Orientation::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>400</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-         </layout>
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="label">
+        <widget class="QLabel" name="labelCopyrightcsNovaMain">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
            <horstretch>0</horstretch>
@@ -91,10 +79,10 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="widgetCenter" native="true">
+     <widget class="QWidget" name="widgetCentercsNova" native="true">
       <layout class="QVBoxLayout" name="verticalLayout_4">
        <item>
-        <widget class="QLabel" name="welcomeTxt">
+        <widget class="QLabel" name="csNovaHeader">
          <property name="font">
           <font>
            <family>Lato</family>
@@ -116,7 +104,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QFrame" name="frame">
+        <widget class="QFrame" name="framecsNovaMainStatistic">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
            <horstretch>0</horstretch>
@@ -131,7 +119,7 @@
          </property>
          <layout class="QFormLayout" name="formLayout">
           <item row="0" column="0" colspan="2">
-           <widget class="QLabel" name="labelStatistic">
+           <widget class="QLabel" name="labelStatisticStatistic">
             <property name="font">
              <font>
               <family>Lato</family>
@@ -150,14 +138,14 @@
            </widget>
           </item>
           <item row="1" column="0">
-           <widget class="QLabel" name="labelProjects">
+           <widget class="QLabel" name="labelProjectsStatistic">
             <property name="text">
              <string>Projekte</string>
             </property>
            </widget>
           </item>
           <item row="1" column="1">
-           <widget class="QLabel" name="labelCountProjects">
+           <widget class="QLabel" name="labelCountProjectsStatistic">
             <property name="font">
              <font>
               <family>Lato</family>
@@ -179,14 +167,14 @@
            </widget>
           </item>
           <item row="2" column="0">
-           <widget class="QLabel" name="labelCharacters">
+           <widget class="QLabel" name="labelCharactersStatistic">
             <property name="text">
              <string>Charaktere</string>
             </property>
            </widget>
           </item>
           <item row="2" column="1">
-           <widget class="QLabel" name="labelCountCharacters">
+           <widget class="QLabel" name="labelCountCharactersStatistic">
             <property name="font">
              <font>
               <family>Lato</family>
@@ -208,14 +196,14 @@
            </widget>
           </item>
           <item row="3" column="0">
-           <widget class="QLabel" name="labelObjects">
+           <widget class="QLabel" name="labelObjectsStatistic">
             <property name="text">
              <string>Objekte</string>
             </property>
            </widget>
           </item>
           <item row="3" column="1">
-           <widget class="QLabel" name="labelCountObjects">
+           <widget class="QLabel" name="labelCountObjectsStatistic">
             <property name="font">
              <font>
               <family>Lato</family>
@@ -237,14 +225,14 @@
            </widget>
           </item>
           <item row="4" column="0">
-           <widget class="QLabel" name="labelLocations">
+           <widget class="QLabel" name="labelLocationsStatistic">
             <property name="text">
              <string>Handlungsorte</string>
             </property>
            </widget>
           </item>
           <item row="4" column="1">
-           <widget class="QLabel" name="labelCountLocations">
+           <widget class="QLabel" name="labelCountLocationsStatistic">
             <property name="font">
              <font>
               <family>Lato</family>
@@ -266,14 +254,14 @@
            </widget>
           </item>
           <item row="5" column="0">
-           <widget class="QLabel" name="labelStorylines">
+           <widget class="QLabel" name="labelStorylinesStatistic">
             <property name="text">
              <string>Handlungsstränge</string>
             </property>
            </widget>
           </item>
           <item row="5" column="1">
-           <widget class="QLabel" name="labelCountStorylines">
+           <widget class="QLabel" name="labelCountStorylinesStatistic">
             <property name="font">
              <font>
               <family>Lato</family>
@@ -298,7 +286,7 @@
         </widget>
        </item>
        <item>
-        <spacer name="horizontalSpacer_4">
+        <spacer name="horizontalSpacerCenter_1">
          <property name="orientation">
           <enum>Qt::Orientation::Horizontal</enum>
          </property>
@@ -311,7 +299,7 @@
         </spacer>
        </item>
        <item>
-        <widget class="Line" name="line">
+        <widget class="Line" name="linecsNova">
          <property name="lineWidth">
           <number>3</number>
          </property>
@@ -324,7 +312,7 @@
         </widget>
        </item>
        <item>
-        <spacer name="horizontalSpacer_3">
+        <spacer name="horizontalSpacerCenter_2">
          <property name="orientation">
           <enum>Qt::Orientation::Horizontal</enum>
          </property>
@@ -337,7 +325,7 @@
         </spacer>
        </item>
        <item>
-        <widget class="QFrame" name="frame_3">
+        <widget class="QFrame" name="framecsNovaProjectStatistic">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
            <horstretch>0</horstretch>
@@ -590,7 +578,7 @@
            </widget>
           </item>
           <item row="10" column="0" colspan="4">
-           <widget class="QFrame" name="frame_4">
+           <widget class="QFrame" name="framecsNovaProjectInfo">
             <property name="frameShape">
              <enum>QFrame::Shape::StyledPanel</enum>
             </property>
@@ -606,7 +594,7 @@
               </widget>
              </item>
              <item row="0" column="1">
-              <widget class="QLabel" name="labelCountScenes_7">
+              <widget class="QLabel" name="labelCountProjectBeginn">
                <property name="font">
                 <font>
                  <family>Lato</family>
@@ -635,7 +623,7 @@
               </widget>
              </item>
              <item row="1" column="1">
-              <widget class="QLabel" name="labelCountScenes_8">
+              <widget class="QLabel" name="labelCountProjectDeadline">
                <property name="font">
                 <font>
                  <family>Lato</family>
@@ -664,7 +652,7 @@
               </widget>
              </item>
              <item row="2" column="1">
-              <widget class="QLabel" name="labelCountScenes_9">
+              <widget class="QLabel" name="labelCountProjectDays">
                <property name="font">
                 <font>
                  <family>Lato</family>
@@ -693,7 +681,7 @@
               </widget>
              </item>
              <item row="3" column="1">
-              <widget class="QLabel" name="labelCountScenes_10">
+              <widget class="QLabel" name="labelCountProjectDaysRest">
                <property name="font">
                 <font>
                  <family>Lato</family>
@@ -722,7 +710,7 @@
               </widget>
              </item>
              <item row="4" column="1">
-              <widget class="QLabel" name="labelCountScenes_11">
+              <widget class="QLabel" name="labelCountProjectWordsPlaned">
                <property name="font">
                 <font>
                  <family>Lato</family>
@@ -751,7 +739,7 @@
               </widget>
              </item>
              <item row="5" column="1">
-              <widget class="QLabel" name="labelCountScenes_12">
+              <widget class="QLabel" name="labelCountProjectWordsWritten">
                <property name="font">
                 <font>
                  <family>Lato</family>
@@ -780,7 +768,7 @@
               </widget>
              </item>
              <item row="6" column="1">
-              <widget class="QLabel" name="labelCountScenes_13">
+              <widget class="QLabel" name="labelCountProjectWordsRest">
                <property name="font">
                 <font>
                  <family>Lato</family>
@@ -1274,7 +1262,7 @@
            </widget>
           </item>
           <item row="8" column="0" colspan="3">
-           <spacer name="horizontalSpacer_6">
+           <spacer name="horizontalSpacerCenter_3">
             <property name="orientation">
              <enum>Qt::Orientation::Horizontal</enum>
             </property>
@@ -1433,7 +1421,7 @@
            </widget>
           </item>
           <item row="0" column="0" colspan="7">
-           <widget class="QLabel" name="labelStatistic_2">
+           <widget class="QLabel" name="labelStatisticThisProject">
             <property name="font">
              <font>
               <family>Lato</family>
@@ -1456,10 +1444,10 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="widgetRight" native="true">
+     <widget class="QWidget" name="widgetRightcsNovaMain" native="true">
       <layout class="QVBoxLayout" name="verticalLayout">
        <item>
-        <widget class="QPushButton" name="projectBtn">
+        <widget class="QPushButton" name="projectBtncsNovaMain">
          <property name="enabled">
           <bool>true</bool>
          </property>
@@ -1499,7 +1487,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="characterBtn">
+        <widget class="QPushButton" name="characterBtncsNovaMain">
          <property name="enabled">
           <bool>true</bool>
          </property>
@@ -1539,7 +1527,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="objectBtn">
+        <widget class="QPushButton" name="objectBtncsNovaMain">
          <property name="enabled">
           <bool>true</bool>
          </property>
@@ -1576,7 +1564,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="locationBtn">
+        <widget class="QPushButton" name="locationBtncsNovaMain">
          <property name="enabled">
           <bool>true</bool>
          </property>
@@ -1613,7 +1601,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="storylineBtn">
+        <widget class="QPushButton" name="storylineBtncsNovaMain">
          <property name="enabled">
           <bool>true</bool>
          </property>
@@ -1650,7 +1638,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="editorBtn">
+        <widget class="QPushButton" name="editorBtncsNovaMain">
          <property name="enabled">
           <bool>true</bool>
          </property>
@@ -1687,7 +1675,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="preferencesBtn">
+        <widget class="QPushButton" name="preferencesBtncsNovaMain">
          <property name="enabled">
           <bool>true</bool>
          </property>
@@ -1724,7 +1712,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="helpBtn">
+        <widget class="QPushButton" name="helpBtncsNovaMain">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
            <horstretch>0</horstretch>
@@ -1758,7 +1746,7 @@
         </widget>
        </item>
        <item>
-        <spacer name="horizontalSpacer">
+        <spacer name="horizontalSpacercsNovaMain">
          <property name="orientation">
           <enum>Qt::Orientation::Horizontal</enum>
          </property>
@@ -1771,7 +1759,7 @@
         </spacer>
        </item>
        <item>
-        <widget class="QPushButton" name="exitBnt">
+        <widget class="QPushButton" name="exitBtncsNovaMain">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
            <horstretch>0</horstretch>
