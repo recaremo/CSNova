@@ -1,0 +1,26 @@
+{
+    "de": {
+        "key_german": "Deutsch",
+        "key_english": "Englisch",
+        "key_spanish": "Spanisch",
+        "key_french": "Französisch"
+    },
+    "en": {
+        "key_german": "German",
+        "key_english": "English",
+        "key_spanish": "Spanish",
+        "key_french": "French"
+    },
+    "es": {
+        "key_german": "Alemán",
+        "key_english": "Inglés",
+        "key_spanish": "Español",
+        "key_french": "Francés"
+    },
+    "fr": {
+        "key_german": "Allemand",
+        "key_english": "Anglais",
+        "key_spanish": "Espagnol",
+        "key_french": "Français"
+    }
+}

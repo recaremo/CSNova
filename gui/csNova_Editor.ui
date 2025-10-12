@@ -2415,8 +2415,8 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>263</width>
-                   <height>682</height>
+                   <width>435</width>
+                   <height>702</height>
                   </rect>
                  </property>
                  <attribute name="label">
@@ -5039,8 +5039,8 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>98</width>
-                   <height>88</height>
+                   <width>435</width>
+                   <height>120</height>
                   </rect>
                  </property>
                  <attribute name="label">
@@ -5057,7 +5057,7 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>98</width>
+                   <width>94</width>
                    <height>88</height>
                   </rect>
                  </property>
@@ -5075,7 +5075,7 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>98</width>
+                   <width>94</width>
                    <height>88</height>
                   </rect>
                  </property>
@@ -5093,7 +5093,7 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>98</width>
+                   <width>94</width>
                    <height>88</height>
                   </rect>
                  </property>
@@ -5111,7 +5111,7 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>98</width>
+                   <width>94</width>
                    <height>88</height>
                   </rect>
                  </property>
@@ -5129,7 +5129,7 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>98</width>
+                   <width>94</width>
                    <height>88</height>
                   </rect>
                  </property>
@@ -5147,7 +5147,7 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>98</width>
+                   <width>94</width>
                    <height>88</height>
                   </rect>
                  </property>
@@ -5165,7 +5165,7 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>98</width>
+                   <width>94</width>
                    <height>88</height>
                   </rect>
                  </property>
@@ -5183,7 +5183,7 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>98</width>
+                   <width>94</width>
                    <height>88</height>
                   </rect>
                  </property>
@@ -5201,7 +5201,7 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>98</width>
+                   <width>94</width>
                    <height>88</height>
                   </rect>
                  </property>
@@ -5219,7 +5219,7 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>98</width>
+                   <width>94</width>
                    <height>88</height>
                   </rect>
                  </property>
@@ -5237,7 +5237,7 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>98</width>
+                   <width>94</width>
                    <height>88</height>
                   </rect>
                  </property>
@@ -5255,7 +5255,7 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>98</width>
+                   <width>94</width>
                    <height>88</height>
                   </rect>
                  </property>
@@ -5273,7 +5273,7 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>98</width>
+                   <width>94</width>
                    <height>88</height>
                   </rect>
                  </property>
@@ -5291,7 +5291,7 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>98</width>
+                   <width>94</width>
                    <height>88</height>
                   </rect>
                  </property>
@@ -5309,7 +5309,7 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>98</width>
+                   <width>94</width>
                    <height>88</height>
                   </rect>
                  </property>
@@ -5327,7 +5327,7 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>98</width>
+                   <width>94</width>
                    <height>88</height>
                   </rect>
                  </property>
@@ -5345,7 +5345,7 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>98</width>
+                   <width>94</width>
                    <height>88</height>
                   </rect>
                  </property>
@@ -5363,7 +5363,7 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>98</width>
+                   <width>94</width>
                    <height>88</height>
                   </rect>
                  </property>
@@ -5381,7 +5381,7 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>98</width>
+                   <width>94</width>
                    <height>88</height>
                   </rect>
                  </property>
@@ -5399,7 +5399,7 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>98</width>
+                   <width>94</width>
                    <height>88</height>
                   </rect>
                  </property>
@@ -5417,7 +5417,7 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>98</width>
+                   <width>94</width>
                    <height>88</height>
                   </rect>
                  </property>
@@ -5435,7 +5435,7 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>98</width>
+                   <width>94</width>
                    <height>88</height>
                   </rect>
                  </property>
@@ -5453,7 +5453,7 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>98</width>
+                   <width>94</width>
                    <height>88</height>
                   </rect>
                  </property>
@@ -5471,7 +5471,7 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>98</width>
+                   <width>94</width>
                    <height>88</height>
                   </rect>
                  </property>
@@ -5489,7 +5489,7 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>98</width>
+                   <width>94</width>
                    <height>88</height>
                   </rect>
                  </property>
@@ -5739,6 +5739,12 @@
                <layout class="QHBoxLayout" name="horizontalLayout_10">
                 <item>
                  <widget class="QPushButton" name="btnEditorBold">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
                   <property name="font">
                    <font>
                     <family>Lato</family>
@@ -5776,6 +5782,12 @@
                 </item>
                 <item>
                  <widget class="QPushButton" name="btnEditorItalic">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
                   <property name="font">
                    <font>
                     <family>Lato</family>
@@ -5813,6 +5825,12 @@
                 </item>
                 <item>
                  <widget class="QPushButton" name="btnEditorUnderline">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
                   <property name="font">
                    <font>
                     <family>Lato</family>
@@ -5857,6 +5875,12 @@
                 </item>
                 <item>
                  <widget class="QPushButton" name="btnEditorLeft">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
                   <property name="font">
                    <font>
                     <family>Lato</family>
@@ -5894,6 +5918,12 @@
                 </item>
                 <item>
                  <widget class="QPushButton" name="btnEditorCenter">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
                   <property name="font">
                    <font>
                     <family>Lato</family>
@@ -5931,6 +5961,12 @@
                 </item>
                 <item>
                  <widget class="QPushButton" name="btnEditorRight">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
                   <property name="font">
                    <font>
                     <family>Lato</family>
@@ -5968,6 +6004,12 @@
                 </item>
                 <item>
                  <widget class="QPushButton" name="bntEditorIndentet">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
                   <property name="font">
                    <font>
                     <family>Lato</family>
@@ -6011,7 +6053,131 @@
                  </widget>
                 </item>
                 <item>
+                 <widget class="QPushButton" name="btnEditorImage">
+                  <property name="font">
+                   <font>
+                    <family>Lato</family>
+                    <pointsize>12</pointsize>
+                    <bold>false</bold>
+                    <stylestrategy>PreferAntialias</stylestrategy>
+                    <kerning>true</kerning>
+                   </font>
+                  </property>
+                  <property name="cursor">
+                   <cursorShape>PointingHandCursor</cursorShape>
+                  </property>
+                  <property name="toolTip">
+                   <string>Grafik/Bild einfügen</string>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="icon">
+                   <iconset theme="insert-image"/>
+                  </property>
+                  <property name="iconSize">
+                   <size>
+                    <width>32</width>
+                    <height>32</height>
+                   </size>
+                  </property>
+                  <property name="default">
+                   <bool>true</bool>
+                  </property>
+                  <property name="flat">
+                   <bool>false</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="btnEditorGlossar">
+                  <property name="font">
+                   <font>
+                    <family>Lato</family>
+                    <pointsize>12</pointsize>
+                    <bold>false</bold>
+                    <stylestrategy>PreferAntialias</stylestrategy>
+                    <kerning>true</kerning>
+                   </font>
+                  </property>
+                  <property name="cursor">
+                   <cursorShape>PointingHandCursor</cursorShape>
+                  </property>
+                  <property name="toolTip">
+                   <string>Glossar definieren</string>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="icon">
+                   <iconset theme="insert-text"/>
+                  </property>
+                  <property name="iconSize">
+                   <size>
+                    <width>32</width>
+                    <height>32</height>
+                   </size>
+                  </property>
+                  <property name="default">
+                   <bool>true</bool>
+                  </property>
+                  <property name="flat">
+                   <bool>false</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="btnEditorObject">
+                  <property name="font">
+                   <font>
+                    <family>Lato</family>
+                    <pointsize>12</pointsize>
+                    <bold>false</bold>
+                    <stylestrategy>PreferAntialias</stylestrategy>
+                    <kerning>true</kerning>
+                   </font>
+                  </property>
+                  <property name="cursor">
+                   <cursorShape>PointingHandCursor</cursorShape>
+                  </property>
+                  <property name="toolTip">
+                   <string>Objekt definieren</string>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="icon">
+                   <iconset theme="insert-object"/>
+                  </property>
+                  <property name="iconSize">
+                   <size>
+                    <width>32</width>
+                    <height>32</height>
+                   </size>
+                  </property>
+                  <property name="default">
+                   <bool>true</bool>
+                  </property>
+                  <property name="flat">
+                   <bool>false</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="Line" name="line">
+                  <property name="orientation">
+                   <enum>Qt::Orientation::Vertical</enum>
+                  </property>
+                 </widget>
+                </item>
+                <item>
                  <widget class="QPushButton" name="btnEditorSuperscript">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
                   <property name="font">
                    <font>
                     <family>Lato</family>
@@ -6046,6 +6212,12 @@
                 </item>
                 <item>
                  <widget class="QPushButton" name="btnEditorSubscript">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
                   <property name="font">
                    <font>
                     <family>Lato</family>
@@ -6080,6 +6252,12 @@
                 </item>
                 <item>
                  <widget class="QPushButton" name="btnEditorBulletList">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
                   <property name="font">
                    <font>
                     <family>Lato</family>
@@ -6114,6 +6292,12 @@
                 </item>
                 <item>
                  <widget class="QPushButton" name="btnEditorNumberList">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
                   <property name="font">
                    <font>
                     <family>Lato</family>
@@ -6167,6 +6351,66 @@
                 <number>2</number>
                </property>
                <layout class="QHBoxLayout" name="horizontalLayout_12">
+                <item>
+                 <widget class="QFontComboBox" name="fontComboBoxEditor">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                    <horstretch>2</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <family>Lato</family>
+                    <pointsize>12</pointsize>
+                    <bold>false</bold>
+                    <stylestrategy>PreferAntialias</stylestrategy>
+                    <kerning>true</kerning>
+                   </font>
+                  </property>
+                  <property name="toolTip">
+                   <string>Schriftart</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QSpinBox" name="spinBoxFontSizeEditor">
+                  <property name="font">
+                   <font>
+                    <family>Lato</family>
+                    <pointsize>12</pointsize>
+                    <bold>false</bold>
+                    <stylestrategy>PreferAntialias</stylestrategy>
+                    <kerning>true</kerning>
+                   </font>
+                  </property>
+                  <property name="toolTip">
+                   <string>Schriftgröße</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignmentFlag::AlignCenter</set>
+                  </property>
+                  <property name="prefix">
+                   <string/>
+                  </property>
+                  <property name="minimum">
+                   <number>8</number>
+                  </property>
+                  <property name="maximum">
+                   <number>24</number>
+                  </property>
+                  <property name="value">
+                   <number>12</number>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="Line" name="line_2">
+                  <property name="orientation">
+                   <enum>Qt::Orientation::Vertical</enum>
+                  </property>
+                 </widget>
+                </item>
                 <item>
                  <widget class="QPushButton" name="bntEditorUndo">
                   <property name="font">
@@ -6360,6 +6604,47 @@
                  </widget>
                 </item>
                 <item>
+                 <widget class="Line" name="line_3">
+                  <property name="orientation">
+                   <enum>Qt::Orientation::Vertical</enum>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="btnEditorEmpty_2">
+                  <property name="font">
+                   <font>
+                    <family>Lato</family>
+                    <pointsize>20</pointsize>
+                    <bold>false</bold>
+                    <stylestrategy>PreferAntialias</stylestrategy>
+                    <kerning>true</kerning>
+                   </font>
+                  </property>
+                  <property name="cursor">
+                   <cursorShape>PointingHandCursor</cursorShape>
+                  </property>
+                  <property name="toolTip">
+                   <string>Tiefgestellt</string>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="iconSize">
+                   <size>
+                    <width>32</width>
+                    <height>32</height>
+                   </size>
+                  </property>
+                  <property name="default">
+                   <bool>true</bool>
+                  </property>
+                  <property name="flat">
+                   <bool>false</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item>
                  <widget class="QPushButton" name="btnEditorEmpty_1">
                   <property name="font">
                    <font>
@@ -6397,225 +6682,6 @@
                  <widget class="Line" name="line_Spacer_3">
                   <property name="orientation">
                    <enum>Qt::Orientation::Vertical</enum>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QPushButton" name="btnEditorImage">
-                  <property name="font">
-                   <font>
-                    <family>Lato</family>
-                    <pointsize>12</pointsize>
-                    <bold>false</bold>
-                    <stylestrategy>PreferAntialias</stylestrategy>
-                    <kerning>true</kerning>
-                   </font>
-                  </property>
-                  <property name="cursor">
-                   <cursorShape>PointingHandCursor</cursorShape>
-                  </property>
-                  <property name="toolTip">
-                   <string>Grafik/Bild einfügen</string>
-                  </property>
-                  <property name="text">
-                   <string/>
-                  </property>
-                  <property name="icon">
-                   <iconset theme="insert-image"/>
-                  </property>
-                  <property name="iconSize">
-                   <size>
-                    <width>32</width>
-                    <height>32</height>
-                   </size>
-                  </property>
-                  <property name="default">
-                   <bool>true</bool>
-                  </property>
-                  <property name="flat">
-                   <bool>false</bool>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QPushButton" name="btnEditorGlossar">
-                  <property name="font">
-                   <font>
-                    <family>Lato</family>
-                    <pointsize>12</pointsize>
-                    <bold>false</bold>
-                    <stylestrategy>PreferAntialias</stylestrategy>
-                    <kerning>true</kerning>
-                   </font>
-                  </property>
-                  <property name="cursor">
-                   <cursorShape>PointingHandCursor</cursorShape>
-                  </property>
-                  <property name="toolTip">
-                   <string>Glossar definieren</string>
-                  </property>
-                  <property name="text">
-                   <string/>
-                  </property>
-                  <property name="icon">
-                   <iconset theme="insert-text"/>
-                  </property>
-                  <property name="iconSize">
-                   <size>
-                    <width>32</width>
-                    <height>32</height>
-                   </size>
-                  </property>
-                  <property name="default">
-                   <bool>true</bool>
-                  </property>
-                  <property name="flat">
-                   <bool>false</bool>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QPushButton" name="btnEditorObject">
-                  <property name="font">
-                   <font>
-                    <family>Lato</family>
-                    <pointsize>12</pointsize>
-                    <bold>false</bold>
-                    <stylestrategy>PreferAntialias</stylestrategy>
-                    <kerning>true</kerning>
-                   </font>
-                  </property>
-                  <property name="cursor">
-                   <cursorShape>PointingHandCursor</cursorShape>
-                  </property>
-                  <property name="toolTip">
-                   <string>Objekt definieren</string>
-                  </property>
-                  <property name="text">
-                   <string/>
-                  </property>
-                  <property name="icon">
-                   <iconset theme="insert-object"/>
-                  </property>
-                  <property name="iconSize">
-                   <size>
-                    <width>32</width>
-                    <height>32</height>
-                   </size>
-                  </property>
-                  <property name="default">
-                   <bool>true</bool>
-                  </property>
-                  <property name="flat">
-                   <bool>false</bool>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </widget>
-             </item>
-             <item>
-              <widget class="QFrame" name="toolboxCenterEditor_3">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="frameShape">
-                <enum>QFrame::Shape::StyledPanel</enum>
-               </property>
-               <property name="frameShadow">
-                <enum>QFrame::Shadow::Raised</enum>
-               </property>
-               <property name="lineWidth">
-                <number>2</number>
-               </property>
-               <layout class="QHBoxLayout" name="horizontalLayout_11">
-                <item>
-                 <widget class="QFontComboBox" name="fontComboBoxEditor">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                    <horstretch>2</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
-                  <property name="font">
-                   <font>
-                    <family>Lato</family>
-                    <pointsize>12</pointsize>
-                    <bold>false</bold>
-                    <stylestrategy>PreferAntialias</stylestrategy>
-                    <kerning>true</kerning>
-                   </font>
-                  </property>
-                  <property name="toolTip">
-                   <string>Schriftart</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QSpinBox" name="spinBoxFontSizeEditor">
-                  <property name="font">
-                   <font>
-                    <family>Lato</family>
-                    <pointsize>12</pointsize>
-                    <bold>false</bold>
-                    <stylestrategy>PreferAntialias</stylestrategy>
-                    <kerning>true</kerning>
-                   </font>
-                  </property>
-                  <property name="toolTip">
-                   <string>Schriftgröße</string>
-                  </property>
-                  <property name="alignment">
-                   <set>Qt::AlignmentFlag::AlignCenter</set>
-                  </property>
-                  <property name="prefix">
-                   <string/>
-                  </property>
-                  <property name="minimum">
-                   <number>8</number>
-                  </property>
-                  <property name="maximum">
-                   <number>24</number>
-                  </property>
-                  <property name="value">
-                   <number>12</number>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QPushButton" name="btnEditorEmpty_2">
-                  <property name="font">
-                   <font>
-                    <family>Lato</family>
-                    <pointsize>20</pointsize>
-                    <bold>false</bold>
-                    <stylestrategy>PreferAntialias</stylestrategy>
-                    <kerning>true</kerning>
-                   </font>
-                  </property>
-                  <property name="cursor">
-                   <cursorShape>PointingHandCursor</cursorShape>
-                  </property>
-                  <property name="toolTip">
-                   <string>Tiefgestellt</string>
-                  </property>
-                  <property name="text">
-                   <string/>
-                  </property>
-                  <property name="iconSize">
-                   <size>
-                    <width>32</width>
-                    <height>32</height>
-                   </size>
-                  </property>
-                  <property name="default">
-                   <bool>true</bool>
-                  </property>
-                  <property name="flat">
-                   <bool>false</bool>
                   </property>
                  </widget>
                 </item>

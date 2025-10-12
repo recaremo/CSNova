@@ -1,0 +1,50 @@
+{
+"de": {
+  "key_female": "weiblich",
+  "key_male": "männlich",
+  "key_nonbinary": "nicht-binär",
+  "key_agender": "agender",
+  "key_genderfluid": "genderfluid",
+  "key_bigender": "bigender",
+  "key_transfemale": "trans Frau",
+  "key_transmale": "trans Mann",
+  "key_intersex": "intersexuell",
+  "key_other": "anderes"
+},
+"en": {
+  "key_female": "female",
+  "key_male": "male",
+  "key_nonbinary": "non-binary",
+  "key_agender": "agender",
+  "key_genderfluid": "genderfluid",
+  "key_bigender": "bigender",
+  "key_transfemale": "trans female",
+  "key_transmale": "trans male",
+  "key_intersex": "intersex",
+  "key_other": "other"
+},
+"es": {
+  "key_female": "femenino",
+  "key_male": "masculino",
+  "key_nonbinary": "no binario",
+  "key_agender": "agénero",
+  "key_genderfluid": "género fluido",
+  "key_bigender": "bigénero",
+  "key_transfemale": "trans femenina",
+  "key_transmale": "trans masculino",
+  "key_intersex": "intersexual",
+  "key_other": "otro"
+},
+"fr": {
+  "key_female": "féminin",
+  "key_male": "masculin",
+  "key_nonbinary": "non binaire",
+  "key_agender": "agénaire",
+  "key_genderfluid": "genre fluide",
+  "key_bigender": "bigender",
+  "key_transfemale": "trans féminin",
+  "key_transmale": "trans masculin",
+  "key_intersex": "intersexe",
+  "key_other": "autre"
+}
+}

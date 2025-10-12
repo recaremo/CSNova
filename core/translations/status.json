@@ -1,0 +1,34 @@
+{
+"de": {
+  "key_draft": "Entwurf",
+  "key_in_progress": "In Bearbeitung",
+  "key_review": "Überarbeitung",
+  "key_editing": "Lektorat/Korrektur",
+  "key_completed": "Abgeschlossen",
+  "key_published": "Veröffentlicht"
+},
+"en": {
+  "key_draft": "Draft",
+  "key_in_progress": "In Progress",
+  "key_review": "Review",
+  "key_editing": "Editing/Proofreading",
+  "key_completed": "Completed",
+  "key_published": "Published"
+},
+"es": {
+  "key_draft": "Borrador",
+  "key_in_progress": "En Progreso",
+  "key_review": "Revisión",
+  "key_editing": "Edición/Corrección",
+  "key_completed": "Completado",
+  "key_published": "Publicado"
+},
+"fr": {
+  "key_draft": "Brouillon",
+  "key_in_progress": "En Cours",
+  "key_review": "Revue",
+  "key_editing": "Édition/Correction",
+  "key_completed": "Terminé",
+  "key_published": "Publié"
+}  
+}

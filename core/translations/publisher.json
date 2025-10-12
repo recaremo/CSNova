@@ -1,0 +1,382 @@
+{
+  "publishers": [
+    {
+      "id": "none",
+      "name": "-",
+      "street": "-",
+      "zip": "-",
+      "town": "-",
+      "country": "-",
+      "type": "book"
+    },
+    {
+      "id": "arena",
+      "name": "Arena Verlag",
+      "street": "Hohnerstraße 23",
+      "zip": "97084",
+      "town": "Würzburg",
+      "country": "Deutschland",
+      "type": "book"
+    },
+    {
+      "id": "bastei_luebbe",
+      "name": "Bastei Lübbe",
+      "street": "Schanzenstraße 6-20",
+      "zip": "51063",
+      "town": "Köln",
+      "country": "Deutschland",
+      "type": "book"
+    },
+    {
+      "id": "beltz",
+      "name": "Beltz & Gelberg",
+      "street": "Werderstraße 10",
+      "zip": "69469",
+      "town": "Weinheim",
+      "country": "Deutschland",
+      "type": "book"
+    },
+    {
+      "id": "carlsen",
+      "name": "Carlsen Verlag",
+      "street": "Völckersstraße 14-20",
+      "zip": "22765",
+      "town": "Hamburg",
+      "country": "Deutschland",
+      "type": "book"
+    },
+    {
+      "id": "dtv",
+      "name": "Deutscher Taschenbuch Verlag",
+      "street": "Tumblingerstraße 21",
+      "zip": "80337",
+      "town": "München",
+      "country": "Deutschland",
+      "type": "book"
+    },
+    {
+      "id": "dtv_junior",
+      "name": "dtv junior",
+      "street": "Tumblingerstraße 21",
+      "zip": "80337",
+      "town": "München",
+      "country": "Deutschland",
+      "type": "book"
+    },
+    {
+      "id": "dtv_kinderbuch",
+      "name": "dtv Kinderbuch",
+      "street": "Tumblingerstraße 21",
+      "zip": "80337",
+      "town": "München",
+      "country": "Deutschland",
+      "type": "book"
+    },
+    {
+      "id": "dtv_sachbuch",
+      "name": "dtv Sachbuch",
+      "street": "Tumblingerstraße 21",
+      "zip": "80337",
+      "town": "München",
+      "country": "Deutschland",
+      "type": "book"
+    },
+    {
+      "id": "electronic_arts",
+      "name": "Electronic Arts",
+      "street": "209 Redwood Shores Pkwy",
+      "zip": "94065",
+      "town": "Redwood City",
+      "country": "USA",
+      "type": "game"
+    },
+    {
+      "id": "fischer",
+      "name": "S. Fischer Verlag",
+      "street": "Hedderichstraße 114",
+      "zip": "60596",
+      "town": "Frankfurt am Main",
+      "country": "Deutschland",
+      "type": "book"
+    },
+    {
+      "id": "goldmann",
+      "name": "Goldmann Verlag",
+      "street": "Neumarkter Straße 28",
+      "zip": "81673",
+      "town": "München",
+      "country": "Deutschland",
+      "type": "book"
+    },
+    {
+      "id": "hanser",
+      "name": "Carl Hanser Verlag",
+      "street": "Vilshofener Straße 10",
+      "zip": "81679",
+      "town": "München",
+      "country": "Deutschland",
+      "type": "book"
+    },
+    {
+      "id": "kiwi",
+      "name": "Kiepenheuer & Witsch",
+      "street": "Bahnhofsvorplatz 1",
+      "zip": "50667",
+      "town": "Köln",
+      "country": "Deutschland",
+      "type": "book"
+    },
+    {
+      "id": "klett_cotta",
+      "name": "Klett-Cotta Verlag",
+      "street": "Rotebühlstraße 77",
+      "zip": "70178",
+      "town": "Stuttgart",
+      "country": "Deutschland",
+      "type": "book"
+    },
+    {
+      "id": "loewe",
+      "name": "Loewe Verlag",
+      "street": "Bürgermeister-Kutterer-Straße 10",
+      "zip": "90768",
+      "town": "Fürth",
+      "country": "Deutschland",
+      "type": "book"
+    },
+    {
+      "id": "paramount_pictures",
+      "name": "Paramount Pictures",
+      "street": "5555 Melrose Ave",
+      "zip": "90038",
+      "town": "Los Angeles",
+      "country": "USA",
+      "type": "film"
+    },
+    {
+      "id": "penguin_random_house",
+      "name": "Penguin Random House",
+      "street": "1745 Broadway",
+      "zip": "10019",
+      "town": "New York",
+      "country": "USA",
+      "type": "book"
+    },
+    {
+      "id": "rowohlt",
+      "name": "Rowohlt Verlag",
+      "street": "Hamburger Str. 17",
+      "zip": "21465",
+      "town": "Reinbek",
+      "country": "Deutschland",
+      "type": "book"
+    },
+    {
+      "id": "springer",
+      "name": "Springer Verlag",
+      "street": "Heidelberger Platz 3",
+      "zip": "14197",
+      "town": "Berlin",
+      "country": "Deutschland",
+      "type": "book"
+    },
+    {
+      "id": "suhrkamp",
+      "name": "Suhrkamp Verlag",
+      "street": "Pappelallee 78/79",
+      "zip": "10437",
+      "town": "Berlin",
+      "country": "Deutschland",
+      "type": "book"
+    },
+    {
+      "id": "ubisoft",
+      "name": "Ubisoft",
+      "street": "28 Rue Armand Carrel",
+      "zip": "93100",
+      "town": "Montreuil",
+      "country": "Frankreich",
+      "type": "game"
+    },
+    {
+      "id": "ullstein",
+      "name": "Ullstein Buchverlage",
+      "street": "Friedrichstraße 126",
+      "zip": "10117",
+      "town": "Berlin",
+      "country": "Deutschland",
+      "type": "book"
+    },
+    {
+      "id": "universum_film",
+      "name": "Universum Film",
+      "street": "Neumarkter Str. 18",
+      "zip": "81673",
+      "town": "München",
+      "country": "Deutschland",
+      "type": "film"
+    },
+    {
+      "id": "verlagsgruppe_random_house",
+      "name": "Verlagsgruppe Random House",
+      "street": "Neumarkter Straße 28",
+      "zip": "81673",
+      "town": "München",
+      "country": "Deutschland",
+      "type": "book"
+    },
+    {
+      "id": "warner_bros",
+      "name": "Warner Bros.",
+      "street": "4000 Warner Blvd",
+      "zip": "91522",
+      "town": "Burbank",
+      "country": "USA",
+      "type": "film"
+    },
+        {
+      "id": "hachette",
+      "name": "Hachette Livre",
+      "street": "43 Quai de Grenelle",
+      "zip": "75015",
+      "town": "Paris",
+      "country": "Frankreich",
+      "type": "book"
+    },
+    {
+      "id": "planeta",
+      "name": "Grupo Planeta",
+      "street": "Avenida Diagonal 662-664",
+      "zip": "08034",
+      "town": "Barcelona",
+      "country": "Spanien",
+      "type": "book"
+    },
+    {
+      "id": "mondadori",
+      "name": "Arnoldo Mondadori Editore",
+      "street": "Via Bianca di Savoia 12",
+      "zip": "20122",
+      "town": "Mailand",
+      "country": "Italien",
+      "type": "book"
+    },
+    {
+      "id": "harpercollins_uk",
+      "name": "HarperCollins UK",
+      "street": "1 London Bridge Street",
+      "zip": "SE1 9GF",
+      "town": "London",
+      "country": "Vereinigtes Königreich",
+      "type": "book"
+    },
+    {
+      "id": "bloomsbury",
+      "name": "Bloomsbury Publishing",
+      "street": "50 Bedford Square",
+      "zip": "WC1B 3DP",
+      "town": "London",
+      "country": "Vereinigtes Königreich",
+      "type": "book"
+    },
+    {
+      "id": "bonnier",
+      "name": "Bonnier Books",
+      "street": "Sveavägen 56",
+      "zip": "113 59",
+      "town": "Stockholm",
+      "country": "Schweden",
+      "type": "book"
+    },
+    {
+      "id": "sanoma",
+      "name": "Sanoma",
+      "street": "Töölönlahdenkatu 2",
+      "zip": "00100",
+      "town": "Helsinki",
+      "country": "Finnland",
+      "type": "book"
+    },
+    {
+      "id": "astra",
+      "name": "Astra Publishing House",
+      "street": "ul. Dobra 56/66",
+      "zip": "00-312",
+      "town": "Warschau",
+      "country": "Polen",
+      "type": "book"
+    },
+    {
+      "id": "lemniscaat",
+      "name": "Uitgeverij Lemniscaat",
+      "street": "Westersingel 34",
+      "zip": "3014 GS",
+      "town": "Rotterdam",
+      "country": "Niederlande",
+      "type": "book"
+    },
+    {
+      "id": "de_agostini",
+      "name": "De Agostini Editore",
+      "street": "Via Giovanni da Verrazano 15",
+      "zip": "28100",
+      "town": "Novara",
+      "country": "Italien",
+      "type": "book"
+    },
+    {
+      "id": "media_partners",
+      "name": "Media Partners",
+      "street": "Avenue Louise 523",
+      "zip": "1050",
+      "town": "Brüssel",
+      "country": "Belgien",
+      "type": "book"
+    },
+    {
+      "id": "albin_michel",
+      "name": "Éditions Albin Michel",
+      "street": "22 Rue Huyghens",
+      "zip": "75014",
+      "town": "Paris",
+      "country": "Frankreich",
+      "type": "book"
+    },
+    {
+      "id": "flammarion",
+      "name": "Éditions Flammarion",
+      "street": "87 Quai Panhard et Levassor",
+      "zip": "75013",
+      "town": "Paris",
+      "country": "Frankreich",
+      "type": "book"
+    },
+    {
+      "id": "gallimard",
+      "name": "Éditions Gallimard",
+      "street": "5 Rue Sébastien-Bottin",
+      "zip": "75327",
+      "town": "Paris",
+      "country": "Frankreich",
+      "type": "book"
+    },
+    {
+      "id": "salamandra",
+      "name": "Editorial Salamandra",
+      "street": "Carrer de la Diputació 262",
+      "zip": "08007",
+      "town": "Barcelona",
+      "country": "Spanien",
+      "type": "book"
+    },
+    {
+      "id": "alma_littera",
+      "name": "Alma littera",
+      "street": "Ukmergės g. 126",
+      "zip": "08100",
+      "town": "Vilnius",
+      "country": "Litauen",
+      "type": "book"
+    }
+  ]
+}

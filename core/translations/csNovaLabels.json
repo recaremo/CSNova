@@ -1,0 +1,10 @@
+{
+    "de": {
+        "label_title": "Titel",
+        "label_subtitle": "Untertitel",
+        "label_author": "Autor",
+        "label_genre": "Genre",
+        "label_language": "Sprache",
+        "label_description": "Beschreibung"
+    }
+}

@@ -1,0 +1,58 @@
+{
+"de": { 
+  "key_children": "Kinder",
+  "key_youth": "Jugendliche",
+  "key_adult": "Erwachsene",
+  "key_senior": "Senioren",
+  "key_family": "Familie",
+  "key_educational": "Bildung",
+  "key_professional": "Fachpublikum",
+  "key_general": "Allgemeines Publikum",
+  "key_fans": "Fans/Spezialinteressierte",
+  "key_casual": "Gelegenheitsspieler",
+  "key_hardcore": "Vielspieler",
+  "key_learners": "Lernende"
+  },
+"en": { 
+  "key_children": "Children",
+  "key_youth": "Youth",
+  "key_adult": "Adults",
+  "key_senior": "Seniors",
+  "key_family": "Family",
+  "key_educational": "Educational",
+  "key_professional": "Professional Audience",
+  "key_general": "General Audience",
+  "key_fans": "Fans/Special Interest",
+  "key_casual": "Casual Gamers",
+  "key_hardcore": "Hardcore Gamers",
+  "key_learners": "Learners"
+  },
+"es": { 
+  "key_children": "Niños",
+  "key_youth": "Jóvenes",
+  "key_adult": "Adultos",
+  "key_senior": "Personas Mayores",
+  "key_family": "Familia",
+  "key_educational": "Educativo",
+  "key_professional": "Público Profesional",
+  "key_general": "Público General",
+  "key_fans": "Aficionados/Interés Especial",
+  "key_casual": "Jugadores Ocasionales",
+  "key_hardcore": "Jugadores Empedernidos",
+  "key_learners": "Aprendices"
+  },
+"fr": { 
+  "key_children": "Enfants",
+  "key_youth": "Jeunes",
+  "key_adult": "Adultes",
+  "key_senior": "Seniors",
+  "key_family": "Famille",
+  "key_educational": "Éducatif",
+  "key_professional": "Public Professionnel",
+  "key_general": "Public Général",
+  "key_fans": "Fans/Intérêt Spécial",
+  "key_casual": "Joueurs Occasionnels",
+  "key_hardcore": "Joueurs Assidus",
+  "key_learners": "Apprenants"
+  }    
+}

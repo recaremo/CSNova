@@ -140,14 +140,14 @@ li.checked::marker { content: &quot;\2612&quot;; }
           </sizepolicy>
          </property>
          <property name="currentIndex">
-          <number>0</number>
+          <number>1</number>
          </property>
          <widget class="QWidget" name="page_1">
           <property name="geometry">
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>859</width>
+            <width>1076</width>
             <height>704</height>
            </rect>
           </property>
@@ -385,7 +385,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>845</width>
+            <width>1062</width>
             <height>707</height>
            </rect>
           </property>
@@ -2205,7 +2205,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>859</width>
+            <width>1076</width>
             <height>704</height>
            </rect>
           </property>
@@ -2218,7 +2218,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>859</width>
+            <width>1076</width>
             <height>704</height>
            </rect>
           </property>
@@ -2232,7 +2232,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>859</width>
+            <width>1076</width>
             <height>704</height>
            </rect>
           </property>
@@ -2246,7 +2246,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>859</width>
+            <width>1076</width>
             <height>704</height>
            </rect>
           </property>
@@ -2260,7 +2260,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>859</width>
+            <width>1076</width>
             <height>704</height>
            </rect>
           </property>
@@ -2274,7 +2274,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>859</width>
+            <width>1076</width>
             <height>704</height>
            </rect>
           </property>
@@ -2288,7 +2288,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>859</width>
+            <width>1076</width>
             <height>704</height>
            </rect>
           </property>
@@ -2302,7 +2302,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>859</width>
+            <width>1076</width>
             <height>704</height>
            </rect>
           </property>

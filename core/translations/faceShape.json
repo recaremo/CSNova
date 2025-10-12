@@ -1,0 +1,54 @@
+{
+"de": {
+  "key_round": "rund",
+  "key_oval": "oval",
+  "key_square": "quadratisch",
+  "key_heart": "herzförmig",
+  "key_diamond": "diamantförmig",
+  "key_triangle": "dreieckig",
+  "key_rectangular": "rechteckig",
+  "key_long": "lang",
+  "key_pearl": "perlenförmig",
+  "key_oblong": "länglich",
+  "key_teardrop": "tropfenförmig"
+},
+"en": {
+  "key_round": "round",
+  "key_oval": "oval",
+  "key_square": "square",
+  "key_heart": "heart-shaped",
+  "key_diamond": "diamond-shaped",
+  "key_triangle": "triangular",
+  "key_rectangular": "rectangular",
+  "key_long": "long",
+  "key_pearl": "pearl-shaped",
+  "key_oblong": "oblong",
+  "key_teardrop": "teardrop-shaped"
+},
+"es": {
+  "key_round": "redondo",
+  "key_oval": "ovalado",
+  "key_square": "cuadrado",
+  "key_heart": "en forma de corazón",
+  "key_diamond": "en forma de diamante",
+  "key_triangle": "triangular",
+  "key_rectangular": "rectangular",
+  "key_long": "largo",
+  "key_pearl": "en forma de perla",
+  "key_oblong": "oblongo",
+  "key_teardrop": "en forma de lágrima"
+},
+"fr": {
+  "key_round": "rond",
+  "key_oval": "ovale",
+  "key_square": "carré",
+  "key_heart": "en forme de cœur",
+  "key_diamond": "en forme de losange",
+  "key_triangle": "triangulaire",
+  "key_rectangular": "rectangulaire",
+  "key_long": "long",
+  "key_pearl": "en forme de perle",
+  "key_oblong": "oblong",
+  "key_teardrop": "en forme de larme"
+}
+}

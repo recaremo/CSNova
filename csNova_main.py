@@ -1,9 +1,15 @@
 import sys
 import locale
-from PySide6.QtWidgets import QApplication, QLabel, QWidget, QVBoxLayout, QSizePolicy, QSplitter, QMainWindow
+from PySide6.QtWidgets import (
+    QApplication, QLabel, QWidget, 
+    QVBoxLayout, QSizePolicy, QSplitter, 
+    QMainWindow, QComboBox, QLineEdit, 
+    QSpinBox, QTextEdit, QDateEdit)
 from PySide6.QtGui import QFont, QIcon
 from PySide6 import QtUiTools, QtGui, QtCore
-
+from PySide6.QtCore import QDate
+import json
+from pathlib import Path
 from config.dev import ASSETS_DIR, GUI_DIR
 from config.settings import load_settings, save_settings
 from core.logger import log_info, log_error, setup_logging, log_header, log_exception
@@ -73,7 +79,7 @@ def connect_dynamic_events(self, splitter_name=None):
 # Welche Sprache verwendet das System?
 def get_system_language():
     lang_tuple = locale.getlocale()
-    lang = lang_tuple[0] if lang_tuple and lang_tuple[0] else "de"
+    lang = lang_tuple[0] if lang_tuple and lang_tuple[0] else "en"
     return lang.split('_')[0]
 
 # UI-Einstellungen laden und anwenden
@@ -230,6 +236,157 @@ def show_projects_window(parent=None):
     window = DynamicWindow("projects_ui", PROJECTS_UI_FILE, splitter_name="mainSplitter")
     window.show()
     log_info("Projektfenster erfolgreich geladen und angezeigt.")
+
+    # 1. Sprache ermitteln
+    settings = load_settings()
+    language = settings.get("language", "de")
+
+    # 2. Daten laden
+    with open(Path("data/projects/data_projects.json"), "r", encoding="utf-8") as f:
+        projects_data = json.load(f)
+    first_project = next(iter(projects_data.values()))
+
+    def fill_combobox(combo, values, selected_index_or_value):
+        combo.clear()
+        combo.addItems(values)
+        # Wenn selected_index_or_value ein int ist, setze direkt den Index
+        if isinstance(selected_index_or_value, int):
+            index = selected_index_or_value if 0 <= selected_index_or_value < len(values) else 0
+        else:
+            try:
+                index = values.index(selected_index_or_value)
+            except ValueError:
+                index = 0
+        combo.setCurrentIndex(index)
+
+    # 3. Zielgruppe
+    with open(Path("core/translations/targetGroups.json"), "r", encoding="utf-8") as f:
+        target_groups = json.load(f)[language]
+    combo_target_group = window.centralWidget().findChild(QComboBox, "comboBoxProjectTargetGroup")
+    fill_combobox(combo_target_group, list(target_groups.values()), first_project.get("project_target_group", 0))
+
+    # 4. Erzählperspektive
+    with open(Path("core/translations/narrativePerspective.json"), "r", encoding="utf-8") as f:
+        perspectives = json.load(f)[language]
+    combo_narrative = window.centralWidget().findChild(QComboBox, "comboBoxProjectNarrativePerspective")
+    fill_combobox(combo_narrative, list(perspectives.values()), first_project.get("project_narrative_perspective", 0))
+
+    # 5. Stil
+    with open(Path("core/translations/style.json"), "r", encoding="utf-8") as f:
+        styles = json.load(f)[language]
+    combo_style = window.centralWidget().findChild(QComboBox, "comboBoxProjectStyle")
+    fill_combobox(combo_style, list(styles.values()), first_project.get("project_style", 0))
+
+    # 6. Genre
+    with open(Path("core/translations/genre.json"), "r", encoding="utf-8") as f:
+        genres = json.load(f)[language]["book_genres"]
+    combo_genre = window.centralWidget().findChild(QComboBox, "comboBoxProjectGenre")
+    fill_combobox(combo_genre, list(genres.values()), first_project.get("project_genre", 0))
+
+    # 7. Arbeitstyp
+    with open(Path("core/translations/workingType.json"), "r", encoding="utf-8") as f:
+        working_types = json.load(f)[language]["book_working_types"]
+    combo_work_type = window.centralWidget().findChild(QComboBox, "comboBoxProjectWorkingType")
+    fill_combobox(combo_work_type, list(working_types.values()), first_project.get("project_work_type", 0))
+
+    # 8. Motiv
+    with open(Path("core/translations/motif.json"), "r", encoding="utf-8") as f:
+        motifs = json.load(f)[language]
+    combo_motif = window.centralWidget().findChild(QComboBox, "comboBoxProjectMotif")
+    fill_combobox(combo_motif, list(motifs.values()), first_project.get("project_motif", 0))
+
+    # 9. Status
+    with open(Path("core/translations/status.json"), "r", encoding="utf-8") as f:
+        status = json.load(f)[language]
+    combo_status = window.centralWidget().findChild(QComboBox, "comboBoxProjectStatus")
+    fill_combobox(combo_status, list(status.values()), first_project.get("project_status", 0))
+
+    # 10. Verlag
+    with open(Path("core/translations/publisher.json"), "r", encoding="utf-8") as f:
+        publishers = json.load(f)["publishers"]
+    publisher_names = [pub["name"] for pub in publishers if pub["type"] == "book"]
+    combo_publisher = window.centralWidget().findChild(QComboBox, "comboBoxPublisher")
+    fill_combobox(combo_publisher, publisher_names, first_project.get("project_publisher", 0))
+
+    # Beispiel: Weitere Felder setzen
+    window.centralWidget().findChild(QLineEdit, "lineEditProjectTitle").setText(first_project.get("project_title", ""))
+    window.centralWidget().findChild(QLineEdit, "lineEditProjectSubtitle").setText(first_project.get("project_subtitle", ""))
+    window.centralWidget().findChild(QLineEdit, "lineEditProjectAuthor").setText(first_project.get("project_author", ""))
+    window.centralWidget().findChild(QLineEdit, "lineEditProjectPremise").setText(first_project.get("project_premise", ""))
+    spin_box = window.centralWidget().findChild(QSpinBox, "spinBoxProjectWordsCount")
+    if spin_box:
+        spin_box.setValue(int(first_project.get("project_word_goal", 0)))
+    notes_edit = window.centralWidget().findChild(QTextEdit, "textEditProjectNotes")
+    if notes_edit:
+        notes_edit.setPlainText(first_project.get("project_notes", ""))
+    # Datum Beginn
+    begin_date_edit = window.centralWidget().findChild(QDateEdit, "dateEditProjectBegin")
+    if begin_date_edit:
+        begin_str = first_project.get("project_begin_date", "")
+        if begin_str:
+            # Format: "yyyy-MM-dd"
+            date = QDate.fromString(begin_str, "yyyy-MM-dd")
+            if date.isValid():
+                begin_date_edit.setDate(date)
+    # Datum Deadline
+    deadline_date_edit = window.centralWidget().findChild(QDateEdit, "dateEditProjectDeadLine")
+    if deadline_date_edit:
+        deadline_str = first_project.get("project_deadline", "")
+        if deadline_str:
+            date = QDate.fromString(deadline_str, "yyyy-MM-dd")
+            if date.isValid():
+                deadline_date_edit.setDate(date)
+
+    # Buttons einbinden
+    # --- Exit-Button einbinden ---
+    exit_btn = window.centralWidget().findChild(QWidget, "exitBtnProjects")
+    if exit_btn:
+        exit_btn.clicked.connect(window.close)
+    # --- Save-Button einbinden ---
+    save_btn = window.centralWidget().findChild(QWidget, "saveBtnProjects")
+    if save_btn:
+        def on_save_clicked():
+            # Lade aktuelle Projektdaten
+            with open(Path("data/projects/data_projects.json"), "r", encoding="utf-8") as f:
+                projects_data = json.load(f)
+            # Hole das erste Projekt (oder das aktuell ausgewählte)
+            project_key = next(iter(projects_data.keys()))
+            project = projects_data[project_key]
+
+            # Sammle alle Eingabewerte aus dem Fenster
+            project["project_title"] = window.centralWidget().findChild(QLineEdit, "lineEditProjectTitle").text()
+            project["project_subtitle"] = window.centralWidget().findChild(QLineEdit, "lineEditProjectSubtitle").text()
+            project["project_author"] = window.centralWidget().findChild(QLineEdit, "lineEditProjectAuthor").text()
+            project["project_premise"] = window.centralWidget().findChild(QLineEdit, "lineEditProjectPremise").text()
+            project["project_target_group"] = window.centralWidget().findChild(QComboBox, "comboBoxProjectTargetGroup").currentIndex()
+            project["project_narrative_perspective"] = window.centralWidget().findChild(QComboBox, "comboBoxProjectNarrativePerspective").currentIndex()
+            project["project_style"] = window.centralWidget().findChild(QComboBox, "comboBoxProjectStyle").currentIndex()
+            project["project_genre"] = window.centralWidget().findChild(QComboBox, "comboBoxProjectGenre").currentIndex()
+            project["project_work_type"] = window.centralWidget().findChild(QComboBox, "comboBoxProjectWorkingType").currentIndex()
+            project["project_motif"] = window.centralWidget().findChild(QComboBox, "comboBoxProjectMotif").currentIndex()
+            project["project_status"] = window.centralWidget().findChild(QComboBox, "comboBoxProjectStatus").currentIndex()
+            project["project_publisher"] = window.centralWidget().findChild(QComboBox, "comboBoxPublisher").currentIndex()
+            project["project_word_goal"] = window.centralWidget().findChild(QSpinBox, "spinBoxProjectWordsCount").value()
+            project["project_notes"] = window.centralWidget().findChild(QTextEdit, "textEditProjectNotes").toPlainText()
+            project["project_cover_image"] = window.centralWidget().findChild(QLineEdit, "lineEditProjectCoverImage").text()
+            project["project_data_file"] = window.centralWidget().findChild(QLineEdit, "lineEditProjectDataFile").text()
+            project["project_isbn"] = window.centralWidget().findChild(QLineEdit, "lineEditISBN").text()
+            project["project_issn"] = window.centralWidget().findChild(QLineEdit, "lineEditISSN").text()
+            # Datum ggf. als String speichern
+            begin_date = window.centralWidget().findChild(QDateEdit, "dateEditProjectBegin")
+            if begin_date:
+                project["project_begin_date"] = begin_date.date().toString("yyyy-MM-dd")
+            deadline_date = window.centralWidget().findChild(QDateEdit, "dateEditProjectDeadLine")
+            if deadline_date:
+                project["project_deadline"] = deadline_date.date().toString("yyyy-MM-dd")
+
+            # Speichere die Daten zurück
+            with open(Path("data/projects/data_projects.json"), "w", encoding="utf-8") as f:
+                json.dump(projects_data, f, ensure_ascii=False, indent=2)
+            log_info("Projekt erfolgreich gespeichert.")
+
+        save_btn.clicked.connect(on_save_clicked)    
+
     return window
 
 # Charakterfenster anzeigen

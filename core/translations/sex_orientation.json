@@ -1,0 +1,54 @@
+{
+    "de": {
+  "key_heterosexual": "heterosexuell",
+  "key_homosexual": "homosexuell",
+  "key_bisexual": "bisexuell",
+  "key_pansexual": "pansexuell",
+  "key_asexual": "asexuell",
+  "key_demisexual": "demisexuell",
+  "key_queer": "queer",
+  "key_polysexual": "polysexuell",
+  "key_graysexual": "grausexuell",
+  "key_questioning": "unsicher",
+  "key_other": "anderes"
+},
+    "en": {
+  "key_heterosexual": "heterosexual",
+  "key_homosexual": "homosexual",
+  "key_bisexual": "bisexual",
+  "key_pansexual": "pansexual",
+  "key_asexual": "asexual",
+  "key_demisexual": "demisexual",
+  "key_queer": "queer",
+  "key_polysexual": "polysexual",
+  "key_graysexual": "graysexual",
+  "key_questioning": "questioning",
+  "key_other": "other"
+},
+    "es": {
+  "key_heterosexual": "heterosexual",
+  "key_homosexual": "homosexual",
+  "key_bisexual": "bisexual",
+  "key_pansexual": "pansexual",
+  "key_asexual": "asexual",
+  "key_demisexual": "demisexual",
+  "key_queer": "queer",
+  "key_polysexual": "polysexual",
+  "key_graysexual": "grisexual",
+  "key_questioning": "inseguro",
+  "key_other": "otro"
+},
+    "fr": {
+  "key_heterosexual": "hétérosexuel",
+  "key_homosexual": "homosexuel",
+  "key_bisexual": "bisexuel",
+  "key_pansexual": "pansexuel",
+  "key_asexual": "asexuel",
+  "key_demisexual": "demisexuel",
+  "key_queer": "queer",
+  "key_polysexual": "polysexuel",
+  "key_graysexual": "grisexuel",
+  "key_questioning": "incertain",
+  "key_other": "autre"
+}
+}

@@ -1,0 +1,46 @@
+{
+"de":
+  {
+  "key_first_person": "Ich-Erzähler (1. Person)",
+  "key_second_person": "Du-Erzähler (2. Person)",
+  "key_third_person_limited": "Er/Sie-Erzähler (3. Person, begrenzt)",
+  "key_third_person_omniscient": "Er/Sie-Erzähler (3. Person, allwissend)",
+  "key_stream_of_consciousness": "Bewusstseinsstrom",
+  "key_objective": "Neutraler Erzähler (objektiv)",
+  "key_multiple": "Wechselnde Perspektiven",
+  "key_unreliable": "Unzuverlässiger Erzähler"
+  },
+"en":
+  {
+  "key_first_person": "First-Person Narrator (1st Person)",
+  "key_second_person": "Second-Person Narrator (2nd Person)",
+  "key_third_person_limited": "Third-Person Narrator (3rd Person, Limited)",
+  "key_third_person_omniscient": "Third-Person Narrator (3rd Person, Omniscient)",
+  "key_stream_of_consciousness": "Stream of Consciousness",
+  "key_objective": "Objective Narrator",
+  "key_multiple": "Multiple Perspectives",
+  "key_unreliable": "Unreliable Narrator"
+  },
+"es":
+  {
+  "key_first_person": "Narrador en Primera Persona (1ª Persona)",
+  "key_second_person": "Narrador en Segunda Persona (2ª Persona)",
+  "key_third_person_limited": "Narrador en Tercera Persona (3ª Persona, Limitado)",
+  "key_third_person_omniscient": "Narrador en Tercera Persona (3ª Persona, Omnisciente)",
+  "key_stream_of_consciousness": "Flujo de Conciencia",
+  "key_objective": "Narrador Objetivo",
+  "key_multiple": "Perspectivas Múltiples",
+  "key_unreliable": "Narrador Poco Fiable"
+  },
+"fr":
+  {
+  "key_first_person": "Narrateur à la Première Personne (1ère Personne)",
+  "key_second_person": "Narrateur à la Deuxième Personne (2ème Personne)",
+  "key_third_person_limited": "Narrateur à la Troisième Personne (3ème Personne, Limité)",
+  "key_third_person_omniscient": "Narrateur à la Troisième Personne (3ème Personne, Omniscient)",
+  "key_stream_of_consciousness": "Flux de Conscience",
+  "key_objective": "Narrateur Objectif",
+  "key_multiple": "Perspectives Multiples",
+  "key_unreliable": "Narrateur Peu Fiable"       
+  }
+}

@@ -1,0 +1,150 @@
+{
+"de": {
+  "book_working_types": {
+    "key_novel": "Roman",
+    "key_short_story": "Kurzgeschichte",
+    "key_poetry": "Poesie",
+    "key_nonfiction": "Sachbuch",
+    "key_biography": "Biografie",
+    "key_anthology": "Anthologie",
+    "key_essay": "Essay",
+    "key_children_book": "Kinderbuch",
+    "key_young_adult": "Jugendbuch",
+    "key_screenplay": "Drehbuch (Buchvorlage)"
+  },
+  "film_working_types": {
+    "key_feature_film": "Spielfilm",
+    "key_short_film": "Kurzfilm",
+    "key_documentary": "Dokumentarfilm",
+    "key_animation": "Animationsfilm",
+    "key_series": "Serie",
+    "key_episode": "Serienepisode",
+    "key_screenplay": "Drehbuch",
+    "key_storyboard": "Storyboard",
+    "key_trailer": "Trailer"
+  },
+  "game_working_types": {
+    "key_video_game": "Videospiel",
+    "key_board_game": "Brettspiel",
+    "key_card_game": "Kartenspiel",
+    "key_role_playing_game": "Rollenspiel",
+    "key_mobile_game": "Mobile Game",
+    "key_puzzle_game": "Puzzle-Spiel",
+    "key_game_concept": "Game-Konzept",
+    "key_game_script": "Game-Skript",
+    "key_level_design": "Level-Design",
+    "key_character_design": "Charakter-Design"
+  }
+},
+"en": {
+  "book_working_types": {
+    "key_novel": "Novel",
+    "key_short_story": "Short Story",
+    "key_poetry": "Poetry",
+    "key_nonfiction": "Non-Fiction",
+    "key_biography": "Biography",
+    "key_anthology": "Anthology",
+    "key_essay": "Essay",
+    "key_children_book": "Children's Book",
+    "key_young_adult": "Young Adult",
+    "key_screenplay": "Screenplay (Book Adaptation)"
+  },
+  "film_working_types": {
+    "key_feature_film": "Feature Film",
+    "key_short_film": "Short Film",
+    "key_documentary": "Documentary",
+    "key_animation": "Animated Film",
+    "key_series": "Series",
+    "key_episode": "Series Episode",
+    "key_screenplay": "Screenplay",
+    "key_storyboard": "Storyboard",
+    "key_trailer": "Trailer"
+  },
+  "game_working_types": {
+    "key_video_game": "Video Game",
+    "key_board_game": "Board Game",
+    "key_card_game": "Card Game",
+    "key_role_playing_game": "Role-Playing Game",
+    "key_mobile_game": "Mobile Game",
+    "key_puzzle_game": "Puzzle Game",
+    "key_game_concept": "Game Concept",
+    "key_game_script": "Game Script",
+    "key_level_design": "Level Design",
+    "key_character_design": "Character Design"
+  } 
+},
+"es": {
+  "book_working_types": {
+    "key_novel": "Novela",
+    "key_short_story": "Cuento",
+    "key_poetry": "Poesía",
+    "key_nonfiction": "No Ficción",
+    "key_biography": "Biografía",
+    "key_anthology": "Antología",
+    "key_essay": "Ensayo",
+    "key_children_book": "Libro Infantil",
+    "key_young_adult": "Juvenil",
+    "key_screenplay": "Guion (Adaptación de Libro)"
+  },
+  "film_working_types": {
+    "key_feature_film": "Largometraje",
+    "key_short_film": "Cortometraje",
+    "key_documentary": "Documental",
+    "key_animation": "Película Animada",
+    "key_series": "Serie",
+    "key_episode": "Episodio de Serie",
+    "key_screenplay": "Guion",
+    "key_storyboard": "Storyboard",
+    "key_trailer": "Tráiler"
+  },
+  "game_working_types": {
+    "key_video_game": "Videojuego",
+    "key_board_game": "Juego de Mesa",
+    "key_card_game": "Juego de Cartas",
+    "key_role_playing_game": "Juego de Rol",
+    "key_mobile_game": "Juego Móvil",
+    "key_puzzle_game": "Juego de Rompecabezas",
+    "key_game_concept": "Concepto de Juego",
+    "key_game_script": "Guion de Juego",
+    "key_level_design": "Diseño de Niveles",
+    "key_character_design": "Diseño de Personajes"
+  } 
+},
+"fr": {
+  "book_working_types": {
+    "key_novel": "Roman",
+    "key_short_story": "Nouvelle",
+    "key_poetry": "Poésie",
+    "key_nonfiction": "Non-Fiction",
+    "key_biography": "Biographie",
+    "key_anthology": "Anthologie",
+    "key_essay": "Essai",
+    "key_children_book": "Livre pour Enfants",
+    "key_young_adult": "Jeune Adulte",
+    "key_screenplay": "Scénario (Adaptation de Livre)"
+  },
+  "film_working_types": {
+    "key_feature_film": "Long Métrage",
+    "key_short_film": "Court Métrage",
+    "key_documentary": "Documentaire",
+    "key_animation": "Film d'Animation",
+    "key_series": "Série",
+    "key_episode": "Épisode de Série",
+    "key_screenplay": "Scénario",
+    "key_storyboard": "Storyboard",
+    "key_trailer": "Bande-Annonce"
+  },
+  "game_working_types": {
+    "key_video_game": "Jeu Vidéo",
+    "key_board_game": "Jeu de Société",
+    "key_card_game": "Jeu de Cartes",
+    "key_role_playing_game": "Jeu de Rôle",
+    "key_mobile_game": "Jeu Mobile",
+    "key_puzzle_game": "Jeu de Puzzle",
+    "key_game_concept": "Concept de Jeu",
+    "key_game_script": "Scénario de Jeu",
+    "key_level_design": "Conception de Niveaux",
+    "key_character_design": "Conception de Personnages"
+  } 
+}
+}   

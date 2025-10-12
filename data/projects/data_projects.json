@@ -1,0 +1,26 @@
+{
+  "project_ID_01": {
+    "project_ID": "1",
+    "project_title": "Dao",
+    "project_subtitle": "",
+    "project_author": "Frank Reiser",
+    "project_premise": "8 Forscher:innen, ein prähistorisches Artefakt und seine Bedeutung für die Quantenphysik",
+    "project_target_group": 7,
+    "project_narrative_perspective": 0,
+    "project_style": 12,
+    "project_genre": 3,
+    "project_work_type": 0,
+    "project_motif": 15,
+    "project_begin_date": "2025-10-12",
+    "project_deadline": "2026-09-30",
+    "project_status": 0,
+    "project_word_goal": 50000,
+    "project_cover_image": "",
+    "project_data_file": "",
+    "project_notes": "Welche Bedeutung hat das mysteriöse prähistorische Artefakt und können die 98 Forscher:innen seine Bedeutung für die aktuelle Quantenphysik entschlüsseln?",
+    "project_publisher": 0,
+    "project_editor": "",
+    "project_isbn": "",
+    "project_issn": ""
+  }
+}
