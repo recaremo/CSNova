@@ -175,7 +175,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
               </widget>
              </item>
              <item row="6" column="1">
-              <widget class="QLineEdit" name="lineEditName">
+              <widget class="QLineEdit" name="lineEditFirstName">
                <property name="font">
                 <font>
                  <family>Lato</family>
@@ -188,7 +188,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
               </widget>
              </item>
              <item row="5" column="1">
-              <widget class="QLineEdit" name="lineEditFirstName">
+              <widget class="QLineEdit" name="lineEditName">
                <property name="font">
                 <font>
                  <family>Lato</family>
@@ -231,7 +231,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
               </widget>
              </item>
              <item row="1" column="1">
-              <widget class="QComboBox" name="comboBox">
+              <widget class="QComboBox" name="comboBoxStatus">
                <property name="font">
                 <font>
                  <family>Lato</family>
@@ -354,6 +354,9 @@ li.checked::marker { content: &quot;\2612&quot;; }
                    </property>
                   </widget>
                  </item>
+                 <item row="1" column="0" colspan="2">
+                  <widget class="QLineEdit" name="lineEditNickName"/>
+                 </item>
                  <item row="2" column="0">
                   <widget class="QLabel" name="labelBorn">
                    <property name="font">
@@ -371,7 +374,11 @@ li.checked::marker { content: &quot;\2612&quot;; }
                   </widget>
                  </item>
                  <item row="3" column="0">
-                  <widget class="QLineEdit" name="lineEditBorn"/>
+                  <widget class="QLineEdit" name="lineEditBorn">
+                   <property name="text">
+                    <string/>
+                   </property>
+                  </widget>
                  </item>
                  <item row="4" column="0">
                   <widget class="QLabel" name="labelDied">
@@ -390,7 +397,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                   </widget>
                  </item>
                  <item row="5" column="0">
-                  <widget class="QLineEdit" name="lineEditBorn_2"/>
+                  <widget class="QLineEdit" name="lineEditDied"/>
                  </item>
                  <item row="6" column="0">
                   <widget class="QLabel" name="labelAge">
@@ -405,6 +412,34 @@ li.checked::marker { content: &quot;\2612&quot;; }
                    </property>
                    <property name="text">
                     <string>Alter:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="7" column="0" colspan="2">
+                  <widget class="QLabel" name="labelAgeValue">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Maximum" vsizetype="Expanding">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="font">
+                    <font>
+                     <family>Lato</family>
+                     <pointsize>12</pointsize>
+                     <bold>false</bold>
+                     <stylestrategy>PreferAntialias</stylestrategy>
+                     <kerning>true</kerning>
+                    </font>
+                   </property>
+                   <property name="frameShape">
+                    <enum>QFrame::Shape::StyledPanel</enum>
+                   </property>
+                   <property name="text">
+                    <string>0</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignmentFlag::AlignCenter</set>
                    </property>
                   </widget>
                  </item>
@@ -424,6 +459,9 @@ li.checked::marker { content: &quot;\2612&quot;; }
                    </property>
                   </widget>
                  </item>
+                 <item row="9" column="0" colspan="2">
+                  <widget class="QComboBox" name="comboBoxGender"/>
+                 </item>
                  <item row="10" column="0">
                   <widget class="QLabel" name="labelSexOrientation">
                    <property name="font">
@@ -439,6 +477,9 @@ li.checked::marker { content: &quot;\2612&quot;; }
                     <string>sex. Orientierung:</string>
                    </property>
                   </widget>
+                 </item>
+                 <item row="11" column="0" colspan="2">
+                  <widget class="QComboBox" name="comboBoxSexOrientation"/>
                  </item>
                  <item row="12" column="0">
                   <widget class="QLabel" name="labelRole">
@@ -456,6 +497,9 @@ li.checked::marker { content: &quot;\2612&quot;; }
                    </property>
                   </widget>
                  </item>
+                 <item row="13" column="0" colspan="2">
+                  <widget class="QComboBox" name="comboBoxRole"/>
+                 </item>
                  <item row="14" column="0">
                   <widget class="QLabel" name="labelGroup">
                    <property name="font">
@@ -471,6 +515,9 @@ li.checked::marker { content: &quot;\2612&quot;; }
                     <string>Gruppe:</string>
                    </property>
                   </widget>
+                 </item>
+                 <item row="15" column="0" colspan="2">
+                  <widget class="QComboBox" name="comboBoxGroup"/>
                  </item>
                  <item row="16" column="0">
                   <widget class="QLabel" name="labelCharakterDevelopment">
@@ -504,54 +551,11 @@ li.checked::marker { content: &quot;\2612&quot;; }
                    </property>
                   </widget>
                  </item>
-                 <item row="9" column="0" colspan="2">
-                  <widget class="QComboBox" name="comboBoxGender"/>
-                 </item>
-                 <item row="11" column="0" colspan="2">
-                  <widget class="QComboBox" name="comboBoxSexOrientation"/>
-                 </item>
-                 <item row="13" column="0" colspan="2">
-                  <widget class="QComboBox" name="comboBoxRole"/>
-                 </item>
-                 <item row="15" column="0" colspan="2">
-                  <widget class="QComboBox" name="comboBoxGroup"/>
+                 <item row="19" column="0" colspan="2">
+                  <widget class="QTextEdit" name="textEditCharacterNotes"/>
                  </item>
                  <item row="17" column="0" colspan="2">
-                  <widget class="QPlainTextEdit" name="plainTextCharakterDevelopment"/>
-                 </item>
-                 <item row="19" column="0" colspan="2">
-                  <widget class="QPlainTextEdit" name="plainTextCharacterNotes"/>
-                 </item>
-                 <item row="7" column="0" colspan="2">
-                  <widget class="QLabel" name="labelAgeValue">
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Maximum" vsizetype="Expanding">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                   <property name="font">
-                    <font>
-                     <family>Lato</family>
-                     <pointsize>12</pointsize>
-                     <bold>false</bold>
-                     <stylestrategy>PreferAntialias</stylestrategy>
-                     <kerning>true</kerning>
-                    </font>
-                   </property>
-                   <property name="frameShape">
-                    <enum>QFrame::Shape::StyledPanel</enum>
-                   </property>
-                   <property name="text">
-                    <string>0</string>
-                   </property>
-                   <property name="alignment">
-                    <set>Qt::AlignmentFlag::AlignCenter</set>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="1" column="0" colspan="2">
-                  <widget class="QLineEdit" name="lineEditNickName"/>
+                  <widget class="QTextEdit" name="textEditDevelopmentNotes"/>
                  </item>
                 </layout>
                </widget>
@@ -1211,6 +1215,9 @@ li.checked::marker { content: &quot;\2612&quot;; }
              </property>
             </widget>
            </item>
+           <item row="0" column="1">
+            <widget class="QTextEdit" name="textEditSchool"/>
+           </item>
            <item row="1" column="0">
             <widget class="QLabel" name="labelUniversity">
              <property name="font">
@@ -1245,9 +1252,6 @@ li.checked::marker { content: &quot;\2612&quot;; }
               <string>Berufsausbildung:</string>
              </property>
             </widget>
-           </item>
-           <item row="2" column="1">
-            <widget class="QTextEdit" name="textEditVocationalTraining"/>
            </item>
            <item row="3" column="0">
             <widget class="QLabel" name="labelProfession">
@@ -1363,8 +1367,8 @@ li.checked::marker { content: &quot;\2612&quot;; }
            <item row="8" column="1">
             <widget class="QTextEdit" name="textEditEducationNotes"/>
            </item>
-           <item row="0" column="1">
-            <widget class="QTextEdit" name="textEditSchool"/>
+           <item row="2" column="1">
+            <widget class="QTextEdit" name="textEditVocationalTraining"/>
            </item>
           </layout>
          </widget>
@@ -1750,7 +1754,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
            <item row="1" column="1">
             <widget class="QSpinBox" name="spinBoxSize">
              <property name="sizePolicy">
-              <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
+              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
@@ -1766,7 +1770,27 @@ li.checked::marker { content: &quot;\2612&quot;; }
              </property>
             </widget>
            </item>
-           <item row="4" column="0">
+           <item row="4" column="1">
+            <widget class="QComboBox" name="comboBoxStature">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="1">
+            <widget class="QComboBox" name="comboBoxBodyType">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="0">
             <widget class="QLabel" name="labelBodyType">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -1788,17 +1812,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
              </property>
             </widget>
            </item>
-           <item row="4" column="1">
-            <widget class="QComboBox" name="comboBoxBodyType">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-            </widget>
-           </item>
-           <item row="6" column="0">
+           <item row="4" column="0">
             <widget class="QLabel" name="labelStature">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -1820,17 +1834,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
              </property>
             </widget>
            </item>
-           <item row="6" column="1">
-            <widget class="QComboBox" name="comboBoxStature">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-            </widget>
-           </item>
-           <item row="8" column="0">
+           <item row="5" column="0">
             <widget class="QLabel" name="labelFaceShape">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -1852,17 +1856,17 @@ li.checked::marker { content: &quot;\2612&quot;; }
              </property>
             </widget>
            </item>
-           <item row="8" column="1">
+           <item row="5" column="1">
             <widget class="QComboBox" name="comboBoxFaceShape">
              <property name="sizePolicy">
-              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
              </property>
             </widget>
            </item>
-           <item row="10" column="0">
+           <item row="6" column="0">
             <widget class="QLabel" name="labelEyeShape">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -1884,241 +1888,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
              </property>
             </widget>
            </item>
-           <item row="10" column="1">
-            <widget class="QComboBox" name="comboBoxEyeShape">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-            </widget>
-           </item>
-           <item row="12" column="0">
-            <widget class="QLabel" name="labelEyeColor">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="font">
-              <font>
-               <family>Lato</family>
-               <pointsize>12</pointsize>
-               <bold>true</bold>
-               <stylestrategy>PreferAntialias</stylestrategy>
-               <kerning>true</kerning>
-              </font>
-             </property>
-             <property name="text">
-              <string>Augenfarbe:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="12" column="1">
-            <widget class="QLineEdit" name="lineEditEyeColor">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-            </widget>
-           </item>
-           <item row="14" column="0">
-            <widget class="QLabel" name="labelHair">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="font">
-              <font>
-               <family>Lato</family>
-               <pointsize>12</pointsize>
-               <bold>true</bold>
-               <stylestrategy>PreferAntialias</stylestrategy>
-               <kerning>true</kerning>
-              </font>
-             </property>
-             <property name="text">
-              <string>Haare:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="14" column="1">
-            <widget class="QLineEdit" name="lineEditHair">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-            </widget>
-           </item>
-           <item row="16" column="0">
-            <widget class="QLabel" name="labelHairColor">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="font">
-              <font>
-               <family>Lato</family>
-               <pointsize>12</pointsize>
-               <bold>true</bold>
-               <stylestrategy>PreferAntialias</stylestrategy>
-               <kerning>true</kerning>
-              </font>
-             </property>
-             <property name="text">
-              <string>Haarfarbe:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="16" column="1">
-            <widget class="QLineEdit" name="lineEditHairColor">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-            </widget>
-           </item>
-           <item row="18" column="0">
-            <widget class="QLabel" name="labelSkin">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="font">
-              <font>
-               <family>Lato</family>
-               <pointsize>12</pointsize>
-               <bold>true</bold>
-               <stylestrategy>PreferAntialias</stylestrategy>
-               <kerning>true</kerning>
-              </font>
-             </property>
-             <property name="text">
-              <string>Haut:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="18" column="1">
-            <widget class="QLineEdit" name="lineEditSkin">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-            </widget>
-           </item>
-           <item row="20" column="0">
-            <widget class="QLabel" name="labelSkinColor">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="font">
-              <font>
-               <family>Lato</family>
-               <pointsize>12</pointsize>
-               <bold>true</bold>
-               <stylestrategy>PreferAntialias</stylestrategy>
-               <kerning>true</kerning>
-              </font>
-             </property>
-             <property name="text">
-              <string>Hautfarbe:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="20" column="1">
-            <widget class="QLineEdit" name="lineEditSkinColor">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-            </widget>
-           </item>
-           <item row="22" column="0">
-            <widget class="QLabel" name="labelCharisma">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="font">
-              <font>
-               <family>Lato</family>
-               <pointsize>12</pointsize>
-               <bold>true</bold>
-               <stylestrategy>PreferAntialias</stylestrategy>
-               <kerning>true</kerning>
-              </font>
-             </property>
-             <property name="text">
-              <string>Ausstrahlung:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="22" column="1">
-            <widget class="QLineEdit" name="lineEditCharisma">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-            </widget>
-           </item>
-           <item row="24" column="0">
-            <widget class="QLabel" name="labelSpecialFeatures">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="font">
-              <font>
-               <family>Lato</family>
-               <pointsize>12</pointsize>
-               <bold>true</bold>
-               <stylestrategy>PreferAntialias</stylestrategy>
-               <kerning>true</kerning>
-              </font>
-             </property>
-             <property name="text">
-              <string>Besonderheiten:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="24" column="1">
-            <widget class="QLineEdit" name="lineEditSpecialFeatures">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-            </widget>
-           </item>
-           <item row="26" column="0">
+           <item row="15" column="0">
             <widget class="QLabel" name="labelLookNotes">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -2140,15 +1910,262 @@ li.checked::marker { content: &quot;\2612&quot;; }
              </property>
             </widget>
            </item>
-           <item row="26" column="1">
-            <widget class="QTextEdit" name="textEditLookNotes">
+           <item row="6" column="1">
+            <widget class="QComboBox" name="comboBoxEyeShape">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+            </widget>
+           </item>
+           <item row="7" column="0">
+            <widget class="QLabel" name="labelEyeColor">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
              </property>
+             <property name="font">
+              <font>
+               <family>Lato</family>
+               <pointsize>12</pointsize>
+               <bold>true</bold>
+               <stylestrategy>PreferAntialias</stylestrategy>
+               <kerning>true</kerning>
+              </font>
+             </property>
+             <property name="text">
+              <string>Augenfarbe:</string>
+             </property>
             </widget>
+           </item>
+           <item row="8" column="0">
+            <widget class="QLabel" name="labelHair">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="font">
+              <font>
+               <family>Lato</family>
+               <pointsize>12</pointsize>
+               <bold>true</bold>
+               <stylestrategy>PreferAntialias</stylestrategy>
+               <kerning>true</kerning>
+              </font>
+             </property>
+             <property name="text">
+              <string>Haare:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="7" column="1">
+            <widget class="QLineEdit" name="lineEditEyeColor">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+            </widget>
+           </item>
+           <item row="8" column="1">
+            <widget class="QLineEdit" name="lineEditHair">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+            </widget>
+           </item>
+           <item row="9" column="0">
+            <widget class="QLabel" name="labelHairColor">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="font">
+              <font>
+               <family>Lato</family>
+               <pointsize>12</pointsize>
+               <bold>true</bold>
+               <stylestrategy>PreferAntialias</stylestrategy>
+               <kerning>true</kerning>
+              </font>
+             </property>
+             <property name="text">
+              <string>Haarfarbe:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="10" column="0">
+            <widget class="QLabel" name="labelSkin">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="font">
+              <font>
+               <family>Lato</family>
+               <pointsize>12</pointsize>
+               <bold>true</bold>
+               <stylestrategy>PreferAntialias</stylestrategy>
+               <kerning>true</kerning>
+              </font>
+             </property>
+             <property name="text">
+              <string>Haut:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="11" column="0">
+            <widget class="QLabel" name="labelSkinColor">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="font">
+              <font>
+               <family>Lato</family>
+               <pointsize>12</pointsize>
+               <bold>true</bold>
+               <stylestrategy>PreferAntialias</stylestrategy>
+               <kerning>true</kerning>
+              </font>
+             </property>
+             <property name="text">
+              <string>Hautfarbe:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="12" column="0">
+            <widget class="QLabel" name="labelCharisma">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="font">
+              <font>
+               <family>Lato</family>
+               <pointsize>12</pointsize>
+               <bold>true</bold>
+               <stylestrategy>PreferAntialias</stylestrategy>
+               <kerning>true</kerning>
+              </font>
+             </property>
+             <property name="text">
+              <string>Ausstrahlung:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="13" column="0">
+            <widget class="QLabel" name="labelSpecialFeatures">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="font">
+              <font>
+               <family>Lato</family>
+               <pointsize>12</pointsize>
+               <bold>true</bold>
+               <stylestrategy>PreferAntialias</stylestrategy>
+               <kerning>true</kerning>
+              </font>
+             </property>
+             <property name="text">
+              <string>Besonderheiten:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="9" column="1">
+            <widget class="QLineEdit" name="lineEditHairColor">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+            </widget>
+           </item>
+           <item row="10" column="1">
+            <widget class="QLineEdit" name="lineEditSkin">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+            </widget>
+           </item>
+           <item row="11" column="1">
+            <widget class="QLineEdit" name="lineEditSkinColor">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+            </widget>
+           </item>
+           <item row="12" column="1">
+            <widget class="QLineEdit" name="lineEditCharisma">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+            </widget>
+           </item>
+           <item row="13" column="1">
+            <widget class="QLineEdit" name="lineEditSpecialFeatures">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+            </widget>
+           </item>
+           <item row="16" column="0" colspan="2">
+            <widget class="QTextEdit" name="textEditLookNotes">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+            </widget>
+           </item>
+           <item row="24" column="1">
+            <spacer name="verticalSpacer">
+             <property name="orientation">
+              <enum>Qt::Orientation::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>240</height>
+              </size>
+             </property>
+            </spacer>
            </item>
           </layout>
          </widget>
@@ -2212,7 +2229,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
             </widget>
            </item>
            <item row="2" column="1">
-            <widget class="QLineEdit" name="lineShoulders"/>
+            <widget class="QLineEdit" name="lineEditShoulders"/>
            </item>
            <item row="3" column="0">
             <widget class="QLabel" name="labelUpperArm">
@@ -2250,7 +2267,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
             </widget>
            </item>
            <item row="4" column="1">
-            <widget class="QLineEdit" name="lineEditEllbow"/>
+            <widget class="QLineEdit" name="lineEditElbow"/>
            </item>
            <item row="5" column="0">
             <widget class="QLabel" name="labelLowerArm">
@@ -2659,25 +2676,6 @@ li.checked::marker { content: &quot;\2612&quot;; }
             <widget class="QLineEdit" name="lineEditEthicalValues"/>
            </item>
            <item row="6" column="0">
-            <widget class="QLabel" name="labelBeliefs">
-             <property name="font">
-              <font>
-               <family>Lato</family>
-               <pointsize>12</pointsize>
-               <bold>true</bold>
-               <stylestrategy>PreferAntialias</stylestrategy>
-               <kerning>true</kerning>
-              </font>
-             </property>
-             <property name="text">
-              <string>Glaubensgrundsatz:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="6" column="1">
-            <widget class="QLineEdit" name="lineEditBeliefs"/>
-           </item>
-           <item row="7" column="0">
             <widget class="QLabel" name="labelMoralValues">
              <property name="font">
               <font>
@@ -2693,10 +2691,10 @@ li.checked::marker { content: &quot;\2612&quot;; }
              </property>
             </widget>
            </item>
-           <item row="7" column="1">
+           <item row="6" column="1">
             <widget class="QLineEdit" name="lineEditMoralValues"/>
            </item>
-           <item row="8" column="0">
+           <item row="7" column="0">
             <widget class="QLabel" name="labelStengthOfCharacter">
              <property name="font">
               <font>
@@ -2712,10 +2710,10 @@ li.checked::marker { content: &quot;\2612&quot;; }
              </property>
             </widget>
            </item>
-           <item row="8" column="1">
+           <item row="7" column="1">
             <widget class="QLineEdit" name="lineEditStrengthsOfCharacter"/>
            </item>
-           <item row="9" column="0">
+           <item row="8" column="0">
             <widget class="QLabel" name="labelWeaknessOfCharacter">
              <property name="font">
               <font>
@@ -2731,10 +2729,10 @@ li.checked::marker { content: &quot;\2612&quot;; }
              </property>
             </widget>
            </item>
-           <item row="9" column="1">
+           <item row="8" column="1">
             <widget class="QLineEdit" name="lineEditWeaknessOfCharacter"/>
            </item>
-           <item row="10" column="0">
+           <item row="9" column="0">
             <widget class="QLabel" name="labelSelfImage">
              <property name="font">
               <font>
@@ -2750,10 +2748,10 @@ li.checked::marker { content: &quot;\2612&quot;; }
              </property>
             </widget>
            </item>
-           <item row="10" column="1">
+           <item row="9" column="1">
             <widget class="QLineEdit" name="lineEditSelfImage"/>
            </item>
-           <item row="11" column="0">
+           <item row="10" column="0">
             <widget class="QLabel" name="labelHumor">
              <property name="font">
               <font>
@@ -2769,10 +2767,10 @@ li.checked::marker { content: &quot;\2612&quot;; }
              </property>
             </widget>
            </item>
-           <item row="11" column="1">
+           <item row="10" column="1">
             <widget class="QLineEdit" name="lineEditHumor"/>
            </item>
-           <item row="12" column="0">
+           <item row="11" column="0">
             <widget class="QLabel" name="labelAggressiveness">
              <property name="font">
               <font>
@@ -2788,10 +2786,10 @@ li.checked::marker { content: &quot;\2612&quot;; }
              </property>
             </widget>
            </item>
-           <item row="12" column="1">
+           <item row="11" column="1">
             <widget class="QLineEdit" name="lineEditAggressivness"/>
            </item>
-           <item row="13" column="0">
+           <item row="12" column="0">
             <widget class="QLabel" name="labelTrauma">
              <property name="font">
               <font>
@@ -2807,10 +2805,10 @@ li.checked::marker { content: &quot;\2612&quot;; }
              </property>
             </widget>
            </item>
-           <item row="13" column="1">
+           <item row="12" column="1">
             <widget class="QLineEdit" name="lineEditTrauma"/>
            </item>
-           <item row="14" column="0">
+           <item row="13" column="0">
             <widget class="QLabel" name="labelImpression">
              <property name="font">
               <font>
@@ -2826,10 +2824,10 @@ li.checked::marker { content: &quot;\2612&quot;; }
              </property>
             </widget>
            </item>
-           <item row="14" column="1">
+           <item row="13" column="1">
             <widget class="QLineEdit" name="lineEditImpression"/>
            </item>
-           <item row="15" column="0">
+           <item row="14" column="0">
             <widget class="QLabel" name="labelSocialization">
              <property name="font">
               <font>
@@ -2845,10 +2843,10 @@ li.checked::marker { content: &quot;\2612&quot;; }
              </property>
             </widget>
            </item>
-           <item row="15" column="1">
+           <item row="14" column="1">
             <widget class="QLineEdit" name="lineEditSocialization"/>
            </item>
-           <item row="16" column="0">
+           <item row="15" column="0">
             <widget class="QLabel" name="labelNorms">
              <property name="font">
               <font>
@@ -2864,10 +2862,10 @@ li.checked::marker { content: &quot;\2612&quot;; }
              </property>
             </widget>
            </item>
-           <item row="16" column="1">
+           <item row="15" column="1">
             <widget class="QLineEdit" name="lineEditNorms"/>
            </item>
-           <item row="17" column="0">
+           <item row="16" column="0">
             <widget class="QLabel" name="labelTabus">
              <property name="font">
               <font>
@@ -2883,10 +2881,10 @@ li.checked::marker { content: &quot;\2612&quot;; }
              </property>
             </widget>
            </item>
-           <item row="17" column="1">
-            <widget class="QLineEdit" name="lineEditTabus"/>
+           <item row="16" column="1">
+            <widget class="QLineEdit" name="lineEditTaboos"/>
            </item>
-           <item row="18" column="0">
+           <item row="17" column="0">
             <widget class="QLabel" name="labelPsychologyNotes">
              <property name="font">
               <font>
@@ -2902,7 +2900,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
              </property>
             </widget>
            </item>
-           <item row="18" column="1">
+           <item row="17" column="1">
             <widget class="QTextEdit" name="textEditPsychologyNotes"/>
            </item>
           </layout>
@@ -3180,7 +3178,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
         </spacer>
        </item>
        <item>
-        <widget class="QPushButton" name="exitBntCharacter">
+        <widget class="QPushButton" name="exitBtnCharacter">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
            <horstretch>0</horstretch>

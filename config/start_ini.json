@@ -2,7 +2,7 @@
   "first_start": false,
   "last_project": "",
   "language": "de",
-  "theme": "Modern_neutral",
+  "theme": "Modern - Neutral",
   "help_ui": {
     "win_maximized": false,
     "win_width": 1920,
@@ -28,8 +28,8 @@
     "win_width": 1920,
     "win_height": 1080,
     "win_splitter": [
-      589,
-      774,
+      528,
+      835,
       467
     ]
   },

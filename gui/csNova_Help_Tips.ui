@@ -142,8 +142,8 @@
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>1115</width>
-               <height>405</height>
+               <width>236</width>
+               <height>134</height>
               </rect>
              </property>
              <attribute name="label">
@@ -188,7 +188,7 @@
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>1115</width>
+               <width>1016</width>
                <height>405</height>
               </rect>
              </property>
@@ -395,7 +395,7 @@
            </spacer>
           </item>
           <item>
-           <widget class="QPushButton" name="exitBntHelpReturn">
+           <widget class="QPushButton" name="exitBtnHelp">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
               <horstretch>0</horstretch>
