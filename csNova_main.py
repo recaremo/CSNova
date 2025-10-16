@@ -153,6 +153,13 @@ def show_secure_dialog(parent=None, action="exit", project_key=None, on_confirm=
             yes_btn.clicked.connect(lambda: (on_confirm(), secure_window.close()))
         if no_btn:
             no_btn.clicked.connect(secure_window.close)
+    elif action == "delete_character":
+        if infoText and project_key:
+            infoText.setText(f"Möchten Sie den Charakter '{project_key}' wirklich löschen?")
+        if yes_btn and on_confirm:
+            yes_btn.clicked.connect(lambda: (on_confirm(), secure_window.close()))
+        if no_btn:
+            no_btn.clicked.connect(secure_window.close)
 
     secure_window.show()
     log_info("Sicherheitsdialog erfolgreich geladen und angezeigt.")
@@ -614,6 +621,7 @@ def show_projects_window(parent=None):
                     # Optional: Nächstes Projekt anzeigen oder Felder leeren
             show_secure_dialog(window, action="delete_project", project_key=project_title, on_confirm=delete_project)
         delete_btn.clicked.connect(on_delete_clicked)   
+    
     # --- Save-Button einbinden ---
     save_btn = window.centralWidget().findChild(QWidget, "saveBtnProjects")
     if save_btn:
@@ -938,10 +946,10 @@ def show_characters_window(parent=None):
     window.centralWidget().findChild(QSpinBox, "spinBoxSize").setValue(int(current_character.get("character_height", 175)))
     window.centralWidget().findChild(QCheckBox, "checkBoxMainCharacter").setChecked(current_character.get("character_mainCharacter", False))
     # Notizfelder
-    notes_edit = window.centralWidget().findChild(QTextEdit, "plainTextCharacterNotes")
+    notes_edit = window.centralWidget().findChild(QTextEdit, "textEditCharacterNotes")
     if notes_edit:
         notes_edit.setPlainText(current_character.get("character_notes", ""))
-    development_edit = window.centralWidget().findChild(QTextEdit, "plainTextCharacterDevelopment")
+    development_edit = window.centralWidget().findChild(QTextEdit, "textEditDevelopmentNotes")
     if development_edit:
         development_edit.setPlainText(current_character.get("character_development", ""))
     siblings_edit = window.centralWidget().findChild(QTextEdit, "textEditSiblings")
@@ -1098,7 +1106,153 @@ def show_characters_window(parent=None):
                 json.dump(character_data, f, ensure_ascii=False, indent=2)
             log_info(f"Charakter {character_key} erfolgreich gespeichert.")
 
-        save_btn.clicked.connect(on_save_clicked)   
+        save_btn.clicked.connect(on_save_clicked)
+
+    # --- Daten löschen Button einbinden ---
+    delete_btn = window.centralWidget().findChild(QWidget, "deleteBtnCharacter")
+    if delete_btn:
+        def on_delete_clicked():
+            with open(Path("data/characters/data_characters.json"), "r", encoding="utf-8") as f:
+                character_data = json.load(f)
+            character_key = window.current_character_key
+            character_name = character_data[character_key].get("character_name", character_key)
+            def delete_character():
+                if character_key in character_data:
+                    del character_data[character_key]
+                    with open(Path("data/characters/data_characters.json"), "w", encoding="utf-8") as f:
+                        json.dump(character_data, f, ensure_ascii=False, indent=2)
+                    log_info(f"Charakter {character_name} gelöscht.")
+                    # Optional: Nächsten Charakter anzeigen oder Felder leeren
+            show_secure_dialog(window, action="delete_character", project_key=character_name, on_confirm=delete_character)
+        delete_btn.clicked.connect(on_delete_clicked)
+
+    # --- Neuen Charakter Button einbinden ---
+    new_btn = window.centralWidget().findChild(QWidget, "newBtnCharacter")
+    if new_btn:
+        def on_new_clicked():
+            with open(Path("data/characters/data_characters.json"), "r", encoding="utf-8") as f:
+                character_data = json.load(f)
+            # Neuen Key erzeugen
+            new_id = f"character_ID_{len(character_data) + 1:02d}"
+            # Leeren Datensatz anlegen
+            character_data[new_id] = {
+                "character_ID": str(len(character_data) + 1),
+                "character_name": "",
+                "character_firstname": "",
+                "character_nickname": "",
+                "character_birthdate": "",
+                "character_died": "",
+                "character_gender": 0,
+                "character_sexOrientation": 0,
+                "character_status": 0,
+                "character_role": 0,
+                "character_group": 0,
+                "character_mother": "",
+                "character_father": "",
+                "character_referencePerson": "",
+                "character_siblings": "",
+                "character_placeOfBirth": "",
+                "character_country": "",
+                "character_ethnicity": "",
+                "character_ancestryNotes ": "",
+                "character_school": "",
+                "character_university": "",
+                "character_vocationalTraining": "",
+                "character_profession": "",
+                "character_artMusic": "",
+                "character_sports": "",
+                "character_technology": "",
+                "character_autodidact": "",
+                "character_educationNotes": "",
+                "character_positiveCharacteristics": "",
+                "character_negativeCharacteristics": "",
+                "character_fears": "",
+                "character_weaknesses": "",
+                "character_strengths": "",
+                "character_talents": "",
+                "character_beliefs": "",
+                "character_lifeGoals": "",
+                "character_motivation": "",
+                "character_behavior": "",
+                "character_personalityNotes": "",
+                "character_height": 175,
+                "character_bodyType": 0,
+                "character_stature": 0,
+                "character_faceshape": 0,
+                "character_eyeshape": 0,
+                "character_eyesColor": "",
+                "character_hair": "",
+                "character_hairColor": "",
+                "character_skinType": "",
+                "character_skinColor": "",
+                "character_charisma": "",
+                "charactert_specialFeatures": "",
+                "character_lookNotes": "",
+                "character_head": "",
+                "character_neck": "",
+                "character_breast": "",
+                "character_back": "",
+                "character_shoulder": "",
+                "character_upperarm": "",
+                "character_elbow": "",
+                "character_lowerarm": "",
+                "character_wrist": "",
+                "character_hand": "",
+                "character_finger": "",
+                "character_hips": "",
+                "character_buttocks": "",
+                "character_upperleg": "",
+                "character_knee": "",
+                "character_lowerleg": "",
+                "character_ankle": "",
+                "character_foot": "",
+                "character_toe": "",
+                "character_bodyNotes": "",
+                "character_diagnoses": "",
+                "character_symptoms": "",
+                "character_therapies": "",
+                "character_medications": "",
+                "character_temperament": "",
+                "character_ethicValues": "",
+                "character_moralValues": "",
+                "character_strengthsOfCharacter": "",
+                "character_weaknessesOfCharacter": "",
+                "character_selfimage": "",
+                "character_humor": "",
+                "character_aggressiveness": "",
+                "character_traumas": "",
+                "character_Impressions": "",
+                "character_socialization": "",
+                "character_norms": "",
+                "character_taboos": "",
+                "character_psycheNotes": "",
+                "character_mainCharacter": False,
+                "character_notes": "",
+                "character_development": ""
+            }
+            # Speichern
+            with open(Path("data/characters/data_characters.json"), "w", encoding="utf-8") as f:
+                json.dump(character_data, f, ensure_ascii=False, indent=2)
+            log_info(f"Neuer Charakter {new_id} erstellt.")
+            window.current_character_key = new_id
+            # Felder leeren
+            line_edits = window.centralWidget().findChildren(QLineEdit)
+            text_edits = window.centralWidget().findChildren(QTextEdit)
+            for widget in line_edits + text_edits:
+                widget.clear()
+            for combo in window.centralWidget().findChildren(QComboBox):
+                combo.setCurrentIndex(0)
+            for spin in window.centralWidget().findChildren(QSpinBox):
+                spin.setValue(175 if spin.objectName() == "spinBoxSize" else 0)
+            for check in window.centralWidget().findChildren(QCheckBox):
+                check.setChecked(False)
+        new_btn.clicked.connect(on_new_clicked)
+
+
+    # --- nächster Charakter Button einbinden ---
+
+    # --- vorheriger Charakter Button einbinden ---
+
 
     # --- Exit-Button einbinden ---
     exit_btn = window.centralWidget().findChild(QWidget, "exitBtnCharacter")

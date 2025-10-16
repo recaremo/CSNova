@@ -46,5 +46,29 @@
     "project_editor": "",
     "project_isbn": "",
     "project_issn": ""
+  },
+  "project_ID_03": {
+    "project_ID": "3",
+    "project_title": "Test Projekt",
+    "project_subtitle": "",
+    "project_author": "",
+    "project_premise": "",
+    "project_target_group": 0,
+    "project_narrative_perspective": 0,
+    "project_style": 0,
+    "project_genre": 0,
+    "project_work_type": 0,
+    "project_motif": 0,
+    "project_begin_date": "2025-10-14",
+    "project_deadline": "2025-10-14",
+    "project_status": 0,
+    "project_word_goal": 1000,
+    "project_cover_image": "",
+    "project_data_file": "",
+    "project_notes": "",
+    "project_publisher": 0,
+    "project_editor": "",
+    "project_isbn": "",
+    "project_issn": ""
   }
 }

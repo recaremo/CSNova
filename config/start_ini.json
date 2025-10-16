@@ -25,12 +25,12 @@
   },
   "main_ui": {
     "win_maximized": false,
-    "win_width": 1920,
-    "win_height": 1080,
+    "win_width": 1536,
+    "win_height": 851,
     "win_splitter": [
-      528,
-      835,
-      467
+      410,
+      833,
+      203
     ]
   },
   "editor_ui": {
