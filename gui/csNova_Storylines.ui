@@ -159,82 +159,10 @@ li.checked::marker { content: &quot;\2612&quot;; }
                </property>
               </widget>
              </item>
-             <item row="2" column="1">
-              <widget class="QLineEdit" name="dateCreatedStorylines">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Maximum" vsizetype="Expanding">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="font">
-                <font>
-                 <family>Lato</family>
-                 <pointsize>12</pointsize>
-                 <bold>false</bold>
-                 <stylestrategy>PreferAntialias</stylestrategy>
-                 <kerning>true</kerning>
-                </font>
-               </property>
-               <property name="inputMask">
-                <string>__.__.____</string>
-               </property>
-               <property name="text">
-                <string>__.__.____</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignmentFlag::AlignCenter</set>
-               </property>
-              </widget>
-             </item>
-             <item row="3" column="1">
-              <widget class="QToolButton" name="setDateStorylinesToday_1">
-               <property name="cursor">
-                <cursorShape>PointingHandCursor</cursorShape>
-               </property>
-               <property name="toolTip">
-                <string>Verwende das aktuelle Datum</string>
-               </property>
-               <property name="text">
-                <string/>
-               </property>
-               <property name="icon">
-                <iconset theme="x-office-calendar"/>
-               </property>
-              </widget>
-             </item>
              <item row="4" column="0">
               <widget class="QLabel" name="labelLastEditStorylines">
                <property name="text">
                 <string>bearbeitet am:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="4" column="1">
-              <widget class="QLineEdit" name="dateEditedStorylines">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Maximum" vsizetype="Expanding">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="font">
-                <font>
-                 <family>Lato</family>
-                 <pointsize>12</pointsize>
-                 <bold>false</bold>
-                 <stylestrategy>PreferAntialias</stylestrategy>
-                 <kerning>true</kerning>
-                </font>
-               </property>
-               <property name="inputMask">
-                <string>__.__.____</string>
-               </property>
-               <property name="text">
-                <string>__.__.____</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignmentFlag::AlignCenter</set>
                </property>
               </widget>
              </item>
@@ -264,7 +192,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
              <item row="6" column="1">
               <widget class="QComboBox" name="comboBoxStorylinesStatus">
                <property name="sizePolicy">
-                <sizepolicy hsizetype="Maximum" vsizetype="Expanding">
+                <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
                  <horstretch>0</horstretch>
                  <verstretch>0</verstretch>
                 </sizepolicy>
@@ -322,6 +250,86 @@ li.checked::marker { content: &quot;\2612&quot;; }
                  <stylestrategy>PreferAntialias</stylestrategy>
                  <kerning>true</kerning>
                 </font>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="1">
+              <widget class="QToolButton" name="setDateStorylinesToday_1">
+               <property name="cursor">
+                <cursorShape>PointingHandCursor</cursorShape>
+               </property>
+               <property name="toolTip">
+                <string>Verwende das aktuelle Datum</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset theme="x-office-calendar"/>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="1">
+              <widget class="QDateEdit" name="dateEditCreatedStorylines">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="font">
+                <font>
+                 <family>Lato</family>
+                 <pointsize>12</pointsize>
+                 <bold>false</bold>
+                 <stylestrategy>PreferAntialias</stylestrategy>
+                 <kerning>true</kerning>
+                </font>
+               </property>
+               <property name="displayFormat">
+                <string>dd.MM.yyyy</string>
+               </property>
+               <property name="calendarPopup">
+                <bool>true</bool>
+               </property>
+               <property name="date">
+                <date>
+                 <year>2026</year>
+                 <month>1</month>
+                 <day>1</day>
+                </date>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="1">
+              <widget class="QDateEdit" name="dateEditEditedStorylines">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="font">
+                <font>
+                 <family>Lato</family>
+                 <pointsize>12</pointsize>
+                 <bold>false</bold>
+                 <stylestrategy>PreferAntialias</stylestrategy>
+                 <kerning>true</kerning>
+                </font>
+               </property>
+               <property name="displayFormat">
+                <string>dd.MM.yyyy</string>
+               </property>
+               <property name="calendarPopup">
+                <bool>true</bool>
+               </property>
+               <property name="date">
+                <date>
+                 <year>2026</year>
+                 <month>1</month>
+                 <day>1</day>
+                </date>
                </property>
               </widget>
              </item>
@@ -568,7 +576,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="saveBtn">
+        <widget class="QPushButton" name="saveBtnStorylines">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
            <horstretch>0</horstretch>

@@ -1,0 +1,20 @@
+{
+  "storylines_ID_01": {
+    "storyline_ID": "1",
+    "storyline_title": "",
+    "storyline_status": 0,
+    "storyline_created": "2026-01-02",
+    "storyline_modified": "2026-01-22",
+    "storyline_notes": "",
+    "storyline_titel": "Storyline 1"
+  },
+  "storyline_ID_02": {
+    "storyline_ID": "2",
+    "storyline_title": "",
+    "storyline_status": 0,
+    "storyline_created": "2026-01-02",
+    "storyline_modified": "2026-01-22",
+    "storyline_notes": "",
+    "storyline_titel": "Storyline 2"
+  }
+}

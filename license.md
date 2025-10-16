@@ -15,6 +15,7 @@ Dieses Projekt verwendet folgende externe Bibliotheken:
 - **Requests** (Apache License 2.0)
 - **asyncio** (Python Standard Library, PSF License)
 - **PyInstaller** (GPL)
+- **libxcb-cursor** (MIT)
 
 Die jeweiligen Lizenztexte finden Sie in den offiziellen Repositories der Bibliotheken.  
 Es wurden keine Änderungen an den Originalquellen vorgenommen.
@@ -131,7 +132,7 @@ The use of the names “CSNova,” “Codices Scriptoria Nova,” “CSNova Novi
 The author assumes **no liability** for damages resulting from modified versions or their contents — especially for content that has been altered without the author's consent or published under any of the aforementioned names.
 
 ## CSNova Reader
-
+CSNova ist eine umfassende Softwarelösung für Romanautor:innen, Drehbuchautor:innen, Game Writer:innen, Storyboarder:innen und alle, die komplexe erzählerische Projekte planen, gestalten und veröffentlichen möchten.
 The CSNova Reader is **open source** and available **free of charge**. Its use is subject to the restrictions listed below.\
 *Usage requires registration.*
 

@@ -5,4 +5,4 @@ pyinstaller --noconfirm --onefile --windowed \
   --add-data "data:data" \
   --add-data "docs:docs" \
   --add-data "gui:gui" \
-  csNova.py
+  csNova_main.py

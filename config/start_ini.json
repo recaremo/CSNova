@@ -25,7 +25,7 @@
   },
   "main_ui": {
     "win_maximized": false,
-    "win_width": 1536,
+    "win_width": 1510,
     "win_height": 851,
     "win_splitter": [
       410,
@@ -58,9 +58,9 @@
     "win_width": 1920,
     "win_height": 1080,
     "win_splitter": [
-      600,
-      766,
-      482
+      594,
+      784,
+      452
     ]
   },
   "objects_ui": {

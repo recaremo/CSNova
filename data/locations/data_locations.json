@@ -1,0 +1,20 @@
+{
+  "locations_ID_01": {
+    "location_ID": "1",
+    "location_title": "",
+    "location_status": 0,
+    "location_created": "2026-01-13",
+    "location_modified": "2026-01-23",
+    "location_notes": "",
+    "location_titel": "Location 1"
+  },
+  "location_ID_02": {
+    "location_ID": "2",
+    "location_title": "",
+    "location_status": 0,
+    "location_created": "2026-01-13",
+    "location_modified": "2026-01-23",
+    "location_notes": "",
+    "location_titel": "Location 3"
+  }
+}
