@@ -605,22 +605,50 @@ def show_projects_window(parent=None):
         exit_btn.clicked.connect(window.close)
     
     # --- Delete-Button einbinden ---
+    def on_delete_clicked():
+        with open(Path("data/projects/data_projects.json"), "r", encoding="utf-8") as f:
+            projects_data = json.load(f)
+        project_key = window.current_project_key
+        project_title = projects_data[project_key].get("project_title", project_key)
+        def delete_project():
+            if project_key in projects_data:
+                del projects_data[project_key]
+                with open(Path("data/projects/data_projects.json"), "w", encoding="utf-8") as f:
+                    json.dump(projects_data, f, ensure_ascii=False, indent=2)
+                log_info(f"Projekt {project_title} gelöscht.")
+                # Nach dem Löschen: neuen Key setzen und Felder aktualisieren
+                keys = list(projects_data.keys())
+                if keys:
+                    # Wähle den nächsten Projekt-Key (oder den ersten, falls Index zu groß)
+                    idx = 0
+                    if project_key in keys:
+                        idx = keys.index(project_key)
+                    elif window.current_project_key and window.current_project_key in keys:
+                        idx = keys.index(window.current_project_key)
+                    if idx >= len(keys):
+                        idx = len(keys) - 1
+                    window.current_project_key = keys[idx]
+                    update_project_fields(projects_data[window.current_project_key])
+                else:
+                    # Keine Projekte mehr: Felder leeren
+                    line_edits = window.centralWidget().findChildren(QLineEdit)
+                    text_edits = window.centralWidget().findChildren(QTextEdit)
+                    for widget in line_edits + text_edits:
+                        widget.clear()
+                    for combo in window.centralWidget().findChildren(QComboBox):
+                        combo.setCurrentIndex(0)
+                    for spin in window.centralWidget().findChildren(QSpinBox):
+                        spin.setValue(0)
+                    for date_edit in window.centralWidget().findChildren(QDateEdit):
+                        date_edit.setDate(QDate.currentDate())
+                    for check in window.centralWidget().findChildren(QCheckBox):
+                        check.setChecked(False)
+                    window.current_project_key = None
+        show_secure_dialog(window, action="delete_project", project_key=project_title, on_confirm=delete_project)
     delete_btn = window.centralWidget().findChild(QWidget, "deleteBtnProjects")
     if delete_btn:
-        def on_delete_clicked():
-            with open(Path("data/projects/data_projects.json"), "r", encoding="utf-8") as f:
-                projects_data = json.load(f)
-            project_key = window.current_project_key
-            project_title = projects_data[project_key].get("project_title", project_key)
-            def delete_project():
-                if project_key in projects_data:
-                    del projects_data[project_key]
-                    with open(Path("data/projects/data_projects.json"), "w", encoding="utf-8") as f:
-                        json.dump(projects_data, f, ensure_ascii=False, indent=2)
-                    log_info(f"Projekt {project_title} gelöscht.")
-                    # Optional: Nächstes Projekt anzeigen oder Felder leeren
-            show_secure_dialog(window, action="delete_project", project_key=project_title, on_confirm=delete_project)
-        delete_btn.clicked.connect(on_delete_clicked)   
+        delete_btn.clicked.connect(on_delete_clicked),
+    
     
     # --- Save-Button einbinden ---
     save_btn = window.centralWidget().findChild(QWidget, "saveBtnProjects")
@@ -1109,21 +1137,47 @@ def show_characters_window(parent=None):
         save_btn.clicked.connect(on_save_clicked)
 
     # --- Daten löschen Button einbinden ---
+    def on_delete_clicked():
+        with open(Path("data/characters/data_characters.json"), "r", encoding="utf-8") as f:
+            character_data = json.load(f)
+        character_key = window.current_character_key
+        character_name = character_data[character_key].get("character_name", character_key)
+        def delete_character():
+            if character_key in character_data:
+                del character_data[character_key]
+                with open(Path("data/characters/data_characters.json"), "w", encoding="utf-8") as f:
+                    json.dump(character_data, f, ensure_ascii=False, indent=2)
+                log_info(f"Charakter {character_name} gelöscht.")
+                # Nach dem Löschen: neuen Key setzen und Felder aktualisieren
+                keys = list(character_data.keys())
+                if keys:
+                    # Wähle den nächsten Charakter (oder den ersten, falls Index zu groß)
+                    idx = 0
+                    if character_key in keys:
+                        idx = keys.index(character_key)
+                    elif window.current_character_key and window.current_character_key in keys:
+                        idx = keys.index(window.current_character_key)
+                    # Falls Index zu groß, nimm den letzten
+                    if idx >= len(keys):
+                        idx = len(keys) - 1
+                    window.current_character_key = keys[idx]
+                    update_character_fields(character_data[window.current_character_key])
+                else:
+                    # Keine Charaktere mehr: Felder leeren
+                    line_edits = window.centralWidget().findChildren(QLineEdit)
+                    text_edits = window.centralWidget().findChildren(QTextEdit)
+                    for widget in line_edits + text_edits:
+                        widget.clear()
+                    for combo in window.centralWidget().findChildren(QComboBox):
+                        combo.setCurrentIndex(0)
+                    for spin in window.centralWidget().findChildren(QSpinBox):
+                        spin.setValue(175 if spin.objectName() == "spinBoxSize" else 0)
+                    for check in window.centralWidget().findChildren(QCheckBox):
+                        check.setChecked(False)
+                    window.current_character_key = None
+        show_secure_dialog(window, action="delete_character", project_key=character_name, on_confirm=delete_character)
     delete_btn = window.centralWidget().findChild(QWidget, "deleteBtnCharacter")
     if delete_btn:
-        def on_delete_clicked():
-            with open(Path("data/characters/data_characters.json"), "r", encoding="utf-8") as f:
-                character_data = json.load(f)
-            character_key = window.current_character_key
-            character_name = character_data[character_key].get("character_name", character_key)
-            def delete_character():
-                if character_key in character_data:
-                    del character_data[character_key]
-                    with open(Path("data/characters/data_characters.json"), "w", encoding="utf-8") as f:
-                        json.dump(character_data, f, ensure_ascii=False, indent=2)
-                    log_info(f"Charakter {character_name} gelöscht.")
-                    # Optional: Nächsten Charakter anzeigen oder Felder leeren
-            show_secure_dialog(window, action="delete_character", project_key=character_name, on_confirm=delete_character)
         delete_btn.clicked.connect(on_delete_clicked)
 
     # --- Neuen Charakter Button einbinden ---
@@ -1248,12 +1302,163 @@ def show_characters_window(parent=None):
                 check.setChecked(False)
         new_btn.clicked.connect(on_new_clicked)
 
-
+    # Update Charakterfelder Funktion
+    def update_character_fields(character):
+        #window.current_character_key = character.get("character_ID", "")
+        window.centralWidget().findChild(QLineEdit, "lineEditName").setText(character.get("character_name", ""))
+        window.centralWidget().findChild(QLineEdit, "lineEditFirstName").setText(character.get("character_firstname", ""))
+        window.centralWidget().findChild(QLineEdit, "lineEditNickName").setText(character.get("character_nickname", ""))
+        window.centralWidget().findChild(QLineEdit, "lineEditBorn").setText(character.get("character_birthdate", ""))
+        window.centralWidget().findChild(QLineEdit, "lineEditDied").setText(character.get("character_died", ""))
+        window.centralWidget().findChild(QComboBox, "comboBoxGender").setCurrentIndex(character.get("character_gender", 0))
+        window.centralWidget().findChild(QComboBox, "comboBoxSexOrientation").setCurrentIndex(character.get("character_sexOrientation", 0))
+        window.centralWidget().findChild(QComboBox, "comboBoxStatus").setCurrentIndex(character.get("character_status", 0))
+        window.centralWidget().findChild(QComboBox, "comboBoxRole").setCurrentIndex(character.get("character_role", 0))
+        window.centralWidget().findChild(QComboBox, "comboBoxGroup").setCurrentIndex(character.get("character_group", 0))
+        window.centralWidget().findChild(QLineEdit, "lineEditMother").setText(character.get("character_mother", ""))
+        window.centralWidget().findChild(QLineEdit, "lineEditFather").setText(character.get("character_father", ""))
+        window.centralWidget().findChild(QLineEdit, "lineEditReferencePerson").setText(character.get("character_referencePerson", ""))
+        window.centralWidget().findChild(QTextEdit, "textEditSiblings").setPlainText(character.get("character_siblings", ""))
+        window.centralWidget().findChild(QLineEdit, "lineEditPlaceOfBirth").setText(character.get("character_placeOfBirth", ""))
+        window.centralWidget().findChild(QLineEdit, "lineEditCountry").setText(character.get("character_country", ""))
+        window.centralWidget().findChild(QLineEdit, "lineEditEthnicity").setText(character.get("character_ethnicity", ""))
+        window.centralWidget().findChild(QTextEdit, "textEditAncestryNotes").setPlainText(character.get("character_ancestryNotes ", ""))
+        window.centralWidget().findChild(QTextEdit, "textEditSchool").setPlainText(character.get("character_school", ""))
+        window.centralWidget().findChild(QTextEdit, "textEditUniversity").setPlainText(character.get("character_university", ""))
+        window.centralWidget().findChild(QTextEdit, "textEditVocationalTraining").setPlainText(character.get("character_vocationalTraining", ""))
+        window.centralWidget().findChild(QTextEdit, "textEditProfession").setPlainText(character.get("character_profession", ""))
+        window.centralWidget().findChild(QTextEdit, "textEditArtMusic").setPlainText(character.get("character_artMusic", ""))
+        window.centralWidget().findChild(QTextEdit, "textEditSport").setPlainText(character.get("character_sports", ""))
+        window.centralWidget().findChild(QTextEdit, "textEditTechnic").setPlainText(character.get("character_technology", ""))
+        window.centralWidget().findChild(QTextEdit, "textEditAutodidact").setPlainText(character.get("character_autodidact", ""))
+        window.centralWidget().findChild(QTextEdit, "textEditEducationNotes").setPlainText(character.get("character_educationNotes", ""))
+        window.centralWidget().findChild(QLineEdit, "lineEditPosCharacteristics").setText(character.get("character_positiveCharacteristics", ""))
+        window.centralWidget().findChild(QLineEdit, "lineEditNegCharacteristics").setText(character.get("character_negativeCharacteristics", ""))
+        window.centralWidget().findChild(QLineEdit, "lineEditFears").setText(character.get("character_fears", ""))
+        window.centralWidget().findChild(QLineEdit, "lineEditWeakness").setText(character.get("character_weaknesses", ""))
+        window.centralWidget().findChild(QLineEdit, "lineEditStrength").setText(character.get("character_strengths", ""))
+        window.centralWidget().findChild(QLineEdit, "lineEditTalents").setText(character.get("character_talents", ""))
+        window.centralWidget().findChild(QLineEdit, "lineEditBelief").setText(character.get("character_beliefs", ""))
+        window.centralWidget().findChild(QLineEdit, "lineEditLifeGoal").setText(character.get("character_lifeGoals", ""))
+        window.centralWidget().findChild(QLineEdit, "lineEditMotivation").setText(character.get("character_motivation", ""))
+        window.centralWidget().findChild(QLineEdit, "lineEditBehavior").setText(character.get("character_behavior", ""))
+        window.centralWidget().findChild(QTextEdit, "textEditPersonalityNotes").setPlainText(character.get("character_personalityNotes", ""))
+        window.centralWidget().findChild(QSpinBox, "spinBoxSize").setValue(int(character.get("character_height", 175)))
+        window.centralWidget().findChild(QComboBox, "comboBoxBodyType").setCurrentIndex(character.get("character_bodyType", 0))
+        window.centralWidget().findChild(QComboBox, "comboBoxStature").setCurrentIndex(character.get("character_stature", 0))
+        window.centralWidget().findChild(QComboBox, "comboBoxFaceShape").setCurrentIndex(character.get("character_faceshape", 0))
+        window.centralWidget().findChild(QComboBox, "comboBoxEyeShape").setCurrentIndex(character.get("character_eyeshape", 0))
+        window.centralWidget().findChild(QLineEdit, "lineEditEyeColor").setText(character.get("character_eyesColor", ""))
+        window.centralWidget().findChild(QLineEdit, "lineEditHair").setText(character.get("character_hair", ""))
+        window.centralWidget().findChild(QLineEdit, "lineEditHairColor").setText(character.get("character_hairColor", ""))
+        window.centralWidget().findChild(QLineEdit, "lineEditSkin").setText(character.get("character_skinType", ""))
+        window.centralWidget().findChild(QLineEdit, "lineEditSkinColor").setText(character.get("character_skinColor", ""))
+        window.centralWidget().findChild(QLineEdit, "lineEditCharisma").setText(character.get("character_charisma", ""))
+        window.centralWidget().findChild(QLineEdit, "lineEditSpecialFeatures").setText(character.get("charactert_specialFeatures", ""))
+        window.centralWidget().findChild(QTextEdit, "textEditLookNotes").setPlainText(character.get("character_lookNotes", ""))
+        window.centralWidget().findChild(QLineEdit, "lineEditHead").setText(character.get("character_head", ""))
+        window.centralWidget().findChild(QLineEdit, "lineEditNeck").setText(character.get("character_neck", ""))
+        window.centralWidget().findChild(QLineEdit, "lineEditBreast").setText(character.get("character_breast", ""))
+        window.centralWidget().findChild(QLineEdit, "lineEditBack").setText(character.get("character_back", ""))
+        window.centralWidget().findChild(QLineEdit, "lineEditShoulders").setText(character.get("character_shoulder", ""))
+        window.centralWidget().findChild(QLineEdit, "lineEditUpperArm").setText(character.get("character_upperarm", ""))
+        window.centralWidget().findChild(QLineEdit, "lineEditElbow").setText(character.get("character_elbow", ""))
+        window.centralWidget().findChild(QLineEdit, "lineEditLowerArms").setText(character.get("character_lowerarm", ""))
+        window.centralWidget().findChild(QLineEdit, "lineEditWrists").setText(character.get("character_wrist", ""))
+        window.centralWidget().findChild(QLineEdit, "lineEditHand").setText(character.get("character_hand", ""))
+        window.centralWidget().findChild(QLineEdit, "lineEditFinger").setText(character.get("character_finger", ""))
+        window.centralWidget().findChild(QLineEdit, "lineEditHips").setText(character.get("character_hips", ""))
+        window.centralWidget().findChild(QLineEdit, "lineEditButtocks").setText(character.get("character_buttocks", ""))
+        window.centralWidget().findChild(QLineEdit, "lineEditUpperLeg").setText(character.get("character_upperleg", ""))
+        window.centralWidget().findChild(QLineEdit, "lineEditKnee").setText(character.get("character_knee", ""))
+        window.centralWidget().findChild(QLineEdit, "lineEditLowerLeg").setText(character.get("character_lowerleg", ""))
+        window.centralWidget().findChild(QLineEdit, "lineEditAnkles").setText(character.get("character_ankle", ""))
+        window.centralWidget().findChild(QLineEdit, "lineEditFeet").setText(character.get("character_foot", ""))
+        window.centralWidget().findChild(QLineEdit, "lineEditToes").setText(character.get("character_toe", ""))
+        window.centralWidget().findChild(QTextEdit, "textEditLookDetailsNotes").setPlainText(character.get("character_bodyNotes", ""))
+        window.centralWidget().findChild(QLineEdit, "lineEditDiagnosis").setText(character.get("character_diagnoses", ""))
+        window.centralWidget().findChild(QLineEdit, "lineEditSymptoms").setText(character.get("character_symptoms", ""))
+        window.centralWidget().findChild(QLineEdit, "lineEditTherapy").setText(character.get("character_therapies", ""))
+        window.centralWidget().findChild(QLineEdit, "lineEditMedication").setText(character.get("character_medications", ""))
+        window.centralWidget().findChild(QLineEdit, "lineEditTemperament").setText(character.get("character_temperament", ""))
+        window.centralWidget().findChild(QLineEdit, "lineEditEthicalValues").setText(character.get("character_ethicValues", ""))
+        window.centralWidget().findChild(QLineEdit, "lineEditMoralValues").setText(character.get("character_moralValues", ""))
+        window.centralWidget().findChild(QLineEdit, "lineEditStrengthsOfCharacter").setText(character.get("character_strengthsOfCharacter", ""))
+        window.centralWidget().findChild(QLineEdit, "lineEditWeaknessOfCharacter").setText(character.get("character_weaknessesOfCharacter", ""))
+        window.centralWidget().findChild(QLineEdit, "lineEditSelfImage").setText(character.get("character_selfimage", ""))
+        window.centralWidget().findChild(QLineEdit, "lineEditHumor").setText(character.get("character_humor", ""))
+        window.centralWidget().findChild(QLineEdit, "lineEditAggressivness").setText(character.get("character_aggressiveness", ""))
+        window.centralWidget().findChild(QLineEdit, "lineEditTrauma").setText(character.get("character_traumas", ""))
+        window.centralWidget().findChild(QLineEdit, "lineEditImpression").setText(character.get("character_Impressions", ""))
+        window.centralWidget().findChild(QLineEdit, "lineEditSocialization").setText(character.get("character_socialization", ""))
+        window.centralWidget().findChild(QLineEdit, "lineEditNorms").setText(character.get("character_norms", ""))
+        window.centralWidget().findChild(QLineEdit, "lineEditTaboos").setText(character.get("character_taboos", ""))
+        window.centralWidget().findChild(QTextEdit, "textEditPsychologyNotes").setPlainText(character.get("character_psycheNotes", ""))
+        window.centralWidget().findChild(QCheckBox, "checkBoxMainCharacter").setChecked(character.get("character_mainCharacter", False))
+        window.centralWidget().findChild(QTextEdit, "textEditCharacterNotes").setPlainText(character.get("character_notes", ""))
+        window.centralWidget().findChild(QTextEdit, "textEditDevelopmentNotes").setPlainText(character.get("character_development", ""))
+    
+        notes_edit = window.centralWidget().findChild(QTextEdit, "textEditCharacterNotes")
+        if notes_edit:
+            notes_edit.setPlainText(character.get("character_notes", ""))
+        development_edit = window.centralWidget().findChild(QTextEdit, "textEditDevelopmentNotes")
+        if development_edit:
+            development_edit.setPlainText(character.get("character_development", ""))
+        character_siblings_edit = window.centralWidget().findChild(QTextEdit, "textEditSiblings")
+        if character_siblings_edit:
+            character_siblings_edit.setPlainText(character.get("character_siblings", ""))
+        charachter_ancestry_notes_edit = window.centralWidget().findChild(QTextEdit, "textEditAncestryNotes")
+        if charachter_ancestry_notes_edit:
+            charachter_ancestry_notes_edit.setPlainText(character.get("character_ancestryNotes ", ""))
+        education_notes_edit = window.centralWidget().findChild(QTextEdit, "textEditEducationNotes")
+        if education_notes_edit:
+            education_notes_edit.setPlainText(character.get("character_educationNotes", ""))
+        personality_notes_edit = window.centralWidget().findChild(QTextEdit, "textEditPersonalityNotes")
+        if personality_notes_edit:
+            personality_notes_edit.setPlainText(character.get("character_personalityNotes", ""))
+        look_notes_edit = window.centralWidget().findChild(QTextEdit, "textEditLookNotes")
+        if look_notes_edit:
+            look_notes_edit.setPlainText(character.get("character_lookNotes", ""))
+        look_details_notes_edit = window.centralWidget().findChild(QTextEdit, "textEditLookDetailsNotes")
+        if look_details_notes_edit:
+            look_details_notes_edit.setPlainText(character.get("character_bodyNotes", ""))
+        psyche_notes_edit = window.centralWidget().findChild(QTextEdit, "textEditPsychologyNotes")
+        if psyche_notes_edit:
+            psyche_notes_edit.setPlainText(character.get("character_psycheNotes", "")) 
+         
     # --- nächster Charakter Button einbinden ---
+    next_btn = window.centralWidget().findChild(QWidget, "nextBtnCharacter")
+    if next_btn:
+        def on_next_clicked():
+            with open(Path("data/characters/data_characters.json"), "r", encoding="utf-8") as f:
+                character_data = json.load(f)
+            keys = list(character_data.keys())
+            current_index = keys.index(window.current_character_key)
+            next_index = (current_index + 1) % len(keys)
+            next_key = keys[next_index]
+            window.current_character_key = next_key  # <-- Korrektur!
+            next_character = character_data[next_key]
+            update_character_fields(next_character)
+        next_btn.clicked.connect(on_next_clicked)
 
     # --- vorheriger Charakter Button einbinden ---
+    prev_btn = window.centralWidget().findChild(QWidget, "previousBtnCharacter")
+    if prev_btn:
+        def on_prev_clicked():
+            with open(Path("data/characters/data_characters.json"), "r", encoding="utf-8") as f:
+                character_data = json.load(f)
+            keys = list(character_data.keys())
+            current_index = keys.index(window.current_character_key)
+            prev_index = (current_index - 1) % len(keys)
+            prev_key = keys[prev_index]
+            window.current_character_key = prev_key
+            prev_character = character_data[prev_key]
+            update_character_fields(prev_character)
+        prev_btn.clicked.connect(on_prev_clicked)
 
+    
 
+    
     # --- Exit-Button einbinden ---
     exit_btn = window.centralWidget().findChild(QWidget, "exitBtnCharacter")
     if exit_btn:
