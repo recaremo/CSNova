@@ -271,7 +271,7 @@
                 </widget>
                </item>
                <item row="3" column="0" colspan="2">
-                <widget class="QLineEdit" name="lineEditorSceneTitel">
+                <widget class="QLineEdit" name="lineEditorSceneTitle">
                  <property name="font">
                   <font>
                    <family>Lato</family>
@@ -2401,8 +2401,8 @@
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>263</width>
-                    <height>682</height>
+                    <width>435</width>
+                    <height>699</height>
                    </rect>
                   </property>
                   <attribute name="label">
@@ -5025,8 +5025,8 @@
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>98</width>
-                    <height>88</height>
+                    <width>435</width>
+                    <height>117</height>
                    </rect>
                   </property>
                   <attribute name="label">
@@ -6795,9 +6795,6 @@
                 </property>
                </widget>
               </item>
-              <item row="3" column="0" colspan="2">
-               <widget class="QListView" name="listViewEditorChapters"/>
-              </item>
               <item row="6" column="0" colspan="2">
                <widget class="QLabel" name="labelEditorChapterID">
                 <property name="font">
@@ -7242,6 +7239,9 @@
                 </property>
                </widget>
               </item>
+              <item row="3" column="0" colspan="2">
+               <widget class="QListWidget" name="listWidgetEditorChapters"/>
+              </item>
              </layout>
             </widget>
            </item>
@@ -7266,6 +7266,262 @@
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
+ <tabstops>
+  <tabstop>newBtnEditorScene</tabstop>
+  <tabstop>nextBtnEditorScene</tabstop>
+  <tabstop>previousBtnEditorScene</tabstop>
+  <tabstop>deleteBtnEditorScene</tabstop>
+  <tabstop>saveBtnEditorScene</tabstop>
+  <tabstop>lineEditorSceneTitle</tabstop>
+  <tabstop>lineEditorScenePremise</tabstop>
+  <tabstop>comboBoxEditorSceneStatus</tabstop>
+  <tabstop>dateEditorSceneBegin</tabstop>
+  <tabstop>dateEditorSceneEdited</tabstop>
+  <tabstop>spinBoxEditorSceneOrder</tabstop>
+  <tabstop>lineEditorSceneGoal</tabstop>
+  <tabstop>lineEditorSceneResult</tabstop>
+  <tabstop>comboBoxEditorSceneStoryline</tabstop>
+  <tabstop>comboBoxEditorSceneLocation</tabstop>
+  <tabstop>comboBoxEditorSceneCharacter</tabstop>
+  <tabstop>comboBoxEditorSceneObject</tabstop>
+  <tabstop>lineEditorceneMood</tabstop>
+  <tabstop>lineEditorSceneDuration</tabstop>
+  <tabstop>lineEditorSceneType</tabstop>
+  <tabstop>textEditorSceneTags</tabstop>
+  <tabstop>textEditorSceneNotes</tabstop>
+  <tabstop>newBtnEditorCharacter</tabstop>
+  <tabstop>nextBtnEditorCharacter</tabstop>
+  <tabstop>previousBtnEditorCharacter</tabstop>
+  <tabstop>deleteBtnEditorCharacter</tabstop>
+  <tabstop>saveBtnEditorCharacter</tabstop>
+  <tabstop>listView_T</tabstop>
+  <tabstop>listView_U</tabstop>
+  <tabstop>listView_V</tabstop>
+  <tabstop>listView_W</tabstop>
+  <tabstop>listView_X</tabstop>
+  <tabstop>listView_Y</tabstop>
+  <tabstop>listView_Z</tabstop>
+  <tabstop>plainTextEditorStructure</tabstop>
+  <tabstop>listView_E</tabstop>
+  <tabstop>listView_D</tabstop>
+  <tabstop>listView_F</tabstop>
+  <tabstop>listView_G</tabstop>
+  <tabstop>listView_H</tabstop>
+  <tabstop>listView_I</tabstop>
+  <tabstop>listView_J</tabstop>
+  <tabstop>listView_K</tabstop>
+  <tabstop>listView_L</tabstop>
+  <tabstop>listView_N</tabstop>
+  <tabstop>listView_O</tabstop>
+  <tabstop>newBtnEditorObject</tabstop>
+  <tabstop>nextBtnEditorObject</tabstop>
+  <tabstop>previousBtnEditorObject</tabstop>
+  <tabstop>deleteBtnEditorObject</tabstop>
+  <tabstop>saveBtnEditorObject</tabstop>
+  <tabstop>lineEditEditorTitleObject</tabstop>
+  <tabstop>dateEditorObjectCreated</tabstop>
+  <tabstop>setDateEditorTodayObject_1</tabstop>
+  <tabstop>dateEditorEditedObject</tabstop>
+  <tabstop>setDateEditorTodayObject_2</tabstop>
+  <tabstop>comboBoxEditorObjectStatus</tabstop>
+  <tabstop>textEditorDescriptionObject</tabstop>
+  <tabstop>newBtnEditorLocation</tabstop>
+  <tabstop>nextBtnEditorLocation</tabstop>
+  <tabstop>previousBtnEditorLocation</tabstop>
+  <tabstop>deleteBtnEditorLocation</tabstop>
+  <tabstop>saveBtnEditorLocation</tabstop>
+  <tabstop>LineEditEditorTitleLocation</tabstop>
+  <tabstop>dateEditorLocationCreated</tabstop>
+  <tabstop>setDateEditorTodayLocation_1</tabstop>
+  <tabstop>dateEditorLocationEdited</tabstop>
+  <tabstop>setDateEditorTodayLocation_2</tabstop>
+  <tabstop>comboBoxEditorLocationStatus</tabstop>
+  <tabstop>textEditorDescriptionLocation</tabstop>
+  <tabstop>newBtnEditorStoryline</tabstop>
+  <tabstop>nextBtnEditorStoryline</tabstop>
+  <tabstop>previousBtnEditorStoryline</tabstop>
+  <tabstop>deleteBtnEditorStoryline</tabstop>
+  <tabstop>saveBtnEditorStoryline</tabstop>
+  <tabstop>lineEditEditorTitleStoryline</tabstop>
+  <tabstop>dateEditorStorylineCreated</tabstop>
+  <tabstop>setDateEditorTodayStoryline_1</tabstop>
+  <tabstop>dateEditorEditedStoryline</tabstop>
+  <tabstop>setDateEditorTodayStoryline_2</tabstop>
+  <tabstop>comboBoxEditorStorylineStatus</tabstop>
+  <tabstop>textEditorDescriptionStoryline</tabstop>
+  <tabstop>newBtnEditorReference</tabstop>
+  <tabstop>nextBtnEditorReference</tabstop>
+  <tabstop>previousBtnEditorReference</tabstop>
+  <tabstop>deleteBtnEditorReference</tabstop>
+  <tabstop>saveBtnEditorReference</tabstop>
+  <tabstop>lineEditEditorTitleReference</tabstop>
+  <tabstop>dateEditorReferenceCreated</tabstop>
+  <tabstop>setDateEditorTodayReference_1</tabstop>
+  <tabstop>dateEditorEditedReference</tabstop>
+  <tabstop>setDateEditorTodayReference_2</tabstop>
+  <tabstop>comboBoxEditorReferenceStatus</tabstop>
+  <tabstop>textEditorDescriptionReference</tabstop>
+  <tabstop>listView_B</tabstop>
+  <tabstop>listView_R</tabstop>
+  <tabstop>listView_S</tabstop>
+  <tabstop>newBtnEditorSource</tabstop>
+  <tabstop>nextBtnEditorSource</tabstop>
+  <tabstop>previousBtnEditorSource</tabstop>
+  <tabstop>deleteBtnEditorSource</tabstop>
+  <tabstop>saveBtnEditorSource</tabstop>
+  <tabstop>lineEditEditorTitleSource</tabstop>
+  <tabstop>dateEditorSourceCreated</tabstop>
+  <tabstop>setDateEditorTodaySource_1</tabstop>
+  <tabstop>dateEditorEditedSource</tabstop>
+  <tabstop>setDateEditorTodaySource_2</tabstop>
+  <tabstop>comboBoxEditorSourceStatus</tabstop>
+  <tabstop>textEditorDescriptionSource</tabstop>
+  <tabstop>newBtnEditorIdea</tabstop>
+  <tabstop>nextBtnEditorIdea</tabstop>
+  <tabstop>previousBtnEditorIdea</tabstop>
+  <tabstop>deleteBtnEditorIdea</tabstop>
+  <tabstop>saveBtnEditorIdea</tabstop>
+  <tabstop>lineEditEditorTtitleIdea</tabstop>
+  <tabstop>dateEditEditorIdeaCreated</tabstop>
+  <tabstop>setDateEditorTodayIdea_1</tabstop>
+  <tabstop>dateEditEditorIdea</tabstop>
+  <tabstop>setDateEditorTodayIdea_2</tabstop>
+  <tabstop>comboBoxEditorIdeaStatus</tabstop>
+  <tabstop>textEditorDescriptionIdea</tabstop>
+  <tabstop>listView_A</tabstop>
+  <tabstop>listView_C</tabstop>
+  <tabstop>tabViewEditor</tabstop>
+  <tabstop>btnEditorBold</tabstop>
+  <tabstop>btnEditorItalic</tabstop>
+  <tabstop>btnEditorUnderline</tabstop>
+  <tabstop>btnEditorLeft</tabstop>
+  <tabstop>btnEditorCenter</tabstop>
+  <tabstop>btnEditorRight</tabstop>
+  <tabstop>bntEditorIndentet</tabstop>
+  <tabstop>btnEditorImage</tabstop>
+  <tabstop>btnEditorGlossar</tabstop>
+  <tabstop>btnEditorObject</tabstop>
+  <tabstop>btnEditorSuperscript</tabstop>
+  <tabstop>btnEditorSubscript</tabstop>
+  <tabstop>btnEditorBulletList</tabstop>
+  <tabstop>btnEditorNumberList</tabstop>
+  <tabstop>fontComboBoxEditor</tabstop>
+  <tabstop>spinBoxFontSizeEditor</tabstop>
+  <tabstop>bntEditorUndo</tabstop>
+  <tabstop>bntEditorRedo</tabstop>
+  <tabstop>btnEditorCut</tabstop>
+  <tabstop>btnEditorCopy</tabstop>
+  <tabstop>btnEditorPaste</tabstop>
+  <tabstop>btnEditorEmpty_2</tabstop>
+  <tabstop>btnEditorEmpty_1</tabstop>
+  <tabstop>plainTextEditorScenePlainText</tabstop>
+  <tabstop>listWidgetEditorChapters</tabstop>
+  <tabstop>lineEditorChapterTitleText</tabstop>
+  <tabstop>lineEditorChapterPremise</tabstop>
+  <tabstop>comboBoxEditorChapterStatus</tabstop>
+  <tabstop>dateEditorChapterBegin</tabstop>
+  <tabstop>dateEditorChapterEdited</tabstop>
+  <tabstop>textEditEditorChapterExcerpt</tabstop>
+  <tabstop>textEditEditorChapterNotes</tabstop>
+  <tabstop>newBtnEditorChapter</tabstop>
+  <tabstop>nextBtnEditorChapter</tabstop>
+  <tabstop>previousBtnEditorChapter</tabstop>
+  <tabstop>deleteBtnEditorChapter</tabstop>
+  <tabstop>saveBtnEditorChapter</tabstop>
+  <tabstop>exitBtnEditor</tabstop>
+  <tabstop>lineEditEditorNickName</tabstop>
+  <tabstop>lineEditEditorBorn</tabstop>
+  <tabstop>lineEditEditorDied</tabstop>
+  <tabstop>comboBoxEditorGender</tabstop>
+  <tabstop>comboBoxEditorSexOrientation</tabstop>
+  <tabstop>comboBoxEditorRole</tabstop>
+  <tabstop>comboBoxEditorGroup</tabstop>
+  <tabstop>plainTextEditorDevelopment</tabstop>
+  <tabstop>plainTextEditorNotes</tabstop>
+  <tabstop>lineEditEditorMother</tabstop>
+  <tabstop>lineEditEditorFather</tabstop>
+  <tabstop>lineEditEditorReferencePerson</tabstop>
+  <tabstop>textEditEditorSiblings</tabstop>
+  <tabstop>lineEditEditorPlaceOfBirth</tabstop>
+  <tabstop>lineEditEditorCountry</tabstop>
+  <tabstop>lineEditEditorEthnicity</tabstop>
+  <tabstop>textEditEditorNotes</tabstop>
+  <tabstop>textEditEditorSchool</tabstop>
+  <tabstop>textEditEditorUniversity</tabstop>
+  <tabstop>textEditEditorVocationalTraining</tabstop>
+  <tabstop>textEditEditorProfession</tabstop>
+  <tabstop>textEditEditorArtMusic</tabstop>
+  <tabstop>textEditEditorSport</tabstop>
+  <tabstop>textEditEditorTechnic</tabstop>
+  <tabstop>textEditEditorAutodidact</tabstop>
+  <tabstop>textEditEditorEducationNotes</tabstop>
+  <tabstop>spinBoxEditorSize</tabstop>
+  <tabstop>comboBoxEditorBodyType</tabstop>
+  <tabstop>comboBoxEditorStature</tabstop>
+  <tabstop>comboBoxFEditorFaceShape</tabstop>
+  <tabstop>comboBoxEditorEyeShape</tabstop>
+  <tabstop>lineEditEditorEyeColor</tabstop>
+  <tabstop>lineEditEditorHair</tabstop>
+  <tabstop>lineEditEditorHairColor</tabstop>
+  <tabstop>lineEditEditorSkin</tabstop>
+  <tabstop>lineEditEditorSkinColor</tabstop>
+  <tabstop>lineEditEditorCharisma</tabstop>
+  <tabstop>lineEditEditorSpecialFeatures</tabstop>
+  <tabstop>textEditEditorLookNotes</tabstop>
+  <tabstop>lineEditEditorHead</tabstop>
+  <tabstop>lineEditEditorNeck</tabstop>
+  <tabstop>lineEditorShoulders</tabstop>
+  <tabstop>lineEditEditorUpperArm</tabstop>
+  <tabstop>lineEditEditorEllbow</tabstop>
+  <tabstop>lineEditEditorLowerArms</tabstop>
+  <tabstop>lineEditEditorWrists</tabstop>
+  <tabstop>lineEditEditorHand</tabstop>
+  <tabstop>lineEditEditorFinger</tabstop>
+  <tabstop>lineEditEditorBreast</tabstop>
+  <tabstop>lineEditEditorBack</tabstop>
+  <tabstop>lineEditEditorHips</tabstop>
+  <tabstop>lineEditEditorButtocks</tabstop>
+  <tabstop>lineEditEditorUpperLeg</tabstop>
+  <tabstop>lineEditEditorKnee</tabstop>
+  <tabstop>lineEditEditorLowerLeg</tabstop>
+  <tabstop>lineEditEditorAnkles</tabstop>
+  <tabstop>lineEditEditorFeet</tabstop>
+  <tabstop>lineEditEditorToes</tabstop>
+  <tabstop>textEditEditorLookDetailsNotes</tabstop>
+  <tabstop>lineEditEditorPosCharacteristics</tabstop>
+  <tabstop>lineEditEditorNegCharacteristics</tabstop>
+  <tabstop>lineEditEditorFears</tabstop>
+  <tabstop>lineEditEditorWeakness</tabstop>
+  <tabstop>lineEditEditorStrength</tabstop>
+  <tabstop>lineEditEditorTalents</tabstop>
+  <tabstop>lineEditEditorBelief</tabstop>
+  <tabstop>lineEditEditorLifeGoal</tabstop>
+  <tabstop>lineEditEditorMotivation</tabstop>
+  <tabstop>lineEditEditorBehavior</tabstop>
+  <tabstop>textEditEditorPersonalityNotes</tabstop>
+  <tabstop>lineEditEditorDiagnosis</tabstop>
+  <tabstop>lineEditEditorSymptoms</tabstop>
+  <tabstop>lineEditEditorTherapy</tabstop>
+  <tabstop>lineEditEditorMedication</tabstop>
+  <tabstop>lineEditEditorTemperament</tabstop>
+  <tabstop>lineEditEditorEthicalValues</tabstop>
+  <tabstop>lineEditEditorBeliefs</tabstop>
+  <tabstop>lineEditEditorMoralValues</tabstop>
+  <tabstop>lineEditEditorStrengthsOfCharacter</tabstop>
+  <tabstop>lineEditEditorWeaknessOfCharacter</tabstop>
+  <tabstop>lineEditEditorSelfImage</tabstop>
+  <tabstop>lineEditEditorHumor</tabstop>
+  <tabstop>lineEditEditorAggressivness</tabstop>
+  <tabstop>lineEditEditorTrauma</tabstop>
+  <tabstop>lineEditEditorImpression</tabstop>
+  <tabstop>lineEditEditorSocialization</tabstop>
+  <tabstop>lineEditEditorNorms</tabstop>
+  <tabstop>lineEditEditorTabus</tabstop>
+  <tabstop>textEditEditorPsychologyNotes</tabstop>
+  <tabstop>listView_Q</tabstop>
+  <tabstop>listView_P</tabstop>
+  <tabstop>listView_M</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

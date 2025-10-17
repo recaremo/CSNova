@@ -681,6 +681,23 @@ li.checked::marker { content: &quot;\2612&quot;; }
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
+ <tabstops>
+  <tabstop>titleObjects</tabstop>
+  <tabstop>dateEditCreatedObjects</tabstop>
+  <tabstop>setDateTodayObjects_1</tabstop>
+  <tabstop>dateEditEditedObjects</tabstop>
+  <tabstop>setDateTodayObjects_2</tabstop>
+  <tabstop>comboBoxObjectsStatus</tabstop>
+  <tabstop>textDescriptionObjects</tabstop>
+  <tabstop>newBtnObjects</tabstop>
+  <tabstop>nextBtnObjects</tabstop>
+  <tabstop>previousBtnObjects</tabstop>
+  <tabstop>deleteBtnObjects</tabstop>
+  <tabstop>imageLoadObjects</tabstop>
+  <tabstop>saveBtnObjects</tabstop>
+  <tabstop>exitBtnObjects</tabstop>
+  <tabstop>textEditHelpObjects</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

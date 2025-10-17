@@ -400,7 +400,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
            </font>
           </property>
           <property name="text">
-           <string>Hnadlungsorte</string>
+           <string>Handlungsorte</string>
           </property>
           <property name="scaledContents">
            <bool>false</bool>
@@ -682,6 +682,23 @@ li.checked::marker { content: &quot;\2612&quot;; }
   </widget>
   <widget class="QStatusBar" name="statusbarLocations"/>
  </widget>
+ <tabstops>
+  <tabstop>titleLocations</tabstop>
+  <tabstop>dateEditCreatedLocations</tabstop>
+  <tabstop>setDateTodayLocations_1</tabstop>
+  <tabstop>dateEditEditedLocations</tabstop>
+  <tabstop>setDateTodayLocations_2</tabstop>
+  <tabstop>comboBoxLocationsStatus</tabstop>
+  <tabstop>textDescriptionLocations</tabstop>
+  <tabstop>newBtnLocations</tabstop>
+  <tabstop>nextBtnLocations</tabstop>
+  <tabstop>previousBtnLocations</tabstop>
+  <tabstop>deleteBtnLocations</tabstop>
+  <tabstop>imageLoadLocations</tabstop>
+  <tabstop>saveBtnLocations</tabstop>
+  <tabstop>exitBtnLocations</tabstop>
+  <tabstop>textEditHelpLocations</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

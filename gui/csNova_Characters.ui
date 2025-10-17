@@ -278,7 +278,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
            <enum>QTabWidget::TabShape::Triangular</enum>
           </property>
           <property name="currentIndex">
-           <number>6</number>
+           <number>0</number>
           </property>
           <property name="elideMode">
            <enum>Qt::TextElideMode::ElideLeft</enum>
@@ -3215,6 +3215,109 @@ li.checked::marker { content: &quot;\2612&quot;; }
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
+ <tabstops>
+  <tabstop>comboBoxStatus</tabstop>
+  <tabstop>checkBoxMainCharacter</tabstop>
+  <tabstop>lineEditName</tabstop>
+  <tabstop>lineEditFirstName</tabstop>
+  <tabstop>lineEditNickName</tabstop>
+  <tabstop>lineEditBorn</tabstop>
+  <tabstop>lineEditDied</tabstop>
+  <tabstop>comboBoxGender</tabstop>
+  <tabstop>comboBoxSexOrientation</tabstop>
+  <tabstop>comboBoxRole</tabstop>
+  <tabstop>comboBoxGroup</tabstop>
+  <tabstop>textEditDevelopmentNotes</tabstop>
+  <tabstop>textEditCharacterNotes</tabstop>
+  <tabstop>lineEditMother</tabstop>
+  <tabstop>lineEditFather</tabstop>
+  <tabstop>lineEditReferencePerson</tabstop>
+  <tabstop>textEditSiblings</tabstop>
+  <tabstop>lineEditPlaceOfBirth</tabstop>
+  <tabstop>lineEditCountry</tabstop>
+  <tabstop>lineEditEthnicity</tabstop>
+  <tabstop>textEditAncestryNotes</tabstop>
+  <tabstop>textEditSchool</tabstop>
+  <tabstop>textEditUniversity</tabstop>
+  <tabstop>textEditVocationalTraining</tabstop>
+  <tabstop>textEditProfession</tabstop>
+  <tabstop>textEditArtMusic</tabstop>
+  <tabstop>textEditSport</tabstop>
+  <tabstop>textEditTechnic</tabstop>
+  <tabstop>textEditAutodidact</tabstop>
+  <tabstop>textEditEducationNotes</tabstop>
+  <tabstop>lineEditPosCharacteristics</tabstop>
+  <tabstop>lineEditNegCharacteristics</tabstop>
+  <tabstop>lineEditFears</tabstop>
+  <tabstop>lineEditWeakness</tabstop>
+  <tabstop>lineEditStrength</tabstop>
+  <tabstop>lineEditTalents</tabstop>
+  <tabstop>lineEditBelief</tabstop>
+  <tabstop>lineEditLifeGoal</tabstop>
+  <tabstop>lineEditMotivation</tabstop>
+  <tabstop>lineEditBehavior</tabstop>
+  <tabstop>textEditPersonalityNotes</tabstop>
+  <tabstop>spinBoxSize</tabstop>
+  <tabstop>comboBoxBodyType</tabstop>
+  <tabstop>comboBoxStature</tabstop>
+  <tabstop>comboBoxFaceShape</tabstop>
+  <tabstop>comboBoxEyeShape</tabstop>
+  <tabstop>lineEditEyeColor</tabstop>
+  <tabstop>lineEditHair</tabstop>
+  <tabstop>lineEditHairColor</tabstop>
+  <tabstop>lineEditSkin</tabstop>
+  <tabstop>lineEditSkinColor</tabstop>
+  <tabstop>lineEditCharisma</tabstop>
+  <tabstop>lineEditSpecialFeatures</tabstop>
+  <tabstop>textEditLookNotes</tabstop>
+  <tabstop>lineEditHead</tabstop>
+  <tabstop>lineEditNeck</tabstop>
+  <tabstop>lineEditShoulders</tabstop>
+  <tabstop>lineEditUpperArm</tabstop>
+  <tabstop>lineEditElbow</tabstop>
+  <tabstop>lineEditLowerArms</tabstop>
+  <tabstop>lineEditWrists</tabstop>
+  <tabstop>lineEditHand</tabstop>
+  <tabstop>lineEditFinger</tabstop>
+  <tabstop>lineEditBreast</tabstop>
+  <tabstop>lineEditBack</tabstop>
+  <tabstop>lineEditHips</tabstop>
+  <tabstop>lineEditButtocks</tabstop>
+  <tabstop>lineEditUpperLeg</tabstop>
+  <tabstop>lineEditKnee</tabstop>
+  <tabstop>lineEditLowerLeg</tabstop>
+  <tabstop>lineEditAnkles</tabstop>
+  <tabstop>lineEditFeet</tabstop>
+  <tabstop>lineEditToes</tabstop>
+  <tabstop>textEditLookDetailsNotes</tabstop>
+  <tabstop>lineEditDiagnosis</tabstop>
+  <tabstop>lineEditSymptoms</tabstop>
+  <tabstop>lineEditTherapy</tabstop>
+  <tabstop>lineEditMedication</tabstop>
+  <tabstop>lineEditTemperament</tabstop>
+  <tabstop>lineEditEthicalValues</tabstop>
+  <tabstop>lineEditMoralValues</tabstop>
+  <tabstop>lineEditStrengthsOfCharacter</tabstop>
+  <tabstop>lineEditWeaknessOfCharacter</tabstop>
+  <tabstop>lineEditSelfImage</tabstop>
+  <tabstop>lineEditHumor</tabstop>
+  <tabstop>lineEditAggressivness</tabstop>
+  <tabstop>lineEditTrauma</tabstop>
+  <tabstop>lineEditImpression</tabstop>
+  <tabstop>lineEditSocialization</tabstop>
+  <tabstop>lineEditNorms</tabstop>
+  <tabstop>lineEditTaboos</tabstop>
+  <tabstop>textEditPsychologyNotes</tabstop>
+  <tabstop>tabCharacter</tabstop>
+  <tabstop>newBtnCharacter</tabstop>
+  <tabstop>nextBtnCharacter</tabstop>
+  <tabstop>previousBtnCharacter</tabstop>
+  <tabstop>deleteBtnCharacter</tabstop>
+  <tabstop>imageBtnCharacter</tabstop>
+  <tabstop>saveBtnCharacter</tabstop>
+  <tabstop>exitBtnCharacter</tabstop>
+  <tabstop>textEditHelpCharacter</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

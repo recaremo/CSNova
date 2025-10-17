@@ -2,16 +2,16 @@
   "storylines_ID_01": {
     "storyline_ID": "1",
     "storyline_title": "Handlungsstrang 1",
-    "storyline_status": 0,
-    "storyline_created": "2026-01-02",
-    "storyline_modified": "2026-01-22",
-    "storyline_notes": "",
+    "storyline_status": 1,
+    "storyline_created": "2026-01-21",
+    "storyline_modified": "2026-01-01",
+    "storyline_notes": "4",
     "storyline_titel": "Storyline 1"
   },
   "storyline_ID_02": {
     "storyline_ID": "2",
     "storyline_title": "Handlungsstrang2",
-    "storyline_status": 0,
+    "storyline_status": 1,
     "storyline_created": "2026-01-02",
     "storyline_modified": "2026-01-22",
     "storyline_notes": ""

@@ -1,10 +1,18 @@
 {
   "object_ID_02": {
     "object_ID": "2",
-    "object_title": "Objekte 2",
-    "object_created": "2026-01-20",
-    "object_modified": "2026-01-24",
-    "object_notes": "Beschreibung Objekt 2",
-    "object_titel": "Objekt 2"
+    "object_title": "Objekt3",
+    "object_status": 0,
+    "object_created": "2026-01-21",
+    "object_modified": "2026-01-20",
+    "object_notes": "Beschreibung 3"
+  },
+  "object_ID_04": {
+    "object_ID": "4",
+    "object_title": "Objekt 4",
+    "object_status": 0,
+    "object_created": "2025-10-17",
+    "object_modified": "2025-10-07",
+    "object_notes": "Beschreibung 4"
   }
 }

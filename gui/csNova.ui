@@ -1936,6 +1936,18 @@ li.checked::marker { content: &quot;\2612&quot;; }
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
+ <tabstops>
+  <tabstop>projectBtncsNovaMain</tabstop>
+  <tabstop>characterBtncsNovaMain</tabstop>
+  <tabstop>objectBtncsNovaMain</tabstop>
+  <tabstop>locationBtncsNovaMain</tabstop>
+  <tabstop>storylineBtncsNovaMain</tabstop>
+  <tabstop>editorBtncsNovaMain</tabstop>
+  <tabstop>preferencesBtncsNovaMain</tabstop>
+  <tabstop>helpBtncsNovaMain</tabstop>
+  <tabstop>exitBtncsNovaMain</tabstop>
+  <tabstop>textEditHelpcsNovaMain</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

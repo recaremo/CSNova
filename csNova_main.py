@@ -12,7 +12,7 @@ from datetime import datetime
 from PySide6.QtWidgets import (
     QApplication, QLabel, QWidget, QVBoxLayout, QSizePolicy, QSplitter, QListWidget,
     QMainWindow, QComboBox, QLineEdit, QSpinBox, QTextEdit, QDateEdit, QCheckBox,
-    QToolBar, QDockWidget, QDialog
+    QToolBar, QDockWidget, QDialog, QPlainTextEdit
 )
 from PySide6.QtGui import QFont, QIcon, QRegularExpressionValidator, QPixmap
 from PySide6.QtCore import QDate, QRegularExpression, QTimer, QEvent
@@ -203,7 +203,6 @@ def connect_dynamic_events(window, splitter_name=None):
                 settings[window.settings_key] = ui_settings
                 save_settings(settings)
             splitter.splitterMoved.connect(lambda pos, index: on_splitter_size_changed())
-
 # Alter berechnen aus Geburts- und Sterbedatum
 def calculate_age(birth_str, died_str):
     # Versuche das Datum zu parsen (Format: TT.MM.JJJJ)
@@ -446,7 +445,23 @@ def safe_save_json(path: Path, data: Any) -> bool:
     except Exception as e:
         log_exception(f"safe_save_json: failed to save {path}", e)
         return False
-
+# Generiert den nächsten eindeutigen Key und eine fortlaufende ID
+def get_next_id(data_dict, prefix):
+    max_id = 0
+    for key, entry in data_dict.items():
+        # Extrahiere die Nummer aus dem Key oder aus dem Feld
+        if key.startswith(prefix):
+            try:
+                num = int(key.replace(prefix, ""))
+                max_id = max(max_id, num)
+            except Exception:
+                pass
+        # Falls das Feld existiert
+        if isinstance(entry, dict) and entry.get(f"{prefix[:-1]}", "").isdigit():
+            num = int(entry[f"{prefix[:-1]}"])
+            max_id = max(max_id, num)
+    next_num = max_id + 1
+    return f"{prefix}{next_num:02d}", str(next_num)
 # Übersetzungs- / static JSON Cache
 _TRANSLATION_CACHE: Dict[str, Any] = {}
 # Lade Übersetzungen aus JSON-Dateien mit Caching
@@ -823,7 +838,7 @@ def get_empty_project():
 # Mapping der Objektfelder zu Widget-Typen und Namen
 OBJECTS_FIELD_MAP = {
         "object_title": (QLineEdit, "titleObjects"),
-        "object_status": (QComboBox, "comboBoxObjectStatus"),
+        "object_status": (QComboBox, "comboBoxObjectsStatus"),
         "object_created": (QDateEdit, "dateEditCreatedObjects"),
         "object_modified": (QDateEdit, "dateEditEditedObjects"),
         "object_notes": (QTextEdit, "textDescriptionObjects"),
@@ -887,8 +902,8 @@ def get_empty_object():
 # -------------------------------------------------------------------------------------
 # Mapping der Locationsfelder zu Widget-Typen und Namen
 LOCATIONS_FIELD_MAP = {
-        "location_title": (QLineEdit, "lineEditLocations"),
-        "location_status": (QComboBox, "comboBoxLocationStatus"),
+        "location_title": (QLineEdit, "titleLocations"),
+        "location_status": (QComboBox, "comboBoxLocationsStatus"),
         "location_created": (QDateEdit, "dateEditCreatedLocations"),
         "location_modified": (QDateEdit, "dateEditEditedLocations"),
         "location_notes": (QTextEdit, "textDescriptionLocations"),
@@ -951,7 +966,7 @@ def get_empty_location():
 # Mapping der Storylinefelder zu Widget-Typen und Namen
 STORYLINES_FIELD_MAP = {
         "storyline_title": (QLineEdit, "titleStorylines"),
-        "storyline_status": (QComboBox, "comboBoxStorylineStatus"),
+        "storyline_status": (QComboBox, "comboBoxStorylinesStatus"),
         "storyline_created": (QDateEdit, "dateEditCreatedStorylines"),
         "storyline_modified": (QDateEdit, "dateEditEditedStorylines"),
         "storyline_notes": (QTextEdit, "textDescriptionStorylines"),
@@ -1009,6 +1024,108 @@ def get_empty_storyline():
     }
 
 
+# -------------------------------------------------------------------------------------
+# Grundlegendes Mapping und Konstanten für Kaptiel und Szenen im Editor
+# -------------------------------------------------------------------------------------
+# Mapping der Kapitel- und Szenenfelder zu Widget-Typen und Namen
+EDITOR_CHAPTER_MAP = {
+        "chapter_title": (QLineEdit, "lineEditorChapterTitleText"),
+        "chapter_premise": (QLineEdit, "lineEditorChapterPremise"),
+        "chapter_status": (QComboBox, "comboBoxEditorChapterStatus"),
+        "chapter_begin": (QDateEdit, "dateEditorChapterBegin"),
+        "chapter_edited": (QDateEdit, "dateEditorChapterEdited"),
+        "chapter_excerpt": (QTextEdit, "textEditEditorChapterExcerpt"),
+        "chapter_notes": (QTextEdit, "textEditEditorChapterNotes"),
+    }
+EDITOR_SCENE_MAP = {
+            "scene_title": (QLineEdit, "lineEditorSceneTitle"),
+            "scene_premise": (QLineEdit, "lineEditorScenePremise"),
+            "scene_status": (QComboBox, "comboBoxEditorSceneStatus"),
+            "scene_begin": (QDateEdit, "dateEditorSceneBegin"),
+            "scene_edited": (QDateEdit, "dateEditorSceneEdited"),
+            "scene_order": (QSpinBox, "spinBoxEditorSceneOrder"),
+            "scene_goal": (QLineEdit, "lineEditorSceneGoal"),
+            "scene_result ": (QLineEdit, "lineEditorSceneResult"),
+            "scene_storyline": (QComboBox, "comboBoxEditorSceneStoryline"),
+            "scene_location": (QComboBox, "comboBoxEditorSceneLocation"),
+            "scene_character": (QComboBox, "comboBoxEditorSceneCharacter"),
+            "scene_object": (QComboBox, "comboBoxEditorSceneObject"),
+            "scene_mood": (QLineEdit, "lineEditorceneMood"),
+            "scene_duration": (QLineEdit, "lineEditorSceneDuration"),
+            "scene_type": (QLineEdit, "lineEditorSceneType"),
+            "scene_tags": (QTextEdit, "textEditorSceneTags"),
+            "scene_notes": (QTextEdit, "textEditorSceneNotes"),
+            "scene_plain_text": (QPlainTextEdit, "plainTextEditorScenePlainText"),
+        }   
+# Worte zählen in einem plainTextEditorScenePlainText anzeigen im Label labelEditorSceneWordCount
+# Es kann mehrere Charaktere geben: Auswahl in der comboBoxEditorSceneCharacter und alle in "scene_characters" speichern
+# Es kann mehrere Objekte geben: Auswahl in der comboBoxEditorSceneObject und alle in "scene_objects" speichern
+# Die ID der aktuellen Szene wird im Label labelEditorSceneID angezeigt.
+# Die ID des aktuellen Kapitels wird im Label labelEditorChapterID angezeigt.
+# Der Name des aktuellen Projektes wird im Label labelEditorActualProject angezeigt.
+# Eine Liste aller Kaptiel dieses Projektes wird in der QListWidget listViewEditorChapters angezeigt.
+
+# Liest die Werte aus den Kapitel-Widgets aus
+def read_editor_chapter_fields(window):
+    chapter = {}
+    for field, (widget_type, widget_name) in EDITOR_CHAPTER_MAP.items():
+        widget = winFindChild(window, widget_type, widget_name)
+        if widget:
+            if isinstance(widget, QLineEdit):
+                chapter[field] = widget.text()
+            elif isinstance(widget, QTextEdit):
+                chapter[field] = widget.toPlainText()
+            elif isinstance(widget, QComboBox):
+                chapter[field] = widget.currentIndex()
+            elif isinstance(widget, QDateEdit):
+                chapter[field] = widget.date().toString("yyyy-MM-dd")
+    return chapter
+# Erstelle eine leere Kapitel-Datenstruktur zurück
+def get_empty_chapter():
+    return {
+        "chapter_id": "",
+        "chapter_title": "",
+        "chapter_premise": "",
+        "chapter_status": 0,
+        "chapter_begin": "",
+        "chapter_edited": "",
+        "chapter_excerpt": "",
+        "chapter_notes": ""
+        # Szenen werden später hinzugefügt
+    }
+# Update Kapitel Felder
+def update_editor_chapter_fields(window, chapter):
+    for field, (widget_type, widget_name) in EDITOR_CHAPTER_MAP.items():
+        widget = winFindChild(window, widget_type, widget_name)
+        value = chapter.get(field, "")
+        if widget:
+            if isinstance(widget, QLineEdit):
+                widget.setText(str(value))
+            elif isinstance(widget, QTextEdit):
+                widget.setPlainText(str(value))
+            elif isinstance(widget, QComboBox):
+                try:
+                    widget.setCurrentIndex(int(value))
+                except Exception:
+                    widget.setCurrentIndex(0)
+            elif isinstance(widget, QDateEdit):
+                if value:
+                    date = QDate.fromString(value, "yyyy-MM-dd")
+                    if date.isValid():
+                        widget.setDate(date)
+# Aktualisiere die Kapitel-Liste im Editor
+def update_chapter_list_widget(window):
+    chapter_data = getattr(window, "chapter_data", {})
+    list_chapters = winFindChild(window, QListWidget, "listWidgetEditorChapters")
+    if list_chapters:
+        list_chapters.clear()
+        for chap_key, chap in chapter_data.items():
+            chap_id = chap.get("chapter_id", chap_key)
+            chap_title = chap.get("chapter_title", "")
+            list_chapters.addItem(f"{chap_id} - {chap_title}")
+
+
+# Hauptfenster anzeigen
 def show_main_window():
     window = DynamicWindow("main_ui", UI_FILES["main"], splitter_name="mainSplitter", confirm_on_close=True)
     app_state.main_window = window 
@@ -1043,42 +1160,93 @@ def show_main_window():
     # Projektfenster verbinden
     projects_btn = winFindChild(window,QWidget, "projectBtncsNovaMain")
     if projects_btn:
-        projects_btn.clicked.connect(lambda: show_projects_window(window))
+        def open_projects():
+            window.hide()      
+            show_projects_window(parent=window)      
+        projects_btn.clicked.connect(open_projects)
 
     # Charakterfenster verbinden
     characters_btn = winFindChild(window,QWidget, "characterBtncsNovaMain")
     if characters_btn:
-        characters_btn.clicked.connect(lambda: show_characters_window(window))
+        def open_characters():
+            window.hide()      
+            show_characters_window(parent=window)
+        characters_btn.clicked.connect(open_characters)
 
     # Objektfenster verbinden
     objects_btn = winFindChild(window,QWidget, "objectBtncsNovaMain")
     if objects_btn:
-        objects_btn.clicked.connect(lambda: show_objects_window(window))
+        def open_objects():
+            window.hide()      
+            show_objects_window(parent=window)
+        objects_btn.clicked.connect(open_objects)
 
     # Locationsfenster verbinden
     locations_btn = winFindChild(window,QWidget, "locationBtncsNovaMain")
     if locations_btn:
-        locations_btn.clicked.connect(lambda: show_locations_window(window))
+        def open_locations():
+            window.hide()      
+            show_locations_window(parent=window)
+        locations_btn.clicked.connect(open_locations)
 
     # Storylinefenster verbinden
     storylines_btn = winFindChild(window,QWidget, "storylineBtncsNovaMain")
     if storylines_btn:
-        storylines_btn.clicked.connect(lambda: show_storylines_window(window))
+        def open_storylines():
+            window.hide()      
+            show_storylines_window(parent=window)
+        storylines_btn.clicked.connect(open_storylines)
 
     # Editorfenster verbinden
     editor_btn = winFindChild(window,QWidget, "editorBtncsNovaMain")
     if editor_btn:
-        editor_btn.clicked.connect(lambda: show_editor_window(window))
+        def open_editor():
+            window.hide()      
+            show_editor_window(parent=window)
+        editor_btn.clicked.connect(open_editor)
 
     # Preferences-Button verbinden
     preferences_btn = winFindChild(window,QWidget, "preferencesBtncsNovaMain")
     if preferences_btn:
-        preferences_btn.clicked.connect(lambda: show_preferences_window(window))
+        def open_preferences():
+            window.hide()      
+            show_preferences_window(parent=window)
+        preferences_btn.clicked.connect(open_preferences)
 
     # Hilfe-Button verbinden
     help_btn = winFindChild(window,QWidget, "helpBtncsNovaMain")
     if help_btn:
-        help_btn.clicked.connect(lambda: show_help_window(window))
+        def open_help():
+            window.hide()
+            show_help_window(parent=window)
+        help_btn.clicked.connect(open_help)
+
+    # Statistik berechnen und anzeigen
+    stats = {
+        "labelCountProjectsStatistic": len(safe_load_json(Path("data/projects/data_projects.json"), {})),
+        "labelCountCharactersStatistic": len(safe_load_json(Path("data/characters/data_characters.json"), {})),
+        "labelCountObjectsStatistic": len(safe_load_json(Path("data/objects/data_objects.json"), {})),
+        "labelCountLocationsStatistic": len(safe_load_json(Path("data/locations/data_locations.json"), {})),
+        "labelCountStorylinesStatistic": len(safe_load_json(Path("data/storylines/data_storylines.json"), {})),
+    }
+    for label_name, value in stats.items():
+        label = winFindChild(window, QLabel, label_name)
+        if label:
+            label.setText(str(value))
+
+     # Aktuelles Projekt anzeigen
+    settings = load_settings()
+    last_project_key = settings.get("last_project")
+    project_title = ""
+    if last_project_key:
+        projects_data = safe_load_json(Path("data/projects/data_projects.json"), {})
+        project = projects_data.get(last_project_key)
+        if project:
+            project_title = project.get("project_title", "")
+    label_current_project = winFindChild(window, QLabel, "labelActuellProject")
+    if label_current_project:
+        label_current_project.setText(project_title if project_title else "Kein Projekt ausgewählt")
+
 
     log_info("Hauptfenster erfolgreich geladen und angezeigt.")
     window.show()
@@ -1243,15 +1411,14 @@ def show_projects_window(parent=None):
     if new_btn:
         def on_new_clicked():
             projects_data = safe_load_json(projects_path, {})
-            new_id = f"project_ID_{len(projects_data) + 1:02d}"
+            new_key, new_id = get_next_id(projects_data, "project_ID_")
             empty_project = get_empty_project()
-            empty_project["project_ID"] = str(len(projects_data) + 1)
-            projects_data[new_id] = empty_project
+            empty_project["project_ID"] = new_id
+            projects_data[new_key] = empty_project
             safe_save_json(projects_path, projects_data)
-            log_info(f"Neues Projekt {new_id} angelegt.")
-            window.current_project_key = new_id
+            log_info(f"Neues Projekt {new_key} angelegt.")
+            window.current_project_key = new_key
             update_project_fields(window, empty_project)
-
         new_btn.clicked.connect(on_new_clicked)
 
     # --- Next-Button ---
@@ -1284,9 +1451,21 @@ def show_projects_window(parent=None):
 
     # --- Exit-Button einbinden ---
     exit_btn = winFindChild(window,QWidget, "exitBtnProjects")
-    if exit_btn:
-        exit_btn.clicked.connect(window.close)
-    
+    if exit_btn and parent:
+        def on_exit_clicked():
+            window.close()
+            parent.show()
+        exit_btn.clicked.connect(on_exit_clicked)
+
+    def on_close_event(event):
+        settings = load_settings()
+        settings["last_project"] = window.current_project_key
+        save_settings(settings)
+        event.accept()
+        if parent:
+            parent.show()
+    window.closeEvent = on_close_event
+
     # --- Delete-Button einbinden ---
     def on_delete_clicked():
         projects_data = safe_load_json(projects_path, {})
@@ -1492,13 +1671,13 @@ def show_characters_window(parent=None):
     if new_btn:
         def on_new_clicked():
             character_data = safe_load_json(character_path, {})
-            new_id = f"character_ID_{len(character_data) + 1:02d}"
+            new_key, new_id = get_next_id(character_data, "character_ID_")
             empty_char = get_empty_character()
-            empty_char["character_ID"] = str(len(character_data) + 1)
-            character_data[new_id] = empty_char
+            empty_char["character_ID"] = new_id
+            character_data[new_key] = empty_char
             safe_save_json(character_path, character_data)
-            log_info(f"Neuer Charakter {new_id} erstellt.")
-            window.current_character_key = new_id
+            log_info(f"Neuer Charakter {new_key} erstellt.")
+            window.current_character_key = new_key
             update_character_fields(window, empty_char)
         new_btn.clicked.connect(on_new_clicked)
          
@@ -1532,7 +1711,19 @@ def show_characters_window(parent=None):
     # --- Exit-Button einbinden ---
     exit_btn = winFindChild(window,QWidget, "exitBtnCharacter")
     if exit_btn:
-        exit_btn.clicked.connect(window.close)
+        def on_exit_clicked():
+            window.close()
+            if parent:
+                parent.show()
+        exit_btn.clicked.connect(on_exit_clicked)
+    
+    def on_close_event(event):
+        settings = load_settings()
+        save_settings(settings)
+        event.accept()
+        if parent:
+            parent.show()
+    window.closeEvent = on_close_event
 
     log_info("Charakterfenster erfolgreich geladen und angezeigt.")
     return window
@@ -1562,7 +1753,7 @@ def show_objects_window(parent=None):
 
     # Status-ComboBox füllen
     status = load_translation(Path("core/translations/status.json"), language)
-    combo_status = winFindChild(window, QComboBox, "comboBoxObjectStatus")
+    combo_status = winFindChild(window, QComboBox, "comboBoxObjectsStatus")
     fill_combobox(combo_status, list(status.values()), current_object.get("object_status", 0))
 
     # --- Save-Button einbinden ---
@@ -1583,13 +1774,17 @@ def show_objects_window(parent=None):
     if new_btn:
         def on_new_clicked():
             object_data = safe_load_json(object_path, {})
-            new_id = f"object_ID_{len(object_data) + 1:02d}"
+            new_key, new_id = get_next_id(object_data, "object_ID_")
             empty_object = get_empty_object()
-            empty_object["object_ID"] = str(len(object_data) + 1)
-            object_data[new_id] = empty_object
+            empty_object["object_ID"] = new_id
+            # Setze Erstellungs-/Bearbeitungsdatum
+            today = QDate.currentDate().toString("yyyy-MM-dd")
+            empty_object["object_created"] = today
+            empty_object["object_modified"] = today
+            object_data[new_key] = empty_object
             safe_save_json(object_path, object_data)
-            log_info(f"Neues Objekt {new_id} erstellt.")
-            window.current_object_key = new_id
+            log_info(f"Neues Objekt {new_key} erstellt.")
+            window.current_object_key = new_key
             update_object_fields(window, empty_object)
         new_btn.clicked.connect(on_new_clicked)
     # --- nächster Objekt Button einbinden ---
@@ -1654,7 +1849,19 @@ def show_objects_window(parent=None):
     # --- Exit-Button einbinden ---
     exit_btn = winFindChild(window,QWidget, "exitBtnObjects")
     if exit_btn:
-        exit_btn.clicked.connect(window.close)
+        def on_exit_clicked():
+            window.close()
+            if parent:
+                parent.show()
+        exit_btn.clicked.connect(on_exit_clicked)
+
+    def on_close_event(event):
+        settings = load_settings()
+        save_settings(settings)
+        event.accept()
+        if parent:
+            parent.show()
+    window.closeEvent = on_close_event
 
     log_info("Objektfenster erfolgreich geladen und angezeigt.")
     return window
@@ -1682,7 +1889,7 @@ def show_locations_window(parent=None):
     update_location_fields(window, current_location)
     # Status-ComboBox füllen
     status = load_translation(Path("core/translations/status.json"), language)
-    combo_status = winFindChild(window, QComboBox, "comboBoxLocationStatus")
+    combo_status = winFindChild(window, QComboBox, "comboBoxLocationsStatus")
     fill_combobox(combo_status, list(status.values()), current_location.get("location_status", 0) if isinstance(current_location, dict) else 0)
     # --- Save-Button einbinden ---
     save_btn = winFindChild(window,QWidget, "saveBtnLocations")
@@ -1702,13 +1909,16 @@ def show_locations_window(parent=None):
     if new_btn:
         def on_new_clicked():
             location_data = safe_load_json(locations_path, {})
-            new_id = f"location_ID_{len(location_data) + 1:02d}"
+            new_key, new_id = get_next_id(location_data, "location_ID_")
             empty_location = get_empty_location()
-            empty_location["location_ID"] = str(len(location_data) + 1)
-            location_data[new_id] = empty_location
+            empty_location["location_ID"] = new_id
+            today = QDate.currentDate().toString("yyyy-MM-dd")
+            empty_location["location_created"] = today
+            empty_location["location_modified"] = today
+            location_data[new_key] = empty_location
             safe_save_json(locations_path, location_data)
-            log_info(f"Neue Location {new_id} erstellt.")
-            window.current_location_key = new_id
+            log_info(f"Neue Location {new_key} erstellt.")
+            window.current_location_key = new_key
             update_location_fields(window, empty_location)
         new_btn.clicked.connect(on_new_clicked)
     # --- nächster Location Button einbinden ---
@@ -1772,7 +1982,19 @@ def show_locations_window(parent=None):
     # --- Exit-Button einbinden ---
     exit_btn = winFindChild(window,QWidget, "exitBtnLocations")
     if exit_btn:
-        exit_btn.clicked.connect(window.close) 
+        def on_exit_clicked():
+            window.close()
+            if parent:
+                parent.show()
+        exit_btn.clicked.connect(on_exit_clicked)
+    
+    def on_close_event(event):
+        settings = load_settings()
+        save_settings(settings)
+        event.accept()
+        if parent:
+            parent.show()
+    window.closeEvent = on_close_event
 
     log_info("Locationsfenster erfolgreich geladen und angezeigt.")
     return window
@@ -1800,7 +2022,7 @@ def show_storylines_window(parent=None):
     update_storyline_fields(window, current_storyline)
     # Status-ComboBox füllen
     status = load_translation(Path("core/translations/status.json"), language)
-    combo_status = winFindChild(window, QComboBox, "comboBoxStorylineStatus")
+    combo_status = winFindChild(window, QComboBox, "comboBoxStorylinesStatus")
     fill_combobox(combo_status, list(status.values()), current_storyline.get("storyline_status", 0) if isinstance(current_storyline, dict) else 0)
     # --- Save-Button einbinden ---
     save_btn = winFindChild(window,QWidget, "saveBtnStorylines")
@@ -1820,13 +2042,16 @@ def show_storylines_window(parent=None):
     if new_btn:
         def on_new_clicked():
             storyline_data = safe_load_json(storylines_path, {})
-            new_id = f"storyline_ID_{len(storyline_data) + 1:02d}"
+            new_key, new_id = get_next_id(storyline_data, "storyline_ID_")
             empty_storyline = get_empty_storyline()
-            empty_storyline["storyline_ID"] = str(len(storyline_data) + 1)
-            storyline_data[new_id] = empty_storyline
+            empty_storyline["storyline_ID"] = new_id
+            today = QDate.currentDate().toString("yyyy-MM-dd")
+            empty_storyline["storyline_created"] = today
+            empty_storyline["storyline_modified"] = today
+            storyline_data[new_key] = empty_storyline
             safe_save_json(storylines_path, storyline_data)
-            log_info(f"Neue Storyline {new_id} erstellt.")
-            window.current_storyline_key = new_id
+            log_info(f"Neue Storyline {new_key} erstellt.")
+            window.current_storyline_key = new_key
             update_storyline_fields(window, empty_storyline)
         new_btn.clicked.connect(on_new_clicked)
     # --- nächster Storyline Button einbinden ---
@@ -1890,7 +2115,19 @@ def show_storylines_window(parent=None):
     # --- Exit-Button einbinden ---
     exit_btn = winFindChild(window,QWidget, "exitBtnStorylines")
     if exit_btn:
-        exit_btn.clicked.connect(window.close)
+        def on_exit_clicked():
+            window.close()
+            if parent:
+                parent.show()
+        exit_btn.clicked.connect(on_exit_clicked)
+    
+    def on_close_event(event):
+        settings = load_settings()
+        save_settings(settings)
+        event.accept()
+        if parent:
+            parent.show()
+    window.closeEvent = on_close_event
 
     log_info("Storylinefenster erfolgreich geladen und angezeigt.")
     return window
@@ -1900,10 +2137,316 @@ def show_editor_window(parent=None):
     window = DynamicWindow("editor_ui", UI_FILES["editor"], splitter_name="mainSplitter")
     window.show()
 
+    # --- Kapitel-/Szenenstruktur laden ---
+    settings = load_settings()
+    last_project_key = settings.get("last_project")
+    chapters_dir = Path("data/chapters")
+    projects_data = safe_load_json(Path("data/projects/data_projects.json"), {})
+    project = projects_data.get(last_project_key, {})
+    project_id = project.get("project_ID", last_project_key.split("_")[-1])
+    project_name = project.get("project_title", f"project_{project_id}")
+    today_str = QDate.currentDate().toString("yyyyMMdd")
+    safe_project_name = "".join(c for c in project_name if c.isalnum() or c in ("_", "-")).rstrip()
+    project_dir = chapters_dir / f"project_{project_id}"
+    project_dir.mkdir(parents=True, exist_ok=True)
+    chapter_file = project_dir / f"data_{safe_project_name}_{today_str}.json"
+    if not chapter_file.exists():
+        template = safe_load_json(chapters_dir / "data_project_00.json", {})
+        safe_save_json(chapter_file, template)
+    chapter_data = safe_load_json(chapter_file, {})
+    window.chapter_data = chapter_data
+    window.chapter_file = chapter_file
+    update_chapter_list_widget(window)
+
+    # --- Erstes Kapitel und erste Szene bestimmen ---
+    first_chapter_key = next(iter(chapter_data.keys()), None)
+    first_chapter = chapter_data[first_chapter_key] if first_chapter_key else None
+    scene_keys = [k for k in first_chapter.keys() if k.startswith("scenes_id_")] if first_chapter else []
+    first_scene_key = scene_keys[0] if scene_keys else None
+    first_scene = first_chapter[first_scene_key] if first_scene_key else None
+
+    # --- Kapitel-Felder setzen ---
+    for field, (widget_type, widget_name) in EDITOR_CHAPTER_MAP.items():
+        value = first_chapter.get(field, "") if first_chapter else ""
+        widget = winFindChild(window, widget_type, widget_name)
+        if widget:
+            if isinstance(widget, QLineEdit):
+                widget.setText(str(value))
+            elif isinstance(widget, QTextEdit):
+                widget.setPlainText(str(value))
+            elif isinstance(widget, QComboBox):
+                try:
+                    widget.setCurrentIndex(int(value))
+                except Exception:
+                    widget.setCurrentIndex(0)
+            elif isinstance(widget, QDateEdit):
+                if value:
+                    date = QDate.fromString(value, "yyyy-MM-dd")
+                    if date.isValid():
+                        widget.setDate(date)
+
+    # --- Szenen-Felder setzen ---
+    for field, (widget_type, widget_name) in EDITOR_SCENE_MAP.items():
+        value = first_scene.get(field, "") if first_scene else ""
+        widget = winFindChild(window, widget_type, widget_name)
+        if widget:
+            if isinstance(widget, QLineEdit):
+                widget.setText(str(value))
+            elif isinstance(widget, QTextEdit):
+                widget.setPlainText(str(value))
+            elif isinstance(widget, QPlainTextEdit):
+                widget.setPlainText(str(value))
+            elif isinstance(widget, QComboBox):
+                try:
+                    widget.setCurrentIndex(int(value))
+                except Exception:
+                    widget.setCurrentIndex(0)
+            elif isinstance(widget, QSpinBox):
+                try:
+                    widget.setValue(int(value))
+                except Exception:
+                    widget.setValue(0)
+            elif isinstance(widget, QDateEdit):
+                if value:
+                    date = QDate.fromString(value, "yyyy-MM-dd")
+                    if date.isValid():
+                        widget.setDate(date)
+
+    # --- Labels und Zusatzfelder setzen ---
+    # Kapitel-ID
+    label_chapter_id = winFindChild(window, QLabel, "labelEditorChapterID")
+    if label_chapter_id and first_chapter:
+        label_chapter_id.setText(first_chapter.get("chapter_id", ""))
+
+    # Szenen-ID
+    label_scene_id = winFindChild(window, QLabel, "labelEditorSceneID")
+    if label_scene_id and first_scene:
+        label_scene_id.setText(first_scene.get("scene_id", ""))
+
+    # Projektname
+    label_project = winFindChild(window, QLabel, "labelEditorActualProject")
+    if label_project:
+        label_project.setText(project_name)
+
+    # Wortanzahl im Editor
+    plain_text_widget = winFindChild(window, QPlainTextEdit, "plainTextEditorScenePlainText")
+    label_word_count = winFindChild(window, QLabel, "labelEditorSceneWordCount")
+    if plain_text_widget and label_word_count:
+        def update_word_count():
+            text = plain_text_widget.toPlainText()
+            count = len(text.split())
+            label_word_count.setText(str(count))
+        plain_text_widget.textChanged.connect(update_word_count)
+        update_word_count()
+
+    # --- Save-Button einbinden ---
+    save_btn = winFindChild(window, QWidget, "saveBtnEditorChapter")
+    if save_btn:
+        def on_save_chapter():
+            chapter_data = window.chapter_data
+            # Aktuelle Kapitel-ID aus dem Label holen
+            label_chapter_id = winFindChild(window, QLabel, "labelEditorChapterID")
+            current_chapter_id = label_chapter_id.text() if label_chapter_id else ""
+            # Passenden Key im Dict suchen
+            current_key = None
+            for k, v in chapter_data.items():
+                if v.get("chapter_id", "") == current_chapter_id:
+                    current_key = k
+                    break
+            if not current_key:
+                return
+            # Felder auslesen und speichern
+            chapter = chapter_data[current_key]
+            chapter.update(read_editor_chapter_fields(window))
+            chapter_data[current_key] = chapter
+            safe_save_json(window.chapter_file, chapter_data)
+            log_info(f"Kapitel {current_key} erfolgreich gespeichert.")
+            update_chapter_list_widget(window)
+        save_btn.clicked.connect(on_save_chapter)
+
+    # --- Neuer Kapitel-Button einbinden ---
+    new_btn = winFindChild(window, QWidget, "newBtnEditorChapter")
+    if new_btn:
+        def on_new_chapter():
+            chapter_data = window.chapter_data
+            # Neuen Key und ID generieren
+            new_key, new_id = get_next_id(chapter_data, "chapter_id_")
+            empty_chapter = get_empty_chapter()
+            empty_chapter["chapter_id"] = new_id
+            # Optional: aktuelles Datum setzen
+            today = QDate.currentDate().toString("yyyy-MM-dd")
+            empty_chapter["chapter_begin"] = today
+            empty_chapter["chapter_edited"] = today
+            # Kapitel hinzufügen und speichern
+            chapter_data[new_key] = empty_chapter
+            safe_save_json(window.chapter_file, chapter_data)
+            # Kapitel-Liste aktualisieren
+            update_chapter_list_widget(window)
+            # Felder im Editor setzen
+            for field, (widget_type, widget_name) in EDITOR_CHAPTER_MAP.items():
+                widget = winFindChild(window, widget_type, widget_name)
+                value = empty_chapter.get(field, "")
+                if widget:
+                    if isinstance(widget, QLineEdit):
+                        widget.setText(str(value))
+                    elif isinstance(widget, QTextEdit):
+                        widget.setPlainText(str(value))
+                    elif isinstance(widget, QComboBox):
+                        try:
+                            widget.setCurrentIndex(int(value))
+                        except Exception:
+                            widget.setCurrentIndex(0)
+                    elif isinstance(widget, QDateEdit):
+                        if value:
+                            date = QDate.fromString(value, "yyyy-MM-dd")
+                            if date.isValid():
+                                widget.setDate(date)
+            # Kapitel-ID-Label aktualisieren
+            label_chapter_id = winFindChild(window, QLabel, "labelEditorChapterID")
+            if label_chapter_id:
+                label_chapter_id.setText(new_id)
+            
+            log_info(f"Neues Kapitel {new_key} angelegt.")
+        
+        new_btn.clicked.connect(on_new_chapter)
+
+    # --- Next-Kapitel-Button einbinden ---
+    next_btn = winFindChild(window, QWidget, "nextBtnEditorChapter")
+    if next_btn:
+        def on_next_chapter():
+            chapter_data = window.chapter_data
+            keys = list(chapter_data.keys())
+            if not keys:
+                return
+            # Aktuelles Kapitel bestimmen
+            current_id = winFindChild(window, QLabel, "labelEditorChapterID")
+            current_key = None
+            if current_id:
+                for k, v in chapter_data.items():
+                    if v.get("chapter_id", "") == current_id.text():
+                        current_key = k
+                        break
+            if current_key and current_key in keys:
+                idx = keys.index(current_key)
+                next_idx = (idx + 1) % len(keys)
+            else:
+                next_idx = 0
+            next_key = keys[next_idx]
+            next_chapter = chapter_data[next_key]
+            # Felder setzen
+            update_editor_chapter_fields(window, next_chapter)
+            # Kapitel-ID-Label aktualisieren
+            label_chapter_id = winFindChild(window, QLabel, "labelEditorChapterID")
+            if label_chapter_id:
+                label_chapter_id.setText(next_chapter.get("chapter_id", ""))
+        next_btn.clicked.connect(on_next_chapter)
+
+    # --- Prev-Kapitel-Button einbinden ---
+    prev_btn = winFindChild(window, QWidget, "previousBtnEditorChapter")
+    if prev_btn:
+        def on_prev_chapter():
+            chapter_data = window.chapter_data
+            keys = list(chapter_data.keys())
+            if not keys:
+                return
+            # Aktuelles Kapitel bestimmen
+            current_id = winFindChild(window, QLabel, "labelEditorChapterID")
+            current_key = None
+            if current_id:
+                for k, v in chapter_data.items():
+                    if v.get("chapter_id", "") == current_id.text():
+                        current_key = k
+                        break
+            if current_key and current_key in keys:
+                idx = keys.index(current_key)
+                prev_idx = (idx - 1) % len(keys)
+            else:
+                prev_idx = 0
+            prev_key = keys[prev_idx]
+            prev_chapter = chapter_data[prev_key]
+            # Felder setzen
+            update_editor_chapter_fields(window, prev_chapter)
+            # Kapitel-ID-Label aktualisieren
+            label_chapter_id = winFindChild(window, QLabel, "labelEditorChapterID")
+            if label_chapter_id:
+                label_chapter_id.setText(prev_chapter.get("chapter_id", ""))
+        prev_btn.clicked.connect(on_prev_chapter)
+
+    # --- Delete-Kapitel-Button einbinden ---
+    delete_btn = winFindChild(window, QWidget, "deleteBtnEditorChapter")
+    if delete_btn:
+        def on_delete_chapter():
+            chapter_data = window.chapter_data
+            # Aktuelle Kapitel-ID aus dem Label holen
+            label_chapter_id = winFindChild(window, QLabel, "labelEditorChapterID")
+            current_chapter_id = label_chapter_id.text() if label_chapter_id else ""
+            # Passenden Key im Dict suchen
+            current_key = None
+            for k, v in chapter_data.items():
+                if v.get("chapter_id", "") == current_chapter_id:
+                    current_key = k
+                    break
+            if not current_key:
+                return
+            # Bestätigungsdialog
+            if not show_secure_dialog(window, action="delete_chapter", project_key=current_chapter_id):
+                return
+            # Kapitel löschen
+            del chapter_data[current_key]
+            safe_save_json(window.chapter_file, chapter_data)
+            log_info(f"Kapitel {current_key} gelöscht.")
+            # Kapitel-Liste im QListWidget aktualisieren
+            update_chapter_list_widget(window)
+            # Nächstes oder vorheriges Kapitel anzeigen
+            keys = list(chapter_data.keys())
+            if keys:
+                # Wähle das nächste Kapitel, falls möglich, sonst das vorherige
+                idx = 0
+                if current_key in keys:
+                    idx = keys.index(current_key)
+                if idx >= len(keys):
+                    idx = len(keys) - 1
+                next_key = keys[idx]
+                next_chapter = chapter_data[next_key]
+                update_editor_chapter_fields(window, next_chapter)
+                label_chapter_id = winFindChild(window, QLabel, "labelEditorChapterID")
+                if label_chapter_id:
+                    label_chapter_id.setText(next_chapter.get("chapter_id", ""))
+            else:
+                # Keine Kapitel mehr vorhanden: Felder leeren
+                for field, (widget_type, widget_name) in EDITOR_CHAPTER_MAP.items():
+                    widget = winFindChild(window, widget_type, widget_name)
+                    if widget:
+                        if isinstance(widget, QLineEdit):
+                            widget.clear()
+                        elif isinstance(widget, QTextEdit):
+                            widget.clear()
+                        elif isinstance(widget, QComboBox):
+                            widget.setCurrentIndex(0)
+                        elif isinstance(widget, QDateEdit):
+                            widget.setDate(QDate.currentDate())
+                label_chapter_id = winFindChild(window, QLabel, "labelEditorChapterID")
+                if label_chapter_id:
+                    label_chapter_id.setText("")
+
+        delete_btn.clicked.connect(on_delete_chapter)
+
     # --- Exit-Button einbinden ---
     exit_btn = winFindChild(window,QWidget, "exitBtnEditor")
     if exit_btn:
-        exit_btn.clicked.connect(window.close)
+        def on_exit_clicked():
+            window.close()
+            if parent:
+                parent.show()
+        exit_btn.clicked.connect(on_exit_clicked)
+    
+    def on_close_event(event):
+        settings = load_settings()
+        save_settings(settings)
+        event.accept()
+        if parent:
+            parent.show()
+    window.closeEvent = on_close_event
 
     log_info("Editorfenster erfolgreich geladen und angezeigt.")
     return window
@@ -1916,7 +2459,19 @@ def show_preferences_window(parent=None):
     # --- Exit-Button einbinden ---
     exit_btn = winFindChild(window,QWidget, "exitBtnPreferences")
     if exit_btn:
-        exit_btn.clicked.connect(window.close)
+        def on_exit_clicked():
+            window.close()
+            if parent:
+                parent.show()
+        exit_btn.clicked.connect(on_exit_clicked)   
+    
+    def on_close_event(event):
+        settings = load_settings()
+        save_settings(settings)
+        event.accept()
+        if parent:
+            parent.show()
+    window.closeEvent = on_close_event
 
     log_info("Einstellungen-Fenster erfolgreich geladen und angezeigt.")
     return window
@@ -1929,7 +2484,19 @@ def show_help_window(parent=None):
     # --- Exit-Button einbinden ---
     exit_btn = winFindChild(window,QWidget, "exitBtnHelp")
     if exit_btn:
-        exit_btn.clicked.connect(window.close)
+        def on_exit_clicked():
+            window.close()
+            if parent:
+                parent.show()
+        exit_btn.clicked.connect(on_exit_clicked)
+    
+    def on_close_event(event):
+        settings = load_settings()
+        save_settings(settings)
+        event.accept()
+        if parent:
+            parent.show()
+    window.closeEvent = on_close_event
 
     log_info("Hilfe-Fenster erfolgreich geladen und angezeigt.")
     return window

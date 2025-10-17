@@ -232,19 +232,6 @@ li.checked::marker { content: &quot;\2612&quot;; }
                 </property>
                </widget>
               </item>
-              <item row="9" column="0" colspan="2">
-               <widget class="QPlainTextEdit" name="textDescriptionStorylines">
-                <property name="font">
-                 <font>
-                  <family>Lato</family>
-                  <pointsize>12</pointsize>
-                  <bold>false</bold>
-                  <stylestrategy>PreferAntialias</stylestrategy>
-                  <kerning>true</kerning>
-                 </font>
-                </property>
-               </widget>
-              </item>
               <item row="3" column="1">
                <widget class="QToolButton" name="setDateStorylinesToday_1">
                 <property name="cursor">
@@ -322,6 +309,19 @@ li.checked::marker { content: &quot;\2612&quot;; }
                   <month>1</month>
                   <day>1</day>
                  </date>
+                </property>
+               </widget>
+              </item>
+              <item row="9" column="0" colspan="2">
+               <widget class="QTextEdit" name="textDescriptionStorylines">
+                <property name="font">
+                 <font>
+                  <family>Lato</family>
+                  <pointsize>12</pointsize>
+                  <bold>false</bold>
+                  <stylestrategy>PreferAntialias</stylestrategy>
+                  <kerning>true</kerning>
+                 </font>
                 </property>
                </widget>
               </item>
@@ -672,6 +672,23 @@ li.checked::marker { content: &quot;\2612&quot;; }
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
+ <tabstops>
+  <tabstop>titleStorylines</tabstop>
+  <tabstop>dateEditCreatedStorylines</tabstop>
+  <tabstop>setDateStorylinesToday_1</tabstop>
+  <tabstop>dateEditEditedStorylines</tabstop>
+  <tabstop>setDateStorylinesToday_2</tabstop>
+  <tabstop>comboBoxStorylinesStatus</tabstop>
+  <tabstop>textDescriptionStorylines</tabstop>
+  <tabstop>newBtnStorylines</tabstop>
+  <tabstop>nextBtnStorylines</tabstop>
+  <tabstop>previousBtnStorylines</tabstop>
+  <tabstop>deleteBtnStorylines</tabstop>
+  <tabstop>imageLoadStorylines</tabstop>
+  <tabstop>saveBtnStorylines</tabstop>
+  <tabstop>exitBtnStorylines</tabstop>
+  <tabstop>textEditHelpStorylines</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

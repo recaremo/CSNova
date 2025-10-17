@@ -1,0 +1,57 @@
+{
+  "chapter_id_01": {
+    "chapter_id": "1",
+    "chapter_title": "Kapitel 1",
+    "chapter_premise": "Kapitel 1 Prämisse",
+    "chapter_status": 0,
+    "chapter_begin": "2025-10-09",
+    "chapter_edited": "2025-10-22",
+    "chapter_excerpt": "Auszug Kapitel 1",
+    "chapter_notes": "Notes Kapitel 1",
+    "scenes_id_01": {
+      "scene_id": "1",
+      "scene_title": "",
+      "scene_premise": "",
+      "scene_status": "",
+      "scene_begin": "",
+      "scene_edited": "",
+      "scene_word_count": "",
+      "scene_order": "1",
+      "scene_goal": "",
+      "scene_result ": "",
+      "scene_storyline": "",
+      "scene_location": "",
+      "scene_charter": "",
+      "scene_object": "",
+      "scene_characters": [],
+      "scene_objects": [],
+      "scene_mood": "",
+      "scene_duration": "",
+      "scene_type": "",
+      "scene_tags": "",
+      "scene_notes": "",
+      "scene_plain_text": "",
+      "scene_rich_text": ""
+    }
+  },
+  "chapter_id_03": {
+    "chapter_id": "3",
+    "chapter_title": "Kapitel 2",
+    "chapter_premise": "Kapitel 2",
+    "chapter_status": 0,
+    "chapter_begin": "2025-10-17",
+    "chapter_edited": "2025-10-17",
+    "chapter_excerpt": "",
+    "chapter_notes": ""
+  },
+  "chapter_id_04": {
+    "chapter_id": "4",
+    "chapter_title": "Kapitel 3",
+    "chapter_premise": "",
+    "chapter_status": 0,
+    "chapter_begin": "2025-10-17",
+    "chapter_edited": "2025-10-17",
+    "chapter_excerpt": "",
+    "chapter_notes": ""
+  }
+}
