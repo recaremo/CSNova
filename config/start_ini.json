@@ -5,8 +5,8 @@
   "theme": "Modern - Neutral",
   "help_ui": {
     "win_maximized": false,
-    "win_width": 1920,
-    "win_height": 1080,
+    "win_width": 1614,
+    "win_height": 994,
     "win_splitter": [
       576,
       833,
@@ -25,18 +25,18 @@
   },
   "main_ui": {
     "win_maximized": false,
-    "win_width": 1510,
-    "win_height": 851,
+    "win_width": 1673,
+    "win_height": 922,
     "win_splitter": [
-      410,
-      833,
-      203
+      467,
+      866,
+      250
     ]
   },
   "editor_ui": {
     "win_maximized": false,
-    "win_width": 1920,
-    "win_height": 1081,
+    "win_width": 1754,
+    "win_height": 1103,
     "win_splitter": [
       485,
       1109,
@@ -45,8 +45,8 @@
   },
   "preferences_ui": {
     "win_maximized": false,
-    "win_width": 1920,
-    "win_height": 1080,
+    "win_width": 1612,
+    "win_height": 882,
     "win_splitter": [
       521,
       929,
@@ -55,8 +55,8 @@
   },
   "projects_ui": {
     "win_maximized": false,
-    "win_width": 1920,
-    "win_height": 1080,
+    "win_width": 1617,
+    "win_height": 882,
     "win_splitter": [
       594,
       784,
@@ -65,8 +65,8 @@
   },
   "objects_ui": {
     "win_maximized": false,
-    "win_width": 1920,
-    "win_height": 1080,
+    "win_width": 1623,
+    "win_height": 875,
     "win_splitter": [
       553,
       779,
@@ -75,8 +75,8 @@
   },
   "locations_ui": {
     "win_maximized": false,
-    "win_width": 1920,
-    "win_height": 1080,
+    "win_width": 1611,
+    "win_height": 872,
     "win_splitter": [
       580,
       747,
@@ -85,8 +85,8 @@
   },
   "storylines_ui": {
     "win_maximized": false,
-    "win_width": 1920,
-    "win_height": 1080,
+    "win_width": 1600,
+    "win_height": 863,
     "win_splitter": [
       520,
       804,
@@ -95,12 +95,12 @@
   },
   "characters_ui": {
     "win_maximized": false,
-    "win_width": 1920,
-    "win_height": 1080,
+    "win_width": 1613,
+    "win_height": 962,
     "win_splitter": [
-      469,
-      929,
-      450
+      268,
+      884,
+      371
     ]
   }
 }

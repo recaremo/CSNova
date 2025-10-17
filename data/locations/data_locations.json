@@ -5,7 +5,7 @@
     "location_status": 0,
     "location_created": "2026-01-13",
     "location_modified": "2026-01-23",
-    "location_notes": "",
+    "location_notes": "Handlungsort 1",
     "location_titel": "Location 1"
   },
   "location_ID_02": {
@@ -14,7 +14,7 @@
     "location_status": 0,
     "location_created": "2026-01-13",
     "location_modified": "2026-01-23",
-    "location_notes": "",
+    "location_notes": "Handlungsort 2",
     "location_titel": "Location 3"
   }
 }

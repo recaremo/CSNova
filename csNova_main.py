@@ -2,13 +2,17 @@
 import sys
 import locale
 import json
+import tempfile
+from typing import Optional, Dict, Any
+from json import JSONDecodeError
 from pathlib import Path
 from datetime import datetime
 
 # Drittanbieter
 from PySide6.QtWidgets import (
     QApplication, QLabel, QWidget, QVBoxLayout, QSizePolicy, QSplitter, QListWidget,
-    QMainWindow, QComboBox, QLineEdit, QSpinBox, QTextEdit, QDateEdit, QCheckBox
+    QMainWindow, QComboBox, QLineEdit, QSpinBox, QTextEdit, QDateEdit, QCheckBox,
+    QToolBar, QDockWidget, QDialog
 )
 from PySide6.QtGui import QFont, QIcon, QRegularExpressionValidator, QPixmap
 from PySide6.QtCore import QDate, QRegularExpression, QTimer, QEvent
@@ -39,21 +43,104 @@ class CSNovaApp:
         self.main_window = None
         self.start_window = None
         self.help_window = None
+app_state = CSNovaApp()
+
 # Fensterereignisse verbinden, um UI-Einstellungen zu speichern
 class DynamicWindow(QMainWindow):
-    def __init__(self, settings_key, ui_file, splitter_name="mainSplitter"):
+    def __init__(self, settings_key, ui_file, splitter_name="mainSplitter", confirm_on_close=False):
         super().__init__()
         self.settings_key = settings_key
+        self.confirm_on_close = confirm_on_close
+        self._closing = False
         loader = QtUiTools.QUiLoader()
-        ui = loader.load(str(ui_file), self)
-        self.setCentralWidget(ui)
-        self.setWindowIcon(QIcon(str(ASSETS_DIR / "media" / "csnova.png")))
-        self.setWindowFlags(QtGui.Qt.Window)
+        ui = loader.load(str(ui_file))  # ohne parent laden
+
+        # Falls die geladene .ui ein QMainWindow ist: übernehme dessen Komponenten
+        if isinstance(ui, QMainWindow):
+            # Central widget übernehmen
+            central = ui.centralWidget()
+            if central:
+                central.setParent(self)
+                self.setCentralWidget(central)
+            else:
+                ui.setParent(self)
+                self.setCentralWidget(ui)
+
+            # Menüleiste übernehmen
+            try:
+                menubar = ui.menuBar()
+                if menubar:
+                    menubar.setParent(self)
+                    self.setMenuBar(menubar)
+            except Exception:
+                pass
+
+            # Statusbar übernehmen
+            try:
+                statusbar = ui.statusBar()
+                if statusbar:
+                    statusbar.setParent(self)
+                    self.setStatusBar(statusbar)
+            except Exception:
+                pass
+
+            # Toolbars übernehmen
+            try:
+                for tb in ui.findChildren(QToolBar):
+                    tb.setParent(self)
+                    self.addToolBar(tb)
+            except Exception:
+                pass
+
+            # DockWidgets übernehmen
+            try:
+                for dock in ui.findChildren(QDockWidget):
+                    dock.setParent(self)
+                    allowed = dock.allowedAreas()
+                    area = None
+                    for a in (QtCore.Qt.LeftDockWidgetArea, QtCore.Qt.RightDockWidgetArea,
+                              QtCore.Qt.TopDockWidgetArea, QtCore.Qt.BottomDockWidgetArea):
+                        if allowed & a:
+                            area = a
+                            break
+                    if area is None:
+                        area = QtCore.Qt.LeftDockWidgetArea
+                    self.addDockWidget(area, dock)
+            except Exception:
+                pass
+
+            # Fenster-Titel, Flags und Icon übernehmen
+            try:
+                title = ui.windowTitle()
+                if title:
+                    self.setWindowTitle(title)
+            except Exception:
+                pass
+            try:
+                flags = ui.windowFlags()
+                self.setWindowFlags(flags)
+            except Exception:
+                pass
+            try:
+                icon = ui.windowIcon()
+                if not icon.isNull():
+                    self.setWindowIcon(icon)
+            except Exception:
+                pass
+
+            ui.deleteLater()
+        else:
+            ui.setParent(self)
+            self.setCentralWidget(ui)
+
+        try:
+            self.setWindowIcon(QIcon(str(ASSETS_DIR / "media" / "csnova.png")))
+        except Exception:
+            pass
         apply_ui_settings(self, settings_key, splitter_name=splitter_name)
         connect_dynamic_events(self, splitter_name=splitter_name)
 
     def save_window_settings(self):
-        """Speichert Fenstergröße und Maximierungsstatus."""
         ui_settings = self.ui_settings.copy()
         if not self.isMaximized():
             size = self.size()
@@ -72,24 +159,51 @@ class DynamicWindow(QMainWindow):
         if event.type() == QtCore.QEvent.WindowStateChange:
             self.save_window_settings()
         super().changeEvent(event)
-    
-    # 
+
     @property
     def ui_settings(self):
         settings = load_settings()
         return settings.get(self.settings_key, {})
-# Splitter-Events verbinden, um Positionen zu speichern
-def connect_dynamic_events(self, splitter_name=None):
-    if splitter_name:
-        splitter = self.centralWidget().findChild(QSplitter, splitter_name)
+
+    def closeEvent(self, event):
+        # If already in programmatic shutdown, accept and return
+        if getattr(self, "_closing", False):
+            event.accept()
+            return
+
+        if not getattr(self, "confirm_on_close", False):
+            event.accept()
+            return
+
+        try:
+            confirmed = show_secure_dialog(self, action="exit")
+        except Exception as e:
+            # Log the exception and do NOT accept — avoid unexpected close loops
+            log_exception("Fehler beim Anzeigen des Sicherheitsdialogs beim Schließen", e)
+            event.ignore()
+            return
+
+        if confirmed:
+            # mark as closing so subsequent closeEvent calls don't re-open the dialog
+            self._closing = True
+            event.accept()
+            QApplication.quit()
+        else:
+            event.ignore()
+
+# Fensterereignisse verbinden, um UI-Einstellungen zu speichern
+def connect_dynamic_events(window, splitter_name=None):
+    if splitter_name and window.centralWidget() is not None:
+        splitter = window.centralWidget().findChild(QSplitter, splitter_name)
         if splitter:
             def on_splitter_size_changed():
                 settings = load_settings()
-                ui_settings = settings.get(self.settings_key, {})
+                ui_settings = settings.get(window.settings_key, {})
                 ui_settings["win_splitter"] = splitter.sizes()
-                settings[self.settings_key] = ui_settings
+                settings[window.settings_key] = ui_settings
                 save_settings(settings)
             splitter.splitterMoved.connect(lambda pos, index: on_splitter_size_changed())
+
 # Alter berechnen aus Geburts- und Sterbedatum
 def calculate_age(birth_str, died_str):
     # Versuche das Datum zu parsen (Format: TT.MM.JJJJ)
@@ -134,73 +248,156 @@ def apply_ui_settings(window, settings_key, splitter_name=None):
                 splitter.setSizes(ui_settings["win_splitter"])
         QtCore.QTimer.singleShot(0, set_splitter_sizes)
 # Sicherheitsabfrage vor dem Beenden
-def show_secure_dialog(parent=None, action="exit", project_key=None, on_confirm=None):
-    loader = QtUiTools.QUiLoader()
-    secure_window = loader.load(str(UI_FILES["secure"]), parent)
-    if secure_window is None:
-        log_error(f"Konnte UI-Datei nicht laden: {UI_FILES["secure"]}")
-        raise FileNotFoundError(f"Konnte UI-Datei nicht laden: {UI_FILES["secure"]}")
-    secure_window.setFont(QFont("Arial", 12))
-    secure_window.setWindowModality(QtGui.Qt.ApplicationModal)
-    secure_window.setWindowFlags(QtGui.Qt.Dialog)
-    secure_window.setStyleSheet("background-color: white;")
+def show_secure_dialog(parent=None, action="exit", project_key=None) -> bool:
 
-    infoText = secure_window.findChild(QLabel, "infoText")
-    yes_btn = secure_window.findChild(QWidget, "yesBtn")
-    no_btn = secure_window.findChild(QWidget, "noBtn")
+    # Versuche parent sinnvoll zu wählen
+    parent_win = parent or QApplication.activeWindow() or getattr(app_state, "main_window", None)
+
+    loader = QtUiTools.QUiLoader()
+    content = None
+    try:
+        content = loader.load(str(UI_FILES["secure"]))
+    except Exception as e:
+        log_exception("show_secure_dialog: UI load failed", e)
+        content = None
+
+    # Fallback: QMessageBox (sichtbar, zuverlässig)
+    if content is None:
+        from PySide6.QtWidgets import QMessageBox
+        msg = QMessageBox(parent_win)
+        msg.setIcon(QMessageBox.Question)
+        if action == "exit":
+            text = "Möchten Sie das Programm wirklich beenden?"
+        elif action.startswith("delete") and project_key:
+            text = f"Möchten Sie '{project_key}' wirklich löschen?"
+        else:
+            text = "Bitte bestätigen."
+        msg.setText(text)
+        msg.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
+        msg.setWindowModality(QtCore.Qt.ApplicationModal)
+        try:
+            msg.setWindowFlag(QtCore.Qt.WindowStaysOnTopHint, True)
+        except Exception:
+            pass
+        msg.raise_()
+        msg.activateWindow()
+        res = msg.exec()
+        return res == QMessageBox.Yes
+
+    # Erzeuge Dialog als child/transient (besseres Verhalten auf Wayland/X11)
+    try:
+        dialog = QDialog(parent_win)
+        dialog.setModal(True)
+        # Flags: Dialog + System menu + stay on top hint (WM-freundlich)
+        flags = QtCore.Qt.Dialog | QtCore.Qt.WindowTitleHint | QtCore.Qt.WindowSystemMenuHint
+        dialog.setWindowFlags(flags)
+        try:
+            dialog.setWindowFlag(QtCore.Qt.WindowStaysOnTopHint, True)
+        except Exception:
+            pass
+    except Exception as e:
+        log_exception("show_secure_dialog: failed to create QDialog with parent", e)
+        dialog = QDialog(None)
+        dialog.setModal(True)
+
+    # Packe geladenes UI ein
+    try:
+        layout = QVBoxLayout(dialog)
+        layout.setContentsMargins(6, 6, 6, 6)
+        content.setParent(dialog)
+        layout.addWidget(content)
+    except Exception as e:
+        log_exception("show_secure_dialog: failed to place content into dialog", e)
+        dialog = None
+
+    if dialog is None:
+        # fallback to message box
+        from PySide6.QtWidgets import QMessageBox
+        msg = QMessageBox(parent_win)
+        msg.setText("Fehler beim Anzeigen des Bestätigungsdialogs.")
+        msg.setStandardButtons(QMessageBox.Ok)
+        msg.exec()
+        return False
+
+    # Finde Widgets und setze Texte / Verbindungen
+    infoText = content.findChild(QLabel, "infoText")
+    yes_btn = content.findChild(QWidget, "yesBtn")
+    no_btn = content.findChild(QWidget, "noBtn")
+  
 
     if action == "exit":
         if infoText:
             infoText.setText("Möchten Sie das Programm wirklich beenden?")
-        if yes_btn:
-            yes_btn.clicked.connect(QApplication.quit)
-        if no_btn:
-            no_btn.clicked.connect(secure_window.close)
-    elif action == "delete_project":
-        if infoText and project_key:
-            infoText.setText(f"Möchten Sie das Projekt '{project_key}' wirklich löschen?")
-        if yes_btn and on_confirm:
-            yes_btn.clicked.connect(lambda: (on_confirm(), secure_window.close()))
-        if no_btn:
-            no_btn.clicked.connect(secure_window.close)
-    elif action == "delete_character":
-        if infoText and project_key:
-            infoText.setText(f"Möchten Sie den Charakter '{project_key}' wirklich löschen?")
-        if yes_btn and on_confirm:
-            yes_btn.clicked.connect(lambda: (on_confirm(), secure_window.close()))
-        if no_btn:
-            no_btn.clicked.connect(secure_window.close)
-    elif action == "delete_object":
-        if infoText and project_key:
-            infoText.setText(f"Möchten Sie das Objekt '{project_key}' wirklich löschen?")
-        if yes_btn and on_confirm:
-            yes_btn.clicked.connect(lambda: (on_confirm(), secure_window.close()))
-        if no_btn:
-            no_btn.clicked.connect(secure_window.close)
-    elif action == "delete_location":
-        if infoText and project_key:
-            infoText.setText(f"Möchten Sie den Ort '{project_key}' wirklich löschen?")
-        if yes_btn and on_confirm:
-            yes_btn.clicked.connect(lambda: (on_confirm(), secure_window.close()))
-        if no_btn:
-            no_btn.clicked.connect(secure_window.close)
-    elif action == "delete_storyline":
-        if infoText and project_key:
-            infoText.setText(f"Möchten Sie die Handlung '{project_key}' wirklich löschen?")
-        if yes_btn and on_confirm:
-            yes_btn.clicked.connect(lambda: (on_confirm(), secure_window.close()))
-        if no_btn:
-            no_btn.clicked.connect(secure_window.close)
+    elif action.startswith("delete") and infoText and project_key:
+        infoText.setText(f"Möchten Sie '{project_key}' wirklich löschen?")
 
-    secure_window.show()
-    log_info("Sicherheitsdialog erfolgreich geladen und angezeigt.")
-    return secure_window
+    # Verbinde vorhandene Buttons mit accept/reject
+    if yes_btn and hasattr(yes_btn, "clicked"):
+        yes_btn.clicked.connect(dialog.accept)
+    if no_btn and hasattr(no_btn, "clicked"):
+        no_btn.clicked.connect(dialog.reject)
+
+    # Falls die UI keine Buttons (oder nicht funktionsfähige) enthält: eigene hinzufügen
+    if (not yes_btn or not hasattr(yes_btn, "clicked")) or (not no_btn or not hasattr(no_btn, "clicked")):
+        from PySide6.QtWidgets import QPushButton, QHBoxLayout
+        btn_container = QWidget()
+        hb = QHBoxLayout(btn_container)
+        hb.addStretch()
+        yes = QPushButton("Ja")
+        no = QPushButton("Nein")
+        yes.clicked.connect(dialog.accept)
+        no.clicked.connect(dialog.reject)
+        hb.addWidget(yes)
+        hb.addWidget(no)
+        layout.addWidget(btn_container)
+
+    # Größe sicherstellen (sizeHint / Mindestgröße) — viele WM zeigen sonst nichts
+    try:
+        dialog.adjustSize()
+        sh = dialog.sizeHint()
+        minw = max(320, sh.width())
+        minh = max(140, sh.height())
+        dialog.resize(minw, minh)
+        dialog.setMinimumSize(minw, minh)
+    except Exception as e:
+        log_exception("show_secure_dialog: sizing failed", e)
+
+    # Sichtbar machen, Vordergrund erzwingen, Event-Loop kurz laufen lassen
+    try:
+        dialog.show()
+        dialog.raise_()
+        dialog.activateWindow()
+        QApplication.processEvents()
+    except Exception as e:
+        log_exception("show_secure_dialog: show/raise/activate failed", e)
+
+    try:
+        result = dialog.exec()
+    except Exception as e:
+        log_exception("show_secure_dialog: exec() failed", e)
+        return False
+
+    return result == QDialog.Accepted
 # Globale Referenzen auf Fenster
 def get_widget(parent, widget_type, name):
-    widget = parent.centralWidget().findChild(widget_type, name)
-    if widget is None:
-        log_error(f"Widget '{name}' vom Typ '{widget_type.__name__}' nicht gefunden!")
-    return widget
+    try:
+        # safe centralWidget access
+        cw = None
+        try:
+            cw = parent.centralWidget()
+        except Exception:
+            cw = None
+        widget = None
+        if cw is not None:
+            widget = cw.findChild(widget_type, name)
+        if widget is None and hasattr(parent, "findChild"):
+            widget = parent.findChild(widget_type, name)
+        if widget is None:
+            log_error(f"Widget '{name}' ({widget_type.__name__}) nicht gefunden im Fenster '{getattr(parent, 'windowTitle', lambda: '')()}'")
+        return widget
+    except Exception as e:
+        log_exception(f"get_widget: Fehler beim Suchen von {name}", e)
+        return None
 # Hilfsfunktionen zum Setzen von Werten in Widgets
 def set_text(parent, widget_type, name, value):
     widget = get_widget(parent, widget_type, name)
@@ -226,13 +423,69 @@ def set_checked(parent, widget_type, name, checked):
         widget.setChecked(checked)
 # Findet ein Kind-Widget im zentralen Widget des Fensters
 def winFindChild(window, widget_type, name):
-    return window.centralWidget().findChild(widget_type, name)
+    return get_widget(window, widget_type, name)
+# Sicheres Laden von JSON-Dateien
+def safe_load_json(path: Path, default: Any = None) -> Any:
+    try:
+        if not path.exists():
+            return default if default is not None else {}
+        with path.open("r", encoding="utf-8") as f:
+            return json.load(f)
+    except (JSONDecodeError, OSError) as e:
+        log_error(f"safe_load_json: failed to load {path}: {e}")
+        return default if default is not None else {}
+# Sicheres Speichern von JSON-Dateien
+def safe_save_json(path: Path, data: Any) -> bool:
+    try:
+        path.parent.mkdir(parents=True, exist_ok=True)
+        with tempfile.NamedTemporaryFile("w", encoding="utf-8", delete=False, dir=str(path.parent)) as tf:
+            json.dump(data, tf, ensure_ascii=False, indent=2)
+            tmpname = tf.name
+        Path(tmpname).replace(path)
+        return True
+    except Exception as e:
+        log_exception(f"safe_save_json: failed to save {path}", e)
+        return False
+
+# Übersetzungs- / static JSON Cache
+_TRANSLATION_CACHE: Dict[str, Any] = {}
+# Lade Übersetzungen aus JSON-Dateien mit Caching
+def load_translation(path: Path, language: str = "de", default_lang: str = "de") -> Any:
+    key = f"{path}:{language}"
+    if key in _TRANSLATION_CACHE:
+        return _TRANSLATION_CACHE[key]
+    data = safe_load_json(path, {})
+    if isinstance(data, dict) and language in data:
+        result = data[language]
+    else:
+        # fallback: default_lang or first value
+        if isinstance(data, dict):
+            result = data.get(default_lang, next(iter(data.values())) if data else {})
+        else:
+            result = data
+    _TRANSLATION_CACHE[key] = result
+    return result
+# Füllt eine ComboBox mit Werten und setzt den ausgewählten Index oder Wert
+def fill_combobox(combo: Optional[QComboBox], values: list, selected_index_or_value=0):
+    if combo is None:
+        return
+    combo.clear()
+    combo.addItems(list(values))
+    if isinstance(selected_index_or_value, int):
+        idx = selected_index_or_value if 0 <= selected_index_or_value < combo.count() else 0
+    else:
+        try:
+            idx = values.index(selected_index_or_value)
+        except Exception:
+            idx = 0
+    combo.setCurrentIndex(idx)
 
 # -------------------------------------------------------------------------------------
 # Grundlegende Mappings und Konstanten für Charaktere
 # -------------------------------------------------------------------------------------
 # Mapping der Charakterfelder zu Widget-Typen und Namen
 CHARACTER_FIELD_MAP = {
+        "character_status": (QComboBox, "comboBoxStatus"),
         "character_name": (QLineEdit, "lineEditName"),
         "character_firstname": (QLineEdit, "lineEditFirstName"),
         "character_nickname": (QLineEdit, "lineEditNickName"),
@@ -242,39 +495,37 @@ CHARACTER_FIELD_MAP = {
         "character_sexOrientation": (QComboBox, "comboBoxSexOrientation"),
         "character_role": (QComboBox, "comboBoxRole"),
         "character_group": (QComboBox, "comboBoxGroup"),
-        "character_development": (QTextEdit, "textEditDevelopment"),
-        "character_notes": (QTextEdit, "textEditNotes"),
-        "character_image": (QLineEdit, "lineEditImage"),
-        "character_images": (QListWidget, "listWidgetImages"),
+        "character_development": (QTextEdit, "textEditDevelopmentNotes"),
+        "character_notes": (QTextEdit, "textEditCharacterNotes"),
         "character_mother": (QLineEdit, "lineEditMother"),
         "character_father": (QLineEdit, "lineEditFather"),
         "character_referencePerson": (QLineEdit, "lineEditReferencePerson"),
-        "character_siblings": (QLineEdit, "lineEditSiblings"),
+        "character_siblings": (QTextEdit, "textEditSiblings"),
         "character_placeOfBirth": (QLineEdit, "lineEditPlaceOfBirth"),
         "character_country": (QLineEdit, "lineEditCountry"),
         "character_ethnicity": (QLineEdit, "lineEditEthnicity"),
         "character_ancestryNotes": (QTextEdit, "textEditAncestryNotes"),
-        "character_school": (QLineEdit, "lineEditSchool"),
-        "character_university": (QLineEdit, "lineEditUniversity"),
-        "character_vocationalTraining": (QLineEdit, "lineEditVocationalTraining"),
-        "character_profession": (QLineEdit, "lineEditProfession"),
-        "character_artMusic": (QLineEdit, "lineEditArtMusic"),
-        "character_sports": (QLineEdit, "lineEditSports"),
-        "character_technology": (QLineEdit, "lineEditTechnology"),
-        "character_autodidact": (QLineEdit, "lineEditAutodidact"),
+        "character_school": (QTextEdit, "textEditSchool"),
+        "character_university": (QTextEdit, "textEditUniversity"),
+        "character_vocationalTraining": (QTextEdit, "textEditVocationalTraining"),
+        "character_profession": (QTextEdit, "textEditProfession"),
+        "character_artMusic": (QTextEdit, "textEditArtMusic"),
+        "character_sports": (QTextEdit, "textEditSport"),
+        "character_technology": (QTextEdit, "textEditTechnic"),
+        "character_autodidact": (QTextEdit, "textEditAutodidact"),
         "character_educationNotes": (QTextEdit, "textEditEducationNotes"),
-        "character_positiveCharacteristics": (QTextEdit, "textEditPositiveCharacteristics"),
-        "character_negativeCharacteristics": (QTextEdit, "textEditNegativeCharacteristics"),
-        "character_fears": (QTextEdit, "textEditFears"),
-        "character_weaknesses": (QTextEdit, "textEditWeaknesses"),
-        "character_strengths": (QTextEdit, "textEditStrengths"),
-        "character_talents": (QTextEdit, "textEditTalents"),
-        "character_beliefs": (QTextEdit, "textEditBeliefs"),
-        "character_lifeGoals": (QTextEdit, "textEditLifeGoals"),
-        "character_motivation": (QTextEdit, "textEditMotivation"),
-        "character_behavior": (QTextEdit, "textEditBehavior"),
+        "character_positiveCharacteristics": (QLineEdit, "lineEditPosCharacteristics"),
+        "character_negativeCharacteristics": (QLineEdit, "lineEditNegCharacteristics"),
+        "character_fears": (QLineEdit, "lineEditFears"),
+        "character_weaknesses": (QLineEdit, "lineEditWeakness"),
+        "character_strengths": (QLineEdit, "lineEditStrength"),
+        "character_talents": (QLineEdit, "lineEditTalents"),
+        "character_beliefs": (QLineEdit, "lineEditBelief"),
+        "character_lifeGoals": (QLineEdit, "lineEditLifeGoal"),
+        "character_motivation": (QLineEdit, "lineEditMotivation"),
+        "character_behavior": (QLineEdit, "lineEditBehavior"),
         "character_personalityNotes": (QTextEdit, "textEditPersonalityNotes"),
-        "character_height": (QSpinBox, "spinBoxHeight"),
+        "character_height": (QSpinBox, "spinBoxSize"),
         "character_bodyType": (QComboBox, "comboBoxBodyType"),
         "character_stature": (QComboBox, "comboBoxStature"),
         "character_faceshape": (QComboBox, "comboBoxFaceShape"),
@@ -282,7 +533,7 @@ CHARACTER_FIELD_MAP = {
         "character_eyesColor": (QLineEdit, "lineEditEyeColor"),
         "character_hair": (QLineEdit, "lineEditHair"),
         "character_hairColor": (QLineEdit, "lineEditHairColor"),
-        "character_skinType": (QLineEdit, "lineEditSkinType"),
+        "character_skinType": (QLineEdit, "lineEditSkin"),
         "character_skinColor": (QLineEdit, "lineEditSkinColor"),
         "character_charisma": (QLineEdit, "lineEditCharisma"),
         "character_specialFeatures": (QLineEdit, "lineEditSpecialFeatures"),
@@ -291,11 +542,11 @@ CHARACTER_FIELD_MAP = {
         "character_neck": (QLineEdit, "lineEditNeck"),
         "character_breast": (QLineEdit, "lineEditBreast"),
         "character_back": (QLineEdit, "lineEditBack"),
-        "character_shoulder": (QLineEdit, "lineEditShoulder"),
+        "character_shoulder": (QLineEdit, "lineEditShoulders"),
         "character_upperarm": (QLineEdit, "lineEditUpperArm"),
         "character_elbow": (QLineEdit, "lineEditElbow"),
-        "character_lowerarm": (QLineEdit, "lineEditLowerArm"),
-        "character_wrist": (QLineEdit, "lineEditWrist"),
+        "character_lowerarm": (QLineEdit, "lineEditLowerArms"),
+        "character_wrist": (QLineEdit, "lineEditWrists"),
         "character_hand": (QLineEdit, "lineEditHand"),
         "character_finger": (QLineEdit, "lineEditFinger"),
         "character_hips": (QLineEdit, "lineEditHips"),
@@ -303,28 +554,28 @@ CHARACTER_FIELD_MAP = {
         "character_upperleg": (QLineEdit, "lineEditUpperLeg"),
         "character_knee": (QLineEdit, "lineEditKnee"),
         "character_lowerleg": (QLineEdit, "lineEditLowerLeg"),
-        "character_ankle": (QLineEdit, "lineEditAnkle"),
-        "character_foot": (QLineEdit, "lineEditFoot"),
-        "character_toe": (QLineEdit, "lineEditToe"),
-        "character_lookNotes": (QTextEdit, "textEditBodyNotes"),
-        "character_diagnoses": (QTextEdit, "textEditDiagnoses"),
-        "character_symptoms": (QTextEdit, "textEditSymptoms"),
-        "character_therapies": (QTextEdit, "textEditTherapies"),
-        "character_medications": (QTextEdit, "textEditMedications"),
-        "character_temperament": (QTextEdit, "textEditTemperament"),
-        "character_ethicValues": (QTextEdit, "textEditEthicValues"),
-        "character_moralValues": (QTextEdit, "textEditMoralValues"),
-        "character_strengthsOfCharacter": (QTextEdit, "textEditStrengthsOfCharacter"),
-        "character_weaknessesOfCharacter": (QTextEdit, "textEditWeaknessesOfCharacter"),
-        "character_selfimage": (QTextEdit, "textEditSelfImage"),
-        "character_humor": (QTextEdit, "textEditHumor"),
-        "character_aggressiveness": (QTextEdit, "textEditAggressiveness"),
-        "character_traumas": (QTextEdit, "textEditTraumas"),
-        "character_Impressions": (QTextEdit, "textEditImpressions"),
-        "character_socialization": (QTextEdit, "textEditSocialization"),
-        "character_norms": (QTextEdit, "textEditNorms"),
-        "character_taboos": (QTextEdit, "textEditTaboos"),
-        "character_psycheNotes": (QTextEdit, "textEditPsycheNotes"),
+        "character_ankle": (QLineEdit, "lineEditAnkles"),
+        "character_foot": (QLineEdit, "lineEditFeet"),
+        "character_toe": (QLineEdit, "lineEditToes"),
+        "character_bodyNotes": (QTextEdit, "textEditLookDetailsNotes"),
+        "character_diagnoses": (QLineEdit, "lineEditDiagnosis"),
+        "character_symptoms": (QLineEdit, "lineEditSymptoms"),
+        "character_therapies": (QLineEdit, "lineEditTherapy"),
+        "character_medications": (QLineEdit, "lineEditMedication"),
+        "character_temperament": (QLineEdit, "lineEditTemperament"),
+        "character_ethicValues": (QLineEdit, "lineEditEthicalValues"),
+        "character_moralValues": (QLineEdit, "lineEditMoralValues"),
+        "character_strengthsOfCharacter": (QLineEdit, "lineEditStrengthsOfCharacter"),
+        "character_weaknessesOfCharacter": (QLineEdit, "lineEditWeaknessOfCharacter"),
+        "character_selfimage": (QLineEdit, "lineEditSelfImage"),
+        "character_humor": (QLineEdit, "lineEditHumor"),
+        "character_aggressiveness": (QLineEdit, "lineEditAggressivness"),
+        "character_traumas": (QLineEdit, "lineEditTrauma"),
+        "character_Impressions": (QLineEdit, "lineEditImpression"),
+        "character_socialization": (QLineEdit, "lineEditSocialization"),
+        "character_norms": (QLineEdit, "lineEditNorms"),
+        "character_taboos": (QLineEdit, "lineEditTaboos"),
+        "character_psycheNotes": (QTextEdit, "textEditPsychologyNotes"),
     }
 # Liest die Werte aus den Charakter-Widgets aus
 def read_character_fields(window):
@@ -388,8 +639,6 @@ def get_empty_character():
         "character_group": 0,
         "character_development": "",
         "character_notes": "",
-        "character_image": "",
-        "character_images": [],
         "character_mother": "",
         "character_father": "",
         "character_referencePerson": "",
@@ -480,22 +729,21 @@ PROJECTS_FIELD_MAP = {
     "project_title": (QLineEdit, "lineEditProjectTitle", "text"),
     "project_subtitle": (QLineEdit, "lineEditProjectSubtitle", "text"),
     "project_author": (QLineEdit, "lineEditProjectAuthor", "text"),
-    "project_premise": (QTextEdit, "textEditProjectPremise", "toPlainText"),
+    "project_premise": (QLineEdit, "lineEditProjectPremise", "text"),
     "project_target_group": (QComboBox, "comboBoxProjectTargetGroup", "currentIndex"),
     "project_narrative_perspective": (QComboBox, "comboBoxProjectNarrativePerspective", "currentIndex"),
     "project_style": (QComboBox, "comboBoxProjectStyle", "currentIndex"),
     "project_genre": (QComboBox, "comboBoxProjectGenre", "currentIndex"),
     "project_work_type": (QComboBox, "comboBoxProjectWorkingType", "currentIndex"),
     "project_motif": (QComboBox, "comboBoxProjectMotif", "currentIndex"),
-    "project_begin_date": (QDateEdit, "dateEditProjectBeginDate", "date"),
-    "project_deadline": (QDateEdit, "dateEditProjectDeadline", "date"),
+    "project_begin_date": (QDateEdit, "dateEditProjectBegin", "date"),
+    "project_deadline": (QDateEdit, "dateEditProjectDeadLine", "date"),
     "project_status": (QComboBox, "comboBoxProjectStatus", "currentIndex"),
-    "project_word_goal": (QSpinBox, "spinBoxProjectWordGoal", "value"),
-    "project_cover_image": (QLineEdit, "lineEditProjectCoverImage", "text"),
+    "project_word_goal": (QSpinBox, "spinBoxProjectWordsCount", "value"),
     "project_data_file": (QLineEdit, "lineEditProjectDataFile", "text"),
     "project_notes": (QTextEdit, "textEditProjectNotes", "toPlainText"),
     "project_publisher": (QComboBox, "comboBoxProjectPublisher", "currentIndex"),
-    "project_editor": (QLineEdit, "lineEditProjectEditor", "text"),
+    "project_editor": (QComboBox, "comboBoxProjectEditor", "currentIndex"),
     "project_isbn": (QLineEdit, "lineEditProjectISBN", "text"),
     "project_issn": (QLineEdit, "lineEditProjectISSN", "text")
 }
@@ -564,7 +812,7 @@ def get_empty_project():
         "project_data_file": "",
         "project_notes": "",
         "project_publisher": 0,
-        "project_editor": "",
+        "project_editor": 0,
         "project_isbn": "",
         "project_issn": ""
     }
@@ -574,7 +822,7 @@ def get_empty_project():
 # -------------------------------------------------------------------------------------
 # Mapping der Objektfelder zu Widget-Typen und Namen
 OBJECTS_FIELD_MAP = {
-        "object_titel": (QLineEdit, "titleObjects"),
+        "object_title": (QLineEdit, "titleObjects"),
         "object_status": (QComboBox, "comboBoxObjectStatus"),
         "object_created": (QDateEdit, "dateEditCreatedObjects"),
         "object_modified": (QDateEdit, "dateEditEditedObjects"),
@@ -639,7 +887,7 @@ def get_empty_object():
 # -------------------------------------------------------------------------------------
 # Mapping der Locationsfelder zu Widget-Typen und Namen
 LOCATIONS_FIELD_MAP = {
-        "location_titel": (QLineEdit, "lineEditLocations"),
+        "location_title": (QLineEdit, "lineEditLocations"),
         "location_status": (QComboBox, "comboBoxLocationStatus"),
         "location_created": (QDateEdit, "dateEditCreatedLocations"),
         "location_modified": (QDateEdit, "dateEditEditedLocations"),
@@ -702,7 +950,7 @@ def get_empty_location():
 # -------------------------------------------------------------------------------------
 # Mapping der Storylinefelder zu Widget-Typen und Namen
 STORYLINES_FIELD_MAP = {
-        "storyline_titel": (QLineEdit, "titleStorylines"),
+        "storyline_title": (QLineEdit, "titleStorylines"),
         "storyline_status": (QComboBox, "comboBoxStorylineStatus"),
         "storyline_created": (QDateEdit, "dateEditCreatedStorylines"),
         "storyline_modified": (QDateEdit, "dateEditEditedStorylines"),
@@ -762,29 +1010,35 @@ def get_empty_storyline():
 
 
 def show_main_window():
-    global main_window_ref
-    window = DynamicWindow("main_ui", UI_FILES["main"], splitter_name="mainSplitter")
-    main_window_ref = window  # Referenz halten!
+    window = DynamicWindow("main_ui", UI_FILES["main"], splitter_name="mainSplitter", confirm_on_close=True)
+    app_state.main_window = window 
 
     # Icon setzen
     icon_path = ASSETS_DIR / "media" / "csnova.png"
     window.setWindowIcon(QIcon(str(icon_path)))
 
-    # Cover-Bild setzen
-    cover_label = winFindChild(window,QLabel, "coverImage")
-    if cover_label:
-        pixmap_path = ASSETS_DIR / "media" / "Buchcover_csNova.png"
-        pixmap = QtGui.QPixmap(str(pixmap_path))
-        cover_label.setPixmap(pixmap)
-        cover_label.setScaledContents(True)
+    # # Cover-Bild setzen
+    # cover_label = winFindChild(window,QLabel, "coverImage")
+    # if cover_label:
+    #     pixmap_path = ASSETS_DIR / "media" / "Buchcover_csNova.png"
+    #     pixmap = QtGui.QPixmap(str(pixmap_path))
+    #     cover_label.setPixmap(pixmap)
+    #     cover_label.setScaledContents(True)
 
     # Exit-Button verbinden
     exit_btn = winFindChild(window,QWidget, "exitBtncsNovaMain")
     if exit_btn:
         def on_exit_clicked():
-            secure_dialog = show_secure_dialog(window, action="exit")
-            secure_dialog.setWindowModality(QtGui.Qt.ApplicationModal)
+            try:
+                confirmed = show_secure_dialog(window, action="exit")
+            except Exception as e:
+                log_exception("main exit handler: show_secure_dialog raised", e)
+                confirmed = False
+            if confirmed:
+                window._closing = True
+                QApplication.quit()
         exit_btn.clicked.connect(on_exit_clicked)
+# ...existing code...
 
     # Projektfenster verbinden
     projects_btn = winFindChild(window,QWidget, "projectBtncsNovaMain")
@@ -832,21 +1086,20 @@ def show_main_window():
 
 # Startfenster anzeigen
 def show_start_window(settings):
-    global start_window_ref
     window = DynamicWindow("start_ui", UI_FILES["start"], splitter_name="mainSplitter")
-    start_window_ref = window  # Referenz halten!
+    app_state.start_window = window 
 
     # Icon setzen
     icon_path = ASSETS_DIR / "media" / "csnova.png"
     window.setWindowIcon(QIcon(str(icon_path)))
 
-    # Cover-Bild setzen
-    cover_label = winFindChild(window,QLabel, "coverImage")
-    if cover_label:
-        pixmap_path = ASSETS_DIR / "media" / "Buchcover_csNova.png"
-        pixmap = QtGui.QPixmap(str(pixmap_path))
-        cover_label.setPixmap(pixmap)
-        cover_label.setScaledContents(True)
+    # # Cover-Bild setzen
+    # cover_label = winFindChild(window,QLabel, "coverImage")
+    # if cover_label:
+    #     pixmap_path = ASSETS_DIR / "media" / "Buchcover_csNova.png"
+    #     pixmap = QtGui.QPixmap(str(pixmap_path))
+    #     cover_label.setPixmap(pixmap)
+    #     cover_label.setScaledContents(True)
 
     # Sprache aus settings oder System bestimmen
     language = settings.get("language", get_system_language())
@@ -855,26 +1108,24 @@ def show_start_window(settings):
     combo_language = winFindChild(window,QComboBox, "comboBoxLanguage")
     combo_theme = winFindChild(window,QComboBox, "comboBoxTheme")
 
-    # Items für Sprache laden
-    with open(Path("core/translations/languages.json"), "r", encoding="utf-8") as f:
-        languages = json.load(f)
+    # Items für Sprache laden (sicher, mit Cache)
+    languages = safe_load_json(Path("core/translations/languages.json"), {})
     language_codes = list(languages.keys())
-    language_items = list(languages.get(language, languages["de"]).values())
+    language_items = list(languages.get(language, languages.get("de", {})).values())
     if combo_language:
         combo_language.clear()
         combo_language.addItems(language_items)
-        # Vorbelegen, falls vorhanden
+        # Vorbelegen, falls vorhanden (index in language_codes suchen)
         if "language" in settings:
             try:
-                idx = language_items.index(settings["language"])
+                idx = language_codes.index(settings["language"])
                 combo_language.setCurrentIndex(idx)
             except ValueError:
                 combo_language.setCurrentIndex(0)
 
     # Items für Theme laden
-    with open(Path("core/translations/design.json"), "r", encoding="utf-8") as f:
-        designs = json.load(f)
-    theme_items = list(designs.get(language, designs["de"]).values())
+    designs = load_translation(Path("core/translations/design.json"), language)
+    theme_items = list(designs.values() if isinstance(designs, dict) else designs)
     if combo_theme:
         combo_theme.clear()
         combo_theme.addItems(theme_items)
@@ -907,7 +1158,10 @@ def show_start_window(settings):
     exit_btn = winFindChild(window,QWidget, "exitBnt")
     if exit_btn:
         def on_exit_clicked():
-            show_secure_dialog(window, action="exit")
+            if show_secure_dialog(window, action="exit"):
+                # markiere und beende die App sauber
+                window._closing = True
+                QApplication.quit()
         exit_btn.clicked.connect(on_exit_clicked)
 
     log_info("Startfenster erfolgreich geladen und angezeigt.")
@@ -925,81 +1179,59 @@ def show_projects_window(parent=None):
     language = settings.get("language", "de")
 
     # 2. Daten laden
-    with open(Path("data/projects/data_projects.json"), "r", encoding="utf-8") as f:
-        projects_data = json.load(f)
-
+    projects_path = Path("data/projects/data_projects.json")
+    projects_data = safe_load_json(projects_path, {})
     if not projects_data:
         empty_project = get_empty_project()
         empty_project["project_ID"] = "1"
-        projects_data["project_ID_01"] = empty_project
-        with open(Path("data/projects/data_projects.json"), "w", encoding="utf-8") as f:
-            json.dump(projects_data, f, ensure_ascii=False, indent=2)
+        projects_data = {"project_ID_01": empty_project}
+        safe_save_json(projects_path, projects_data)
 
     first_key = next(iter(projects_data.keys()))
     window.current_project_key = first_key
     current_project = projects_data[window.current_project_key]
-
-    def fill_combobox(combo, values, selected_index_or_value):
-        combo.clear()
-        combo.addItems(values)
-        # Wenn selected_index_or_value ein int ist, setze direkt den Index
-        if isinstance(selected_index_or_value, int):
-            index = selected_index_or_value if 0 <= selected_index_or_value < len(values) else 0
-        else:
-            try:
-                index = values.index(selected_index_or_value)
-            except ValueError:
-                index = 0
-        combo.setCurrentIndex(index)
-
     # 3. Zielgruppe
-    with open(Path("core/translations/targetGroups.json"), "r", encoding="utf-8") as f:
-        target_groups = json.load(f)[language]
+    target_groups = load_translation(Path("core/translations/targetGroups.json"), language)
     combo_target_group = winFindChild(window,QComboBox, "comboBoxProjectTargetGroup")
     fill_combobox(combo_target_group, list(target_groups.values()), current_project.get("project_target_group", 0))
-
     # 4. Erzählperspektive
-    with open(Path("core/translations/narrativePerspective.json"), "r", encoding="utf-8") as f:
-        perspectives = json.load(f)[language]
+    perspectives = load_translation(Path("core/translations/narrativePerspective.json"), language)
     combo_narrative = winFindChild(window,QComboBox, "comboBoxProjectNarrativePerspective")
     fill_combobox(combo_narrative, list(perspectives.values()), current_project.get("project_narrative_perspective", 0))
-
     # 5. Stil
-    with open(Path("core/translations/style.json"), "r", encoding="utf-8") as f:
-        styles = json.load(f)[language]
+    styles = load_translation(Path("core/translations/style.json"), language)
     combo_style = winFindChild(window,QComboBox, "comboBoxProjectStyle")
     fill_combobox(combo_style, list(styles.values()), current_project.get("project_style", 0))
-
     # 6. Genre
-    with open(Path("core/translations/genre.json"), "r", encoding="utf-8") as f:
-        genres = json.load(f)[language]["book_genres"]
+    genres_root = load_translation(Path("core/translations/genre.json"), language)
+    genres = genres_root.get("book_genres", {}) if isinstance(genres_root, dict) else {}
     combo_genre = winFindChild(window,QComboBox, "comboBoxProjectGenre")
     fill_combobox(combo_genre, list(genres.values()), current_project.get("project_genre", 0))
-
     # 7. Arbeitstyp
-    with open(Path("core/translations/workingType.json"), "r", encoding="utf-8") as f:
-        working_types = json.load(f)[language]["book_working_types"]
-    combo_work_type = winFindChild(window,QComboBox, "comboBoxProjectWorkingType")
+    working_root = load_translation(Path("core/translations/workingType.json"), language)
+    working_types = working_root.get("book_working_types", {}) if isinstance(working_root, dict) else {}
+    combo_work_type = winFindChild(window, QComboBox, "comboBoxProjectWorkingType")
     fill_combobox(combo_work_type, list(working_types.values()), current_project.get("project_work_type", 0))
-
     # 8. Motiv
-    with open(Path("core/translations/motif.json"), "r", encoding="utf-8") as f:
-        motifs = json.load(f)[language]
+    motifs = load_translation(Path("core/translations/motif.json"), language)
     combo_motif = winFindChild(window,QComboBox, "comboBoxProjectMotif")
     fill_combobox(combo_motif, list(motifs.values()), current_project.get("project_motif", 0))
-
     # 9. Status
-    with open(Path("core/translations/status.json"), "r", encoding="utf-8") as f:
-        status = json.load(f)[language]
+    status = load_translation(Path("core/translations/status.json"), language)
     combo_status = winFindChild(window,QComboBox, "comboBoxProjectStatus")
     fill_combobox(combo_status, list(status.values()), current_project.get("project_status", 0))
-
     # 10. Verlag
-    with open(Path("core/translations/publisher.json"), "r", encoding="utf-8") as f:
-        publishers = json.load(f)["publishers"]
-    publisher_names = [pub["name"] for pub in publishers if pub["type"] == "book"]
-    combo_publisher = winFindChild(window,QComboBox, "comboBoxPublisher")
+    publishers_root = safe_load_json(Path("core/translations/publisher.json"), {})
+    publishers = publishers_root.get("publishers", []) if isinstance(publishers_root, dict) else []
+    publisher_names = [pub.get("name", "") for pub in publishers if pub.get("type") == "book"]
+    combo_publisher = winFindChild(window,QComboBox, "comboBoxProjectPublisher")
     fill_combobox(combo_publisher, publisher_names, current_project.get("project_publisher", 0))
+    # 11. Editor
+    editors_root = safe_load_json(Path("core/translations/editor.json"), {})
+    editors = editors_root.get("editors", []) if isinstance(editors_root, dict) else []
+    editor_names = [ed.get("name", "") for ed in editors if ed.get("type") == "book"]
+    combo_editor = winFindChild(window,QComboBox, "comboBoxProjectEditor")
+    fill_combobox(combo_editor, editor_names, current_project.get("project_editor", 0))
 
     # Felder setzen
     update_project_fields(window, current_project)
@@ -1010,14 +1242,12 @@ def show_projects_window(parent=None):
     new_btn = winFindChild(window,QWidget, "newBtnProjects")
     if new_btn:
         def on_new_clicked():
-            with open(Path("data/projects/data_projects.json"), "r", encoding="utf-8") as f:
-                projects_data = json.load(f)
+            projects_data = safe_load_json(projects_path, {})
             new_id = f"project_ID_{len(projects_data) + 1:02d}"
             empty_project = get_empty_project()
             empty_project["project_ID"] = str(len(projects_data) + 1)
             projects_data[new_id] = empty_project
-            with open(Path("data/projects/data_projects.json"), "w", encoding="utf-8") as f:
-                json.dump(projects_data, f, ensure_ascii=False, indent=2)
+            safe_save_json(projects_path, projects_data)
             log_info(f"Neues Projekt {new_id} angelegt.")
             window.current_project_key = new_id
             update_project_fields(window, empty_project)
@@ -1028,8 +1258,7 @@ def show_projects_window(parent=None):
     next_btn = winFindChild(window,QWidget, "nextBtnProjects")
     if next_btn:
         def on_next_clicked():
-            with open(Path("data/projects/data_projects.json"), "r", encoding="utf-8") as f:
-                projects_data = json.load(f)
+            projects_data = safe_load_json(projects_path, {})
             keys = list(projects_data.keys())
             current_index = keys.index(window.current_project_key)
             next_index = (current_index + 1) % len(keys)
@@ -1043,8 +1272,7 @@ def show_projects_window(parent=None):
     previous_btn = winFindChild(window,QWidget, "previousBtnProjects")
     if previous_btn:
         def on_previous_clicked():
-            with open(Path("data/projects/data_projects.json"), "r", encoding="utf-8") as f:
-                projects_data = json.load(f)
+            projects_data = safe_load_json(projects_path, {})
             keys = list(projects_data.keys())
             current_index = keys.index(window.current_project_key)
             previous_index = (current_index - 1) % len(keys)
@@ -1061,15 +1289,15 @@ def show_projects_window(parent=None):
     
     # --- Delete-Button einbinden ---
     def on_delete_clicked():
-        with open(Path("data/projects/data_projects.json"), "r", encoding="utf-8") as f:
-            projects_data = json.load(f)
+        projects_data = safe_load_json(projects_path, {})
         project_key = window.current_project_key
         project_title = projects_data[project_key].get("project_title", project_key)
         def delete_project():
+            nonlocal projects_data, project_key, project_title
             if project_key in projects_data:
                 del projects_data[project_key]
-                with open(Path("data/projects/data_projects.json"), "w", encoding="utf-8") as f:
-                    json.dump(projects_data, f, ensure_ascii=False, indent=2)
+                # Speichern der geänderten Daten
+                safe_save_json(projects_path, projects_data)
                 log_info(f"Projekt {project_title} gelöscht.")
                 # Nach dem Löschen: neuen Key setzen und Felder aktualisieren
                 keys = list(projects_data.keys())
@@ -1083,22 +1311,23 @@ def show_projects_window(parent=None):
                     if idx >= len(keys):
                         idx = len(keys) - 1
                     window.current_project_key = keys[idx]
-                    update_project_fields(window. projects_data[window.current_project_key])
+                    update_project_fields(window, projects_data[window.current_project_key])
                 else:
                     empty_project = get_empty_project()
                     update_project_fields(window, empty_project)
                     window.current_project_key = None
-        show_secure_dialog(window, action="delete_project", project_key=project_title, on_confirm=delete_project)
+        # Blockierender Bestätigungsdialog; delete_project() nur bei Bestätigung ausführen
+        if show_secure_dialog(window, action="delete_project", project_key=project_title):
+            delete_project()
     delete_btn = winFindChild(window,QWidget, "deleteBtnProjects")
     if delete_btn:
-        delete_btn.clicked.connect(on_delete_clicked),
+        delete_btn.clicked.connect(on_delete_clicked)
     
     # --- Save-Button einbinden ---
     save_btn = winFindChild(window,QWidget, "saveBtnProjects")
     if save_btn:
         def on_save_clicked():
-            with open(Path("data/projects/data_projects.json"), "r", encoding="utf-8") as f:
-                projects_data = json.load(f)
+            projects_data = safe_load_json(projects_path, {})
             project_key = window.current_project_key  # <-- immer aktueller Key!
             project = projects_data[project_key]
 
@@ -1106,8 +1335,7 @@ def show_projects_window(parent=None):
             project.update(read_project_fields(window))
 
             # Speichere die Daten zurück
-            with open(Path("data/projects/data_projects.json"), "w", encoding="utf-8") as f:
-                json.dump(projects_data, f, ensure_ascii=False, indent=2)
+            safe_save_json(projects_path, projects_data)
             log_info(f"Projekt {project_key} erfolgreich gespeichert.")
 
         save_btn.clicked.connect(on_save_clicked)    
@@ -1124,16 +1352,15 @@ def show_characters_window(parent=None):
     language = settings.get("language", "de")
 
     # 2. Daten laden
-    with open(Path("data/characters/data_characters.json"), "r", encoding="utf-8") as f:
-        character_data = json.load(f)
+    character_path = Path("data/characters/data_characters.json")
+    character_data = safe_load_json(character_path, {})
 
     # Wenn keine Charaktere vorhanden sind, einen leeren anlegen
     if not character_data:
         empty_char = get_empty_character()
         empty_char["character_ID"] = "1"
-        character_data["character_ID_01"] = empty_char
-        with open(Path("data/characters/data_characters.json"), "w", encoding="utf-8") as f:
-            json.dump(character_data, f, ensure_ascii=False, indent=2)
+        character_data = {"character_ID_01": empty_char}
+        safe_save_json(character_path, character_data)
         
     first_key = next(iter(character_data.keys()))
     window.current_character_key = first_key
@@ -1147,10 +1374,12 @@ def show_characters_window(parent=None):
         if label_age:
             label_age.setText(age_value)
 
+    # Validator für Datumsfelder erstellen (wird für birth und died verwendet)
+    regex = QRegularExpression(r"^\d{1,2}\.\d{1,2}\.\d{1,4}( v\. Chr\.)?$|^\d{1,4}( v\. Chr\.)?$")
+    validator = QRegularExpressionValidator(regex)
+
     birthdate_edit = winFindChild(window,QLineEdit, "lineEditBorn")
     if birthdate_edit:
-        regex = QRegularExpression(r"^\d{1,2}\.\d{1,2}\.\d{1,4}( v\. Chr\.)?$|^\d{1,4}( v\. Chr\.)?$")
-        validator = QRegularExpressionValidator(regex)
         birthdate_edit.setValidator(validator)
         birthdate_edit.setText(current_character.get("character_birthdate", ""))
         birthdate_edit.textChanged.connect(update_age_label)
@@ -1170,64 +1399,40 @@ def show_characters_window(parent=None):
     if label_age:
         label_age.setText(age_value)
 
-    def fill_combobox(combo, values, selected_index_or_value):
-        combo.clear()
-        combo.addItems(values)
-        # Wenn selected_index_or_value ein int ist, setze direkt den Index
-        if isinstance(selected_index_or_value, int):
-            index = selected_index_or_value if 0 <= selected_index_or_value < len(values) else 0
-        else:
-            try:
-                index = values.index(selected_index_or_value)
-            except ValueError:
-                index = 0
-        combo.setCurrentIndex(index)
-    
-    # ComboBoxen füllen
     # Status
-    with open(Path("core/translations/status.json"), "r", encoding="utf-8") as f:
-        status = json.load(f)[language]
+    status = load_translation(Path("core/translations/status.json"), language)
     combo_status = winFindChild(window,QComboBox, "comboBoxStatus")
     fill_combobox(combo_status, list(status.values()), current_character.get("character_status", 0))
-    # 2. Alter
     # 3. Geschlecht
-    with open(Path("core/translations/gender.json"), "r", encoding="utf-8") as f:
-        gender = json.load(f)[language]
+    gender = load_translation(Path("core/translations/gender.json"), language)
     combo_gender = winFindChild(window,QComboBox, "comboBoxGender")
     fill_combobox(combo_gender, list(gender.values()), current_character.get("character_gender", 0))
     # 4. Sexualität
-    with open(Path("core/translations/sex_orientation.json"), "r", encoding="utf-8") as f:
-        sexual_orientation = json.load(f)[language]
+    sexual_orientation = load_translation(Path("core/translations/sex_orientation.json"), language)
     combo_sexual_orientation = winFindChild(window,QComboBox, "comboBoxSexOrientation")
     fill_combobox(combo_sexual_orientation, list(sexual_orientation.values()), current_character.get("character_sexOrientation", 0))
     # 5. Rolle 
-    with open(Path("core/translations/role.json"), "r", encoding="utf-8") as f:
-        role = json.load(f)[language]
+    role = load_translation(Path("core/translations/role.json"), language)
     combo_role = winFindChild(window,QComboBox, "comboBoxRole")
     fill_combobox(combo_role, list(role.values()), current_character.get("character_role", 0))
     # 6. Gruppe
-    with open(Path("core/translations/group.json"), "r", encoding="utf-8") as f:
-        group = json.load(f)[language]
+    group = load_translation(Path("core/translations/group.json"), language)
     combo_group = winFindChild(window,QComboBox, "comboBoxGroup")
     fill_combobox(combo_group, list(group.values()), current_character.get("character_group", 0))
     # 7. Körperbau
-    with open(Path("core/translations/bodyType.json"), "r", encoding="utf-8") as f:
-        body_type = json.load(f)[language]
+    body_type = load_translation(Path("core/translations/bodyType.json"), language)
     combo_body_type = winFindChild(window,QComboBox, "comboBoxBodyType")
     fill_combobox(combo_body_type, list(body_type.values()), current_character.get("character_bodyType", 0))
     # 8. Statur
-    with open(Path("core/translations/stature.json"), "r", encoding="utf-8") as f:
-        stature = json.load(f)[language]
+    stature = load_translation(Path("core/translations/stature.json"), language)
     combo_stature = winFindChild(window,QComboBox, "comboBoxStature")
     fill_combobox(combo_stature, list(stature.values()), current_character.get("character_stature", 0))
     # 9. Gesichtsform
-    with open(Path("core/translations/faceShape.json"), "r", encoding="utf-8") as f:
-        face_shape = json.load(f)[language]
+    face_shape = load_translation(Path("core/translations/faceShape.json"), language)
     combo_face_shape = winFindChild(window,QComboBox, "comboBoxFaceShape")
     fill_combobox(combo_face_shape, list(face_shape.values()), current_character.get("character_faceshape", 0))
     # 10. Augenform
-    with open(Path("core/translations/eyeShape.json"), "r", encoding="utf-8") as f:
-        eye_shape = json.load(f)[language]
+    eye_shape = load_translation(Path("core/translations/eyeShape.json"), language)
     combo_eye_shape = winFindChild(window,QComboBox, "comboBoxEyeShape")
     fill_combobox(combo_eye_shape, list(eye_shape.values()), current_character.get("character_eyeshape", 0))
 
@@ -1239,28 +1444,25 @@ def show_characters_window(parent=None):
     save_btn = winFindChild(window,QWidget, "saveBtnCharacter")
     if save_btn:
         def on_save_clicked():
-            with open(Path("data/characters/data_characters.json"), "r", encoding="utf-8") as f:
-                character_data = json.load(f)
+            character_data = safe_load_json(character_path, {})
             character_key = window.current_character_key
             character = character_data[character_key]
             character.update(read_character_fields(window))
-            with open(Path("data/characters/data_characters.json"), "w", encoding="utf-8") as f:
-                json.dump(character_data, f, ensure_ascii=False, indent=2)
+            safe_save_json(character_path, character_data)
             log_info(f"Charakter {character_key} erfolgreich gespeichert.")
 
         save_btn.clicked.connect(on_save_clicked)
 
     # --- Daten löschen Button einbinden ---
     def on_delete_clicked():
-        with open(Path("data/characters/data_characters.json"), "r", encoding="utf-8") as f:
-            character_data = json.load(f)
+        character_data = safe_load_json(character_path, {})
         character_key = window.current_character_key
         character_name = character_data[character_key].get("character_name", character_key)
         def delete_character():
+            nonlocal character_data, character_key, character_name
             if character_key in character_data:
                 del character_data[character_key]
-                with open(Path("data/characters/data_characters.json"), "w", encoding="utf-8") as f:
-                    json.dump(character_data, f, ensure_ascii=False, indent=2)
+                safe_save_json(character_path, character_data)
                 log_info(f"Charakter {character_name} gelöscht.")
                 # Nach dem Löschen: neuen Key setzen und Felder aktualisieren
                 keys = list(character_data.keys())
@@ -1273,12 +1475,14 @@ def show_characters_window(parent=None):
                     if idx >= len(keys):
                         idx = len(keys) - 1
                     window.current_character_key = keys[idx]
-                    update_character_fields(window, character_data[window.current_character_key])  # <-- Fenster übergeben!
+                    update_character_fields(window, character_data[window.current_character_key])
                 else:
                     empty_char = get_empty_character()
                     update_character_fields(window, empty_char)
                     window.current_character_key = None
-        show_secure_dialog(window, action="delete_character", project_key=character_name, on_confirm=delete_character)
+        if show_secure_dialog(window, action="delete_character", project_key=character_name):
+            delete_character()
+
     delete_btn = winFindChild(window,QWidget, "deleteBtnCharacter")
     if delete_btn:
         delete_btn.clicked.connect(on_delete_clicked)
@@ -1287,14 +1491,12 @@ def show_characters_window(parent=None):
     new_btn = winFindChild(window,QWidget, "newBtnCharacter")
     if new_btn:
         def on_new_clicked():
-            with open(Path("data/characters/data_characters.json"), "r", encoding="utf-8") as f:
-                character_data = json.load(f)
+            character_data = safe_load_json(character_path, {})
             new_id = f"character_ID_{len(character_data) + 1:02d}"
             empty_char = get_empty_character()
             empty_char["character_ID"] = str(len(character_data) + 1)
             character_data[new_id] = empty_char
-            with open(Path("data/characters/data_characters.json"), "w", encoding="utf-8") as f:
-                json.dump(character_data, f, ensure_ascii=False, indent=2)
+            safe_save_json(character_path, character_data)
             log_info(f"Neuer Charakter {new_id} erstellt.")
             window.current_character_key = new_id
             update_character_fields(window, empty_char)
@@ -1302,8 +1504,7 @@ def show_characters_window(parent=None):
          
     # --- nächster Charakter Button einbinden ---
     def on_next_clicked():
-        with open(Path("data/characters/data_characters.json"), "r", encoding="utf-8") as f:
-            character_data = json.load(f)
+        character_data = safe_load_json(character_path, {})
         keys = list(character_data.keys())
         current_index = keys.index(window.current_character_key)
         next_index = (current_index + 1) % len(keys)
@@ -1316,8 +1517,7 @@ def show_characters_window(parent=None):
         next_btn.clicked.connect(on_next_clicked)
 
     def on_prev_clicked():
-        with open(Path("data/characters/data_characters.json"), "r", encoding="utf-8") as f:
-            character_data = json.load(f)
+        character_data = safe_load_json(character_path, {})
         keys = list(character_data.keys())
         current_index = keys.index(window.current_character_key)
         prev_index = (current_index - 1) % len(keys)
@@ -1346,14 +1546,13 @@ def show_objects_window(parent=None):
     settings = load_settings()
     language = settings.get("language", "de")
     # 2. Daten laden
-    with open(Path("data/objects/data_objects.json"), "r", encoding="utf-8") as f:
-        object_data = json.load(f)
+    object_path = Path("data/objects/data_objects.json")
+    object_data = safe_load_json(object_path, {})
     if not object_data:
         empty_object = get_empty_object()
         empty_object["object_ID"] = "1"
-        object_data["object_ID_01"] = empty_object
-        with open(Path("data/objects/data_objects.json"), "w", encoding="utf-8") as f:
-            json.dump(object_data, f, ensure_ascii=False, indent=2)
+        object_data = {"object_ID_01": empty_object}
+        safe_save_json(object_path, object_data)
     first_key = next(iter(object_data.keys()))
     window.current_object_key = first_key
     current_object = object_data[window.current_object_key]
@@ -1362,34 +1561,20 @@ def show_objects_window(parent=None):
     update_object_fields(window, current_object)
 
     # Status-ComboBox füllen
-    with open(Path("core/translations/status.json"), "r", encoding="utf-8") as f:
-        status = json.load(f)[language]
+    status = load_translation(Path("core/translations/status.json"), language)
     combo_status = winFindChild(window, QComboBox, "comboBoxObjectStatus")
-    if combo_status:
-        values = list(status.values())
-        selected = current_object.get("object_status", 0)
-        combo_status.clear()
-        combo_status.addItems(values)
-        if isinstance(selected, int):
-            combo_status.setCurrentIndex(selected if 0 <= selected < len(values) else 0)
-        else:
-            try:
-                idx = values.index(selected)
-                combo_status.setCurrentIndex(idx)
-            except ValueError:
-                combo_status.setCurrentIndex(0)
+    fill_combobox(combo_status, list(status.values()), current_object.get("object_status", 0))
 
     # --- Save-Button einbinden ---
     save_btn = winFindChild(window,QWidget, "saveBtnObjects")
     if save_btn:
         def on_save_clicked():
-            with open(Path("data/objects/data_objects.json"), "r", encoding="utf-8") as f:
-                object_data = json.load(f)
+            object_data = safe_load_json(object_path, {})
             object_key = window.current_object_key
-            obj = object_data[object_key]
+            obj = object_data.get(object_key, {})
             obj.update(read_object_fields(window))
-            with open(Path("data/objects/data_objects.json"), "w", encoding="utf-8") as f:
-                json.dump(object_data, f, ensure_ascii=False, indent=2)
+            object_data[object_key] = obj
+            safe_save_json(object_path, object_data)
             log_info(f"Objekt {object_key} erfolgreich gespeichert.")
 
         save_btn.clicked.connect(on_save_clicked)
@@ -1397,22 +1582,19 @@ def show_objects_window(parent=None):
     new_btn = winFindChild(window,QWidget, "newBtnObjects")
     if new_btn:
         def on_new_clicked():
-            with open(Path("data/objects/data_objects.json"), "r", encoding="utf-8") as f:
-                object_data = json.load(f)
+            object_data = safe_load_json(object_path, {})
             new_id = f"object_ID_{len(object_data) + 1:02d}"
             empty_object = get_empty_object()
             empty_object["object_ID"] = str(len(object_data) + 1)
             object_data[new_id] = empty_object
-            with open(Path("data/objects/data_objects.json"), "w", encoding="utf-8") as f:
-                json.dump(object_data, f, ensure_ascii=False, indent=2)
+            safe_save_json(object_path, object_data)
             log_info(f"Neues Objekt {new_id} erstellt.")
             window.current_object_key = new_id
             update_object_fields(window, empty_object)
         new_btn.clicked.connect(on_new_clicked)
     # --- nächster Objekt Button einbinden ---
     def on_next_clicked():
-        with open(Path("data/objects/data_objects.json"), "r", encoding="utf-8") as f:
-            object_data = json.load(f)
+        object_data = safe_load_json(object_path, {})
         keys = list(object_data.keys())
         current_index = keys.index(window.current_object_key)
         next_index = (current_index + 1) % len(keys)
@@ -1425,8 +1607,7 @@ def show_objects_window(parent=None):
         next_btn.clicked.connect(on_next_clicked)
     # --- vorheriger Objekt Button einbinden ---
     def on_prev_clicked():
-        with open(Path("data/objects/data_objects.json"), "r", encoding="utf-8") as f:
-            object_data = json.load(f)
+        object_data = safe_load_json(object_path, {})
         keys = list(object_data.keys())
         current_index = keys.index(window.current_object_key)
         prev_index = (current_index - 1) % len(keys)
@@ -1439,16 +1620,15 @@ def show_objects_window(parent=None):
         prev_btn.clicked.connect(on_prev_clicked)
     # --- Daten löschen Button einbinden ---
     def on_delete_clicked():
-        with open(Path("data/objects/data_objects.json"), "r", encoding="utf-8") as f:
-            object_data = json.load(f)
+        object_data = safe_load_json(object_path, {})
         object_key = window.current_object_key
-        object_name = object_data[object_key].get("object_name", object_key)
+        object_name = object_data[object_key].get("object_title", object_key)
         def delete_object():
+            nonlocal object_data, object_key, object_name
             if object_key in object_data:
                 del object_data[object_key]
-                with open(Path("data/objects/data_objects.json"), "w", encoding="utf-8") as f:
-                    json.dump(object_data, f, ensure_ascii=False, indent=2)
-                log_info(f"Objekt {object_name} gelöscht.")
+                safe_save_json(object_path, object_data)
+                # log_info(f"Objekt {object_name} gelöscht.")
                 # Nach dem Löschen: neuen Key setzen und Felder aktualisieren
                 keys = list(object_data.keys())
                 if keys:
@@ -1460,12 +1640,13 @@ def show_objects_window(parent=None):
                     if idx >= len(keys):
                         idx = len(keys) - 1
                     window.current_object_key = keys[idx]
-                    update_object_fields(window, object_data[window.current_object_key])  # <-- Fenster übergeben!
+                    update_object_fields(window, object_data[window.current_object_key])
                 else:
                     empty_object = get_empty_object()
                     update_object_fields(window, empty_object)
                     window.current_object_key = None
-        show_secure_dialog(window, action="delete_object", project_key=object_name, on_confirm=delete_object)
+        if show_secure_dialog(window, action="delete_object", project_key=object_name):
+            delete_object()
     delete_btn = winFindChild(window,QWidget, "deleteBtnObjects")
     if delete_btn:
         delete_btn.clicked.connect(on_delete_clicked)
@@ -1487,53 +1668,32 @@ def show_locations_window(parent=None):
     settings = load_settings()
     language = settings.get("language", "de")
     # 2. Daten laden
-    with open(Path("data/locations/data_locations.json"), "r", encoding="utf-8") as f:
-        location_data = json.load(f)
+    locations_path = Path("data/locations/data_locations.json")
+    location_data = safe_load_json(locations_path, {})
     if not location_data:
         empty_location = get_empty_location()
         empty_location["location_ID"] = "1"
-        location_data["location_ID_01"] = empty_location
-        with open(Path("data/locations/data_locations.json"), "w", encoding="utf-8") as f:
-            json.dump(location_data, f, ensure_ascii=False, indent=2)
+        location_data = {"location_ID_01": empty_location}
+        safe_save_json(locations_path, location_data)
     first_key = next(iter(location_data.keys()))
     window.current_location_key = first_key
     current_location = location_data[window.current_location_key]
     # Felder setzen
     update_location_fields(window, current_location)
     # Status-ComboBox füllen
-    with open(Path("core/translations/status.json"), "r", encoding="utf-8") as f:
-        status = json.load(f)[language]
+    status = load_translation(Path("core/translations/status.json"), language)
     combo_status = winFindChild(window, QComboBox, "comboBoxLocationStatus")
-    if combo_status:
-        values = list(status.values())
-        # Hole das aktuelle Objekt, falls vorhanden
-        current_location = None
-        if hasattr(window, "current_location_key"):
-            with open(Path("data/locations/data_locations.json"), "r", encoding="utf-8") as f:
-                location_data = json.load(f)
-            current_location = location_data.get(window.current_location_key)
-        selected = current_location.get("location_status", 0) if current_location else 0
-        combo_status.clear()
-        combo_status.addItems(values)
-        if isinstance(selected, int):
-            combo_status.setCurrentIndex(selected if 0 <= selected < len(values) else 0)
-        else:
-            try:
-                idx = values.index(selected)
-                combo_status.setCurrentIndex(idx)
-            except ValueError:
-                combo_status.setCurrentIndex(0)
+    fill_combobox(combo_status, list(status.values()), current_location.get("location_status", 0) if isinstance(current_location, dict) else 0)
     # --- Save-Button einbinden ---
     save_btn = winFindChild(window,QWidget, "saveBtnLocations")
     if save_btn:
         def on_save_clicked():
-            with open(Path("data/locations/data_locations.json"), "r", encoding="utf-8") as f:
-                location_data = json.load(f)
+            location_data = safe_load_json(locations_path, {})
             location_key = window.current_location_key
-            loc = location_data[location_key]
+            loc = location_data.get(location_key, {})
             loc.update(read_location_fields(window))
-            with open(Path("data/locations/data_locations.json"), "w", encoding="utf-8") as f:
-                json.dump(location_data, f, ensure_ascii=False, indent=2)
+            location_data[location_key] = loc
+            safe_save_json(locations_path, location_data)
             log_info(f"Location {location_key} erfolgreich gespeichert.")
 
         save_btn.clicked.connect(on_save_clicked)
@@ -1541,22 +1701,19 @@ def show_locations_window(parent=None):
     new_btn = winFindChild(window,QWidget, "newBtnLocations")
     if new_btn:
         def on_new_clicked():
-            with open(Path("data/locations/data_locations.json"), "r", encoding="utf-8") as f:
-                location_data = json.load(f)
+            location_data = safe_load_json(locations_path, {})
             new_id = f"location_ID_{len(location_data) + 1:02d}"
             empty_location = get_empty_location()
             empty_location["location_ID"] = str(len(location_data) + 1)
             location_data[new_id] = empty_location
-            with open(Path("data/locations/data_locations.json"), "w", encoding="utf-8") as f:
-                json.dump(location_data, f, ensure_ascii=False, indent=2)
+            safe_save_json(locations_path, location_data)
             log_info(f"Neue Location {new_id} erstellt.")
             window.current_location_key = new_id
             update_location_fields(window, empty_location)
         new_btn.clicked.connect(on_new_clicked)
     # --- nächster Location Button einbinden ---
     def on_next_clicked():
-        with open(Path("data/locations/data_locations.json"), "r", encoding="utf-8") as f:
-            location_data = json.load(f)
+        location_data = safe_load_json(locations_path, {})
         keys = list(location_data.keys())
         current_index = keys.index(window.current_location_key)
         next_index = (current_index + 1) % len(keys)
@@ -1569,8 +1726,7 @@ def show_locations_window(parent=None):
         next_btn.clicked.connect(on_next_clicked)
     # --- vorheriger Location Button einbinden ---
     def on_prev_clicked():
-        with open(Path("data/locations/data_locations.json"), "r", encoding="utf-8") as f:
-            location_data = json.load(f)
+        location_data = safe_load_json(locations_path, {})
         keys = list(location_data.keys())
         current_index = keys.index(window.current_location_key)
         prev_index = (current_index - 1) % len(keys)
@@ -1583,15 +1739,14 @@ def show_locations_window(parent=None):
         prev_btn.clicked.connect(on_prev_clicked)
     # --- Daten löschen Button einbinden ---
     def on_delete_clicked():
-        with open(Path("data/locations/data_locations.json"), "r", encoding="utf-8") as f:
-            location_data = json.load(f)
+        location_data = safe_load_json(locations_path, {})
         location_key = window.current_location_key
-        location_name = location_data[location_key].get("location_name", location_key)
+        location_name = location_data[location_key].get("location_title", location_key)
         def delete_location():
+            nonlocal location_data, location_key, location_name
             if location_key in location_data:
                 del location_data[location_key]
-                with open(Path("data/locations/data_locations.json"), "w", encoding="utf-8") as f:
-                    json.dump(location_data, f, ensure_ascii=False, indent=2)
+                safe_save_json(locations_path, location_data)
                 log_info(f"Location {location_name} gelöscht.")
                 # Nach dem Löschen: neuen Key setzen und Felder aktualisieren
                 keys = list(location_data.keys())
@@ -1604,12 +1759,13 @@ def show_locations_window(parent=None):
                     if idx >= len(keys):
                         idx = len(keys) - 1
                     window.current_location_key = keys[idx]
-                    update_location_fields(window, location_data[window.current_location_key])  # <-- Fenster übergeben!
+                    update_location_fields(window, location_data[window.current_location_key])
                 else:
                     empty_location = get_empty_location()
                     update_location_fields(window, empty_location)
                     window.current_location_key = None
-        show_secure_dialog(window, action="delete_location", project_key=location_name, on_confirm=delete_location)
+        if show_secure_dialog(window, action="delete_location", project_key=location_name):
+            delete_location()
     delete_btn = winFindChild(window,QWidget, "deleteBtnLocations")
     if delete_btn:
         delete_btn.clicked.connect(on_delete_clicked)
@@ -1630,53 +1786,32 @@ def show_storylines_window(parent=None):
     settings = load_settings()
     language = settings.get("language", "de")
     # 2. Daten laden
-    with open(Path("data/storylines/data_storylines.json"), "r", encoding="utf-8") as f:
-        storyline_data = json.load(f)
+    storylines_path = Path("data/storylines/data_storylines.json")
+    storyline_data = safe_load_json(storylines_path, {})
     if not storyline_data:
         empty_storyline = get_empty_storyline()
         empty_storyline["storyline_ID"] = "1"
         storyline_data["storyline_ID_01"] = empty_storyline
-        with open(Path("data/storylines/data_storylines.json"), "w", encoding="utf-8") as f:
-            json.dump(storyline_data, f, ensure_ascii=False, indent=2)
+        safe_save_json(storylines_path, storyline_data)
     first_key = next(iter(storyline_data.keys()))
     window.current_storyline_key = first_key
     current_storyline = storyline_data[window.current_storyline_key]
     # Felder setzen
     update_storyline_fields(window, current_storyline)
     # Status-ComboBox füllen
-    with open(Path("core/translations/status.json"), "r", encoding="utf-8") as f:
-        status = json.load(f)[language]
+    status = load_translation(Path("core/translations/status.json"), language)
     combo_status = winFindChild(window, QComboBox, "comboBoxStorylineStatus")
-    if combo_status:
-        values = list(status.values())
-        # Hole das aktuelle Objekt, falls vorhanden
-        current_storyline = None
-        if hasattr(window, "current_storyline_key"):
-            with open(Path("data/storylines/data_storylines.json"), "r", encoding="utf-8") as f:
-                storyline_data = json.load(f)
-            current_storyline = storyline_data.get(window.current_storyline_key)
-        selected = current_storyline.get("storyline_status", 0) if current_storyline else 0
-        combo_status.clear()
-        combo_status.addItems(values)
-        if isinstance(selected, int):
-            combo_status.setCurrentIndex(selected if 0 <= selected < len(values) else 0)
-        else:
-            try:
-                idx = values.index(selected)
-                combo_status.setCurrentIndex(idx)
-            except ValueError:
-                combo_status.setCurrentIndex(0)
+    fill_combobox(combo_status, list(status.values()), current_storyline.get("storyline_status", 0) if isinstance(current_storyline, dict) else 0)
     # --- Save-Button einbinden ---
     save_btn = winFindChild(window,QWidget, "saveBtnStorylines")
     if save_btn:
         def on_save_clicked():
-            with open(Path("data/storylines/data_storylines.json"), "r", encoding="utf-8") as f:
-                storyline_data = json.load(f)
+            storyline_data = safe_load_json(storylines_path, {})
             storyline_key = window.current_storyline_key
-            story = storyline_data[storyline_key]
+            story = storyline_data.get(storyline_key, {})
             story.update(read_storyline_fields(window))
-            with open(Path("data/storylines/data_storylines.json"), "w", encoding="utf-8") as f:
-                json.dump(storyline_data, f, ensure_ascii=False, indent=2)
+            storyline_data[storyline_key] = story
+            safe_save_json(storylines_path, storyline_data)
             log_info(f"Storyline {storyline_key} erfolgreich gespeichert.")
 
         save_btn.clicked.connect(on_save_clicked)
@@ -1684,22 +1819,19 @@ def show_storylines_window(parent=None):
     new_btn = winFindChild(window,QWidget, "newBtnStorylines")
     if new_btn:
         def on_new_clicked():
-            with open(Path("data/storylines/data_storylines.json"), "r", encoding="utf-8") as f:
-                storyline_data = json.load(f)
+            storyline_data = safe_load_json(storylines_path, {})
             new_id = f"storyline_ID_{len(storyline_data) + 1:02d}"
             empty_storyline = get_empty_storyline()
             empty_storyline["storyline_ID"] = str(len(storyline_data) + 1)
             storyline_data[new_id] = empty_storyline
-            with open(Path("data/storylines/data_storylines.json"), "w", encoding="utf-8") as f:
-                json.dump(storyline_data, f, ensure_ascii=False, indent=2)
+            safe_save_json(storylines_path, storyline_data)
             log_info(f"Neue Storyline {new_id} erstellt.")
             window.current_storyline_key = new_id
             update_storyline_fields(window, empty_storyline)
         new_btn.clicked.connect(on_new_clicked)
     # --- nächster Storyline Button einbinden ---
     def on_next_clicked():
-        with open(Path("data/storylines/data_storylines.json"), "r", encoding="utf-8") as f:
-            storyline_data = json.load(f)
+        storyline_data = safe_load_json(storylines_path, {})
         keys = list(storyline_data.keys())
         current_index = keys.index(window.current_storyline_key)
         next_index = (current_index + 1) % len(keys)
@@ -1712,8 +1844,7 @@ def show_storylines_window(parent=None):
         next_btn.clicked.connect(on_next_clicked)
     # --- vorheriger Storyline Button einbinden ---
     def on_prev_clicked():
-        with open(Path("data/storylines/data_storylines.json"), "r", encoding="utf-8") as f:
-            storyline_data = json.load(f)
+        storyline_data = safe_load_json(storylines_path, {})
         keys = list(storyline_data.keys())
         current_index = keys.index(window.current_storyline_key)
         prev_index = (current_index - 1) % len(keys)
@@ -1726,15 +1857,14 @@ def show_storylines_window(parent=None):
         prev_btn.clicked.connect(on_prev_clicked)
     # --- Daten löschen Button einbinden ---
     def on_delete_clicked():
-        with open(Path("data/storylines/data_storylines.json"), "r", encoding="utf-8") as f:
-            storyline_data = json.load(f)
+        storyline_data = safe_load_json(storylines_path, {})
         storyline_key = window.current_storyline_key
-        storyline_name = storyline_data[storyline_key].get("storyline_name", storyline_key)
+        storyline_name = storyline_data[storyline_key].get("storyline_title", storyline_key)
         def delete_storyline():
+            nonlocal storyline_data, storyline_key, storyline_name
             if storyline_key in storyline_data:
                 del storyline_data[storyline_key]
-                with open(Path("data/storylines/data_storylines.json"), "w", encoding="utf-8") as f:
-                    json.dump(storyline_data, f, ensure_ascii=False, indent=2)
+                safe_save_json(storylines_path, storyline_data)
                 log_info(f"Storyline {storyline_name} gelöscht.")
                 # Nach dem Löschen: neuen Key setzen und Felder aktualisieren
                 keys = list(storyline_data.keys())
@@ -1747,12 +1877,13 @@ def show_storylines_window(parent=None):
                     if idx >= len(keys):
                         idx = len(keys) - 1
                     window.current_storyline_key = keys[idx]
-                    update_storyline_fields(window, storyline_data[window.current_storyline_key])  # <-- Fenster übergeben!
+                    update_storyline_fields(window, storyline_data[window.current_storyline_key])
                 else:
                     empty_storyline = get_empty_storyline()
                     update_storyline_fields(window, empty_storyline)
                     window.current_storyline_key = None
-        show_secure_dialog(window, action="delete_storyline", project_key=storyline_name, on_confirm=delete_storyline)
+        if show_secure_dialog(window, action="delete_storyline", project_key=storyline_name):
+            delete_storyline()
     delete_btn = winFindChild(window,QWidget, "deleteBtnStorylines")
     if delete_btn:
         delete_btn.clicked.connect(on_delete_clicked)    
@@ -1774,7 +1905,7 @@ def show_editor_window(parent=None):
     if exit_btn:
         exit_btn.clicked.connect(window.close)
 
-    log_info(...)
+    log_info("Editorfenster erfolgreich geladen und angezeigt.")
     return window
 
 # Preferences-Fenster anzeigen

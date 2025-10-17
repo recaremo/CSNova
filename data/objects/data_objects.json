@@ -1,19 +1,10 @@
 {
   "object_ID_02": {
     "object_ID": "2",
-    "object_title": "",
+    "object_title": "Objekte 2",
     "object_created": "2026-01-20",
     "object_modified": "2026-01-24",
     "object_notes": "Beschreibung Objekt 2",
     "object_titel": "Objekt 2"
-  },
-  "object_ID_03": {
-    "object_ID": "3",
-    "object_title": "",
-    "object_status": 0,
-    "object_created": "2026-01-20",
-    "object_modified": "2026-01-24",
-    "object_notes": "",
-    "object_titel": "Objekt 3"
   }
 }

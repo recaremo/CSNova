@@ -1,0 +1,13 @@
+{
+  "editors": [
+    {
+      "id": "none",
+      "name": "-",
+      "street": "-",
+      "zip": "-",
+      "town": "-",
+      "country": "-",
+      "type": "book"
+    }
+  ]
+}
