@@ -35,12 +35,12 @@
   },
   "editor_ui": {
     "win_maximized": false,
-    "win_width": 1754,
+    "win_width": 1888,
     "win_height": 1103,
     "win_splitter": [
-      387,
-      1041,
-      300
+      460,
+      1046,
+      356
     ]
   },
   "preferences_ui": {

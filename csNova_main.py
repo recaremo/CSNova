@@ -1057,14 +1057,6 @@ EDITOR_SCENE_MAP = {
             "scene_notes": (QTextEdit, "textEditorSceneNotes"),
             "scene_plain_text": (QPlainTextEdit, "plainTextEditorScenePlainText"),
         }   
-# Worte zählen in einem plainTextEditorScenePlainText anzeigen im Label labelEditorSceneWordCount
-# Es kann mehrere Charaktere geben: Auswahl in der comboBoxEditorSceneCharacter und alle in "scene_characters" speichern
-# Es kann mehrere Objekte geben: Auswahl in der comboBoxEditorSceneObject und alle in "scene_objects" speichern
-# Die ID der aktuellen Szene wird im Label labelEditorSceneID angezeigt.
-# Die ID des aktuellen Kapitels wird im Label labelEditorChapterID angezeigt.
-# Der Name des aktuellen Projektes wird im Label labelEditorActualProject angezeigt.
-# Eine Liste aller Kaptiel dieses Projektes wird in der QListWidget listViewEditorChapters angezeigt.
-
 # Liest die Werte aus den Kapitel-Widgets aus
 def read_editor_chapter_fields(window):
     chapter = {}
@@ -1123,7 +1115,152 @@ def update_chapter_list_widget(window):
             chap_id = chap.get("chapter_id", chap_key)
             chap_title = chap.get("chapter_title", "")
             list_chapters.addItem(f"{chap_id} - {chap_title}")
+# Nächste freie Szenen-ID in einem Kapitel ermitteln
+def get_next_project_scene_id(chapter_data):
+    max_id = 0
+    for chapter in chapter_data.values():
+        for k, v in chapter.items():
+            if k.startswith("scenes_id_"):
+                try:
+                    num = int(v.get("scene_id", "0"))
+                    max_id = max(max_id, num)
+                except Exception:
+                    pass
+    return str(max_id + 1)
+# Liest die Werte aus den Szenen-Widgets aus
+def read_editor_scene_fields(window):
+    scene = {}
+    for field, (widget_type, widget_name) in EDITOR_SCENE_MAP.items():
+        widget = winFindChild(window, widget_type, widget_name)
+        if widget:
+            if isinstance(widget, QLineEdit):
+                scene[field] = widget.text()
+            elif isinstance(widget, QTextEdit):
+                scene[field] = widget.toPlainText()
+            elif isinstance(widget, QPlainTextEdit):
+                scene[field] = widget.toPlainText()
+            elif isinstance(widget, QComboBox):
+                scene[field] = widget.currentIndex()
+            elif isinstance(widget, QSpinBox):
+                scene[field] = widget.value()
+            elif isinstance(widget, QDateEdit):
+                scene[field] = widget.date().toString("yyyy-MM-dd")
+    return scene
+# Setzt die Werte aus den Szenen-Widgets basierend auf einem Szenen-Dictionary
+def update_editor_scene_fields(window, scene):
+    for field, (widget_type, widget_name) in EDITOR_SCENE_MAP.items():
+        widget = winFindChild(window, widget_type, widget_name)
+        value = scene.get(field, "")
+        if widget:
+            if isinstance(widget, QLineEdit):
+                widget.setText(str(value))
+            elif isinstance(widget, QTextEdit):
+                widget.setPlainText(str(value))
+            elif isinstance(widget, QPlainTextEdit):
+                widget.setPlainText(str(value))
+            elif isinstance(widget, QComboBox):
+                try:
+                    # Korrektur: Setze den gespeicherten Index oder Wert
+                    if isinstance(value, int):
+                        widget.setCurrentIndex(value)
+                    else:
+                        idx = widget.findText(str(value))
+                        widget.setCurrentIndex(idx if idx >= 0 else 0)
+                except Exception:
+                    widget.setCurrentIndex(0)
+            elif isinstance(widget, QSpinBox):
+                try:
+                    widget.setValue(int(value))
+                except Exception:
+                    widget.setValue(0)
+            elif isinstance(widget, QDateEdit):
+                if value:
+                    date = QDate.fromString(value, "yyyy-MM-dd")
+                    if date.isValid():
+                        widget.setDate(date)
+# Zeige die erste Szene eines Kapitels im Editor an
+def show_first_scene_of_chapter(window, chapter):
+    scene_keys = [k for k in chapter.keys() if k.startswith("scenes_id_")]
+    label_scene_id = winFindChild(window, QLabel, "labelEditorSceneID")
+    if scene_keys:
+        first_scene = chapter[scene_keys[0]]
+        update_editor_scene_fields(window, first_scene)
+        if label_scene_id:
+            label_scene_id.setText(first_scene.get("scene_id", ""))
+    else:
+        # Leere Szene anzeigen
+        empty_scene = {"scene_id": ""}
+        update_editor_scene_fields(window, empty_scene)
+        if label_scene_id:
+            label_scene_id.setText("")
+# Szenenbestellungen in allen Kapiteln neu nummerieren
+def renumber_scene_orders(chapter_data):
+    # Alle Szenen aller Kapitel nach scene_order sortieren und neu nummerieren
+    all_scenes = []
+    for chapter in chapter_data.values():
+        for k, v in chapter.items():
+            if k.startswith("scenes_id_"):
+                all_scenes.append((chapter, k, v))
+    # Sortieren nach scene_order (Fallback: scene_id)
+    all_scenes.sort(key=lambda tup: int(tup[2].get("scene_order", tup[2].get("scene_id", "0"))))
+    # Neu nummerieren
+    for idx, (chapter, k, v) in enumerate(all_scenes, 1):
+        v["scene_order"] = idx
+# Nächste freie Szenen-ID in einem Kapitel ermitteln
+def get_next_project_scene_id(chapter_data):
+    max_id = 0
+    for chapter in chapter_data.values():
+        for k, v in chapter.items():
+            if k.startswith("scenes_id_"):
+                try:
+                    num = int(v.get("scene_id", "0"))
+                    max_id = max(max_id, num)
+                except Exception:
+                    pass
+    return str(max_id + 1)
+# Nächste freie Szenenbestellung in einem Kapitel ermitteln
+def get_next_scene_order(chapter):
+    orders = [int(v.get("scene_order", "0")) for k, v in chapter.items() if k.startswith("scenes_id_")]
+    return max(orders, default=0) + 1
+# Aktualisiere die Informationslabels im Editor
+def update_editor_info_labels(window, chapter=None, scene=None):
+    # Storyline
+    storyline_combo = winFindChild(window, QComboBox, "comboBoxEditorSceneStoryline")
+    label_storyline = winFindChild(window, QLabel, "labelEditorStorylineText")
+    if storyline_combo and label_storyline:
+        label_storyline.setText(storyline_combo.currentText())
 
+    # Location
+    location_combo = winFindChild(window, QComboBox, "comboBoxEditorSceneLocation")
+    label_location = winFindChild(window, QLabel, "labelEditorLocationText")
+    if location_combo and label_location:
+        label_location.setText(location_combo.currentText())
+
+    # Kapitel
+    label_chapter = winFindChild(window, QLabel, "labelEditorChapterText")
+    if label_chapter:
+        chapter_title = ""
+        if chapter:
+            chapter_title = chapter.get("chapter_title", "")
+        else:
+            # Versuche aus dem Feld zu lesen, falls kein Kapitel-Dict übergeben
+            chapter_title_widget = winFindChild(window, QLineEdit, "lineEditorChapterTitleText")
+            if chapter_title_widget:
+                chapter_title = chapter_title_widget.text()
+        label_chapter.setText(chapter_title)
+
+    # Szene
+    label_scene = winFindChild(window, QLabel, "labelEditorSceneText")
+    if label_scene:
+        scene_title = ""
+        if scene:
+            scene_title = scene.get("scene_title", "")
+        else:
+            # Versuche aus dem Feld zu lesen, falls kein Szene-Dict übergeben
+            scene_title_widget = winFindChild(window, QLineEdit, "lineEditorSceneTitle")
+            if scene_title_widget:
+                scene_title = scene_title_widget.text()
+        label_scene.setText(scene_title)
 
 # Hauptfenster anzeigen
 def show_main_window():
@@ -2136,6 +2273,23 @@ def show_storylines_window(parent=None):
 def show_editor_window(parent=None):
     window = DynamicWindow("editor_ui", UI_FILES["editor"], splitter_name="mainSplitter")
     window.show()
+    # --- Daten für Comboboxen laden ---
+    storyline_data = safe_load_json(Path("data/storylines/data_storylines.json"), {})
+    location_data = safe_load_json(Path("data/locations/data_locations.json"), {})
+    character_data = safe_load_json(Path("data/characters/data_characters.json"), {})
+    object_data = safe_load_json(Path("data/objects/data_objects.json"), {})
+
+    # Storylines: Titel
+    storyline_titles = [v.get("storyline_title", "") for v in storyline_data.values()]
+    # Locations: Titel
+    location_titles = [v.get("location_title", "") for v in location_data.values()]
+    # Characters: Name + Vorname
+    character_names = [
+        f"{v.get('character_name', '')} {v.get('character_firstname', '')}".strip()
+        for v in character_data.values()]
+    # Objects: Titel
+    object_titles = [v.get("object_title", "") for v in object_data.values()]
+
 
     # --- Kapitel-/Szenenstruktur laden ---
     settings = load_settings()
@@ -2145,14 +2299,21 @@ def show_editor_window(parent=None):
     project = projects_data.get(last_project_key, {})
     project_id = project.get("project_ID", last_project_key.split("_")[-1])
     project_name = project.get("project_title", f"project_{project_id}")
-    today_str = QDate.currentDate().toString("yyyyMMdd")
     safe_project_name = "".join(c for c in project_name if c.isalnum() or c in ("_", "-")).rstrip()
     project_dir = chapters_dir / f"project_{project_id}"
     project_dir.mkdir(parents=True, exist_ok=True)
-    chapter_file = project_dir / f"data_{safe_project_name}_{today_str}.json"
-    if not chapter_file.exists():
+
+    # Bestehende Datei suchen (beginnt mit "data_<projektname>_")
+    chapter_files = sorted(project_dir.glob(f"data_{safe_project_name}_*.json"))
+    if chapter_files:
+        chapter_file = chapter_files[-1]  # Die zuletzt erstellte Datei nehmen (nach Datum sortiert)
+    else:
+        # Wenn keine Datei existiert, Vorlage kopieren und neuen Namen vergeben
+        today_str = QDate.currentDate().toString("yyyyMMdd")
+        chapter_file = project_dir / f"data_{safe_project_name}_{today_str}.json"
         template = safe_load_json(chapters_dir / "data_project_00.json", {})
         safe_save_json(chapter_file, template)
+
     chapter_data = safe_load_json(chapter_file, {})
     window.chapter_data = chapter_data
     window.chapter_file = chapter_file
@@ -2211,7 +2372,7 @@ def show_editor_window(parent=None):
                     date = QDate.fromString(value, "yyyy-MM-dd")
                     if date.isValid():
                         widget.setDate(date)
-
+    
     # --- Labels und Zusatzfelder setzen ---
     # Kapitel-ID
     label_chapter_id = winFindChild(window, QLabel, "labelEditorChapterID")
@@ -2239,6 +2400,18 @@ def show_editor_window(parent=None):
         plain_text_widget.textChanged.connect(update_word_count)
         update_word_count()
 
+    # Comboboxen füllen
+    fill_combobox(
+    winFindChild(window, QComboBox, "comboBoxEditorSceneStoryline"), storyline_titles)
+    fill_combobox(
+        winFindChild(window, QComboBox, "comboBoxEditorSceneLocation"), location_titles)
+    fill_combobox(
+        winFindChild(window, QComboBox, "comboBoxEditorSceneCharacter"), character_names)
+    fill_combobox(
+        winFindChild(window, QComboBox, "comboBoxEditorSceneObject"), object_titles)
+    
+    update_editor_info_labels(window, first_chapter)
+
     # --- Save-Button einbinden ---
     save_btn = winFindChild(window, QWidget, "saveBtnEditorChapter")
     if save_btn:
@@ -2261,7 +2434,23 @@ def show_editor_window(parent=None):
             chapter_data[current_key] = chapter
             safe_save_json(window.chapter_file, chapter_data)
             log_info(f"Kapitel {current_key} erfolgreich gespeichert.")
+
+            # Kapitel-Liste aktualisieren
             update_chapter_list_widget(window)
+
+            # Szenen bestimmen und Felder/Labels aktualisieren
+            scene_keys = [k for k in chapter.keys() if k.startswith("scenes_id_")]
+            current_scene = chapter[scene_keys[0]] if scene_keys else None
+
+            # Felder für Szene setzen
+            update_editor_scene_fields(window, current_scene if current_scene else {})
+            # Szenen-ID-Label aktualisieren
+            label_scene_id = winFindChild(window, QLabel, "labelEditorSceneID")
+            if label_scene_id:
+                label_scene_id.setText(current_scene.get("scene_id", "") if current_scene else "")
+
+            # Info-Labels aktualisieren
+            update_editor_info_labels(window, chapter, current_scene)
         save_btn.clicked.connect(on_save_chapter)
 
     # --- Neuer Kapitel-Button einbinden ---
@@ -2302,10 +2491,16 @@ def show_editor_window(parent=None):
                             if date.isValid():
                                 widget.setDate(date)
             # Kapitel-ID-Label aktualisieren
+            update_editor_chapter_fields(window, empty_chapter)
             label_chapter_id = winFindChild(window, QLabel, "labelEditorChapterID")
             if label_chapter_id:
                 label_chapter_id.setText(new_id)
-            
+            # Szene-Felder leeren
+            update_editor_scene_fields(window, {})
+            label_scene_id = winFindChild(window, QLabel, "labelEditorSceneID")
+            if label_scene_id:
+                label_scene_id.setText("")
+            update_editor_info_labels(window, empty_chapter, None)
             log_info(f"Neues Kapitel {new_key} angelegt.")
         
         new_btn.clicked.connect(on_new_chapter)
@@ -2335,10 +2530,16 @@ def show_editor_window(parent=None):
             next_chapter = chapter_data[next_key]
             # Felder setzen
             update_editor_chapter_fields(window, next_chapter)
-            # Kapitel-ID-Label aktualisieren
+            scene_keys = [k for k in next_chapter.keys() if k.startswith("scenes_id_")]
+            next_scene = next_chapter[scene_keys[0]] if scene_keys else None
+            update_editor_scene_fields(window, next_scene if next_scene else {})
             label_chapter_id = winFindChild(window, QLabel, "labelEditorChapterID")
             if label_chapter_id:
                 label_chapter_id.setText(next_chapter.get("chapter_id", ""))
+            label_scene_id = winFindChild(window, QLabel, "labelEditorSceneID")
+            if label_scene_id:
+                label_scene_id.setText(next_scene.get("scene_id", "") if next_scene else "")
+            update_editor_info_labels(window, next_chapter, next_scene)
         next_btn.clicked.connect(on_next_chapter)
 
     # --- Prev-Kapitel-Button einbinden ---
@@ -2366,10 +2567,16 @@ def show_editor_window(parent=None):
             prev_chapter = chapter_data[prev_key]
             # Felder setzen
             update_editor_chapter_fields(window, prev_chapter)
-            # Kapitel-ID-Label aktualisieren
+            scene_keys = [k for k in prev_chapter.keys() if k.startswith("scenes_id_")]
+            prev_scene = prev_chapter[scene_keys[0]] if scene_keys else None
+            update_editor_scene_fields(window, prev_scene if prev_scene else {})
             label_chapter_id = winFindChild(window, QLabel, "labelEditorChapterID")
             if label_chapter_id:
                 label_chapter_id.setText(prev_chapter.get("chapter_id", ""))
+            label_scene_id = winFindChild(window, QLabel, "labelEditorSceneID")
+            if label_scene_id:
+                label_scene_id.setText(prev_scene.get("scene_id", "") if prev_scene else "")
+            update_editor_info_labels(window, prev_chapter, prev_scene)
         prev_btn.clicked.connect(on_prev_chapter)
 
     # --- Delete-Kapitel-Button einbinden ---
@@ -2409,9 +2616,17 @@ def show_editor_window(parent=None):
                 next_key = keys[idx]
                 next_chapter = chapter_data[next_key]
                 update_editor_chapter_fields(window, next_chapter)
+                scene_keys = [k for k in next_chapter.keys() if k.startswith("scenes_id_")]
+                next_scene = next_chapter[scene_keys[0]] if scene_keys else None
+                update_editor_scene_fields(window, next_scene if next_scene else {})
                 label_chapter_id = winFindChild(window, QLabel, "labelEditorChapterID")
                 if label_chapter_id:
                     label_chapter_id.setText(next_chapter.get("chapter_id", ""))
+                label_scene_id = winFindChild(window, QLabel, "labelEditorSceneID")
+                if label_scene_id:
+                    label_scene_id.setText(next_scene.get("scene_id", "") if next_scene else "")
+                update_editor_info_labels(window, next_chapter, next_scene)                
+
             else:
                 # Keine Kapitel mehr vorhanden: Felder leeren
                 for field, (widget_type, widget_name) in EDITOR_CHAPTER_MAP.items():
@@ -2440,6 +2655,164 @@ def show_editor_window(parent=None):
                 parent.show()
         exit_btn.clicked.connect(on_exit_clicked)
     
+    # --- Szenen-Buttons einbinden ---
+    def get_current_chapter():
+        chapter_data = window.chapter_data
+        label_chapter_id = winFindChild(window, QLabel, "labelEditorChapterID")
+        current_chapter_id = label_chapter_id.text() if label_chapter_id else ""
+        for k, v in chapter_data.items():
+            if v.get("chapter_id", "") == current_chapter_id:
+                return v
+        return None
+
+    def get_current_scene_key_and_scene(chapter):
+        label_scene_id = winFindChild(window, QLabel, "labelEditorSceneID")
+        current_scene_id = label_scene_id.text() if label_scene_id else ""
+        scene_keys = [k for k in chapter.keys() if k.startswith("scenes_id_")]
+        for k in scene_keys:
+            if chapter[k].get("scene_id", "") == current_scene_id:
+                return k, chapter[k], scene_keys
+        # Fallback: erste Szene
+        if scene_keys:
+            return scene_keys[0], chapter[scene_keys[0]], scene_keys
+        return None, None, scene_keys
+
+    # --- Save Szene ---
+    save_scene_btn = winFindChild(window, QWidget, "saveBtnEditorScene")
+    if save_scene_btn:
+        def on_save_scene():
+            chapter = get_current_chapter()
+            if not chapter:
+                return
+            scene_key, scene, scene_keys = get_current_scene_key_and_scene(chapter)
+            if not scene_key:
+                return
+            scene.update(read_editor_scene_fields(window))
+            update_editor_info_labels(window, chapter, scene)
+            # Bearbeitet-Datum setzen
+            today = QDate.currentDate().toString("yyyy-MM-dd")
+            scene["scene_edited"] = today
+            chapter[scene_key] = scene
+            safe_save_json(window.chapter_file, window.chapter_data)
+            log_info(f"Szene {scene_key} gespeichert.")
+        save_scene_btn.clicked.connect(on_save_scene)
+
+    new_scene_btn = winFindChild(window, QWidget, "newBtnEditorScene")
+    if new_scene_btn:
+        def on_new_scene():
+            chapter_data = window.chapter_data
+            chapter = get_current_chapter()
+            if not chapter:
+                return
+            new_id = get_next_project_scene_id(chapter_data)
+            new_key = f"scenes_id_{int(new_id):02d}"
+            today = QDate.currentDate().toString("yyyy-MM-dd")
+            empty_scene = {
+                "scene_id": new_id,
+                "scene_begin": today,
+                "scene_edited": today,
+                "scene_order": get_next_scene_order(chapter)
+            }
+            chapter[new_key] = empty_scene
+            safe_save_json(window.chapter_file, chapter_data)
+            update_editor_scene_fields(window, empty_scene)
+            label_scene_id = winFindChild(window, QLabel, "labelEditorSceneID")
+            if label_scene_id:
+                label_scene_id.setText(new_id)
+            update_editor_info_labels(window, chapter, empty_scene)
+            log_info(f"Neue Szene {new_key} angelegt.")
+        new_scene_btn.clicked.connect(on_new_scene)
+
+    # --- Next Szene ---
+    next_scene_btn = winFindChild(window, QWidget, "nextBtnEditorScene")
+    if next_scene_btn:
+        def on_next_scene():
+            chapter = get_current_chapter()
+            if not chapter:
+                return
+            scene_key, scene, scene_keys = get_current_scene_key_and_scene(chapter)
+            if not scene_keys:
+                return
+            idx = scene_keys.index(scene_key) if scene_key in scene_keys else 0
+            next_idx = (idx + 1) % len(scene_keys)
+            next_key = scene_keys[next_idx]
+            next_scene = chapter[next_key]
+            update_editor_scene_fields(window, next_scene)
+            label_scene_id = winFindChild(window, QLabel, "labelEditorSceneID")
+            if label_scene_id:
+                label_scene_id.setText(next_scene.get("scene_id", ""))
+            update_editor_info_labels(window, chapter, next_scene)
+        next_scene_btn.clicked.connect(on_next_scene)
+
+    # --- Prev Szene ---
+    prev_scene_btn = winFindChild(window, QWidget, "previousBtnEditorScene")
+    if prev_scene_btn:
+        def on_prev_scene():
+            chapter = get_current_chapter()
+            if not chapter:
+                return
+            scene_key, scene, scene_keys = get_current_scene_key_and_scene(chapter)
+            if not scene_keys:
+                return
+            idx = scene_keys.index(scene_key) if scene_key in scene_keys else 0
+            prev_idx = (idx - 1) % len(scene_keys)
+            prev_key = scene_keys[prev_idx]
+            prev_scene = chapter[prev_key]
+            update_editor_scene_fields(window, prev_scene)
+            label_scene_id = winFindChild(window, QLabel, "labelEditorSceneID")
+            if label_scene_id:
+                label_scene_id.setText(prev_scene.get("scene_id", ""))
+            update_editor_info_labels(window, chapter, prev_scene)
+        prev_scene_btn.clicked.connect(on_prev_scene)
+
+    # --- Delete Szene ---
+    delete_scene_btn = winFindChild(window, QWidget, "deleteBtnEditorScene")
+    if delete_scene_btn:
+        def on_delete_scene():
+            chapter = get_current_chapter()
+            if not chapter:
+                return
+            scene_key, scene, scene_keys = get_current_scene_key_and_scene(chapter)
+            if not scene_key:
+                return
+            label_scene_id = winFindChild(window, QLabel, "labelEditorSceneID")
+            current_scene_id = label_scene_id.text() if label_scene_id else ""
+            if not show_secure_dialog(window, action="delete_scene", project_key=current_scene_id):
+                return
+            del chapter[scene_key]
+            renumber_scene_orders(window.chapter_data)
+            safe_save_json(window.chapter_file, window.chapter_data)
+            log_info(f"Szene {scene_key} gelöscht.")
+            # Nächste Szene anzeigen oder Felder leeren
+            scene_keys = [k for k in chapter.keys() if k.startswith("scenes_id_")]
+            if scene_keys:
+                next_scene = chapter[scene_keys[0]]
+                update_editor_scene_fields(window, next_scene)
+                if label_scene_id:
+                    label_scene_id.setText(next_scene.get("scene_id", ""))
+                update_editor_info_labels(window, chapter, next_scene)
+            else:
+                for field, (widget_type, widget_name) in EDITOR_SCENE_MAP.items():
+                    widget = winFindChild(window, widget_type, widget_name)
+                    if widget:
+                        if isinstance(widget, QLineEdit):
+                            widget.clear()
+                        elif isinstance(widget, QTextEdit):
+                            widget.clear()
+                        elif isinstance(widget, QPlainTextEdit):
+                            widget.clear()
+                        elif isinstance(widget, QComboBox):
+                            widget.setCurrentIndex(0)
+                        elif isinstance(widget, QSpinBox):
+                            widget.setValue(0)
+                        elif isinstance(widget, QDateEdit):
+                            widget.setDate(QDate.currentDate())
+                if label_scene_id:
+                    label_scene_id.setText("")
+                update_editor_info_labels(window, chapter, None)
+        delete_scene_btn.clicked.connect(on_delete_scene)    
+
+    # -- Close Event überschreiben ---
     def on_close_event(event):
         settings = load_settings()
         save_settings(settings)
