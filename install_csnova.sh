@@ -5,24 +5,29 @@ echo "Installing CSNova..."
 INSTALL_DIR="$HOME/CSNova"
 mkdir -p "$INSTALL_DIR"
 
-# Kopiere Binary und Ressourcen
 cp ./dist/csNova "$INSTALL_DIR/"
+chmod +x "$INSTALL_DIR/csNova"
+
 for folder in assets config core data docs gui ai export; do
     [ -d "$folder" ] && cp -r "$folder" "$INSTALL_DIR/"
 done
 
-# Desktop-Datei anpassen und ins Menü kopieren
-DESKTOP_FILE="$INSTALL_DIR/csnova.desktop"
 MENU_FILE="$HOME/.local/share/applications/csnova.desktop"
-sed "s|{INSTALL_DIR}|$INSTALL_DIR|g" ./csnova.desktop > "$MENU_FILE"
+cat > "$MENU_FILE" <<EOF
+[Desktop Entry]
+Type=Application
+Name=CSNova
+Comment=Creative Writing Tool
+Exec=$INSTALL_DIR/csNova
+Icon=$INSTALL_DIR/assets/media/csnova.png
+Terminal=false
+Categories=Office;Utility;
+StartupNotify=true
+EOF
 
-# Icon-Rechte setzen
+chmod 644 "$MENU_FILE"
 chmod 644 "$INSTALL_DIR/assets/media/csnova.png"
 
-# Desktop-Datei Rechte setzen
-chmod 644 "$MENU_FILE"
-
-# Desktop-Datenbank aktualisieren
 update-desktop-database ~/.local/share/applications/
 
 echo "Installation complete!"

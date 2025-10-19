@@ -2,8 +2,8 @@
 Type=Application
 Name=CSNova
 Comment=Creative Writing Tool
-Exec={INSTALL_DIR}/csNova
-Icon={INSTALL_DIR}/assets/media/csnova.png
+Exec=/home/frank/CSNova/csNova
+Icon=/home/frank/CSNova/assets/media/csnova.png
 Terminal=false
 Categories=Office;Utility;
 StartupNotify=true

@@ -494,6 +494,61 @@ def fill_combobox(combo: Optional[QComboBox], values: list, selected_index_or_va
         except Exception:
             idx = 0
     combo.setCurrentIndex(idx)
+# Setzt die Beschriftungen und Tooltips der Buttons basierend auf Übersetzungen
+def set_button_labels(window, language="en"):
+    btn_labels = load_translation(Path("core/translations/csNovaBtn/csNovaBtn.json"), language)
+    # Mapping: Button-Objektname → Key in JSON
+    btn_map = {
+        "projectBtncsNovaMain": "project_btn",
+        "characterBtncsNovaMain": "character_btn",
+        "objectBtncsNovaMain": "objects_btn",
+        "locationBtncsNovaMain": "location_btn",
+        "storylineBtncsNovaMain": "storyline_btn",
+        "editorBtncsNovaMain": "editor_btn",
+        "preferencesBtncsNovaMain": "preferences_btn",
+        "helpBtncsNovaMain": "help_btn",
+        "exitBtncsNovaMain": "exit_btn",
+        "saveBtnEditorChapter": "save_btn",
+        "newBtnEditorChapter": "new_btn",
+        "deleteBtnEditorChapter": "delete_btn",
+        "nextBtnEditorChapter": "next_btn",
+        "previousBtnEditorChapter": "previous_btn",
+        "saveBtnEditorScene": "save_btn",
+        "newBtnEditorScene": "new_btn",
+        "deleteBtnEditorScene": "delete_btn",
+        "nextBtnEditorScene": "next_btn",
+        "previousBtnEditorScene": "previous_btn",
+        "saveBtnCharacter": "save_btn",
+        "newBtnCharacter": "new_btn",
+        "deleteBtnCharacter": "delete_btn",
+        "nextBtnCharacter": "next_btn",
+        "previousBtnCharacter": "previous_btn",
+        "saveBtnObjects": "save_btn",
+        "newBtnObjects": "new_btn",
+        "deleteBtnObjects": "delete_btn",
+        "nextBtnObjects": "next_btn",
+        "previousBtnObjects": "previous_btn",
+        "saveBtnLocations": "save_btn",
+        "newBtnLocations": "new_btn",
+        "deleteBtnLocations": "delete_btn",
+        "nextBtnLocations": "next_btn",
+        "previousBtnLocations": "previous_btn",
+        "saveBtnStorylines": "save_btn",
+        "newBtnStorylines": "new_btn",
+        "deleteBtnStorylines": "delete_btn",
+        "nextBtnStorylines": "next_btn",
+        "previousBtnStorylines": "previous_btn",
+        "returnBtn": "return_btn",
+        "imageBtn": "image_btn",
+        "setDateBtn": "set_date_btn"
+    }
+    for widget_name, label_key in btn_map.items():
+        btn = winFindChild(window, QWidget, widget_name)
+        if btn and label_key in btn_labels:
+            btn.setText(btn_labels[label_key])
+            tooltip_key = f"{label_key}_tooltip"
+            if tooltip_key in btn_labels:
+                btn.setToolTip(btn_labels[tooltip_key])
 
 # -------------------------------------------------------------------------------------
 # Grundlegende Mappings und Konstanten für Charaktere
@@ -1292,7 +1347,13 @@ def connect_text_formatting_buttons(window, text_edit_name="textEditorScenePlain
     btn_bullet = winFindChild(window, QWidget, "btnEditorBulletList")
     btn_number = winFindChild(window, QWidget, "btnEditorNumberList")
 
-    
+    # Icons für Buttons setzen
+    indent_icon = QIcon("assets/editor_icons/indent_icon.png")
+    list_bullet_icon = QIcon("assets/editor_icons/list_bullet_icon.png")
+    list_number_icon = QIcon("assets/editor_icons/list_numbered_icon.png")
+    subscript_icon = QIcon("assets/editor_icons/subscript_icon.png")
+    superscript_icon = QIcon("assets/editor_icons/superscript_icon.png")
+
     def update_format_buttons():
         cursor = text_edit.textCursor()
         fmt = cursor.charFormat()
@@ -1370,6 +1431,7 @@ def connect_text_formatting_buttons(window, text_edit_name="textEditorScenePlain
     # Einzug
     btn_indent = winFindChild(window, QWidget, "bntEditorIndentet")
     if btn_indent:
+        btn_indent.setIcon(QIcon(indent_icon))
         def indent():
             cursor = text_edit.textCursor()
             cursor.insertText("    ")
@@ -1379,6 +1441,7 @@ def connect_text_formatting_buttons(window, text_edit_name="textEditorScenePlain
     # Hochgestellt (Toggle)
     btn_sup = winFindChild(window, QWidget, "btnEditorSuperscript")
     if btn_sup:
+        btn_sup.setIcon(QIcon(superscript_icon))
         def set_superscript():
             cursor = text_edit.textCursor()
             fmt = cursor.charFormat()
@@ -1393,6 +1456,7 @@ def connect_text_formatting_buttons(window, text_edit_name="textEditorScenePlain
     # Tiefgestellt (Toggle)
     btn_sub = winFindChild(window, QWidget, "btnEditorSubscript")
     if btn_sub:
+        btn_sub.setIcon(QIcon(subscript_icon))
         def set_subscript():
             cursor = text_edit.textCursor()
             fmt = cursor.charFormat()
@@ -1407,6 +1471,7 @@ def connect_text_formatting_buttons(window, text_edit_name="textEditorScenePlain
     # Bullet-List (Toggle)
     btn_bullet = winFindChild(window, QWidget, "btnEditorBulletList")
     if btn_bullet:
+        btn_bullet.setIcon(QIcon(list_bullet_icon))
         def bullet_list():
             cursor = text_edit.textCursor()
             block = cursor.block()
@@ -1425,6 +1490,7 @@ def connect_text_formatting_buttons(window, text_edit_name="textEditorScenePlain
     # Number-List (Toggle)
     btn_number = winFindChild(window, QWidget, "btnEditorNumberList")
     if btn_number:
+        btn_number.setIcon(QIcon(list_number_icon))
         def number_list():
             cursor = text_edit.textCursor()
             block = cursor.block()
@@ -1534,6 +1600,9 @@ def toggle_item_in_list(item_list, idx):
 def show_main_window():
     window = DynamicWindow("main_ui", UI_FILES["main"], splitter_name="mainSplitter", confirm_on_close=True)
     app_state.main_window = window 
+    settings = load_settings()
+    language = settings.get("language", "en")
+    set_button_labels(window, language)
 
     # Icon setzen
     icon_path = ASSETS_DIR / "media" / "csnova.png"
@@ -1682,7 +1751,7 @@ def show_start_window(settings):
     combo_theme = winFindChild(window,QComboBox, "comboBoxTheme")
 
     # Items für Sprache laden (sicher, mit Cache)
-    languages = safe_load_json(Path("core/translations/languages.json"), {})
+    languages = safe_load_json(Path("core/translations/comboBox/languages.json"), {})
     language_codes = list(languages.keys())
     language_items = list(languages.get(language, languages.get("de", {})).values())
     if combo_language:
@@ -1697,7 +1766,7 @@ def show_start_window(settings):
                 combo_language.setCurrentIndex(0)
 
     # Items für Theme laden
-    designs = load_translation(Path("core/translations/design.json"), language)
+    designs = load_translation(Path("core/translations/comboBox/design.json"), language)
     theme_items = list(designs.values() if isinstance(designs, dict) else designs)
     if combo_theme:
         combo_theme.clear()
@@ -1744,12 +1813,11 @@ def show_start_window(settings):
 # Projektfenster anzeigen
 def show_projects_window(parent=None):
     window = DynamicWindow("projects_ui", UI_FILES["projects"], splitter_name="mainSplitter")
+    settings = load_settings()
+    language = settings.get("language", "en")
+    set_button_labels(window, language)
     window.show()
     log_info("Projektfenster erfolgreich geladen und angezeigt.")
-
-    # 1. Sprache ermitteln
-    settings = load_settings()
-    language = settings.get("language", "de")
 
     # 2. Daten laden
     projects_path = Path("data/projects/data_projects.json")
@@ -1764,43 +1832,43 @@ def show_projects_window(parent=None):
     window.current_project_key = first_key
     current_project = projects_data[window.current_project_key]
     # 3. Zielgruppe
-    target_groups = load_translation(Path("core/translations/targetGroups.json"), language)
+    target_groups = load_translation(Path("core/translations/comboBox/targetGroups.json"), language)
     combo_target_group = winFindChild(window,QComboBox, "comboBoxProjectTargetGroup")
     fill_combobox(combo_target_group, list(target_groups.values()), current_project.get("project_target_group", 0))
     # 4. Erzählperspektive
-    perspectives = load_translation(Path("core/translations/narrativePerspective.json"), language)
+    perspectives = load_translation(Path("core/translations/comboBox/narrativePerspective.json"), language)
     combo_narrative = winFindChild(window,QComboBox, "comboBoxProjectNarrativePerspective")
     fill_combobox(combo_narrative, list(perspectives.values()), current_project.get("project_narrative_perspective", 0))
     # 5. Stil
-    styles = load_translation(Path("core/translations/style.json"), language)
+    styles = load_translation(Path("core/translations/comboBox/style.json"), language)
     combo_style = winFindChild(window,QComboBox, "comboBoxProjectStyle")
     fill_combobox(combo_style, list(styles.values()), current_project.get("project_style", 0))
     # 6. Genre
-    genres_root = load_translation(Path("core/translations/genre.json"), language)
+    genres_root = load_translation(Path("core/translations/comboBox/genre.json"), language)
     genres = genres_root.get("book_genres", {}) if isinstance(genres_root, dict) else {}
     combo_genre = winFindChild(window,QComboBox, "comboBoxProjectGenre")
     fill_combobox(combo_genre, list(genres.values()), current_project.get("project_genre", 0))
     # 7. Arbeitstyp
-    working_root = load_translation(Path("core/translations/workingType.json"), language)
+    working_root = load_translation(Path("core/translations/comboBox/workingType.json"), language)
     working_types = working_root.get("book_working_types", {}) if isinstance(working_root, dict) else {}
     combo_work_type = winFindChild(window, QComboBox, "comboBoxProjectWorkingType")
     fill_combobox(combo_work_type, list(working_types.values()), current_project.get("project_work_type", 0))
     # 8. Motiv
-    motifs = load_translation(Path("core/translations/motif.json"), language)
+    motifs = load_translation(Path("core/translations/comboBox/motif.json"), language)
     combo_motif = winFindChild(window,QComboBox, "comboBoxProjectMotif")
     fill_combobox(combo_motif, list(motifs.values()), current_project.get("project_motif", 0))
     # 9. Status
-    status = load_translation(Path("core/translations/status.json"), language)
+    status = load_translation(Path("core/translations/comboBox/status.json"), language)
     combo_status = winFindChild(window,QComboBox, "comboBoxProjectStatus")
     fill_combobox(combo_status, list(status.values()), current_project.get("project_status", 0))
     # 10. Verlag
-    publishers_root = safe_load_json(Path("core/translations/publisher.json"), {})
+    publishers_root = safe_load_json(Path("core/translations/comboBox/publisher.json"), {})
     publishers = publishers_root.get("publishers", []) if isinstance(publishers_root, dict) else []
     publisher_names = [pub.get("name", "") for pub in publishers if pub.get("type") == "book"]
     combo_publisher = winFindChild(window,QComboBox, "comboBoxProjectPublisher")
     fill_combobox(combo_publisher, publisher_names, current_project.get("project_publisher", 0))
     # 11. Editor
-    editors_root = safe_load_json(Path("core/translations/editor.json"), {})
+    editors_root = safe_load_json(Path("core/translations/comboBox/editor.json"), {})
     editors = editors_root.get("editors", []) if isinstance(editors_root, dict) else []
     editor_names = [ed.get("name", "") for ed in editors if ed.get("type") == "book"]
     combo_editor = winFindChild(window,QComboBox, "comboBoxProjectEditor")
@@ -1929,11 +1997,10 @@ def show_projects_window(parent=None):
 # Charakterfenster anzeigen
 def show_characters_window(parent=None):
     window = DynamicWindow("characters_ui", UI_FILES["characters"], splitter_name="mainSplitter")
-    window.show()
-
-    # 1. Sprache ermitteln
     settings = load_settings()
-    language = settings.get("language", "de")
+    language = settings.get("language", "en")
+    set_button_labels(window, language)
+    window.show()
 
     # 2. Daten laden
     character_path = Path("data/characters/data_characters.json")
@@ -1984,39 +2051,39 @@ def show_characters_window(parent=None):
         label_age.setText(age_value)
 
     # Status
-    status = load_translation(Path("core/translations/status.json"), language)
+    status = load_translation(Path("core/translations/comboBox/status.json"), language)
     combo_status = winFindChild(window,QComboBox, "comboBoxStatus")
     fill_combobox(combo_status, list(status.values()), current_character.get("character_status", 0))
     # 3. Geschlecht
-    gender = load_translation(Path("core/translations/gender.json"), language)
+    gender = load_translation(Path("core/translations/comboBox/gender.json"), language)
     combo_gender = winFindChild(window,QComboBox, "comboBoxGender")
     fill_combobox(combo_gender, list(gender.values()), current_character.get("character_gender", 0))
     # 4. Sexualität
-    sexual_orientation = load_translation(Path("core/translations/sex_orientation.json"), language)
+    sexual_orientation = load_translation(Path("core/translations/comboBox/sex_orientation.json"), language)
     combo_sexual_orientation = winFindChild(window,QComboBox, "comboBoxSexOrientation")
     fill_combobox(combo_sexual_orientation, list(sexual_orientation.values()), current_character.get("character_sexOrientation", 0))
     # 5. Rolle 
-    role = load_translation(Path("core/translations/role.json"), language)
+    role = load_translation(Path("core/translations/comboBox/role.json"), language)
     combo_role = winFindChild(window,QComboBox, "comboBoxRole")
     fill_combobox(combo_role, list(role.values()), current_character.get("character_role", 0))
     # 6. Gruppe
-    group = load_translation(Path("core/translations/group.json"), language)
+    group = load_translation(Path("core/translations/comboBox/group.json"), language)
     combo_group = winFindChild(window,QComboBox, "comboBoxGroup")
     fill_combobox(combo_group, list(group.values()), current_character.get("character_group", 0))
     # 7. Körperbau
-    body_type = load_translation(Path("core/translations/bodyType.json"), language)
+    body_type = load_translation(Path("core/translations/comboBox/bodyType.json"), language)
     combo_body_type = winFindChild(window,QComboBox, "comboBoxBodyType")
     fill_combobox(combo_body_type, list(body_type.values()), current_character.get("character_bodyType", 0))
     # 8. Statur
-    stature = load_translation(Path("core/translations/stature.json"), language)
+    stature = load_translation(Path("core/translations/comboBox/stature.json"), language)
     combo_stature = winFindChild(window,QComboBox, "comboBoxStature")
     fill_combobox(combo_stature, list(stature.values()), current_character.get("character_stature", 0))
     # 9. Gesichtsform
-    face_shape = load_translation(Path("core/translations/faceShape.json"), language)
+    face_shape = load_translation(Path("core/translations/comboBox/faceShape.json"), language)
     combo_face_shape = winFindChild(window,QComboBox, "comboBoxFaceShape")
     fill_combobox(combo_face_shape, list(face_shape.values()), current_character.get("character_faceshape", 0))
     # 10. Augenform
-    eye_shape = load_translation(Path("core/translations/eyeShape.json"), language)
+    eye_shape = load_translation(Path("core/translations/comboBox/eyeShape.json"), language)
     combo_eye_shape = winFindChild(window,QComboBox, "comboBoxEyeShape")
     fill_combobox(combo_eye_shape, list(eye_shape.values()), current_character.get("character_eyeshape", 0))
 
@@ -2136,11 +2203,11 @@ def show_characters_window(parent=None):
 # Objektfenster anzeigen
 def show_objects_window(parent=None):
     window = DynamicWindow("objects_ui", UI_FILES["objects"], splitter_name="mainSplitter")
+    settings = load_settings()
+    language = settings.get("language", "en")
+    set_button_labels(window, language)
     window.show()
 
-    #1. Sprache ermitteln
-    settings = load_settings()
-    language = settings.get("language", "de")
     # 2. Daten laden
     object_path = Path("data/objects/data_objects.json")
     object_data = safe_load_json(object_path, {})
@@ -2157,7 +2224,7 @@ def show_objects_window(parent=None):
     update_object_fields(window, current_object)
 
     # Status-ComboBox füllen
-    status = load_translation(Path("core/translations/status.json"), language)
+    status = load_translation(Path("core/translations/comboBox/status.json"), language)
     combo_status = winFindChild(window, QComboBox, "comboBoxObjectsStatus")
     fill_combobox(combo_status, list(status.values()), current_object.get("object_status", 0))
 
@@ -2274,11 +2341,11 @@ def show_objects_window(parent=None):
 # Locationsfenster anzeigen
 def show_locations_window(parent=None):
     window = DynamicWindow("locations_ui", UI_FILES["locations"], splitter_name="mainSplitter")
+    settings = load_settings()
+    language = settings.get("language", "en")
+    set_button_labels(window, language)
     window.show()
     
-    # 1. Sprache ermitteln
-    settings = load_settings()
-    language = settings.get("language", "de")
     # 2. Daten laden
     locations_path = Path("data/locations/data_locations.json")
     location_data = safe_load_json(locations_path, {})
@@ -2293,7 +2360,7 @@ def show_locations_window(parent=None):
     # Felder setzen
     update_location_fields(window, current_location)
     # Status-ComboBox füllen
-    status = load_translation(Path("core/translations/status.json"), language)
+    status = load_translation(Path("core/translations/comboBox/status.json"), language)
     combo_status = winFindChild(window, QComboBox, "comboBoxLocationsStatus")
     fill_combobox(combo_status, list(status.values()), current_location.get("location_status", 0) if isinstance(current_location, dict) else 0)
     # --- Save-Button einbinden ---
@@ -2407,11 +2474,11 @@ def show_locations_window(parent=None):
 # Storylinefenster anzeigen
 def show_storylines_window(parent=None):
     window = DynamicWindow("storylines_ui", UI_FILES["storylines"], splitter_name="mainSplitter")
+    settings = load_settings()
+    language = settings.get("language", "en")
+    set_button_labels(window, language)
     window.show()
 
-    # 1. Sprache ermitteln
-    settings = load_settings()
-    language = settings.get("language", "de")
     # 2. Daten laden
     storylines_path = Path("data/storylines/data_storylines.json")
     storyline_data = safe_load_json(storylines_path, {})
@@ -2426,7 +2493,7 @@ def show_storylines_window(parent=None):
     # Felder setzen
     update_storyline_fields(window, current_storyline)
     # Status-ComboBox füllen
-    status = load_translation(Path("core/translations/status.json"), language)
+    status = load_translation(Path("core/translations/comboBox/status.json"), language)
     combo_status = winFindChild(window, QComboBox, "comboBoxStorylinesStatus")
     fill_combobox(combo_status, list(status.values()), current_storyline.get("storyline_status", 0) if isinstance(current_storyline, dict) else 0)
     # --- Save-Button einbinden ---
@@ -2540,7 +2607,11 @@ def show_storylines_window(parent=None):
 # Editorfenster anzeigen
 def show_editor_window(parent=None):
     window = DynamicWindow("editor_ui", UI_FILES["editor"], splitter_name="mainSplitter")
+    settings = load_settings()
+    language = settings.get("language", "en")
+    set_button_labels(window, language)
     window.show()
+
     # --- Daten für Comboboxen laden ---
     storyline_data = safe_load_json(Path("data/storylines/data_storylines.json"), {})
     location_data = safe_load_json(Path("data/locations/data_locations.json"), {})
@@ -3146,6 +3217,9 @@ def show_editor_window(parent=None):
 # Preferences-Fenster anzeigen
 def show_preferences_window(parent=None):
     window = DynamicWindow("preferences_ui", UI_FILES["preferences"], splitter_name="mainSplitter")
+    settings = load_settings()
+    language = settings.get("language", "en")
+    set_button_labels(window, language)
     window.show()
 
     # --- Exit-Button einbinden ---
@@ -3171,6 +3245,9 @@ def show_preferences_window(parent=None):
 # Hilfe-Fenster anzeigen
 def show_help_window(parent=None):
     window = DynamicWindow("help_ui", UI_FILES["help"], splitter_name="mainSplitter")
+    settings = load_settings()
+    language = settings.get("language", "en")
+    set_button_labels(window, language)
     window.show()
 
     # --- Exit-Button einbinden ---

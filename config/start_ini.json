@@ -1,7 +1,7 @@
 {
   "first_start": false,
   "last_project": "project_ID_01",
-  "language": "de",
+  "language": "en",
   "theme": "Modern - Neutral",
   "help_ui": {
     "win_maximized": false,
@@ -35,7 +35,7 @@
   },
   "editor_ui": {
     "win_maximized": false,
-    "win_width": 1732,
+    "win_width": 1772,
     "win_height": 1054,
     "win_splitter": [
       387,
