@@ -19,10 +19,10 @@
             "scene_order": "1",
             "scene_goal": "",
             "scene_result ": "",
-            "scene_storyline": "",
-            "scene_location": "",
-            "scene_charter": "",
-            "scene_object": "",
+            "scene_storyline": 0,
+            "scene_location": 0,
+            "scene_character": 0,
+            "scene_object": 0,
             "scene_characters": [],
             "scene_objects": [],
             "scene_mood": "",
@@ -30,8 +30,7 @@
             "scene_type": "",
             "scene_tags": "",
             "scene_notes": "",
-            "scene_plain_text": "",
-            "scene_rich_text": ""
+            "scene_plain_text": ""
         }
     }
 }

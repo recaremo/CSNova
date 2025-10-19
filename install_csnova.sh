@@ -2,39 +2,29 @@
 
 echo "Installing CSNova..."
 
-# 1. Check and install system dependencies
-echo "Checking system dependencies..."
-sudo apt update
-sudo apt install -y libxcb-cursor0
-
-# 2. Create installation directory
 INSTALL_DIR="$HOME/CSNova"
 mkdir -p "$INSTALL_DIR"
 
-# 3. Copy Executable and Desktop File
+# Kopiere Binary und Ressourcen
 cp ./dist/csNova "$INSTALL_DIR/"
-cp ./csnova.desktop "$INSTALL_DIR/"
-chmod +x "$INSTALL_DIR/csnova.desktop"
-
-# 4. Copy all necessary folders and files
 for folder in assets config core data docs gui ai export; do
-    if [ -d "$folder" ]; then
-        cp -r "$folder" "$INSTALL_DIR/"
-    fi
+    [ -d "$folder" ] && cp -r "$folder" "$INSTALL_DIR/"
 done
 
-# 5. Set executable permissions
-chmod +x "$INSTALL_DIR/csNova"
-
-# 6. Desktop Integration
+# Desktop-Datei anpassen und ins Menü kopieren
 DESKTOP_FILE="$INSTALL_DIR/csnova.desktop"
 MENU_FILE="$HOME/.local/share/applications/csnova.desktop"
+sed "s|{INSTALL_DIR}|$INSTALL_DIR|g" ./csnova.desktop > "$MENU_FILE"
 
-# Passe Pfade in der .desktop-Datei an (ohne Backslash!)
-sed "s|Exec=.*|Exec=$INSTALL_DIR/csNova|g; s|Icon=.*|Icon=$INSTALL_DIR/assets/media/csnova.png|g" "$DESKTOP_FILE" > "$MENU_FILE"
-chmod +x "$MENU_FILE"
+# Icon-Rechte setzen
+chmod 644 "$INSTALL_DIR/assets/media/csnova.png"
+
+# Desktop-Datei Rechte setzen
+chmod 644 "$MENU_FILE"
+
+# Desktop-Datenbank aktualisieren
+update-desktop-database ~/.local/share/applications/
 
 echo "Installation complete!"
-echo "Du kannst CSNova starten mit:"
+echo "Du kannst CSNova starten über das Anwendungsmenü (Suchbegriff: CSNova) oder mit:"
 echo "$INSTALL_DIR/csNova"
-echo "Oder über das Anwendungsmenü (Suchbegriff: CSNova)."

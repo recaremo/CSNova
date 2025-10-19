@@ -12,7 +12,7 @@ from datetime import datetime
 from PySide6.QtWidgets import (
     QApplication, QLabel, QWidget, QVBoxLayout, QSizePolicy, QSplitter, QListWidget,
     QMainWindow, QComboBox, QLineEdit, QSpinBox, QTextEdit, QDateEdit, QCheckBox,
-    QToolBar, QDockWidget, QDialog, QPlainTextEdit
+    QToolBar, QDockWidget, QDialog, QFontComboBox
 )
 from PySide6.QtGui import QFont, QIcon, QRegularExpressionValidator, QPixmap
 from PySide6.QtCore import QDate, QRegularExpression, QTimer, QEvent
@@ -1048,14 +1048,14 @@ EDITOR_SCENE_MAP = {
             "scene_result ": (QLineEdit, "lineEditorSceneResult"),
             "scene_storyline": (QComboBox, "comboBoxEditorSceneStoryline"),
             "scene_location": (QComboBox, "comboBoxEditorSceneLocation"),
-            "scene_character": (QComboBox, "comboBoxEditorSceneCharacter"),
-            "scene_object": (QComboBox, "comboBoxEditorSceneObject"),
             "scene_mood": (QLineEdit, "lineEditorceneMood"),
             "scene_duration": (QLineEdit, "lineEditorSceneDuration"),
             "scene_type": (QLineEdit, "lineEditorSceneType"),
             "scene_tags": (QTextEdit, "textEditorSceneTags"),
+            "scene_characters": (QListWidget, "listWidgetEditorSceneCharacters"),
+            "scene_objects": (QListWidget, "listWidgetEditorSceneObjects"),
             "scene_notes": (QTextEdit, "textEditorSceneNotes"),
-            "scene_plain_text": (QPlainTextEdit, "plainTextEditorScenePlainText"),
+            "scene_plain_text": (QTextEdit, "textEditorScenePlainText"),
         }   
 # Liest die Werte aus den Kapitel-Widgets aus
 def read_editor_chapter_fields(window):
@@ -1128,26 +1128,42 @@ def get_next_project_scene_id(chapter_data):
                     pass
     return str(max_id + 1)
 # Liest die Werte aus den Szenen-Widgets aus
-def read_editor_scene_fields(window):
-    scene = {}
+def read_editor_scene_fields(window, scene=None):
+    if scene is None:
+        scene = {}
     for field, (widget_type, widget_name) in EDITOR_SCENE_MAP.items():
         widget = winFindChild(window, widget_type, widget_name)
         if widget:
             if isinstance(widget, QLineEdit):
                 scene[field] = widget.text()
             elif isinstance(widget, QTextEdit):
-                scene[field] = widget.toPlainText()
-            elif isinstance(widget, QPlainTextEdit):
-                scene[field] = widget.toPlainText()
+                if field == "scene_plain_text":
+                    scene[field] = widget.toHtml()
+                else:
+                    scene[field] = widget.toPlainText()
             elif isinstance(widget, QComboBox):
                 scene[field] = widget.currentIndex()
             elif isinstance(widget, QSpinBox):
                 scene[field] = widget.value()
             elif isinstance(widget, QDateEdit):
                 scene[field] = widget.date().toString("yyyy-MM-dd")
+    # Charakter-ListView auslesen
+    listview_characters = winFindChild(window, QListWidget, "listWidgetEditorSceneCharacters")
+    if listview_characters:
+        scene["scene_characters"] = [listview_characters.item(i).text() for i in range(listview_characters.count())]
+    # Objekt-ListView auslesen
+    listview_objects = winFindChild(window, QListWidget, "listWidgetEditorSceneObjects")
+    if listview_objects:
+        scene["scene_objects"] = [listview_objects.item(i).text() for i in range(listview_objects.count())]
     return scene
 # Setzt die Werte aus den Szenen-Widgets basierend auf einem Szenen-Dictionary
 def update_editor_scene_fields(window, scene):
+    # Listen für Charaktere und Objekte immer initialisieren
+    if "scene_characters" not in scene or not isinstance(scene["scene_characters"], list):
+        scene["scene_characters"] = []
+    if "scene_objects" not in scene or not isinstance(scene["scene_objects"], list):
+        scene["scene_objects"] = []
+
     for field, (widget_type, widget_name) in EDITOR_SCENE_MAP.items():
         widget = winFindChild(window, widget_type, widget_name)
         value = scene.get(field, "")
@@ -1155,17 +1171,13 @@ def update_editor_scene_fields(window, scene):
             if isinstance(widget, QLineEdit):
                 widget.setText(str(value))
             elif isinstance(widget, QTextEdit):
-                widget.setPlainText(str(value))
-            elif isinstance(widget, QPlainTextEdit):
-                widget.setPlainText(str(value))
+                if field == "scene_plain_text":
+                    widget.setHtml(str(value))
+                else:
+                    widget.setPlainText(str(value))
             elif isinstance(widget, QComboBox):
                 try:
-                    # Korrektur: Setze den gespeicherten Index oder Wert
-                    if isinstance(value, int):
-                        widget.setCurrentIndex(value)
-                    else:
-                        idx = widget.findText(str(value))
-                        widget.setCurrentIndex(idx if idx >= 0 else 0)
+                    widget.setCurrentIndex(int(value))
                 except Exception:
                     widget.setCurrentIndex(0)
             elif isinstance(widget, QSpinBox):
@@ -1178,6 +1190,19 @@ def update_editor_scene_fields(window, scene):
                     date = QDate.fromString(value, "yyyy-MM-dd")
                     if date.isValid():
                         widget.setDate(date)
+    # Charakter-ListView füllen
+    listview_characters = winFindChild(window, QListWidget, "listWidgetEditorSceneCharacters")
+    if listview_characters:
+        listview_characters.clear()
+        for name in scene.get("scene_characters", []):
+            listview_characters.addItem(name)
+
+    # Objekt-ListView füllen
+    listview_objects = winFindChild(window, QListWidget, "listWidgetEditorSceneObjects")
+    if listview_objects:
+        listview_objects.clear()
+        for name in scene.get("scene_objects", []):
+            listview_objects.addItem(name)
 # Zeige die erste Szene eines Kapitels im Editor an
 def show_first_scene_of_chapter(window, chapter):
     scene_keys = [k for k in chapter.keys() if k.startswith("scenes_id_")]
@@ -1224,17 +1249,6 @@ def get_next_scene_order(chapter):
     return max(orders, default=0) + 1
 # Aktualisiere die Informationslabels im Editor
 def update_editor_info_labels(window, chapter=None, scene=None):
-    # Storyline
-    storyline_combo = winFindChild(window, QComboBox, "comboBoxEditorSceneStoryline")
-    label_storyline = winFindChild(window, QLabel, "labelEditorStorylineText")
-    if storyline_combo and label_storyline:
-        label_storyline.setText(storyline_combo.currentText())
-
-    # Location
-    location_combo = winFindChild(window, QComboBox, "comboBoxEditorSceneLocation")
-    label_location = winFindChild(window, QLabel, "labelEditorLocationText")
-    if location_combo and label_location:
-        label_location.setText(location_combo.currentText())
 
     # Kapitel
     label_chapter = winFindChild(window, QLabel, "labelEditorChapterText")
@@ -1261,6 +1275,260 @@ def update_editor_info_labels(window, chapter=None, scene=None):
             if scene_title_widget:
                 scene_title = scene_title_widget.text()
         label_scene.setText(scene_title)
+# Verbinde die Textformatierungs-Buttons mit dem Text-Editor
+def connect_text_formatting_buttons(window, text_edit_name="textEditorScenePlainText"):
+    text_edit = winFindChild(window, QTextEdit, text_edit_name)
+    if not text_edit:
+        text_edit = winFindChild(window, QTextEdit, "textEditorScenePlainText")
+        if not text_edit:
+            return
+    
+    # Buttons zuerst definieren!
+    btn_bold = winFindChild(window, QWidget, "btnEditorBold")
+    btn_italic = winFindChild(window, QWidget, "btnEditorItalic")
+    btn_underline = winFindChild(window, QWidget, "btnEditorUnderline")
+    btn_sup = winFindChild(window, QWidget, "btnEditorSuperscript")
+    btn_sub = winFindChild(window, QWidget, "btnEditorSubscript")
+    btn_bullet = winFindChild(window, QWidget, "btnEditorBulletList")
+    btn_number = winFindChild(window, QWidget, "btnEditorNumberList")
+
+    
+    def update_format_buttons():
+        cursor = text_edit.textCursor()
+        fmt = cursor.charFormat()
+        btn_bold.setChecked(fmt.fontWeight() == QtGui.QFont.Bold)
+        btn_italic.setChecked(fmt.fontItalic())
+        btn_underline.setChecked(fmt.fontUnderline())
+        btn_sup.setChecked(fmt.verticalAlignment() == QtGui.QTextCharFormat.AlignSuperScript)
+        btn_sub.setChecked(fmt.verticalAlignment() == QtGui.QTextCharFormat.AlignSubScript)
+        block = cursor.block()
+        current_list = block.textList()
+        btn_bullet.setChecked(bool(current_list and current_list.format().style() == QtGui.QTextListFormat.ListDisc))
+        btn_number.setChecked(bool(current_list and current_list.format().style() == QtGui.QTextListFormat.ListDecimal))
+
+    # Ausschneiden
+    btn_cut = winFindChild(window, QWidget, "btnEditorCut")
+    if btn_cut:
+        btn_cut.clicked.connect(text_edit.cut)
+    # Kopieren
+    btn_copy = winFindChild(window, QWidget, "btnEditorCopy")
+    if btn_copy:
+        btn_copy.clicked.connect(text_edit.copy)
+    # Einfügen
+    btn_paste = winFindChild(window, QWidget, "btnEditorPaste")
+    if btn_paste:
+        btn_paste.clicked.connect(text_edit.paste)
+    
+    # Fett
+    btn_bold = winFindChild(window, QWidget, "btnEditorBold")
+    if btn_bold:
+        def set_bold():
+            fmt = text_edit.currentCharFormat()
+            fmt.setFontWeight(QtGui.QFont.Bold if fmt.fontWeight() != QtGui.QFont.Bold else QtGui.QFont.Normal)
+            text_edit.setCurrentCharFormat(fmt)
+            update_format_buttons()
+        btn_bold.clicked.connect(set_bold)
+
+    # Kursiv
+    btn_italic = winFindChild(window, QWidget, "btnEditorItalic")
+    if btn_italic:
+        def set_italic():
+            fmt = text_edit.currentCharFormat()
+            fmt.setFontItalic(not fmt.fontItalic())
+            text_edit.setCurrentCharFormat(fmt)
+            update_format_buttons()
+        btn_italic.clicked.connect(set_italic)
+
+    # Unterstrichen
+    btn_underline = winFindChild(window, QWidget, "btnEditorUnderline")
+    if btn_underline:
+        def set_underline():
+            fmt = text_edit.currentCharFormat()
+            fmt.setFontUnderline(not fmt.fontUnderline())
+            text_edit.setCurrentCharFormat(fmt)
+            update_format_buttons()
+        btn_underline.clicked.connect(set_underline)
+
+    # Linksbündig
+    btn_left = winFindChild(window, QWidget, "btnEditorLeft")
+    if btn_left:
+        btn_left.clicked.connect(lambda: text_edit.setAlignment(QtCore.Qt.AlignLeft))
+        update_format_buttons
+
+    # Zentriert
+    btn_center = winFindChild(window, QWidget, "btnEditorCenter")
+    if btn_center:
+        btn_center.clicked.connect(lambda: text_edit.setAlignment(QtCore.Qt.AlignCenter))
+        update_format_buttons
+
+    # Rechtsbündig
+    btn_right = winFindChild(window, QWidget, "btnEditorRight")
+    if btn_right:
+        btn_right.clicked.connect(lambda: text_edit.setAlignment(QtCore.Qt.AlignRight))
+        update_format_buttons()
+
+    # Einzug
+    btn_indent = winFindChild(window, QWidget, "bntEditorIndentet")
+    if btn_indent:
+        def indent():
+            cursor = text_edit.textCursor()
+            cursor.insertText("    ")
+            update_format_buttons()
+        btn_indent.clicked.connect(indent)
+
+    # Hochgestellt (Toggle)
+    btn_sup = winFindChild(window, QWidget, "btnEditorSuperscript")
+    if btn_sup:
+        def set_superscript():
+            cursor = text_edit.textCursor()
+            fmt = cursor.charFormat()
+            if fmt.verticalAlignment() == QtGui.QTextCharFormat.AlignSuperScript:
+                fmt.setVerticalAlignment(QtGui.QTextCharFormat.AlignNormal)
+            else:
+                fmt.setVerticalAlignment(QtGui.QTextCharFormat.AlignSuperScript)
+            cursor.mergeCharFormat(fmt)
+            update_format_buttons()
+        btn_sup.clicked.connect(set_superscript)
+
+    # Tiefgestellt (Toggle)
+    btn_sub = winFindChild(window, QWidget, "btnEditorSubscript")
+    if btn_sub:
+        def set_subscript():
+            cursor = text_edit.textCursor()
+            fmt = cursor.charFormat()
+            if fmt.verticalAlignment() == QtGui.QTextCharFormat.AlignSubScript:
+                fmt.setVerticalAlignment(QtGui.QTextCharFormat.AlignNormal)
+            else:
+                fmt.setVerticalAlignment(QtGui.QTextCharFormat.AlignSubScript)
+            cursor.mergeCharFormat(fmt)
+            update_format_buttons()
+        btn_sub.clicked.connect(set_subscript)
+
+    # Bullet-List (Toggle)
+    btn_bullet = winFindChild(window, QWidget, "btnEditorBulletList")
+    if btn_bullet:
+        def bullet_list():
+            cursor = text_edit.textCursor()
+            block = cursor.block()
+            current_list = block.textList()
+            cursor.beginEditBlock()
+            if current_list and current_list.format().style() == QtGui.QTextListFormat.ListDisc:
+                # Entferne Liste
+                fmt = QtGui.QTextBlockFormat()
+                cursor.setBlockFormat(fmt)
+            else:
+                cursor.createList(QtGui.QTextListFormat.ListDisc)
+            cursor.endEditBlock()
+            update_format_buttons()
+        btn_bullet.clicked.connect(bullet_list)
+
+    # Number-List (Toggle)
+    btn_number = winFindChild(window, QWidget, "btnEditorNumberList")
+    if btn_number:
+        def number_list():
+            cursor = text_edit.textCursor()
+            block = cursor.block()
+            current_list = block.textList()
+            cursor.beginEditBlock()
+            if current_list and current_list.format().style() == QtGui.QTextListFormat.ListDecimal:
+                # Entferne Liste
+                fmt = QtGui.QTextBlockFormat()
+                cursor.setBlockFormat(fmt)
+            else:
+                cursor.createList(QtGui.QTextListFormat.ListDecimal)
+            cursor.endEditBlock()
+            update_format_buttons()
+        btn_number.clicked.connect(number_list)
+
+    # Schriftart
+    font_combo = winFindChild(window, QFontComboBox, "fontComboBoxEditor")
+    if font_combo:
+        def set_font(font):
+            fmt = text_edit.currentCharFormat()
+            fmt.setFont(font)
+            text_edit.setCurrentCharFormat(fmt)
+        font_combo.currentFontChanged.connect(set_font)
+
+    # Schriftgröße
+    spin_font_size = winFindChild(window, QSpinBox, "spinBoxFontSizeEditor")
+    if spin_font_size:
+        def set_font_size(size):
+            fmt = text_edit.currentCharFormat()
+            fmt.setFontPointSize(size)
+            text_edit.setCurrentCharFormat(fmt)
+        spin_font_size.valueChanged.connect(set_font_size)
+
+    # Undo/Redo
+    btn_undo = winFindChild(window, QWidget, "bntEditorUndo")
+    if btn_undo:
+        btn_undo.clicked.connect(text_edit.undo)
+    btn_redo = winFindChild(window, QWidget, "bntEditorRedo")
+    if btn_redo:
+        btn_redo.clicked.connect(text_edit.redo)
+
+
+
+    text_edit.cursorPositionChanged.connect(update_format_buttons)
+    text_edit.selectionChanged.connect(update_format_buttons)
+# Gibt eine leere Szenen-Datenstruktur zurück
+def get_empty_scene():
+    scene = {}
+    new_id = get_next_project_scene_id(app_state.current_project.get("chapter_data", {}))
+    today = QDate.currentDate().toString("yyyy-MM-dd")
+    # Alle Felder initialisieren
+    for field, (widget_type, widget_name) in EDITOR_SCENE_MAP.items():
+        if widget_type == QLineEdit or widget_type == QTextEdit:
+            scene[field] = ""
+        elif widget_type == QComboBox or widget_type == QSpinBox:
+            scene[field] = 0
+        elif widget_type == QDateEdit:
+            scene[field] = QDate.currentDate().toString("yyyy-MM-dd")
+        else:
+            scene[field] = ""
+    # Pflichtfelder überschreiben
+    scene["scene_id"] = new_id
+    scene["scene_title"] = ""
+    scene["scene_premise"] = ""
+    scene["scene_status"] = 0
+    scene["scene_begin"] = today
+    scene["scene_edited"] = today
+    scene["scene_order"] = get_next_scene_order(scene)
+    scene["scene_word_count"] = ""
+    scene["scene_order":] = 1
+    scene["scene_goal"] = ""
+    scene["scene_result"] = ""
+    scene["scene_storyline"] = 0
+    scene["scene_location"] = 0
+    scene["scene_characters"] = []
+    scene["scene_objects"] = []
+    scene["scene_mood"] = ""
+    scene["scene_duration"] = ""
+    scene["scene_type"] = ""
+    scene["scene_tags"] = ""
+    scene["scene_notes"] = ""
+    scene["scene_plain_text"] = ""
+    return scene
+# Stelle sicher, dass alle Felder in der Szenen-Datenstruktur vorhanden sind
+def ensure_all_scene_fields(scene):
+    for field, (widget_type, widget_name) in EDITOR_SCENE_MAP.items():
+        if field not in scene:
+            if widget_type == QLineEdit or widget_type == QTextEdit:
+                scene[field] = ""
+            elif widget_type == QComboBox or widget_type == QSpinBox:
+                scene[field] = 0
+            elif widget_type == QDateEdit:
+                scene[field] = QDate.currentDate().toString("yyyy-MM-dd")
+            else:
+                scene[field] = ""
+    return scene
+# Fügt ein Element zu einer Liste hinzu oder entfernt es, falls bereits vorhanden 
+def toggle_item_in_list(item_list, idx):
+    """Fügt idx hinzu oder entfernt ihn, falls schon enthalten."""
+    if idx in item_list:
+        item_list.remove(idx)
+    else:
+        item_list.append(idx)
+    return item_list
 
 # Hauptfenster anzeigen
 def show_main_window():
@@ -2317,6 +2585,7 @@ def show_editor_window(parent=None):
     chapter_data = safe_load_json(chapter_file, {})
     window.chapter_data = chapter_data
     window.chapter_file = chapter_file
+
     update_chapter_list_widget(window)
 
     # --- Erstes Kapitel und erste Szene bestimmen ---
@@ -2354,9 +2623,10 @@ def show_editor_window(parent=None):
             if isinstance(widget, QLineEdit):
                 widget.setText(str(value))
             elif isinstance(widget, QTextEdit):
-                widget.setPlainText(str(value))
-            elif isinstance(widget, QPlainTextEdit):
-                widget.setPlainText(str(value))
+                if field == "scene_plain_text":
+                    widget.setHtml(str(value))
+                else:
+                    widget.setPlainText(str(value))
             elif isinstance(widget, QComboBox):
                 try:
                     widget.setCurrentIndex(int(value))
@@ -2390,7 +2660,7 @@ def show_editor_window(parent=None):
         label_project.setText(project_name)
 
     # Wortanzahl im Editor
-    plain_text_widget = winFindChild(window, QPlainTextEdit, "plainTextEditorScenePlainText")
+    plain_text_widget = winFindChild(window, QTextEdit, "textEditorScenePlainText")
     label_word_count = winFindChild(window, QLabel, "labelEditorSceneWordCount")
     if plain_text_widget and label_word_count:
         def update_word_count():
@@ -2410,7 +2680,41 @@ def show_editor_window(parent=None):
     fill_combobox(
         winFindChild(window, QComboBox, "comboBoxEditorSceneObject"), object_titles)
     
+    combo_character = winFindChild(window, QComboBox, "comboBoxEditorSceneCharacter")
+    listview_characters = winFindChild(window, QListWidget, "listWidgetEditorSceneCharacters")
+    if combo_character and listview_characters:
+        def on_character_selected(idx):
+            name = combo_character.itemText(idx)
+            items = [listview_characters.item(i).text() for i in range(listview_characters.count())]
+            if name in items:
+                for i in range(listview_characters.count()):
+                    if listview_characters.item(i).text() == name:
+                        listview_characters.takeItem(i)
+                        break
+            else:
+                listview_characters.addItem(name)
+        combo_character.setEditable(False)
+        combo_character.currentIndexChanged.connect(on_character_selected)
+
+    combo_object = winFindChild(window, QComboBox, "comboBoxEditorSceneObject")
+    listview_objects = winFindChild(window, QListWidget, "listWidgetEditorSceneObjects")
+    if combo_object and listview_objects:
+        def on_object_selected(idx):
+            name = combo_object.itemText(idx)
+            items = [listview_objects.item(i).text() for i in range(listview_objects.count())]
+            if name in items:
+                for i in range(listview_objects.count()):
+                    if listview_objects.item(i).text() == name:
+                        listview_objects.takeItem(i)
+                        break
+            else:
+                listview_objects.addItem(name)
+        combo_object.setEditable(False)
+        combo_object.currentIndexChanged.connect(on_object_selected)
+    
     update_editor_info_labels(window, first_chapter)
+
+    connect_text_formatting_buttons(window)
 
     # --- Save-Button einbinden ---
     save_btn = winFindChild(window, QWidget, "saveBtnEditorChapter")
@@ -2688,6 +2992,7 @@ def show_editor_window(parent=None):
             if not scene_key:
                 return
             scene.update(read_editor_scene_fields(window))
+            scene = ensure_all_scene_fields(scene)
             update_editor_info_labels(window, chapter, scene)
             # Bearbeitet-Datum setzen
             today = QDate.currentDate().toString("yyyy-MM-dd")
@@ -2709,9 +3014,25 @@ def show_editor_window(parent=None):
             today = QDate.currentDate().toString("yyyy-MM-dd")
             empty_scene = {
                 "scene_id": new_id,
+                "scene_title": "",
+                "scene_premise": "",
+                "scene_status": 0,
                 "scene_begin": today,
                 "scene_edited": today,
-                "scene_order": get_next_scene_order(chapter)
+                "scene_word_count": "",
+                "scene_order": get_next_scene_order(chapter),
+                "scene_goal": "",
+                "scene_result ": "",
+                "scene_storyline": 0,
+                "scene_location": 0,
+                "scene_characters": [],
+                "scene_objects": [],
+                "scene_mood": "",
+                "scene_duration": "",
+                "scene_type": "",
+                "scene_tags": "",
+                "scene_notes": "",
+                "scene_plain_text": ""   
             }
             chapter[new_key] = empty_scene
             safe_save_json(window.chapter_file, chapter_data)
@@ -2798,8 +3119,6 @@ def show_editor_window(parent=None):
                         if isinstance(widget, QLineEdit):
                             widget.clear()
                         elif isinstance(widget, QTextEdit):
-                            widget.clear()
-                        elif isinstance(widget, QPlainTextEdit):
                             widget.clear()
                         elif isinstance(widget, QComboBox):
                             widget.setCurrentIndex(0)

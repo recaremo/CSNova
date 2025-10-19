@@ -1,9 +1,0 @@
-[Desktop Entry]
-Name=CSNova
-Comment=CSNova ist eine umfassende Softwarelösung für Romanautor:innen, Drehbuchautor:innen, Game Writer:innen, Storyboarder:innen und alle, die komplexe erzählerische Projekte planen, gestalten und veröffentlichen möchten.
-Exec=python3 csNova_main.py
-Icon=assets/media/csNova.png
-Terminal=false
-Type=Application
-Categories=Utility;Education;Office;
-StartupNotify=true

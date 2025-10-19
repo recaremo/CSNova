@@ -1,4 +1,5 @@
 pyinstaller --noconfirm --onefile --windowed \
+  --name csNova \
   --add-data "assets:assets" \
   --add-data "config:config" \
   --add-data "core:core" \
