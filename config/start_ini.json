@@ -5,102 +5,102 @@
   "theme": "Modern - Neutral",
   "help_ui": {
     "win_maximized": false,
-    "win_width": 1614,
+    "win_width": 1600,
     "win_height": 994,
     "win_splitter": [
-      576,
-      833,
-      439
+      300,
+      1000,
+      300
     ]
   },
   "start_ui": {
     "win_maximized": false,
-    "win_width": 1920,
-    "win_height": 1080,
+    "win_width": 1600,
+    "win_height": 880,
     "win_splitter": [
-      571,
-      868,
-      387
+      300,
+      1000,
+      300
     ]
   },
   "main_ui": {
     "win_maximized": false,
-    "win_width": 1438,
-    "win_height": 943,
+    "win_width": 1600,
+    "win_height": 880,
     "win_splitter": [
-      467,
-      866,
-      250
+      300,
+      1000,
+      300
     ]
   },
   "editor_ui": {
     "win_maximized": false,
-    "win_width": 1772,
+    "win_width": 1600,
     "win_height": 1054,
     "win_splitter": [
-      387,
-      1059,
-      260
+      400,
+      900,
+      300
     ]
   },
   "preferences_ui": {
     "win_maximized": false,
-    "win_width": 1612,
-    "win_height": 882,
+    "win_width": 1600,
+    "win_height": 880,
     "win_splitter": [
-      521,
-      929,
-      398
+      300,
+      1000,
+      300
     ]
   },
   "projects_ui": {
     "win_maximized": false,
-    "win_width": 1617,
-    "win_height": 882,
+    "win_width": 1600,
+    "win_height": 880,
     "win_splitter": [
-      594,
-      784,
-      452
+      300,
+      1000,
+      300
     ]
   },
   "objects_ui": {
     "win_maximized": false,
-    "win_width": 1623,
-    "win_height": 875,
+    "win_width": 1600,
+    "win_height": 880,
     "win_splitter": [
-      553,
-      779,
-      516
+      300,
+      1000,
+      300
     ]
   },
   "locations_ui": {
     "win_maximized": false,
-    "win_width": 1611,
-    "win_height": 872,
+    "win_width": 1600,
+    "win_height": 880,
     "win_splitter": [
-      580,
-      747,
-      521
+      300,
+      1000,
+      300
     ]
   },
   "storylines_ui": {
     "win_maximized": false,
     "win_width": 1600,
-    "win_height": 863,
+    "win_height": 880,
     "win_splitter": [
-      520,
-      804,
-      524
+      300,
+      1000,
+      300
     ]
   },
   "characters_ui": {
     "win_maximized": false,
-    "win_width": 1613,
+    "win_width": 1600,
     "win_height": 962,
     "win_splitter": [
-      268,
-      884,
-      371
+      300,
+      1000,
+      300
     ]
   }
 }

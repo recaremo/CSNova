@@ -6,9 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1919</width>
-    <height>1113</height>
+    <width>1600</width>
+    <height>880</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
   </property>
   <property name="windowTitle">
    <string>Codices Scriptoria Nova (csNova)</string>
@@ -18,9 +24,21 @@
     <normaloff>../assets/media/csnova.png</normaloff>../assets/media/csnova.png</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
    <layout class="QHBoxLayout" name="horizontalLayout">
     <item>
      <widget class="QSplitter" name="mainSplitter">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
       <property name="font">
        <font>
         <family>Lato</family>
@@ -40,6 +58,12 @@
        <number>36</number>
       </property>
       <widget class="QWidget" name="widgetLeftcsNovaMain" native="true">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
        <layout class="QVBoxLayout" name="verticalLayout_2">
         <item>
          <widget class="QTextEdit" name="textEditHelpcsNovaMain">
@@ -76,9 +100,21 @@ li.checked::marker { content: &quot;\2612&quot;; }
        </layout>
       </widget>
       <widget class="QWidget" name="widgetCentercsNova" native="true">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
        <layout class="QVBoxLayout" name="verticalLayout_4">
         <item>
          <widget class="QLabel" name="csNovaHeader">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
           <property name="font">
            <font>
             <family>Lato</family>
@@ -323,7 +359,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
         <item>
          <widget class="QFrame" name="framecsNovaProjectStatistic">
           <property name="sizePolicy">
-           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
             <horstretch>0</horstretch>
             <verstretch>1</verstretch>
            </sizepolicy>
@@ -575,6 +611,12 @@ li.checked::marker { content: &quot;\2612&quot;; }
            </item>
            <item row="10" column="0" colspan="4">
             <widget class="QFrame" name="framecsNovaProjectInfo">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
              <property name="frameShape">
               <enum>QFrame::Shape::StyledPanel</enum>
              </property>
@@ -1441,6 +1483,12 @@ li.checked::marker { content: &quot;\2612&quot;; }
        </layout>
       </widget>
       <widget class="QWidget" name="widgetRightcsNovaMain" native="true">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
        <layout class="QVBoxLayout" name="verticalLayout">
         <item>
          <widget class="QPushButton" name="projectBtncsNovaMain">
@@ -1794,147 +1842,6 @@ li.checked::marker { content: &quot;\2612&quot;; }
     </item>
    </layout>
   </widget>
-  <widget class="QMenuBar" name="menubar">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>1919</width>
-     <height>25</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <family>Lato</family>
-     <pointsize>12</pointsize>
-     <bold>false</bold>
-    </font>
-   </property>
-   <widget class="QMenu" name="menucsNova">
-    <property name="font">
-     <font>
-      <family>Lato</family>
-      <pointsize>12</pointsize>
-      <bold>false</bold>
-     </font>
-    </property>
-    <property name="title">
-     <string>csNova</string>
-    </property>
-   </widget>
-   <widget class="QMenu" name="menuProjekte">
-    <property name="font">
-     <font>
-      <family>Lato</family>
-      <pointsize>12</pointsize>
-      <bold>false</bold>
-     </font>
-    </property>
-    <property name="title">
-     <string>Projekte</string>
-    </property>
-   </widget>
-   <widget class="QMenu" name="menuCharaktere">
-    <property name="font">
-     <font>
-      <family>Lato</family>
-      <pointsize>12</pointsize>
-      <bold>false</bold>
-     </font>
-    </property>
-    <property name="title">
-     <string>Charaktere</string>
-    </property>
-   </widget>
-   <widget class="QMenu" name="menuObjekte">
-    <property name="font">
-     <font>
-      <family>Lato</family>
-      <pointsize>12</pointsize>
-      <bold>false</bold>
-     </font>
-    </property>
-    <property name="title">
-     <string>Objekte</string>
-    </property>
-   </widget>
-   <widget class="QMenu" name="menuHandlungsorte">
-    <property name="font">
-     <font>
-      <family>Lato</family>
-      <pointsize>12</pointsize>
-      <bold>false</bold>
-     </font>
-    </property>
-    <property name="title">
-     <string>Handlungsorte</string>
-    </property>
-   </widget>
-   <widget class="QMenu" name="menuHandlungsstr_nge">
-    <property name="font">
-     <font>
-      <family>Lato</family>
-      <pointsize>12</pointsize>
-      <bold>false</bold>
-     </font>
-    </property>
-    <property name="title">
-     <string>Handlungsstränge</string>
-    </property>
-   </widget>
-   <widget class="QMenu" name="menuEditor">
-    <property name="font">
-     <font>
-      <family>Lato</family>
-      <pointsize>12</pointsize>
-      <bold>false</bold>
-     </font>
-    </property>
-    <property name="title">
-     <string>Editor</string>
-    </property>
-   </widget>
-   <widget class="QMenu" name="menuEinstellungen">
-    <property name="font">
-     <font>
-      <family>Lato</family>
-      <pointsize>12</pointsize>
-      <bold>false</bold>
-     </font>
-    </property>
-    <property name="title">
-     <string>Einstellungen</string>
-    </property>
-   </widget>
-   <widget class="QMenu" name="menuCSNova">
-    <property name="font">
-     <font>
-      <family>Lato</family>
-      <pointsize>12</pointsize>
-      <bold>false</bold>
-     </font>
-    </property>
-    <property name="tearOffEnabled">
-     <bool>false</bool>
-    </property>
-    <property name="title">
-     <string>?</string>
-    </property>
-   </widget>
-   <addaction name="menucsNova"/>
-   <addaction name="menuProjekte"/>
-   <addaction name="menuCharaktere"/>
-   <addaction name="menuObjekte"/>
-   <addaction name="menuHandlungsorte"/>
-   <addaction name="menuHandlungsstr_nge"/>
-   <addaction name="menuEditor"/>
-   <addaction name="menuEinstellungen"/>
-   <addaction name="menuCSNova"/>
-  </widget>
-  <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <tabstops>
   <tabstop>projectBtncsNovaMain</tabstop>

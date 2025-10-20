@@ -67,7 +67,7 @@
               <enum>QTabWidget::TabPosition::East</enum>
              </property>
              <property name="currentIndex">
-              <number>0</number>
+              <number>4</number>
              </property>
              <widget class="QWidget" name="tabEditorScenes">
               <attribute name="title">
@@ -737,7 +737,7 @@
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>323</width>
+                    <width>365</width>
                     <height>699</height>
                    </rect>
                   </property>
@@ -4912,7 +4912,7 @@
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>323</width>
+                    <width>365</width>
                     <height>117</height>
                    </rect>
                   </property>
@@ -4930,7 +4930,7 @@
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>94</width>
+                    <width>98</width>
                     <height>88</height>
                    </rect>
                   </property>
@@ -4948,7 +4948,7 @@
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>94</width>
+                    <width>98</width>
                     <height>88</height>
                    </rect>
                   </property>
@@ -4966,7 +4966,7 @@
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>94</width>
+                    <width>98</width>
                     <height>88</height>
                    </rect>
                   </property>
@@ -4984,7 +4984,7 @@
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>94</width>
+                    <width>98</width>
                     <height>88</height>
                    </rect>
                   </property>
@@ -5002,7 +5002,7 @@
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>94</width>
+                    <width>98</width>
                     <height>88</height>
                    </rect>
                   </property>
@@ -5020,7 +5020,7 @@
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>94</width>
+                    <width>98</width>
                     <height>88</height>
                    </rect>
                   </property>
@@ -5038,7 +5038,7 @@
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>94</width>
+                    <width>98</width>
                     <height>88</height>
                    </rect>
                   </property>
@@ -5056,7 +5056,7 @@
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>94</width>
+                    <width>98</width>
                     <height>88</height>
                    </rect>
                   </property>
@@ -5074,7 +5074,7 @@
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>94</width>
+                    <width>98</width>
                     <height>88</height>
                    </rect>
                   </property>
@@ -5092,7 +5092,7 @@
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>94</width>
+                    <width>98</width>
                     <height>88</height>
                    </rect>
                   </property>
@@ -5110,7 +5110,7 @@
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>94</width>
+                    <width>98</width>
                     <height>88</height>
                    </rect>
                   </property>
@@ -5128,7 +5128,7 @@
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>94</width>
+                    <width>98</width>
                     <height>88</height>
                    </rect>
                   </property>
@@ -5146,7 +5146,7 @@
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>94</width>
+                    <width>98</width>
                     <height>88</height>
                    </rect>
                   </property>
@@ -5164,7 +5164,7 @@
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>94</width>
+                    <width>98</width>
                     <height>88</height>
                    </rect>
                   </property>
@@ -5182,7 +5182,7 @@
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>94</width>
+                    <width>98</width>
                     <height>88</height>
                    </rect>
                   </property>
@@ -5200,7 +5200,7 @@
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>94</width>
+                    <width>98</width>
                     <height>88</height>
                    </rect>
                   </property>
@@ -5218,7 +5218,7 @@
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>94</width>
+                    <width>98</width>
                     <height>88</height>
                    </rect>
                   </property>
@@ -5236,7 +5236,7 @@
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>94</width>
+                    <width>98</width>
                     <height>88</height>
                    </rect>
                   </property>
@@ -5254,7 +5254,7 @@
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>94</width>
+                    <width>98</width>
                     <height>88</height>
                    </rect>
                   </property>
@@ -5272,7 +5272,7 @@
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>94</width>
+                    <width>98</width>
                     <height>88</height>
                    </rect>
                   </property>
@@ -5290,7 +5290,7 @@
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>94</width>
+                    <width>98</width>
                     <height>88</height>
                    </rect>
                   </property>
@@ -5308,7 +5308,7 @@
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>94</width>
+                    <width>98</width>
                     <height>88</height>
                    </rect>
                   </property>
@@ -5326,7 +5326,7 @@
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>94</width>
+                    <width>98</width>
                     <height>88</height>
                    </rect>
                   </property>
@@ -5344,7 +5344,7 @@
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>94</width>
+                    <width>98</width>
                     <height>88</height>
                    </rect>
                   </property>
@@ -5362,7 +5362,7 @@
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>94</width>
+                    <width>98</width>
                     <height>88</height>
                    </rect>
                   </property>
@@ -6157,7 +6157,7 @@
                       </property>
                       <property name="icon">
                        <iconset>
-                        <normaloff>../assets/editor_icons/352386_format_increase_indent_icon.png</normaloff>../assets/editor_icons/352386_format_increase_indent_icon.png</iconset>
+                        <normaloff>../assets/editor_icons/indent_icon.png</normaloff>../assets/editor_icons/indent_icon.png</iconset>
                       </property>
                       <property name="iconSize">
                        <size>
@@ -6356,7 +6356,7 @@
                       </property>
                       <property name="icon">
                        <iconset>
-                        <normaloff>../assets/editor_icons/8542572_superscript_text_icon.png</normaloff>../assets/editor_icons/8542572_superscript_text_icon.png</iconset>
+                        <normaloff>../assets/editor_icons/superscript_icon.png</normaloff>../assets/editor_icons/superscript_icon.png</iconset>
                       </property>
                       <property name="iconSize">
                        <size>
@@ -6403,7 +6403,7 @@
                       </property>
                       <property name="icon">
                        <iconset>
-                        <normaloff>../assets/editor_icons/8542673_subscript_text_icon.png</normaloff>../assets/editor_icons/8542673_subscript_text_icon.png</iconset>
+                        <normaloff>../assets/editor_icons/subscript_icon.png</normaloff>../assets/editor_icons/subscript_icon.png</iconset>
                       </property>
                       <property name="iconSize">
                        <size>
@@ -6450,7 +6450,7 @@
                       </property>
                       <property name="icon">
                        <iconset>
-                        <normaloff>../assets/editor_icons/352389_bulleted_format_list_icon.png</normaloff>../assets/editor_icons/352389_bulleted_format_list_icon.png</iconset>
+                        <normaloff>../assets/editor_icons/list_bullet_icon.png</normaloff>../assets/editor_icons/list_bullet_icon.png</iconset>
                       </property>
                       <property name="iconSize">
                        <size>
@@ -6497,7 +6497,7 @@
                       </property>
                       <property name="icon">
                        <iconset>
-                        <normaloff>../assets/editor_icons/352390_format_list_numbered_icon.png</normaloff>../assets/editor_icons/352390_format_list_numbered_icon.png</iconset>
+                        <normaloff>../assets/editor_icons/list_numbered_icon.png</normaloff>../assets/editor_icons/list_numbered_icon.png</iconset>
                       </property>
                       <property name="iconSize">
                        <size>

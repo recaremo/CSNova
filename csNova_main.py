@@ -508,38 +508,60 @@ def set_button_labels(window, language="en"):
         "preferencesBtncsNovaMain": "preferences_btn",
         "helpBtncsNovaMain": "help_btn",
         "exitBtncsNovaMain": "exit_btn",
+
+        "exitBtnEditor": "return_btn",
         "saveBtnEditorChapter": "save_btn",
         "newBtnEditorChapter": "new_btn",
         "deleteBtnEditorChapter": "delete_btn",
         "nextBtnEditorChapter": "next_btn",
         "previousBtnEditorChapter": "previous_btn",
-        "saveBtnEditorScene": "save_btn",
-        "newBtnEditorScene": "new_btn",
-        "deleteBtnEditorScene": "delete_btn",
-        "nextBtnEditorScene": "next_btn",
-        "previousBtnEditorScene": "previous_btn",
+
+        "newBtnProjects": "new_btn",
+        "deleteBtnProjects": "delete_btn",
+        "nextBtnProjects": "next_btn",
+        "previousBtnProjects": "previous_btn",
+        "imageBtnProjects": "image_btn",
+        "saveBtnProjects": "save_btn",
+        "exitBtnProjects": "return_btn",
+
         "saveBtnCharacter": "save_btn",
         "newBtnCharacter": "new_btn",
         "deleteBtnCharacter": "delete_btn",
         "nextBtnCharacter": "next_btn",
+        "imageBtnCharacter": "image_btn",
         "previousBtnCharacter": "previous_btn",
+        "exitBtnCharacter": "return_btn",
+
         "saveBtnObjects": "save_btn",
         "newBtnObjects": "new_btn",
         "deleteBtnObjects": "delete_btn",
         "nextBtnObjects": "next_btn",
+        "imageBtnObjects": "image_btn",
         "previousBtnObjects": "previous_btn",
+        "exitBtnObjects": "return_btn",
+
         "saveBtnLocations": "save_btn",
         "newBtnLocations": "new_btn",
         "deleteBtnLocations": "delete_btn",
         "nextBtnLocations": "next_btn",
+        "imageBtnLocations": "image_btn",
         "previousBtnLocations": "previous_btn",
+        "exitBtnLocations": "return_btn",
+
         "saveBtnStorylines": "save_btn",
         "newBtnStorylines": "new_btn",
         "deleteBtnStorylines": "delete_btn",
         "nextBtnStorylines": "next_btn",
+        "imageBtnStorylines": "image_btn",
         "previousBtnStorylines": "previous_btn",
-        "returnBtn": "return_btn",
-        "imageBtn": "image_btn",
+        "exitBtnStorylines": "return_btn",
+
+        "saveBtnPreferences": "save_btn",
+        "exitBtnPreferences": "return_btn",
+
+        "exitBtnHelp": "return_btn",
+
+
         "setDateBtn": "set_date_btn"
     }
     for widget_name, label_key in btn_map.items():

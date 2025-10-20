@@ -6,9 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1910</width>
-    <height>1107</height>
+    <width>1600</width>
+    <height>880</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
   </property>
   <property name="font">
    <font>
@@ -20,9 +26,21 @@
    <string>csNova - Handlungsorte</string>
   </property>
   <widget class="QWidget" name="centralwidget">
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
    <layout class="QHBoxLayout" name="horizontalLayout">
     <item>
      <widget class="QSplitter" name="mainSplitter">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
       <property name="font">
        <font>
         <family>Lato</family>
@@ -42,6 +60,12 @@
        <number>36</number>
       </property>
       <widget class="QWidget" name="widgetLeft" native="true">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
        <layout class="QVBoxLayout" name="verticalLayout_2">
         <item>
          <widget class="QTextEdit" name="textEditHelpLocations">
@@ -381,6 +405,12 @@ li.checked::marker { content: &quot;\2612&quot;; }
        </layout>
       </widget>
       <widget class="QWidget" name="widgetRight" native="true">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
        <layout class="QVBoxLayout" name="verticalLayout">
         <item>
          <widget class="QLabel" name="labelHeaderObjects">
@@ -550,7 +580,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="imageLoadLocations">
+         <widget class="QPushButton" name="imageBtnLocations">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
             <horstretch>0</horstretch>
@@ -670,17 +700,6 @@ li.checked::marker { content: &quot;\2612&quot;; }
     </item>
    </layout>
   </widget>
-  <widget class="QMenuBar" name="menubarLocations">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>1910</width>
-     <height>25</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QStatusBar" name="statusbarLocations"/>
  </widget>
  <tabstops>
   <tabstop>titleLocations</tabstop>
@@ -694,7 +713,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
   <tabstop>nextBtnLocations</tabstop>
   <tabstop>previousBtnLocations</tabstop>
   <tabstop>deleteBtnLocations</tabstop>
-  <tabstop>imageLoadLocations</tabstop>
+  <tabstop>imageBtnLocations</tabstop>
   <tabstop>saveBtnLocations</tabstop>
   <tabstop>exitBtnLocations</tabstop>
   <tabstop>textEditHelpLocations</tabstop>
