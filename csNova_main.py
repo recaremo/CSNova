@@ -494,82 +494,7 @@ def fill_combobox(combo: Optional[QComboBox], values: list, selected_index_or_va
         except Exception:
             idx = 0
     combo.setCurrentIndex(idx)
-# Setzt die Beschriftungen und Tooltips der Buttons basierend auf Übersetzungen
-def set_button_labels(window, language="en"):
-    btn_labels = load_translation(Path("core/translations/csNovaBtn/csNovaBtn.json"), language)
-    # Mapping: Button-Objektname → Key in JSON
-    btn_map = {
-        "projectBtncsNovaMain": "project_btn",
-        "characterBtncsNovaMain": "character_btn",
-        "objectBtncsNovaMain": "objects_btn",
-        "locationBtncsNovaMain": "location_btn",
-        "storylineBtncsNovaMain": "storyline_btn",
-        "editorBtncsNovaMain": "editor_btn",
-        "preferencesBtncsNovaMain": "preferences_btn",
-        "helpBtncsNovaMain": "help_btn",
-        "exitBtncsNovaMain": "exit_btn",
 
-        "exitBtnEditor": "return_btn",
-        "saveBtnEditorChapter": "save_btn",
-        "newBtnEditorChapter": "new_btn",
-        "deleteBtnEditorChapter": "delete_btn",
-        "nextBtnEditorChapter": "next_btn",
-        "previousBtnEditorChapter": "previous_btn",
-
-        "newBtnProjects": "new_btn",
-        "deleteBtnProjects": "delete_btn",
-        "nextBtnProjects": "next_btn",
-        "previousBtnProjects": "previous_btn",
-        "imageBtnProjects": "image_btn",
-        "saveBtnProjects": "save_btn",
-        "exitBtnProjects": "return_btn",
-
-        "saveBtnCharacter": "save_btn",
-        "newBtnCharacter": "new_btn",
-        "deleteBtnCharacter": "delete_btn",
-        "nextBtnCharacter": "next_btn",
-        "imageBtnCharacter": "image_btn",
-        "previousBtnCharacter": "previous_btn",
-        "exitBtnCharacter": "return_btn",
-
-        "saveBtnObjects": "save_btn",
-        "newBtnObjects": "new_btn",
-        "deleteBtnObjects": "delete_btn",
-        "nextBtnObjects": "next_btn",
-        "imageBtnObjects": "image_btn",
-        "previousBtnObjects": "previous_btn",
-        "exitBtnObjects": "return_btn",
-
-        "saveBtnLocations": "save_btn",
-        "newBtnLocations": "new_btn",
-        "deleteBtnLocations": "delete_btn",
-        "nextBtnLocations": "next_btn",
-        "imageBtnLocations": "image_btn",
-        "previousBtnLocations": "previous_btn",
-        "exitBtnLocations": "return_btn",
-
-        "saveBtnStorylines": "save_btn",
-        "newBtnStorylines": "new_btn",
-        "deleteBtnStorylines": "delete_btn",
-        "nextBtnStorylines": "next_btn",
-        "imageBtnStorylines": "image_btn",
-        "previousBtnStorylines": "previous_btn",
-        "exitBtnStorylines": "return_btn",
-
-        "saveBtnPreferences": "save_btn",
-        "exitBtnPreferences": "return_btn",
-
-        "exitBtnHelp": "return_btn",
-
-        "setDateBtn": "set_date_btn"
-    }
-    for widget_name, label_key in btn_map.items():
-        btn = winFindChild(window, QWidget, widget_name)
-        if btn and label_key in btn_labels:
-            btn.setText(btn_labels[label_key])
-            tooltip_key = f"{label_key}_tooltip"
-            if tooltip_key in btn_labels:
-                btn.setToolTip(btn_labels[tooltip_key])
 
 # -------------------------------------------------------------------------------------
 # Grundlegende Mappings und Konstanten für Charaktere
@@ -1608,10 +1533,6 @@ def toggle_item_in_list(item_list, idx):
 def show_main_window():
     window = DynamicWindow("main_ui", UI_FILES["main"], splitter_name="mainSplitter", confirm_on_close=True)
     app_state.main_window = window 
-    settings = load_settings()
-    language = settings.get("language", "en")
-    set_button_labels(window, language)
-
     # Icon setzen
     icon_path = ASSETS_DIR / "media" / "csnova.png"
     window.setWindowIcon(QIcon(str(icon_path)))
@@ -1821,7 +1742,6 @@ def show_projects_window(parent=None):
     window = DynamicWindow("projects_ui", UI_FILES["projects"], splitter_name="mainSplitter")
     settings = load_settings()
     language = settings.get("language", "en")
-    set_button_labels(window, language)
     window.show()
     log_info("Projektfenster erfolgreich geladen und angezeigt.")
 
@@ -2005,7 +1925,6 @@ def show_characters_window(parent=None):
     window = DynamicWindow("characters_ui", UI_FILES["characters"], splitter_name="mainSplitter")
     settings = load_settings()
     language = settings.get("language", "en")
-    set_button_labels(window, language)
     window.show()
 
     # 2. Daten laden
@@ -2211,7 +2130,6 @@ def show_objects_window(parent=None):
     window = DynamicWindow("objects_ui", UI_FILES["objects"], splitter_name="mainSplitter")
     settings = load_settings()
     language = settings.get("language", "en")
-    set_button_labels(window, language)
     window.show()
 
     # 2. Daten laden
@@ -2349,7 +2267,6 @@ def show_locations_window(parent=None):
     window = DynamicWindow("locations_ui", UI_FILES["locations"], splitter_name="mainSplitter")
     settings = load_settings()
     language = settings.get("language", "en")
-    set_button_labels(window, language)
     window.show()
     
     # 2. Daten laden
@@ -2482,7 +2399,6 @@ def show_storylines_window(parent=None):
     window = DynamicWindow("storylines_ui", UI_FILES["storylines"], splitter_name="mainSplitter")
     settings = load_settings()
     language = settings.get("language", "en")
-    set_button_labels(window, language)
     window.show()
 
     # 2. Daten laden
@@ -2613,9 +2529,6 @@ def show_storylines_window(parent=None):
 # Editorfenster anzeigen
 def show_editor_window(parent=None):
     window = DynamicWindow("editor_ui", UI_FILES["editor"], splitter_name="mainSplitter")
-    settings = load_settings()
-    language = settings.get("language", "en")
-    set_button_labels(window, language)
     window.show()
 
     # --- Daten für Comboboxen laden ---
@@ -3223,9 +3136,6 @@ def show_editor_window(parent=None):
 # Preferences-Fenster anzeigen
 def show_preferences_window(parent=None):
     window = DynamicWindow("preferences_ui", UI_FILES["preferences"], splitter_name="mainSplitter")
-    settings = load_settings()
-    language = settings.get("language", "en")
-    set_button_labels(window, language)
     window.show()
 
     # --- Exit-Button einbinden ---
@@ -3251,9 +3161,6 @@ def show_preferences_window(parent=None):
 # Hilfe-Fenster anzeigen
 def show_help_window(parent=None):
     window = DynamicWindow("help_ui", UI_FILES["help"], splitter_name="mainSplitter")
-    settings = load_settings()
-    language = settings.get("language", "en")
-    set_button_labels(window, language)
     window.show()
 
     # --- Exit-Button einbinden ---
