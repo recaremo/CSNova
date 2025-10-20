@@ -6,7 +6,7 @@
   "help_ui": {
     "win_maximized": false,
     "win_width": 1600,
-    "win_height": 994,
+    "win_height": 769,
     "win_splitter": [
       300,
       1000,
@@ -16,7 +16,7 @@
   "start_ui": {
     "win_maximized": false,
     "win_width": 1600,
-    "win_height": 880,
+    "win_height": 850,
     "win_splitter": [
       300,
       1000,
@@ -26,7 +26,7 @@
   "main_ui": {
     "win_maximized": false,
     "win_width": 1600,
-    "win_height": 880,
+    "win_height": 850,
     "win_splitter": [
       300,
       1000,
@@ -35,28 +35,28 @@
   },
   "editor_ui": {
     "win_maximized": false,
-    "win_width": 1600,
+    "win_width": 1582,
     "win_height": 1054,
     "win_splitter": [
-      400,
-      900,
-      300
+      499,
+      802,
+      322
     ]
   },
   "preferences_ui": {
     "win_maximized": false,
     "win_width": 1600,
-    "win_height": 880,
+    "win_height": 830,
     "win_splitter": [
-      300,
-      1000,
-      300
+      283,
+      1045,
+      182
     ]
   },
   "projects_ui": {
     "win_maximized": false,
     "win_width": 1600,
-    "win_height": 880,
+    "win_height": 878,
     "win_splitter": [
       300,
       1000,
@@ -66,7 +66,7 @@
   "objects_ui": {
     "win_maximized": false,
     "win_width": 1600,
-    "win_height": 880,
+    "win_height": 767,
     "win_splitter": [
       300,
       1000,
@@ -76,7 +76,7 @@
   "locations_ui": {
     "win_maximized": false,
     "win_width": 1600,
-    "win_height": 880,
+    "win_height": 793,
     "win_splitter": [
       300,
       1000,
@@ -86,7 +86,7 @@
   "storylines_ui": {
     "win_maximized": false,
     "win_width": 1600,
-    "win_height": 880,
+    "win_height": 760,
     "win_splitter": [
       300,
       1000,

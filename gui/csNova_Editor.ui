@@ -6,15 +6,27 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1896</width>
-    <height>1119</height>
+    <width>1600</width>
+    <height>850</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
   </property>
   <property name="windowTitle">
    <string>csNova - Editor</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QHBoxLayout" name="horizontalLayout">
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout_2">
     <item>
      <widget class="QSplitter" name="mainSplitter">
       <property name="sizePolicy">
@@ -66,14 +78,23 @@
              <property name="tabPosition">
               <enum>QTabWidget::TabPosition::East</enum>
              </property>
+             <property name="tabShape">
+              <enum>QTabWidget::TabShape::Rounded</enum>
+             </property>
              <property name="currentIndex">
-              <number>4</number>
+              <number>0</number>
              </property>
              <widget class="QWidget" name="tabEditorScenes">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <attribute name="title">
                <string>Szenen</string>
               </attribute>
-              <layout class="QFormLayout" name="formLayout_7">
+              <layout class="QGridLayout" name="gridLayout_2">
                <item row="0" column="0" colspan="2">
                 <widget class="QFrame" name="toolbarEditorScenes">
                  <property name="sizePolicy">
@@ -88,9 +109,15 @@
                  <property name="frameShadow">
                   <enum>QFrame::Shadow::Raised</enum>
                  </property>
-                 <layout class="QHBoxLayout" name="horizontalLayout_7">
+                 <layout class="QHBoxLayout" name="horizontalLayout">
                   <item>
                    <widget class="QPushButton" name="newBtnEditorScene">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
                     <property name="cursor">
                      <cursorShape>PointingHandCursor</cursorShape>
                     </property>
@@ -98,15 +125,15 @@
                      <string>Einen neuen Datensatz erstellen</string>
                     </property>
                     <property name="text">
-                     <string/>
+                     <string notr="true"/>
                     </property>
                     <property name="icon">
                      <iconset theme="document-new"/>
                     </property>
                     <property name="iconSize">
                      <size>
-                      <width>32</width>
-                      <height>32</height>
+                      <width>16</width>
+                      <height>16</height>
                      </size>
                     </property>
                     <property name="default">
@@ -119,6 +146,12 @@
                   </item>
                   <item>
                    <widget class="QPushButton" name="nextBtnEditorScene">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
                     <property name="cursor">
                      <cursorShape>PointingHandCursor</cursorShape>
                     </property>
@@ -126,15 +159,15 @@
                      <string>Einen Datensatz vor</string>
                     </property>
                     <property name="text">
-                     <string/>
+                     <string notr="true"/>
                     </property>
                     <property name="icon">
                      <iconset theme="go-next"/>
                     </property>
                     <property name="iconSize">
                      <size>
-                      <width>32</width>
-                      <height>32</height>
+                      <width>16</width>
+                      <height>16</height>
                      </size>
                     </property>
                     <property name="default">
@@ -147,6 +180,12 @@
                   </item>
                   <item>
                    <widget class="QPushButton" name="previousBtnEditorScene">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
                     <property name="cursor">
                      <cursorShape>PointingHandCursor</cursorShape>
                     </property>
@@ -154,15 +193,15 @@
                      <string>Einen Datensatz zurück</string>
                     </property>
                     <property name="text">
-                     <string/>
+                     <string notr="true"/>
                     </property>
                     <property name="icon">
                      <iconset theme="go-previous"/>
                     </property>
                     <property name="iconSize">
                      <size>
-                      <width>32</width>
-                      <height>32</height>
+                      <width>16</width>
+                      <height>16</height>
                      </size>
                     </property>
                     <property name="default">
@@ -175,6 +214,12 @@
                   </item>
                   <item>
                    <widget class="QPushButton" name="deleteBtnEditorScene">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
                     <property name="cursor">
                      <cursorShape>PointingHandCursor</cursorShape>
                     </property>
@@ -182,15 +227,15 @@
                      <string>Den aktuellen Datensatz löschen</string>
                     </property>
                     <property name="text">
-                     <string/>
+                     <string notr="true"/>
                     </property>
                     <property name="icon">
                      <iconset theme="user-trash"/>
                     </property>
                     <property name="iconSize">
                      <size>
-                      <width>32</width>
-                      <height>32</height>
+                      <width>16</width>
+                      <height>16</height>
                      </size>
                     </property>
                     <property name="default">
@@ -203,6 +248,12 @@
                   </item>
                   <item>
                    <widget class="QPushButton" name="saveBtnEditorScene">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
                     <property name="cursor">
                      <cursorShape>PointingHandCursor</cursorShape>
                     </property>
@@ -210,15 +261,15 @@
                      <string>Den aktuellen Datensatz speichern</string>
                     </property>
                     <property name="text">
-                     <string/>
+                     <string notr="true"/>
                     </property>
                     <property name="icon">
                      <iconset theme="document-save"/>
                     </property>
                     <property name="iconSize">
                      <size>
-                      <width>32</width>
-                      <height>32</height>
+                      <width>16</width>
+                      <height>16</height>
                      </size>
                     </property>
                     <property name="default">
@@ -232,32 +283,7 @@
                  </layout>
                 </widget>
                </item>
-               <item row="1" column="0" colspan="2">
-                <widget class="QLabel" name="labelEditorSceneID">
-                 <property name="enabled">
-                  <bool>false</bool>
-                 </property>
-                 <property name="font">
-                  <font>
-                   <family>Lato</family>
-                   <pointsize>12</pointsize>
-                   <bold>true</bold>
-                   <stylestrategy>PreferAntialias</stylestrategy>
-                   <kerning>true</kerning>
-                  </font>
-                 </property>
-                 <property name="frameShape">
-                  <enum>QFrame::Shape::StyledPanel</enum>
-                 </property>
-                 <property name="frameShadow">
-                  <enum>QFrame::Shadow::Sunken</enum>
-                 </property>
-                 <property name="text">
-                  <string>Szenen-ID</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="2" column="0">
+               <item row="1" column="0">
                 <widget class="QLabel" name="labelEditorSceneTitle">
                  <property name="font">
                   <font>
@@ -273,7 +299,7 @@
                  </property>
                 </widget>
                </item>
-               <item row="3" column="0" colspan="2">
+               <item row="2" column="0">
                 <widget class="QLineEdit" name="lineEditorSceneTitle">
                  <property name="font">
                   <font>
@@ -286,7 +312,7 @@
                  </property>
                 </widget>
                </item>
-               <item row="4" column="0">
+               <item row="3" column="0">
                 <widget class="QLabel" name="labelEditorScenePremise">
                  <property name="font">
                   <font>
@@ -302,7 +328,7 @@
                  </property>
                 </widget>
                </item>
-               <item row="5" column="0" colspan="2">
+               <item row="4" column="0" colspan="2">
                 <widget class="QLineEdit" name="lineEditorScenePremise">
                  <property name="font">
                   <font>
@@ -315,7 +341,7 @@
                  </property>
                 </widget>
                </item>
-               <item row="6" column="0">
+               <item row="5" column="0">
                 <widget class="QLabel" name="labelEditorSceneStatus">
                  <property name="font">
                   <font>
@@ -331,7 +357,7 @@
                  </property>
                 </widget>
                </item>
-               <item row="6" column="1">
+               <item row="5" column="1">
                 <widget class="QComboBox" name="comboBoxEditorSceneStatus">
                  <property name="font">
                   <font>
@@ -369,7 +395,7 @@
                  </item>
                 </widget>
                </item>
-               <item row="7" column="0">
+               <item row="6" column="0">
                 <widget class="QLabel" name="labelEditorSceneBegin">
                  <property name="font">
                   <font>
@@ -385,7 +411,7 @@
                  </property>
                 </widget>
                </item>
-               <item row="7" column="1">
+               <item row="6" column="1">
                 <widget class="QDateEdit" name="dateEditorSceneBegin">
                  <property name="font">
                   <font>
@@ -411,7 +437,7 @@
                  </property>
                 </widget>
                </item>
-               <item row="8" column="0">
+               <item row="7" column="0">
                 <widget class="QLabel" name="labelEditorSceneEdited">
                  <property name="font">
                   <font>
@@ -427,7 +453,7 @@
                  </property>
                 </widget>
                </item>
-               <item row="8" column="1">
+               <item row="7" column="1">
                 <widget class="QDateEdit" name="dateEditorSceneEdited">
                  <property name="font">
                   <font>
@@ -453,7 +479,7 @@
                  </property>
                 </widget>
                </item>
-               <item row="9" column="0">
+               <item row="8" column="0">
                 <widget class="QLabel" name="labelEditorWordCount">
                  <property name="font">
                   <font>
@@ -469,14 +495,14 @@
                  </property>
                 </widget>
                </item>
-               <item row="9" column="1">
+               <item row="8" column="1">
                 <widget class="QLabel" name="labelEditorSceneWordCount">
                  <property name="text">
                   <string>Anzahl Worte:</string>
                  </property>
                 </widget>
                </item>
-               <item row="10" column="0">
+               <item row="9" column="0">
                 <widget class="QLabel" name="labelEditorSceneOrder">
                  <property name="font">
                   <font>
@@ -492,7 +518,7 @@
                  </property>
                 </widget>
                </item>
-               <item row="10" column="1">
+               <item row="9" column="1">
                 <widget class="QSpinBox" name="spinBoxEditorSceneOrder">
                  <property name="alignment">
                   <set>Qt::AlignmentFlag::AlignCenter</set>
@@ -505,7 +531,7 @@
                  </property>
                 </widget>
                </item>
-               <item row="16" column="0">
+               <item row="10" column="0">
                 <widget class="QLabel" name="labelEditorSceneGoal">
                  <property name="font">
                   <font>
@@ -521,7 +547,7 @@
                  </property>
                 </widget>
                </item>
-               <item row="17" column="0" colspan="2">
+               <item row="11" column="0" colspan="2">
                 <widget class="QLineEdit" name="lineEditorSceneGoal">
                  <property name="font">
                   <font>
@@ -534,7 +560,7 @@
                  </property>
                 </widget>
                </item>
-               <item row="18" column="0">
+               <item row="12" column="0">
                 <widget class="QLabel" name="labelEditorSceneResult">
                  <property name="font">
                   <font>
@@ -550,7 +576,7 @@
                  </property>
                 </widget>
                </item>
-               <item row="19" column="0" colspan="2">
+               <item row="13" column="0">
                 <widget class="QLineEdit" name="lineEditorSceneResult">
                  <property name="font">
                   <font>
@@ -563,7 +589,7 @@
                  </property>
                 </widget>
                </item>
-               <item row="24" column="0">
+               <item row="14" column="0">
                 <widget class="QLabel" name="labelEditorSceneMood">
                  <property name="font">
                   <font>
@@ -579,7 +605,7 @@
                  </property>
                 </widget>
                </item>
-               <item row="25" column="0" colspan="2">
+               <item row="15" column="0">
                 <widget class="QLineEdit" name="lineEditorceneMood">
                  <property name="font">
                   <font>
@@ -592,7 +618,7 @@
                  </property>
                 </widget>
                </item>
-               <item row="26" column="0">
+               <item row="16" column="0">
                 <widget class="QLabel" name="labelEditorSceneDuration">
                  <property name="font">
                   <font>
@@ -608,7 +634,7 @@
                  </property>
                 </widget>
                </item>
-               <item row="27" column="0" colspan="2">
+               <item row="17" column="0">
                 <widget class="QLineEdit" name="lineEditorSceneDuration">
                  <property name="font">
                   <font>
@@ -621,7 +647,7 @@
                  </property>
                 </widget>
                </item>
-               <item row="28" column="0">
+               <item row="18" column="0">
                 <widget class="QLabel" name="labelEditorSceneType">
                  <property name="font">
                   <font>
@@ -637,7 +663,7 @@
                  </property>
                 </widget>
                </item>
-               <item row="29" column="0" colspan="2">
+               <item row="19" column="0">
                 <widget class="QLineEdit" name="lineEditorSceneType">
                  <property name="font">
                   <font>
@@ -650,7 +676,7 @@
                  </property>
                 </widget>
                </item>
-               <item row="30" column="0" colspan="2">
+               <item row="20" column="0">
                 <widget class="QLabel" name="labelEditorSceneTags">
                  <property name="font">
                   <font>
@@ -666,7 +692,7 @@
                  </property>
                 </widget>
                </item>
-               <item row="31" column="0" colspan="2">
+               <item row="21" column="0" colspan="2">
                 <widget class="QTextEdit" name="textEditorSceneTags">
                  <property name="font">
                   <font>
@@ -679,7 +705,7 @@
                  </property>
                 </widget>
                </item>
-               <item row="32" column="0" colspan="2">
+               <item row="22" column="0">
                 <widget class="QLabel" name="labelEditorSceneNotes">
                  <property name="font">
                   <font>
@@ -695,7 +721,7 @@
                  </property>
                 </widget>
                </item>
-               <item row="33" column="0" colspan="2">
+               <item row="23" column="0" colspan="2">
                 <widget class="QTextEdit" name="textEditorSceneNotes">
                  <property name="font">
                   <font>
@@ -711,6 +737,12 @@
               </layout>
              </widget>
              <widget class="QWidget" name="tabEditorCharacters">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <attribute name="title">
                <string>Charaktere</string>
               </attribute>
@@ -718,7 +750,7 @@
                <item row="1" column="0" colspan="2">
                 <widget class="QToolBox" name="toolBoxCharacters">
                  <property name="sizePolicy">
-                  <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                    <horstretch>0</horstretch>
                    <verstretch>2</verstretch>
                   </sizepolicy>
@@ -730,16 +762,22 @@
                   <number>2</number>
                  </property>
                  <property name="currentIndex">
-                  <number>0</number>
+                  <number>1</number>
                  </property>
                  <widget class="QWidget" name="pageEditorCharacter">
                   <property name="geometry">
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>365</width>
-                    <height>699</height>
+                    <width>238</width>
+                    <height>477</height>
                    </rect>
+                  </property>
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
                   </property>
                   <attribute name="label">
                    <string>Charakter</string>
@@ -961,9 +999,15 @@
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>263</width>
-                    <height>362</height>
+                    <width>336</width>
+                    <height>486</height>
                    </rect>
+                  </property>
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
                   </property>
                   <attribute name="label">
                    <string>Herkunft</string>
@@ -1202,6 +1246,12 @@
                     <height>696</height>
                    </rect>
                   </property>
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
                   <attribute name="label">
                    <string>Ausbildung</string>
                   </attribute>
@@ -1387,6 +1437,12 @@
                     <width>279</width>
                     <height>581</height>
                    </rect>
+                  </property>
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
                   </property>
                   <attribute name="label">
                    <string>Aussehen</string>
@@ -1672,6 +1728,12 @@
                     <width>263</width>
                     <height>715</height>
                    </rect>
+                  </property>
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
                   </property>
                   <attribute name="label">
                    <string>Aussehen Details</string>
@@ -2068,6 +2130,12 @@
                     <height>418</height>
                    </rect>
                   </property>
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
                   <attribute name="label">
                    <string>Persönlichkeit</string>
                   </attribute>
@@ -2291,6 +2359,12 @@
                     <width>263</width>
                     <height>682</height>
                    </rect>
+                  </property>
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
                   </property>
                   <attribute name="label">
                    <string>Psychologisches Profil</string>
@@ -2675,8 +2749,8 @@
                  <property name="frameShadow">
                   <enum>QFrame::Shadow::Raised</enum>
                  </property>
-                 <layout class="QHBoxLayout" name="horizontalLayout_8">
-                  <item>
+                 <layout class="QGridLayout" name="gridLayout_3">
+                  <item row="0" column="0">
                    <widget class="QPushButton" name="newBtnEditorCharacter">
                     <property name="cursor">
                      <cursorShape>PointingHandCursor</cursorShape>
@@ -2692,8 +2766,8 @@
                     </property>
                     <property name="iconSize">
                      <size>
-                      <width>32</width>
-                      <height>32</height>
+                      <width>16</width>
+                      <height>16</height>
                      </size>
                     </property>
                     <property name="default">
@@ -2704,7 +2778,7 @@
                     </property>
                    </widget>
                   </item>
-                  <item>
+                  <item row="0" column="1">
                    <widget class="QPushButton" name="nextBtnEditorCharacter">
                     <property name="cursor">
                      <cursorShape>PointingHandCursor</cursorShape>
@@ -2720,8 +2794,8 @@
                     </property>
                     <property name="iconSize">
                      <size>
-                      <width>32</width>
-                      <height>32</height>
+                      <width>16</width>
+                      <height>16</height>
                      </size>
                     </property>
                     <property name="default">
@@ -2732,7 +2806,7 @@
                     </property>
                    </widget>
                   </item>
-                  <item>
+                  <item row="0" column="2">
                    <widget class="QPushButton" name="previousBtnEditorCharacter">
                     <property name="cursor">
                      <cursorShape>PointingHandCursor</cursorShape>
@@ -2748,8 +2822,8 @@
                     </property>
                     <property name="iconSize">
                      <size>
-                      <width>32</width>
-                      <height>32</height>
+                      <width>16</width>
+                      <height>16</height>
                      </size>
                     </property>
                     <property name="default">
@@ -2760,7 +2834,7 @@
                     </property>
                    </widget>
                   </item>
-                  <item>
+                  <item row="0" column="3">
                    <widget class="QPushButton" name="deleteBtnEditorCharacter">
                     <property name="cursor">
                      <cursorShape>PointingHandCursor</cursorShape>
@@ -2776,8 +2850,8 @@
                     </property>
                     <property name="iconSize">
                      <size>
-                      <width>32</width>
-                      <height>32</height>
+                      <width>16</width>
+                      <height>16</height>
                      </size>
                     </property>
                     <property name="default">
@@ -2788,7 +2862,7 @@
                     </property>
                    </widget>
                   </item>
-                  <item>
+                  <item row="0" column="4">
                    <widget class="QPushButton" name="saveBtnEditorCharacter">
                     <property name="cursor">
                      <cursorShape>PointingHandCursor</cursorShape>
@@ -2804,8 +2878,8 @@
                     </property>
                     <property name="iconSize">
                      <size>
-                      <width>32</width>
-                      <height>32</height>
+                      <width>16</width>
+                      <height>16</height>
                      </size>
                     </property>
                     <property name="default">
@@ -2822,6 +2896,12 @@
               </layout>
              </widget>
              <widget class="QWidget" name="tabEditorObjects">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <attribute name="title">
                <string>Objekte</string>
               </attribute>
@@ -2840,8 +2920,8 @@
                  <property name="frameShadow">
                   <enum>QFrame::Shadow::Raised</enum>
                  </property>
-                 <layout class="QHBoxLayout" name="horizontalLayout_13">
-                  <item>
+                 <layout class="QGridLayout" name="gridLayout_4">
+                  <item row="0" column="0">
                    <widget class="QPushButton" name="newBtnEditorObject">
                     <property name="cursor">
                      <cursorShape>PointingHandCursor</cursorShape>
@@ -2857,8 +2937,8 @@
                     </property>
                     <property name="iconSize">
                      <size>
-                      <width>32</width>
-                      <height>32</height>
+                      <width>16</width>
+                      <height>16</height>
                      </size>
                     </property>
                     <property name="default">
@@ -2869,7 +2949,7 @@
                     </property>
                    </widget>
                   </item>
-                  <item>
+                  <item row="0" column="1">
                    <widget class="QPushButton" name="nextBtnEditorObject">
                     <property name="cursor">
                      <cursorShape>PointingHandCursor</cursorShape>
@@ -2885,8 +2965,8 @@
                     </property>
                     <property name="iconSize">
                      <size>
-                      <width>32</width>
-                      <height>32</height>
+                      <width>16</width>
+                      <height>16</height>
                      </size>
                     </property>
                     <property name="default">
@@ -2897,7 +2977,7 @@
                     </property>
                    </widget>
                   </item>
-                  <item>
+                  <item row="0" column="2">
                    <widget class="QPushButton" name="previousBtnEditorObject">
                     <property name="cursor">
                      <cursorShape>PointingHandCursor</cursorShape>
@@ -2913,8 +2993,8 @@
                     </property>
                     <property name="iconSize">
                      <size>
-                      <width>32</width>
-                      <height>32</height>
+                      <width>16</width>
+                      <height>16</height>
                      </size>
                     </property>
                     <property name="default">
@@ -2925,7 +3005,7 @@
                     </property>
                    </widget>
                   </item>
-                  <item>
+                  <item row="0" column="3">
                    <widget class="QPushButton" name="deleteBtnEditorObject">
                     <property name="cursor">
                      <cursorShape>PointingHandCursor</cursorShape>
@@ -2941,8 +3021,8 @@
                     </property>
                     <property name="iconSize">
                      <size>
-                      <width>32</width>
-                      <height>32</height>
+                      <width>16</width>
+                      <height>16</height>
                      </size>
                     </property>
                     <property name="default">
@@ -2953,7 +3033,7 @@
                     </property>
                    </widget>
                   </item>
-                  <item>
+                  <item row="0" column="4">
                    <widget class="QPushButton" name="saveBtnEditorObject">
                     <property name="cursor">
                      <cursorShape>PointingHandCursor</cursorShape>
@@ -2969,8 +3049,8 @@
                     </property>
                     <property name="iconSize">
                      <size>
-                      <width>32</width>
-                      <height>32</height>
+                      <width>16</width>
+                      <height>16</height>
                      </size>
                     </property>
                     <property name="default">
@@ -3168,6 +3248,12 @@
               </layout>
              </widget>
              <widget class="QWidget" name="tabEditorLocations">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <attribute name="title">
                <string>Orte</string>
               </attribute>
@@ -3186,8 +3272,8 @@
                  <property name="frameShadow">
                   <enum>QFrame::Shadow::Raised</enum>
                  </property>
-                 <layout class="QHBoxLayout" name="horizontalLayout_14">
-                  <item>
+                 <layout class="QGridLayout" name="gridLayout_5">
+                  <item row="0" column="0">
                    <widget class="QPushButton" name="newBtnEditorLocation">
                     <property name="cursor">
                      <cursorShape>PointingHandCursor</cursorShape>
@@ -3203,8 +3289,8 @@
                     </property>
                     <property name="iconSize">
                      <size>
-                      <width>32</width>
-                      <height>32</height>
+                      <width>16</width>
+                      <height>16</height>
                      </size>
                     </property>
                     <property name="default">
@@ -3215,7 +3301,7 @@
                     </property>
                    </widget>
                   </item>
-                  <item>
+                  <item row="0" column="1">
                    <widget class="QPushButton" name="nextBtnEditorLocation">
                     <property name="cursor">
                      <cursorShape>PointingHandCursor</cursorShape>
@@ -3231,8 +3317,8 @@
                     </property>
                     <property name="iconSize">
                      <size>
-                      <width>32</width>
-                      <height>32</height>
+                      <width>16</width>
+                      <height>16</height>
                      </size>
                     </property>
                     <property name="default">
@@ -3243,7 +3329,7 @@
                     </property>
                    </widget>
                   </item>
-                  <item>
+                  <item row="0" column="2">
                    <widget class="QPushButton" name="previousBtnEditorLocation">
                     <property name="cursor">
                      <cursorShape>PointingHandCursor</cursorShape>
@@ -3259,8 +3345,8 @@
                     </property>
                     <property name="iconSize">
                      <size>
-                      <width>32</width>
-                      <height>32</height>
+                      <width>16</width>
+                      <height>16</height>
                      </size>
                     </property>
                     <property name="default">
@@ -3271,7 +3357,7 @@
                     </property>
                    </widget>
                   </item>
-                  <item>
+                  <item row="0" column="3">
                    <widget class="QPushButton" name="deleteBtnEditorLocation">
                     <property name="cursor">
                      <cursorShape>PointingHandCursor</cursorShape>
@@ -3287,8 +3373,8 @@
                     </property>
                     <property name="iconSize">
                      <size>
-                      <width>32</width>
-                      <height>32</height>
+                      <width>16</width>
+                      <height>16</height>
                      </size>
                     </property>
                     <property name="default">
@@ -3299,7 +3385,7 @@
                     </property>
                    </widget>
                   </item>
-                  <item>
+                  <item row="0" column="4">
                    <widget class="QPushButton" name="saveBtnEditorLocation">
                     <property name="cursor">
                      <cursorShape>PointingHandCursor</cursorShape>
@@ -3315,8 +3401,8 @@
                     </property>
                     <property name="iconSize">
                      <size>
-                      <width>32</width>
-                      <height>32</height>
+                      <width>16</width>
+                      <height>16</height>
                      </size>
                     </property>
                     <property name="default">
@@ -3514,6 +3600,12 @@
               </layout>
              </widget>
              <widget class="QWidget" name="tabEditorStorylines">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <attribute name="title">
                <string>Handlungsstränge</string>
               </attribute>
@@ -3532,8 +3624,8 @@
                  <property name="frameShadow">
                   <enum>QFrame::Shadow::Raised</enum>
                  </property>
-                 <layout class="QHBoxLayout" name="horizontalLayout_15">
-                  <item>
+                 <layout class="QGridLayout" name="gridLayout_6">
+                  <item row="0" column="0">
                    <widget class="QPushButton" name="newBtnEditorStoryline">
                     <property name="cursor">
                      <cursorShape>PointingHandCursor</cursorShape>
@@ -3542,15 +3634,15 @@
                      <string>Einen neuen Datensatz erstellen</string>
                     </property>
                     <property name="text">
-                     <string/>
+                     <string notr="true"/>
                     </property>
                     <property name="icon">
                      <iconset theme="document-new"/>
                     </property>
                     <property name="iconSize">
                      <size>
-                      <width>32</width>
-                      <height>32</height>
+                      <width>16</width>
+                      <height>16</height>
                      </size>
                     </property>
                     <property name="default">
@@ -3561,7 +3653,7 @@
                     </property>
                    </widget>
                   </item>
-                  <item>
+                  <item row="0" column="1">
                    <widget class="QPushButton" name="nextBtnEditorStoryline">
                     <property name="cursor">
                      <cursorShape>PointingHandCursor</cursorShape>
@@ -3570,15 +3662,15 @@
                      <string>Einen Datensatz vor</string>
                     </property>
                     <property name="text">
-                     <string/>
+                     <string notr="true"/>
                     </property>
                     <property name="icon">
                      <iconset theme="go-next"/>
                     </property>
                     <property name="iconSize">
                      <size>
-                      <width>32</width>
-                      <height>32</height>
+                      <width>16</width>
+                      <height>16</height>
                      </size>
                     </property>
                     <property name="default">
@@ -3589,7 +3681,7 @@
                     </property>
                    </widget>
                   </item>
-                  <item>
+                  <item row="0" column="2">
                    <widget class="QPushButton" name="previousBtnEditorStoryline">
                     <property name="cursor">
                      <cursorShape>PointingHandCursor</cursorShape>
@@ -3598,15 +3690,15 @@
                      <string>Einen Datensatz zurück</string>
                     </property>
                     <property name="text">
-                     <string/>
+                     <string notr="true"/>
                     </property>
                     <property name="icon">
                      <iconset theme="go-previous"/>
                     </property>
                     <property name="iconSize">
                      <size>
-                      <width>32</width>
-                      <height>32</height>
+                      <width>16</width>
+                      <height>16</height>
                      </size>
                     </property>
                     <property name="default">
@@ -3617,7 +3709,7 @@
                     </property>
                    </widget>
                   </item>
-                  <item>
+                  <item row="0" column="3">
                    <widget class="QPushButton" name="deleteBtnEditorStoryline">
                     <property name="cursor">
                      <cursorShape>PointingHandCursor</cursorShape>
@@ -3626,15 +3718,15 @@
                      <string>Den aktuellen Datensatz löschen</string>
                     </property>
                     <property name="text">
-                     <string/>
+                     <string notr="true"/>
                     </property>
                     <property name="icon">
                      <iconset theme="user-trash"/>
                     </property>
                     <property name="iconSize">
                      <size>
-                      <width>32</width>
-                      <height>32</height>
+                      <width>16</width>
+                      <height>16</height>
                      </size>
                     </property>
                     <property name="default">
@@ -3645,7 +3737,7 @@
                     </property>
                    </widget>
                   </item>
-                  <item>
+                  <item row="0" column="4">
                    <widget class="QPushButton" name="saveBtnEditorStoryline">
                     <property name="cursor">
                      <cursorShape>PointingHandCursor</cursorShape>
@@ -3654,15 +3746,15 @@
                      <string>Den aktuellen Datensatz speichern</string>
                     </property>
                     <property name="text">
-                     <string/>
+                     <string notr="true"/>
                     </property>
                     <property name="icon">
                      <iconset theme="document-save"/>
                     </property>
                     <property name="iconSize">
                      <size>
-                      <width>32</width>
-                      <height>32</height>
+                      <width>16</width>
+                      <height>16</height>
                      </size>
                     </property>
                     <property name="default">
@@ -3860,6 +3952,12 @@
               </layout>
              </widget>
              <widget class="QWidget" name="tabEditorReferences">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <attribute name="title">
                <string>Referenzen</string>
               </attribute>
@@ -3878,8 +3976,8 @@
                  <property name="frameShadow">
                   <enum>QFrame::Shadow::Raised</enum>
                  </property>
-                 <layout class="QHBoxLayout" name="horizontalLayout_16">
-                  <item>
+                 <layout class="QGridLayout" name="gridLayout_7">
+                  <item row="0" column="0">
                    <widget class="QPushButton" name="newBtnEditorReference">
                     <property name="cursor">
                      <cursorShape>PointingHandCursor</cursorShape>
@@ -3895,8 +3993,8 @@
                     </property>
                     <property name="iconSize">
                      <size>
-                      <width>32</width>
-                      <height>32</height>
+                      <width>16</width>
+                      <height>16</height>
                      </size>
                     </property>
                     <property name="default">
@@ -3907,7 +4005,7 @@
                     </property>
                    </widget>
                   </item>
-                  <item>
+                  <item row="0" column="1">
                    <widget class="QPushButton" name="nextBtnEditorReference">
                     <property name="cursor">
                      <cursorShape>PointingHandCursor</cursorShape>
@@ -3923,8 +4021,8 @@
                     </property>
                     <property name="iconSize">
                      <size>
-                      <width>32</width>
-                      <height>32</height>
+                      <width>16</width>
+                      <height>16</height>
                      </size>
                     </property>
                     <property name="default">
@@ -3935,7 +4033,7 @@
                     </property>
                    </widget>
                   </item>
-                  <item>
+                  <item row="0" column="2">
                    <widget class="QPushButton" name="previousBtnEditorReference">
                     <property name="cursor">
                      <cursorShape>PointingHandCursor</cursorShape>
@@ -3951,8 +4049,8 @@
                     </property>
                     <property name="iconSize">
                      <size>
-                      <width>32</width>
-                      <height>32</height>
+                      <width>16</width>
+                      <height>16</height>
                      </size>
                     </property>
                     <property name="default">
@@ -3963,7 +4061,7 @@
                     </property>
                    </widget>
                   </item>
-                  <item>
+                  <item row="0" column="3">
                    <widget class="QPushButton" name="deleteBtnEditorReference">
                     <property name="cursor">
                      <cursorShape>PointingHandCursor</cursorShape>
@@ -3979,8 +4077,8 @@
                     </property>
                     <property name="iconSize">
                      <size>
-                      <width>32</width>
-                      <height>32</height>
+                      <width>16</width>
+                      <height>16</height>
                      </size>
                     </property>
                     <property name="default">
@@ -3991,7 +4089,7 @@
                     </property>
                    </widget>
                   </item>
-                  <item>
+                  <item row="0" column="4">
                    <widget class="QPushButton" name="saveBtnEditorReference">
                     <property name="cursor">
                      <cursorShape>PointingHandCursor</cursorShape>
@@ -4007,8 +4105,8 @@
                     </property>
                     <property name="iconSize">
                      <size>
-                      <width>32</width>
-                      <height>32</height>
+                      <width>16</width>
+                      <height>16</height>
                      </size>
                     </property>
                     <property name="default">
@@ -4206,6 +4304,12 @@
               </layout>
              </widget>
              <widget class="QWidget" name="tabEditorSources">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <attribute name="title">
                <string>Quellen</string>
               </attribute>
@@ -4224,8 +4328,8 @@
                  <property name="frameShadow">
                   <enum>QFrame::Shadow::Raised</enum>
                  </property>
-                 <layout class="QHBoxLayout" name="horizontalLayout_17">
-                  <item>
+                 <layout class="QGridLayout" name="gridLayout_8">
+                  <item row="0" column="0">
                    <widget class="QPushButton" name="newBtnEditorSource">
                     <property name="cursor">
                      <cursorShape>PointingHandCursor</cursorShape>
@@ -4241,8 +4345,8 @@
                     </property>
                     <property name="iconSize">
                      <size>
-                      <width>32</width>
-                      <height>32</height>
+                      <width>16</width>
+                      <height>16</height>
                      </size>
                     </property>
                     <property name="default">
@@ -4253,7 +4357,7 @@
                     </property>
                    </widget>
                   </item>
-                  <item>
+                  <item row="0" column="1">
                    <widget class="QPushButton" name="nextBtnEditorSource">
                     <property name="cursor">
                      <cursorShape>PointingHandCursor</cursorShape>
@@ -4269,8 +4373,8 @@
                     </property>
                     <property name="iconSize">
                      <size>
-                      <width>32</width>
-                      <height>32</height>
+                      <width>16</width>
+                      <height>16</height>
                      </size>
                     </property>
                     <property name="default">
@@ -4281,7 +4385,7 @@
                     </property>
                    </widget>
                   </item>
-                  <item>
+                  <item row="0" column="2">
                    <widget class="QPushButton" name="previousBtnEditorSource">
                     <property name="cursor">
                      <cursorShape>PointingHandCursor</cursorShape>
@@ -4297,8 +4401,8 @@
                     </property>
                     <property name="iconSize">
                      <size>
-                      <width>32</width>
-                      <height>32</height>
+                      <width>16</width>
+                      <height>16</height>
                      </size>
                     </property>
                     <property name="default">
@@ -4309,7 +4413,7 @@
                     </property>
                    </widget>
                   </item>
-                  <item>
+                  <item row="0" column="3">
                    <widget class="QPushButton" name="deleteBtnEditorSource">
                     <property name="cursor">
                      <cursorShape>PointingHandCursor</cursorShape>
@@ -4325,8 +4429,8 @@
                     </property>
                     <property name="iconSize">
                      <size>
-                      <width>32</width>
-                      <height>32</height>
+                      <width>16</width>
+                      <height>16</height>
                      </size>
                     </property>
                     <property name="default">
@@ -4337,7 +4441,7 @@
                     </property>
                    </widget>
                   </item>
-                  <item>
+                  <item row="0" column="4">
                    <widget class="QPushButton" name="saveBtnEditorSource">
                     <property name="cursor">
                      <cursorShape>PointingHandCursor</cursorShape>
@@ -4353,8 +4457,8 @@
                     </property>
                     <property name="iconSize">
                      <size>
-                      <width>32</width>
-                      <height>32</height>
+                      <width>16</width>
+                      <height>16</height>
                      </size>
                     </property>
                     <property name="default">
@@ -4552,6 +4656,12 @@
               </layout>
              </widget>
              <widget class="QWidget" name="tabEditorIdeas">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <attribute name="title">
                <string>Ideen</string>
               </attribute>
@@ -4570,8 +4680,8 @@
                  <property name="frameShadow">
                   <enum>QFrame::Shadow::Raised</enum>
                  </property>
-                 <layout class="QHBoxLayout" name="horizontalLayout_18">
-                  <item>
+                 <layout class="QGridLayout" name="gridLayout_9">
+                  <item row="0" column="0">
                    <widget class="QPushButton" name="newBtnEditorIdea">
                     <property name="cursor">
                      <cursorShape>PointingHandCursor</cursorShape>
@@ -4587,8 +4697,8 @@
                     </property>
                     <property name="iconSize">
                      <size>
-                      <width>32</width>
-                      <height>32</height>
+                      <width>16</width>
+                      <height>16</height>
                      </size>
                     </property>
                     <property name="default">
@@ -4599,7 +4709,7 @@
                     </property>
                    </widget>
                   </item>
-                  <item>
+                  <item row="0" column="1">
                    <widget class="QPushButton" name="nextBtnEditorIdea">
                     <property name="cursor">
                      <cursorShape>PointingHandCursor</cursorShape>
@@ -4615,8 +4725,8 @@
                     </property>
                     <property name="iconSize">
                      <size>
-                      <width>32</width>
-                      <height>32</height>
+                      <width>16</width>
+                      <height>16</height>
                      </size>
                     </property>
                     <property name="default">
@@ -4627,7 +4737,7 @@
                     </property>
                    </widget>
                   </item>
-                  <item>
+                  <item row="0" column="2">
                    <widget class="QPushButton" name="previousBtnEditorIdea">
                     <property name="cursor">
                      <cursorShape>PointingHandCursor</cursorShape>
@@ -4643,8 +4753,8 @@
                     </property>
                     <property name="iconSize">
                      <size>
-                      <width>32</width>
-                      <height>32</height>
+                      <width>16</width>
+                      <height>16</height>
                      </size>
                     </property>
                     <property name="default">
@@ -4655,7 +4765,7 @@
                     </property>
                    </widget>
                   </item>
-                  <item>
+                  <item row="0" column="3">
                    <widget class="QPushButton" name="deleteBtnEditorIdea">
                     <property name="cursor">
                      <cursorShape>PointingHandCursor</cursorShape>
@@ -4671,8 +4781,8 @@
                     </property>
                     <property name="iconSize">
                      <size>
-                      <width>32</width>
-                      <height>32</height>
+                      <width>16</width>
+                      <height>16</height>
                      </size>
                     </property>
                     <property name="default">
@@ -4683,7 +4793,7 @@
                     </property>
                    </widget>
                   </item>
-                  <item>
+                  <item row="0" column="4">
                    <widget class="QPushButton" name="saveBtnEditorIdea">
                     <property name="cursor">
                      <cursorShape>PointingHandCursor</cursorShape>
@@ -4699,8 +4809,8 @@
                     </property>
                     <property name="iconSize">
                      <size>
-                      <width>32</width>
-                      <height>32</height>
+                      <width>16</width>
+                      <height>16</height>
                      </size>
                     </property>
                     <property name="default">
@@ -4898,12 +5008,24 @@
               </layout>
              </widget>
              <widget class="QWidget" name="tagEditorGlossar">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <attribute name="title">
                <string>Glossar</string>
               </attribute>
               <layout class="QFormLayout" name="formLayout_22">
                <item row="0" column="0" colspan="2">
                 <widget class="QToolBox" name="toolBoxABC">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
                  <property name="currentIndex">
                   <number>0</number>
                  </property>
@@ -4912,9 +5034,15 @@
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>365</width>
-                    <height>117</height>
+                    <width>322</width>
+                    <height>88</height>
                    </rect>
+                  </property>
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
                   </property>
                   <attribute name="label">
                    <string>A</string>
@@ -4930,9 +5058,15 @@
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>98</width>
+                    <width>94</width>
                     <height>88</height>
                    </rect>
+                  </property>
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
                   </property>
                   <attribute name="label">
                    <string>B</string>
@@ -4948,9 +5082,15 @@
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>98</width>
+                    <width>94</width>
                     <height>88</height>
                    </rect>
+                  </property>
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
                   </property>
                   <attribute name="label">
                    <string>C</string>
@@ -4966,9 +5106,15 @@
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>98</width>
+                    <width>94</width>
                     <height>88</height>
                    </rect>
+                  </property>
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
                   </property>
                   <attribute name="label">
                    <string>D</string>
@@ -4984,9 +5130,15 @@
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>98</width>
+                    <width>94</width>
                     <height>88</height>
                    </rect>
+                  </property>
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
                   </property>
                   <attribute name="label">
                    <string>E</string>
@@ -5002,9 +5154,15 @@
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>98</width>
+                    <width>94</width>
                     <height>88</height>
                    </rect>
+                  </property>
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
                   </property>
                   <attribute name="label">
                    <string>F</string>
@@ -5020,9 +5178,15 @@
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>98</width>
+                    <width>94</width>
                     <height>88</height>
                    </rect>
+                  </property>
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
                   </property>
                   <attribute name="label">
                    <string>G</string>
@@ -5038,9 +5202,15 @@
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>98</width>
+                    <width>94</width>
                     <height>88</height>
                    </rect>
+                  </property>
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
                   </property>
                   <attribute name="label">
                    <string>H</string>
@@ -5056,9 +5226,15 @@
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>98</width>
+                    <width>94</width>
                     <height>88</height>
                    </rect>
+                  </property>
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
                   </property>
                   <attribute name="label">
                    <string>I</string>
@@ -5074,9 +5250,15 @@
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>98</width>
+                    <width>94</width>
                     <height>88</height>
                    </rect>
+                  </property>
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
                   </property>
                   <attribute name="label">
                    <string>J</string>
@@ -5092,9 +5274,15 @@
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>98</width>
+                    <width>94</width>
                     <height>88</height>
                    </rect>
+                  </property>
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
                   </property>
                   <attribute name="label">
                    <string>K</string>
@@ -5110,9 +5298,15 @@
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>98</width>
+                    <width>94</width>
                     <height>88</height>
                    </rect>
+                  </property>
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
                   </property>
                   <attribute name="label">
                    <string>L</string>
@@ -5128,9 +5322,15 @@
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>98</width>
+                    <width>94</width>
                     <height>88</height>
                    </rect>
+                  </property>
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
                   </property>
                   <attribute name="label">
                    <string>M</string>
@@ -5146,9 +5346,15 @@
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>98</width>
+                    <width>94</width>
                     <height>88</height>
                    </rect>
+                  </property>
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
                   </property>
                   <attribute name="label">
                    <string>N</string>
@@ -5164,9 +5370,15 @@
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>98</width>
+                    <width>94</width>
                     <height>88</height>
                    </rect>
+                  </property>
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
                   </property>
                   <attribute name="label">
                    <string>O</string>
@@ -5182,9 +5394,15 @@
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>98</width>
+                    <width>94</width>
                     <height>88</height>
                    </rect>
+                  </property>
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
                   </property>
                   <attribute name="label">
                    <string>P</string>
@@ -5200,9 +5418,15 @@
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>98</width>
+                    <width>94</width>
                     <height>88</height>
                    </rect>
+                  </property>
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
                   </property>
                   <attribute name="label">
                    <string>Q</string>
@@ -5218,9 +5442,15 @@
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>98</width>
+                    <width>94</width>
                     <height>88</height>
                    </rect>
+                  </property>
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
                   </property>
                   <attribute name="label">
                    <string>R</string>
@@ -5236,9 +5466,15 @@
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>98</width>
+                    <width>94</width>
                     <height>88</height>
                    </rect>
+                  </property>
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
                   </property>
                   <attribute name="label">
                    <string>S</string>
@@ -5254,9 +5490,15 @@
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>98</width>
+                    <width>94</width>
                     <height>88</height>
                    </rect>
+                  </property>
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
                   </property>
                   <attribute name="label">
                    <string>T</string>
@@ -5272,9 +5514,15 @@
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>98</width>
+                    <width>94</width>
                     <height>88</height>
                    </rect>
+                  </property>
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
                   </property>
                   <attribute name="label">
                    <string>U</string>
@@ -5290,9 +5538,15 @@
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>98</width>
+                    <width>94</width>
                     <height>88</height>
                    </rect>
+                  </property>
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
                   </property>
                   <attribute name="label">
                    <string>V</string>
@@ -5308,9 +5562,15 @@
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>98</width>
+                    <width>94</width>
                     <height>88</height>
                    </rect>
+                  </property>
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
                   </property>
                   <attribute name="label">
                    <string>W</string>
@@ -5326,9 +5586,15 @@
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>98</width>
+                    <width>94</width>
                     <height>88</height>
                    </rect>
+                  </property>
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
                   </property>
                   <attribute name="label">
                    <string>X</string>
@@ -5344,9 +5610,15 @@
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>98</width>
+                    <width>94</width>
                     <height>88</height>
                    </rect>
+                  </property>
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
                   </property>
                   <attribute name="label">
                    <string>Y</string>
@@ -5362,9 +5634,15 @@
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>98</width>
+                    <width>94</width>
                     <height>88</height>
                    </rect>
+                  </property>
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
                   </property>
                   <attribute name="label">
                    <string>Z</string>
@@ -5380,6 +5658,12 @@
               </layout>
              </widget>
              <widget class="QWidget" name="tabEditorStructure">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <attribute name="title">
                <string>Struktur</string>
               </attribute>
@@ -6953,32 +7237,31 @@
                 </property>
                </widget>
               </item>
-              <item row="6" column="0" colspan="2">
-               <widget class="QLabel" name="labelEditorChapterID">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
+              <item row="2" column="0" colspan="2">
+               <widget class="QLabel" name="labelEditorActualProject">
                 <property name="font">
                  <font>
                   <family>Lato</family>
-                  <pointsize>12</pointsize>
+                  <pointsize>14</pointsize>
+                  <italic>true</italic>
                   <bold>true</bold>
+                  <underline>true</underline>
                   <stylestrategy>PreferAntialias</stylestrategy>
                   <kerning>true</kerning>
                  </font>
                 </property>
-                <property name="frameShape">
-                 <enum>QFrame::Shape::StyledPanel</enum>
-                </property>
-                <property name="frameShadow">
-                 <enum>QFrame::Shadow::Sunken</enum>
-                </property>
                 <property name="text">
-                 <string>Kapitel-ID</string>
+                 <string>aktuelles Projekt</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignmentFlag::AlignCenter</set>
                 </property>
                </widget>
               </item>
-              <item row="7" column="0">
+              <item row="3" column="0" colspan="2">
+               <widget class="QListWidget" name="listWidgetEditorChapters"/>
+              </item>
+              <item row="6" column="0">
                <widget class="QLabel" name="labelEditorChapterTitle">
                 <property name="font">
                  <font>
@@ -6994,7 +7277,7 @@
                 </property>
                </widget>
               </item>
-              <item row="7" column="1">
+              <item row="6" column="1">
                <widget class="QLineEdit" name="lineEditorChapterTitleText">
                 <property name="font">
                  <font>
@@ -7007,7 +7290,7 @@
                 </property>
                </widget>
               </item>
-              <item row="11" column="0">
+              <item row="10" column="0">
                <widget class="QLabel" name="labelEditorChapterPremise">
                 <property name="font">
                  <font>
@@ -7023,7 +7306,7 @@
                 </property>
                </widget>
               </item>
-              <item row="11" column="1">
+              <item row="10" column="1">
                <widget class="QLineEdit" name="lineEditorChapterPremise">
                 <property name="font">
                  <font>
@@ -7036,7 +7319,7 @@
                 </property>
                </widget>
               </item>
-              <item row="15" column="0">
+              <item row="14" column="0">
                <widget class="QLabel" name="labelEditorChapterStatus">
                 <property name="font">
                  <font>
@@ -7052,7 +7335,7 @@
                 </property>
                </widget>
               </item>
-              <item row="15" column="1">
+              <item row="14" column="1">
                <widget class="QComboBox" name="comboBoxEditorChapterStatus">
                 <property name="font">
                  <font>
@@ -7090,7 +7373,7 @@
                 </item>
                </widget>
               </item>
-              <item row="17" column="0">
+              <item row="16" column="0">
                <widget class="QLabel" name="labelEditorChapterBegin">
                 <property name="font">
                  <font>
@@ -7106,7 +7389,7 @@
                 </property>
                </widget>
               </item>
-              <item row="17" column="1">
+              <item row="16" column="1">
                <widget class="QDateEdit" name="dateEditorChapterBegin">
                 <property name="font">
                  <font>
@@ -7132,7 +7415,7 @@
                 </property>
                </widget>
               </item>
-              <item row="18" column="0">
+              <item row="17" column="0">
                <widget class="QLabel" name="labelEditorChapterEdited">
                 <property name="font">
                  <font>
@@ -7148,7 +7431,7 @@
                 </property>
                </widget>
               </item>
-              <item row="18" column="1">
+              <item row="17" column="1">
                <widget class="QDateEdit" name="dateEditorChapterEdited">
                 <property name="font">
                  <font>
@@ -7174,7 +7457,7 @@
                 </property>
                </widget>
               </item>
-              <item row="19" column="0" colspan="2">
+              <item row="18" column="0" colspan="2">
                <widget class="QLabel" name="labelEditorChapterExcerpt">
                 <property name="font">
                  <font>
@@ -7190,7 +7473,7 @@
                 </property>
                </widget>
               </item>
-              <item row="20" column="0" colspan="2">
+              <item row="19" column="0" colspan="2">
                <widget class="QTextEdit" name="textEditEditorChapterExcerpt">
                 <property name="font">
                  <font>
@@ -7203,7 +7486,7 @@
                 </property>
                </widget>
               </item>
-              <item row="23" column="0" colspan="2">
+              <item row="22" column="0" colspan="2">
                <widget class="QLabel" name="labelEditorChapterNotes">
                 <property name="font">
                  <font>
@@ -7219,7 +7502,7 @@
                 </property>
                </widget>
               </item>
-              <item row="24" column="0" colspan="2">
+              <item row="23" column="0" colspan="2">
                <widget class="QTextEdit" name="textEditEditorChapterNotes">
                 <property name="font">
                  <font>
@@ -7232,7 +7515,7 @@
                 </property>
                </widget>
               </item>
-              <item row="26" column="0" colspan="2">
+              <item row="25" column="0" colspan="2">
                <widget class="QPushButton" name="newBtnEditorChapter">
                 <property name="cursor">
                  <cursorShape>PointingHandCursor</cursorShape>
@@ -7260,119 +7543,7 @@
                 </property>
                </widget>
               </item>
-              <item row="29" column="0" colspan="2">
-               <widget class="QPushButton" name="previousBtnEditorChapter">
-                <property name="cursor">
-                 <cursorShape>PointingHandCursor</cursorShape>
-                </property>
-                <property name="toolTip">
-                 <string>Einen Datensatz zurück</string>
-                </property>
-                <property name="text">
-                 <string>Zurück</string>
-                </property>
-                <property name="icon">
-                 <iconset theme="go-previous"/>
-                </property>
-                <property name="iconSize">
-                 <size>
-                  <width>32</width>
-                  <height>32</height>
-                 </size>
-                </property>
-                <property name="default">
-                 <bool>true</bool>
-                </property>
-                <property name="flat">
-                 <bool>false</bool>
-                </property>
-               </widget>
-              </item>
-              <item row="30" column="0" colspan="2">
-               <widget class="QPushButton" name="deleteBtnEditorChapter">
-                <property name="cursor">
-                 <cursorShape>PointingHandCursor</cursorShape>
-                </property>
-                <property name="toolTip">
-                 <string>Den aktuellen Datensatz löschen</string>
-                </property>
-                <property name="text">
-                 <string>Löschen</string>
-                </property>
-                <property name="icon">
-                 <iconset theme="user-trash"/>
-                </property>
-                <property name="iconSize">
-                 <size>
-                  <width>32</width>
-                  <height>32</height>
-                 </size>
-                </property>
-                <property name="default">
-                 <bool>true</bool>
-                </property>
-                <property name="flat">
-                 <bool>false</bool>
-                </property>
-               </widget>
-              </item>
-              <item row="31" column="0" colspan="2">
-               <widget class="QPushButton" name="saveBtnEditorChapter">
-                <property name="cursor">
-                 <cursorShape>PointingHandCursor</cursorShape>
-                </property>
-                <property name="toolTip">
-                 <string>Den aktuellen Datensatz speichern</string>
-                </property>
-                <property name="text">
-                 <string>Speichern</string>
-                </property>
-                <property name="icon">
-                 <iconset theme="document-save"/>
-                </property>
-                <property name="iconSize">
-                 <size>
-                  <width>32</width>
-                  <height>32</height>
-                 </size>
-                </property>
-                <property name="default">
-                 <bool>true</bool>
-                </property>
-                <property name="flat">
-                 <bool>false</bool>
-                </property>
-               </widget>
-              </item>
-              <item row="32" column="0" colspan="2">
-               <widget class="QPushButton" name="exitBtnEditor">
-                <property name="cursor">
-                 <cursorShape>PointingHandCursor</cursorShape>
-                </property>
-                <property name="toolTip">
-                 <string>Das Startfenster aufrufen</string>
-                </property>
-                <property name="text">
-                 <string>Startfenster</string>
-                </property>
-                <property name="icon">
-                 <iconset theme="go-home"/>
-                </property>
-                <property name="iconSize">
-                 <size>
-                  <width>32</width>
-                  <height>32</height>
-                 </size>
-                </property>
-                <property name="default">
-                 <bool>true</bool>
-                </property>
-                <property name="flat">
-                 <bool>false</bool>
-                </property>
-               </widget>
-              </item>
-              <item row="27" column="0" colspan="2">
+              <item row="26" column="0" colspan="2">
                <widget class="QPushButton" name="nextBtnEditorChapter">
                 <property name="cursor">
                  <cursorShape>PointingHandCursor</cursorShape>
@@ -7400,27 +7571,115 @@
                 </property>
                </widget>
               </item>
-              <item row="3" column="0" colspan="2">
-               <widget class="QListWidget" name="listWidgetEditorChapters"/>
-              </item>
-              <item row="2" column="0" colspan="2">
-               <widget class="QLabel" name="labelEditorActualProject">
-                <property name="font">
-                 <font>
-                  <family>Lato</family>
-                  <pointsize>14</pointsize>
-                  <italic>true</italic>
-                  <bold>true</bold>
-                  <underline>true</underline>
-                  <stylestrategy>PreferAntialias</stylestrategy>
-                  <kerning>true</kerning>
-                 </font>
+              <item row="28" column="0" colspan="2">
+               <widget class="QPushButton" name="previousBtnEditorChapter">
+                <property name="cursor">
+                 <cursorShape>PointingHandCursor</cursorShape>
+                </property>
+                <property name="toolTip">
+                 <string>Einen Datensatz zurück</string>
                 </property>
                 <property name="text">
-                 <string>aktuelles Projekt</string>
+                 <string>Zurück</string>
                 </property>
-                <property name="alignment">
-                 <set>Qt::AlignmentFlag::AlignCenter</set>
+                <property name="icon">
+                 <iconset theme="go-previous"/>
+                </property>
+                <property name="iconSize">
+                 <size>
+                  <width>32</width>
+                  <height>32</height>
+                 </size>
+                </property>
+                <property name="default">
+                 <bool>true</bool>
+                </property>
+                <property name="flat">
+                 <bool>false</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="29" column="0" colspan="2">
+               <widget class="QPushButton" name="deleteBtnEditorChapter">
+                <property name="cursor">
+                 <cursorShape>PointingHandCursor</cursorShape>
+                </property>
+                <property name="toolTip">
+                 <string>Den aktuellen Datensatz löschen</string>
+                </property>
+                <property name="text">
+                 <string>Löschen</string>
+                </property>
+                <property name="icon">
+                 <iconset theme="user-trash"/>
+                </property>
+                <property name="iconSize">
+                 <size>
+                  <width>32</width>
+                  <height>32</height>
+                 </size>
+                </property>
+                <property name="default">
+                 <bool>true</bool>
+                </property>
+                <property name="flat">
+                 <bool>false</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="30" column="0" colspan="2">
+               <widget class="QPushButton" name="saveBtnEditorChapter">
+                <property name="cursor">
+                 <cursorShape>PointingHandCursor</cursorShape>
+                </property>
+                <property name="toolTip">
+                 <string>Den aktuellen Datensatz speichern</string>
+                </property>
+                <property name="text">
+                 <string>Speichern</string>
+                </property>
+                <property name="icon">
+                 <iconset theme="document-save"/>
+                </property>
+                <property name="iconSize">
+                 <size>
+                  <width>32</width>
+                  <height>32</height>
+                 </size>
+                </property>
+                <property name="default">
+                 <bool>true</bool>
+                </property>
+                <property name="flat">
+                 <bool>false</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="31" column="0" colspan="2">
+               <widget class="QPushButton" name="exitBtnEditor">
+                <property name="cursor">
+                 <cursorShape>PointingHandCursor</cursorShape>
+                </property>
+                <property name="toolTip">
+                 <string>Das Startfenster aufrufen</string>
+                </property>
+                <property name="text">
+                 <string>Startfenster</string>
+                </property>
+                <property name="icon">
+                 <iconset theme="go-home"/>
+                </property>
+                <property name="iconSize">
+                 <size>
+                  <width>32</width>
+                  <height>32</height>
+                 </size>
+                </property>
+                <property name="default">
+                 <bool>true</bool>
+                </property>
+                <property name="flat">
+                 <bool>false</bool>
                 </property>
                </widget>
               </item>
@@ -7436,267 +7695,7 @@
     </item>
    </layout>
   </widget>
-  <widget class="QMenuBar" name="menubar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>1896</width>
-     <height>20</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QStatusBar" name="statusbar"/>
  </widget>
- <tabstops>
-  <tabstop>newBtnEditorScene</tabstop>
-  <tabstop>nextBtnEditorScene</tabstop>
-  <tabstop>previousBtnEditorScene</tabstop>
-  <tabstop>deleteBtnEditorScene</tabstop>
-  <tabstop>saveBtnEditorScene</tabstop>
-  <tabstop>lineEditorSceneTitle</tabstop>
-  <tabstop>lineEditorScenePremise</tabstop>
-  <tabstop>comboBoxEditorSceneStatus</tabstop>
-  <tabstop>dateEditorSceneBegin</tabstop>
-  <tabstop>dateEditorSceneEdited</tabstop>
-  <tabstop>spinBoxEditorSceneOrder</tabstop>
-  <tabstop>lineEditorSceneGoal</tabstop>
-  <tabstop>lineEditorSceneResult</tabstop>
-  <tabstop>lineEditorceneMood</tabstop>
-  <tabstop>lineEditorSceneDuration</tabstop>
-  <tabstop>lineEditorSceneType</tabstop>
-  <tabstop>textEditorSceneTags</tabstop>
-  <tabstop>textEditorSceneNotes</tabstop>
-  <tabstop>newBtnEditorCharacter</tabstop>
-  <tabstop>nextBtnEditorCharacter</tabstop>
-  <tabstop>previousBtnEditorCharacter</tabstop>
-  <tabstop>deleteBtnEditorCharacter</tabstop>
-  <tabstop>saveBtnEditorCharacter</tabstop>
-  <tabstop>listView_T</tabstop>
-  <tabstop>listView_U</tabstop>
-  <tabstop>listView_V</tabstop>
-  <tabstop>listView_W</tabstop>
-  <tabstop>listView_X</tabstop>
-  <tabstop>listView_Y</tabstop>
-  <tabstop>listView_Z</tabstop>
-  <tabstop>plainTextEditorStructure</tabstop>
-  <tabstop>listView_E</tabstop>
-  <tabstop>listView_D</tabstop>
-  <tabstop>listView_F</tabstop>
-  <tabstop>listView_G</tabstop>
-  <tabstop>listView_H</tabstop>
-  <tabstop>listView_I</tabstop>
-  <tabstop>listView_J</tabstop>
-  <tabstop>listView_K</tabstop>
-  <tabstop>listView_L</tabstop>
-  <tabstop>listView_N</tabstop>
-  <tabstop>listView_O</tabstop>
-  <tabstop>newBtnEditorObject</tabstop>
-  <tabstop>nextBtnEditorObject</tabstop>
-  <tabstop>previousBtnEditorObject</tabstop>
-  <tabstop>deleteBtnEditorObject</tabstop>
-  <tabstop>saveBtnEditorObject</tabstop>
-  <tabstop>lineEditEditorTitleObject</tabstop>
-  <tabstop>dateEditorObjectCreated</tabstop>
-  <tabstop>setDateEditorTodayObject_1</tabstop>
-  <tabstop>dateEditorEditedObject</tabstop>
-  <tabstop>setDateEditorTodayObject_2</tabstop>
-  <tabstop>comboBoxEditorObjectStatus</tabstop>
-  <tabstop>textEditorDescriptionObject</tabstop>
-  <tabstop>newBtnEditorLocation</tabstop>
-  <tabstop>nextBtnEditorLocation</tabstop>
-  <tabstop>previousBtnEditorLocation</tabstop>
-  <tabstop>deleteBtnEditorLocation</tabstop>
-  <tabstop>saveBtnEditorLocation</tabstop>
-  <tabstop>LineEditEditorTitleLocation</tabstop>
-  <tabstop>dateEditorLocationCreated</tabstop>
-  <tabstop>setDateEditorTodayLocation_1</tabstop>
-  <tabstop>dateEditorLocationEdited</tabstop>
-  <tabstop>setDateEditorTodayLocation_2</tabstop>
-  <tabstop>comboBoxEditorLocationStatus</tabstop>
-  <tabstop>textEditorDescriptionLocation</tabstop>
-  <tabstop>newBtnEditorStoryline</tabstop>
-  <tabstop>nextBtnEditorStoryline</tabstop>
-  <tabstop>previousBtnEditorStoryline</tabstop>
-  <tabstop>deleteBtnEditorStoryline</tabstop>
-  <tabstop>saveBtnEditorStoryline</tabstop>
-  <tabstop>lineEditEditorTitleStoryline</tabstop>
-  <tabstop>dateEditorStorylineCreated</tabstop>
-  <tabstop>setDateEditorTodayStoryline_1</tabstop>
-  <tabstop>dateEditorEditedStoryline</tabstop>
-  <tabstop>setDateEditorTodayStoryline_2</tabstop>
-  <tabstop>comboBoxEditorStorylineStatus</tabstop>
-  <tabstop>textEditorDescriptionStoryline</tabstop>
-  <tabstop>newBtnEditorReference</tabstop>
-  <tabstop>nextBtnEditorReference</tabstop>
-  <tabstop>previousBtnEditorReference</tabstop>
-  <tabstop>deleteBtnEditorReference</tabstop>
-  <tabstop>saveBtnEditorReference</tabstop>
-  <tabstop>lineEditEditorTitleReference</tabstop>
-  <tabstop>dateEditorReferenceCreated</tabstop>
-  <tabstop>setDateEditorTodayReference_1</tabstop>
-  <tabstop>dateEditorEditedReference</tabstop>
-  <tabstop>setDateEditorTodayReference_2</tabstop>
-  <tabstop>comboBoxEditorReferenceStatus</tabstop>
-  <tabstop>textEditorDescriptionReference</tabstop>
-  <tabstop>listView_B</tabstop>
-  <tabstop>listView_R</tabstop>
-  <tabstop>listView_S</tabstop>
-  <tabstop>newBtnEditorSource</tabstop>
-  <tabstop>nextBtnEditorSource</tabstop>
-  <tabstop>previousBtnEditorSource</tabstop>
-  <tabstop>deleteBtnEditorSource</tabstop>
-  <tabstop>saveBtnEditorSource</tabstop>
-  <tabstop>lineEditEditorTitleSource</tabstop>
-  <tabstop>dateEditorSourceCreated</tabstop>
-  <tabstop>setDateEditorTodaySource_1</tabstop>
-  <tabstop>dateEditorEditedSource</tabstop>
-  <tabstop>setDateEditorTodaySource_2</tabstop>
-  <tabstop>comboBoxEditorSourceStatus</tabstop>
-  <tabstop>textEditorDescriptionSource</tabstop>
-  <tabstop>newBtnEditorIdea</tabstop>
-  <tabstop>nextBtnEditorIdea</tabstop>
-  <tabstop>previousBtnEditorIdea</tabstop>
-  <tabstop>deleteBtnEditorIdea</tabstop>
-  <tabstop>saveBtnEditorIdea</tabstop>
-  <tabstop>lineEditEditorTtitleIdea</tabstop>
-  <tabstop>dateEditEditorIdeaCreated</tabstop>
-  <tabstop>setDateEditorTodayIdea_1</tabstop>
-  <tabstop>dateEditEditorIdea</tabstop>
-  <tabstop>setDateEditorTodayIdea_2</tabstop>
-  <tabstop>comboBoxEditorIdeaStatus</tabstop>
-  <tabstop>textEditorDescriptionIdea</tabstop>
-  <tabstop>listView_A</tabstop>
-  <tabstop>listView_C</tabstop>
-  <tabstop>tabViewEditor</tabstop>
-  <tabstop>btnEditorBold</tabstop>
-  <tabstop>btnEditorItalic</tabstop>
-  <tabstop>btnEditorUnderline</tabstop>
-  <tabstop>btnEditorCenter</tabstop>
-  <tabstop>btnEditorRight</tabstop>
-  <tabstop>bntEditorIndentet</tabstop>
-  <tabstop>btnEditorImage</tabstop>
-  <tabstop>btnEditorGlossar</tabstop>
-  <tabstop>btnEditorObject</tabstop>
-  <tabstop>btnEditorSuperscript</tabstop>
-  <tabstop>btnEditorSubscript</tabstop>
-  <tabstop>btnEditorBulletList</tabstop>
-  <tabstop>btnEditorNumberList</tabstop>
-  <tabstop>fontComboBoxEditor</tabstop>
-  <tabstop>spinBoxFontSizeEditor</tabstop>
-  <tabstop>bntEditorUndo</tabstop>
-  <tabstop>bntEditorRedo</tabstop>
-  <tabstop>btnEditorCut</tabstop>
-  <tabstop>btnEditorCopy</tabstop>
-  <tabstop>btnEditorPaste</tabstop>
-  <tabstop>textEditorScenePlainText</tabstop>
-  <tabstop>listWidgetEditorChapters</tabstop>
-  <tabstop>lineEditorChapterTitleText</tabstop>
-  <tabstop>lineEditorChapterPremise</tabstop>
-  <tabstop>comboBoxEditorChapterStatus</tabstop>
-  <tabstop>dateEditorChapterBegin</tabstop>
-  <tabstop>dateEditorChapterEdited</tabstop>
-  <tabstop>textEditEditorChapterExcerpt</tabstop>
-  <tabstop>textEditEditorChapterNotes</tabstop>
-  <tabstop>newBtnEditorChapter</tabstop>
-  <tabstop>nextBtnEditorChapter</tabstop>
-  <tabstop>previousBtnEditorChapter</tabstop>
-  <tabstop>deleteBtnEditorChapter</tabstop>
-  <tabstop>saveBtnEditorChapter</tabstop>
-  <tabstop>exitBtnEditor</tabstop>
-  <tabstop>lineEditEditorNickName</tabstop>
-  <tabstop>lineEditEditorBorn</tabstop>
-  <tabstop>lineEditEditorDied</tabstop>
-  <tabstop>comboBoxEditorGender</tabstop>
-  <tabstop>comboBoxEditorSexOrientation</tabstop>
-  <tabstop>comboBoxEditorRole</tabstop>
-  <tabstop>comboBoxEditorGroup</tabstop>
-  <tabstop>plainTextEditorDevelopment</tabstop>
-  <tabstop>plainTextEditorNotes</tabstop>
-  <tabstop>lineEditEditorMother</tabstop>
-  <tabstop>lineEditEditorFather</tabstop>
-  <tabstop>lineEditEditorReferencePerson</tabstop>
-  <tabstop>textEditEditorSiblings</tabstop>
-  <tabstop>lineEditEditorPlaceOfBirth</tabstop>
-  <tabstop>lineEditEditorCountry</tabstop>
-  <tabstop>lineEditEditorEthnicity</tabstop>
-  <tabstop>textEditEditorNotes</tabstop>
-  <tabstop>textEditEditorSchool</tabstop>
-  <tabstop>textEditEditorUniversity</tabstop>
-  <tabstop>textEditEditorVocationalTraining</tabstop>
-  <tabstop>textEditEditorProfession</tabstop>
-  <tabstop>textEditEditorArtMusic</tabstop>
-  <tabstop>textEditEditorSport</tabstop>
-  <tabstop>textEditEditorTechnic</tabstop>
-  <tabstop>textEditEditorAutodidact</tabstop>
-  <tabstop>textEditEditorEducationNotes</tabstop>
-  <tabstop>spinBoxEditorSize</tabstop>
-  <tabstop>comboBoxEditorBodyType</tabstop>
-  <tabstop>comboBoxEditorStature</tabstop>
-  <tabstop>comboBoxFEditorFaceShape</tabstop>
-  <tabstop>comboBoxEditorEyeShape</tabstop>
-  <tabstop>lineEditEditorEyeColor</tabstop>
-  <tabstop>lineEditEditorHair</tabstop>
-  <tabstop>lineEditEditorHairColor</tabstop>
-  <tabstop>lineEditEditorSkin</tabstop>
-  <tabstop>lineEditEditorSkinColor</tabstop>
-  <tabstop>lineEditEditorCharisma</tabstop>
-  <tabstop>lineEditEditorSpecialFeatures</tabstop>
-  <tabstop>textEditEditorLookNotes</tabstop>
-  <tabstop>lineEditEditorHead</tabstop>
-  <tabstop>lineEditEditorNeck</tabstop>
-  <tabstop>lineEditorShoulders</tabstop>
-  <tabstop>lineEditEditorUpperArm</tabstop>
-  <tabstop>lineEditEditorEllbow</tabstop>
-  <tabstop>lineEditEditorLowerArms</tabstop>
-  <tabstop>lineEditEditorWrists</tabstop>
-  <tabstop>lineEditEditorHand</tabstop>
-  <tabstop>lineEditEditorFinger</tabstop>
-  <tabstop>lineEditEditorBreast</tabstop>
-  <tabstop>lineEditEditorBack</tabstop>
-  <tabstop>lineEditEditorHips</tabstop>
-  <tabstop>lineEditEditorButtocks</tabstop>
-  <tabstop>lineEditEditorUpperLeg</tabstop>
-  <tabstop>lineEditEditorKnee</tabstop>
-  <tabstop>lineEditEditorLowerLeg</tabstop>
-  <tabstop>lineEditEditorAnkles</tabstop>
-  <tabstop>lineEditEditorFeet</tabstop>
-  <tabstop>lineEditEditorToes</tabstop>
-  <tabstop>textEditEditorLookDetailsNotes</tabstop>
-  <tabstop>lineEditEditorPosCharacteristics</tabstop>
-  <tabstop>lineEditEditorNegCharacteristics</tabstop>
-  <tabstop>lineEditEditorFears</tabstop>
-  <tabstop>lineEditEditorWeakness</tabstop>
-  <tabstop>lineEditEditorStrength</tabstop>
-  <tabstop>lineEditEditorTalents</tabstop>
-  <tabstop>lineEditEditorBelief</tabstop>
-  <tabstop>lineEditEditorLifeGoal</tabstop>
-  <tabstop>lineEditEditorMotivation</tabstop>
-  <tabstop>lineEditEditorBehavior</tabstop>
-  <tabstop>textEditEditorPersonalityNotes</tabstop>
-  <tabstop>lineEditEditorDiagnosis</tabstop>
-  <tabstop>lineEditEditorSymptoms</tabstop>
-  <tabstop>lineEditEditorTherapy</tabstop>
-  <tabstop>lineEditEditorMedication</tabstop>
-  <tabstop>lineEditEditorTemperament</tabstop>
-  <tabstop>lineEditEditorEthicalValues</tabstop>
-  <tabstop>lineEditEditorBeliefs</tabstop>
-  <tabstop>lineEditEditorMoralValues</tabstop>
-  <tabstop>lineEditEditorStrengthsOfCharacter</tabstop>
-  <tabstop>lineEditEditorWeaknessOfCharacter</tabstop>
-  <tabstop>lineEditEditorSelfImage</tabstop>
-  <tabstop>lineEditEditorHumor</tabstop>
-  <tabstop>lineEditEditorAggressivness</tabstop>
-  <tabstop>lineEditEditorTrauma</tabstop>
-  <tabstop>lineEditEditorImpression</tabstop>
-  <tabstop>lineEditEditorSocialization</tabstop>
-  <tabstop>lineEditEditorNorms</tabstop>
-  <tabstop>lineEditEditorTabus</tabstop>
-  <tabstop>textEditEditorPsychologyNotes</tabstop>
-  <tabstop>listView_Q</tabstop>
-  <tabstop>listView_P</tabstop>
-  <tabstop>listView_M</tabstop>
- </tabstops>
  <resources/>
  <connections/>
 </ui>

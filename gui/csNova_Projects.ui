@@ -7,14 +7,20 @@
     <x>0</x>
     <y>0</y>
     <width>1600</width>
-    <height>880</height>
+    <height>850</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
   </property>
   <property name="windowTitle">
    <string>csNova - Projekte</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QHBoxLayout" name="horizontalLayout">
+   <layout class="QVBoxLayout" name="verticalLayout_3">
     <item>
      <widget class="QSplitter" name="mainSplitter">
       <property name="sizePolicy">
@@ -451,7 +457,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                      <second>0</second>
                      <year>2025</year>
                      <month>9</month>
-                     <day>20</day>
+                     <day>18</day>
                     </datetime>
                    </property>
                    <property name="displayFormat">
@@ -493,7 +499,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                      <second>0</second>
                      <year>2025</year>
                      <month>9</month>
-                     <day>20</day>
+                     <day>18</day>
                     </datetime>
                    </property>
                    <property name="displayFormat">
