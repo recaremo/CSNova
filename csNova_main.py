@@ -10,12 +10,12 @@ from datetime import datetime
 
 # Drittanbieter
 from PySide6.QtWidgets import (
-    QApplication, QLabel, QWidget, QVBoxLayout, QSizePolicy, QSplitter, QListWidget,
+    QApplication, QLabel, QWidget, QVBoxLayout, QSplitter, QListWidget,
     QMainWindow, QComboBox, QLineEdit, QSpinBox, QTextEdit, QDateEdit, QCheckBox,
     QToolBar, QDockWidget, QDialog, QFontComboBox
 )
-from PySide6.QtGui import QFont, QIcon, QRegularExpressionValidator, QPixmap
-from PySide6.QtCore import QDate, QRegularExpression, QTimer, QEvent
+from PySide6.QtGui import QIcon, QRegularExpressionValidator
+from PySide6.QtCore import QDate, QRegularExpression
 from PySide6 import QtUiTools, QtGui, QtCore
 
 # Eigene Module
@@ -560,7 +560,6 @@ def set_button_labels(window, language="en"):
         "exitBtnPreferences": "return_btn",
 
         "exitBtnHelp": "return_btn",
-
 
         "setDateBtn": "set_date_btn"
     }
@@ -1308,25 +1307,12 @@ def renumber_scene_orders(chapter_data):
     # Neu nummerieren
     for idx, (chapter, k, v) in enumerate(all_scenes, 1):
         v["scene_order"] = idx
-# Nächste freie Szenen-ID in einem Kapitel ermitteln
-def get_next_project_scene_id(chapter_data):
-    max_id = 0
-    for chapter in chapter_data.values():
-        for k, v in chapter.items():
-            if k.startswith("scenes_id_"):
-                try:
-                    num = int(v.get("scene_id", "0"))
-                    max_id = max(max_id, num)
-                except Exception:
-                    pass
-    return str(max_id + 1)
 # Nächste freie Szenenbestellung in einem Kapitel ermitteln
 def get_next_scene_order(chapter):
     orders = [int(v.get("scene_order", "0")) for k, v in chapter.items() if k.startswith("scenes_id_")]
     return max(orders, default=0) + 1
 # Aktualisiere die Informationslabels im Editor
 def update_editor_info_labels(window, chapter=None, scene=None):
-
     # Kapitel
     label_chapter = winFindChild(window, QLabel, "labelEditorChapterText")
     if label_chapter:
@@ -1651,8 +1637,6 @@ def show_main_window():
                 window._closing = True
                 QApplication.quit()
         exit_btn.clicked.connect(on_exit_clicked)
-# ...existing code...
-
     # Projektfenster verbinden
     projects_btn = winFindChild(window,QWidget, "projectBtncsNovaMain")
     if projects_btn:
@@ -3315,10 +3299,10 @@ def main():
         # Fenster anzeigen
         if settings.get("first_start", True):
             log_info("Erster Start erkannt, lade Startfenster.")
-            start_window = show_start_window(settings)
+            show_start_window(settings)
         else:
             log_info("Lade Hauptfenster.")
-            main_window = show_main_window()
+            show_main_window()
 
         sys.exit(app.exec())
 
