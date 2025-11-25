@@ -207,7 +207,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
         <location filename="csNova_Characters.ui" line="917"/>
         <location filename="csNova_Characters.ui" line="954"/>
         <source>x</source>
-        <translation></translation>
+        <translation>x</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="986"/>
@@ -457,7 +457,6 @@ li.checked::marker { content: &quot;\2612&quot;; }
     <message>
         <location filename="csNova_Characters.ui" line="2343"/>
         <source>Handgelenke:</source>
-        <translatorcomment>Deutsch ist die Originalsprache</translatorcomment>
         <translation>Handgelenke:</translation>
     </message>
     <message>
@@ -583,7 +582,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
     <message>
         <location filename="csNova_Characters.ui" line="2831"/>
         <source>Agressivität:</source>
-        <translation>Agressivität:</translation>
+        <translation>Aggressivität:</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="2850"/>
@@ -842,7 +841,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
     <message>
         <location filename="csNova.ui" line="1623"/>
         <source>Erstellen, bearbeiten und verwalten von Storylines</source>
-        <translation>Erstellen, bearbeiten und verwalten von Storylines</translation>
+        <translation>Erstellen, bearbeiten und verwalten von Handlungssträngen</translation>
     </message>
     <message>
         <location filename="csNova.ui" line="1660"/>

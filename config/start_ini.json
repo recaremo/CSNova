@@ -25,12 +25,12 @@
   },
   "main_ui": {
     "win_maximized": false,
-    "win_width": 1600,
-    "win_height": 850,
+    "win_width": 1679,
+    "win_height": 963,
     "win_splitter": [
-      300,
-      1000,
-      300
+      688,
+      1253,
+      529
     ]
   },
   "editor_ui": {
@@ -55,12 +55,12 @@
   },
   "projects_ui": {
     "win_maximized": false,
-    "win_width": 1600,
+    "win_width": 1550,
     "win_height": 878,
     "win_splitter": [
-      300,
-      1000,
-      300
+      557,
+      1467,
+      446
     ]
   },
   "objects_ui": {
@@ -95,7 +95,7 @@
   },
   "characters_ui": {
     "win_maximized": false,
-    "win_width": 1600,
+    "win_width": 1638,
     "win_height": 962,
     "win_splitter": [
       300,

@@ -119,9 +119,9 @@
     "project_isbn": "",
     "project_issn": ""
   },
-  "project_ID_07": {
-    "project_ID": "7",
-    "project_title": "Projekt neu",
+  "project_ID_08": {
+    "project_ID": "8",
+    "project_title": "",
     "project_subtitle": "",
     "project_author": "",
     "project_premise": "",
@@ -131,10 +131,10 @@
     "project_genre": 0,
     "project_work_type": 0,
     "project_motif": 0,
-    "project_begin_date": "2025-10-17",
-    "project_deadline": "2025-10-17",
+    "project_begin_date": "2025-11-06",
+    "project_deadline": "2025-11-06",
     "project_status": 0,
-    "project_word_goal": 1000,
+    "project_word_goal": 0,
     "project_cover_image": "",
     "project_data_file": "",
     "project_notes": "",

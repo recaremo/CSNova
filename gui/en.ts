@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1">
+<TS version="2.1" language="en_GB">
 <context>
     <name>MainWindow</name>
     <message>
         <location filename="csNova_Characters.ui" line="20"/>
         <source>csNova - Charaktere</source>
-        <translation type="unfinished"></translation>
+        <translation>csNova - Characters</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="76"/>
@@ -21,82 +21,82 @@ li.checked::marker { content: &quot;\2612&quot;; }
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; text-decoration: underline;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:400;&quot;&gt;Charaktere sind essenziell.&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; text-decoration: underline;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt; &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt; p, li { white-space: pre-wrap; } hr { height: 1px; border-width: 0; } li.unchecked::marker { content: &quot;\2610&quot;; } li.checked::marker { content: &quot;\2612&quot;; } &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Lato&apos;; font-size:12pt; font-weight:700; font-style:normal;&quot;&gt; &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;Help and Tips&lt;/span&gt;&lt;/p&gt; &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; text-decoration: underline;&quot;&gt;&lt;br /&gt;&lt;/p&gt; &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:400;&quot;&gt;Characters are essential.&lt;/span&gt;&lt;/p&gt; &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; text-decoration: underline;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="106"/>
         <source>(c) 2025 - v 0.1.2703</source>
-        <translation type="unfinished"></translation>
+        <translation>(c) Copyright 2025 Frank Reiser - v 0.1.2703</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="162"/>
         <source>Hauptcharakter</source>
-        <translation type="unfinished"></translation>
+        <translation>Main character</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="204"/>
         <source>Name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Name:</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="211"/>
         <source>Vorname:</source>
-        <translation type="unfinished"></translation>
+        <translation>First name:</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="227"/>
         <source>Status:</source>
-        <translation type="unfinished"></translation>
+        <translation>Status:</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="244"/>
         <source>Planung</source>
-        <translation type="unfinished"></translation>
+        <translation>Planning</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="249"/>
         <source>Entwicklung</source>
-        <translation type="unfinished"></translation>
+        <translation>Development</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="254"/>
         <source>Bearbeitung</source>
-        <translation type="unfinished"></translation>
+        <translation>Editing</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="259"/>
         <source>Test</source>
-        <translation type="unfinished"></translation>
+        <translation>Test</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="264"/>
         <source>Fertig</source>
-        <translation type="unfinished"></translation>
+        <translation>Complete</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="318"/>
         <source>Charakter</source>
-        <translation type="unfinished"></translation>
+        <translation>Character</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="357"/>
         <source>Spitzname:</source>
-        <translation type="unfinished"></translation>
+        <translation>Nickname:</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="376"/>
         <source>Geburtsdatum:</source>
-        <translation type="unfinished"></translation>
+        <translation>Birth date:</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="399"/>
         <source>Sterbedatum:</source>
-        <translation type="unfinished"></translation>
+        <translation>Date of death:</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="418"/>
         <source>Alter:</source>
-        <translation type="unfinished"></translation>
+        <translation>Age:</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="443"/>
@@ -147,32 +147,32 @@ li.checked::marker { content: &quot;\2612&quot;; }
         <location filename="csNova.ui" line="1412"/>
         <location filename="csNova.ui" line="1434"/>
         <source>0</source>
-        <translation type="unfinished"></translation>
+        <translation>0</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="462"/>
         <source>Gender:</source>
-        <translation type="unfinished"></translation>
+        <translation>Gender:</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="481"/>
         <source>sex. Orientierung:</source>
-        <translation type="unfinished"></translation>
+        <translation>sex. orientation:</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="500"/>
         <source>Rolle:</source>
-        <translation type="unfinished"></translation>
+        <translation>Role:</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="519"/>
         <source>Gruppe:</source>
-        <translation type="unfinished"></translation>
+        <translation>Group:</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="538"/>
         <source>Entwicklung:</source>
-        <translation type="unfinished"></translation>
+        <translation>Development:</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="554"/>
@@ -183,7 +183,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
         <location filename="csNova_Characters.ui" line="2590"/>
         <location filename="csNova_Characters.ui" line="2945"/>
         <source>Anmerkungen/Notizen:</source>
-        <translation type="unfinished"></translation>
+        <translation>Remarks/Notes:</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="606"/>
@@ -197,407 +197,407 @@ li.checked::marker { content: &quot;\2612&quot;; }
         <location filename="csNova_Characters.ui" line="917"/>
         <location filename="csNova_Characters.ui" line="954"/>
         <source>x</source>
-        <translation type="unfinished"></translation>
+        <translation>x</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="986"/>
         <source>Herkunft</source>
-        <translation type="unfinished"></translation>
+        <translation>Origin</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="1001"/>
         <source>Mutter:</source>
-        <translation type="unfinished"></translation>
+        <translation>Mother:</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="1030"/>
         <source>Vater:</source>
-        <translation type="unfinished"></translation>
+        <translation>Father:</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="1059"/>
         <source>Bezugsperson:</source>
-        <translation type="unfinished"></translation>
+        <translation>Reference person:</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="1088"/>
         <source>Geschwister:</source>
-        <translation type="unfinished"></translation>
+        <translation>Siblings:</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="1117"/>
         <source>Geburtsort:</source>
-        <translation type="unfinished"></translation>
+        <translation>Place of birth:</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="1146"/>
         <source>Land:</source>
-        <translation type="unfinished"></translation>
+        <translation>Country:</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="1175"/>
         <source>Ethnie:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ethnicity:</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="1221"/>
         <source>Ausbildung</source>
-        <translation type="unfinished"></translation>
+        <translation>Education</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="1236"/>
         <source>Schule:</source>
-        <translation type="unfinished"></translation>
+        <translation>School:</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="1255"/>
         <source>Universität:</source>
-        <translation type="unfinished"></translation>
+        <translation>University:</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="1274"/>
         <source>Berufsausbildung:</source>
-        <translation type="unfinished"></translation>
+        <translation>Vocational training:</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="1290"/>
         <source>Beruf:</source>
-        <translation type="unfinished"></translation>
+        <translation>Profession:</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="1309"/>
         <source>Kunst/Musik:</source>
-        <translation type="unfinished"></translation>
+        <translation>Art/Music:</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="1328"/>
         <source>Sport/Bewegung:</source>
-        <translation type="unfinished"></translation>
+        <translation>Sports/Exercise:</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="1347"/>
         <source>Technik:</source>
-        <translation type="unfinished"></translation>
+        <translation>Technology:</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="1366"/>
         <source>Autodidaktisch:</source>
-        <translation type="unfinished"></translation>
+        <translation>Autodidact:</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="1405"/>
         <source>Persönlichkeit</source>
-        <translation type="unfinished"></translation>
+        <translation>Personality</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="1426"/>
         <source>positive Eigenschaft:</source>
-        <translation type="unfinished"></translation>
+        <translation>positive characteristic:</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="1448"/>
         <source>negative Eigenschaft:</source>
-        <translation type="unfinished"></translation>
+        <translation>negative characteristic:</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="1480"/>
         <source>Ängste:</source>
-        <translation type="unfinished"></translation>
+        <translation>Fears:</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="1512"/>
         <source>Schwächen:</source>
-        <translation type="unfinished"></translation>
+        <translation>Weaknesses:</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="1544"/>
         <source>Stärken:</source>
-        <translation type="unfinished"></translation>
+        <translation>Strengths:</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="1576"/>
         <source>Talente:</source>
-        <translation type="unfinished"></translation>
+        <translation>Talents:</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="1608"/>
         <source>Glaubensgrundsatz:</source>
-        <translation type="unfinished"></translation>
+        <translation>Belief principle:</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="1640"/>
         <source>Lebensziel:</source>
-        <translation type="unfinished"></translation>
+        <translation>Life goal:</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="1672"/>
         <source>Motivation:</source>
-        <translation type="unfinished"></translation>
+        <translation>Motivation:</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="1704"/>
         <source>Verhalten:</source>
-        <translation type="unfinished"></translation>
+        <translation>Behavior:</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="1763"/>
         <source>Aussehen</source>
-        <translation type="unfinished"></translation>
+        <translation>Appearance</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="1784"/>
         <source>Größe:</source>
-        <translation type="unfinished"></translation>
+        <translation>Size:</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="1797"/>
         <source> cm</source>
-        <translation type="unfinished"></translation>
+        <translation> cm</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="1845"/>
         <source>Körpertyp:</source>
-        <translation type="unfinished"></translation>
+        <translation>Body type:</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="1867"/>
         <source>Statur:</source>
-        <translation type="unfinished"></translation>
+        <translation>Stature:</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="1889"/>
         <source>Gesichtsform:</source>
-        <translation type="unfinished"></translation>
+        <translation>Face shape:</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="1921"/>
         <source>Augenform:</source>
-        <translation type="unfinished"></translation>
+        <translation>Eye shape:</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="1975"/>
         <source>Augenfarbe:</source>
-        <translation type="unfinished"></translation>
+        <translation>Eye color:</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="1997"/>
         <source>Haare:</source>
-        <translation type="unfinished"></translation>
+        <translation>Hair:</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="2039"/>
         <source>Haarfarbe:</source>
-        <translation type="unfinished"></translation>
+        <translation>Hair color:</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="2061"/>
         <source>Haut:</source>
-        <translation type="unfinished"></translation>
+        <translation>Skin:</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="2083"/>
         <source>Hautfarbe:</source>
-        <translation type="unfinished"></translation>
+        <translation>Skin color:</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="2105"/>
         <source>Ausstrahlung:</source>
-        <translation type="unfinished"></translation>
+        <translation>Charisma:</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="2127"/>
         <source>Besonderheiten:</source>
-        <translation type="unfinished"></translation>
+        <translation>Special features:</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="2214"/>
         <source>Aussehen Details</source>
-        <translation type="unfinished"></translation>
+        <translation>Appearance Details</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="2229"/>
         <source>Kopf:</source>
-        <translation type="unfinished"></translation>
+        <translation>Head:</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="2248"/>
         <source>Hals/Nacken:</source>
-        <translation type="unfinished"></translation>
+        <translation>Neck:</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="2267"/>
         <source>Schultern:</source>
-        <translation type="unfinished"></translation>
+        <translation>Shoulder:</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="2286"/>
         <source>Oberarme:</source>
-        <translation type="unfinished"></translation>
+        <translation>Upper arms:</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="2305"/>
         <source>Ellenbogen:</source>
-        <translation type="unfinished"></translation>
+        <translation>Elbow:</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="2324"/>
         <source>Unterarme:</source>
-        <translation type="unfinished"></translation>
+        <translation>Forearms:</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="2343"/>
         <source>Handgelenke:</source>
-        <translation type="unfinished"></translation>
+        <translation>Wrists:</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="2362"/>
         <source>Hand:</source>
-        <translation type="unfinished"></translation>
+        <translation>Hand:</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="2381"/>
         <source>Finger:</source>
-        <translation type="unfinished"></translation>
+        <translation>Finger:</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="2400"/>
         <source>Brust:</source>
-        <translation type="unfinished"></translation>
+        <translation>Breast:</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="2419"/>
         <source>Rücken:</source>
-        <translation type="unfinished"></translation>
+        <translation>Back:</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="2438"/>
         <source>Hüfte/Taille:</source>
-        <translation type="unfinished"></translation>
+        <translation>Hips/Waist:</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="2457"/>
         <source>Gesäß:</source>
-        <translation type="unfinished"></translation>
+        <translation>Buttocks:</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="2476"/>
         <source>Oberschenkel:</source>
-        <translation type="unfinished"></translation>
+        <translation>Thigh:</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="2495"/>
         <source>Knie:</source>
-        <translation type="unfinished"></translation>
+        <translation>Knee:</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="2514"/>
         <source>Unterschenkel:</source>
-        <translation type="unfinished"></translation>
+        <translation>Lower leg:</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="2533"/>
         <source>Fußgelenke:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ankles:</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="2552"/>
         <source>Füße:</source>
-        <translation type="unfinished"></translation>
+        <translation>Feet:</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="2571"/>
         <source>Zehen:</source>
-        <translation type="unfinished"></translation>
+        <translation>Toes:</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="2607"/>
         <source>Psychologisches Profil</source>
-        <translation type="unfinished"></translation>
+        <translation>Psychological profile</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="2622"/>
         <source>Diagnose:</source>
-        <translation type="unfinished"></translation>
+        <translation>Diagnosis:</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="2641"/>
         <source>Symptome:</source>
-        <translation type="unfinished"></translation>
+        <translation>Symptoms:</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="2660"/>
         <source>Therapie:</source>
-        <translation type="unfinished"></translation>
+        <translation>Therapy:</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="2679"/>
         <source>Medikamente:</source>
-        <translation type="unfinished"></translation>
+        <translation>Medications:</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="2698"/>
         <source>Temperament:</source>
-        <translation type="unfinished"></translation>
+        <translation>Temperament:</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="2717"/>
         <source>ethische Werte:</source>
-        <translation type="unfinished"></translation>
+        <translation>ethical values:</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="2736"/>
         <source>Moralvorstellung:</source>
-        <translation type="unfinished"></translation>
+        <translation>Moral values:</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="2755"/>
         <source>Charakterstärke:</source>
-        <translation type="unfinished"></translation>
+        <translation>Strength of character:</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="2774"/>
         <source>Charakterschwäche:</source>
-        <translation type="unfinished"></translation>
+        <translation>Weakness of character:</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="2793"/>
         <source>Sebstbild:</source>
-        <translation type="unfinished"></translation>
+        <translation>Self-image:</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="2812"/>
         <source>Humor:</source>
-        <translation type="unfinished"></translation>
+        <translation>Humor:</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="2831"/>
         <source>Agressivität:</source>
-        <translation type="unfinished"></translation>
+        <translation>Aggressiveness:</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="2850"/>
         <source>Trauma:</source>
-        <translation type="unfinished"></translation>
+        <translation>Trauma:</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="2869"/>
         <source>Prägung:</source>
-        <translation type="unfinished"></translation>
+        <translation>Imprinting:</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="2888"/>
         <source>Sozialisation:</source>
-        <translation type="unfinished"></translation>
+        <translation>Socialization:</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="2907"/>
         <source>Normen:</source>
-        <translation type="unfinished"></translation>
+        <translation>Norms:</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="2926"/>
         <source>Tabus:</source>
-        <translation type="unfinished"></translation>
+        <translation>Tabus:</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="2990"/>
@@ -605,82 +605,82 @@ li.checked::marker { content: &quot;\2612&quot;; }
         <location filename="csNova.ui" line="527"/>
         <location filename="csNova.ui" line="1512"/>
         <source>Charaktere</source>
-        <translation type="unfinished"></translation>
+        <translation>Character</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="3015"/>
         <source>Einen neuen Datensatz erstellen</source>
-        <translation type="unfinished"></translation>
+        <translation>Create a new record</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="3018"/>
         <source>Neu</source>
-        <translation type="unfinished"></translation>
+        <translation>New</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="3049"/>
         <source>Einen Datensatz vor</source>
-        <translation type="unfinished"></translation>
+        <translation>A record before</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="3052"/>
         <source>Vor</source>
-        <translation type="unfinished"></translation>
+        <translation>Before</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="3083"/>
         <source>Einen Datensatz zurück</source>
-        <translation type="unfinished"></translation>
+        <translation>One record back</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="3086"/>
         <source>Zurück</source>
-        <translation type="unfinished"></translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="3117"/>
         <source>Den aktuellen Datensatz löschen</source>
-        <translation type="unfinished"></translation>
+        <translation>Delete the current record</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="3120"/>
         <source>Löschen</source>
-        <translation type="unfinished"></translation>
+        <translation>Delete</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="3151"/>
         <source>Ein Bild laden</source>
-        <translation type="unfinished"></translation>
+        <translation>Upload an image</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="3154"/>
         <source>Bild Laden</source>
-        <translation type="unfinished"></translation>
+        <translation>Load image</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="3185"/>
         <source>Den aktuellen Datensatz speichern</source>
-        <translation type="unfinished"></translation>
+        <translation>Save the current record</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="3188"/>
         <source>Speichern</source>
-        <translation type="unfinished"></translation>
+        <translation>Save</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="3238"/>
         <source>Das Startfenster aufrufen</source>
-        <translation type="unfinished"></translation>
+        <translation>Open the start window</translation>
     </message>
     <message>
         <location filename="csNova_Characters.ui" line="3241"/>
         <source>Startfenster</source>
-        <translation type="unfinished"></translation>
+        <translation>Start window</translation>
     </message>
     <message>
         <location filename="csNova.ui" line="20"/>
         <source>Codices Scriptoria Nova (csNova)</source>
-        <translation type="unfinished"></translation>
+        <translation>Codices Scriptoria Nova (csNova)</translation>
     </message>
     <message>
         <location filename="csNova.ui" line="74"/>
@@ -694,175 +694,184 @@ li.checked::marker { content: &quot;\2612&quot;; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;Hilfen &amp;amp; Tipps - csNova&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; text-decoration: underline;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-weight:400;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+hr { height: 1px; border-width: 0; }
+li.unchecked::marker { content: &quot;\2610&quot;; }
+li.checked::marker { content: &quot;\2612&quot;; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Lato&apos;; font-size:12pt; font-weight:700; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;Help and tips - csNova&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; text-decoration: underline;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-weight:400;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="csNova.ui" line="96"/>
         <source>(c)2025 - csNova</source>
-        <translation type="unfinished"></translation>
+        <translation>(c) Copyright 2025 Frank Reiser - v 0.1.2703</translation>
     </message>
     <message>
         <location filename="csNova.ui" line="131"/>
         <source>CSNova</source>
-        <translation type="unfinished"></translation>
+        <translation>CSNova</translation>
     </message>
     <message>
         <location filename="csNova.ui" line="165"/>
         <source>Statistik csNova</source>
-        <translation type="unfinished"></translation>
+        <translation>Statistics csNova</translation>
     </message>
     <message>
         <location filename="csNova.ui" line="175"/>
         <location filename="csNova.ui" line="1475"/>
         <source>Projekte</source>
-        <translation type="unfinished"></translation>
+        <translation>Projects</translation>
     </message>
     <message>
         <location filename="csNova.ui" line="233"/>
         <location filename="csNova.ui" line="1349"/>
         <location filename="csNova.ui" line="1552"/>
         <source>Objekte</source>
-        <translation type="unfinished"></translation>
+        <translation>Objects</translation>
     </message>
     <message>
         <location filename="csNova.ui" line="262"/>
         <location filename="csNova.ui" line="824"/>
         <location filename="csNova.ui" line="1589"/>
         <source>Handlungsorte</source>
-        <translation type="unfinished"></translation>
+        <translation>Locations</translation>
     </message>
     <message>
         <location filename="csNova.ui" line="291"/>
         <location filename="csNova.ui" line="795"/>
         <location filename="csNova.ui" line="1626"/>
         <source>Handlungsstränge</source>
-        <translation type="unfinished"></translation>
+        <translation>Storylines</translation>
     </message>
     <message>
         <location filename="csNova.ui" line="675"/>
         <source>Statistik aktuelles Projekt:</source>
-        <translation type="unfinished"></translation>
+        <translation>Statistics current project:</translation>
     </message>
     <message>
         <location filename="csNova.ui" line="919"/>
         <source>Kapitel</source>
-        <translation type="unfinished"></translation>
+        <translation>Chapter</translation>
     </message>
     <message>
         <location filename="csNova.ui" line="985"/>
         <source>Projektbeginn:</source>
-        <translation type="unfinished"></translation>
+        <translation>Project start:</translation>
     </message>
     <message>
         <location filename="csNova.ui" line="1004"/>
         <location filename="csNova.ui" line="1033"/>
         <source>01.01.2025</source>
-        <translation type="unfinished"></translation>
+        <translation>01.01.2025</translation>
     </message>
     <message>
         <location filename="csNova.ui" line="1014"/>
         <source>Projektende:</source>
-        <translation type="unfinished"></translation>
+        <translation>Project end:</translation>
     </message>
     <message>
         <location filename="csNova.ui" line="1043"/>
         <source>Projektdauer/Tage:</source>
-        <translation type="unfinished"></translation>
+        <translation>Project duration/days:</translation>
     </message>
     <message>
         <location filename="csNova.ui" line="1072"/>
         <source>Projektdauer/Rest:</source>
-        <translation type="unfinished"></translation>
+        <translation>Project duration/remaining:</translation>
     </message>
     <message>
         <location filename="csNova.ui" line="1101"/>
         <source>Worte, geplant:</source>
-        <translation type="unfinished"></translation>
+        <translation>Words, planned:</translation>
     </message>
     <message>
         <location filename="csNova.ui" line="1130"/>
         <source>Worte, geschrieben:</source>
-        <translation type="unfinished"></translation>
+        <translation>Words written:</translation>
     </message>
     <message>
         <location filename="csNova.ui" line="1159"/>
         <source>Worte, verbleibend:</source>
-        <translation type="unfinished"></translation>
+        <translation>Words remaining:</translation>
     </message>
     <message>
         <location filename="csNova.ui" line="1288"/>
         <source>Projekt</source>
-        <translation type="unfinished"></translation>
+        <translation>Project</translation>
     </message>
     <message>
         <location filename="csNova.ui" line="1342"/>
         <source>Szenen</source>
-        <translation type="unfinished"></translation>
+        <translation>Scenes</translation>
     </message>
     <message>
         <location filename="csNova.ui" line="1469"/>
         <source>Erstellen, bearbeiten und verwalten von Projekten</source>
-        <translation type="unfinished"></translation>
+        <translation>Create, edit and manage projects</translation>
     </message>
     <message>
         <location filename="csNova.ui" line="1509"/>
         <source>Erstellen, bearbeiten und verwalten von Charakteren</source>
-        <translation type="unfinished"></translation>
+        <translation>Create, edit and manage characters</translation>
     </message>
     <message>
         <location filename="csNova.ui" line="1549"/>
         <source>Erstellen, bearbeiten und verwalten von Objekten</source>
-        <translation type="unfinished"></translation>
+        <translation>Create, edit and manage objects</translation>
     </message>
     <message>
         <location filename="csNova.ui" line="1586"/>
         <source>Erstellen, bearbeiten und verwalten von Orten</source>
-        <translation type="unfinished"></translation>
+        <translation>Create, edit and manage places</translation>
     </message>
     <message>
         <location filename="csNova.ui" line="1623"/>
         <source>Erstellen, bearbeiten und verwalten von Storylines</source>
-        <translation type="unfinished"></translation>
+        <translation>Create, edit and manage storylines</translation>
     </message>
     <message>
         <location filename="csNova.ui" line="1660"/>
         <source>Erstellen, bearbeiten und verwalten von Kapiteln und Szenen</source>
-        <translation type="unfinished"></translation>
+        <translation>Create, edit and manage chapters and scenes</translation>
     </message>
     <message>
         <location filename="csNova.ui" line="1663"/>
         <source>Editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Editor</translation>
     </message>
     <message>
         <location filename="csNova.ui" line="1697"/>
         <source>Einstellungen anpassen: Sprache, Design, Vorlagen uvm.</source>
-        <translation type="unfinished"></translation>
+        <translation>Adjust settings: language, design, templates and much more.</translation>
     </message>
     <message>
         <location filename="csNova.ui" line="1700"/>
         <source>Einstellungen</source>
-        <translation type="unfinished"></translation>
+        <translation>Settings</translation>
     </message>
     <message>
         <location filename="csNova.ui" line="1731"/>
         <source>Tutorials, Hilfen, Tipps, Kontakt und allgemeine Information zu csNova</source>
-        <translation type="unfinished"></translation>
+        <translation>Tutorials, help, tips, contact and general information about csNova</translation>
     </message>
     <message>
         <location filename="csNova.ui" line="1734"/>
         <source>Hilfen + Tipps</source>
-        <translation type="unfinished"></translation>
+        <translation>Help and tips</translation>
     </message>
     <message>
         <location filename="csNova.ui" line="1778"/>
         <source>Das Programm csNova beenden</source>
-        <translation type="unfinished"></translation>
+        <translation>Exit the csNova program</translation>
     </message>
     <message>
         <location filename="csNova.ui" line="1781"/>
         <source>csNova beenden</source>
-        <translation type="unfinished"></translation>
+        <translation>Exit csNova</translation>
     </message>
 </context>
 <context>
@@ -870,12 +879,12 @@ li.checked::marker { content: &quot;\2612&quot;; }
     <message>
         <location filename="csNova_Editor.ui" line="20"/>
         <source>csNova - Editor</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">csNova - Editor</translation>
     </message>
     <message>
         <location filename="csNova_Editor.ui" line="95"/>
         <source>Szenen</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Scenes</translation>
     </message>
     <message>
         <location filename="csNova_Editor.ui" line="125"/>
@@ -888,7 +897,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
         <location filename="csNova_Editor.ui" line="4690"/>
         <location filename="csNova_Editor.ui" line="7524"/>
         <source>Einen neuen Datensatz erstellen</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Create a new record</translation>
     </message>
     <message>
         <location filename="csNova_Editor.ui" line="159"/>
@@ -901,7 +910,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
         <location filename="csNova_Editor.ui" line="4718"/>
         <location filename="csNova_Editor.ui" line="7552"/>
         <source>Einen Datensatz vor</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">A record before</translation>
     </message>
     <message>
         <location filename="csNova_Editor.ui" line="193"/>
@@ -914,7 +923,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
         <location filename="csNova_Editor.ui" line="4746"/>
         <location filename="csNova_Editor.ui" line="7580"/>
         <source>Einen Datensatz zurück</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">One record back</translation>
     </message>
     <message>
         <location filename="csNova_Editor.ui" line="227"/>
@@ -927,7 +936,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
         <location filename="csNova_Editor.ui" line="4774"/>
         <location filename="csNova_Editor.ui" line="7608"/>
         <source>Den aktuellen Datensatz löschen</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Delete the current record</translation>
     </message>
     <message>
         <location filename="csNova_Editor.ui" line="261"/>
@@ -940,7 +949,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
         <location filename="csNova_Editor.ui" line="4802"/>
         <location filename="csNova_Editor.ui" line="7636"/>
         <source>Den aktuellen Datensatz speichern</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Save the current record</translation>
     </message>
     <message>
         <location filename="csNova_Editor.ui" line="298"/>
