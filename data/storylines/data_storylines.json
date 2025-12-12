@@ -1,19 +1,32 @@
 {
-  "storylines_ID_01": {
-    "storyline_ID": "1",
-    "storyline_title": "Handlungsstrang 1",
-    "storyline_status": 1,
-    "storyline_created": "2026-01-21",
-    "storyline_modified": "2026-01-01",
-    "storyline_notes": "4",
-    "storyline_titel": "Storyline 1"
-  },
-  "storyline_ID_02": {
-    "storyline_ID": "2",
-    "storyline_title": "Handlungsstrang2",
-    "storyline_status": 1,
-    "storyline_created": "2026-01-02",
-    "storyline_modified": "2026-01-22",
-    "storyline_notes": ""
-  }
+    "ID_03": {
+        "title": "Storyline 3",
+        "description": "Das ist Storyline 3",
+        "status": "Draft",
+        "created_date": "2025-12-11",
+        "edited_date": "2025-12-11",
+        "id": "ID_03",
+        "storyline_ID": "",
+        "storyline_title": "",
+        "storyline_status": 0,
+        "storyline_created": "",
+        "storyline_modified": "",
+        "storyline_notes": "",
+        "storyline_titel": ""
+    },
+    "ID_04": {
+        "title": "Das ist Storyline 1",
+        "description": "Storyline 1",
+        "status": "In Progress",
+        "created_date": "2025-12-08",
+        "edited_date": "2025-12-12",
+        "id": "ID_04",
+        "storyline_ID": "",
+        "storyline_title": "",
+        "storyline_status": 0,
+        "storyline_created": "",
+        "storyline_modified": "",
+        "storyline_notes": "",
+        "storyline_titel": ""
+    }
 }

@@ -1,12 +1,16 @@
 {
     "APA": {
-        "type": "",
-        "author_name": "",
-        "author_firstname": "",
-        "author_initial": "",   
+        "type": "book",
+        "authors": [
+            {
+                "firstname": "",
+                "name": "",
+                "initial": ""
+            }
+        ],
         "author_format": "Nachname, Initialen.",
-        "puplished": "",
-        "published_format": "(Jahr).",
+        "year": "",
+        "year_format": "(Jahr).",
         "title": "",
         "title_format": "Titel (kursiv)",
         "edition": "",
@@ -17,7 +21,7 @@
         "doi_format": "https://doi.org/xxxxx",
         "order": [
             "author",
-            "published",
+            "year",
             "title",
             "edition",
             "publisher",
@@ -26,13 +30,17 @@
         "example": "Miller, J. A. (2020). The Art of Writing (2nd ed). Fiction House. https://doi.org/xxxxx"
     },
     "Harvard": {
-        "type": "",
-        "author_name": "",
-        "author_firstname": "",
-        "author_initial": "",
+        "type": "book",
+        "authors": [
+            {
+                "firstname": "",
+                "name": "",
+                "initial": ""
+            }
+        ],
         "author_format": "Nachname, Initialen.",
-        "published": "",
-        "published_format": "Jahr.",
+        "year": "",
+        "year_format": "Jahr.",
         "title": "",
         "title_format": "Titel (kursiv)",
         "edition": "",
@@ -45,7 +53,7 @@
         "doi_format": "https://doi.org/xxxxx",
         "order": [
             "author",
-            "published",
+            "year",
             "title",
             "edition",
             "place",
@@ -55,10 +63,14 @@
         "example": "Miller, J.A. 2020. The Art of Writing. 2nd ed. London: Fiction House. https://doi.org/xxxxx"
     },
     "Oxford": {
-        "type": "",
-        "author_name": "",
-        "author_firstname": "",
-        "author_initial": "",
+        "type": "book",
+        "authors": [
+            {
+                "firstname": "",
+                "name": "",
+                "initial": ""
+            }
+        ],
         "author_format": "Vorname Nachname.",
         "title": "",
         "title_format": "Titel (kursiv)",
@@ -70,8 +82,8 @@
         "place_format": "Ort.",
         "year": "",
         "year_format": "Jahr.",
-        "page": "",
-        "page_format": "Seitenzahl(en).",
+        "pages": "",
+        "pages_format": "Seitenzahl(en).",
         "order": [
             "author",
             "title",
@@ -79,15 +91,19 @@
             "place",
             "publisher",
             "year",
-            "page"
+            "pages"
         ],
         "example": "John A. Miller, The Art of Writing, 2nd edn (London: Fiction House, 2020), p. 123."
     },
     "MLA": {
-        "type": "",
-        "author_name": "",
-        "author_firstname": "",
-        "author_initial": "",
+        "type": "book",
+        "authors": [
+            {
+                "firstname": "",
+                "name": "",
+                "initial": ""
+            }
+        ],
         "author_format": "Nachname, Vorname.",
         "title": "",
         "title_format": "Titel (kursiv)",
@@ -95,22 +111,26 @@
         "publisher_format": "Verlag.",
         "year": "",
         "year_format": "Jahr.",
-        "page": "",
-        "page_format": "Seitenzahl(en).",
+        "pages": "",
+        "pages_format": "Seitenzahl(en).",
         "order": [
             "author",
             "title",
             "publisher",
             "year",
-            "page"
+            "pages"
         ],
         "example": "Miller, John A. The Art of Writing. Fiction House, 2020, p. 123."
     },
     "Chicago": {
-        "type": "",
-        "author_name": "",
-        "author_firstname": "",
-        "author_initial": "",
+        "type": "book",
+        "authors": [
+            {
+                "firstname": "",
+                "name": "",
+                "initial": ""
+            }
+        ],
         "author_format": "Nachname, Vorname.",
         "title": "",
         "title_format": "Titel (kursiv)",
@@ -122,8 +142,8 @@
         "year_format": "Jahr.",
         "edition": "",
         "edition_format": "Auflage.",
-        "page": "",
-        "page_format": "Seitenzahl(en).",
+        "pages": "",
+        "pages_format": "Seitenzahl(en).",
         "order": [
             "author",
             "title",
@@ -131,14 +151,19 @@
             "place",
             "publisher",
             "year",
-            "page"
+            "pages"
         ],
         "example": "Miller, John A. The Art of Writing. 2nd ed. London: Fiction House, 2020, 123."
     },
     "Vancouver": {
-        "type": "",
-        "author_name": "",
-        "author_initial": "",
+        "type": "journal_article",
+        "authors": [
+            {
+                "firstname": "",
+                "name": "",
+                "initial": ""
+            }
+        ],
         "author_format": "Nachname Initialen.",
         "title": "",
         "title_format": "Titel.",
@@ -150,8 +175,8 @@
         "volume_format": "Band.",
         "issue": "",
         "issue_format": "Heft.",
-        "page": "",
-        "page_format": "Seitenzahl(en).",
+        "pages": "",
+        "pages_format": "Seitenzahl(en).",
         "doi": "",
         "doi_format": "https://doi.org/xxxxx",
         "order": [
@@ -161,15 +186,20 @@
             "year",
             "volume",
             "issue",
-            "page",
+            "pages",
             "doi"
         ],
         "example": "Miller JA. The Art of Writing. Fiction Journal. 2020;2(1):123-130. https://doi.org/xxxxx"
     },
     "IEEE": {
-        "type": "",
-        "author_name": "",
-        "author_initial": "",
+        "type": "journal_article",
+        "authors": [
+            {
+                "firstname": "",
+                "name": "",
+                "initial": ""
+            }
+        ],
         "author_format": "Initialen. Nachname.",
         "title": "",
         "title_format": "Titel.",
@@ -181,8 +211,8 @@
         "volume_format": "Band.",
         "issue": "",
         "issue_format": "Heft.",
-        "page": "",
-        "page_format": "Seitenzahl(en).",
+        "pages": "",
+        "pages_format": "Seitenzahl(en).",
         "doi": "",
         "doi_format": "https://doi.org/xxxxx",
         "order": [
@@ -191,7 +221,7 @@
             "journal",
             "volume",
             "issue",
-            "page",
+            "pages",
             "year",
             "doi"
         ],

@@ -1,6 +1,6 @@
 {
   "first_start": false,
-  "last_project": "project_ID_01",
+  "last_project": "ID_02",
   "language": "en",
   "theme": "Modern - Neutral",
   "help_ui": {
@@ -26,11 +26,11 @@
   "main_ui": {
     "win_maximized": false,
     "win_width": 1679,
-    "win_height": 963,
+    "win_height": 904,
     "win_splitter": [
-      688,
-      1253,
-      529
+      371,
+      996,
+      222
     ]
   },
   "editor_ui": {
@@ -58,9 +58,9 @@
     "win_width": 1550,
     "win_height": 878,
     "win_splitter": [
-      557,
-      1467,
-      446
+      261,
+      1014,
+      185
     ]
   },
   "objects_ui": {

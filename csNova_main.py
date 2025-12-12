@@ -12,7 +12,7 @@ from datetime import datetime
 from PySide6.QtWidgets import (
     QApplication, QLabel, QWidget, QVBoxLayout, QSplitter, QListWidget,
     QMainWindow, QComboBox, QLineEdit, QSpinBox, QTextEdit, QDateEdit, QCheckBox,
-    QToolBar, QDockWidget, QDialog, QFontComboBox
+    QToolBar, QDockWidget, QDialog, QFontComboBox, QFileDialog, QMessageBox
 )
 from PySide6.QtGui import QIcon, QRegularExpressionValidator
 from PySide6.QtCore import QDate, QRegularExpression
@@ -37,12 +37,25 @@ UI_FILES = {
     "preferences": GUI_DIR / "csNova_Preferences.ui",
     "help": GUI_DIR / "csNova_Help_Tips.ui"
 }
-# Globale Referenzen auf Fenster
+# Globale Referenzen auf Fenster und Manager
 class CSNovaApp:
     def __init__(self):
         self.main_window = None
         self.start_window = None
         self.help_window = None
+        # Alle Daten-Manager
+        self.references = None
+        self.citations = None
+        self.projects = None
+        self.characters = None
+        self.locations = None
+        self.objects = None
+        self.storylines = None
+        self.ideas = None
+        self.chapters = None
+        # Backwards compatibility
+        self.ref_manager = None
+        self.cite_manager = None
 app_state = CSNovaApp()
 
 # Fensterereignisse verbinden, um UI-Einstellungen zu speichern
@@ -1614,6 +1627,16 @@ def show_main_window():
             show_preferences_window(parent=window)
         preferences_btn.clicked.connect(open_preferences)
 
+    # Referenz-Management-Button verbinden
+    references_btn = winFindChild(window,QWidget, "referencesBtncsNovaMain")
+    if references_btn:
+        def open_references():
+            show_references_window(parent=window)
+        references_btn.clicked.connect(open_references)
+    else:
+        # Falls kein Button im UI existiert, erstelle einen für Debugging
+        log_info("⚠ Referenzen-Button 'referencesBtncsNovaMain' nicht im UI gefunden")
+
     # Hilfe-Button verbinden
     help_btn = winFindChild(window,QWidget, "helpBtncsNovaMain")
     if help_btn:
@@ -1630,6 +1653,17 @@ def show_main_window():
         "labelCountLocationsStatistic": len(safe_load_json(Path("data/locations/data_locations.json"), {})),
         "labelCountStorylinesStatistic": len(safe_load_json(Path("data/storylines/data_storylines.json"), {})),
     }
+    
+    # Referenzen-Statistik hinzufügen
+    if app_state.ref_manager:
+        try:
+            ref_count = len(app_state.ref_manager.get_all_references())
+            stats["labelCountReferencesStatistic"] = ref_count
+            log_info(f"✓ {ref_count} Referenzen in Statistik geladen")
+        except Exception as e:
+            log_error(f"Konnte Referenzen-Statistik nicht laden: {e}")
+            stats["labelCountReferencesStatistic"] = 0
+    
     for label_name, value in stats.items():
         label = winFindChild(window, QLabel, label_name)
         if label:
@@ -1739,391 +1773,768 @@ def show_start_window(settings):
 
 # Projektfenster anzeigen
 def show_projects_window(parent=None):
-    window = DynamicWindow("projects_ui", UI_FILES["projects"], splitter_name="mainSplitter")
-    settings = load_settings()
-    language = settings.get("language", "en")
-    window.show()
-    log_info("Projektfenster erfolgreich geladen und angezeigt.")
-
-    # 2. Daten laden
-    projects_path = Path("data/projects/data_projects.json")
-    projects_data = safe_load_json(projects_path, {})
-    if not projects_data:
-        empty_project = get_empty_project()
-        empty_project["project_ID"] = "1"
-        projects_data = {"project_ID_01": empty_project}
-        safe_save_json(projects_path, projects_data)
-
-    first_key = next(iter(projects_data.keys()))
-    window.current_project_key = first_key
-    current_project = projects_data[window.current_project_key]
-    # 3. Zielgruppe
-    target_groups = load_translation(Path("core/translations/comboBox/targetGroups.json"), language)
-    combo_target_group = winFindChild(window,QComboBox, "comboBoxProjectTargetGroup")
-    fill_combobox(combo_target_group, list(target_groups.values()), current_project.get("project_target_group", 0))
-    # 4. Erzählperspektive
-    perspectives = load_translation(Path("core/translations/comboBox/narrativePerspective.json"), language)
-    combo_narrative = winFindChild(window,QComboBox, "comboBoxProjectNarrativePerspective")
-    fill_combobox(combo_narrative, list(perspectives.values()), current_project.get("project_narrative_perspective", 0))
-    # 5. Stil
-    styles = load_translation(Path("core/translations/comboBox/style.json"), language)
-    combo_style = winFindChild(window,QComboBox, "comboBoxProjectStyle")
-    fill_combobox(combo_style, list(styles.values()), current_project.get("project_style", 0))
-    # 6. Genre
-    genres_root = load_translation(Path("core/translations/comboBox/genre.json"), language)
-    genres = genres_root.get("book_genres", {}) if isinstance(genres_root, dict) else {}
-    combo_genre = winFindChild(window,QComboBox, "comboBoxProjectGenre")
-    fill_combobox(combo_genre, list(genres.values()), current_project.get("project_genre", 0))
-    # 7. Arbeitstyp
-    working_root = load_translation(Path("core/translations/comboBox/workingType.json"), language)
-    working_types = working_root.get("book_working_types", {}) if isinstance(working_root, dict) else {}
-    combo_work_type = winFindChild(window, QComboBox, "comboBoxProjectWorkingType")
-    fill_combobox(combo_work_type, list(working_types.values()), current_project.get("project_work_type", 0))
-    # 8. Motiv
-    motifs = load_translation(Path("core/translations/comboBox/motif.json"), language)
-    combo_motif = winFindChild(window,QComboBox, "comboBoxProjectMotif")
-    fill_combobox(combo_motif, list(motifs.values()), current_project.get("project_motif", 0))
-    # 9. Status
-    status = load_translation(Path("core/translations/comboBox/status.json"), language)
-    combo_status = winFindChild(window,QComboBox, "comboBoxProjectStatus")
-    fill_combobox(combo_status, list(status.values()), current_project.get("project_status", 0))
-    # 10. Verlag
-    publishers_root = safe_load_json(Path("core/translations/comboBox/publisher.json"), {})
-    publishers = publishers_root.get("publishers", []) if isinstance(publishers_root, dict) else []
-    publisher_names = [pub.get("name", "") for pub in publishers if pub.get("type") == "book"]
-    combo_publisher = winFindChild(window,QComboBox, "comboBoxProjectPublisher")
-    fill_combobox(combo_publisher, publisher_names, current_project.get("project_publisher", 0))
-    # 11. Editor
-    editors_root = safe_load_json(Path("core/translations/comboBox/editor.json"), {})
-    editors = editors_root.get("editors", []) if isinstance(editors_root, dict) else []
-    editor_names = [ed.get("name", "") for ed in editors if ed.get("type") == "book"]
-    combo_editor = winFindChild(window,QComboBox, "comboBoxProjectEditor")
-    fill_combobox(combo_editor, editor_names, current_project.get("project_editor", 0))
-
-    # Felder setzen
-    update_project_fields(window, current_project)
-   
-
-    # Buttons einbinden
-    # --- New-Button einbinden ---
-    new_btn = winFindChild(window,QWidget, "newBtnProjects")
-    if new_btn:
-        def on_new_clicked():
-            projects_data = safe_load_json(projects_path, {})
-            new_key, new_id = get_next_id(projects_data, "project_ID_")
-            empty_project = get_empty_project()
-            empty_project["project_ID"] = new_id
-            projects_data[new_key] = empty_project
-            safe_save_json(projects_path, projects_data)
-            log_info(f"Neues Projekt {new_key} angelegt.")
-            window.current_project_key = new_key
-            update_project_fields(window, empty_project)
-        new_btn.clicked.connect(on_new_clicked)
-
-    # --- Next-Button ---
-    next_btn = winFindChild(window,QWidget, "nextBtnProjects")
-    if next_btn:
-        def on_next_clicked():
-            projects_data = safe_load_json(projects_path, {})
-            keys = list(projects_data.keys())
-            current_index = keys.index(window.current_project_key)
-            next_index = (current_index + 1) % len(keys)
-            next_key = keys[next_index]
-            window.current_project_key = next_key
-            next_project = projects_data[next_key]
-            update_project_fields(window, next_project)
-        next_btn.clicked.connect(on_next_clicked)
-
-    # --- Previous-Button ---
-    previous_btn = winFindChild(window,QWidget, "previousBtnProjects")
-    if previous_btn:
-        def on_previous_clicked():
-            projects_data = safe_load_json(projects_path, {})
-            keys = list(projects_data.keys())
-            current_index = keys.index(window.current_project_key)
-            previous_index = (current_index - 1) % len(keys)
-            previous_key = keys[previous_index]
-            window.current_project_key = previous_key
-            previous_project = projects_data[previous_key]
-            update_project_fields(window, previous_project)
-        previous_btn.clicked.connect(on_previous_clicked) 
-
-    # --- Exit-Button einbinden ---
-    exit_btn = winFindChild(window,QWidget, "exitBtnProjects")
-    if exit_btn and parent:
-        def on_exit_clicked():
-            window.close()
-            parent.show()
-        exit_btn.clicked.connect(on_exit_clicked)
-
-    def on_close_event(event):
+    try:
+        # 1. Manager abrufen
+        project_manager = app_state.projects
+        
+        # 2. Window laden
+        window = DynamicWindow("projects_ui", UI_FILES["projects"], splitter_name="mainSplitter")
         settings = load_settings()
-        settings["last_project"] = window.current_project_key
-        save_settings(settings)
-        event.accept()
-        if parent:
-            parent.show()
-    window.closeEvent = on_close_event
-
-    # --- Delete-Button einbinden ---
-    def on_delete_clicked():
-        projects_data = safe_load_json(projects_path, {})
-        project_key = window.current_project_key
-        project_title = projects_data[project_key].get("project_title", project_key)
-        def delete_project():
-            nonlocal projects_data, project_key, project_title
-            if project_key in projects_data:
-                del projects_data[project_key]
-                # Speichern der geänderten Daten
-                safe_save_json(projects_path, projects_data)
-                log_info(f"Projekt {project_title} gelöscht.")
-                # Nach dem Löschen: neuen Key setzen und Felder aktualisieren
-                keys = list(projects_data.keys())
-                if keys:
-                    # Wähle den nächsten Projekt-Key (oder den ersten, falls Index zu groß)
-                    idx = 0
-                    if project_key in keys:
-                        idx = keys.index(project_key)
-                    elif window.current_project_key and window.current_project_key in keys:
-                        idx = keys.index(window.current_project_key)
-                    if idx >= len(keys):
-                        idx = len(keys) - 1
-                    window.current_project_key = keys[idx]
-                    update_project_fields(window, projects_data[window.current_project_key])
+        language = settings.get("language", "en")
+        
+        # 3. State in window speichern
+        window.project_manager = project_manager
+        window.current_project_id = None
+        window.project_keys_list = []
+        
+        # 4. Translation-Caches laden (einmalig)
+        window.target_groups = load_translation(Path("core/translations/comboBox/targetGroups.json"), language)
+        window.perspectives = load_translation(Path("core/translations/comboBox/narrativePerspective.json"), language)
+        window.styles = load_translation(Path("core/translations/comboBox/style.json"), language)
+        genres_root = load_translation(Path("core/translations/comboBox/genre.json"), language)
+        window.genres = genres_root.get("book_genres", {}) if isinstance(genres_root, dict) else {}
+        working_root = load_translation(Path("core/translations/comboBox/workingType.json"), language)
+        window.working_types = working_root.get("book_working_types", {}) if isinstance(working_root, dict) else {}
+        window.motifs = load_translation(Path("core/translations/comboBox/motif.json"), language)
+        window.status = load_translation(Path("core/translations/comboBox/status.json"), language)
+        publishers_root = safe_load_json(Path("core/translations/comboBox/publisher.json"), {})
+        publishers = publishers_root.get("publishers", []) if isinstance(publishers_root, dict) else []
+        window.publisher_names = [pub.get("name", "") for pub in publishers if pub.get("type") == "book"]
+        editors_root = safe_load_json(Path("core/translations/comboBox/editor.json"), {})
+        editors = editors_root.get("editors", []) if isinstance(editors_root, dict) else []
+        window.editor_names = [ed.get("name", "") for ed in editors if ed.get("type") == "book"]
+        
+        # 5. Helper-Funktionen
+        def refresh_projects_table():
+            """Lädt alle Projekte aus dem Manager"""
+            try:
+                all_projects = project_manager.get_all()
+                window.project_keys_list = list(all_projects.keys())
+                
+                if window.project_keys_list:
+                    if not window.current_project_id or window.current_project_id not in window.project_keys_list:
+                        window.current_project_id = window.project_keys_list[0]
+                    
+                    current_project = project_manager.get(window.current_project_id)
+                    update_project_fields(window, current_project)
+                    refresh_comboboxes(window, current_project)
                 else:
-                    empty_project = get_empty_project()
-                    update_project_fields(window, empty_project)
-                    window.current_project_key = None
-        # Blockierender Bestätigungsdialog; delete_project() nur bei Bestätigung ausführen
-        if show_secure_dialog(window, action="delete_project", project_key=project_title):
-            delete_project()
-    delete_btn = winFindChild(window,QWidget, "deleteBtnProjects")
-    if delete_btn:
-        delete_btn.clicked.connect(on_delete_clicked)
-    
-    # --- Save-Button einbinden ---
-    save_btn = winFindChild(window,QWidget, "saveBtnProjects")
-    if save_btn:
-        def on_save_clicked():
-            projects_data = safe_load_json(projects_path, {})
-            project_key = window.current_project_key  # <-- immer aktueller Key!
-            project = projects_data[project_key]
-
-            # Sammle alle Eingabewerte aus dem Fenster
-            project.update(read_project_fields(window))
-
-            # Speichere die Daten zurück
-            safe_save_json(projects_path, projects_data)
-            log_info(f"Projekt {project_key} erfolgreich gespeichert.")
-
-        save_btn.clicked.connect(on_save_clicked)    
-
-    return window
+                    log_info("Keine Projekte vorhanden.")
+            except Exception as e:
+                log_error(f"Fehler beim Aktualisieren der Projekte: {e}")
+        
+        def refresh_comboboxes(window, project):
+            """Aktualisiert alle ComboBoxes mit korrekten Werten"""
+            try:
+                combo_target = winFindChild(window, QComboBox, "comboBoxProjectTargetGroup")
+                fill_combobox(combo_target, list(window.target_groups.values()), 
+                            project.get("target_group", "Allgemein"))
+                
+                combo_narrative = winFindChild(window, QComboBox, "comboBoxProjectNarrativePerspective")
+                fill_combobox(combo_narrative, list(window.perspectives.values()),
+                            project.get("narrative_perspective", "Ich-Perspektive"))
+                
+                combo_style = winFindChild(window, QComboBox, "comboBoxProjectStyle")
+                fill_combobox(combo_style, list(window.styles.values()),
+                            project.get("style", "Modern"))
+                
+                combo_genre = winFindChild(window, QComboBox, "comboBoxProjectGenre")
+                fill_combobox(combo_genre, list(window.genres.values()),
+                            project.get("genre", "Roman"))
+                
+                combo_work = winFindChild(window, QComboBox, "comboBoxProjectWorkingType")
+                fill_combobox(combo_work, list(window.working_types.values()),
+                            project.get("working_type", "Belletristik"))
+                
+                combo_motif = winFindChild(window, QComboBox, "comboBoxProjectMotif")
+                fill_combobox(combo_motif, list(window.motifs.values()),
+                            project.get("motif", "Liebe"))
+                
+                combo_status = winFindChild(window, QComboBox, "comboBoxProjectStatus")
+                fill_combobox(combo_status, list(window.status.values()),
+                            project.get("status", "Planung"))
+                
+                combo_publisher = winFindChild(window, QComboBox, "comboBoxProjectPublisher")
+                fill_combobox(combo_publisher, window.publisher_names,
+                            project.get("publisher", ""))
+                
+                combo_editor = winFindChild(window, QComboBox, "comboBoxProjectEditor")
+                fill_combobox(combo_editor, window.editor_names,
+                            project.get("editor", ""))
+            except Exception as e:
+                log_error(f"Fehler beim Aktualisieren der ComboBoxes: {e}")
+        
+        def update_project_fields(window, project):
+            """Füllt das Formular mit Projekt-Daten"""
+            try:
+                title_field = winFindChild(window, QLineEdit, "lineEditProjectTitle")
+                if title_field:
+                    title_field.setText(project.get("title", ""))
+                
+                subtitle_field = winFindChild(window, QLineEdit, "lineEditProjectSubtitle")
+                if subtitle_field:
+                    subtitle_field.setText(project.get("subtitle", ""))
+                
+                author_field = winFindChild(window, QLineEdit, "lineEditProjectAuthor")
+                if author_field:
+                    author_field.setText(project.get("author", ""))
+                
+                premise_field = winFindChild(window, QLineEdit, "lineEditProjectPremise")
+                if premise_field:
+                    premise_field.setText(project.get("premise", ""))
+                
+                begin_field = winFindChild(window, QDateEdit, "dateEditProjectBegin")
+                if begin_field:
+                    begin_str = project.get("begin_date", "")
+                    begin_field.setDate(QDate.fromString(begin_str, "yyyy-MM-dd") if begin_str else QDate.currentDate())
+                
+                deadline_field = winFindChild(window, QDateEdit, "dateEditProjectDeadLine")
+                if deadline_field:
+                    deadline_str = project.get("deadline_date", "")
+                    deadline_field.setDate(QDate.fromString(deadline_str, "yyyy-MM-dd") if deadline_str else QDate.currentDate())
+                
+                words_spin = winFindChild(window, QSpinBox, "spinBoxProjectWordsCount")
+                if words_spin:
+                    words_spin.setValue(project.get("words_goal", 0))
+                
+                cover_field = winFindChild(window, QLineEdit, "lineEditProjectCoverImage")
+                if cover_field:
+                    cover_field.setText(project.get("cover_image", ""))
+                
+                datafile_field = winFindChild(window, QLineEdit, "lineEditProjectDataFile")
+                if datafile_field:
+                    datafile_field.setText(project.get("data_file", ""))
+                
+                notes_field = winFindChild(window, QTextEdit, "textEditProjectNotes")
+                if notes_field:
+                    notes_field.setText(project.get("notes", ""))
+            except Exception as e:
+                log_error(f"Fehler beim Füllen der Felder: {e}")
+        
+        def read_project_fields(window):
+            """Liest die Formular-Werte und gibt sie als Dict zurück"""
+            try:
+                return {
+                    "title": winFindChild(window, QLineEdit, "lineEditProjectTitle").text() if winFindChild(window, QLineEdit, "lineEditProjectTitle") else "",
+                    "subtitle": winFindChild(window, QLineEdit, "lineEditProjectSubtitle").text() if winFindChild(window, QLineEdit, "lineEditProjectSubtitle") else "",
+                    "author": winFindChild(window, QLineEdit, "lineEditProjectAuthor").text() if winFindChild(window, QLineEdit, "lineEditProjectAuthor") else "",
+                    "premise": winFindChild(window, QLineEdit, "lineEditProjectPremise").text() if winFindChild(window, QLineEdit, "lineEditProjectPremise") else "",
+                    "target_group": winFindChild(window, QComboBox, "comboBoxProjectTargetGroup").currentText() if winFindChild(window, QComboBox, "comboBoxProjectTargetGroup") else "",
+                    "narrative_perspective": winFindChild(window, QComboBox, "comboBoxProjectNarrativePerspective").currentText() if winFindChild(window, QComboBox, "comboBoxProjectNarrativePerspective") else "",
+                    "style": winFindChild(window, QComboBox, "comboBoxProjectStyle").currentText() if winFindChild(window, QComboBox, "comboBoxProjectStyle") else "",
+                    "genre": winFindChild(window, QComboBox, "comboBoxProjectGenre").currentText() if winFindChild(window, QComboBox, "comboBoxProjectGenre") else "",
+                    "working_type": winFindChild(window, QComboBox, "comboBoxProjectWorkingType").currentText() if winFindChild(window, QComboBox, "comboBoxProjectWorkingType") else "",
+                    "motif": winFindChild(window, QComboBox, "comboBoxProjectMotif").currentText() if winFindChild(window, QComboBox, "comboBoxProjectMotif") else "",
+                    "begin_date": winFindChild(window, QDateEdit, "dateEditProjectBegin").date().toString("yyyy-MM-dd") if winFindChild(window, QDateEdit, "dateEditProjectBegin") else "",
+                    "deadline_date": winFindChild(window, QDateEdit, "dateEditProjectDeadLine").date().toString("yyyy-MM-dd") if winFindChild(window, QDateEdit, "dateEditProjectDeadLine") else "",
+                    "status": winFindChild(window, QComboBox, "comboBoxProjectStatus").currentText() if winFindChild(window, QComboBox, "comboBoxProjectStatus") else "Planung",
+                    "words_goal": winFindChild(window, QSpinBox, "spinBoxProjectWordsCount").value() if winFindChild(window, QSpinBox, "spinBoxProjectWordsCount") else 0,
+                    "cover_image": winFindChild(window, QLineEdit, "lineEditProjectCoverImage").text() if winFindChild(window, QLineEdit, "lineEditProjectCoverImage") else "",
+                    "data_file": winFindChild(window, QLineEdit, "lineEditProjectDataFile").text() if winFindChild(window, QLineEdit, "lineEditProjectDataFile") else "",
+                    "notes": winFindChild(window, QTextEdit, "textEditProjectNotes").toPlainText() if winFindChild(window, QTextEdit, "textEditProjectNotes") else "",
+                    "publisher": winFindChild(window, QComboBox, "comboBoxProjectPublisher").currentText() if winFindChild(window, QComboBox, "comboBoxProjectPublisher") else "",
+                    "editor": winFindChild(window, QComboBox, "comboBoxProjectEditor").currentText() if winFindChild(window, QComboBox, "comboBoxProjectEditor") else "",
+                    "isbn": winFindChild(window, QLineEdit, "lineEditProjectISBN").text() if winFindChild(window, QLineEdit, "lineEditProjectISBN") else "",
+                    "issn": winFindChild(window, QLineEdit, "lineEditProjectISSN").text() if winFindChild(window, QLineEdit, "lineEditProjectISSN") else ""
+                }
+            except Exception as e:
+                log_error(f"Fehler beim Lesen der Felder: {e}")
+                return {}
+        
+        # 6. Speichern-Button
+        save_btn = winFindChild(window, QWidget, "saveBtnProjects")
+        if save_btn:
+            def on_save_clicked():
+                try:
+                    if not window.current_project_id:
+                        QMessageBox.warning(window, "Warnung", "Kein Projekt ausgewählt.")
+                        return
+                    
+                    updated_data = read_project_fields(window)
+                    project_manager.data[window.current_project_id].update(updated_data)
+                    
+                    if project_manager.save():
+                        log_info(f"Projekt '{updated_data.get('title', window.current_project_id)}' erfolgreich gespeichert.")
+                        QMessageBox.information(window, "Erfolg", "Projekt gespeichert.")
+                    else:
+                        log_error("Fehler beim Speichern des Projekts.")
+                        QMessageBox.critical(window, "Fehler", "Fehler beim Speichern.")
+                        
+                except Exception as e:
+                    log_error(f"Fehler beim Speichern: {e}")
+                    QMessageBox.critical(window, "Fehler", f"Fehler beim Speichern: {e}")
+            
+            save_btn.clicked.connect(on_save_clicked)
+        
+        # 7. Neues Projekt Button
+        new_btn = winFindChild(window, QWidget, "newBtnProjects")
+        if new_btn:
+            def on_new_clicked():
+                try:
+                    new_data = {
+                        "title": "Neues Projekt",
+                        "subtitle": "",
+                        "author": "",
+                        "premise": "",
+                        "target_group": "Allgemein",
+                        "narrative_perspective": "Ich-Perspektive",
+                        "style": "Modern",
+                        "genre": "Roman",
+                        "working_type": "Belletristik",
+                        "motif": "Liebe",
+                        "begin_date": QDate.currentDate().toString("yyyy-MM-dd"),
+                        "deadline_date": QDate.currentDate().toString("yyyy-MM-dd"),
+                        "status": "Planung",
+                        "words_goal": 80000,
+                        "cover_image": "",
+                        "data_file": "",
+                        "notes": "",
+                        "publisher": "",
+                        "editor": "",
+                        "isbn": "",
+                        "issn": ""
+                    }
+                    new_id = project_manager.add(new_data)
+                    window.current_project_id = new_id
+                    log_info(f"Neues Projekt '{new_id}' erstellt.")
+                    refresh_projects_table()
+                    QMessageBox.information(window, "Erfolg", f"Neues Projekt erstellt: {new_id}")
+                    
+                except Exception as e:
+                    log_error(f"Fehler beim Erstellen eines neuen Projekts: {e}")
+                    QMessageBox.critical(window, "Fehler", f"Fehler beim Erstellen: {e}")
+            
+            new_btn.clicked.connect(on_new_clicked)
+        
+        # 8. Nächstes Projekt Button
+        next_btn = winFindChild(window, QWidget, "nextBtnProjects")
+        if next_btn:
+            def on_next_clicked():
+                try:
+                    if not window.project_keys_list:
+                        return
+                    current_index = window.project_keys_list.index(window.current_project_id)
+                    next_index = (current_index + 1) % len(window.project_keys_list)
+                    window.current_project_id = window.project_keys_list[next_index]
+                    next_project = project_manager.get(window.current_project_id)
+                    update_project_fields(window, next_project)
+                    refresh_comboboxes(window, next_project)
+                    
+                except Exception as e:
+                    log_error(f"Fehler beim Navigieren: {e}")
+            
+            next_btn.clicked.connect(on_next_clicked)
+        
+        # 9. Vorheriges Projekt Button
+        prev_btn = winFindChild(window, QWidget, "previousBtnProjects")
+        if prev_btn:
+            def on_prev_clicked():
+                try:
+                    if not window.project_keys_list:
+                        return
+                    current_index = window.project_keys_list.index(window.current_project_id)
+                    prev_index = (current_index - 1) % len(window.project_keys_list)
+                    window.current_project_id = window.project_keys_list[prev_index]
+                    prev_project = project_manager.get(window.current_project_id)
+                    update_project_fields(window, prev_project)
+                    refresh_comboboxes(window, prev_project)
+                    
+                except Exception as e:
+                    log_error(f"Fehler beim Navigieren: {e}")
+            
+            prev_btn.clicked.connect(on_prev_clicked)
+        
+        # 10. Projekt löschen Button
+        delete_btn = winFindChild(window, QWidget, "deleteBtnProjects")
+        if delete_btn:
+            def on_delete_clicked():
+                try:
+                    if not window.current_project_id:
+                        QMessageBox.warning(window, "Warnung", "Kein Projekt ausgewählt.")
+                        return
+                    
+                    project_data = project_manager.get(window.current_project_id)
+                    project_title = project_data.get("title", window.current_project_id)
+                    
+                    reply = QMessageBox.question(
+                        window,
+                        "Bestätigung",
+                        f"Projekt '{project_title}' wirklich löschen?",
+                        QMessageBox.Yes | QMessageBox.No
+                    )
+                    
+                    if reply == QMessageBox.Yes:
+                        project_manager.delete(window.current_project_id)
+                        log_info(f"Projekt '{project_title}' gelöscht.")
+                        refresh_projects_table()
+                        QMessageBox.information(window, "Erfolg", f"Projekt '{project_title}' gelöscht.")
+                        
+                except Exception as e:
+                    log_error(f"Fehler beim Löschen: {e}")
+                    QMessageBox.critical(window, "Fehler", f"Fehler beim Löschen: {e}")
+            
+            delete_btn.clicked.connect(on_delete_clicked)
+        
+        # 11. Bild laden Button
+        image_btn = winFindChild(window, QWidget, "imageBtnProjects")
+        if image_btn:
+            def on_image_clicked():
+                try:
+                    file_dialog = QFileDialog()
+                    image_path, _ = file_dialog.getOpenFileName(
+                        window,
+                        "Bild wählen",
+                        "",
+                        "Bilder (*.png *.jpg *.jpeg *.bmp *.gif)"
+                    )
+                    if image_path:
+                        cover_field = winFindChild(window, QLineEdit, "lineEditProjectCoverImage")
+                        if cover_field:
+                            cover_field.setText(image_path)
+                            log_info(f"Coverbild ausgewählt: {image_path}")
+                except Exception as e:
+                    log_error(f"Fehler beim Öffnen des Bilddialogs: {e}")
+            
+            image_btn.clicked.connect(on_image_clicked)
+        
+        # 12. Exit-Button
+        exit_btn = winFindChild(window, QWidget, "exitBtnProjects")
+        if exit_btn:
+            def on_exit_clicked():
+                window.close()
+                if parent:
+                    parent.show()
+            
+            exit_btn.clicked.connect(on_exit_clicked)
+        
+        # 13. Close Event Handler
+        def on_close_event(event):
+            settings = load_settings()
+            if window.current_project_id:
+                settings["last_project"] = window.current_project_id
+            save_settings(settings)
+            event.accept()
+            if parent:
+                parent.show()
+        
+        window.closeEvent = on_close_event
+        
+        # Initiale Befüllung
+        refresh_projects_table()
+        window.show()
+        
+        log_info("Projekt-Fenster erfolgreich mit Manager geladen.")
+        return window
+        
+    except Exception as e:
+        log_error(f"Fehler in show_projects_window: {e}")
+        QMessageBox.critical(None, "Fehler", f"Fehler beim Öffnen des Projekt-Fensters: {e}")
+        return None
 
 # Charakterfenster anzeigen
 def show_characters_window(parent=None):
-    window = DynamicWindow("characters_ui", UI_FILES["characters"], splitter_name="mainSplitter")
-    settings = load_settings()
-    language = settings.get("language", "en")
-    window.show()
-
-    # 2. Daten laden
-    character_path = Path("data/characters/data_characters.json")
-    character_data = safe_load_json(character_path, {})
-
-    # Wenn keine Charaktere vorhanden sind, einen leeren anlegen
-    if not character_data:
-        empty_char = get_empty_character()
-        empty_char["character_ID"] = "1"
-        character_data = {"character_ID_01": empty_char}
-        safe_save_json(character_path, character_data)
+    try:
+        # 1. Manager abrufen
+        character_manager = app_state.characters
         
-    first_key = next(iter(character_data.keys()))
-    window.current_character_key = first_key
-    current_character = character_data[window.current_character_key]
-
-    # Alter-Label aktualisieren
-    def update_age_label():
-        birth_str = birthdate_edit.text()
-        died_str = died_edit.text()
-        age_value = calculate_age(birth_str, died_str)
-        if label_age:
-            label_age.setText(age_value)
-
-    # Validator für Datumsfelder erstellen (wird für birth und died verwendet)
-    regex = QRegularExpression(r"^\d{1,2}\.\d{1,2}\.\d{1,4}( v\. Chr\.)?$|^\d{1,4}( v\. Chr\.)?$")
-    validator = QRegularExpressionValidator(regex)
-
-    birthdate_edit = winFindChild(window,QLineEdit, "lineEditBorn")
-    if birthdate_edit:
-        birthdate_edit.setValidator(validator)
-        birthdate_edit.setText(current_character.get("character_birthdate", ""))
-        birthdate_edit.textChanged.connect(update_age_label)
-
-    died_edit = winFindChild(window,QLineEdit, "lineEditDied")
-    if died_edit:
-        died_edit.setValidator(validator)
-        died_edit.setText(current_character.get("character_died", ""))
-        died_edit.textChanged.connect(update_age_label)
-
-    # Alter berechnen
-    birth_value = current_character.get("character_birthdate", "")
-    died_value = current_character.get("character_died", "")
-    age_value = calculate_age(birth_value, died_value)
-
-    label_age = winFindChild(window,QLabel, "labelAgeValue")
-    if label_age:
-        label_age.setText(age_value)
-
-    # Status
-    status = load_translation(Path("core/translations/comboBox/status.json"), language)
-    combo_status = winFindChild(window,QComboBox, "comboBoxStatus")
-    fill_combobox(combo_status, list(status.values()), current_character.get("character_status", 0))
-    # 3. Geschlecht
-    gender = load_translation(Path("core/translations/comboBox/gender.json"), language)
-    combo_gender = winFindChild(window,QComboBox, "comboBoxGender")
-    fill_combobox(combo_gender, list(gender.values()), current_character.get("character_gender", 0))
-    # 4. Sexualität
-    sexual_orientation = load_translation(Path("core/translations/comboBox/sex_orientation.json"), language)
-    combo_sexual_orientation = winFindChild(window,QComboBox, "comboBoxSexOrientation")
-    fill_combobox(combo_sexual_orientation, list(sexual_orientation.values()), current_character.get("character_sexOrientation", 0))
-    # 5. Rolle 
-    role = load_translation(Path("core/translations/comboBox/role.json"), language)
-    combo_role = winFindChild(window,QComboBox, "comboBoxRole")
-    fill_combobox(combo_role, list(role.values()), current_character.get("character_role", 0))
-    # 6. Gruppe
-    group = load_translation(Path("core/translations/comboBox/group.json"), language)
-    combo_group = winFindChild(window,QComboBox, "comboBoxGroup")
-    fill_combobox(combo_group, list(group.values()), current_character.get("character_group", 0))
-    # 7. Körperbau
-    body_type = load_translation(Path("core/translations/comboBox/bodyType.json"), language)
-    combo_body_type = winFindChild(window,QComboBox, "comboBoxBodyType")
-    fill_combobox(combo_body_type, list(body_type.values()), current_character.get("character_bodyType", 0))
-    # 8. Statur
-    stature = load_translation(Path("core/translations/comboBox/stature.json"), language)
-    combo_stature = winFindChild(window,QComboBox, "comboBoxStature")
-    fill_combobox(combo_stature, list(stature.values()), current_character.get("character_stature", 0))
-    # 9. Gesichtsform
-    face_shape = load_translation(Path("core/translations/comboBox/faceShape.json"), language)
-    combo_face_shape = winFindChild(window,QComboBox, "comboBoxFaceShape")
-    fill_combobox(combo_face_shape, list(face_shape.values()), current_character.get("character_faceshape", 0))
-    # 10. Augenform
-    eye_shape = load_translation(Path("core/translations/comboBox/eyeShape.json"), language)
-    combo_eye_shape = winFindChild(window,QComboBox, "comboBoxEyeShape")
-    fill_combobox(combo_eye_shape, list(eye_shape.values()), current_character.get("character_eyeshape", 0))
-
-    # Felder setzen
-    update_character_fields(window, current_character)
-
-
-    # --- Save-Button einbinden ---
-    save_btn = winFindChild(window,QWidget, "saveBtnCharacter")
-    if save_btn:
-        def on_save_clicked():
-            character_data = safe_load_json(character_path, {})
-            character_key = window.current_character_key
-            character = character_data[character_key]
-            character.update(read_character_fields(window))
-            safe_save_json(character_path, character_data)
-            log_info(f"Charakter {character_key} erfolgreich gespeichert.")
-
-        save_btn.clicked.connect(on_save_clicked)
-
-    # --- Daten löschen Button einbinden ---
-    def on_delete_clicked():
-        character_data = safe_load_json(character_path, {})
-        character_key = window.current_character_key
-        character_name = character_data[character_key].get("character_name", character_key)
-        def delete_character():
-            nonlocal character_data, character_key, character_name
-            if character_key in character_data:
-                del character_data[character_key]
-                safe_save_json(character_path, character_data)
-                log_info(f"Charakter {character_name} gelöscht.")
-                # Nach dem Löschen: neuen Key setzen und Felder aktualisieren
-                keys = list(character_data.keys())
-                if keys:
-                    idx = 0
-                    if character_key in keys:
-                        idx = keys.index(character_key)
-                    elif window.current_character_key and window.current_character_key in keys:
-                        idx = keys.index(window.current_character_key)
-                    if idx >= len(keys):
-                        idx = len(keys) - 1
-                    window.current_character_key = keys[idx]
-                    update_character_fields(window, character_data[window.current_character_key])
+        # 2. Window laden
+        window = DynamicWindow("characters_ui", UI_FILES["characters"], splitter_name="mainSplitter")
+        settings = load_settings()
+        language = settings.get("language", "en")
+        
+        # 3. State in window speichern
+        window.character_manager = character_manager
+        window.current_character_id = None
+        window.character_keys_list = []
+        
+        # 4. Translation-Caches laden
+        window.status = load_translation(Path("core/translations/comboBox/status.json"), language)
+        window.gender = load_translation(Path("core/translations/comboBox/gender.json"), language)
+        window.sexual_orientation = load_translation(Path("core/translations/comboBox/sex_orientation.json"), language)
+        window.role = load_translation(Path("core/translations/comboBox/role.json"), language)
+        window.group = load_translation(Path("core/translations/comboBox/group.json"), language)
+        window.body_type = load_translation(Path("core/translations/comboBox/bodyType.json"), language)
+        window.stature = load_translation(Path("core/translations/comboBox/stature.json"), language)
+        window.face_shape = load_translation(Path("core/translations/comboBox/faceShape.json"), language)
+        window.eye_shape = load_translation(Path("core/translations/comboBox/eyeShape.json"), language)
+        
+        # 5. Helper-Funktionen
+        def refresh_characters_table():
+            """Lädt alle Charaktere aus dem Manager"""
+            try:
+                all_characters = character_manager.get_all()
+                window.character_keys_list = list(all_characters.keys())
+                
+                if window.character_keys_list:
+                    if not window.current_character_id or window.current_character_id not in window.character_keys_list:
+                        window.current_character_id = window.character_keys_list[0]
+                    
+                    current_character = character_manager.get(window.current_character_id)
+                    update_character_fields(window, current_character)
+                    refresh_comboboxes(window, current_character)
                 else:
-                    empty_char = get_empty_character()
-                    update_character_fields(window, empty_char)
-                    window.current_character_key = None
-        if show_secure_dialog(window, action="delete_character", project_key=character_name):
-            delete_character()
-
-    delete_btn = winFindChild(window,QWidget, "deleteBtnCharacter")
-    if delete_btn:
-        delete_btn.clicked.connect(on_delete_clicked)
-
-    # --- Neuen Charakter Button einbinden ---
-    new_btn = winFindChild(window,QWidget, "newBtnCharacter")
-    if new_btn:
-        def on_new_clicked():
-            character_data = safe_load_json(character_path, {})
-            new_key, new_id = get_next_id(character_data, "character_ID_")
-            empty_char = get_empty_character()
-            empty_char["character_ID"] = new_id
-            character_data[new_key] = empty_char
-            safe_save_json(character_path, character_data)
-            log_info(f"Neuer Charakter {new_key} erstellt.")
-            window.current_character_key = new_key
-            update_character_fields(window, empty_char)
-        new_btn.clicked.connect(on_new_clicked)
-         
-    # --- nächster Charakter Button einbinden ---
-    def on_next_clicked():
-        character_data = safe_load_json(character_path, {})
-        keys = list(character_data.keys())
-        current_index = keys.index(window.current_character_key)
-        next_index = (current_index + 1) % len(keys)
-        next_key = keys[next_index]
-        window.current_character_key = next_key
-        next_character = character_data[next_key]
-        update_character_fields(window, next_character)  # <--- Fenster übergeben!
-    next_btn = winFindChild(window,QWidget, "nextBtnCharacter")
-    if next_btn:
-        next_btn.clicked.connect(on_next_clicked)
-
-    def on_prev_clicked():
-        character_data = safe_load_json(character_path, {})
-        keys = list(character_data.keys())
-        current_index = keys.index(window.current_character_key)
-        prev_index = (current_index - 1) % len(keys)
-        prev_key = keys[prev_index]
-        window.current_character_key = prev_key
-        prev_character = character_data[prev_key]
-        update_character_fields(window, prev_character)  # <--- Fenster übergeben!
-    prev_btn = winFindChild(window,QWidget, "previousBtnCharacter")
-    if prev_btn:
-        prev_btn.clicked.connect(on_prev_clicked)
-
-    # --- Exit-Button einbinden ---
-    exit_btn = winFindChild(window,QWidget, "exitBtnCharacter")
-    if exit_btn:
-        def on_exit_clicked():
-            window.close()
+                    log_info("Keine Charaktere vorhanden.")
+            except Exception as e:
+                log_error(f"Fehler beim Aktualisieren der Charaktere: {e}")
+        
+        def refresh_comboboxes(window, character):
+            """Aktualisiert alle ComboBoxes mit korrekten Werten"""
+            try:
+                combo_status = winFindChild(window, QComboBox, "comboBoxStatus")
+                fill_combobox(combo_status, list(window.status.values()),
+                            character.get("status", "Planung"))
+                
+                combo_gender = winFindChild(window, QComboBox, "comboBoxGender")
+                fill_combobox(combo_gender, list(window.gender.values()),
+                            character.get("gender", "Weiblich"))
+                
+                combo_sexual = winFindChild(window, QComboBox, "comboBoxSexOrientation")
+                fill_combobox(combo_sexual, list(window.sexual_orientation.values()),
+                            character.get("sexual_orientation", "Heterosexuell"))
+                
+                combo_role = winFindChild(window, QComboBox, "comboBoxRole")
+                fill_combobox(combo_role, list(window.role.values()),
+                            character.get("role", "Hauptcharakter"))
+                
+                combo_group = winFindChild(window, QComboBox, "comboBoxGroup")
+                fill_combobox(combo_group, list(window.group.values()),
+                            character.get("group", "Besetzung"))
+                
+                combo_body = winFindChild(window, QComboBox, "comboBoxBodyType")
+                fill_combobox(combo_body, list(window.body_type.values()),
+                            character.get("body_type", "Normal"))
+                
+                combo_stature = winFindChild(window, QComboBox, "comboBoxStature")
+                fill_combobox(combo_stature, list(window.stature.values()),
+                            character.get("stature", "Mittel"))
+                
+                combo_face = winFindChild(window, QComboBox, "comboBoxFaceShape")
+                fill_combobox(combo_face, list(window.face_shape.values()),
+                            character.get("face_shape", "Oval"))
+                
+                combo_eye = winFindChild(window, QComboBox, "comboBoxEyeShape")
+                fill_combobox(combo_eye, list(window.eye_shape.values()),
+                            character.get("eye_shape", "Normal"))
+            except Exception as e:
+                log_error(f"Fehler beim Aktualisieren der ComboBoxes: {e}")
+        
+        def update_character_fields(window, character):
+            """Füllt das Formular mit Charakter-Daten"""
+            try:
+                # Basis-Felder
+                first_name = winFindChild(window, QLineEdit, "lineEditFirstName")
+                if first_name:
+                    first_name.setText(character.get("first_name", ""))
+                
+                name = winFindChild(window, QLineEdit, "lineEditName")
+                if name:
+                    name.setText(character.get("name", ""))
+                
+                nickname = winFindChild(window, QLineEdit, "lineEditNickName")
+                if nickname:
+                    nickname.setText(character.get("nickname", ""))
+                
+                # Datums-Felder
+                born = winFindChild(window, QLineEdit, "lineEditBorn")
+                if born:
+                    born.setText(character.get("birth_date", ""))
+                
+                died = winFindChild(window, QLineEdit, "lineEditDied")
+                if died:
+                    died.setText(character.get("death_date", ""))
+                
+                # Herkunft
+                mother = winFindChild(window, QLineEdit, "lineEditMother")
+                if mother:
+                    mother.setText(character.get("mother", ""))
+                
+                father = winFindChild(window, QLineEdit, "lineEditFather")
+                if father:
+                    father.setText(character.get("father", ""))
+                
+                ref_person = winFindChild(window, QLineEdit, "lineEditReferencePerson")
+                if ref_person:
+                    ref_person.setText(character.get("reference_person", ""))
+                
+                siblings = winFindChild(window, QTextEdit, "textEditSiblings")
+                if siblings:
+                    siblings.setText(character.get("siblings", ""))
+                
+                place_birth = winFindChild(window, QLineEdit, "lineEditPlaceOfBirth")
+                if place_birth:
+                    place_birth.setText(character.get("place_of_birth", ""))
+                
+                country = winFindChild(window, QLineEdit, "lineEditCountry")
+                if country:
+                    country.setText(character.get("country", ""))
+                
+                ethnicity = winFindChild(window, QLineEdit, "lineEditEthnicity")
+                if ethnicity:
+                    ethnicity.setText(character.get("ethnicity", ""))
+                
+                ancestry_notes = winFindChild(window, QTextEdit, "textEditAncestryNotes")
+                if ancestry_notes:
+                    ancestry_notes.setText(character.get("ancestry_notes", ""))
+                
+                # Aussehen
+                pos_char = winFindChild(window, QLineEdit, "lineEditPosCharacteristics")
+                if pos_char:
+                    pos_char.setText(character.get("positive_characteristics", ""))
+                
+                neg_char = winFindChild(window, QLineEdit, "lineEditNegCharacteristics")
+                if neg_char:
+                    neg_char.setText(character.get("negative_characteristics", ""))
+                
+                # Persönlichkeit
+                strengths = winFindChild(window, QLineEdit, "lineEditStrengthsOfCharacter")
+                if strengths:
+                    strengths.setText(character.get("strengths", ""))
+                
+                weakness = winFindChild(window, QLineEdit, "lineEditWeaknessOfCharacter")
+                if weakness:
+                    weakness.setText(character.get("weakness", ""))
+                
+                # Notizen
+                notes = winFindChild(window, QTextEdit, "textEditCharacterNotes")
+                if notes:
+                    notes.setText(character.get("notes", ""))
+                
+                dev_notes = winFindChild(window, QTextEdit, "textEditDevelopmentNotes")
+                if dev_notes:
+                    dev_notes.setText(character.get("development_notes", ""))
+                
+            except Exception as e:
+                log_error(f"Fehler beim Füllen der Felder: {e}")
+        
+        def read_character_fields(window):
+            """Liest die Formular-Werte und gibt sie als Dict zurück"""
+            try:
+                return {
+                    "first_name": winFindChild(window, QLineEdit, "lineEditFirstName").text() if winFindChild(window, QLineEdit, "lineEditFirstName") else "",
+                    "name": winFindChild(window, QLineEdit, "lineEditName").text() if winFindChild(window, QLineEdit, "lineEditName") else "",
+                    "nickname": winFindChild(window, QLineEdit, "lineEditNickName").text() if winFindChild(window, QLineEdit, "lineEditNickName") else "",
+                    "birth_date": winFindChild(window, QLineEdit, "lineEditBorn").text() if winFindChild(window, QLineEdit, "lineEditBorn") else "",
+                    "death_date": winFindChild(window, QLineEdit, "lineEditDied").text() if winFindChild(window, QLineEdit, "lineEditDied") else "",
+                    "status": winFindChild(window, QComboBox, "comboBoxStatus").currentText() if winFindChild(window, QComboBox, "comboBoxStatus") else "Planung",
+                    "gender": winFindChild(window, QComboBox, "comboBoxGender").currentText() if winFindChild(window, QComboBox, "comboBoxGender") else "Weiblich",
+                    "sexual_orientation": winFindChild(window, QComboBox, "comboBoxSexOrientation").currentText() if winFindChild(window, QComboBox, "comboBoxSexOrientation") else "Heterosexuell",
+                    "role": winFindChild(window, QComboBox, "comboBoxRole").currentText() if winFindChild(window, QComboBox, "comboBoxRole") else "Hauptcharakter",
+                    "group": winFindChild(window, QComboBox, "comboBoxGroup").currentText() if winFindChild(window, QComboBox, "comboBoxGroup") else "Besetzung",
+                    "body_type": winFindChild(window, QComboBox, "comboBoxBodyType").currentText() if winFindChild(window, QComboBox, "comboBoxBodyType") else "Normal",
+                    "stature": winFindChild(window, QComboBox, "comboBoxStature").currentText() if winFindChild(window, QComboBox, "comboBoxStature") else "Mittel",
+                    "face_shape": winFindChild(window, QComboBox, "comboBoxFaceShape").currentText() if winFindChild(window, QComboBox, "comboBoxFaceShape") else "Oval",
+                    "eye_shape": winFindChild(window, QComboBox, "comboBoxEyeShape").currentText() if winFindChild(window, QComboBox, "comboBoxEyeShape") else "Normal",
+                    "mother": winFindChild(window, QLineEdit, "lineEditMother").text() if winFindChild(window, QLineEdit, "lineEditMother") else "",
+                    "father": winFindChild(window, QLineEdit, "lineEditFather").text() if winFindChild(window, QLineEdit, "lineEditFather") else "",
+                    "reference_person": winFindChild(window, QLineEdit, "lineEditReferencePerson").text() if winFindChild(window, QLineEdit, "lineEditReferencePerson") else "",
+                    "siblings": winFindChild(window, QTextEdit, "textEditSiblings").toPlainText() if winFindChild(window, QTextEdit, "textEditSiblings") else "",
+                    "place_of_birth": winFindChild(window, QLineEdit, "lineEditPlaceOfBirth").text() if winFindChild(window, QLineEdit, "lineEditPlaceOfBirth") else "",
+                    "country": winFindChild(window, QLineEdit, "lineEditCountry").text() if winFindChild(window, QLineEdit, "lineEditCountry") else "",
+                    "ethnicity": winFindChild(window, QLineEdit, "lineEditEthnicity").text() if winFindChild(window, QLineEdit, "lineEditEthnicity") else "",
+                    "ancestry_notes": winFindChild(window, QTextEdit, "textEditAncestryNotes").toPlainText() if winFindChild(window, QTextEdit, "textEditAncestryNotes") else "",
+                    "positive_characteristics": winFindChild(window, QLineEdit, "lineEditPosCharacteristics").text() if winFindChild(window, QLineEdit, "lineEditPosCharacteristics") else "",
+                    "negative_characteristics": winFindChild(window, QLineEdit, "lineEditNegCharacteristics").text() if winFindChild(window, QLineEdit, "lineEditNegCharacteristics") else "",
+                    "strengths": winFindChild(window, QLineEdit, "lineEditStrengthsOfCharacter").text() if winFindChild(window, QLineEdit, "lineEditStrengthsOfCharacter") else "",
+                    "weakness": winFindChild(window, QLineEdit, "lineEditWeaknessOfCharacter").text() if winFindChild(window, QLineEdit, "lineEditWeaknessOfCharacter") else "",
+                    "notes": winFindChild(window, QTextEdit, "textEditCharacterNotes").toPlainText() if winFindChild(window, QTextEdit, "textEditCharacterNotes") else "",
+                    "development_notes": winFindChild(window, QTextEdit, "textEditDevelopmentNotes").toPlainText() if winFindChild(window, QTextEdit, "textEditDevelopmentNotes") else ""
+                }
+            except Exception as e:
+                log_error(f"Fehler beim Lesen der Felder: {e}")
+                return {}
+        
+        # 6. Speichern-Button
+        save_btn = winFindChild(window, QWidget, "saveBtnCharacter")
+        if save_btn:
+            def on_save_clicked():
+                try:
+                    if not window.current_character_id:
+                        QMessageBox.warning(window, "Warnung", "Kein Charakter ausgewählt.")
+                        return
+                    
+                    updated_data = read_character_fields(window)
+                    character_manager.data[window.current_character_id].update(updated_data)
+                    
+                    if character_manager.save():
+                        char_name = updated_data.get("name", window.current_character_id)
+                        log_info(f"Charakter '{char_name}' erfolgreich gespeichert.")
+                        QMessageBox.information(window, "Erfolg", "Charakter gespeichert.")
+                    else:
+                        log_error("Fehler beim Speichern des Charakters.")
+                        QMessageBox.critical(window, "Fehler", "Fehler beim Speichern.")
+                        
+                except Exception as e:
+                    log_error(f"Fehler beim Speichern: {e}")
+                    QMessageBox.critical(window, "Fehler", f"Fehler beim Speichern: {e}")
+            
+            save_btn.clicked.connect(on_save_clicked)
+        
+        # 7. Neuer Charakter Button
+        new_btn = winFindChild(window, QWidget, "newBtnCharacter")
+        if new_btn:
+            def on_new_clicked():
+                try:
+                    new_data = {
+                        "first_name": "Vorname",
+                        "name": "Nachname",
+                        "nickname": "",
+                        "birth_date": "",
+                        "death_date": "",
+                        "status": "Planung",
+                        "gender": "Weiblich",
+                        "sexual_orientation": "Heterosexuell",
+                        "role": "Hauptcharakter",
+                        "group": "Besetzung",
+                        "body_type": "Normal",
+                        "stature": "Mittel",
+                        "face_shape": "Oval",
+                        "eye_shape": "Normal",
+                        "mother": "",
+                        "father": "",
+                        "reference_person": "",
+                        "siblings": "",
+                        "place_of_birth": "",
+                        "country": "",
+                        "ethnicity": "",
+                        "ancestry_notes": "",
+                        "positive_characteristics": "",
+                        "negative_characteristics": "",
+                        "strengths": "",
+                        "weakness": "",
+                        "notes": "",
+                        "development_notes": ""
+                    }
+                    new_id = character_manager.add(new_data)
+                    window.current_character_id = new_id
+                    log_info(f"Neuer Charakter '{new_id}' erstellt.")
+                    refresh_characters_table()
+                    QMessageBox.information(window, "Erfolg", f"Neuer Charakter erstellt: {new_id}")
+                    
+                except Exception as e:
+                    log_error(f"Fehler beim Erstellen eines neuen Charakters: {e}")
+                    QMessageBox.critical(window, "Fehler", f"Fehler beim Erstellen: {e}")
+            
+            new_btn.clicked.connect(on_new_clicked)
+        
+        # 8. Nächster Charakter Button
+        next_btn = winFindChild(window, QWidget, "nextBtnCharacter")
+        if next_btn:
+            def on_next_clicked():
+                try:
+                    if not window.character_keys_list:
+                        return
+                    current_index = window.character_keys_list.index(window.current_character_id)
+                    next_index = (current_index + 1) % len(window.character_keys_list)
+                    window.current_character_id = window.character_keys_list[next_index]
+                    next_character = character_manager.get(window.current_character_id)
+                    update_character_fields(window, next_character)
+                    refresh_comboboxes(window, next_character)
+                    
+                except Exception as e:
+                    log_error(f"Fehler beim Navigieren: {e}")
+            
+            next_btn.clicked.connect(on_next_clicked)
+        
+        # 9. Vorheriger Charakter Button
+        prev_btn = winFindChild(window, QWidget, "previousBtnCharacter")
+        if prev_btn:
+            def on_prev_clicked():
+                try:
+                    if not window.character_keys_list:
+                        return
+                    current_index = window.character_keys_list.index(window.current_character_id)
+                    prev_index = (current_index - 1) % len(window.character_keys_list)
+                    window.current_character_id = window.character_keys_list[prev_index]
+                    prev_character = character_manager.get(window.current_character_id)
+                    update_character_fields(window, prev_character)
+                    refresh_comboboxes(window, prev_character)
+                    
+                except Exception as e:
+                    log_error(f"Fehler beim Navigieren: {e}")
+            
+            prev_btn.clicked.connect(on_prev_clicked)
+        
+        # 10. Charakter löschen Button
+        delete_btn = winFindChild(window, QWidget, "deleteBtnCharacter")
+        if delete_btn:
+            def on_delete_clicked():
+                try:
+                    if not window.current_character_id:
+                        QMessageBox.warning(window, "Warnung", "Kein Charakter ausgewählt.")
+                        return
+                    
+                    character_data = character_manager.get(window.current_character_id)
+                    character_name = character_data.get("name", window.current_character_id)
+                    
+                    reply = QMessageBox.question(
+                        window,
+                        "Bestätigung",
+                        f"Charakter '{character_name}' wirklich löschen?",
+                        QMessageBox.Yes | QMessageBox.No
+                    )
+                    
+                    if reply == QMessageBox.Yes:
+                        character_manager.delete(window.current_character_id)
+                        log_info(f"Charakter '{character_name}' gelöscht.")
+                        refresh_characters_table()
+                        QMessageBox.information(window, "Erfolg", f"Charakter '{character_name}' gelöscht.")
+                        
+                except Exception as e:
+                    log_error(f"Fehler beim Löschen: {e}")
+                    QMessageBox.critical(window, "Fehler", f"Fehler beim Löschen: {e}")
+            
+            delete_btn.clicked.connect(on_delete_clicked)
+        
+        # 11. Bild laden Button
+        image_btn = winFindChild(window, QWidget, "imageBtnCharacter")
+        if image_btn:
+            def on_image_clicked():
+                try:
+                    file_dialog = QFileDialog()
+                    image_path, _ = file_dialog.getOpenFileName(
+                        window,
+                        "Bild wählen",
+                        "",
+                        "Bilder (*.png *.jpg *.jpeg *.bmp *.gif)"
+                    )
+                    if image_path:
+                        log_info(f"Charakterbild ausgewählt: {image_path}")
+                except Exception as e:
+                    log_error(f"Fehler beim Öffnen des Bilddialogs: {e}")
+            
+            image_btn.clicked.connect(on_image_clicked)
+        
+        # 12. Exit-Button
+        exit_btn = winFindChild(window, QWidget, "exitBtnCharacter")
+        if exit_btn:
+            def on_exit_clicked():
+                window.close()
+                if parent:
+                    parent.show()
+            
+            exit_btn.clicked.connect(on_exit_clicked)
+        
+        # 13. Close Event Handler
+        def on_close_event(event):
+            settings = load_settings()
+            save_settings(settings)
+            event.accept()
             if parent:
                 parent.show()
-        exit_btn.clicked.connect(on_exit_clicked)
-    
-    def on_close_event(event):
-        settings = load_settings()
-        save_settings(settings)
-        event.accept()
-        if parent:
-            parent.show()
-    window.closeEvent = on_close_event
-
-    log_info("Charakterfenster erfolgreich geladen und angezeigt.")
-    return window
+        
+        window.closeEvent = on_close_event
+        
+        # Initiale Befüllung
+        refresh_characters_table()
+        window.show()
+        
+        log_info("Charakter-Fenster erfolgreich mit Manager geladen.")
+        return window
+        
+    except Exception as e:
+        log_error(f"Fehler in show_characters_window: {e}")
+        QMessageBox.critical(None, "Fehler", f"Fehler beim Öffnen des Charakter-Fensters: {e}")
+        return None
 
 # Objektfenster anzeigen
 def show_objects_window(parent=None):
@@ -2264,266 +2675,500 @@ def show_objects_window(parent=None):
 
 # Locationsfenster anzeigen
 def show_locations_window(parent=None):
-    window = DynamicWindow("locations_ui", UI_FILES["locations"], splitter_name="mainSplitter")
-    settings = load_settings()
-    language = settings.get("language", "en")
-    window.show()
-    
-    # 2. Daten laden
-    locations_path = Path("data/locations/data_locations.json")
-    location_data = safe_load_json(locations_path, {})
-    if not location_data:
-        empty_location = get_empty_location()
-        empty_location["location_ID"] = "1"
-        location_data = {"location_ID_01": empty_location}
-        safe_save_json(locations_path, location_data)
-    first_key = next(iter(location_data.keys()))
-    window.current_location_key = first_key
-    current_location = location_data[window.current_location_key]
-    # Felder setzen
-    update_location_fields(window, current_location)
-    # Status-ComboBox füllen
-    status = load_translation(Path("core/translations/comboBox/status.json"), language)
-    combo_status = winFindChild(window, QComboBox, "comboBoxLocationsStatus")
-    fill_combobox(combo_status, list(status.values()), current_location.get("location_status", 0) if isinstance(current_location, dict) else 0)
-    # --- Save-Button einbinden ---
-    save_btn = winFindChild(window,QWidget, "saveBtnLocations")
-    if save_btn:
-        def on_save_clicked():
-            location_data = safe_load_json(locations_path, {})
-            location_key = window.current_location_key
-            loc = location_data.get(location_key, {})
-            loc.update(read_location_fields(window))
-            location_data[location_key] = loc
-            safe_save_json(locations_path, location_data)
-            log_info(f"Location {location_key} erfolgreich gespeichert.")
-
-        save_btn.clicked.connect(on_save_clicked)
-    # --- Neuen Location Button einbinden ---
-    new_btn = winFindChild(window,QWidget, "newBtnLocations")
-    if new_btn:
-        def on_new_clicked():
-            location_data = safe_load_json(locations_path, {})
-            new_key, new_id = get_next_id(location_data, "location_ID_")
-            empty_location = get_empty_location()
-            empty_location["location_ID"] = new_id
-            today = QDate.currentDate().toString("yyyy-MM-dd")
-            empty_location["location_created"] = today
-            empty_location["location_modified"] = today
-            location_data[new_key] = empty_location
-            safe_save_json(locations_path, location_data)
-            log_info(f"Neue Location {new_key} erstellt.")
-            window.current_location_key = new_key
-            update_location_fields(window, empty_location)
-        new_btn.clicked.connect(on_new_clicked)
-    # --- nächster Location Button einbinden ---
-    def on_next_clicked():
-        location_data = safe_load_json(locations_path, {})
-        keys = list(location_data.keys())
-        current_index = keys.index(window.current_location_key)
-        next_index = (current_index + 1) % len(keys)
-        next_key = keys[next_index]
-        window.current_location_key = next_key
-        next_location = location_data[next_key]
-        update_location_fields(window, next_location)
-    next_btn = winFindChild(window,QWidget, "nextBtnLocations")
-    if next_btn:
-        next_btn.clicked.connect(on_next_clicked)
-    # --- vorheriger Location Button einbinden ---
-    def on_prev_clicked():
-        location_data = safe_load_json(locations_path, {})
-        keys = list(location_data.keys())
-        current_index = keys.index(window.current_location_key)
-        prev_index = (current_index - 1) % len(keys)
-        prev_key = keys[prev_index]
-        window.current_location_key = prev_key
-        prev_location = location_data[prev_key]
-        update_location_fields(window, prev_location)
-    prev_btn = winFindChild(window,QWidget, "previousBtnLocations")
-    if prev_btn:
-        prev_btn.clicked.connect(on_prev_clicked)
-    # --- Daten löschen Button einbinden ---
-    def on_delete_clicked():
-        location_data = safe_load_json(locations_path, {})
-        location_key = window.current_location_key
-        location_name = location_data[location_key].get("location_title", location_key)
-        def delete_location():
-            nonlocal location_data, location_key, location_name
-            if location_key in location_data:
-                del location_data[location_key]
-                safe_save_json(locations_path, location_data)
-                log_info(f"Location {location_name} gelöscht.")
-                # Nach dem Löschen: neuen Key setzen und Felder aktualisieren
-                keys = list(location_data.keys())
-                if keys:
-                    idx = 0
-                    if location_key in keys:
-                        idx = keys.index(location_key)
-                    elif window.current_location_key and window.current_location_key in keys:
-                        idx = keys.index(window.current_location_key)
-                    if idx >= len(keys):
-                        idx = len(keys) - 1
-                    window.current_location_key = keys[idx]
-                    update_location_fields(window, location_data[window.current_location_key])
-                else:
-                    empty_location = get_empty_location()
-                    update_location_fields(window, empty_location)
-                    window.current_location_key = None
-        if show_secure_dialog(window, action="delete_location", project_key=location_name):
-            delete_location()
-    delete_btn = winFindChild(window,QWidget, "deleteBtnLocations")
-    if delete_btn:
-        delete_btn.clicked.connect(on_delete_clicked)
-    # --- Exit-Button einbinden ---
-    exit_btn = winFindChild(window,QWidget, "exitBtnLocations")
-    if exit_btn:
-        def on_exit_clicked():
-            window.close()
+    """
+    Fenster für Handlungsorte/Schauplätze mit Manager-Integration.
+    Nutzt LocationManager statt direkter JSON-Operationen.
+    """
+    try:
+        from PySide6.QtWidgets import QMainWindow, QMessageBox, QTableWidget, QTableWidgetItem
+        from PySide6.QtCore import Qt
+        from core.logger import log_info, log_error
+        
+        # Manager abrufen
+        loc_manager = app_state.locations
+        
+        # Fenster laden
+        window = DynamicWindow("locations_ui", UI_FILES["locations"], splitter_name="mainSplitter")
+        settings = load_settings()
+        language = settings.get("language", "en")
+        window.show()
+        
+        # Speichere Manager und Parent für spätere Referenzen
+        window.loc_manager = loc_manager
+        window.current_location_id = None
+        window.location_keys_list = []
+        
+        # Status-ComboBox füllen
+        status = load_translation(Path("core/translations/comboBox/status.json"), language)
+        combo_status = winFindChild(window, QComboBox, "comboBoxLocationsStatus")
+        if combo_status:
+            fill_combobox(combo_status, list(status.values()), 0)
+        
+        def refresh_locations_table():
+            """Aktualisiert die Anzeige mit Daten aus dem Manager."""
+            try:
+                all_locations = loc_manager.get_all()
+                window.location_keys_list = list(all_locations.keys())
+                
+                if not window.location_keys_list:
+                    log_info("Keine Handlungsorte vorhanden.")
+                    window.current_location_id = None
+                    # Felder leeren
+                    title_field = winFindChild(window, QLineEdit, "titleLocations")
+                    if title_field:
+                        title_field.clear()
+                    desc_field = winFindChild(window, QTextEdit, "textDescriptionLocations")
+                    if desc_field:
+                        desc_field.clear()
+                    return
+                
+                # Ersten Ort anzeigen oder aktuellen behalten
+                if window.current_location_id is None or window.current_location_id not in window.location_keys_list:
+                    window.current_location_id = window.location_keys_list[0]
+                
+                # Aktuelle Location laden und anzeigen
+                current_location = loc_manager.get(window.current_location_id)
+                if current_location:
+                    update_location_fields(window, current_location)
+                    
+            except Exception as e:
+                log_error(f"Fehler beim Aktualisieren der Tabelle: {e}")
+                QMessageBox.critical(window, "Fehler", f"Fehler beim Laden der Daten: {e}")
+        
+        def update_location_fields(win, location_data):
+            """Füllt die Formularfelder mit Ortsdaten."""
+            try:
+                title_field = winFindChild(win, QLineEdit, "titleLocations")
+                if title_field:
+                    title_field.setText(location_data.get("title", ""))
+                
+                desc_field = winFindChild(win, QTextEdit, "textDescriptionLocations")
+                if desc_field:
+                    desc_field.setPlainText(location_data.get("description", ""))
+                
+                created_date = winFindChild(win, QDateEdit, "dateEditCreatedLocations")
+                if created_date and location_data.get("created_date"):
+                    created_date.setDate(QDate.fromString(location_data["created_date"], "yyyy-MM-dd"))
+                
+                edited_date = winFindChild(win, QDateEdit, "dateEditEditedLocations")
+                if edited_date and location_data.get("edited_date"):
+                    edited_date.setDate(QDate.fromString(location_data["edited_date"], "yyyy-MM-dd"))
+                
+                status_combo = winFindChild(win, QComboBox, "comboBoxLocationsStatus")
+                if status_combo:
+                    status_text = location_data.get("status", "Planung")
+                    index = status_combo.findText(status_text)
+                    if index >= 0:
+                        status_combo.setCurrentIndex(index)
+                        
+            except Exception as e:
+                log_error(f"Fehler beim Füllen der Felder: {e}")
+        
+        def read_location_fields(win):
+            """Liest die Formularfelder und gibt ein Dictionary zurück."""
+            try:
+                title_field = winFindChild(win, QLineEdit, "titleLocations")
+                title = title_field.text() if title_field else ""
+                
+                desc_field = winFindChild(win, QTextEdit, "textDescriptionLocations")
+                desc = desc_field.toPlainText() if desc_field else ""
+                
+                created_date = winFindChild(win, QDateEdit, "dateEditCreatedLocations")
+                created = created_date.date().toString("yyyy-MM-dd") if created_date else ""
+                
+                edited_date = winFindChild(win, QDateEdit, "dateEditEditedLocations")
+                edited = edited_date.date().toString("yyyy-MM-dd") if edited_date else ""
+                
+                status_combo = winFindChild(win, QComboBox, "comboBoxLocationsStatus")
+                status = status_combo.currentText() if status_combo else "Planung"
+                
+                return {
+                    "title": title,
+                    "description": desc,
+                    "created_date": created,
+                    "edited_date": edited,
+                    "status": status
+                }
+            except Exception as e:
+                log_error(f"Fehler beim Lesen der Felder: {e}")
+                return {}
+        
+        # --- Save-Button einbinden ---
+        save_btn = winFindChild(window, QWidget, "saveBtnLocations")
+        if save_btn:
+            def on_save_clicked():
+                try:
+                    if not window.current_location_id:
+                        QMessageBox.warning(window, "Warnung", "Kein Ort ausgewählt.")
+                        return
+                    
+                    location_data = read_location_fields(window)
+                    loc_manager.data[window.current_location_id].update(location_data)
+                    loc_manager.save()
+                    log_info(f"Ort '{location_data.get('title', window.current_location_id)}' erfolgreich gespeichert.")
+                    QMessageBox.information(window, "Erfolg", "Ort erfolgreich gespeichert.")
+                    
+                except Exception as e:
+                    log_error(f"Fehler beim Speichern: {e}")
+                    QMessageBox.critical(window, "Fehler", f"Fehler beim Speichern: {e}")
+            
+            save_btn.clicked.connect(on_save_clicked)
+        
+        # --- Neuen Ort Button einbinden ---
+        new_btn = winFindChild(window, QWidget, "newBtnLocations")
+        if new_btn:
+            def on_new_clicked():
+                try:
+                    new_data = {
+                        "title": "Neuer Ort",
+                        "description": "",
+                        "status": "Planung",
+                        "created_date": QDate.currentDate().toString("yyyy-MM-dd"),
+                        "edited_date": QDate.currentDate().toString("yyyy-MM-dd")
+                    }
+                    new_id = loc_manager.add(new_data)
+                    window.current_location_id = new_id
+                    log_info(f"Neuer Ort '{new_id}' erstellt.")
+                    refresh_locations_table()
+                    QMessageBox.information(window, "Erfolg", f"Neuer Ort erstellt: {new_id}")
+                    
+                except Exception as e:
+                    log_error(f"Fehler beim Erstellen eines neuen Ortes: {e}")
+                    QMessageBox.critical(window, "Fehler", f"Fehler beim Erstellen: {e}")
+            
+            new_btn.clicked.connect(on_new_clicked)
+        
+        # --- Nächster Ort Button einbinden ---
+        next_btn = winFindChild(window, QWidget, "nextBtnLocations")
+        if next_btn:
+            def on_next_clicked():
+                try:
+                    if not window.location_keys_list:
+                        return
+                    current_index = window.location_keys_list.index(window.current_location_id)
+                    next_index = (current_index + 1) % len(window.location_keys_list)
+                    window.current_location_id = window.location_keys_list[next_index]
+                    next_location = loc_manager.get(window.current_location_id)
+                    update_location_fields(window, next_location)
+                    
+                except Exception as e:
+                    log_error(f"Fehler beim Navigieren: {e}")
+            
+            next_btn.clicked.connect(on_next_clicked)
+        
+        # --- Vorheriger Ort Button einbinden ---
+        prev_btn = winFindChild(window, QWidget, "previousBtnLocations")
+        if prev_btn:
+            def on_prev_clicked():
+                try:
+                    if not window.location_keys_list:
+                        return
+                    current_index = window.location_keys_list.index(window.current_location_id)
+                    prev_index = (current_index - 1) % len(window.location_keys_list)
+                    window.current_location_id = window.location_keys_list[prev_index]
+                    prev_location = loc_manager.get(window.current_location_id)
+                    update_location_fields(window, prev_location)
+                    
+                except Exception as e:
+                    log_error(f"Fehler beim Navigieren: {e}")
+            
+            prev_btn.clicked.connect(on_prev_clicked)
+        
+        # --- Ort löschen Button einbinden ---
+        delete_btn = winFindChild(window, QWidget, "deleteBtnLocations")
+        if delete_btn:
+            def on_delete_clicked():
+                try:
+                    if not window.current_location_id:
+                        QMessageBox.warning(window, "Warnung", "Kein Ort ausgewählt.")
+                        return
+                    
+                    location_data = loc_manager.get(window.current_location_id)
+                    location_title = location_data.get("title", window.current_location_id)
+                    
+                    reply = QMessageBox.question(
+                        window,
+                        "Bestätigung",
+                        f"Ort '{location_title}' wirklich löschen?",
+                        QMessageBox.Yes | QMessageBox.No
+                    )
+                    
+                    if reply == QMessageBox.Yes:
+                        loc_manager.delete(window.current_location_id)
+                        log_info(f"Ort '{location_title}' gelöscht.")
+                        refresh_locations_table()
+                        QMessageBox.information(window, "Erfolg", f"Ort '{location_title}' gelöscht.")
+                        
+                except Exception as e:
+                    log_error(f"Fehler beim Löschen: {e}")
+                    QMessageBox.critical(window, "Fehler", f"Fehler beim Löschen: {e}")
+            
+            delete_btn.clicked.connect(on_delete_clicked)
+        
+        # --- Exit-Button einbinden ---
+        exit_btn = winFindChild(window, QWidget, "exitBtnLocations")
+        if exit_btn:
+            def on_exit_clicked():
+                window.close()
+                if parent:
+                    parent.show()
+            
+            exit_btn.clicked.connect(on_exit_clicked)
+        
+        # --- Close Event Handler ---
+        def on_close_event(event):
+            settings = load_settings()
+            save_settings(settings)
+            event.accept()
             if parent:
                 parent.show()
-        exit_btn.clicked.connect(on_exit_clicked)
-    
-    def on_close_event(event):
-        settings = load_settings()
-        save_settings(settings)
-        event.accept()
-        if parent:
-            parent.show()
-    window.closeEvent = on_close_event
-
-    log_info("Locationsfenster erfolgreich geladen und angezeigt.")
-    return window
+        
+        window.closeEvent = on_close_event
+        
+        # Initiale Befüllung
+        refresh_locations_table()
+        
+        log_info("Handlungsorte-Fenster erfolgreich mit Manager geladen.")
+        return window
+        
+    except Exception as e:
+        log_error(f"Fehler in show_locations_window: {e}")
+        QMessageBox.critical(None, "Fehler", f"Fehler beim Öffnen des Handlungsorte-Fensters: {e}")
+        return None
 
 # Storylinefenster anzeigen
 def show_storylines_window(parent=None):
-    window = DynamicWindow("storylines_ui", UI_FILES["storylines"], splitter_name="mainSplitter")
-    settings = load_settings()
-    language = settings.get("language", "en")
-    window.show()
-
-    # 2. Daten laden
-    storylines_path = Path("data/storylines/data_storylines.json")
-    storyline_data = safe_load_json(storylines_path, {})
-    if not storyline_data:
-        empty_storyline = get_empty_storyline()
-        empty_storyline["storyline_ID"] = "1"
-        storyline_data["storyline_ID_01"] = empty_storyline
-        safe_save_json(storylines_path, storyline_data)
-    first_key = next(iter(storyline_data.keys()))
-    window.current_storyline_key = first_key
-    current_storyline = storyline_data[window.current_storyline_key]
-    # Felder setzen
-    update_storyline_fields(window, current_storyline)
-    # Status-ComboBox füllen
-    status = load_translation(Path("core/translations/comboBox/status.json"), language)
-    combo_status = winFindChild(window, QComboBox, "comboBoxStorylinesStatus")
-    fill_combobox(combo_status, list(status.values()), current_storyline.get("storyline_status", 0) if isinstance(current_storyline, dict) else 0)
-    # --- Save-Button einbinden ---
-    save_btn = winFindChild(window,QWidget, "saveBtnStorylines")
-    if save_btn:
-        def on_save_clicked():
-            storyline_data = safe_load_json(storylines_path, {})
-            storyline_key = window.current_storyline_key
-            story = storyline_data.get(storyline_key, {})
-            story.update(read_storyline_fields(window))
-            storyline_data[storyline_key] = story
-            safe_save_json(storylines_path, storyline_data)
-            log_info(f"Storyline {storyline_key} erfolgreich gespeichert.")
-
-        save_btn.clicked.connect(on_save_clicked)
-    # --- Neuen Storyline Button einbinden ---
-    new_btn = winFindChild(window,QWidget, "newBtnStorylines")
-    if new_btn:
-        def on_new_clicked():
-            storyline_data = safe_load_json(storylines_path, {})
-            new_key, new_id = get_next_id(storyline_data, "storyline_ID_")
-            empty_storyline = get_empty_storyline()
-            empty_storyline["storyline_ID"] = new_id
-            today = QDate.currentDate().toString("yyyy-MM-dd")
-            empty_storyline["storyline_created"] = today
-            empty_storyline["storyline_modified"] = today
-            storyline_data[new_key] = empty_storyline
-            safe_save_json(storylines_path, storyline_data)
-            log_info(f"Neue Storyline {new_key} erstellt.")
-            window.current_storyline_key = new_key
-            update_storyline_fields(window, empty_storyline)
-        new_btn.clicked.connect(on_new_clicked)
-    # --- nächster Storyline Button einbinden ---
-    def on_next_clicked():
-        storyline_data = safe_load_json(storylines_path, {})
-        keys = list(storyline_data.keys())
-        current_index = keys.index(window.current_storyline_key)
-        next_index = (current_index + 1) % len(keys)
-        next_key = keys[next_index]
-        window.current_storyline_key = next_key
-        next_storyline = storyline_data[next_key]
-        update_storyline_fields(window, next_storyline)
-    next_btn = winFindChild(window,QWidget, "nextBtnStorylines")
-    if next_btn:
-        next_btn.clicked.connect(on_next_clicked)
-    # --- vorheriger Storyline Button einbinden ---
-    def on_prev_clicked():
-        storyline_data = safe_load_json(storylines_path, {})
-        keys = list(storyline_data.keys())
-        current_index = keys.index(window.current_storyline_key)
-        prev_index = (current_index - 1) % len(keys)
-        prev_key = keys[prev_index]
-        window.current_storyline_key = prev_key
-        prev_storyline = storyline_data[prev_key]
-        update_storyline_fields(window, prev_storyline)
-    prev_btn = winFindChild(window,QWidget, "previousBtnStorylines")
-    if prev_btn:
-        prev_btn.clicked.connect(on_prev_clicked)
-    # --- Daten löschen Button einbinden ---
-    def on_delete_clicked():
-        storyline_data = safe_load_json(storylines_path, {})
-        storyline_key = window.current_storyline_key
-        storyline_name = storyline_data[storyline_key].get("storyline_title", storyline_key)
-        def delete_storyline():
-            nonlocal storyline_data, storyline_key, storyline_name
-            if storyline_key in storyline_data:
-                del storyline_data[storyline_key]
-                safe_save_json(storylines_path, storyline_data)
-                log_info(f"Storyline {storyline_name} gelöscht.")
-                # Nach dem Löschen: neuen Key setzen und Felder aktualisieren
-                keys = list(storyline_data.keys())
-                if keys:
-                    idx = 0
-                    if storyline_key in keys:
-                        idx = keys.index(storyline_key)
-                    elif window.current_storyline_key and window.current_storyline_key in keys:
-                        idx = keys.index(window.current_storyline_key)
-                    if idx >= len(keys):
-                        idx = len(keys) - 1
-                    window.current_storyline_key = keys[idx]
-                    update_storyline_fields(window, storyline_data[window.current_storyline_key])
+    try:
+        # 1. Manager abrufen
+        storyline_manager = app_state.storylines
+        
+        # 2. Window laden
+        window = DynamicWindow("storylines_ui", UI_FILES["storylines"], splitter_name="mainSplitter")
+        
+        # 3. State in window speichern
+        window.storyline_manager = storyline_manager
+        window.current_storyline_id = None
+        window.storyline_keys_list = []
+        
+        # 4. Helper-Funktionen
+        def refresh_storylines_table():
+            """Lädt alle Handlungsstränge aus dem Manager"""
+            try:
+                all_storylines = storyline_manager.get_all()
+                window.storyline_keys_list = list(all_storylines.keys())
+                
+                if window.storyline_keys_list:
+                    if not window.current_storyline_id or window.current_storyline_id not in window.storyline_keys_list:
+                        window.current_storyline_id = window.storyline_keys_list[0]
+                    
+                    current_storyline = storyline_manager.get(window.current_storyline_id)
+                    update_storyline_fields(window, current_storyline)
+                    
+                    # Status-ComboBox füllen
+                    settings = load_settings()
+                    language = settings.get("language", "en")
+                    status = load_translation(Path("core/translations/comboBox/status.json"), language)
+                    combo_status = winFindChild(window, QComboBox, "comboBoxStorylinesStatus")
+                    
+                    status_value = current_storyline.get("status", "Planung")
+                    status_index = list(status.values()).index(status_value) if status_value in status.values() else 0
+                    fill_combobox(combo_status, list(status.values()), status_index)
                 else:
-                    empty_storyline = get_empty_storyline()
-                    update_storyline_fields(window, empty_storyline)
-                    window.current_storyline_key = None
-        if show_secure_dialog(window, action="delete_storyline", project_key=storyline_name):
-            delete_storyline()
-    delete_btn = winFindChild(window,QWidget, "deleteBtnStorylines")
-    if delete_btn:
-        delete_btn.clicked.connect(on_delete_clicked)    
-    # --- Exit-Button einbinden ---
-    exit_btn = winFindChild(window,QWidget, "exitBtnStorylines")
-    if exit_btn:
-        def on_exit_clicked():
-            window.close()
+                    log_info("Keine Handlungsstränge vorhanden.")
+            except Exception as e:
+                log_error(f"Fehler beim Aktualisieren der Handlungsstränge: {e}")
+        
+        def update_storyline_fields(window, storyline):
+            """Füllt das Formular mit Handlungsstrang-Daten"""
+            try:
+                title_field = winFindChild(window, QLineEdit, "titleStorylines")
+                desc_field = winFindChild(window, QTextEdit, "textDescriptionStorylines")
+                created_field = winFindChild(window, QDateEdit, "dateEditCreatedStorylines")
+                edited_field = winFindChild(window, QDateEdit, "dateEditEditedStorylines")
+                status_combo = winFindChild(window, QComboBox, "comboBoxStorylinesStatus")
+                
+                if title_field:
+                    title_field.setText(storyline.get("title", ""))
+                if desc_field:
+                    desc_field.setText(storyline.get("description", ""))
+                if created_field:
+                    created_str = storyline.get("created_date", "")
+                    created_field.setDate(QDate.fromString(created_str, "yyyy-MM-dd") if created_str else QDate.currentDate())
+                if edited_field:
+                    edited_str = storyline.get("edited_date", "")
+                    edited_field.setDate(QDate.fromString(edited_str, "yyyy-MM-dd") if edited_str else QDate.currentDate())
+                if status_combo:
+                    status_combo.setCurrentText(storyline.get("status", "Planung"))
+            except Exception as e:
+                log_error(f"Fehler beim Füllen der Felder: {e}")
+        
+        def read_storyline_fields(window):
+            """Liest die Formular-Werte und gibt sie als Dict zurück"""
+            try:
+                title_field = winFindChild(window, QLineEdit, "titleStorylines")
+                desc_field = winFindChild(window, QTextEdit, "textDescriptionStorylines")
+                created_field = winFindChild(window, QDateEdit, "dateEditCreatedStorylines")
+                edited_field = winFindChild(window, QDateEdit, "dateEditEditedStorylines")
+                status_combo = winFindChild(window, QComboBox, "comboBoxStorylinesStatus")
+                
+                return {
+                    "title": title_field.text() if title_field else "",
+                    "description": desc_field.toPlainText() if desc_field else "",
+                    "created_date": created_field.date().toString("yyyy-MM-dd") if created_field else "",
+                    "edited_date": edited_field.date().toString("yyyy-MM-dd") if edited_field else "",
+                    "status": status_combo.currentText() if status_combo else "Planung"
+                }
+            except Exception as e:
+                log_error(f"Fehler beim Lesen der Felder: {e}")
+                return {}
+        
+        # 5. Speichern-Button
+        save_btn = winFindChild(window, QWidget, "saveBtnStorylines")
+        if save_btn:
+            def on_save_clicked():
+                try:
+                    if not window.current_storyline_id:
+                        QMessageBox.warning(window, "Warnung", "Kein Handlungsstrang ausgewählt.")
+                        return
+                    
+                    updated_data = read_storyline_fields(window)
+                    storyline_manager.data[window.current_storyline_id].update(updated_data)
+                    
+                    if storyline_manager.save():
+                        log_info(f"Handlungsstrang '{updated_data.get('title', window.current_storyline_id)}' erfolgreich gespeichert.")
+                        QMessageBox.information(window, "Erfolg", "Handlungsstrang gespeichert.")
+                    else:
+                        log_error("Fehler beim Speichern des Handlungsstrangs.")
+                        QMessageBox.critical(window, "Fehler", "Fehler beim Speichern.")
+                        
+                except Exception as e:
+                    log_error(f"Fehler beim Speichern: {e}")
+                    QMessageBox.critical(window, "Fehler", f"Fehler beim Speichern: {e}")
+            
+            save_btn.clicked.connect(on_save_clicked)
+        
+        # 6. Neuen Handlungsstrang Button
+        new_btn = winFindChild(window, QWidget, "newBtnStorylines")
+        if new_btn:
+            def on_new_clicked():
+                try:
+                    new_data = {
+                        "title": "Neuer Handlungsstrang",
+                        "description": "",
+                        "status": "Planung",
+                        "created_date": QDate.currentDate().toString("yyyy-MM-dd"),
+                        "edited_date": QDate.currentDate().toString("yyyy-MM-dd")
+                    }
+                    new_id = storyline_manager.add(new_data)
+                    window.current_storyline_id = new_id
+                    log_info(f"Neuer Handlungsstrang '{new_id}' erstellt.")
+                    refresh_storylines_table()
+                    QMessageBox.information(window, "Erfolg", f"Neuer Handlungsstrang erstellt: {new_id}")
+                    
+                except Exception as e:
+                    log_error(f"Fehler beim Erstellen eines neuen Handlungsstrangs: {e}")
+                    QMessageBox.critical(window, "Fehler", f"Fehler beim Erstellen: {e}")
+            
+            new_btn.clicked.connect(on_new_clicked)
+        
+        # 7. Nächster Handlungsstrang Button
+        next_btn = winFindChild(window, QWidget, "nextBtnStorylines")
+        if next_btn:
+            def on_next_clicked():
+                try:
+                    if not window.storyline_keys_list:
+                        return
+                    current_index = window.storyline_keys_list.index(window.current_storyline_id)
+                    next_index = (current_index + 1) % len(window.storyline_keys_list)
+                    window.current_storyline_id = window.storyline_keys_list[next_index]
+                    next_storyline = storyline_manager.get(window.current_storyline_id)
+                    update_storyline_fields(window, next_storyline)
+                    
+                except Exception as e:
+                    log_error(f"Fehler beim Navigieren: {e}")
+            
+            next_btn.clicked.connect(on_next_clicked)
+        
+        # 8. Vorheriger Handlungsstrang Button
+        prev_btn = winFindChild(window, QWidget, "previousBtnStorylines")
+        if prev_btn:
+            def on_prev_clicked():
+                try:
+                    if not window.storyline_keys_list:
+                        return
+                    current_index = window.storyline_keys_list.index(window.current_storyline_id)
+                    prev_index = (current_index - 1) % len(window.storyline_keys_list)
+                    window.current_storyline_id = window.storyline_keys_list[prev_index]
+                    prev_storyline = storyline_manager.get(window.current_storyline_id)
+                    update_storyline_fields(window, prev_storyline)
+                    
+                except Exception as e:
+                    log_error(f"Fehler beim Navigieren: {e}")
+            
+            prev_btn.clicked.connect(on_prev_clicked)
+        
+        # 9. Handlungsstrang löschen Button
+        delete_btn = winFindChild(window, QWidget, "deleteBtnStorylines")
+        if delete_btn:
+            def on_delete_clicked():
+                try:
+                    if not window.current_storyline_id:
+                        QMessageBox.warning(window, "Warnung", "Kein Handlungsstrang ausgewählt.")
+                        return
+                    
+                    storyline_data = storyline_manager.get(window.current_storyline_id)
+                    storyline_title = storyline_data.get("title", window.current_storyline_id)
+                    
+                    reply = QMessageBox.question(
+                        window,
+                        "Bestätigung",
+                        f"Handlungsstrang '{storyline_title}' wirklich löschen?",
+                        QMessageBox.Yes | QMessageBox.No
+                    )
+                    
+                    if reply == QMessageBox.Yes:
+                        storyline_manager.delete(window.current_storyline_id)
+                        log_info(f"Handlungsstrang '{storyline_title}' gelöscht.")
+                        refresh_storylines_table()
+                        QMessageBox.information(window, "Erfolg", f"Handlungsstrang '{storyline_title}' gelöscht.")
+                        
+                except Exception as e:
+                    log_error(f"Fehler beim Löschen: {e}")
+                    QMessageBox.critical(window, "Fehler", f"Fehler beim Löschen: {e}")
+            
+            delete_btn.clicked.connect(on_delete_clicked)
+        
+        # 10. Exit-Button
+        exit_btn = winFindChild(window, QWidget, "exitBtnStorylines")
+        if exit_btn:
+            def on_exit_clicked():
+                window.close()
+                if parent:
+                    parent.show()
+            
+            exit_btn.clicked.connect(on_exit_clicked)
+        
+        # 11. Close Event Handler
+        def on_close_event(event):
+            settings = load_settings()
+            save_settings(settings)
+            event.accept()
             if parent:
                 parent.show()
-        exit_btn.clicked.connect(on_exit_clicked)
-    
-    def on_close_event(event):
-        settings = load_settings()
-        save_settings(settings)
-        event.accept()
-        if parent:
-            parent.show()
-    window.closeEvent = on_close_event
-
-    log_info("Storylinefenster erfolgreich geladen und angezeigt.")
+        
+        window.closeEvent = on_close_event
+        
+        # Initiale Befüllung
+        refresh_storylines_table()
+        window.show()
+        
+        log_info("Handlungsstränge-Fenster erfolgreich mit Manager geladen.")
+        return window
+        
+    except Exception as e:
+        log_error(f"Fehler in show_storylines_window: {e}")
+        QMessageBox.critical(None, "Fehler", f"Fehler beim Öffnen des Handlungsstränge-Fensters: {e}")
+        return None
     return window
 
 # Editorfenster anzeigen
@@ -3183,12 +3828,222 @@ def show_help_window(parent=None):
     log_info("Hilfe-Fenster erfolgreich geladen und angezeigt.")
     return window
 
+# Referenz-Verwaltungsfenster anzeigen
+def show_references_window(parent=None):
+    """
+    Zeigt die Referenz-Verwaltungsschnittstelle.
+    Ermöglicht Benutzern, Referenzen zu verwalten, zu validieren und Zitate zu generieren.
+    """
+    from PySide6.QtWidgets import (
+        QDialog, QVBoxLayout, QHBoxLayout, QPushButton, QTableWidget, 
+        QTableWidgetItem, QMessageBox, QComboBox, QLineEdit, QLabel
+    )
+    from PySide6.QtCore import Qt
+    
+    dialog = QDialog(parent)
+    dialog.setWindowTitle("Referenz-Verwaltung - CSNova")
+    dialog.setGeometry(100, 100, 1000, 600)
+    
+    layout = QVBoxLayout()
+    
+    # === Header mit Buttons ===
+    button_layout = QHBoxLayout()
+    
+    add_btn = QPushButton("Referenz hinzufügen")
+    delete_btn = QPushButton("Löschen")
+    validate_btn = QPushButton("Validieren")
+    duplicate_btn = QPushButton("Duplikate prüfen")
+    close_btn = QPushButton("Schließen")
+    
+    button_layout.addWidget(add_btn)
+    button_layout.addWidget(delete_btn)
+    button_layout.addWidget(validate_btn)
+    button_layout.addWidget(duplicate_btn)
+    button_layout.addStretch()
+    button_layout.addWidget(close_btn)
+    
+    layout.addLayout(button_layout)
+    
+    # === Tabelle für Referenzen ===
+    table = QTableWidget()
+    table.setColumnCount(5)
+    table.setHorizontalHeaderLabels(["ID", "Typ", "Titel", "Autoren", "Jahr"])
+    table.setSelectionBehavior(table.SelectRows)
+    layout.addWidget(table)
+    
+    # === Info-Bereich ===
+    info_layout = QHBoxLayout()
+    info_label = QLabel("Referenzen geladen: 0")
+    citation_format_label = QLabel("Zitierformat:")
+    citation_format = QComboBox()
+    citation_format.addItems(["APA", "Harvard", "Oxford", "MLA", "Chicago", "Vancouver", "IEEE"])
+    
+    info_layout.addWidget(info_label)
+    info_layout.addStretch()
+    info_layout.addWidget(citation_format_label)
+    info_layout.addWidget(citation_format)
+    
+    layout.addLayout(info_layout)
+    
+    # === Zitat-Anzeige ===
+    citation_label = QLabel("Generiertes Zitat:")
+    citation_text = QLineEdit()
+    citation_text.setReadOnly(True)
+    layout.addWidget(citation_label)
+    layout.addWidget(citation_text)
+    
+    dialog.setLayout(layout)
+    
+    # === Funktionalität laden ===
+    def load_references():
+        """Lade Referenzen aus ReferenceManager"""
+        try:
+            if app_state.ref_manager is None:
+                QMessageBox.warning(dialog, "Fehler", "ReferenceManager nicht initialisiert")
+                return
+            
+            refs = app_state.ref_manager.get_all_references()
+            table.setRowCount(len(refs))
+            
+            for row, (ref_id, ref_data) in enumerate(refs.items()):
+                ref_type = ref_data.get("type", "?")
+                title = ref_data.get("title", "?")
+                authors = ref_data.get("authors", [])
+                author_names = ", ".join([f"{a.get('name', '')} {a.get('initial', '')}" for a in authors]) if authors else "?"
+                year = ref_data.get("year", "?")
+                
+                table.setItem(row, 0, QTableWidgetItem(ref_id))
+                table.setItem(row, 1, QTableWidgetItem(ref_type))
+                table.setItem(row, 2, QTableWidgetItem(title))
+                table.setItem(row, 3, QTableWidgetItem(author_names))
+                table.setItem(row, 4, QTableWidgetItem(year))
+            
+            info_label.setText(f"Referenzen geladen: {len(refs)}")
+            table.resizeColumnsToContents()
+            log_info(f"✓ {len(refs)} Referenzen in UI geladen")
+        except Exception as e:
+            log_exception("Fehler beim Laden von Referenzen", e)
+            QMessageBox.critical(dialog, "Fehler", f"Konnte Referenzen nicht laden: {e}")
+    
+    def validate_references():
+        """Validiere alle Referenzen"""
+        try:
+            if app_state.ref_manager is None:
+                QMessageBox.warning(dialog, "Fehler", "ReferenceManager nicht initialisiert")
+                return
+            
+            errors = app_state.ref_manager.validate_all()
+            if not errors:
+                QMessageBox.information(dialog, "Validierung", "✓ Alle Referenzen sind gültig!")
+            else:
+                error_msg = "Validierungsfehler gefunden:\n\n"
+                for ref_id, error_list in errors.items():
+                    error_msg += f"{ref_id}:\n  - " + "\n  - ".join(error_list) + "\n\n"
+                QMessageBox.warning(dialog, "Validierungsfehler", error_msg)
+            
+            log_info(f"✓ Validierung durchgeführt: {len(errors)} Fehler")
+        except Exception as e:
+            log_exception("Fehler bei Validierung", e)
+            QMessageBox.critical(dialog, "Fehler", f"Validierung fehlgeschlagen: {e}")
+    
+    def check_duplicates():
+        """Prüfe auf doppelte Referenzen"""
+        try:
+            if app_state.ref_manager is None:
+                QMessageBox.warning(dialog, "Fehler", "ReferenceManager nicht initialisiert")
+                return
+            
+            duplicates = app_state.ref_manager.check_duplicates()
+            if not duplicates:
+                QMessageBox.information(dialog, "Duplikat-Prüfung", "✓ Keine Duplikate gefunden!")
+            else:
+                dup_msg = f"{len(duplicates)} Duplikat(e) gefunden:\n\n"
+                for dup in duplicates:
+                    dup_msg += f"  • {dup['ref1_id']} ↔ {dup['ref2_id']}\n"
+                QMessageBox.warning(dialog, "Duplikate erkannt", dup_msg)
+            
+            log_info(f"✓ Duplikat-Prüfung: {len(duplicates)} gefunden")
+        except Exception as e:
+            log_exception("Fehler bei Duplikat-Prüfung", e)
+            QMessageBox.critical(dialog, "Fehler", f"Duplikat-Prüfung fehlgeschlagen: {e}")
+    
+    def generate_citation():
+        """Generiere Zitat für ausgewählte Referenz"""
+        try:
+            selected_rows = table.selectionModel().selectedRows()
+            if not selected_rows:
+                QMessageBox.warning(dialog, "Fehler", "Bitte wählen Sie eine Referenz aus")
+                return
+            
+            if app_state.ref_manager is None or app_state.cite_manager is None:
+                QMessageBox.warning(dialog, "Fehler", "Manager nicht initialisiert")
+                return
+            
+            ref_id = table.item(selected_rows[0].row(), 0).text()
+            ref = app_state.ref_manager.get_reference(ref_id)
+            
+            if not ref:
+                QMessageBox.warning(dialog, "Fehler", f"Referenz {ref_id} nicht gefunden")
+                return
+            
+            format_style = citation_format.currentText()
+            citation = app_state.cite_manager.get_citation(ref, format_style)
+            citation_text.setText(citation)
+            log_info(f"✓ Zitat generiert: {ref_id} ({format_style})")
+        except Exception as e:
+            log_exception("Fehler bei Zitat-Generierung", e)
+            QMessageBox.critical(dialog, "Fehler", f"Zitat konnte nicht generiert werden: {e}")
+    
+    # === Signal-Verbindungen ===
+    close_btn.clicked.connect(dialog.close)
+    validate_btn.clicked.connect(validate_references)
+    duplicate_btn.clicked.connect(check_duplicates)
+    table.itemSelectionChanged.connect(generate_citation)
+    citation_format.currentTextChanged.connect(generate_citation)
+    
+    # === Initial laden ===
+    load_references()
+    
+    dialog.exec()
+    log_info("Referenz-Verwaltungsfenster geschlossen")
+    return dialog
+
 # Anwendung starten
-def main():
+def main(managers=None):
+    """
+    Haupteinsprungspunkt der CSNova Anwendung.
+    
+    Args:
+        managers: Dictionary mit allen Manager-Instanzen aus initialize_all_managers()
+                  oder Tuple (ref_manager, cite_manager) für Backwards Compatibility
+    """
     setup_logging()
     log_header()
     log_info("Starte CSNova Anwendung")
     app = QApplication(sys.argv)
+    
+    # Speichere Manager in app_state für Zugriff aus UI-Komponenten
+    if managers is not None:
+        if isinstance(managers, dict):
+            # Neue API: Dictionary mit allen Managern
+            app_state.references = managers.get("references")
+            app_state.citations = managers.get("citations")
+            app_state.projects = managers.get("projects")
+            app_state.characters = managers.get("characters")
+            app_state.locations = managers.get("locations")
+            app_state.objects = managers.get("objects")
+            app_state.storylines = managers.get("storylines")
+            app_state.ideas = managers.get("ideas")
+            app_state.chapters = managers.get("chapters")
+            # Backwards compatibility
+            app_state.ref_manager = managers.get("references")
+            app_state.cite_manager = managers.get("citations")
+        elif isinstance(managers, tuple) and len(managers) == 2:
+            # Alte API: Tuple (ref_manager, cite_manager)
+            app_state.ref_manager = managers[0]
+            app_state.cite_manager = managers[1]
+            app_state.references = managers[0]
+            app_state.citations = managers[1]
 
     try:
         settings = load_settings()

@@ -1,0 +1,36 @@
+{
+  "chapter_id_01": {
+    "chapter_id": "1",
+    "chapter_title": "",
+    "chapter_premise": "",
+    "chapter_status": "",
+    "chapter_begin": "",
+    "chapter_edited": "",
+    "chapter_excerpt": "",
+    "chapter_notes": "",
+    "scenes_id_01": {
+      "scene_id": "1",
+      "scene_title": "",
+      "scene_premise": "",
+      "scene_status": "",
+      "scene_begin": "",
+      "scene_edited": "",
+      "scene_word_count": "",
+      "scene_order": "1",
+      "scene_goal": "",
+      "scene_result ": "",
+      "scene_storyline": 0,
+      "scene_location": 0,
+      "scene_character": 0,
+      "scene_object": 0,
+      "scene_characters": [],
+      "scene_objects": [],
+      "scene_mood": "",
+      "scene_duration": "",
+      "scene_type": "",
+      "scene_tags": "",
+      "scene_notes": "",
+      "scene_plain_text": ""
+    }
+  }
+}

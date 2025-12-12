@@ -1,35 +1,32 @@
 {
-  "locations_ID_01": {
-    "location_ID": "1",
-    "location_title": "Lokation1",
-    "location_status": 0,
-    "location_created": "2026-01-23",
-    "location_modified": "2026-01-23",
-    "location_notes": "Handlungsort 1",
-    "location_titel": "Location 1"
-  },
-  "location_ID_03": {
-    "location_ID": "3",
-    "location_title": "Lokation2",
-    "location_status": 2,
-    "location_created": "2026-01-23",
-    "location_modified": "2026-01-23",
-    "location_notes": ""
-  },
-  "location_ID_05": {
-    "location_ID": "5",
-    "location_title": "Lokation 4",
-    "location_status": 0,
-    "location_created": "2025-10-17",
-    "location_modified": "2025-10-17",
-    "location_notes": ""
-  },
-  "location_ID_06": {
-    "location_ID": "6",
-    "location_title": "Lokation 5",
-    "location_status": 0,
-    "location_created": "2025-10-22",
-    "location_modified": "2025-10-17",
-    "location_notes": ""
-  }
+    "ID_01": {
+        "title": "Neuer Ort",
+        "description": "",
+        "status": "Planung",
+        "created_date": "2025-12-11",
+        "edited_date": "2025-12-11",
+        "id": "ID_01",
+        "location_ID": "",
+        "location_title": "",
+        "location_status": 0,
+        "location_created": "",
+        "location_modified": "",
+        "location_notes": "",
+        "location_titel": ""
+    },
+    "ID_02": {
+        "title": "Neuer Ort",
+        "description": "",
+        "status": "Planung",
+        "created_date": "2025-12-11",
+        "edited_date": "2025-12-11",
+        "id": "ID_02",
+        "location_ID": "",
+        "location_title": "",
+        "location_status": 0,
+        "location_created": "",
+        "location_modified": "",
+        "location_notes": "",
+        "location_titel": ""
+    }
 }
